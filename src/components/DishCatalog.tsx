@@ -206,10 +206,12 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({ affiliateConfig, onSel
                     {dish.description}
                   </p>
 
-                  <div className="text-[11px] text-stone-500 bg-stone-50 p-2.5 rounded-xl">
-                    <span className="font-semibold text-stone-700">Ăn kèm chuẩn vị:</span>{' '}
-                    {dish.bestPairedWith}
-                  </div>
+                  {dish.bestPairedWith && (
+                    <div className="text-[11px] text-stone-500 bg-stone-50 p-2.5 rounded-xl">
+                      <span className="font-semibold text-stone-700">Ăn kèm chuẩn vị:</span>{' '}
+                      {dish.bestPairedWith}
+                    </div>
+                  )}
                 </div>
               </div>
 

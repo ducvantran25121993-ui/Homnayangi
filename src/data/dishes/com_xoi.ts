@@ -26,9 +26,10 @@ export const COM_XOI_DISHES: Dish[] = [
     estimatedPrice: 50000,
     calories: '750 - 850 kcal',
     description: 'Đùi gà góc tư vàng ươm giòn rụm bên ngoài mọng nước bên trong, ăn kèm cơm chiên đỏ cà chua thơm lừng.',
-    image: 'https://images.unsplash.com/photo-1562967914-608f82629710?w=800&auto=format&fit=crop&q=80',
+    image: '/images/com_ga_xoi_mo.jpg?v=2',
     popularTags: ['Gà giòn', 'Cơm chiên', 'Đậm đà'],
     searchKeyword: 'Cơm gà xối mỡ',
+    bestPairedWith: 'Canh rong biển thịt bằm, dưa leo & xì dầu tỏi ớt',
   },
   {
     id: 'com-rang-dua-bo',
@@ -40,9 +41,10 @@ export const COM_XOI_DISHES: Dish[] = [
     estimatedPrice: 55000,
     calories: '650 - 750 kcal',
     description: 'Hạt cơm đảo săn vàng giòn sần sật, thịt bò tươi xào lăn lửa lớn quyện dưa cải muối chua giòn giải ngấy.',
-    image: '/images/com_rang_dua_bo.jpg',
+    image: '/images/com_rang_dua_bo.jpg?v=2',
     popularTags: ['Hà Nội', 'Đậm vị', 'Ăn đêm'],
     searchKeyword: 'Cơm rang dưa bò',
+    bestPairedWith: 'Canh nước dùng thanh ngọt, ớt tươi & xì dầu tỏi',
   },
   {
     id: 'com-nieu-singapore',
