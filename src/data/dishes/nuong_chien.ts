@@ -151,8 +151,9 @@ export const NUONG_CHIEN_DISHES: Dish[] = [
     estimatedPrice: 65000,
     calories: '650 - 780 kcal',
     description: 'Từng miếng thịt heo quay nổ bì giòn rụm xếp trên lớp bánh hỏi tơ mịn thoa mỡ hành bóng bẩy chấm nước mắm tỏi ớt kẹo sệt.',
-    image: '/images/banh_hoi_heo_quay.jpg',
+    image: '/images/banh_hoi_heo_quay.jpg?v=2',
     popularTags: ['Bánh hỏi Bình Định', 'Heo quay nổ cốm', 'Mỡ hành béo'],
     searchKeyword: 'Heo quay bánh hỏi',
+    bestPairedWith: 'Nước mắm tỏi ớt kẹo sệt, đồ chua & rau thơm',
   }
 ];
