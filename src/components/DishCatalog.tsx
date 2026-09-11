@@ -23,6 +23,7 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({ affiliateConfig, onSel
     { id: 'salad_monnhe', label: 'Salad & món nhẹ', icon: '🥗' },
     { id: 'lau_chao', label: 'Lẩu & cháo', icon: '🍲' },
     { id: 'pizza_pasta', label: 'Pizza & pasta', icon: '🍕' },
+    { id: 'do_chay', label: 'Đồ chay', icon: '🥬' },
     { id: 'mon_khac', label: 'Món khác', icon: '🍽️' },
   ];
 
@@ -36,6 +37,7 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({ affiliateConfig, onSel
       salad_monnhe: 0,
       lau_chao: 0,
       pizza_pasta: 0,
+      do_chay: 0,
       mon_khac: 0,
     };
     INITIAL_DISHES.forEach((d) => {

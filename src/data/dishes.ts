@@ -6,8 +6,9 @@ import { NUONG_CHIEN_DISHES } from './dishes/nuong_chien';
 import { SALAD_MONNHE_DISHES } from './dishes/salad_monnhe';
 import { LAU_CHAO_DISHES } from './dishes/lau_chao';
 import { PIZZA_PASTA_DISHES } from './dishes/pizza_pasta';
+import { DO_CHAY_DISHES } from './dishes/do_chay';
 
-// Total 128 dishes matching the exact 8 taxonomy categories (31 + 40 + 18 + 11 + 8 + 8 + 12 = 128)
+// Total dishes matching taxonomy categories
 export const INITIAL_DISHES: Dish[] = [
   ...COM_XOI_DISHES,
   ...BUN_PHO_MI_DISHES,
@@ -16,6 +17,7 @@ export const INITIAL_DISHES: Dish[] = [
   ...SALAD_MONNHE_DISHES,
   ...LAU_CHAO_DISHES,
   ...PIZZA_PASTA_DISHES,
+  ...DO_CHAY_DISHES,
 ];
 
 export interface WheelPreset {
@@ -35,16 +37,18 @@ export interface WheelPreset {
     | 'Soup'
     | 'Sandwich'
     | 'Drumstick'
-    | 'Pizza';
+    | 'Pizza'
+    | 'Cookie'
+    | 'Leaf';
   items: string[];
 }
 
 export const WHEEL_PRESETS: WheelPreset[] = [
-  // 1. Tất cả 128 món
+  // 1. Tất cả món
   {
-    id: 'tat_ca_128',
-    name: 'Toàn Bộ 128 Món Ăn',
-    badge: '128 Món Đầy Đủ',
+    id: 'tat_ca_all',
+    name: 'Toàn Bộ Món Ăn',
+    badge: '140 Món Đầy Đủ',
     group: 'categories',
     iconName: 'Sparkles',
     items: INITIAL_DISHES.map((d) => d.vietnameseName || d.name),
@@ -111,6 +115,15 @@ export const WHEEL_PRESETS: WheelPreset[] = [
     group: 'categories',
     iconName: 'Pizza',
     items: PIZZA_PASTA_DISHES.map((d) => d.vietnameseName || d.name),
+  },
+  // 9. Đồ Chay Thanh Tịnh (12 món)
+  {
+    id: 'do_chay_all',
+    name: 'Đồ Chay Thanh Tịnh',
+    badge: '12 Món Thanh Đạm',
+    group: 'categories',
+    iconName: 'Leaf',
+    items: DO_CHAY_DISHES.map((d) => d.vietnameseName || d.name),
   },
 
   // 9. Chủ đề phong cách: Đại tiệc siêu to
@@ -194,28 +207,86 @@ export const WHEEL_PRESETS: WheelPreset[] = [
     ],
   },
   {
-    id: 'an_vat',
-    name: 'Trà Sữa & Ăn Vặt',
-    badge: '16 Món Chiều',
+    id: 'tra_sua',
+    name: 'Trà Sữa & Đồ Uống',
+    badge: '20 Món Hot Trend',
     group: 'themes',
     iconName: 'Coffee',
     items: [
       'Trà sữa trân châu đường đen',
-      'Bánh tráng trộn tôm khô sa tế',
-      'Ốc hương xào bơ tỏi thơm lừng',
-      'Xiên que chiên giòn rụm chấm tương',
-      'Nem chua rán giòn phố cổ',
-      'Tàu hũ trân châu nước cốt dừa',
       'Trà đào cam sả thanh mát',
-      'Bánh flan caramen béo ngậy',
+      'Trà vải lài thơm dịu',
+      'Trà xoài macchiato kem cheese',
+      'Cà phê muối béo ngậy',
+      'Cà phê sữa đá Sài Gòn',
+      'Trà sen vàng kem cheese',
+      'Trà dâu tằm tuyết mát lạnh',
+      'Matcha đậu đỏ kem sữa',
+      'Trà ổi hồng xí muội giải nhiệt',
+      'Sữa tươi trân châu đường đen',
+      'Rau má đậu xanh cốt dừa',
+      'Nước ép cam cà rốt tươi',
+      'Sinh tố bơ dừa béo mịn',
+      'Trà măng cụt hoa đậu biếc',
+      'Trà chanh giã tay Quảng Đông',
+      'Trà tắc xí muội mát lạnh',
+      'Cacao dầm trân châu phô mai',
+      'Trà ô long sữa nướng trân châu',
+      'Sữa chua dẻo dâu tây',
+    ],
+  },
+  {
+    id: 'an_vat',
+    name: 'Ăn Vặt Đường Phố',
+    badge: '20 Món Chiều Giòn Ngon',
+    group: 'themes',
+    iconName: 'Cookie',
+    items: [
+      'Bánh tráng trộn tôm khô sa tế',
+      'Bánh tráng nướng Đà Lạt sốt me',
+      'Nem chua rán giòn phố cổ',
       'Chân gà sả tắc rút xương giòn cay',
+      'Bột chiên giòn đôi trứng hành hoa',
+      'Cá viên chiên sốt mắm tỏi ớt',
+      'Xiên que chiên giòn rụm chấm tương',
       'Khoai tây lắc phô mai giòn rụm',
-      'Bánh tráng nướng Đà Lạt trứng cút',
-      'Trà xoài kem cheese béo mịn',
-      'Bingsu tuyết sốt dâu tây',
-      'Cá viên chiên sốt mắm tỏi',
+      'Xoài non lắc muối tôm giòn chua',
+      'Trứng cút lộn xào me chua ngọt',
+      'Bắp xào bơ tép mỡ hành',
+      'Bò bía ngọt dừa nạo mè đen',
+      'Bánh flan caramen béo ngậy',
+      'Tàu hũ trân châu nước cốt dừa',
       'Chè khúc bạch thanh mát ngọt thanh',
       'Sữa chua trân châu Hạ Long',
+      'Bingsu dâu tây tuyết mịn',
+      'Ốc hương xào bơ tỏi thơm lừng',
+      'Bánh tráng cuốn bơ sốt me cay',
+      'Gỏi cuốn tôm thịt sốt tương bơ',
+    ],
+  },
+  {
+    id: 'do_chay_theme',
+    name: 'Đồ Chay Thanh Tịnh',
+    badge: '16 Món Thanh Khiết',
+    group: 'themes',
+    iconName: 'Leaf',
+    items: [
+      'Cơm chay sườn non kho tiêu',
+      'Bún bò Huế chay nấm đậu hũ',
+      'Phở chay nấm đùi gà rau thơm',
+      'Bún riêu cua chay ngập riêu',
+      'Hủ tiếu chay rau củ nấm tuyết',
+      'Bún chả giò chay rau sống',
+      'Cơm chiên nấm hạt sen',
+      'Cơm niêu nấm rơm kho quẹt chay',
+      'Đậu hũ sốt cà nấm hương',
+      'Canh chua nấm đậu bắp',
+      'Bánh xèo nấm chay giòn rụm',
+      'Lẩu nấm chay thập cẩm',
+      'Mì xào giòn chay nấm rơm',
+      'Gỏi ngó sen chay đậu phộng',
+      'Chả giò chay nấm khoai môn',
+      'Bánh canh nấm đậu hũ chay',
     ],
   },
   {

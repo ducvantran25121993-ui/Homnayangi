@@ -24,7 +24,9 @@ import {
   Drumstick,
   Pizza,
   Layers,
-  Zap
+  Zap,
+  Cookie,
+  Leaf
 } from 'lucide-react';
 import { WHEEL_PRESETS, INITIAL_DISHES } from '../data/dishes';
 import { Dish, AffiliateConfig } from '../types';
@@ -105,6 +107,10 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({ affiliateConfig, onDishS
         return <Coins className={className} />;
       case 'Coffee':
         return <Coffee className={className} />;
+      case 'Cookie':
+        return <Cookie className={className} />;
+      case 'Leaf':
+        return <Leaf className={className} />;
       case 'PartyPopper':
         return <PartyPopper className={className} />;
       default:
@@ -422,10 +428,10 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({ affiliateConfig, onDishS
     playTickSound();
   };
 
-  const handleLoadAll128 = () => {
+  const handleLoadAll = () => {
     const all = INITIAL_DISHES.map((d) => d.vietnameseName || d.name);
     setItems(all);
-    setSelectedPreset('tat_ca_128');
+    setSelectedPreset('tat_ca_all');
     setWinner(null);
     setMatchedDish(null);
     playTickSound();
@@ -461,6 +467,15 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({ affiliateConfig, onDishS
     return WHEEL_PRESETS.filter((p) => p.group === presetTab);
   }, [presetTab]);
 
+  const categoriesCount = useMemo(
+    () => WHEEL_PRESETS.filter((p) => p.group === 'categories').length,
+    []
+  );
+  const themesCount = useMemo(
+    () => WHEEL_PRESETS.filter((p) => p.group === 'themes').length,
+    []
+  );
+
   // Live quick search suggestions
   const searchSuggestions = useMemo(() => {
     if (!quickSearchText.trim()) return [];
@@ -479,13 +494,13 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({ affiliateConfig, onDishS
       <div className="text-center max-w-3xl mx-auto mb-8 px-4">
         <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-orange-100 text-orange-800 text-xs font-bold mb-3">
           <Sparkles className="w-3.5 h-3.5 text-orange-600" />
-          VÒNG QUAY ẨM THỰC THẦN KỲ - ĐÃ KẾT NỐI 128 MÓN NGON
+          VÒNG QUAY ẨM THỰC THẦN KỲ - ĐÃ KẾT NỐI {INITIAL_DISHES.length} MÓN NGON
         </div>
         <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mb-2">
-          Không biết hôm nay ăn gì? <span className="text-orange-600">Quay là trúng!</span>
+          Thử Đi Mấy Ní ! <span className="text-orange-600">Quay là trúng!</span>
         </h1>
         <p className="text-sm sm:text-base text-stone-600">
-          Chọn danh mục từ 128 món ngon 3 miền hoặc chủ đề theo sở thích, quay ngẫu nhiên và đặt ngay trên ShopeeFood, GrabFood hoặc BeFood!
+          Chọn danh mục từ {INITIAL_DISHES.length} món ngon 3 miền hoặc chủ đề theo sở thích, quay ngẫu nhiên và đặt ngay trên ShopeeFood, GrabFood hoặc BeFood!
         </p>
       </div>
 
@@ -678,7 +693,7 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({ affiliateConfig, onDishS
                 Bộ Thực Đơn Chọn Sẵn
               </h2>
               <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-orange-50 text-orange-800 border border-orange-200">
-                128 Món Sẵn Có
+                {INITIAL_DISHES.length} Món Sẵn Có
               </span>
             </div>
 
@@ -692,7 +707,7 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({ affiliateConfig, onDishS
                     : 'text-stone-600 hover:text-stone-900'
                 }`}
               >
-                🍱 8 Danh Mục Ẩm Thực
+                🍱 {categoriesCount} Danh Mục Ẩm Thực
               </button>
               <button
                 onClick={() => setPresetTab('themes')}
@@ -702,7 +717,7 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({ affiliateConfig, onDishS
                     : 'text-stone-600 hover:text-stone-900'
                 }`}
               >
-                🎯 6 Chủ Đề Thịnh Hành
+                🎯 {themesCount} Chủ Đề Thịnh Hành
               </button>
             </div>
 
@@ -752,11 +767,11 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({ affiliateConfig, onDishS
             {/* Fast Load Actions */}
             <div className="mt-3.5 pt-3 border-t border-stone-100 flex items-center justify-between gap-2 text-xs">
               <button
-                onClick={handleLoadAll128}
+                onClick={handleLoadAll}
                 className="text-stone-600 hover:text-orange-600 font-bold flex items-center gap-1 transition-colors"
               >
                 <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                Nạp toàn bộ 128 món
+                Nạp toàn bộ {INITIAL_DISHES.length} món
               </button>
               <button
                 onClick={handleRandomShuffle}
@@ -777,13 +792,13 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({ affiliateConfig, onDishS
               <span className="text-xs text-stone-500">Hỗ trợ không giới hạn món</span>
             </div>
 
-            {/* Quick search & add from 128 dishes */}
+            {/* Quick search & add from all dishes */}
             <div className="relative mb-3">
               <div className="relative">
                 <Search className="w-4 h-4 text-stone-400 absolute left-3 top-2.5" />
                 <input
                   type="text"
-                  placeholder="Tìm & thêm nhanh từ kho 128 món..."
+                  placeholder={`Tìm & thêm nhanh từ kho ${INITIAL_DISHES.length} món...`}
                   value={quickSearchText}
                   onChange={(e) => setQuickSearchText(e.target.value)}
                   className="w-full pl-9 pr-3 py-2 rounded-xl border border-stone-200 bg-stone-50/70 text-xs sm:text-sm focus:outline-hidden focus:border-orange-500 focus:bg-white transition-colors"

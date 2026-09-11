@@ -10,6 +10,7 @@ export interface Dish {
     | 'salad_monnhe'
     | 'lau_chao'
     | 'pizza_pasta'
+    | 'do_chay'
     | 'mon_khac'
     | 'com'
     | 'bun_pho'
