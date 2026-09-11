@@ -497,7 +497,7 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({ affiliateConfig, onDishS
           VÒNG QUAY ẨM THỰC THẦN KỲ - ĐÃ KẾT NỐI {INITIAL_DISHES.length} MÓN NGON
         </div>
         <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mb-2">
-          Thử Đi Mấy Ní ! <span className="text-orange-600">Quay là trúng!</span>
+          Thử Đi Mấy Ní ! <span className="text-orange-600">Nghĩ Chi Cho Mệt 😁</span>
         </h1>
         <p className="text-sm sm:text-base text-stone-600">
           Chọn danh mục từ {INITIAL_DISHES.length} món ngon 3 miền hoặc chủ đề theo sở thích, quay ngẫu nhiên và đặt ngay trên ShopeeFood, GrabFood hoặc BeFood!

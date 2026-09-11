@@ -1,5 +1,5 @@
 import React from 'react';
-import { UtensilsCrossed, Sparkles, Disc, Compass, Share2, Flame } from 'lucide-react';
+import { UtensilsCrossed, Sparkles, Disc, Compass, Share2 } from 'lucide-react';
 
 interface NavbarProps {
   activeTab: 'wheel' | 'ai' | 'tarot' | 'catalog';
@@ -38,10 +38,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               <div className="flex items-center gap-1.5">
                 <span className="font-extrabold text-lg sm:text-xl tracking-tight text-stone-900">
                   Hôm Nay <span className="text-orange-600">Ăn Gì?</span>
-                </span>
-                <span className="inline-flex items-center gap-0.5 px-2 py-0.5 text-[10px] font-bold uppercase rounded-full bg-orange-100 text-orange-700 tracking-wider">
-                  <Flame className="w-3 h-3 text-orange-500" />
-                  Affiliate
                 </span>
               </div>
               <p className="text-xs text-stone-500 hidden sm:block">
