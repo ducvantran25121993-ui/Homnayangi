@@ -1,0 +1,6 @@
+{
+  "name": "Hôm Nay Ăn Gì - Gợi Ý Món Ăn & Affiliate App Food",
+  "description": "Web app gợi ý món ăn hôm nay với Vòng quay may mắn, Trợ lý AI Gemini, bộ lọc thời tiết & ngân sách, tích hợp liên kết đặt món ShopeeFood, GrabFood, BeFood để nhận hoa hồng affiliate.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

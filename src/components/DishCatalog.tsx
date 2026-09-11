@@ -1,0 +1,268 @@
+import React, { useState, useMemo } from 'react';
+import { Search, UtensilsCrossed, Flame, ShoppingBag, ExternalLink, Filter } from 'lucide-react';
+import { INITIAL_DISHES } from '../data/dishes';
+import { Dish, AffiliateConfig } from '../types';
+import { trackAndOpenAffiliateLink, formatVND } from '../utils/affiliate';
+
+interface DishCatalogProps {
+  affiliateConfig: AffiliateConfig;
+  onSelectDish: (dish: Dish) => void;
+}
+
+export const DishCatalog: React.FC<DishCatalogProps> = ({ affiliateConfig, onSelectDish }) => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedMeal, setSelectedMeal] = useState<string>('all');
+
+  const categories = [
+    { id: 'all', label: 'Tất cả', icon: null },
+    { id: 'com_xoi', label: 'Cơm & xôi', icon: '🍚' },
+    { id: 'bun_pho_mi', label: 'Bún, phở & mì', icon: '🍜' },
+    { id: 'banhmi_cuon', label: 'Bánh mì & cuốn', icon: '🥖' },
+    { id: 'nuong_chien', label: 'Nướng & chiên', icon: '🍗' },
+    { id: 'salad_monnhe', label: 'Salad & món nhẹ', icon: '🥗' },
+    { id: 'lau_chao', label: 'Lẩu & cháo', icon: '🍲' },
+    { id: 'pizza_pasta', label: 'Pizza & pasta', icon: '🍕' },
+    { id: 'mon_khac', label: 'Món khác', icon: '🍽️' },
+  ];
+
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = {
+      all: INITIAL_DISHES.length,
+      com_xoi: 0,
+      bun_pho_mi: 0,
+      banhmi_cuon: 0,
+      nuong_chien: 0,
+      salad_monnhe: 0,
+      lau_chao: 0,
+      pizza_pasta: 0,
+      mon_khac: 0,
+    };
+    INITIAL_DISHES.forEach((d) => {
+      const cat = d.category;
+      if (counts[cat] !== undefined) {
+        counts[cat]++;
+      }
+    });
+    return counts;
+  }, []);
+
+  const mealTimes = [
+    { id: 'all', label: 'Mọi bữa ăn' },
+    { id: 'sang', label: 'Bữa Sáng' },
+    { id: 'trua', label: 'Bữa Trưa' },
+    { id: 'an_vat', label: 'Xế Chiều' },
+    { id: 'toi', label: 'Bữa Tối' },
+    { id: 'an_dem', label: 'Ăn Đêm' },
+  ];
+
+  const filteredDishes = useMemo(() => {
+    return INITIAL_DISHES.filter((dish) => {
+      const matchSearch =
+        dish.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        dish.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        dish.popularTags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+
+      const matchCategory = selectedCategory === 'all' || dish.category === selectedCategory;
+      const matchMeal = selectedMeal === 'all' || dish.mealTime.includes(selectedMeal as any);
+
+      return matchSearch && matchCategory && matchMeal;
+    });
+  }, [searchQuery, selectedCategory, selectedMeal]);
+
+  return (
+    <div className="py-6 sm:py-8 max-w-7xl mx-auto px-4">
+      {/* Header */}
+      <div className="text-center max-w-2xl mx-auto mb-8">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-bold mb-3">
+          <UtensilsCrossed className="w-3.5 h-3.5 text-orange-600" />
+          MENU MÓN NGON 3 MIỀN
+        </div>
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mb-2">
+          Khám Phá Danh Mục <span className="text-orange-600">Món Ăn Hôm Nay</span>
+        </h1>
+        <p className="text-sm sm:text-base text-stone-600">
+          Tra cứu nhanh những món best-seller được đặt nhiều nhất trên các app giao đồ ăn ShopeeFood, GrabFood & BeFood.
+        </p>
+      </div>
+
+      {/* Filter and Search Bar */}
+      <div className="bg-white p-4 sm:p-6 rounded-3xl border border-stone-200 shadow-xs mb-8 space-y-4">
+        <div className="flex flex-col sm:flex-row gap-3">
+          
+          {/* Search box */}
+          <div className="relative flex-1">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+            <input
+              type="text"
+              placeholder="Tìm kiếm theo tên món, nguyên liệu, hương vị..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-stone-300 text-sm focus:outline-hidden focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+            />
+          </div>
+
+          {/* Meal Time Selector */}
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+            {mealTimes.map((meal) => (
+              <button
+                key={meal.id}
+                onClick={() => setSelectedMeal(meal.id)}
+                className={`px-3 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all ${
+                  selectedMeal === meal.id
+                    ? 'bg-stone-900 text-white shadow-xs'
+                    : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                }`}
+              >
+                {meal.label}
+              </button>
+            ))}
+          </div>
+
+        </div>
+
+        {/* Categories Tab Pill List */}
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pt-2 border-t border-stone-100">
+          {categories.map((cat) => {
+            const isSelected = selectedCategory === cat.id;
+            const count = categoryCounts[cat.id] ?? 0;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold whitespace-nowrap transition-all border ${
+                  isSelected
+                    ? 'border-amber-500/80 bg-stone-900 text-amber-400 shadow-xs ring-1 ring-amber-500/30'
+                    : 'border-stone-200/90 bg-stone-50/80 hover:bg-stone-100 text-stone-700 hover:border-stone-300'
+                }`}
+              >
+                {cat.icon && <span className="text-sm leading-none">{cat.icon}</span>}
+                <span>{cat.label}</span>
+                <span
+                  className={`text-[11px] font-bold ${
+                    isSelected ? 'text-amber-300/80' : 'text-stone-400'
+                  }`}
+                >
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Dishes Grid */}
+      {filteredDishes.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredDishes.map((dish) => (
+            <div
+              key={dish.id}
+              className="bg-white rounded-3xl border border-stone-200/80 shadow-xs hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group"
+            >
+              <div>
+                {/* Food Image */}
+                <div className="relative aspect-[16/10] overflow-hidden bg-stone-100">
+                  <img
+                    src={dish.image}
+                    alt={dish.name}
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute top-3 left-3 flex gap-1.5">
+                    <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-white/95 backdrop-blur-xs text-orange-700 shadow-xs">
+                      {dish.priceRange}
+                    </span>
+                  </div>
+                  <div className="absolute top-3 right-3">
+                    <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-stone-900/80 backdrop-blur-xs text-white">
+                      {dish.calories}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-5">
+                  <div className="flex flex-wrap gap-1.5 mb-2">
+                    {dish.popularTags.map((tag, idx) => (
+                      <span
+                        key={idx}
+                        className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-orange-50 text-orange-800"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <h3
+                    onClick={() => onSelectDish(dish)}
+                    className="text-lg font-black text-stone-900 hover:text-orange-600 transition-colors cursor-pointer mb-1.5"
+                  >
+                    {dish.name}
+                  </h3>
+
+                  <p className="text-xs text-stone-600 leading-relaxed line-clamp-2 mb-3">
+                    {dish.description}
+                  </p>
+
+                  <div className="text-[11px] text-stone-500 bg-stone-50 p-2.5 rounded-xl">
+                    <span className="font-semibold text-stone-700">Ăn kèm chuẩn vị:</span>{' '}
+                    {dish.bestPairedWith}
+                  </div>
+                </div>
+              </div>
+
+              {/* Instant Order Buttons with Affiliate Tracking */}
+              <div className="p-4 bg-stone-50/80 border-t border-stone-100">
+                <div className="text-[10px] uppercase font-bold text-stone-500 mb-2">
+                  Đặt món trên app đối tác:
+                </div>
+                <div className="grid grid-cols-3 gap-1.5">
+                  <button
+                    onClick={() =>
+                      trackAndOpenAffiliateLink('shopeefood', dish, affiliateConfig)
+                    }
+                    className="py-2 px-2 rounded-xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs"
+                    title="Mở ShopeeFood"
+                  >
+                    <ShoppingBag className="w-3.5 h-3.5" />
+                    Shopee
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      trackAndOpenAffiliateLink('grabfood', dish, affiliateConfig)
+                    }
+                    className="py-2 px-2 rounded-xl bg-[#00B14F] hover:bg-[#009643] text-white font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs"
+                    title="Mở GrabFood"
+                  >
+                    <ShoppingBag className="w-3.5 h-3.5" />
+                    Grab
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      trackAndOpenAffiliateLink('befood', dish, affiliateConfig)
+                    }
+                    className="py-2 px-2 rounded-xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-900 font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs"
+                    title="Mở BeFood"
+                  >
+                    <ShoppingBag className="w-3.5 h-3.5" />
+                    BeFood
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-16 bg-white rounded-3xl border border-stone-200">
+          <UtensilsCrossed className="w-10 h-10 text-stone-400 mx-auto mb-2" />
+          <h3 className="text-base font-bold text-stone-700">Không tìm thấy món nào phù hợp</h3>
+          <p className="text-xs text-stone-500 mt-1">
+            Vui lòng thử tìm kiếm với từ khóa khác hoặc xóa bộ lọc.
+          </p>
+        </div>
+      )}
+    </div>
+  );
+};
