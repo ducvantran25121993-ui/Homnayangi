@@ -112,5 +112,19 @@ export const SALAD_MONNHE_DISHES: Dish[] = [
     image: 'https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=800&auto=format&fit=crop&q=80',
     popularTags: ['Rau mầm tươi', 'Bò xào tỏi', 'Khai vị'],
     searchKeyword: 'Salad rau mầm thịt bò',
+  },
+  {
+    id: 'che-thap-cam-ba-mien',
+    name: 'Chè Thập Cẩm Ba Miền Nước Cốt Dừa Thơm Mát',
+    vietnameseName: 'Chè Thập Cẩm (Ch.)',
+    category: 'salad_monnhe',
+    mealTime: ['an_vat', 'trua', 'toi'],
+    priceRange: '20.000đ - 35.000đ',
+    estimatedPrice: 25000,
+    calories: '250 - 350 kcal',
+    description: 'Ly chè đầy đặn với đậu đỏ bùi bở, thạch sương sáo thanh mát, hạt sen, trân châu dai giòn và nước cốt dừa béo ngậy đá xay mát lạnh.',
+    image: 'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?w=800&auto=format&fit=crop&q=80',
+    popularTags: ['Ch.', 'Chè', 'Chè thập cẩm', 'Tráng miệng', 'Giải nhiệt'],
+    searchKeyword: 'Chè thập cẩm',
   }
 ];

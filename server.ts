@@ -76,9 +76,13 @@ let affiliateConfig = {
 // Lazy Gemini SDK client
 let genAIClient: GoogleGenAI | null = null;
 function getGeminiClient(): GoogleGenAI | null {
-  if (!genAIClient && process.env.GEMINI_API_KEY) {
+  const key = process.env.GEMINI_API_KEY;
+  if (!key || key.startsWith("MY_") || key === "placeholder" || key.trim() === "") {
+    return null;
+  }
+  if (!genAIClient) {
     genAIClient = new GoogleGenAI({
-      apiKey: process.env.GEMINI_API_KEY,
+      apiKey: key,
       httpOptions: {
         headers: {
           "User-Agent": "aistudio-build",
@@ -254,7 +258,7 @@ Yêu cầu trả về đúng định dạng JSON:
   "advice": "Lời khuyên vui vẻ hoặc mẹo săn mã giảm giá cho bữa ăn này"
 }`;
 
-    const response = await ai.models.generateContent({
+    const generatePromise = ai.models.generateContent({
       model: "gemini-3.8-flash",
       contents: prompt,
       config: {
@@ -262,6 +266,12 @@ Yêu cầu trả về đúng định dạng JSON:
         systemInstruction: "Bạn là trợ lý tư vấn món ăn Việt Nam dí dỏm, tinh tế, am hiểu khẩu vị giới trẻ và dân văn phòng.",
       },
     });
+
+    const timeoutPromise = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error("AI generation timed out")), 4000)
+    );
+
+    const response = await Promise.race([generatePromise, timeoutPromise]);
 
     const responseText = response.text || "{}";
     const parsedData = JSON.parse(responseText);

@@ -29,12 +29,15 @@ import {
   Leaf
 } from 'lucide-react';
 import { WHEEL_PRESETS, INITIAL_DISHES } from '../data/dishes';
-import { Dish, AffiliateConfig } from '../types';
+import { Dish, AffiliateConfig, UserLocation } from '../types';
 import { trackAndOpenAffiliateLink, formatVND } from '../utils/affiliate';
+import { DeliveryLocationBadge } from './DeliveryLocationBadge';
 
 interface LuckyWheelProps {
   affiliateConfig: AffiliateConfig;
   onDishSelect: (dish: Dish) => void;
+  userLocation: UserLocation;
+  onOpenLocationModal: (dishName?: string) => void;
 }
 
 // Sophisticated vibrant palette tailored for culinary wheel
@@ -61,7 +64,12 @@ const SLICE_COLORS = [
   '#6D28D9', // Deep Violet
 ];
 
-export const LuckyWheel: React.FC<LuckyWheelProps> = ({ affiliateConfig, onDishSelect }) => {
+export const LuckyWheel: React.FC<LuckyWheelProps> = ({
+  affiliateConfig,
+  onDishSelect,
+  userLocation,
+  onOpenLocationModal,
+}) => {
   // Default to the first category preset: Toàn bộ 128 món (or 20 món đại tiệc)
   const [items, setItems] = useState<string[]>(WHEEL_PRESETS[1].items); // Default: Cơm & Xôi (31 món)
   const [selectedPreset, setSelectedPreset] = useState<string>(WHEEL_PRESETS[1].id);
@@ -637,41 +645,71 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({ affiliateConfig, onDishS
                 </div>
               </div>
 
-              {/* Instant Delivery Buttons with Affiliate Tracking */}
+              {/* Instant Delivery Buttons with Location & Affiliate Tracking */}
               <div className="mt-5 pt-4 border-t border-orange-200/80">
-                <div className="text-xs font-bold text-stone-700 mb-2.5 text-center sm:text-left">
-                  Đặt giao tận nơi ngay với ưu đãi freeship & mã giảm giá:
+                <div className="mb-3">
+                  <DeliveryLocationBadge
+                    location={userLocation}
+                    onClick={() => onOpenLocationModal(winner || matchedDish?.name)}
+                    variant="card"
+                  />
+                </div>
+
+                <div className="text-xs font-black text-stone-800 mb-2.5 text-center sm:text-left flex items-center gap-1.5">
+                  <span className="flex h-2 w-2 relative">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                  </span>
+                  <span>Bấm nút để chuyển qua app tìm kiếm <strong>"{winner}"</strong>:</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                   <button
                     onClick={() =>
-                      trackAndOpenAffiliateLink('shopeefood', matchedDish, affiliateConfig)
+                      trackAndOpenAffiliateLink(
+                        'shopeefood',
+                        matchedDish || { name: winner || 'Món ngon' },
+                        affiliateConfig,
+                        userLocation
+                      )
                     }
-                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-bold text-xs sm:text-sm transition-all shadow-sm hover:scale-[1.02]"
+                    title={`Chuyển qua ShopeeFood tìm ${winner} (${userLocation.city})`}
+                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-extrabold text-xs sm:text-sm transition-all shadow-sm hover:scale-[1.02] cursor-pointer"
                   >
-                    <ShoppingBag className="w-4 h-4" />
+                    <ShoppingBag className="w-4 h-4 shrink-0" />
                     <span>ShopeeFood</span>
                     <ExternalLink className="w-3.5 h-3.5 opacity-80" />
                   </button>
 
                   <button
                     onClick={() =>
-                      trackAndOpenAffiliateLink('grabfood', matchedDish, affiliateConfig)
+                      trackAndOpenAffiliateLink(
+                        'grabfood',
+                        matchedDish || { name: winner || 'Món ngon' },
+                        affiliateConfig,
+                        userLocation
+                      )
                     }
-                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-[#00B14F] hover:bg-[#009643] text-white font-bold text-xs sm:text-sm transition-all shadow-sm hover:scale-[1.02]"
+                    title={`Chuyển qua GrabFood định vị quán ${winner} gần bạn`}
+                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-[#00B14F] hover:bg-[#009643] text-white font-extrabold text-xs sm:text-sm transition-all shadow-sm hover:scale-[1.02] cursor-pointer"
                   >
-                    <ShoppingBag className="w-4 h-4" />
+                    <ShoppingBag className="w-4 h-4 shrink-0" />
                     <span>GrabFood</span>
                     <ExternalLink className="w-3.5 h-3.5 opacity-80" />
                   </button>
 
                   <button
                     onClick={() =>
-                      trackAndOpenAffiliateLink('befood', matchedDish, affiliateConfig)
+                      trackAndOpenAffiliateLink(
+                        'befood',
+                        matchedDish || { name: winner || 'Món ngon' },
+                        affiliateConfig,
+                        userLocation
+                      )
                     }
-                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-900 font-bold text-xs sm:text-sm transition-all shadow-sm hover:scale-[1.02]"
+                    title={`Chuyển qua BeFood tìm ${winner} (${userLocation.city})`}
+                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-900 font-extrabold text-xs sm:text-sm transition-all shadow-sm hover:scale-[1.02] cursor-pointer"
                   >
-                    <ShoppingBag className="w-4 h-4" />
+                    <ShoppingBag className="w-4 h-4 shrink-0" />
                     <span>BeFood</span>
                     <ExternalLink className="w-3.5 h-3.5 opacity-80" />
                   </button>

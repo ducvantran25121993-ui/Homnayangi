@@ -1,5 +1,7 @@
 import React from 'react';
 import { UtensilsCrossed, Sparkles, Disc, Compass, Share2 } from 'lucide-react';
+import { UserLocation } from '../types';
+import { DeliveryLocationBadge } from './DeliveryLocationBadge';
 
 interface NavbarProps {
   activeTab: 'wheel' | 'ai' | 'tarot' | 'catalog';
@@ -7,11 +9,15 @@ interface NavbarProps {
   onOpenAffiliateModal?: () => void;
   clickCount?: number;
   totalEstimatedCommission?: number;
+  userLocation: UserLocation;
+  onOpenLocationModal: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   activeTab,
   setActiveTab,
+  userLocation,
+  onOpenLocationModal,
 }) => {
   const [copied, setCopied] = React.useState(false);
 
@@ -99,17 +105,22 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Right Action buttons */}
           <div className="flex items-center gap-2">
+            {/* Delivery Location Selector */}
+            <DeliveryLocationBadge
+              location={userLocation}
+              onClick={onOpenLocationModal}
+              variant="navbar"
+            />
             
             {/* Share button */}
             <button
               onClick={handleShare}
               title="Chia sẻ link"
-              className="px-3 py-2 rounded-xl border border-stone-200 hover:bg-stone-100 text-stone-600 transition-colors flex items-center gap-1.5 text-xs font-medium shadow-2xs"
+              className="px-3 py-2 rounded-xl border border-stone-200 hover:bg-stone-100 text-stone-600 transition-colors flex items-center gap-1.5 text-xs font-medium shadow-2xs cursor-pointer"
             >
               <Share2 className="w-4 h-4" />
-              <span>{copied ? 'Đã sao chép link!' : 'Chia sẻ'}</span>
+              <span className="hidden sm:inline">{copied ? 'Đã sao chép link!' : 'Chia sẻ'}</span>
             </button>
-
           </div>
         </div>
 

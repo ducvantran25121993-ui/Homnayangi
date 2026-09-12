@@ -1,20 +1,38 @@
-import React, { useState } from 'react';
-import { Sparkles, Send, ShoppingBag, ExternalLink, RefreshCw, AlertCircle, ChefHat, Check, Heart } from 'lucide-react';
-import { AISuggestion, AffiliateConfig } from '../types';
+import React, { useState, useEffect } from 'react';
+import { Sparkles, Send, ShoppingBag, ExternalLink, RefreshCw, AlertCircle, ChefHat, Check, Heart, MapPin } from 'lucide-react';
+import { AISuggestion, AffiliateConfig, UserLocation, Dish } from '../types';
 import { trackAndOpenAffiliateLink } from '../utils/affiliate';
+import { formatLocationDisplay } from '../utils/location';
+import { DeliveryLocationBadge } from './DeliveryLocationBadge';
 
 interface AIAssistantProps {
   affiliateConfig: AffiliateConfig;
+  userLocation: UserLocation;
+  onOpenLocationModal: (dishName?: string) => void;
+  onSelectDish?: (dish: Dish) => void;
+  selectedDish?: Dish | null;
 }
 
-export const AIAssistant: React.FC<AIAssistantProps> = ({ affiliateConfig }) => {
+export const AIAssistant: React.FC<AIAssistantProps> = ({
+  affiliateConfig,
+  userLocation,
+  onOpenLocationModal,
+  onSelectDish,
+  selectedDish,
+}) => {
   const [mealTime, setMealTime] = useState('Trưa');
   const [budget, setBudget] = useState('35k - 60k (Văn phòng)');
   const [mood, setMood] = useState('Thèm đồ đậm đà cay nồng');
   const [weather, setWeather] = useState('Nắng nóng cần giải nhiệt');
-  const [location, setLocation] = useState('TP. Hồ Chí Minh');
+  const [location, setLocation] = useState(userLocation.city || 'TP. Hồ Chí Minh');
   const [partySize, setPartySize] = useState(1);
   const [cravings, setCravings] = useState('');
+
+  useEffect(() => {
+    if (userLocation.city) {
+      setLocation(userLocation.city);
+    }
+  }, [userLocation]);
   
   const [loading, setLoading] = useState(false);
   const [suggestions, setSuggestions] = useState<AISuggestion[]>([]);
@@ -160,9 +178,19 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ affiliateConfig }) => 
         {/* Second row: Location, Party Size & Freeform input */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-end pt-4 border-t border-stone-100">
           <div className="md:col-span-3">
-            <label className="block text-xs font-bold text-stone-700 mb-1">
-              Khu Vực
-            </label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="block text-xs font-bold text-stone-700">
+                Khu Vực Giao Hàng
+              </label>
+              <button
+                type="button"
+                onClick={() => onOpenLocationModal()}
+                className="text-[10px] text-purple-700 hover:text-purple-900 font-bold flex items-center gap-0.5 cursor-pointer underline"
+              >
+                <MapPin className="w-3 h-3" />
+                Định vị GPS
+              </button>
+            </div>
             <select
               value={location}
               onChange={(e) => setLocation(e.target.value)}
@@ -173,6 +201,10 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ affiliateConfig }) => 
               <option value="Đà Nẵng">Đà Nẵng</option>
               <option value="Hải Phòng">Hải Phòng</option>
               <option value="Cần Thơ">Cần Thơ</option>
+              <option value="Bình Dương">Bình Dương</option>
+              <option value="Đồng Nai">Đồng Nai</option>
+              <option value="Vũng Tàu">Vũng Tàu</option>
+              <option value="Nha Trang">Nha Trang</option>
             </select>
           </div>
 
@@ -304,40 +336,93 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ affiliateConfig }) => 
                 </div>
               </div>
 
-              {/* Affiliate Action Bar */}
+              {/* Affiliate / Food App Action Bar */}
               <div className="p-4 bg-stone-50/80 border-t border-stone-100">
-                <div className="text-[11px] font-bold text-stone-600 mb-2">
-                  Đặt món kèm mã giảm giá độc quyền:
+                <div className="flex items-center justify-between text-[11px] font-bold text-stone-600 mb-2">
+                  <span className="flex items-center gap-1 text-orange-950 font-black">
+                    <span className="flex h-2 w-2 relative">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                    </span>
+                    <span>Chuyển qua app tìm món:</span>
+                  </span>
+                  {onSelectDish && (
+                    <button
+                      onClick={() => {
+                        const dishObj: Dish = {
+                          id: `ai-${index}-${item.name.toLowerCase().replace(/\s+/g, '-')}`,
+                          name: item.name,
+                          vietnameseName: item.name,
+                          category: 'mon_khac',
+                          mealTime: ['trua', 'toi'],
+                          priceRange: item.estimatedPrice || '40.000đ - 65.000đ',
+                          estimatedPrice: 50000,
+                          calories: item.calories || '500 kcal',
+                          description: item.reason || item.tagline,
+                          image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop&q=60',
+                          popularTags: item.tags || ['AI Gợi ý'],
+                          searchKeyword: item.searchKeyword || item.name,
+                          bestPairedWith: item.pairWith,
+                        };
+                        onSelectDish(dishObj);
+                      }}
+                      className={`text-[10px] font-bold px-2 py-0.5 rounded-md cursor-pointer transition-colors ${
+                        selectedDish?.name === item.name
+                          ? 'bg-orange-600 text-white'
+                          : 'bg-stone-200/80 hover:bg-orange-100 text-stone-700 hover:text-orange-700'
+                      }`}
+                    >
+                      {selectedDish?.name === item.name ? '✓ Đang chọn' : '🎯 Chọn món'}
+                    </button>
+                  )}
                 </div>
                 <div className="grid grid-cols-3 gap-1.5">
                   <button
                     onClick={() =>
-                      trackAndOpenAffiliateLink('shopeefood', { name: item.searchKeyword || item.name }, affiliateConfig)
+                      trackAndOpenAffiliateLink(
+                        'shopeefood',
+                        { name: item.searchKeyword || item.name },
+                        affiliateConfig,
+                        userLocation
+                      )
                     }
-                    className="flex flex-col items-center justify-center p-2 rounded-xl bg-[#EE4D2D] hover:bg-[#D73211] text-white transition-colors"
+                    title={`Chuyển qua ShopeeFood tìm ${item.name} (${userLocation.city})`}
+                    className="flex flex-col items-center justify-center p-2 rounded-xl bg-[#EE4D2D] hover:bg-[#D73211] text-white transition-all active:scale-95 cursor-pointer shadow-xs"
                   >
-                    <span className="text-[11px] font-extrabold">ShopeeFood</span>
-                    <span className="text-[9px] opacity-90">Freeship</span>
+                    <span className="text-[11px] font-black">ShopeeFood</span>
+                    <span className="text-[9px] opacity-85">Tìm quán gần</span>
                   </button>
 
                   <button
                     onClick={() =>
-                      trackAndOpenAffiliateLink('grabfood', { name: item.searchKeyword || item.name }, affiliateConfig)
+                      trackAndOpenAffiliateLink(
+                        'grabfood',
+                        { name: item.searchKeyword || item.name },
+                        affiliateConfig,
+                        userLocation
+                      )
                     }
-                    className="flex flex-col items-center justify-center p-2 rounded-xl bg-[#00B14F] hover:bg-[#009643] text-white transition-colors"
+                    title={`Chuyển qua GrabFood định vị quán ${item.name} gần bạn`}
+                    className="flex flex-col items-center justify-center p-2 rounded-xl bg-[#00B14F] hover:bg-[#009643] text-white transition-all active:scale-95 cursor-pointer shadow-xs"
                   >
-                    <span className="text-[11px] font-extrabold">GrabFood</span>
-                    <span className="text-[9px] opacity-90">Giảm 40k</span>
+                    <span className="text-[11px] font-black">GrabFood</span>
+                    <span className="text-[9px] opacity-85">Tìm quán gần</span>
                   </button>
 
                   <button
                     onClick={() =>
-                      trackAndOpenAffiliateLink('befood', { name: item.searchKeyword || item.name }, affiliateConfig)
+                      trackAndOpenAffiliateLink(
+                        'befood',
+                        { name: item.searchKeyword || item.name },
+                        affiliateConfig,
+                        userLocation
+                      )
                     }
-                    className="flex flex-col items-center justify-center p-2 rounded-xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-900 transition-colors"
+                    title={`Chuyển qua BeFood tìm ${item.name} (${userLocation.city})`}
+                    className="flex flex-col items-center justify-center p-2 rounded-xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-900 transition-all active:scale-95 cursor-pointer shadow-xs"
                   >
-                    <span className="text-[11px] font-extrabold">BeFood</span>
-                    <span className="text-[9px] font-semibold">Ưu đãi</span>
+                    <span className="text-[11px] font-black">BeFood</span>
+                    <span className="text-[9px] font-bold">Tìm quán gần</span>
                   </button>
                 </div>
               </div>

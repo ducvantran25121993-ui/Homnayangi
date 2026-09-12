@@ -62,6 +62,17 @@ export interface ClickRecord {
   estimatedCommission: number;
 }
 
+export interface UserLocation {
+  city: string;
+  citySlug: string;
+  district?: string;
+  address?: string;
+  latitude?: number;
+  longitude?: number;
+  source: 'gps' | 'manual' | 'default';
+  updatedAt?: string;
+}
+
 export interface AISuggestion {
   name: string;
   tagline: string;

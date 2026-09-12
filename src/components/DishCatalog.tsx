@@ -1,15 +1,25 @@
 import React, { useState, useMemo } from 'react';
 import { Search, UtensilsCrossed, Flame, ShoppingBag, ExternalLink, Filter } from 'lucide-react';
 import { INITIAL_DISHES } from '../data/dishes';
-import { Dish, AffiliateConfig } from '../types';
+import { Dish, AffiliateConfig, UserLocation } from '../types';
 import { trackAndOpenAffiliateLink, formatVND } from '../utils/affiliate';
+import { DeliveryLocationBadge } from './DeliveryLocationBadge';
 
 interface DishCatalogProps {
   affiliateConfig: AffiliateConfig;
   onSelectDish: (dish: Dish) => void;
+  userLocation: UserLocation;
+  onOpenLocationModal: (dishName?: string) => void;
+  selectedDish?: Dish | null;
 }
 
-export const DishCatalog: React.FC<DishCatalogProps> = ({ affiliateConfig, onSelectDish }) => {
+export const DishCatalog: React.FC<DishCatalogProps> = ({
+  affiliateConfig,
+  onSelectDish,
+  userLocation,
+  onOpenLocationModal,
+  selectedDish,
+}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedMeal, setSelectedMeal] = useState<string>('all');
@@ -60,10 +70,12 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({ affiliateConfig, onSel
 
   const filteredDishes = useMemo(() => {
     return INITIAL_DISHES.filter((dish) => {
+      const query = searchQuery.toLowerCase();
       const matchSearch =
-        dish.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        dish.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        dish.popularTags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+        dish.name.toLowerCase().includes(query) ||
+        (dish.vietnameseName ? dish.vietnameseName.toLowerCase().includes(query) : false) ||
+        dish.description.toLowerCase().includes(query) ||
+        dish.popularTags.some((tag) => tag.toLowerCase().includes(query));
 
       const matchCategory = selectedCategory === 'all' || dish.category === selectedCategory;
       const matchMeal = selectedMeal === 'all' || dish.mealTime.includes(selectedMeal as any);
@@ -90,6 +102,19 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({ affiliateConfig, onSel
 
       {/* Filter and Search Bar */}
       <div className="bg-white p-4 sm:p-6 rounded-3xl border border-stone-200 shadow-xs mb-8 space-y-4">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-stone-100">
+          <div className="text-xs text-stone-600 font-medium">
+            Chọn món và đặt ngay qua app giao hàng liên kết. Đang ưu tiên tìm quán gần bạn:
+          </div>
+          <div className="shrink-0">
+            <DeliveryLocationBadge
+              location={userLocation}
+              onClick={() => onOpenLocationModal()}
+              variant="compact"
+            />
+          </div>
+        </div>
+
         <div className="flex flex-col sm:flex-row gap-3">
           
           {/* Search box */}
@@ -156,107 +181,135 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({ affiliateConfig, onSel
       {/* Dishes Grid */}
       {filteredDishes.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredDishes.map((dish) => (
-            <div
-              key={dish.id}
-              className="bg-white rounded-3xl border border-stone-200/80 shadow-xs hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group"
-            >
-              <div>
-                {/* Food Image */}
-                <div className="relative aspect-[16/10] overflow-hidden bg-stone-100">
-                  <img
-                    src={dish.image}
-                    alt={dish.name}
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-3 left-3 flex gap-1.5">
-                    <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-white/95 backdrop-blur-xs text-orange-700 shadow-xs">
-                      {dish.priceRange}
-                    </span>
-                  </div>
-                  <div className="absolute top-3 right-3">
-                    <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-stone-900/80 backdrop-blur-xs text-white">
-                      {dish.calories}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-5">
-                  <div className="flex flex-wrap gap-1.5 mb-2">
-                    {dish.popularTags.map((tag, idx) => (
-                      <span
-                        key={idx}
-                        className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-orange-50 text-orange-800"
-                      >
-                        #{tag}
+          {filteredDishes.map((dish) => {
+            const isSelected = selectedDish?.id === dish.id;
+            return (
+              <div
+                key={dish.id}
+                className={`bg-white rounded-3xl border transition-all overflow-hidden flex flex-col justify-between group ${
+                  isSelected
+                    ? 'border-orange-500 ring-2 ring-orange-500/80 shadow-lg bg-orange-50/10'
+                    : 'border-stone-200/80 shadow-xs hover:shadow-md'
+                }`}
+              >
+                <div
+                  onClick={() => onSelectDish(dish)}
+                  className="cursor-pointer"
+                >
+                  {/* Food Image */}
+                  <div className="relative aspect-[16/10] overflow-hidden bg-stone-100">
+                    <img
+                      src={dish.image}
+                      alt={dish.name}
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute top-3 left-3 flex gap-1.5">
+                      <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-white/95 backdrop-blur-xs text-orange-700 shadow-xs">
+                        {dish.priceRange}
                       </span>
-                    ))}
+                      {isSelected && (
+                        <span className="px-2.5 py-1 rounded-full text-[10px] font-black bg-orange-600 text-white shadow-xs animate-pulse">
+                          ✓ ĐANG CHỌN
+                        </span>
+                      )}
+                    </div>
+                    <div className="absolute top-3 right-3">
+                      <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-stone-900/80 backdrop-blur-xs text-white">
+                        {dish.calories}
+                      </span>
+                    </div>
                   </div>
 
-                  <h3
-                    onClick={() => onSelectDish(dish)}
-                    className="text-lg font-black text-stone-900 hover:text-orange-600 transition-colors cursor-pointer mb-1.5"
-                  >
-                    {dish.name}
-                  </h3>
-
-                  <p className="text-xs text-stone-600 leading-relaxed line-clamp-2 mb-3">
-                    {dish.description}
-                  </p>
-
-                  {dish.bestPairedWith && (
-                    <div className="text-[11px] text-stone-500 bg-stone-50 p-2.5 rounded-xl">
-                      <span className="font-semibold text-stone-700">Ăn kèm chuẩn vị:</span>{' '}
-                      {dish.bestPairedWith}
+                  {/* Content */}
+                  <div className="p-5">
+                    <div className="flex flex-wrap gap-1.5 mb-2">
+                      {dish.popularTags.map((tag, idx) => (
+                        <span
+                          key={idx}
+                          className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-orange-50 text-orange-800"
+                        >
+                          #{tag}
+                        </span>
+                      ))}
                     </div>
-                  )}
+
+                    <h3 className="text-lg font-black text-stone-900 group-hover:text-orange-600 transition-colors mb-1.5">
+                      {dish.name}
+                    </h3>
+
+                    <p className="text-xs text-stone-600 leading-relaxed line-clamp-2 mb-3">
+                      {dish.description}
+                    </p>
+
+                    {dish.bestPairedWith && (
+                      <div className="text-[11px] text-stone-500 bg-stone-50 p-2.5 rounded-xl">
+                        <span className="font-semibold text-stone-700">Ăn kèm chuẩn vị:</span>{' '}
+                        {dish.bestPairedWith}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Instant Order / App Switch Buttons with Affiliate Tracking */}
+                <div className="p-4 bg-stone-50/80 border-t border-stone-100">
+                  <div className="flex items-center justify-between gap-1 mb-2">
+                    <div className="text-[10px] uppercase font-bold text-stone-600 flex items-center gap-1">
+                      <span>Chuyển qua app tìm món:</span>
+                    </div>
+                    <button
+                      onClick={() => onSelectDish(dish)}
+                      className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md transition-colors cursor-pointer ${
+                        isSelected
+                          ? 'bg-orange-600 text-white'
+                          : 'bg-stone-200/80 hover:bg-orange-100 text-stone-700 hover:text-orange-700'
+                      }`}
+                    >
+                      {isSelected ? '✓ Đang chọn' : '🎯 Chọn món'}
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-1.5">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        trackAndOpenAffiliateLink('shopeefood', dish, affiliateConfig, userLocation);
+                      }}
+                      className="py-2 px-1.5 rounded-xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs cursor-pointer"
+                      title={`Chuyển qua ShopeeFood tìm ${dish.name} (${userLocation.city})`}
+                    >
+                      <ShoppingBag className="w-3.5 h-3.5 shrink-0" />
+                      <span>Shopee</span>
+                    </button>
+
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        trackAndOpenAffiliateLink('grabfood', dish, affiliateConfig, userLocation);
+                      }}
+                      className="py-2 px-1.5 rounded-xl bg-[#00B14F] hover:bg-[#009643] text-white font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs cursor-pointer"
+                      title={`Chuyển qua GrabFood định vị quán ${dish.name} gần bạn`}
+                    >
+                      <ShoppingBag className="w-3.5 h-3.5 shrink-0" />
+                      <span>Grab</span>
+                    </button>
+
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        trackAndOpenAffiliateLink('befood', dish, affiliateConfig, userLocation);
+                      }}
+                      className="py-2 px-1.5 rounded-xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-900 font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs cursor-pointer"
+                      title={`Chuyển qua BeFood tìm ${dish.name} (${userLocation.city})`}
+                    >
+                      <ShoppingBag className="w-3.5 h-3.5 shrink-0" />
+                      <span>BeFood</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-
-              {/* Instant Order Buttons with Affiliate Tracking */}
-              <div className="p-4 bg-stone-50/80 border-t border-stone-100">
-                <div className="text-[10px] uppercase font-bold text-stone-500 mb-2">
-                  Đặt món trên app đối tác:
-                </div>
-                <div className="grid grid-cols-3 gap-1.5">
-                  <button
-                    onClick={() =>
-                      trackAndOpenAffiliateLink('shopeefood', dish, affiliateConfig)
-                    }
-                    className="py-2 px-2 rounded-xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs"
-                    title="Mở ShopeeFood"
-                  >
-                    <ShoppingBag className="w-3.5 h-3.5" />
-                    Shopee
-                  </button>
-
-                  <button
-                    onClick={() =>
-                      trackAndOpenAffiliateLink('grabfood', dish, affiliateConfig)
-                    }
-                    className="py-2 px-2 rounded-xl bg-[#00B14F] hover:bg-[#009643] text-white font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs"
-                    title="Mở GrabFood"
-                  >
-                    <ShoppingBag className="w-3.5 h-3.5" />
-                    Grab
-                  </button>
-
-                  <button
-                    onClick={() =>
-                      trackAndOpenAffiliateLink('befood', dish, affiliateConfig)
-                    }
-                    className="py-2 px-2 rounded-xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-900 font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs"
-                    title="Mở BeFood"
-                  >
-                    <ShoppingBag className="w-3.5 h-3.5" />
-                    BeFood
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       ) : (
         <div className="text-center py-16 bg-white rounded-3xl border border-stone-200">

@@ -8,3 +8,51 @@
     -webkit-font-smoothing: antialiased;
   }
 }
+
+@keyframes tarot-levitate {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes tarot-shimmer-sweep {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+  }
+  100% {
+    transform: translateX(250%) skewX(-20deg);
+  }
+}
+
+@keyframes tarot-spin-very-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes tarot-spin-reverse-slow {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-tarot-spin {
+  animation: tarot-spin-very-slow 28s linear infinite;
+}
+
+.animate-tarot-spin-rev {
+  animation: tarot-spin-reverse-slow 35s linear infinite;
+}
+
+.animate-tarot-levitate {
+  animation: tarot-levitate 4s ease-in-out infinite;
+}
