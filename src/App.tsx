@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Navbar } from './components/Navbar';
 import { LuckyWheel } from './components/LuckyWheel';
 import { AIAssistant } from './components/AIAssistant';
@@ -6,23 +6,49 @@ import { FoodTarot } from './components/FoodTarot';
 import { DishCatalog } from './components/DishCatalog';
 import { AffiliateModal } from './components/AffiliateModal';
 import { DishDetailModal } from './components/DishDetailModal';
-import { SelectedDishDock } from './components/SelectedDishDock';
 import { LocationModal } from './components/LocationModal';
 import { OrderToast } from './components/OrderToast';
 import { Footer } from './components/Footer';
 import { Dish, AffiliateConfig, ClickRecord, UserLocation } from './types';
 import { DEFAULT_AFFILIATE_CONFIG } from './utils/affiliate';
 import { getStoredUserLocation, saveUserLocation } from './utils/location';
+import { getTabFromUrl, updateTabSEO, TAB_CONFIG, TabType } from './utils/navigation';
+import { Breadcrumbs } from './components/Breadcrumbs';
+import { SeoContentFaq } from './components/SeoContentFaq';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'wheel' | 'ai' | 'tarot' | 'catalog'>('wheel');
+  const [activeTab, setActiveTab] = useState<TabType>(getTabFromUrl);
   const [affiliateConfig, setAffiliateConfig] = useState<AffiliateConfig>(DEFAULT_AFFILIATE_CONFIG);
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
-  const [detailModalDish, setDetailModalDish] = useState<Dish | null>(null);
   const [isAffiliateModalOpen, setIsAffiliateModalOpen] = useState(false);
   const [userLocation, setUserLocation] = useState<UserLocation>(getStoredUserLocation);
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [locationTargetDish, setLocationTargetDish] = useState<string | undefined>(undefined);
+
+  // Navigate tab with clean URL & History API
+  const handleNavigateTab = useCallback((newTab: TabType) => {
+    setActiveTab(newTab);
+    const targetPath = TAB_CONFIG[newTab]?.path || '/';
+    if (window.location.pathname !== targetPath) {
+      window.history.pushState({ tab: newTab }, '', targetPath);
+    }
+    updateTabSEO(newTab);
+  }, []);
+
+  // Sync with browser Back/Forward buttons and initial SEO metadata
+  useEffect(() => {
+    // Initial SEO update
+    updateTabSEO(activeTab);
+
+    const handlePopState = () => {
+      const currentTab = getTabFromUrl();
+      setActiveTab(currentTab);
+      updateTabSEO(currentTab);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [activeTab]);
 
   const [clickStats, setClickStats] = useState<{
     totalClicks: number;
@@ -131,21 +157,21 @@ export default function App() {
       {/* Top Navigation */}
       <Navbar
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={handleNavigateTab}
         onOpenAffiliateModal={() => setIsAffiliateModalOpen(true)}
         userLocation={userLocation}
         onOpenLocationModal={() => openLocationPicker()}
       />
 
+      {/* Breadcrumbs navigation for subpages */}
+      <Breadcrumbs activeTab={activeTab} onNavigate={handleNavigateTab} />
+
       {/* Main Container */}
-      <main className="flex-1 pb-24">
+      <main className="flex-1 pb-12">
         {activeTab === 'wheel' && (
           <LuckyWheel
             affiliateConfig={affiliateConfig}
-            onDishSelect={(dish) => {
-              setSelectedDish(dish);
-              setDetailModalDish(dish);
-            }}
+            onDishSelect={(dish) => setSelectedDish(dish)}
             userLocation={userLocation}
             onOpenLocationModal={openLocationPicker}
           />
@@ -156,9 +182,7 @@ export default function App() {
             affiliateConfig={affiliateConfig}
             userLocation={userLocation}
             onOpenLocationModal={openLocationPicker}
-            onSelectDish={(dish) => {
-              setSelectedDish(dish);
-            }}
+            onSelectDish={(dish) => setSelectedDish(dish)}
             selectedDish={selectedDish}
           />
         )}
@@ -166,10 +190,7 @@ export default function App() {
         {activeTab === 'tarot' && (
           <FoodTarot
             affiliateConfig={affiliateConfig}
-            onSelectDish={(dish) => {
-              setSelectedDish(dish);
-              setDetailModalDish(dish);
-            }}
+            onSelectDish={(dish) => setSelectedDish(dish)}
             userLocation={userLocation}
             onOpenLocationModal={openLocationPicker}
           />
@@ -178,30 +199,21 @@ export default function App() {
         {activeTab === 'catalog' && (
           <DishCatalog
             affiliateConfig={affiliateConfig}
-            onSelectDish={(dish) => {
-              setSelectedDish(dish);
-            }}
+            onSelectDish={(dish) => setSelectedDish(dish)}
             selectedDish={selectedDish}
             userLocation={userLocation}
             onOpenLocationModal={openLocationPicker}
           />
         )}
+
+        {/* Editorial SEO Content & FAQ Accordion */}
+        <SeoContentFaq activeTab={activeTab} />
       </main>
 
-      {/* Persistent Selected Dish Dock */}
-      <SelectedDishDock
-        dish={selectedDish}
-        onClearDish={() => setSelectedDish(null)}
-        onViewDetails={(dish) => setDetailModalDish(dish)}
-        affiliateConfig={affiliateConfig}
-        userLocation={userLocation}
-        onOpenLocationModal={openLocationPicker}
-      />
-
-      {/* Dish Detail Modal */}
+      {/* Dish Detail Modal (Displays with integrated location and food apps) */}
       <DishDetailModal
-        dish={detailModalDish}
-        onClose={() => setDetailModalDish(null)}
+        dish={selectedDish}
+        onClose={() => setSelectedDish(null)}
         affiliateConfig={affiliateConfig}
         userLocation={userLocation}
         onOpenLocationModal={openLocationPicker}
@@ -231,7 +243,10 @@ export default function App() {
       />
 
       {/* Footer */}
-      <Footer onOpenAffiliateModal={() => setIsAffiliateModalOpen(true)} />
+      <Footer
+        onOpenAffiliateModal={() => setIsAffiliateModalOpen(true)}
+        onNavigate={handleNavigateTab}
+      />
     </div>
   );
 }
