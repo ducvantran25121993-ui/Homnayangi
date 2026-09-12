@@ -23,6 +23,7 @@ import { trackAndOpenAffiliateLink, formatVND } from '../utils/affiliate';
 import { DeliveryLocationBadge } from './DeliveryLocationBadge';
 import { tarotAudio } from '../utils/tarotSound';
 import { FoodAmuletModal, FoodAmuletData } from './FoodAmuletModal';
+import { TarotSigilArt } from './TarotSigilArt';
 import confetti from 'canvas-confetti';
 
 interface FoodTarotProps {
@@ -57,6 +58,10 @@ export interface TarotArchetype {
     | 'chariot'
     | 'strength'
     | 'world';
+  cardBg: string;
+  archBg: string;
+  archBorder: string;
+  accentText: string;
 }
 
 export interface ZodiacSign {
@@ -98,6 +103,10 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badgeColor: 'bg-cyan-500/20 text-cyan-300 border-cyan-400/40',
     glowAura: 'group-hover:shadow-[0_0_40px_rgba(6,182,212,0.55)]',
     sigilType: 'magician',
+    cardBg: 'from-[#081829] via-[#040f1a] to-[#0a2036]',
+    archBg: 'bg-gradient-to-b from-cyan-500/20 via-blue-950/40 to-black/70',
+    archBorder: 'border-cyan-400/40 group-hover:border-cyan-300/80 shadow-[inset_0_0_20px_rgba(6,182,212,0.25)]',
+    accentText: 'text-cyan-300',
   },
   {
     id: 'the_high_priestess',
@@ -112,6 +121,10 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badgeColor: 'bg-blue-500/20 text-blue-300 border-blue-400/40',
     glowAura: 'group-hover:shadow-[0_0_40px_rgba(59,130,246,0.55)]',
     sigilType: 'high_priestess',
+    cardBg: 'from-[#0a1236] via-[#050a22] to-[#0e1747]',
+    archBg: 'bg-gradient-to-b from-blue-500/20 via-indigo-950/40 to-black/70',
+    archBorder: 'border-blue-400/40 group-hover:border-blue-300/80 shadow-[inset_0_0_20px_rgba(59,130,246,0.25)]',
+    accentText: 'text-blue-300',
   },
   {
     id: 'the_empress',
@@ -126,6 +139,10 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-400/40',
     glowAura: 'group-hover:shadow-[0_0_40px_rgba(16,185,129,0.55)]',
     sigilType: 'empress',
+    cardBg: 'from-[#06241b] via-[#031711] to-[#093326]',
+    archBg: 'bg-gradient-to-b from-emerald-500/20 via-teal-950/40 to-black/70',
+    archBorder: 'border-emerald-400/40 group-hover:border-emerald-300/80 shadow-[inset_0_0_20px_rgba(16,185,129,0.25)]',
+    accentText: 'text-emerald-300',
   },
   {
     id: 'the_emperor',
@@ -140,6 +157,10 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badgeColor: 'bg-rose-500/20 text-rose-300 border-rose-400/40',
     glowAura: 'group-hover:shadow-[0_0_40px_rgba(244,63,94,0.55)]',
     sigilType: 'emperor',
+    cardBg: 'from-[#290812] via-[#17030a] to-[#380b19]',
+    archBg: 'bg-gradient-to-b from-rose-500/20 via-red-950/40 to-black/70',
+    archBorder: 'border-rose-400/40 group-hover:border-rose-300/80 shadow-[inset_0_0_20px_rgba(244,63,94,0.25)]',
+    accentText: 'text-rose-300',
   },
   {
     id: 'the_lovers',
@@ -154,6 +175,10 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badgeColor: 'bg-pink-500/20 text-pink-300 border-pink-400/40',
     glowAura: 'group-hover:shadow-[0_0_40px_rgba(236,72,153,0.55)]',
     sigilType: 'lovers',
+    cardBg: 'from-[#290820] via-[#170313] to-[#380b2c]',
+    archBg: 'bg-gradient-to-b from-pink-500/20 via-fuchsia-950/40 to-black/70',
+    archBorder: 'border-pink-400/40 group-hover:border-pink-300/80 shadow-[inset_0_0_20px_rgba(236,72,153,0.25)]',
+    accentText: 'text-pink-300',
   },
   {
     id: 'the_chariot',
@@ -168,6 +193,10 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badgeColor: 'bg-orange-500/20 text-orange-300 border-orange-400/40',
     glowAura: 'group-hover:shadow-[0_0_40px_rgba(249,115,22,0.55)]',
     sigilType: 'chariot',
+    cardBg: 'from-[#291304] via-[#170a02] to-[#381a06]',
+    archBg: 'bg-gradient-to-b from-orange-500/20 via-amber-950/40 to-black/70',
+    archBorder: 'border-orange-400/40 group-hover:border-orange-300/80 shadow-[inset_0_0_20px_rgba(249,115,22,0.25)]',
+    accentText: 'text-orange-300',
   },
   {
     id: 'the_strength',
@@ -182,6 +211,10 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badgeColor: 'bg-yellow-500/20 text-yellow-300 border-yellow-400/40',
     glowAura: 'group-hover:shadow-[0_0_40px_rgba(234,179,8,0.55)]',
     sigilType: 'strength',
+    cardBg: 'from-[#291c04] via-[#170f02] to-[#382606]',
+    archBg: 'bg-gradient-to-b from-yellow-500/20 via-amber-950/40 to-black/70',
+    archBorder: 'border-yellow-400/40 group-hover:border-yellow-300/80 shadow-[inset_0_0_20px_rgba(234,179,8,0.25)]',
+    accentText: 'text-yellow-300',
   },
   {
     id: 'the_hermit',
@@ -196,6 +229,10 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badgeColor: 'bg-indigo-500/20 text-indigo-300 border-indigo-400/40',
     glowAura: 'group-hover:shadow-[0_0_40px_rgba(99,102,241,0.55)]',
     sigilType: 'hermit',
+    cardBg: 'from-[#0d0f30] via-[#06081f] to-[#131642]',
+    archBg: 'bg-gradient-to-b from-indigo-500/20 via-violet-950/40 to-black/70',
+    archBorder: 'border-indigo-400/40 group-hover:border-indigo-300/80 shadow-[inset_0_0_20px_rgba(99,102,241,0.25)]',
+    accentText: 'text-indigo-300',
   },
   {
     id: 'the_wheel_of_fortune',
@@ -210,6 +247,10 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badgeColor: 'bg-purple-500/20 text-purple-300 border-purple-400/40',
     glowAura: 'group-hover:shadow-[0_0_40px_rgba(168,85,247,0.55)]',
     sigilType: 'wheel',
+    cardBg: 'from-[#1f0b36] via-[#110520] to-[#2b0f4a]',
+    archBg: 'bg-gradient-to-b from-purple-500/20 via-fuchsia-950/40 to-black/70',
+    archBorder: 'border-purple-400/40 group-hover:border-purple-300/80 shadow-[inset_0_0_20px_rgba(168,85,247,0.25)]',
+    accentText: 'text-purple-300',
   },
   {
     id: 'the_star',
@@ -224,6 +265,10 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badgeColor: 'bg-teal-500/20 text-teal-300 border-teal-400/40',
     glowAura: 'group-hover:shadow-[0_0_40px_rgba(20,184,166,0.55)]',
     sigilType: 'star',
+    cardBg: 'from-[#052424] via-[#021616] to-[#073030]',
+    archBg: 'bg-gradient-to-b from-teal-500/20 via-cyan-950/40 to-black/70',
+    archBorder: 'border-teal-400/40 group-hover:border-teal-300/80 shadow-[inset_0_0_20px_rgba(20,184,166,0.25)]',
+    accentText: 'text-teal-300',
   },
   {
     id: 'the_sun',
@@ -238,6 +283,10 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-400/40',
     glowAura: 'group-hover:shadow-[0_0_40px_rgba(245,158,11,0.55)]',
     sigilType: 'sun',
+    cardBg: 'from-[#291704] via-[#170c02] to-[#382005]',
+    archBg: 'bg-gradient-to-b from-amber-500/20 via-orange-950/40 to-black/70',
+    archBorder: 'border-amber-400/40 group-hover:border-amber-300/80 shadow-[inset_0_0_20px_rgba(245,158,11,0.25)]',
+    accentText: 'text-amber-300',
   },
   {
     id: 'the_world',
@@ -252,6 +301,10 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badgeColor: 'bg-fuchsia-500/20 text-fuchsia-300 border-fuchsia-400/40',
     glowAura: 'group-hover:shadow-[0_0_40px_rgba(217,70,239,0.55)]',
     sigilType: 'world',
+    cardBg: 'from-[#27062a] via-[#160218] to-[#36083a]',
+    archBg: 'bg-gradient-to-b from-fuchsia-500/20 via-purple-950/40 to-black/70',
+    archBorder: 'border-fuchsia-400/40 group-hover:border-fuchsia-300/80 shadow-[inset_0_0_20px_rgba(217,70,239,0.25)]',
+    accentText: 'text-fuchsia-300',
   },
 ];
 
@@ -565,154 +618,6 @@ const TarotCornerFlourish: React.FC<{ position: 'tl' | 'tr' | 'bl' | 'br' }> = (
       <path d="M18 2H22V6" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
     </svg>
   );
-};
-
-// Esoteric Sacred Geometry Sigils for Tarot Archetypes
-const TarotSigilArt: React.FC<{ type: TarotArchetype['sigilType'] }> = ({ type }) => {
-  switch (type) {
-    case 'sun':
-      return (
-        <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
-          <div className="absolute inset-0 animate-tarot-spin">
-            <svg viewBox="0 0 100 100" className="w-full h-full text-amber-400/70" fill="none">
-              <circle cx="50" cy="50" r="46" stroke="currentColor" strokeWidth="1" strokeDasharray="2 3" />
-              {[...Array(16)].map((_, i) => (
-                <line
-                  key={i}
-                  x1="50"
-                  y1="50"
-                  x2={50 + 44 * Math.cos((i * Math.PI) / 8)}
-                  y2={50 + 44 * Math.sin((i * Math.PI) / 8)}
-                  stroke="currentColor"
-                  strokeWidth={i % 2 === 0 ? '1.5' : '1'}
-                  opacity={i % 2 === 0 ? '0.9' : '0.5'}
-                />
-              ))}
-            </svg>
-          </div>
-          <div className="relative w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 via-amber-300 to-yellow-200 p-[2px] shadow-[0_0_20px_rgba(245,158,11,0.8)] flex items-center justify-center">
-            <div className="w-full h-full rounded-full bg-[#1c0e04] flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-amber-300 animate-pulse" />
-            </div>
-          </div>
-        </div>
-      );
-
-    case 'wheel':
-      return (
-        <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
-          <div className="absolute inset-0 animate-tarot-spin">
-            <svg viewBox="0 0 100 100" className="w-full h-full text-purple-300/80" fill="none">
-              <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="1.5" />
-              <circle cx="50" cy="50" r="34" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
-              {[...Array(8)].map((_, i) => (
-                <line
-                  key={i}
-                  x1="50"
-                  y1="50"
-                  x2={50 + 45 * Math.cos((i * Math.PI) / 4)}
-                  y2={50 + 45 * Math.sin((i * Math.PI) / 4)}
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                />
-              ))}
-            </svg>
-          </div>
-          <div className="relative w-10 h-10 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-500 p-[2px] shadow-[0_0_20px_rgba(168,85,247,0.8)] flex items-center justify-center">
-            <div className="w-full h-full rounded-full bg-[#1e0d38] flex items-center justify-center">
-              <Compass className="w-5 h-5 text-purple-200 animate-tarot-spin-rev" />
-            </div>
-          </div>
-        </div>
-      );
-
-    case 'magician':
-      return (
-        <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
-          <div className="absolute inset-0 animate-tarot-spin-rev">
-            <svg viewBox="0 0 100 100" className="w-full h-full text-cyan-300/80" fill="none">
-              <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="1.2" />
-              <path d="M25,50 Q37.5,30 50,50 T75,50 T50,50 T25,50" stroke="currentColor" strokeWidth="1.5" strokeDasharray="2 2" />
-            </svg>
-          </div>
-          <div className="relative w-10 h-10 rounded-full bg-gradient-to-tr from-cyan-500 to-blue-500 p-[2px] shadow-[0_0_20px_rgba(6,182,212,0.8)] flex items-center justify-center">
-            <div className="w-full h-full rounded-full bg-[#051829] flex items-center justify-center">
-              <Wand2 className="w-5 h-5 text-cyan-200" />
-            </div>
-          </div>
-        </div>
-      );
-
-    case 'emperor':
-      return (
-        <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
-          <div className="absolute inset-0 animate-tarot-spin">
-            <svg viewBox="0 0 100 100" className="w-full h-full text-rose-300/80" fill="none">
-              <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="1.2" />
-              <rect x="22" y="22" width="56" height="56" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
-            </svg>
-          </div>
-          <div className="relative w-10 h-10 rounded-full bg-gradient-to-tr from-rose-600 to-amber-500 p-[2px] shadow-[0_0_20px_rgba(244,63,94,0.8)] flex items-center justify-center">
-            <div className="w-full h-full rounded-full bg-[#260810] flex items-center justify-center">
-              <Shield className="w-5 h-5 text-rose-200" />
-            </div>
-          </div>
-        </div>
-      );
-
-    case 'star':
-      return (
-        <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
-          <div className="absolute inset-0 animate-tarot-spin">
-            <svg viewBox="0 0 100 100" className="w-full h-full text-teal-300/80" fill="none">
-              <circle cx="50" cy="50" r="46" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
-              <polygon points="50,6 60,38 94,38 66,58 76,92 50,72 24,92 34,58 6,38 40,38" fill="rgba(20, 184, 166, 0.15)" stroke="currentColor" strokeWidth="1.2" />
-            </svg>
-          </div>
-          <div className="relative w-10 h-10 rounded-full bg-gradient-to-tr from-teal-500 to-emerald-400 p-[2px] shadow-[0_0_20px_rgba(20,184,166,0.8)] flex items-center justify-center">
-            <div className="w-full h-full rounded-full bg-[#04241d] flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-teal-200 animate-pulse" />
-            </div>
-          </div>
-        </div>
-      );
-
-    case 'lovers':
-      return (
-        <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
-          <div className="absolute inset-0 animate-tarot-spin-rev">
-            <svg viewBox="0 0 100 100" className="w-full h-full text-pink-300/80" fill="none">
-              <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
-              <circle cx="38" cy="50" r="24" stroke="currentColor" strokeWidth="1" />
-              <circle cx="62" cy="50" r="24" stroke="currentColor" strokeWidth="1" />
-            </svg>
-          </div>
-          <div className="relative w-10 h-10 rounded-full bg-gradient-to-tr from-pink-500 to-rose-400 p-[2px] shadow-[0_0_20px_rgba(236,72,153,0.8)] flex items-center justify-center">
-            <div className="w-full h-full rounded-full bg-[#29081a] flex items-center justify-center">
-              <Sparkle className="w-5 h-5 text-pink-200 animate-pulse" />
-            </div>
-          </div>
-        </div>
-      );
-
-    default:
-      return (
-        <div className="relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center">
-          <div className="absolute inset-0 animate-tarot-spin">
-            <svg viewBox="0 0 100 100" className="w-full h-full text-amber-300/80" fill="none">
-              <circle cx="50" cy="50" r="45" stroke="currentColor" strokeWidth="1" strokeDasharray="2 3" />
-              <polygon points="50,12 83,68 17,68" stroke="currentColor" strokeWidth="1" opacity="0.6" />
-              <polygon points="50,88 17,32 83,32" stroke="currentColor" strokeWidth="1" opacity="0.6" />
-            </svg>
-          </div>
-          <div className="relative w-10 h-10 rounded-full bg-gradient-to-tr from-amber-500 to-indigo-500 p-[2px] shadow-[0_0_20px_rgba(245,158,11,0.8)] flex items-center justify-center">
-            <div className="w-full h-full rounded-full bg-[#12082b] flex items-center justify-center">
-              <Compass className="w-5 h-5 text-amber-200" />
-            </div>
-          </div>
-        </div>
-      );
-  }
 };
 
 function getTarotQuoteWithZodiac(dish: Dish, zodiac: ZodiacSign, isUpright: boolean): { quote: string; warning?: string } {
@@ -1106,7 +1011,7 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                   key={arc.id}
                   disabled={isFlipping}
                   onClick={() => drawNextUniqueDish(arc)}
-                  className={`group relative aspect-[1/1.75] rounded-2xl bg-gradient-to-b from-[#180f33] via-[#0b081d] to-[#140b28] p-3 flex flex-col items-center justify-between border-2 ${arc.borderGlow} ${arc.glowAura} hover:-translate-y-2.5 hover:scale-[1.03] transition-all duration-500 shadow-xl cursor-pointer overflow-hidden text-center select-none ${
+                  className={`group relative aspect-[1/1.75] rounded-2xl bg-gradient-to-b ${arc.cardBg} p-3 flex flex-col items-center justify-between border-2 ${arc.borderGlow} ${arc.glowAura} hover:-translate-y-2.5 hover:scale-[1.03] transition-all duration-500 shadow-xl cursor-pointer overflow-hidden text-center select-none ${
                     isFlipping ? 'opacity-50 pointer-events-none scale-95' : ''
                   }`}
                 >
@@ -1136,7 +1041,7 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                   {/* Center Sacred Geometry Arcana Sigil with Gothic Arch Frame */}
                   <div className="my-auto relative z-10 flex flex-col items-center justify-center py-1.5 w-full">
                     {/* Arch Backdrop glow */}
-                    <div className="relative p-1.5 rounded-2xl bg-gradient-to-b from-amber-400/10 via-purple-500/10 to-transparent border border-amber-400/30 group-hover:border-amber-300/60 transition-colors shadow-inner">
+                    <div className={`relative p-2 rounded-2xl ${arc.archBg} border ${arc.archBorder} transition-all duration-300 shadow-inner group-hover:scale-[1.04]`}>
                       <TarotSigilArt type={arc.sigilType} />
                     </div>
 
@@ -1148,7 +1053,7 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                       <div className="text-[9px] text-amber-300/80 italic tracking-wider line-clamp-1 mt-0.5">
                         {arc.latin}
                       </div>
-                      <div className="text-[8.5px] text-indigo-200/70 line-clamp-1 mt-0.5 font-medium">
+                      <div className="text-[8.5px] text-stone-300/75 line-clamp-1 mt-0.5 font-medium">
                         {arc.subtitle.split('&')[0]}
                       </div>
                     </div>
@@ -1233,8 +1138,8 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                   </div>
 
                   <div className="flex items-center gap-2.5 relative z-10">
-                    <div className="w-10 h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center text-white shadow-inner shrink-0">
-                      <Sparkles className="w-4 h-4 animate-spin-slow text-amber-300" />
+                    <div className="w-12 h-12 rounded-xl bg-black/40 border border-amber-300/40 flex items-center justify-center text-white shadow-inner shrink-0 p-1">
+                      <TarotSigilArt type={revealedResult.archetype.sigilType} sizeClass="w-9 h-9" />
                     </div>
                     <div className="text-left">
                       <div className={`text-[11px] font-bold ${theme.headerSubtext} uppercase tracking-wider flex items-center gap-1.5`}>
