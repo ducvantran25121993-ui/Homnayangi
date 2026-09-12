@@ -33,7 +33,7 @@ export const SelectedDishDock: React.FC<SelectedDishDockProps> = ({
             <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-xl overflow-hidden shrink-0 border border-stone-200 shadow-xs">
               <img
                 src={dish.image}
-                alt={dish.name}
+                alt={`${dish.vietnameseName || dish.name} đặc sản ${dish.category} đã chọn - Hôm Nay Ăn Gì`}
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
               />

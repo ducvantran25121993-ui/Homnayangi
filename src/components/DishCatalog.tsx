@@ -3,7 +3,6 @@ import { Search, UtensilsCrossed, Flame, ShoppingBag, ExternalLink, Filter } fro
 import { INITIAL_DISHES } from '../data/dishes';
 import { Dish, AffiliateConfig, UserLocation } from '../types';
 import { trackAndOpenAffiliateLink, formatVND } from '../utils/affiliate';
-import { DeliveryLocationBadge } from './DeliveryLocationBadge';
 
 interface DishCatalogProps {
   affiliateConfig: AffiliateConfig;
@@ -93,28 +92,15 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
           MENU MÓN NGON 3 MIỀN
         </div>
         <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mb-2">
-          Khám Phá Danh Mục <span className="text-orange-600">Món Ăn Hôm Nay</span>
+          Thực Đơn Món Ngon - <span className="text-orange-600">160+ Đặc Sản Việt Nam Chuẩn Vị</span>
         </h1>
         <p className="text-sm sm:text-base text-stone-600">
-          Tra cứu nhanh những món best-seller được đặt nhiều nhất trên các app giao đồ ăn ShopeeFood, GrabFood & BeFood.
+          Tra cứu nhanh danh sách các món ngon 3 miền Bắc - Trung - Nam được yêu thích nhất kèm liên kết đặt món trực tiếp trên ShopeeFood, GrabFood & BeFood.
         </p>
       </div>
 
       {/* Filter and Search Bar */}
       <div className="bg-white p-4 sm:p-6 rounded-3xl border border-stone-200 shadow-xs mb-8 space-y-4">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-stone-100">
-          <div className="text-xs text-stone-600 font-medium">
-            Chọn món và đặt ngay qua app giao hàng liên kết. Đang ưu tiên tìm quán gần bạn:
-          </div>
-          <div className="shrink-0">
-            <DeliveryLocationBadge
-              location={userLocation}
-              onClick={() => onOpenLocationModal()}
-              variant="compact"
-            />
-          </div>
-        </div>
-
         <div className="flex flex-col sm:flex-row gap-3">
           
           {/* Search box */}
@@ -180,7 +166,16 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
 
       {/* Dishes Grid */}
       {filteredDishes.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div>
+          <div className="flex items-center justify-between mb-4 px-1">
+            <h2 className="text-base sm:text-lg font-bold text-stone-900 flex items-center gap-2">
+              <span>Danh Sách Món Ngon</span>
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-orange-100 text-orange-700">
+                {filteredDishes.length} món
+              </span>
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredDishes.map((dish) => {
             const isSelected = selectedDish?.id === dish.id;
             return (
@@ -200,19 +195,14 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
                   <div className="relative aspect-[16/10] overflow-hidden bg-stone-100">
                     <img
                       src={dish.image}
-                      alt={dish.name}
+                      alt={`${dish.vietnameseName || dish.name} đặc sản ${dish.category} chuẩn vị thơm ngon - Hôm Nay Ăn Gì`}
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
-                    <div className="absolute top-3 left-3 flex gap-1.5">
+                    <div className="absolute top-3 left-3">
                       <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-white/95 backdrop-blur-xs text-orange-700 shadow-xs">
                         {dish.priceRange}
                       </span>
-                      {isSelected && (
-                        <span className="px-2.5 py-1 rounded-full text-[10px] font-black bg-orange-600 text-white shadow-xs animate-pulse">
-                          ✓ ĐANG CHỌN
-                        </span>
-                      )}
                     </div>
                     <div className="absolute top-3 right-3">
                       <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-stone-900/80 backdrop-blur-xs text-white">
@@ -259,13 +249,9 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
                     </div>
                     <button
                       onClick={() => onSelectDish(dish)}
-                      className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md transition-colors cursor-pointer ${
-                        isSelected
-                          ? 'bg-orange-600 text-white'
-                          : 'bg-stone-200/80 hover:bg-orange-100 text-stone-700 hover:text-orange-700'
-                      }`}
+                      className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-stone-200/80 hover:bg-orange-100 text-stone-700 hover:text-orange-700 transition-colors cursor-pointer"
                     >
-                      {isSelected ? '✓ Đang chọn' : '🎯 Chọn món'}
+                      Xem chi tiết
                     </button>
                   </div>
 
@@ -276,7 +262,7 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
                         trackAndOpenAffiliateLink('shopeefood', dish, affiliateConfig, userLocation);
                       }}
                       className="py-2 px-1.5 rounded-xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs cursor-pointer"
-                      title={`Chuyển qua ShopeeFood tìm ${dish.name} (${userLocation.city})`}
+                      title={`Chuyển qua ShopeeFood tìm quán ${dish.name} tại ${userLocation.district || userLocation.city}`}
                     >
                       <ShoppingBag className="w-3.5 h-3.5 shrink-0" />
                       <span>Shopee</span>
@@ -288,7 +274,7 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
                         trackAndOpenAffiliateLink('grabfood', dish, affiliateConfig, userLocation);
                       }}
                       className="py-2 px-1.5 rounded-xl bg-[#00B14F] hover:bg-[#009643] text-white font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs cursor-pointer"
-                      title={`Chuyển qua GrabFood định vị quán ${dish.name} gần bạn`}
+                      title={`Chuyển qua GrabFood tìm quán ${dish.name} tại ${userLocation.district || userLocation.city}`}
                     >
                       <ShoppingBag className="w-3.5 h-3.5 shrink-0" />
                       <span>Grab</span>
@@ -300,7 +286,7 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
                         trackAndOpenAffiliateLink('befood', dish, affiliateConfig, userLocation);
                       }}
                       className="py-2 px-1.5 rounded-xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-900 font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs cursor-pointer"
-                      title={`Chuyển qua BeFood tìm ${dish.name} (${userLocation.city})`}
+                      title={`Chuyển qua BeFood tìm quán ${dish.name} tại ${userLocation.district || userLocation.city}`}
                     >
                       <ShoppingBag className="w-3.5 h-3.5 shrink-0" />
                       <span>BeFood</span>
@@ -310,6 +296,7 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
               </div>
             );
           })}
+          </div>
         </div>
       ) : (
         <div className="text-center py-16 bg-white rounded-3xl border border-stone-200">

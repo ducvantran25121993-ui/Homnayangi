@@ -83,10 +83,10 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
           GEMINI 3.8 FLASH FOOD ENGINE
         </div>
         <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mb-2">
-          Trợ Lý AI <span className="text-purple-600">"Ăn Gì Bây Giờ?"</span>
+          AI Gợi Ý Món Ăn - <span className="text-purple-600">Trợ Lý Ẩm Thực Thông Minh</span>
         </h1>
         <p className="text-sm sm:text-base text-stone-600">
-          Phân tích tâm trạng, thời tiết, ngân sách để gợi ý ngay 3 món ngon khó cưỡng kèm link đặt món app food giảm giá.
+          Trí tuệ nhân tạo Gemini phân tích tâm trạng, thời tiết, ngân sách để gợi ý ngay 3 món ngon chuẩn vị khó cưỡng kèm link đặt món ShopeeFood, GrabFood & BeFood.
         </p>
       </div>
 
@@ -284,7 +284,12 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
 
       {/* Generated Suggestions Cards */}
       {suggestions.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="space-y-4">
+          <h2 className="text-base sm:text-lg font-bold text-stone-900 flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-purple-600" />
+            Top Món Ngon AI Đề Xuất Dành Riêng Cho Bạn
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {suggestions.map((item, index) => (
             <div
               key={index}
@@ -366,13 +371,9 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
                         };
                         onSelectDish(dishObj);
                       }}
-                      className={`text-[10px] font-bold px-2 py-0.5 rounded-md cursor-pointer transition-colors ${
-                        selectedDish?.name === item.name
-                          ? 'bg-orange-600 text-white'
-                          : 'bg-stone-200/80 hover:bg-orange-100 text-stone-700 hover:text-orange-700'
-                      }`}
+                      className="text-[10px] font-bold px-2 py-0.5 rounded-md cursor-pointer transition-colors bg-stone-200/80 hover:bg-orange-100 text-stone-700 hover:text-orange-700"
                     >
-                      {selectedDish?.name === item.name ? '✓ Đang chọn' : '🎯 Chọn món'}
+                      Xem chi tiết
                     </button>
                   )}
                 </div>
@@ -428,6 +429,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
               </div>
             </div>
           ))}
+          </div>
         </div>
       )}
 

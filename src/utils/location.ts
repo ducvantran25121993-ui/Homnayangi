@@ -146,6 +146,132 @@ export const DEFAULT_USER_LOCATION: UserLocation = {
   source: 'default',
 };
 
+export const DISTRICT_COORDINATES: Record<string, Record<string, { latitude: number; longitude: number }>> = {
+  hcm: {
+    'Quận 1': { latitude: 10.7769, longitude: 106.7009 },
+    'Quận 3': { latitude: 10.7843, longitude: 106.6843 },
+    'Quận 4': { latitude: 10.7578, longitude: 106.7013 },
+    'Quận 5': { latitude: 10.7554, longitude: 106.6644 },
+    'Quận 6': { latitude: 10.7464, longitude: 106.6353 },
+    'Quận 7': { latitude: 10.7340, longitude: 106.7218 },
+    'Quận 8': { latitude: 10.7241, longitude: 106.6286 },
+    'Quận 10': { latitude: 10.7684, longitude: 106.6669 },
+    'Quận 11': { latitude: 10.7630, longitude: 106.6502 },
+    'Quận 12': { latitude: 10.8672, longitude: 106.6413 },
+    'Bình Thạnh': { latitude: 10.8010, longitude: 106.7110 },
+    'Phú Nhuận': { latitude: 10.7992, longitude: 106.6803 },
+    'Tân Bình': { latitude: 10.8015, longitude: 106.6526 },
+    'Gò Vấp': { latitude: 10.8387, longitude: 106.6664 },
+    'TP. Thủ Đức': { latitude: 10.8494, longitude: 106.7719 },
+    'Tân Phú': { latitude: 10.7904, longitude: 106.6280 },
+    'Bình Tân': { latitude: 10.7654, longitude: 106.6039 },
+    'Hóc Môn': { latitude: 10.8847, longitude: 106.5919 },
+    'Bình Chánh': { latitude: 10.6874, longitude: 106.5929 },
+    'Nhà Bè': { latitude: 10.6953, longitude: 106.7323 },
+    'Củ Chi': { latitude: 11.0067, longitude: 106.5132 },
+  },
+  hn: {
+    'Hoàn Kiếm': { latitude: 21.0285, longitude: 105.8542 },
+    'Ba Đình': { latitude: 21.0341, longitude: 105.8242 },
+    'Đống Đa': { latitude: 21.0181, longitude: 105.8239 },
+    'Hai Bà Trưng': { latitude: 21.0076, longitude: 105.8519 },
+    'Cầu Giấy': { latitude: 21.0333, longitude: 105.7899 },
+    'Tây Hồ': { latitude: 21.0713, longitude: 105.8234 },
+    'Thanh Xuân': { latitude: 20.9937, longitude: 105.8078 },
+    'Nam Từ Liêm': { latitude: 21.0135, longitude: 105.7645 },
+    'Bắc Từ Liêm': { latitude: 21.0631, longitude: 105.7594 },
+    'Hà Đông': { latitude: 20.9723, longitude: 105.7773 },
+    'Hoàng Mai': { latitude: 20.9754, longitude: 105.8576 },
+    'Long Biên': { latitude: 21.0362, longitude: 105.8927 },
+  },
+  dn: {
+    'Hải Châu': { latitude: 16.0678, longitude: 108.2208 },
+    'Thanh Khê': { latitude: 16.0601, longitude: 108.1884 },
+    'Sơn Trà': { latitude: 16.0847, longitude: 108.2435 },
+    'Ngũ Hành Sơn': { latitude: 16.0028, longitude: 108.2573 },
+    'Liên Chiểu': { latitude: 16.0792, longitude: 108.1489 },
+    'Cẩm Lệ': { latitude: 15.9988, longitude: 108.1963 },
+  },
+  ct: {
+    'Ninh Kiều': { latitude: 10.0342, longitude: 105.7883 },
+    'Cái Răng': { latitude: 9.9961, longitude: 105.7538 },
+    'Bình Thủy': { latitude: 10.0707, longitude: 105.7369 },
+    'Ô Môn': { latitude: 10.1171, longitude: 105.6264 },
+  },
+  hp: {
+    'Hồng Bàng': { latitude: 20.8653, longitude: 106.6749 },
+    'Ngô Quyền': { latitude: 20.8524, longitude: 106.6993 },
+    'Lê Chân': { latitude: 20.8402, longitude: 106.6781 },
+    'Hải An': { latitude: 20.8353, longitude: 106.7214 },
+  },
+  bd: {
+    'Thủ Dầu Một': { latitude: 10.9804, longitude: 106.6745 },
+    'Thuận An': { latitude: 10.9234, longitude: 106.6989 },
+    'Dĩ An': { latitude: 10.9067, longitude: 106.7719 },
+    'Bến Cát': { latitude: 11.1342, longitude: 106.6022 },
+  },
+  dnai: {
+    'Biên Hòa': { latitude: 10.9574, longitude: 106.8427 },
+    'Long Thành': { latitude: 10.7853, longitude: 106.9632 },
+    'Nhơn Trạch': { latitude: 10.6728, longitude: 106.8794 },
+  },
+  vt: {
+    'Vũng Tàu': { latitude: 10.346, longitude: 107.0843 },
+    'Bà Rịa': { latitude: 10.4962, longitude: 107.1729 },
+    'Phú Mỹ': { latitude: 10.5983, longitude: 107.0543 },
+  },
+  nt: {
+    'Nha Trang': { latitude: 12.2388, longitude: 109.1967 },
+    'Cam Ranh': { latitude: 11.9214, longitude: 109.1591 },
+  },
+  hue: {
+    'TP. Huế': { latitude: 16.4637, longitude: 107.5909 },
+    'Hương Thủy': { latitude: 16.3986, longitude: 107.6542 },
+    'Hương Trà': { latitude: 16.4354, longitude: 107.5147 },
+  },
+};
+
+export function getDistrictCoordinates(
+  cityIdOrSlugOrName: string,
+  districtName?: string
+): { latitude: number; longitude: number } | null {
+  if (!districtName) return null;
+
+  let cityKey = 'hcm';
+  const c = cityIdOrSlugOrName.toLowerCase();
+  if (c === 'hcm' || c.includes('ho-chi-minh') || c.includes('hồ chí minh')) cityKey = 'hcm';
+  else if (c === 'hn' || c.includes('ha-noi') || c.includes('hà nội')) cityKey = 'hn';
+  else if (c === 'dn' || c.includes('da-nang') || c.includes('đà nẵng')) cityKey = 'dn';
+  else if (c === 'ct' || c.includes('can-tho') || c.includes('cần thơ')) cityKey = 'ct';
+  else if (c === 'hp' || c.includes('hai-phong') || c.includes('hải phòng')) cityKey = 'hp';
+  else if (c === 'bd' || c.includes('binh-duong') || c.includes('bình dương')) cityKey = 'bd';
+  else if (c === 'dnai' || c.includes('dong-nai') || c.includes('đồng nai') || c.includes('biên hòa')) cityKey = 'dnai';
+  else if (c === 'vt' || c.includes('vung-tau') || c.includes('vũng tàu') || c.includes('bà rịa')) cityKey = 'vt';
+  else if (c === 'nt' || c.includes('nha-trang') || c.includes('khánh hòa')) cityKey = 'nt';
+  else if (c === 'hue' || c.includes('huế')) cityKey = 'hue';
+
+  const cityDistricts = DISTRICT_COORDINATES[cityKey];
+  if (!cityDistricts) return null;
+
+  if (cityDistricts[districtName]) {
+    return cityDistricts[districtName];
+  }
+
+  const normDist = districtName.toLowerCase().replace('quận ', 'q').replace(/\s+/g, '');
+  for (const [dName, coords] of Object.entries(cityDistricts)) {
+    const keyNorm = dName.toLowerCase().replace('quận ', 'q').replace(/\s+/g, '');
+    if (
+      keyNorm === normDist ||
+      dName.toLowerCase().includes(districtName.toLowerCase()) ||
+      districtName.toLowerCase().includes(dName.toLowerCase())
+    ) {
+      return coords;
+    }
+  }
+
+  return null;
+}
+
 // Calculate distance in km between two lat/lng points
 function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 6371; // Earth radius in km

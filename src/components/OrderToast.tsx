@@ -5,6 +5,7 @@ import { formatLocationDisplay } from '../utils/location';
 
 export interface OrderEventDetail {
   dishName: string;
+  locationDishQuery?: string;
   platform: 'shopeefood' | 'grabfood' | 'befood' | 'googlemaps';
   location: UserLocation;
   url: string;
@@ -85,11 +86,11 @@ export const OrderToast: React.FC = () => {
                 </span>
               </div>
               <h4 className="text-sm font-extrabold text-stone-900 leading-tight">
-                Tìm "{toastData.dishName}"
+                Tìm "{toastData.locationDishQuery || toastData.dishName}"
               </h4>
               <div className="flex items-center gap-1 text-xs text-stone-600 mt-1 font-medium">
                 <MapPin className="w-3.5 h-3.5 text-orange-600 shrink-0" />
-                <span>Khu vực: <strong>{formatLocationDisplay(toastData.location)}</strong></span>
+                <span>Khu vực ưu tiên: <strong>{toastData.location?.district ? `${toastData.location.district}, ${toastData.location.city}` : formatLocationDisplay(toastData.location)}</strong></span>
               </div>
             </div>
           </div>

@@ -16,6 +16,7 @@ import {
   saveUserLocation,
   CityPreset,
   formatLocationDisplay,
+  getDistrictCoordinates,
 } from '../utils/location';
 
 interface LocationModalProps {
@@ -80,13 +81,17 @@ export const LocationModal: React.FC<LocationModalProps> = ({
   };
 
   const handleApplySelection = () => {
+    const districtCoords = getDistrictCoordinates(currentCityObj.id, selectedDistrict);
+    const lat = districtCoords?.latitude ?? currentCityObj.latitude;
+    const lng = districtCoords?.longitude ?? currentCityObj.longitude;
+
     const newLoc: UserLocation = {
       city: currentCityObj.name,
       citySlug: currentCityObj.citySlug,
       district: selectedDistrict,
       address: `${selectedDistrict}, ${currentCityObj.name}`,
-      latitude: currentCityObj.latitude,
-      longitude: currentCityObj.longitude,
+      latitude: lat,
+      longitude: lng,
       source: 'manual',
       updatedAt: new Date().toISOString(),
     };

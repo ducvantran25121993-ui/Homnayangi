@@ -505,10 +505,10 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
           VÒNG QUAY ẨM THỰC THẦN KỲ - ĐÃ KẾT NỐI {INITIAL_DISHES.length} MÓN NGON
         </div>
         <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mb-2">
-          Thử Đi Mấy Ní ! <span className="text-orange-600">Nghĩ Chi Cho Mệt 😁</span>
+          Vòng Quay Ăn Gì - <span className="text-orange-600">Quay Món Ăn May Mắn Ngẫu Nhiên</span>
         </h1>
         <p className="text-sm sm:text-base text-stone-600">
-          Chọn danh mục từ {INITIAL_DISHES.length} món ngon 3 miền hoặc chủ đề theo sở thích, quay ngẫu nhiên và đặt ngay trên ShopeeFood, GrabFood hoặc BeFood!
+          Phân vân trưa nay, tối nay ăn gì? Hãy để Vòng Quay Ăn Gì chọn ngẫu nhiên từ hơn {INITIAL_DISHES.length} món ngon Việt Nam chuẩn vị và đặt món giao ngay tận nơi!
         </p>
       </div>
 
@@ -608,9 +608,11 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
                 {matchedDish && (
                   <img
                     src={matchedDish.image}
-                    alt={matchedDish.name}
+                    alt={`${matchedDish.vietnameseName || matchedDish.name} đặc sản ${matchedDish.category} trúng thưởng Vòng Quay May Mắn - Hôm Nay Ăn Gì`}
                     referrerPolicy="no-referrer"
-                    className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover shadow-md border-2 border-white shrink-0"
+                    onClick={() => onDishSelect(matchedDish)}
+                    title={`Bấm để xem chi tiết & đặt ${matchedDish.name}`}
+                    className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl object-cover shadow-md border-2 border-white shrink-0 cursor-pointer hover:scale-105 transition-transform"
                   />
                 )}
                 <div className="flex-1 text-center sm:text-left">
@@ -618,7 +620,11 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
                     <Sparkles className="w-3.5 h-3.5" />
                     Vũ trụ đã chọn cho bạn:
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-black text-stone-900 mb-1">
+                  <h3
+                    onClick={() => matchedDish && onDishSelect(matchedDish)}
+                    title={`Bấm để xem chi tiết & đặt ${winner}`}
+                    className="text-xl sm:text-2xl font-black text-stone-900 mb-1 cursor-pointer hover:text-orange-600 transition-colors"
+                  >
                     {winner}
                   </h3>
                   {matchedDish && (
@@ -655,12 +661,18 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
                   />
                 </div>
 
-                <div className="text-xs font-black text-stone-800 mb-2.5 text-center sm:text-left flex items-center gap-1.5">
+                <div className="text-xs font-black text-stone-800 mb-2.5 text-center sm:text-left flex items-center gap-1.5 flex-wrap">
                   <span className="flex h-2 w-2 relative">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
                   </span>
-                  <span>Bấm nút để chuyển qua app tìm kiếm <strong>"{winner}"</strong>:</span>
+                  <span>
+                    Bấm nút để tìm quán <strong>"{winner}"</strong> tại{' '}
+                    <strong className="text-orange-600 underline decoration-orange-300">
+                      {userLocation.district || userLocation.city}
+                    </strong>
+                    :
+                  </span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                   <button
@@ -672,7 +684,7 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
                         userLocation
                       )
                     }
-                    title={`Chuyển qua ShopeeFood tìm ${winner} (${userLocation.city})`}
+                    title={`Chuyển qua ShopeeFood tìm quán ${winner} tại ${userLocation.district || userLocation.city}`}
                     className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-extrabold text-xs sm:text-sm transition-all shadow-sm hover:scale-[1.02] cursor-pointer"
                   >
                     <ShoppingBag className="w-4 h-4 shrink-0" />
@@ -689,7 +701,7 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
                         userLocation
                       )
                     }
-                    title={`Chuyển qua GrabFood định vị quán ${winner} gần bạn`}
+                    title={`Chuyển qua GrabFood tìm quán ${winner} tại ${userLocation.district || userLocation.city}`}
                     className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-[#00B14F] hover:bg-[#009643] text-white font-extrabold text-xs sm:text-sm transition-all shadow-sm hover:scale-[1.02] cursor-pointer"
                   >
                     <ShoppingBag className="w-4 h-4 shrink-0" />
@@ -706,7 +718,7 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
                         userLocation
                       )
                     }
-                    title={`Chuyển qua BeFood tìm ${winner} (${userLocation.city})`}
+                    title={`Chuyển qua BeFood tìm quán ${winner} tại ${userLocation.district || userLocation.city}`}
                     className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-900 font-extrabold text-xs sm:text-sm transition-all shadow-sm hover:scale-[1.02] cursor-pointer"
                   >
                     <ShoppingBag className="w-4 h-4 shrink-0" />
@@ -857,7 +869,7 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
                         <div className="flex items-center gap-2.5 min-w-0">
                           <img
                             src={dish.image}
-                            alt={dishName}
+                            alt={`${dishName} đặc sản gợi ý thêm vào Vòng Quay - Hôm Nay Ăn Gì`}
                             referrerPolicy="no-referrer"
                             className="w-7 h-7 rounded-lg object-cover shrink-0"
                           />
