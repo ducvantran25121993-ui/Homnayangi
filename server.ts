@@ -331,6 +331,17 @@ Yêu cầu trả về đúng định dạng JSON:
 });
 
 async function startServer() {
+  // Static SEO routes for Googlebot and search crawlers
+  app.get("/robots.txt", (_req, res) => {
+    res.type("text/plain");
+    res.sendFile(path.join(process.cwd(), "public", "robots.txt"));
+  });
+
+  app.get("/sitemap.xml", (_req, res) => {
+    res.type("application/xml");
+    res.sendFile(path.join(process.cwd(), "public", "sitemap.xml"));
+  });
+
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
       server: { middlewareMode: true },
