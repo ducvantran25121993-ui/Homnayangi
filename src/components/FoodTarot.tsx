@@ -838,17 +838,17 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
   const targetArea = userLocation.district || userLocation.city;
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-2 sm:px-4 py-4 sm:py-8">
-      {/* Altar Container with crisp WHITE background and refined golden border */}
-      <div className="relative rounded-3xl bg-white border border-amber-200 shadow-xl shadow-amber-950/5 p-4 sm:p-8 text-stone-900 overflow-hidden">
-        {/* Subtle breathing celestial watermark rings */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full border border-amber-200/40 animate-tarot-spin pointer-events-none" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] h-[480px] rounded-full border border-dashed border-amber-300/30 animate-tarot-spin-rev pointer-events-none" />
-        <div className="absolute -top-32 left-1/4 w-80 h-80 bg-amber-100/30 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-32 right-1/4 w-80 h-80 bg-purple-100/25 rounded-full blur-3xl pointer-events-none" />
+    <div className="w-full max-w-7xl mx-auto px-2 sm:px-4 lg:px-6 py-2 sm:py-6">
+      {/* Altar Container - Bỏ khung vàng, mở rộng không gian thoáng đãng */}
+      <div className="relative rounded-3xl bg-transparent sm:bg-white/70 sm:backdrop-blur-sm sm:shadow-lg sm:shadow-purple-950/5 p-2 sm:p-6 lg:p-8 text-stone-900 overflow-hidden">
+        {/* Subtle celestial watermark rings */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[750px] rounded-full border border-indigo-100/40 animate-tarot-spin pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full border border-dashed border-purple-100/30 animate-tarot-spin-rev pointer-events-none" />
+        <div className="absolute -top-32 left-1/4 w-96 h-96 bg-purple-100/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-32 right-1/4 w-96 h-96 bg-indigo-100/20 rounded-full blur-3xl pointer-events-none" />
 
         {/* Top Altar Utility Bar (Audio sound toggle & Candle shrine) */}
-        <div className="relative z-10 flex items-center justify-between gap-2 max-w-4xl mx-auto mb-5 px-1">
+        <div className="relative z-10 flex items-center justify-between gap-2 w-full mb-6 px-1">
           {/* Interactive Mystic Candle */}
           <button
             onClick={handleInteractCandle}
@@ -856,7 +856,7 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
             className={`flex items-center gap-2 px-4 py-1.5 rounded-full border transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer shadow-md shadow-purple-950/30 bg-gradient-to-r from-[#0d041c] via-[#200b3d] to-[#3b0d5c] ${
               isCandleLit
                 ? 'border-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.35)]'
-                : 'border-amber-400/50 hover:border-amber-400'
+                : 'border-purple-600/40 hover:border-amber-400/70'
             }`}
           >
             <div className="relative w-4 h-6 flex items-center justify-center">
@@ -895,17 +895,17 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
         </div>
 
         {/* Altar Header */}
-        <div className="relative z-10 text-center max-w-4xl mx-auto mb-6 sm:mb-8">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#1c0836] via-[#381163] to-[#1c0836] text-amber-300 text-xs font-black uppercase tracking-wider mb-3 shadow-md shadow-purple-950/20 border border-amber-400/50 backdrop-blur-sm">
+        <div className="relative z-10 text-center w-full max-w-4xl mx-auto mb-6 sm:mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#1c0836] via-[#381163] to-[#1c0836] text-amber-300 text-xs font-black uppercase tracking-wider mb-3 shadow-md shadow-purple-950/20 border border-purple-500/40 backdrop-blur-sm">
             <Compass className="w-4 h-4 text-amber-300 animate-spin-slow" />
             <span className="bg-gradient-to-r from-amber-200 via-yellow-300 to-amber-200 bg-clip-text text-transparent font-black drop-shadow-xs">
               TAROT ẨM THỰC VIỆT NAM • TRẢI BÀI CHIÊM TINH
             </span>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[40px] font-black text-stone-900 tracking-tight mb-3 whitespace-nowrap overflow-hidden text-ellipsis">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-black text-stone-900 tracking-tight mb-3">
             Hôm nay <span className="text-[#4f46e5] font-black">Vũ Trụ</span> mách bạn ăn gì?
           </h1>
-          <p className="text-sm sm:text-base text-stone-600 max-w-xl mx-auto font-normal leading-relaxed">
+          <p className="text-sm sm:text-base text-stone-600 max-w-2xl mx-auto font-normal leading-relaxed">
             Lật mở một lá bài Tarot bất kỳ để tiếp nhận lời tiên tri vị giác. Mỗi quẻ là một món ăn duy nhất — <strong className="text-stone-800 font-semibold">tuyệt đối không trùng lặp!</strong>
           </p>
 
@@ -940,33 +940,25 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
           )}
         </div>
 
-        {/* Zodiac Horoscope Selector (Hiển thị đầy đủ 12 Cung & Vũ Trụ) - Nền màu thẻ bài chuyển sắc */}
-        <div className="relative z-10 max-w-5xl mx-auto mb-6 p-3.5 sm:p-5 rounded-2xl bg-gradient-to-r from-[#1b0736] via-[#3d1269] to-[#1b0736] border-2 border-amber-400/60 shadow-2xl overflow-hidden text-white">
-          {/* Ornate Gold Corner Flourishes */}
-          <TarotCornerFlourish position="tl" />
-          <TarotCornerFlourish position="tr" />
-          <TarotCornerFlourish position="bl" />
-          <TarotCornerFlourish position="br" />
-
-          {/* Secondary Inset Gold Hairline Frame */}
-          <div className="absolute inset-1.5 rounded-xl border border-amber-400/20 pointer-events-none" />
-
-          <div className="flex items-center justify-between mb-3 px-1 relative z-10">
-            <h2 className="text-xs font-black uppercase tracking-wider flex items-center gap-2 m-0">
+        {/* Zodiac Horoscope Selector (Hiển thị đầy đủ 12 Cung & Vũ Trụ) - Mở rộng toàn diện, bỏ khung viền vàng */}
+        <div className="relative z-10 w-full mb-8 p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-[#17052e] via-[#2b0c4f] to-[#17052e] border border-purple-800/50 shadow-xl overflow-hidden text-white">
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-4 px-1 relative z-10">
+            <h2 className="text-xs sm:text-sm font-black uppercase tracking-wider flex items-center gap-2 m-0">
               <Sparkles className="w-4 h-4 text-amber-400 animate-spin-slow" />
               <span className="bg-gradient-to-r from-amber-200 via-yellow-300 to-amber-200 bg-clip-text text-transparent font-black">
                 CHỌN CUNG HOÀNG ĐẠO (ĐẦY ĐỦ 12 CUNG & VŨ TRỤ):
               </span>
             </h2>
-            <span className="text-xs text-amber-200/80 font-semibold hidden sm:inline">
-              13 năng lượng vị giác
+            <span className="text-xs text-purple-200 font-semibold">
+              ✦ 13 năng lượng vị giác
             </span>
           </div>
 
-          {/* Fully visible wrap container - no cut-offs or hidden scrollbars */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 relative z-10">
+          {/* Lưới các cung hoàng đạo rộng rãi, bề thế, dễ thao tác */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-2 sm:gap-2.5 relative z-10 w-full">
             {ZODIAC_SIGNS.map((z) => {
               const isSelected = selectedZodiac.id === z.id;
+              const isUniversal = z.id === 'all';
               return (
                 <button
                   key={z.id}
@@ -974,44 +966,46 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                     setSelectedZodiac(z);
                     tarotAudio.playCandleSpark();
                   }}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer shadow-2xs ${
+                  className={`px-3 sm:px-3.5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-[13px] font-bold flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer shadow-sm w-full text-center ${
+                    isUniversal ? 'col-span-2 sm:col-span-1 md:col-span-2 lg:col-span-1' : ''
+                  } ${
                     isSelected
-                      ? 'bg-gradient-to-r from-amber-400 to-yellow-400 text-stone-950 font-black shadow-[0_0_15px_rgba(245,158,11,0.5)] scale-105 border border-amber-200'
-                      : 'bg-white/10 hover:bg-white/20 text-stone-200 hover:text-white border border-white/15 hover:border-amber-400/60'
+                      ? 'bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-400 text-stone-950 font-black shadow-[0_0_18px_rgba(245,158,11,0.55)] scale-[1.02] border border-amber-100 ring-2 ring-amber-400/40'
+                      : 'bg-white/10 hover:bg-white/20 text-stone-100 hover:text-white border border-white/15 hover:border-purple-400/60'
                   }`}
                 >
-                  <span className="text-sm">{z.symbol}</span>
-                  <span className="whitespace-nowrap">{z.name}</span>
+                  <span className="text-sm sm:text-base shrink-0">{z.symbol}</span>
+                  <span className="truncate">{z.name}</span>
                 </button>
               );
             })}
           </div>
-          <div className="mt-3 text-left text-xs text-amber-100 px-3.5 py-2 rounded-xl bg-gradient-to-r from-[#140529]/95 via-[#260a45]/90 to-[#140529]/95 border border-amber-400/30 flex items-center gap-2 shadow-inner relative z-10">
-            <span className="text-amber-300 font-bold">🔮 Khẩu vị {selectedZodiac.name}:</span>
-            <strong className="text-stone-100 font-medium">{selectedZodiac.cravingDesc}</strong>
+          <div className="mt-4 text-left text-xs sm:text-sm text-purple-100 px-4 py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-[#100324]/95 via-[#1e073b]/90 to-[#100324]/95 border border-purple-700/40 flex flex-wrap sm:flex-nowrap items-center gap-2 shadow-inner relative z-10">
+            <span className="text-amber-300 font-bold shrink-0">🔮 Khẩu vị {selectedZodiac.name}:</span>
+            <strong className="text-stone-100 font-medium leading-relaxed">{selectedZodiac.cravingDesc}</strong>
           </div>
         </div>
 
         {/* State 1: Deck of 12 Mystical Arcana Cards */}
         {!revealedResult ? (
-          <div className="relative z-10">
-            <div className="text-center mb-5">
-              <h2 className="text-xs sm:text-sm font-black text-stone-800 uppercase tracking-widest flex items-center justify-center gap-2 m-0">
+          <div className="relative z-10 w-full">
+            <div className="text-center mb-6">
+              <h2 className="text-xs sm:text-sm md:text-base font-black text-stone-800 uppercase tracking-widest flex items-center justify-center gap-2 m-0">
                 <Sparkles className="w-4 h-4 text-amber-500" />
                 Chọn 1 lá bài bạn cảm thấy gắn kết tâm linh nhất để khai quẻ:
                 <Sparkles className="w-4 h-4 text-amber-500" />
               </h2>
             </div>
 
-          {/* 12 Majestic 3D Holographic Tarot Cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4 mb-8">
+          {/* 12 Majestic 3D Holographic Tarot Cards - Mở rộng to đẹp, thoáng đãng */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5 sm:gap-4 md:gap-5 mb-10 w-full">
             {TAROT_ARCHETYPES.map((arc) => {
               return (
                 <button
                   key={arc.id}
                   disabled={isFlipping}
                   onClick={() => drawNextUniqueDish(arc)}
-                  className={`group relative aspect-[1/1.75] rounded-2xl bg-gradient-to-b ${arc.cardBg} p-3 flex flex-col items-center justify-between border-2 ${arc.borderGlow} ${arc.glowAura} hover:-translate-y-2.5 hover:scale-[1.03] transition-all duration-500 shadow-xl cursor-pointer overflow-hidden text-center select-none ${
+                  className={`group relative aspect-[1/1.6] min-h-[290px] sm:min-h-[330px] rounded-2xl bg-gradient-to-b ${arc.cardBg} p-3 sm:p-3.5 flex flex-col items-center justify-between border-2 ${arc.borderGlow} ${arc.glowAura} hover:-translate-y-2.5 hover:scale-[1.03] transition-all duration-500 shadow-xl cursor-pointer overflow-hidden text-center select-none ${
                     isFlipping ? 'opacity-50 pointer-events-none scale-95' : ''
                   }`}
                 >
@@ -1029,40 +1023,40 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                   <div className="absolute inset-2 rounded-lg border border-dashed border-amber-500/15 pointer-events-none" />
 
                   {/* Top Tarot Cartouche: Roman Numeral & Astral Glyph */}
-                  <div className="w-full relative z-10 pt-1 flex items-center justify-between px-1">
-                    <span className="text-[11px] font-black tracking-widest text-amber-300 drop-shadow">
+                  <div className="w-full relative z-10 pt-1 flex items-center justify-between px-1.5">
+                    <span className="text-[11px] sm:text-xs font-black tracking-widest text-amber-300 drop-shadow">
                       ✦ {arc.romanNumeral} ✦
                     </span>
-                    <span className="text-xs text-amber-300/90 font-mono font-bold">
+                    <span className="text-xs sm:text-sm text-amber-300/90 font-mono font-bold">
                       {arc.astralSign}
                     </span>
                   </div>
 
                   {/* Center Sacred Geometry Arcana Sigil with Gothic Arch Frame */}
-                  <div className="my-auto relative z-10 flex flex-col items-center justify-center py-1.5 w-full">
+                  <div className="my-auto relative z-10 flex flex-col items-center justify-center py-2 w-full">
                     {/* Arch Backdrop glow */}
-                    <div className={`relative p-2 rounded-2xl ${arc.archBg} border ${arc.archBorder} transition-all duration-300 shadow-inner group-hover:scale-[1.04]`}>
+                    <div className={`relative p-2.5 rounded-2xl ${arc.archBg} border ${arc.archBorder} transition-all duration-300 shadow-inner group-hover:scale-[1.05]`}>
                       <TarotSigilArt type={arc.sigilType} />
                     </div>
 
                     {/* Tarot Card Title Plate */}
-                    <div className="mt-2 px-1">
-                      <div className="text-xs sm:text-[13px] font-extrabold text-white group-hover:text-amber-300 transition-colors tracking-wide leading-tight drop-shadow">
+                    <div className="mt-2.5 px-1 w-full">
+                      <div className="text-[13px] sm:text-sm md:text-[15px] font-black text-white group-hover:text-amber-300 transition-colors tracking-wide leading-tight drop-shadow">
                         {arc.name}
                       </div>
-                      <div className="text-[9px] text-amber-300/80 italic tracking-wider line-clamp-1 mt-0.5">
+                      <div className="text-[9.5px] sm:text-[10px] text-amber-300/80 italic tracking-wider truncate mt-0.5">
                         {arc.latin}
                       </div>
-                      <div className="text-[8.5px] text-stone-300/75 line-clamp-1 mt-0.5 font-medium">
+                      <div className="text-[9px] sm:text-[9.5px] text-stone-300/80 truncate mt-0.5 font-medium">
                         {arc.subtitle.split('&')[0]}
                       </div>
                     </div>
                   </div>
 
                   {/* Bottom Action Prompt Ribbon */}
-                  <div className="w-full relative z-10 pt-1.5 pb-0.5 border-t border-amber-400/25">
-                    <div className="text-[10px] font-bold text-amber-300 group-hover:text-amber-200 flex items-center justify-center gap-1 tracking-wider">
-                      <Sparkles className="w-3 h-3 text-amber-400 group-hover:animate-spin-slow" />
+                  <div className="w-full relative z-10 pt-2 pb-0.5 border-t border-amber-400/25">
+                    <div className="text-[10.5px] sm:text-[11px] font-bold text-amber-300 group-hover:text-amber-200 flex items-center justify-center gap-1 tracking-wider">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-400 group-hover:animate-spin-slow" />
                       Khai Mở Quẻ
                     </div>
                   </div>
@@ -1071,17 +1065,8 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
             })}
           </div>
 
-          {/* Celestial Draw Action Banner - Nền màu thẻ bài */}
-          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#200b40] via-[#16062c] to-[#270c4a] border-2 border-amber-400/60 shadow-2xl p-4 sm:p-5 max-w-4xl mx-auto my-6 text-white group">
-            {/* Ornate Gold Corner Flourishes */}
-            <TarotCornerFlourish position="tl" />
-            <TarotCornerFlourish position="tr" />
-            <TarotCornerFlourish position="bl" />
-            <TarotCornerFlourish position="br" />
-
-            {/* Secondary Inset Gold Hairline Frame */}
-            <div className="absolute inset-1.5 rounded-xl border border-amber-400/20 pointer-events-none" />
-
+          {/* Celestial Draw Action Banner - Mở rộng, viền tối huyền bí thanh lịch */}
+          <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#1b0736] via-[#280c4c] to-[#1b0736] border border-purple-700/50 shadow-xl p-4 sm:p-6 w-full max-w-5xl mx-auto my-8 text-white group">
             <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="flex items-start gap-3.5 text-left">
                 <div className="w-11 h-11 rounded-xl bg-[#34115f] border border-purple-400/30 flex items-center justify-center text-purple-300 shadow-inner shrink-0 mt-0.5">
