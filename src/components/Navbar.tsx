@@ -1,5 +1,6 @@
 import React from 'react';
-import { UtensilsCrossed, Sparkles, Disc, Compass, Share2 } from 'lucide-react';
+import { UtensilsCrossed, Sparkles, Disc, Compass, Share2, MapPin, Check } from 'lucide-react';
+import { motion } from 'motion/react';
 import { UserLocation } from '../types';
 import { TAB_CONFIG, TabType } from '../utils/navigation';
 
@@ -16,6 +17,8 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({
   activeTab,
   setActiveTab,
+  userLocation,
+  onOpenLocationModal,
 }) => {
   const [copied, setCopied] = React.useState(false);
 
@@ -26,151 +29,179 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   const handleNavClick = (tab: TabType, e: React.MouseEvent<HTMLAnchorElement>) => {
-    // If middle click or holding ctrl/meta, allow default browser behavior (open new tab)
     if (e.ctrlKey || e.metaKey || e.button === 1) return;
     e.preventDefault();
     setActiveTab(tab);
   };
 
+  const navItems: Array<{
+    id: TabType;
+    label: string;
+    shortLabel: string;
+    path: string;
+    icon: React.ReactNode;
+  }> = [
+    {
+      id: 'tarot',
+      label: TAB_CONFIG.tarot.label,
+      shortLabel: TAB_CONFIG.tarot.shortLabel,
+      path: TAB_CONFIG.tarot.path,
+      icon: <Compass className="w-4 h-4" />,
+    },
+    {
+      id: 'wheel',
+      label: TAB_CONFIG.wheel.label,
+      shortLabel: TAB_CONFIG.wheel.shortLabel,
+      path: TAB_CONFIG.wheel.path,
+      icon: <Disc className="w-4 h-4" />,
+    },
+    {
+      id: 'ai',
+      label: TAB_CONFIG.ai.label,
+      shortLabel: TAB_CONFIG.ai.shortLabel,
+      path: TAB_CONFIG.ai.path,
+      icon: <Sparkles className="w-4 h-4" />,
+    },
+    {
+      id: 'catalog',
+      label: TAB_CONFIG.catalog.label,
+      shortLabel: TAB_CONFIG.catalog.shortLabel,
+      path: TAB_CONFIG.catalog.path,
+      icon: <UtensilsCrossed className="w-4 h-4" />,
+    },
+  ];
+
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-xs">
+    <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-stone-200/70 transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20">
+        <div className="flex items-center justify-between h-16 sm:h-18">
           
-          {/* Brand logo */}
+          {/* Brand logo & Identity */}
           <a 
             href={TAB_CONFIG.tarot.path}
             onClick={(e) => handleNavClick('tarot', e)}
-            className="flex items-center gap-3 group"
+            className="flex items-center gap-3 group shrink-0 select-none"
             role="img"
-            aria-label="Logo thương hiệu Hôm Nay Ăn Gì - Ứng dụng gợi ý món ăn chuẩn vị"
+            aria-label="Logo thương hiệu Hôm Nay Ăn Gì"
           >
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white shadow-md shadow-orange-500/20 group-hover:scale-105 transition-transform">
-              <UtensilsCrossed className="w-5 h-5 sm:w-6 sm:h-6" />
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-600 flex items-center justify-center text-white shadow-sm shadow-orange-500/20 group-hover:scale-105 transition-transform duration-200">
+              <UtensilsCrossed className="w-5 h-5 text-white" />
             </div>
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-extrabold text-lg sm:text-xl tracking-tight text-stone-900">
-                  Hôm Nay <span className="text-orange-600">Ăn Gì?</span>
-                </span>
-              </div>
-              <p className="text-xs text-stone-500 hidden sm:block">
-                Gợi ý món chuẩn vị
-              </p>
+            <div className="flex flex-col">
+              <span className="font-extrabold text-base sm:text-lg tracking-tight text-stone-900 leading-tight">
+                Hôm Nay <span className="text-orange-600">Ăn Gì?</span>
+              </span>
+              <span className="text-[11px] text-stone-400 font-medium hidden sm:block tracking-wide">
+                Gợi ý ẩm thực thông minh
+              </span>
             </div>
           </a>
 
-          {/* Navigation Links */}
-          <nav aria-label="Menu điều hướng chính" className="hidden md:flex items-center gap-1 bg-stone-100/80 p-1.5 rounded-xl border border-stone-200/60">
-            <a
-              href={TAB_CONFIG.tarot.path}
-              onClick={(e) => handleNavClick('tarot', e)}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all ${
-                activeTab === 'tarot'
-                  ? 'bg-white text-indigo-700 shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900 hover:bg-stone-200/50'
-              }`}
-            >
-              <Compass className="w-4 h-4 text-indigo-600" />
-              <span>{TAB_CONFIG.tarot.label}</span>
-            </a>
+          {/* Minimalist Modern Pill Tab Menu with Fluid Motion Slider */}
+          <nav 
+            aria-label="Menu điều hướng chính" 
+            className="hidden md:flex items-center bg-stone-100/80 p-1.5 rounded-full border border-stone-200/60 shadow-xs"
+          >
+            {navItems.map((item) => {
+              const isActive = activeTab === item.id;
+              return (
+                <a
+                  key={item.id}
+                  href={item.path}
+                  onClick={(e) => handleNavClick(item.id, e)}
+                  className={`relative flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-colors select-none cursor-pointer ${
+                    isActive ? 'text-stone-900 font-semibold' : 'text-stone-500 hover:text-stone-900'
+                  }`}
+                >
+                  {/* Fluid active animated pill sliding underneath */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="navbar-active-pill"
+                      className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
 
-            <a
-              href={TAB_CONFIG.wheel.path}
-              onClick={(e) => handleNavClick('wheel', e)}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all ${
-                activeTab === 'wheel'
-                  ? 'bg-white text-orange-600 shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900 hover:bg-stone-200/50'
-              }`}
-            >
-              <Disc className="w-4 h-4" />
-              <span>{TAB_CONFIG.wheel.label}</span>
-            </a>
-
-            <a
-              href={TAB_CONFIG.ai.path}
-              onClick={(e) => handleNavClick('ai', e)}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all ${
-                activeTab === 'ai'
-                  ? 'bg-white text-purple-600 shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900 hover:bg-stone-200/50'
-              }`}
-            >
-              <Sparkles className="w-4 h-4 text-purple-600" />
-              <span>{TAB_CONFIG.ai.label}</span>
-            </a>
-
-            <a
-              href={TAB_CONFIG.catalog.path}
-              onClick={(e) => handleNavClick('catalog', e)}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all ${
-                activeTab === 'catalog'
-                  ? 'bg-white text-orange-600 shadow-xs'
-                  : 'text-stone-600 hover:text-stone-900 hover:bg-stone-200/50'
-              }`}
-            >
-              <UtensilsCrossed className="w-4 h-4" />
-              <span>{TAB_CONFIG.catalog.label}</span>
-            </a>
+                  <span className={`relative z-10 transition-colors ${
+                    isActive ? 'text-orange-600' : 'text-stone-400 group-hover:text-stone-600'
+                  }`}>
+                    {item.icon}
+                  </span>
+                  <span className="relative z-10 tracking-tight">{item.label}</span>
+                </a>
+              );
+            })}
           </nav>
 
           {/* Right Action buttons */}
-          <div className="flex items-center gap-2">
-            {/* Share button */}
+          <div className="flex items-center gap-2 shrink-0">
+            {onOpenLocationModal && (
+              <button
+                onClick={onOpenLocationModal}
+                title="Vị trí của bạn"
+                className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-stone-200/80 bg-white hover:bg-stone-50 text-stone-700 transition-colors text-xs font-medium cursor-pointer shadow-2xs"
+              >
+                <MapPin className="w-3.5 h-3.5 text-orange-500" />
+                <span className="max-w-[110px] truncate">
+                  {userLocation?.city || 'Vị trí'}
+                </span>
+              </button>
+            )}
+
             <button
               onClick={handleShare}
-              title="Chia sẻ đường dẫn trang hiện tại"
-              className="px-3 py-2 rounded-xl border border-stone-200 hover:bg-stone-100 text-stone-600 transition-colors flex items-center gap-1.5 text-xs font-medium shadow-2xs cursor-pointer"
+              title="Chia sẻ liên kết"
+              className={`px-3.5 py-1.5 rounded-full border transition-all duration-200 flex items-center gap-1.5 text-xs font-medium cursor-pointer shadow-2xs ${
+                copied
+                  ? 'bg-emerald-50 border-emerald-300 text-emerald-700'
+                  : 'border-stone-200/80 bg-white hover:bg-stone-50 text-stone-700'
+              }`}
             >
-              <Share2 className="w-4 h-4" />
-              <span className="hidden sm:inline">{copied ? 'Đã sao chép link!' : 'Chia sẻ'}</span>
+              {copied ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  <span className="font-semibold">Đã chép</span>
+                </>
+              ) : (
+                <>
+                  <Share2 className="w-3.5 h-3.5 text-stone-500" />
+                  <span className="hidden sm:inline">Chia sẻ</span>
+                </>
+              )}
             </button>
           </div>
         </div>
 
-        {/* Mobile secondary tab bar */}
-        <nav aria-label="Menu điều hướng di động" className="md:hidden flex items-center justify-between overflow-x-auto py-2 border-t border-stone-100 no-scrollbar gap-1">
-          <a
-            href={TAB_CONFIG.tarot.path}
-            onClick={(e) => handleNavClick('tarot', e)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
-              activeTab === 'tarot' ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-stone-600'
-            }`}
-          >
-            <Compass className="w-3.5 h-3.5 text-indigo-600" />
-            {TAB_CONFIG.tarot.shortLabel}
-          </a>
-          <a
-            href={TAB_CONFIG.wheel.path}
-            onClick={(e) => handleNavClick('wheel', e)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
-              activeTab === 'wheel' ? 'bg-orange-50 text-orange-600 font-bold' : 'text-stone-600'
-            }`}
-          >
-            <Disc className="w-3.5 h-3.5" />
-            {TAB_CONFIG.wheel.shortLabel}
-          </a>
-          <a
-            href={TAB_CONFIG.ai.path}
-            onClick={(e) => handleNavClick('ai', e)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
-              activeTab === 'ai' ? 'bg-purple-50 text-purple-600 font-bold' : 'text-stone-600'
-            }`}
-          >
-            <Sparkles className="w-3.5 h-3.5" />
-            {TAB_CONFIG.ai.shortLabel}
-          </a>
-          <a
-            href={TAB_CONFIG.catalog.path}
-            onClick={(e) => handleNavClick('catalog', e)}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors ${
-              activeTab === 'catalog' ? 'bg-orange-50 text-orange-600 font-bold' : 'text-stone-600'
-            }`}
-          >
-            <UtensilsCrossed className="w-3.5 h-3.5" />
-            {TAB_CONFIG.catalog.shortLabel}
-          </a>
+        {/* Mobile Modern Pill Slider */}
+        <nav 
+          aria-label="Menu điều hướng di động" 
+          className="md:hidden flex items-center justify-between p-1 my-1.5 rounded-full bg-stone-100/90 border border-stone-200/60"
+        >
+          {navItems.map((item) => {
+            const isActive = activeTab === item.id;
+            return (
+              <a
+                key={item.id}
+                href={item.path}
+                onClick={(e) => handleNavClick(item.id, e)}
+                className={`relative flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-full text-xs font-medium transition-colors select-none text-center ${
+                  isActive ? 'text-stone-900 font-semibold' : 'text-stone-500'
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="mobile-navbar-active-pill"
+                    className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className={`relative z-10 ${isActive ? 'text-orange-600' : 'text-stone-400'}`}>
+                  {item.icon}
+                </span>
+                <span className="relative z-10 text-[11.5px] leading-none">{item.shortLabel}</span>
+              </a>
+            );
+          })}
         </nav>
       </div>
     </header>
