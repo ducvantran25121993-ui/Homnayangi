@@ -17,7 +17,9 @@ export interface Dish {
     | 'an_vat'
     | 'lau_nuong'
     | 'healthy'
-    | 'fastfood';
+    | 'fastfood'
+    | 'do_uong'
+    | 'mon_nhau';
   mealTime: ('sang' | 'trua' | 'toi' | 'an_vat' | 'an_dem')[];
   priceRange: string;
   estimatedPrice: number; // in VND

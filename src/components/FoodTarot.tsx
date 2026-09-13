@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   Compass,
   Sparkles,
@@ -18,6 +18,7 @@ import {
   Sparkle,
 } from 'lucide-react';
 import { INITIAL_DISHES } from '../data/dishes';
+import { TAROT_REALMS, TarotRealmId, isDishInRealm } from '../data/tarotRealms';
 import { Dish, AffiliateConfig, UserLocation } from '../types';
 import { trackAndOpenAffiliateLink, formatVND } from '../utils/affiliate';
 import { formatLocationDisplay } from '../utils/location';
@@ -696,6 +697,24 @@ function getTarotQuoteWithZodiac(dish: Dish, zodiac: ZodiacSign, isUpright: bool
   const name = dish.vietnameseName || dish.name;
 
   if (!isUpright) {
+    if (dish.category === 'do_uong') {
+      return {
+        quote: `"Lá bài nghịch chiều cảnh báo: Thức uống ${name} hôm nay thơm ngon mê đắm, coi chừng uống ngon quá lại gọi thêm ly nữa không ngủ được nhé!"`,
+        warning: `Nhớ dặn quán giảm độ ngọt hoặc ít đá cho vừa vặn thể trạng và nạp năng lượng hài hòa hôm nay!`,
+      };
+    }
+    if (dish.category === 'mon_nhau') {
+      return {
+        quote: `"Lá bài nghịch chiều xuất hiện: Mồi nhắm ${name} hôm nay quá đỗi hao bia tốn rượu, coi chừng chiến hữu mải vui mà quên lối về!"`,
+        warning: `Vui có chừng, nhớ uống thêm nước lọc và tuyệt đối đã uống rượu bia thì không lái xe bạn nhé!`,
+      };
+    }
+    if (dish.category === 'an_vat') {
+      return {
+        quote: `"Lá bài nghịch chiều sấm truyền: Đồ ăn vặt ${name} hôm nay quyến rũ bất ngờ, ăn vui miệng dễ bị 'lố' chỉ tiêu calorie trong ngày!"`,
+        warning: `Hãy rủ thêm bạn bè cùng nhâm nhi để nhân đôi niềm vui và giữ dáng nhẹ nhàng nhé!`,
+      };
+    }
     // Reversed (Nghịch chiều) reading: humorous cosmic warning
     return {
       quote: `"Lá bài nghịch chiều xuất hiện như một cú chớp mắt của Vũ Trụ: Món ${name} hôm nay mang năng lượng mê hoặc cực mạnh, vị ngon quá đậm đà dễ khiến bạn ăn quên đường về!"`,
@@ -722,12 +741,49 @@ function getTarotQuoteWithZodiac(dish: Dish, zodiac: ZodiacSign, isUpright: bool
       zodiacAdvice = `Vũ Trụ quy tụ tinh hoa tứ phương để ban tặng cho bạn khoảnh khắc vị giác thăng hoa nhất.`;
   }
 
+  if (dish.category === 'do_uong') {
+    return {
+      quote: `"Các vì sao quy tụ dòng chảy linh thủy: ${name} chính là tiên dược giải khát đánh thức mọi giác quan hôm nay! ${zodiacAdvice} Hãy tận hưởng từng ngụm mát lành để nạp đầy sinh khí!"`,
+    };
+  }
+  if (dish.category === 'mon_nhau') {
+    return {
+      quote: `"Càn khôn hội ngộ men say ẩm thực: Mồi nhắm ${name} chính là tâm điểm kết nối tình bằng hữu hôm nay! ${zodiacAdvice} Thưởng thức thảnh thơi, lai rai trọn vị!"`,
+    };
+  }
+  if (dish.category === 'an_vat') {
+    return {
+      quote: `"Thiên hà trải chiếu vị ngọt xế chiều: Món ${name} sinh ra để xoa dịu những mệt mỏi trong ngày! ${zodiacAdvice} Thưởng thức vui vẻ, yêu đời rạng rỡ!"`,
+    };
+  }
+
   return {
     quote: `"Các vì sao đã hội tụ và sấm truyền: ${name} chính là chân ái ẩm thực định mệnh của bạn hôm nay! ${zodiacAdvice} Hãy an tâm thưởng thức để tiếp nhận trọn vẹn phước lành!"`,
   };
 }
 
 function getDishCosmicInfo(dish: Dish): { elementText: string; elementClass: string; luckyHours: string } {
+  if (dish.category === 'do_uong') {
+    return {
+      elementText: 'Thủy Dược (Thanh Khiết & Tỉnh Thức)',
+      elementClass: 'text-cyan-300 bg-cyan-950/70 border-cyan-500/40',
+      luckyHours: '08:30 - 10:30 hoặc 14:00 - 16:30',
+    };
+  }
+  if (dish.category === 'an_vat') {
+    return {
+      elementText: 'Nguyệt Tinh (Miên Man & Thư Thái)',
+      elementClass: 'text-pink-300 bg-pink-950/70 border-pink-500/40',
+      luckyHours: '15:00 - 17:30 hoặc 20:30 - 22:30',
+    };
+  }
+  if (dish.category === 'mon_nhau') {
+    return {
+      elementText: 'Túy Tinh (Hào Khí & Bằng Hữu)',
+      elementClass: 'text-amber-300 bg-amber-950/70 border-amber-500/40',
+      luckyHours: '18:00 - 23:30',
+    };
+  }
   if (['nuong_chien', 'pizza_pasta'].includes(dish.category)) {
     return {
       elementText: 'Hỏa Tinh (Nhiệt Huyết & Quyết Đoán)',
@@ -786,6 +842,31 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
   const [isFlipping, setIsFlipping] = useState(false);
   const [justRecycled, setJustRecycled] = useState(false);
 
+  // 4 Cõi Ẩm Thực: Thực Cảnh, Đồ Miên, Thủy Dược, Túy Vị
+  const [activeRealm, setActiveRealm] = useState<TarotRealmId>('thuc_canh');
+
+  const currentRealmObj = useMemo(() => {
+    return TAROT_REALMS.find((r) => r.id === activeRealm) || TAROT_REALMS[0];
+  }, [activeRealm]);
+
+  const activeRealmDishes = useMemo(() => {
+    return INITIAL_DISHES.filter((d) => isDishInRealm(d, activeRealm));
+  }, [activeRealm]);
+
+  const realmDrawnIds = useMemo(() => {
+    const realmDishIdSet = new Set(activeRealmDishes.map((d) => d.id));
+    return drawnDishIds.filter((id) => realmDishIdSet.has(id));
+  }, [drawnDishIds, activeRealmDishes]);
+
+  const realmRemainingCount = Math.max(0, activeRealmDishes.length - realmDrawnIds.length);
+
+  const handleSelectRealm = (realmId: TarotRealmId) => {
+    if (realmId === activeRealm) return;
+    setActiveRealm(realmId);
+    setRevealedResult(null);
+    tarotAudio.playCandleSpark();
+  };
+
   // Mystic Ritual & Ambience States
   const [isCandleLit, setIsCandleLit] = useState(true);
   const [candlePuffs, setCandlePuffs] = useState(0);
@@ -826,20 +907,27 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
       archetype ||
       TAROT_ARCHETYPES[Math.floor(Math.random() * TAROT_ARCHETYPES.length)];
 
-    let pool = INITIAL_DISHES.filter((d) => !drawnDishIds.includes(d.id));
+    // Draw STRICTLY from active realm's dishes pool!
+    let pool = activeRealmDishes.filter((d) => !drawnDishIds.includes(d.id));
     let recycled = false;
 
     if (pool.length === 0) {
-      pool = [...INITIAL_DISHES];
+      // Recycle only this realm's dishes in the history
+      const realmDishIdSet = new Set(activeRealmDishes.map((d) => d.id));
+      const keptDrawnIds = drawnDishIds.filter((id) => !realmDishIdSet.has(id));
+      pool = [...activeRealmDishes];
       recycled = true;
       setJustRecycled(true);
       setTimeout(() => setJustRecycled(false), 4000);
+      setDrawnDishIds(keptDrawnIds);
     }
 
     const randomIndex = Math.floor(Math.random() * pool.length);
     const selectedDish = pool[randomIndex];
 
-    const newDrawnIds = recycled ? [selectedDish.id] : [...drawnDishIds, selectedDish.id];
+    const newDrawnIds = recycled
+      ? [...drawnDishIds.filter((id) => !activeRealmDishes.some((d) => d.id === id)), selectedDish.id]
+      : [...drawnDishIds, selectedDish.id];
     setDrawnDishIds(newDrawnIds);
 
     const cosmicInfo = getDishCosmicInfo(selectedDish);
@@ -860,7 +948,7 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
       luckyHours: cosmicInfo.luckyHours,
       elementText: cosmicInfo.elementText,
       elementClass: cosmicInfo.elementClass,
-      drawOrder: newDrawnIds.length,
+      drawOrder: realmDrawnIds.length + 1,
     };
 
     setTimeout(() => {
@@ -877,13 +965,10 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
   };
 
   const handleResetCycle = () => {
-    setDrawnDishIds([]);
-    try {
-      localStorage.removeItem(LOCAL_STORAGE_KEY);
-    } catch {
-      // ignore
-    }
+    const realmDishIdSet = new Set(activeRealmDishes.map((d) => d.id));
+    setDrawnDishIds((prev) => prev.filter((id) => !realmDishIdSet.has(id)));
     setRevealedResult(null);
+    tarotAudio.playSingingBowl();
   };
 
   const handleOpenAmulet = () => {
@@ -906,7 +991,6 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
     });
   };
 
-  const remainingCount = Math.max(0, INITIAL_DISHES.length - drawnDishIds.length);
   const targetArea = userLocation.district || userLocation.city;
 
   return (
@@ -980,36 +1064,86 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
           <p className="text-sm sm:text-base text-stone-600 max-w-2xl mx-auto font-normal leading-relaxed">
             Lật mở một lá bài Tarot bất kỳ để tiếp nhận lời tiên tri vị giác. Mỗi quẻ là một món ăn duy nhất — <strong className="text-stone-800 font-semibold">tuyệt đối không trùng lặp!</strong>
           </p>
+        </div>
 
-          {/* Counter & Status Bar */}
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200 shadow-xs">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-              Đã mở: <strong className="text-emerald-950 font-bold">{drawnDishIds.length}</strong> / {INITIAL_DISHES.length} món
-            </div>
+        {/* 4 TAB CÕI ẨM THỰC: THỰC CẢNH - ĐỒ MIÊN - THỦY DƯỢC - TÚY VỊ (VỊ TRÍ BÔI ĐỎ) */}
+        <div className="relative z-10 w-full mb-8">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3.5">
+            {TAROT_REALMS.map((realm) => {
+              const isActive = activeRealm === realm.id;
+              const countInRealm = INITIAL_DISHES.filter((d) => isDishInRealm(d, realm.id)).length;
+              return (
+                <button
+                  key={realm.id}
+                  type="button"
+                  onClick={() => handleSelectRealm(realm.id)}
+                  className={`group relative p-3 sm:p-4 rounded-2xl sm:rounded-3xl border text-left transition-all duration-300 cursor-pointer overflow-hidden ${
+                    isActive
+                      ? `bg-gradient-to-br from-[#1b0633] via-[#280a47] to-[#120324] ${realm.activeBorder} shadow-xl ring-2 ring-amber-300/50 scale-[1.02]`
+                      : 'bg-white/85 hover:bg-white border-purple-200/70 hover:border-purple-300 text-stone-700 hover:shadow-md'
+                  }`}
+                  style={isActive ? { boxShadow: `0 8px 25px ${realm.glowColor}` } : undefined}
+                >
+                  {/* Top row: Emoji, Active Star & Count badge */}
+                  <div className="flex items-center justify-between gap-1.5 mb-2">
+                    <span className="text-2xl sm:text-3xl filter drop-shadow group-hover:scale-110 transition-transform duration-300">
+                      {realm.emoji}
+                    </span>
+                    <span
+                      className={`text-[10.5px] sm:text-xs font-black px-2.5 py-0.5 rounded-full border ${
+                        isActive
+                          ? realm.badgeColor
+                          : 'bg-stone-100 text-stone-600 border-stone-200'
+                      }`}
+                    >
+                      {countInRealm} món
+                    </span>
+                  </div>
 
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-indigo-50/80 text-indigo-700 font-semibold border border-indigo-200 shadow-xs">
-              <Sparkles className="w-4 h-4 text-indigo-600" />
-              Còn lại: <strong className="text-indigo-900 font-bold">{remainingCount}</strong> món chưa lật
-            </div>
+                  {/* Title & Subtitle */}
+                  <div className="mt-1">
+                    <div className="flex items-center gap-1.5">
+                      <span
+                        className={`text-base sm:text-lg font-black tracking-wide ${
+                          isActive ? 'text-white' : 'text-stone-900 group-hover:text-purple-900'
+                        }`}
+                      >
+                        {realm.name}
+                      </span>
+                      {isActive && (
+                        <span className="text-amber-300 text-xs animate-pulse">✦</span>
+                      )}
+                    </div>
+                    <p
+                      className={`text-[11px] sm:text-xs mt-0.5 line-clamp-1 font-medium ${
+                        isActive ? 'text-purple-200' : 'text-stone-500'
+                      }`}
+                    >
+                      {realm.shortDesc}
+                    </p>
+                  </div>
 
-            {drawnDishIds.length > 0 && (
-              <button
-                onClick={handleResetCycle}
-                title="Xóa lịch sử và bắt đầu lại chu kỳ mới"
-                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold transition-colors cursor-pointer border border-stone-300 shadow-xs"
-              >
-                <RotateCcw className="w-3.5 h-3.5" />
-                Làm mới chu kỳ
-              </button>
-            )}
+                  {/* Active Indicator Bar at bottom */}
+                  {isActive && (
+                    <div
+                      className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${realm.activeGradient}`}
+                    />
+                  )}
+                </button>
+              );
+            })}
           </div>
 
-          {justRecycled && (
-            <div className="mt-3 inline-block px-4 py-1.5 rounded-xl bg-amber-100 border border-amber-300 text-amber-900 text-xs font-bold animate-bounce">
-              🎉 Bạn đã khám phá hết toàn bộ thực đơn! Vũ trụ vừa làm mới vòng quay cho bạn.
+          {/* Slogan & Oracle Flavor of Active Realm */}
+          <div className="mt-3 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-[#17052c] via-[#240a3f] to-[#17052c] border border-purple-700/40 text-purple-100 flex items-center justify-between gap-2 text-xs sm:text-[13px] shadow-sm backdrop-blur-xs">
+            <div className="flex items-center gap-2 overflow-hidden">
+              <span className="text-amber-300 font-black shrink-0">✦ Cõi {currentRealmObj.name}:</span>
+              <span className="text-stone-200 italic line-clamp-1">{currentRealmObj.oracleFlavor}</span>
             </div>
-          )}
+            <span className="hidden md:inline-block text-[11px] font-bold text-amber-300/90 shrink-0">
+              {currentRealmObj.tagline}
+            </span>
+          </div>
         </div>
 
         {/* Zodiac Horoscope Selector (Thiết kế Đền Thờ Chiêm Tinh Tinh Vân Huyền Bí) */}
@@ -1293,7 +1427,8 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                     </span>
                   </div>
                   <p className="text-xs sm:text-[13px] text-stone-200 leading-relaxed max-w-xl font-normal">
-                    Thiên hà quy tụ hơn <strong className="text-amber-300 font-extrabold">{INITIAL_DISHES.length} phong vị trần gian</strong>. Mỗi quẻ bài khai mở là một chỉ dẫn duy nhất từ các vì sao — <span className="text-amber-300 underline decoration-amber-400 underline-offset-2 font-semibold">tuyệt đối không trùng lặp</span> trong suốt chu kỳ luân chuyển định mệnh!
+                    Cõi <strong className="text-amber-300 font-extrabold">{currentRealmObj.name}</strong> quy tụ{' '}
+                    <strong className="text-amber-300 font-extrabold">{activeRealmDishes.length} mỹ vị đặc sắc</strong> (trong tổng số {INITIAL_DISHES.length} món tứ cõi). Mỗi quẻ bài khai mở là một chỉ dẫn duy nhất từ các vì sao — <span className="text-amber-300 underline decoration-amber-400 underline-offset-2 font-semibold">tuyệt đối không trùng lặp</span> trong suốt chu kỳ!
                   </p>
                 </div>
               </div>
@@ -1309,7 +1444,7 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                 <div className="w-6 h-6 rounded-lg bg-stone-950/15 flex items-center justify-center">
                   <Dice5 className="w-4 h-4 text-stone-950" />
                 </div>
-                <span className="uppercase font-black">Khai Quẻ Định Mệnh</span>
+                <span className="uppercase font-black">Khai Quẻ {currentRealmObj.name}</span>
                 <Sparkles className="w-3.5 h-3.5 text-stone-950 animate-spin-slow" />
               </button>
             </div>
@@ -1344,7 +1479,11 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                       <TarotSigilArt type={revealedResult.archetype.sigilType} sizeClass="w-9 h-9" />
                     </div>
                     <div className="text-left">
-                      <div className={`text-[11px] font-bold ${theme.headerSubtext} uppercase tracking-wider flex items-center gap-1.5`}>
+                      <div className={`text-[11px] font-bold ${theme.headerSubtext} uppercase tracking-wider flex items-center gap-1.5 flex-wrap`}>
+                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-black border ${currentRealmObj.badgeColor}`}>
+                          {currentRealmObj.emoji} CÕI {currentRealmObj.name.toUpperCase()}
+                        </span>
+                        <span>•</span>
                         <span>{revealedResult.archetype.romanNumeral}</span>
                         <span>•</span>
                         <span>{revealedResult.archetype.latin}</span>

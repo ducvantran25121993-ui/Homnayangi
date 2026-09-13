@@ -7,6 +7,15 @@ import { SALAD_MONNHE_DISHES } from './dishes/salad_monnhe';
 import { LAU_CHAO_DISHES } from './dishes/lau_chao';
 import { PIZZA_PASTA_DISHES } from './dishes/pizza_pasta';
 import { DO_CHAY_DISHES } from './dishes/do_chay';
+import { DO_UONG_DISHES } from './dishes/do_uong';
+import { DO_AN_VAT_DISHES } from './dishes/do_an_vat';
+import { MON_NHAU_DISHES } from './dishes/mon_nhau';
+
+export {
+  DO_UONG_DISHES,
+  DO_AN_VAT_DISHES,
+  MON_NHAU_DISHES,
+};
 
 // Total dishes matching taxonomy categories
 export const INITIAL_DISHES: Dish[] = [
@@ -18,6 +27,9 @@ export const INITIAL_DISHES: Dish[] = [
   ...LAU_CHAO_DISHES,
   ...PIZZA_PASTA_DISHES,
   ...DO_CHAY_DISHES,
+  ...DO_AN_VAT_DISHES,
+  ...DO_UONG_DISHES,
+  ...MON_NHAU_DISHES,
 ];
 
 export interface WheelPreset {
