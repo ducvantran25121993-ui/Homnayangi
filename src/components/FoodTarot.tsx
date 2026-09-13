@@ -20,6 +20,7 @@ import {
 import { INITIAL_DISHES } from '../data/dishes';
 import { Dish, AffiliateConfig, UserLocation } from '../types';
 import { trackAndOpenAffiliateLink, formatVND } from '../utils/affiliate';
+import { formatLocationDisplay } from '../utils/location';
 import { DeliveryLocationBadge } from './DeliveryLocationBadge';
 import { tarotAudio } from '../utils/tarotSound';
 import { FoodAmuletModal, FoodAmuletData } from './FoodAmuletModal';
@@ -402,244 +403,244 @@ export interface ArchetypeColorTheme {
 
 export const ARCHETYPE_THEMES: Record<string, ArchetypeColorTheme> = {
   the_magician: {
-    borderCard: 'border-cyan-400',
-    shadowAura: 'shadow-[0_20px_60px_-15px_rgba(6,182,212,0.35)]',
-    headerGradient: 'from-cyan-900 via-sky-800 to-indigo-950',
-    headerBorder: 'border-cyan-500/60',
-    headerSubtext: 'text-cyan-200',
-    photoBorder: 'border-cyan-400',
-    dishBadgeBg: 'bg-cyan-400',
-    dishBadgeText: 'text-stone-950',
+    borderCard: 'border-cyan-500/50',
+    shadowAura: 'shadow-[0_0_50px_rgba(6,182,212,0.4)]',
+    headerGradient: 'from-[#071927] via-[#04101c] to-[#0a2336]',
+    headerBorder: 'border-cyan-500/40',
+    headerSubtext: 'text-cyan-300',
+    photoBorder: 'border-cyan-500/40',
+    dishBadgeBg: 'bg-cyan-500/30 border border-cyan-400/50',
+    dishBadgeText: 'text-cyan-200',
     dishPriceColor: 'text-cyan-300',
-    quoteBg: 'bg-cyan-50/80',
-    quoteBorder: 'border-cyan-200',
-    quoteText: 'text-cyan-950',
-    quoteHeader: 'text-cyan-800',
-    talismanBanner: 'from-cyan-100/80 via-sky-50 to-indigo-100/70',
-    talismanBorder: 'border-cyan-300',
-    talismanText: 'text-cyan-900',
-    talismanBtn: 'bg-cyan-600 hover:bg-cyan-700 text-white',
-    actionPrimaryBtn: 'from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700',
+    quoteBg: 'bg-[#081b28]/90',
+    quoteBorder: 'border-cyan-500/30',
+    quoteText: 'text-cyan-100',
+    quoteHeader: 'text-cyan-300',
+    talismanBanner: 'from-[#061826] via-[#040f1a] to-[#092233]',
+    talismanBorder: 'border-cyan-500/30',
+    talismanText: 'text-cyan-200',
+    talismanBtn: 'bg-cyan-600 hover:bg-cyan-500 text-white shadow-[0_0_15px_rgba(6,182,212,0.4)]',
+    actionPrimaryBtn: 'from-cyan-600 to-blue-700 hover:from-cyan-500 hover:to-blue-600 shadow-[0_0_20px_rgba(6,182,212,0.45)]',
   },
   the_high_priestess: {
-    borderCard: 'border-blue-400',
-    shadowAura: 'shadow-[0_20px_60px_-15px_rgba(59,130,246,0.35)]',
-    headerGradient: 'from-blue-900 via-indigo-900 to-slate-950',
-    headerBorder: 'border-blue-400/60',
-    headerSubtext: 'text-blue-200',
-    photoBorder: 'border-blue-400',
-    dishBadgeBg: 'bg-blue-400',
-    dishBadgeText: 'text-stone-950',
-    dishPriceColor: 'text-blue-300',
-    quoteBg: 'bg-blue-50/80',
-    quoteBorder: 'border-blue-200',
-    quoteText: 'text-blue-950',
-    quoteHeader: 'text-blue-800',
-    talismanBanner: 'from-blue-100/80 via-sky-50 to-indigo-100/70',
-    talismanBorder: 'border-blue-300',
-    talismanText: 'text-blue-900',
-    talismanBtn: 'bg-blue-600 hover:bg-blue-700 text-white',
-    actionPrimaryBtn: 'from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800',
+    borderCard: 'border-indigo-500/50',
+    shadowAura: 'shadow-[0_0_50px_rgba(99,102,241,0.4)]',
+    headerGradient: 'from-[#0b1030] via-[#060820] to-[#121946]',
+    headerBorder: 'border-indigo-500/40',
+    headerSubtext: 'text-indigo-300',
+    photoBorder: 'border-indigo-500/40',
+    dishBadgeBg: 'bg-indigo-500/30 border border-indigo-400/50',
+    dishBadgeText: 'text-indigo-200',
+    dishPriceColor: 'text-indigo-300',
+    quoteBg: 'bg-[#0c1236]/90',
+    quoteBorder: 'border-indigo-500/30',
+    quoteText: 'text-indigo-100',
+    quoteHeader: 'text-indigo-300',
+    talismanBanner: 'from-[#0a0f2e] via-[#05071e] to-[#111742]',
+    talismanBorder: 'border-indigo-500/30',
+    talismanText: 'text-indigo-200',
+    talismanBtn: 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]',
+    actionPrimaryBtn: 'from-indigo-600 to-purple-700 hover:from-indigo-500 hover:to-purple-600 shadow-[0_0_20px_rgba(99,102,241,0.45)]',
   },
   the_empress: {
-    borderCard: 'border-emerald-400',
-    shadowAura: 'shadow-[0_20px_60px_-15px_rgba(16,185,129,0.35)]',
-    headerGradient: 'from-emerald-900 via-teal-800 to-green-950',
-    headerBorder: 'border-emerald-500/60',
-    headerSubtext: 'text-emerald-200',
-    photoBorder: 'border-emerald-400',
-    dishBadgeBg: 'bg-emerald-400',
-    dishBadgeText: 'text-stone-950',
+    borderCard: 'border-emerald-500/50',
+    shadowAura: 'shadow-[0_0_50px_rgba(16,185,129,0.4)]',
+    headerGradient: 'from-[#052117] via-[#03150e] to-[#082d20]',
+    headerBorder: 'border-emerald-500/40',
+    headerSubtext: 'text-emerald-300',
+    photoBorder: 'border-emerald-500/40',
+    dishBadgeBg: 'bg-emerald-500/30 border border-emerald-400/50',
+    dishBadgeText: 'text-emerald-200',
     dishPriceColor: 'text-emerald-300',
-    quoteBg: 'bg-emerald-50/80',
-    quoteBorder: 'border-emerald-200',
-    quoteText: 'text-emerald-950',
-    quoteHeader: 'text-emerald-800',
-    talismanBanner: 'from-emerald-100/80 via-teal-50 to-green-100/70',
-    talismanBorder: 'border-emerald-300',
-    talismanText: 'text-emerald-900',
-    talismanBtn: 'bg-emerald-600 hover:bg-emerald-700 text-white',
-    actionPrimaryBtn: 'from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800',
+    quoteBg: 'bg-[#06241b]/90',
+    quoteBorder: 'border-emerald-500/30',
+    quoteText: 'text-emerald-100',
+    quoteHeader: 'text-emerald-300',
+    talismanBanner: 'from-[#052017] via-[#03130e] to-[#082a1e]',
+    talismanBorder: 'border-emerald-500/30',
+    talismanText: 'text-emerald-200',
+    talismanBtn: 'bg-emerald-600 hover:bg-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)]',
+    actionPrimaryBtn: 'from-emerald-600 to-teal-700 hover:from-emerald-500 hover:to-teal-600 shadow-[0_0_20px_rgba(16,185,129,0.45)]',
   },
   the_emperor: {
-    borderCard: 'border-rose-400',
-    shadowAura: 'shadow-[0_20px_60px_-15px_rgba(244,63,94,0.35)]',
-    headerGradient: 'from-rose-900 via-red-800 to-orange-950',
-    headerBorder: 'border-rose-500/60',
-    headerSubtext: 'text-rose-200',
-    photoBorder: 'border-rose-400',
-    dishBadgeBg: 'bg-rose-500',
-    dishBadgeText: 'text-white',
+    borderCard: 'border-rose-500/50',
+    shadowAura: 'shadow-[0_0_50px_rgba(244,63,94,0.4)]',
+    headerGradient: 'from-[#2a0611] via-[#160309] to-[#360817]',
+    headerBorder: 'border-rose-500/40',
+    headerSubtext: 'text-rose-300',
+    photoBorder: 'border-rose-500/40',
+    dishBadgeBg: 'bg-rose-500/30 border border-rose-400/50',
+    dishBadgeText: 'text-rose-200',
     dishPriceColor: 'text-rose-300',
-    quoteBg: 'bg-rose-50/80',
-    quoteBorder: 'border-rose-200',
-    quoteText: 'text-rose-950',
-    quoteHeader: 'text-rose-800',
-    talismanBanner: 'from-rose-100/80 via-pink-50 to-orange-100/70',
-    talismanBorder: 'border-rose-300',
-    talismanText: 'text-rose-900',
-    talismanBtn: 'bg-rose-600 hover:bg-rose-700 text-white',
-    actionPrimaryBtn: 'from-rose-600 to-red-700 hover:from-rose-700 hover:to-red-800',
+    quoteBg: 'bg-[#290712]/90',
+    quoteBorder: 'border-rose-500/30',
+    quoteText: 'text-rose-100',
+    quoteHeader: 'text-rose-300',
+    talismanBanner: 'from-[#25050f] via-[#140207] to-[#330715]',
+    talismanBorder: 'border-rose-500/30',
+    talismanText: 'text-rose-200',
+    talismanBtn: 'bg-rose-600 hover:bg-rose-500 text-white shadow-[0_0_15px_rgba(244,63,94,0.4)]',
+    actionPrimaryBtn: 'from-rose-600 to-red-700 hover:from-rose-500 hover:to-red-600 shadow-[0_0_20px_rgba(244,63,94,0.45)]',
   },
   the_lovers: {
-    borderCard: 'border-pink-400',
-    shadowAura: 'shadow-[0_20px_60px_-15px_rgba(236,72,153,0.35)]',
-    headerGradient: 'from-pink-900 via-rose-800 to-fuchsia-950',
-    headerBorder: 'border-pink-500/60',
-    headerSubtext: 'text-pink-200',
-    photoBorder: 'border-pink-400',
-    dishBadgeBg: 'bg-pink-400',
-    dishBadgeText: 'text-stone-950',
+    borderCard: 'border-fuchsia-500/50',
+    shadowAura: 'shadow-[0_0_50px_rgba(217,70,239,0.4)]',
+    headerGradient: 'from-[#280521] via-[#160312] to-[#37072e]',
+    headerBorder: 'border-fuchsia-500/40',
+    headerSubtext: 'text-fuchsia-300',
+    photoBorder: 'border-fuchsia-500/40',
+    dishBadgeBg: 'bg-fuchsia-500/30 border border-fuchsia-400/50',
+    dishBadgeText: 'text-fuchsia-200',
     dishPriceColor: 'text-pink-300',
-    quoteBg: 'bg-pink-50/80',
-    quoteBorder: 'border-pink-200',
-    quoteText: 'text-pink-950',
-    quoteHeader: 'text-pink-800',
-    talismanBanner: 'from-pink-100/80 via-rose-50 to-fuchsia-100/70',
-    talismanBorder: 'border-pink-300',
-    talismanText: 'text-pink-900',
-    talismanBtn: 'bg-pink-600 hover:bg-pink-700 text-white',
-    actionPrimaryBtn: 'from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700',
+    quoteBg: 'bg-[#2a0624]/90',
+    quoteBorder: 'border-fuchsia-500/30',
+    quoteText: 'text-fuchsia-100',
+    quoteHeader: 'text-fuchsia-300',
+    talismanBanner: 'from-[#25041f] via-[#140210] to-[#33062a]',
+    talismanBorder: 'border-fuchsia-500/30',
+    talismanText: 'text-fuchsia-200',
+    talismanBtn: 'bg-fuchsia-600 hover:bg-fuchsia-500 text-white shadow-[0_0_15px_rgba(217,70,239,0.4)]',
+    actionPrimaryBtn: 'from-fuchsia-600 to-pink-700 hover:from-fuchsia-500 hover:to-pink-600 shadow-[0_0_20px_rgba(217,70,239,0.45)]',
   },
   the_chariot: {
-    borderCard: 'border-orange-400',
-    shadowAura: 'shadow-[0_20px_60px_-15px_rgba(249,115,22,0.35)]',
-    headerGradient: 'from-orange-900 via-amber-800 to-stone-950',
-    headerBorder: 'border-orange-500/60',
-    headerSubtext: 'text-orange-200',
-    photoBorder: 'border-orange-400',
-    dishBadgeBg: 'bg-orange-500',
-    dishBadgeText: 'text-white',
-    dishPriceColor: 'text-orange-300',
-    quoteBg: 'bg-orange-50/80',
-    quoteBorder: 'border-orange-200',
-    quoteText: 'text-orange-950',
-    quoteHeader: 'text-orange-800',
-    talismanBanner: 'from-orange-100/80 via-amber-50 to-yellow-100/70',
-    talismanBorder: 'border-orange-300',
-    talismanText: 'text-orange-900',
-    talismanBtn: 'bg-orange-600 hover:bg-orange-700 text-white',
-    actionPrimaryBtn: 'from-orange-500 to-amber-600 hover:from-orange-600 hover:to-amber-700',
+    borderCard: 'border-amber-500/50',
+    shadowAura: 'shadow-[0_0_50px_rgba(245,158,11,0.4)]',
+    headerGradient: 'from-[#2a1304] via-[#160901] to-[#381a05]',
+    headerBorder: 'border-amber-500/40',
+    headerSubtext: 'text-amber-300',
+    photoBorder: 'border-amber-500/40',
+    dishBadgeBg: 'bg-amber-500/30 border border-amber-400/50',
+    dishBadgeText: 'text-amber-200',
+    dishPriceColor: 'text-amber-300',
+    quoteBg: 'bg-[#2a1405]/90',
+    quoteBorder: 'border-amber-500/30',
+    quoteText: 'text-amber-100',
+    quoteHeader: 'text-amber-300',
+    talismanBanner: 'from-[#251003] via-[#140801] to-[#331604]',
+    talismanBorder: 'border-amber-500/30',
+    talismanText: 'text-amber-200',
+    talismanBtn: 'bg-amber-600 hover:bg-amber-500 text-white shadow-[0_0_15px_rgba(245,158,11,0.4)]',
+    actionPrimaryBtn: 'from-amber-600 to-yellow-600 hover:from-amber-500 hover:to-yellow-500 shadow-[0_0_20px_rgba(245,158,11,0.45)]',
   },
   the_strength: {
-    borderCard: 'border-yellow-400',
-    shadowAura: 'shadow-[0_20px_60px_-15px_rgba(234,179,8,0.35)]',
-    headerGradient: 'from-yellow-900 via-amber-800 to-stone-950',
-    headerBorder: 'border-yellow-500/60',
-    headerSubtext: 'text-yellow-200',
-    photoBorder: 'border-yellow-400',
-    dishBadgeBg: 'bg-yellow-400',
-    dishBadgeText: 'text-stone-950',
-    dishPriceColor: 'text-yellow-300',
-    quoteBg: 'bg-yellow-50/80',
-    quoteBorder: 'border-yellow-200',
-    quoteText: 'text-yellow-950',
-    quoteHeader: 'text-yellow-800',
-    talismanBanner: 'from-yellow-100/80 via-amber-50 to-orange-100/70',
-    talismanBorder: 'border-yellow-300',
-    talismanText: 'text-yellow-900',
-    talismanBtn: 'bg-yellow-600 hover:bg-yellow-700 text-stone-950 font-black',
-    actionPrimaryBtn: 'from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 text-stone-950',
+    borderCard: 'border-amber-400/50',
+    shadowAura: 'shadow-[0_0_50px_rgba(251,191,36,0.4)]',
+    headerGradient: 'from-[#261503] via-[#140a01] to-[#341d04]',
+    headerBorder: 'border-amber-400/40',
+    headerSubtext: 'text-amber-300',
+    photoBorder: 'border-amber-400/40',
+    dishBadgeBg: 'bg-amber-400/30 border border-amber-300/50',
+    dishBadgeText: 'text-amber-100',
+    dishPriceColor: 'text-amber-300',
+    quoteBg: 'bg-[#261504]/90',
+    quoteBorder: 'border-amber-400/30',
+    quoteText: 'text-amber-100',
+    quoteHeader: 'text-amber-300',
+    talismanBanner: 'from-[#211202] via-[#120901] to-[#2d1903]',
+    talismanBorder: 'border-amber-400/30',
+    talismanText: 'text-amber-200',
+    talismanBtn: 'bg-amber-500 hover:bg-amber-400 text-stone-950 font-black shadow-[0_0_15px_rgba(251,191,36,0.4)]',
+    actionPrimaryBtn: 'from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-stone-950 shadow-[0_0_20px_rgba(251,191,36,0.45)]',
   },
   the_hermit: {
-    borderCard: 'border-indigo-400',
-    shadowAura: 'shadow-[0_20px_60px_-15px_rgba(99,102,241,0.35)]',
-    headerGradient: 'from-indigo-950 via-slate-900 to-purple-950',
-    headerBorder: 'border-indigo-500/60',
-    headerSubtext: 'text-indigo-200',
-    photoBorder: 'border-indigo-400',
-    dishBadgeBg: 'bg-indigo-400',
-    dishBadgeText: 'text-stone-950',
-    dishPriceColor: 'text-indigo-300',
-    quoteBg: 'bg-indigo-50/80',
-    quoteBorder: 'border-indigo-200',
-    quoteText: 'text-indigo-950',
-    quoteHeader: 'text-indigo-800',
-    talismanBanner: 'from-indigo-100/80 via-slate-50 to-purple-100/70',
-    talismanBorder: 'border-indigo-300',
-    talismanText: 'text-indigo-900',
-    talismanBtn: 'bg-indigo-600 hover:bg-indigo-700 text-white',
-    actionPrimaryBtn: 'from-indigo-600 to-purple-700 hover:from-indigo-700 hover:to-purple-800',
+    borderCard: 'border-purple-500/50',
+    shadowAura: 'shadow-[0_0_50px_rgba(168,85,247,0.4)]',
+    headerGradient: 'from-[#12082b] via-[#09041a] to-[#1c0d40]',
+    headerBorder: 'border-purple-500/40',
+    headerSubtext: 'text-purple-300',
+    photoBorder: 'border-purple-500/40',
+    dishBadgeBg: 'bg-purple-500/30 border border-purple-400/50',
+    dishBadgeText: 'text-purple-200',
+    dishPriceColor: 'text-purple-300',
+    quoteBg: 'bg-[#150a32]/90',
+    quoteBorder: 'border-purple-500/30',
+    quoteText: 'text-purple-100',
+    quoteHeader: 'text-purple-300',
+    talismanBanner: 'from-[#100626] via-[#080316] to-[#180a37]',
+    talismanBorder: 'border-purple-500/30',
+    talismanText: 'text-purple-200',
+    talismanBtn: 'bg-purple-600 hover:bg-purple-500 text-white shadow-[0_0_15px_rgba(168,85,247,0.4)]',
+    actionPrimaryBtn: 'from-purple-600 to-violet-700 hover:from-purple-500 hover:to-violet-600 shadow-[0_0_20px_rgba(168,85,247,0.45)]',
   },
   the_wheel_of_fortune: {
-    borderCard: 'border-purple-400',
-    shadowAura: 'shadow-[0_20px_60px_-15px_rgba(168,85,247,0.35)]',
-    headerGradient: 'from-purple-950 via-violet-900 to-indigo-950',
-    headerBorder: 'border-purple-500/60',
-    headerSubtext: 'text-purple-200',
-    photoBorder: 'border-purple-400',
-    dishBadgeBg: 'bg-purple-400',
-    dishBadgeText: 'text-stone-950',
-    dishPriceColor: 'text-purple-300',
-    quoteBg: 'bg-purple-50/80',
-    quoteBorder: 'border-purple-200',
-    quoteText: 'text-purple-950',
-    quoteHeader: 'text-purple-800',
-    talismanBanner: 'from-purple-100/80 via-violet-50 to-indigo-100/70',
-    talismanBorder: 'border-purple-300',
-    talismanText: 'text-purple-900',
-    talismanBtn: 'bg-purple-600 hover:bg-purple-700 text-white',
-    actionPrimaryBtn: 'from-purple-600 to-violet-700 hover:from-purple-700 hover:to-violet-800',
+    borderCard: 'border-violet-500/50',
+    shadowAura: 'shadow-[0_0_50px_rgba(139,92,246,0.4)]',
+    headerGradient: 'from-[#1a0833] via-[#0d031c] to-[#250d47]',
+    headerBorder: 'border-violet-500/40',
+    headerSubtext: 'text-violet-300',
+    photoBorder: 'border-violet-500/40',
+    dishBadgeBg: 'bg-violet-500/30 border border-violet-400/50',
+    dishBadgeText: 'text-violet-200',
+    dishPriceColor: 'text-violet-300',
+    quoteBg: 'bg-[#1e0a3a]/90',
+    quoteBorder: 'border-violet-500/30',
+    quoteText: 'text-violet-100',
+    quoteHeader: 'text-violet-300',
+    talismanBanner: 'from-[#18062e] via-[#0b0217] to-[#21093f]',
+    talismanBorder: 'border-violet-500/30',
+    talismanText: 'text-violet-200',
+    talismanBtn: 'bg-violet-600 hover:bg-violet-500 text-white shadow-[0_0_15px_rgba(139,92,246,0.4)]',
+    actionPrimaryBtn: 'from-violet-600 to-purple-700 hover:from-violet-500 hover:to-purple-600 shadow-[0_0_20px_rgba(139,92,246,0.45)]',
   },
   the_star: {
-    borderCard: 'border-teal-400',
-    shadowAura: 'shadow-[0_20px_60px_-15px_rgba(20,184,166,0.35)]',
-    headerGradient: 'from-teal-950 via-cyan-900 to-slate-950',
-    headerBorder: 'border-teal-500/60',
-    headerSubtext: 'text-teal-200',
-    photoBorder: 'border-teal-400',
-    dishBadgeBg: 'bg-teal-400',
-    dishBadgeText: 'text-stone-950',
+    borderCard: 'border-teal-500/50',
+    shadowAura: 'shadow-[0_0_50px_rgba(20,184,166,0.4)]',
+    headerGradient: 'from-[#042020] via-[#021313] to-[#072d2d]',
+    headerBorder: 'border-teal-500/40',
+    headerSubtext: 'text-teal-300',
+    photoBorder: 'border-teal-500/40',
+    dishBadgeBg: 'bg-teal-500/30 border border-teal-400/50',
+    dishBadgeText: 'text-teal-200',
     dishPriceColor: 'text-teal-300',
-    quoteBg: 'bg-teal-50/80',
-    quoteBorder: 'border-teal-200',
-    quoteText: 'text-teal-950',
-    quoteHeader: 'text-teal-800',
-    talismanBanner: 'from-teal-100/80 via-cyan-50 to-slate-100/70',
-    talismanBorder: 'border-teal-300',
-    talismanText: 'text-teal-900',
-    talismanBtn: 'bg-teal-600 hover:bg-teal-700 text-white',
-    actionPrimaryBtn: 'from-teal-500 to-cyan-600 hover:from-teal-600 hover:to-cyan-700',
+    quoteBg: 'bg-[#052424]/90',
+    quoteBorder: 'border-teal-500/30',
+    quoteText: 'text-teal-100',
+    quoteHeader: 'text-teal-300',
+    talismanBanner: 'from-[#031d1d] via-[#021111] to-[#062828]',
+    talismanBorder: 'border-teal-500/30',
+    talismanText: 'text-teal-200',
+    talismanBtn: 'bg-teal-600 hover:bg-teal-500 text-white shadow-[0_0_15px_rgba(20,184,166,0.4)]',
+    actionPrimaryBtn: 'from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 shadow-[0_0_20px_rgba(20,184,166,0.45)]',
   },
   the_sun: {
-    borderCard: 'border-amber-400',
-    shadowAura: 'shadow-[0_20px_60px_-15px_rgba(245,158,11,0.35)]',
-    headerGradient: 'from-[#1c0836] via-[#381163] to-[#1c0836]',
-    headerBorder: 'border-amber-400/60',
-    headerSubtext: 'text-amber-200',
-    photoBorder: 'border-amber-400',
-    dishBadgeBg: 'bg-amber-400',
-    dishBadgeText: 'text-stone-950',
+    borderCard: 'border-amber-400/50',
+    shadowAura: 'shadow-[0_0_50px_rgba(245,158,11,0.45)]',
+    headerGradient: 'from-[#1f093a] via-[#100322] to-[#2e0e54]',
+    headerBorder: 'border-amber-400/40',
+    headerSubtext: 'text-amber-300',
+    photoBorder: 'border-amber-400/40',
+    dishBadgeBg: 'bg-amber-400/30 border border-amber-300/50',
+    dishBadgeText: 'text-amber-200',
     dishPriceColor: 'text-amber-300',
-    quoteBg: 'bg-amber-50/80',
-    quoteBorder: 'border-amber-200',
-    quoteText: 'text-amber-950',
-    quoteHeader: 'text-amber-800',
-    talismanBanner: 'from-amber-100/80 via-yellow-50 to-orange-100/70',
-    talismanBorder: 'border-amber-300',
-    talismanText: 'text-amber-900',
-    talismanBtn: 'bg-amber-500 hover:bg-amber-600 text-white',
-    actionPrimaryBtn: 'from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700',
+    quoteBg: 'bg-[#1b0833]/90',
+    quoteBorder: 'border-amber-400/30',
+    quoteText: 'text-amber-100',
+    quoteHeader: 'text-amber-300',
+    talismanBanner: 'from-[#19062e] via-[#0d0219] to-[#260a45]',
+    talismanBorder: 'border-amber-400/30',
+    talismanText: 'text-amber-200',
+    talismanBtn: 'bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-stone-950 font-black shadow-[0_0_15px_rgba(245,158,11,0.4)]',
+    actionPrimaryBtn: 'from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 shadow-[0_0_20px_rgba(245,158,11,0.45)]',
   },
   the_world: {
-    borderCard: 'border-fuchsia-400',
-    shadowAura: 'shadow-[0_20px_60px_-15px_rgba(217,70,239,0.35)]',
-    headerGradient: 'from-fuchsia-950 via-purple-900 to-slate-950',
-    headerBorder: 'border-fuchsia-500/60',
-    headerSubtext: 'text-fuchsia-200',
-    photoBorder: 'border-fuchsia-400',
-    dishBadgeBg: 'bg-fuchsia-400',
-    dishBadgeText: 'text-stone-950',
-    dishPriceColor: 'text-fuchsia-300',
-    quoteBg: 'bg-fuchsia-50/80',
-    quoteBorder: 'border-fuchsia-200',
-    quoteText: 'text-fuchsia-950',
-    quoteHeader: 'text-fuchsia-800',
-    talismanBanner: 'from-fuchsia-100/80 via-purple-50 to-pink-100/70',
-    talismanBorder: 'border-fuchsia-300',
-    talismanText: 'text-fuchsia-900',
-    talismanBtn: 'bg-fuchsia-600 hover:bg-fuchsia-700 text-white',
-    actionPrimaryBtn: 'from-fuchsia-600 to-purple-700 hover:from-fuchsia-700 hover:to-purple-800',
+    borderCard: 'border-purple-400/50',
+    shadowAura: 'shadow-[0_0_50px_rgba(168,85,247,0.45)]',
+    headerGradient: 'from-[#1f0529] via-[#0e0214] to-[#2d083b]',
+    headerBorder: 'border-purple-400/40',
+    headerSubtext: 'text-purple-300',
+    photoBorder: 'border-purple-400/40',
+    dishBadgeBg: 'bg-purple-500/30 border border-purple-400/50',
+    dishBadgeText: 'text-purple-200',
+    dishPriceColor: 'text-purple-300',
+    quoteBg: 'bg-[#21062b]/90',
+    quoteBorder: 'border-purple-400/30',
+    quoteText: 'text-purple-100',
+    quoteHeader: 'text-purple-300',
+    talismanBanner: 'from-[#1b0424] via-[#0c0111] to-[#260633]',
+    talismanBorder: 'border-purple-400/30',
+    talismanText: 'text-purple-200',
+    talismanBtn: 'bg-purple-600 hover:bg-purple-500 text-white shadow-[0_0_15px_rgba(168,85,247,0.4)]',
+    actionPrimaryBtn: 'from-purple-600 to-fuchsia-600 hover:from-purple-500 hover:to-fuchsia-500 shadow-[0_0_20px_rgba(168,85,247,0.45)]',
   },
 };
 
@@ -1315,24 +1316,31 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
           </div>
         </div>
       ) : (
-        /* State 2: Revealed Non-Duplicate Tarot Card - Màu khung & hào quang đồng bộ màu thẻ bài */
+        /* State 2: Revealed Non-Duplicate Tarot Card - Bảng đồ ăn phong cách ma mị, huyền bí, dạ nguyệt */
         (() => {
           const theme = ARCHETYPE_THEMES[revealedResult.archetype.id] || DEFAULT_THEME;
           return (
             <div className="relative z-10 max-w-xl mx-auto animate-fade-in">
-              <div className={`bg-white rounded-3xl border-2 ${theme.borderCard} ${theme.shadowAura} overflow-hidden text-center relative text-stone-900 transition-all duration-500`}>
-                {/* Top banner đồng bộ màu sắc và hào quang của lá bài */}
+              {/* Thẻ bài Tarot ma mị với nền vũ trụ bóng đêm, viền vàng cổ điển và hào quang nguyên tố */}
+              <div className={`relative rounded-3xl bg-gradient-to-b from-[#120526] via-[#090214] to-[#15062c] border-2 ${theme.borderCard} ${theme.shadowAura} overflow-hidden text-center text-white transition-all duration-500 shadow-2xl`}>
+                
+                {/* 4 Góc Họa Tiết Cổ Điển Hoàng Gia Cho Bảng Thần Thoại */}
+                <TarotCornerFlourish position="tl" />
+                <TarotCornerFlourish position="tr" />
+                <TarotCornerFlourish position="bl" />
+                <TarotCornerFlourish position="br" />
+
+                {/* Vòng Quỹ Đạo Huyền Bí Mờ Ảo Phía Sau */}
+                <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full border border-purple-500/10 pointer-events-none blur-[1px]" />
+                <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full border border-amber-500/10 pointer-events-none blur-[1px]" />
+
+                {/* Top banner đồng bộ màu sắc và linh ấn cổ điển */}
                 <div className={`relative bg-gradient-to-r ${theme.headerGradient} p-4 sm:p-5 text-white flex items-center justify-between border-b ${theme.headerBorder} overflow-hidden`}>
-                  {/* Subtle corner flourishes in header */}
-                  <div className="absolute top-1 left-1 opacity-40 scale-75 pointer-events-none">
-                    <TarotCornerFlourish position="tl" />
-                  </div>
-                  <div className="absolute top-1 right-1 opacity-40 scale-75 pointer-events-none">
-                    <TarotCornerFlourish position="tr" />
-                  </div>
+                  {/* Subtle Inset Glow */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
 
                   <div className="flex items-center gap-2.5 relative z-10">
-                    <div className="w-12 h-12 rounded-xl bg-black/40 border border-amber-300/40 flex items-center justify-center text-white shadow-inner shrink-0 p-1">
+                    <div className="w-12 h-12 rounded-xl bg-black/60 border border-amber-300/40 flex items-center justify-center text-white shadow-[inset_0_0_15px_rgba(0,0,0,0.8)] shrink-0 p-1">
                       <TarotSigilArt type={revealedResult.archetype.sigilType} sizeClass="w-9 h-9" />
                     </div>
                     <div className="text-left">
@@ -1341,149 +1349,179 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                         <span>•</span>
                         <span>{revealedResult.archetype.latin}</span>
                         <span>•</span>
-                        <span className="font-extrabold text-amber-300">QUẺ #{revealedResult.drawOrder}</span>
+                        <span className="font-extrabold text-amber-300 drop-shadow">QUẺ #{revealedResult.drawOrder}</span>
                       </div>
-                      <div className="text-base sm:text-lg font-black text-white tracking-wide">
-                        {revealedResult.archetype.name}
+                      <div className="text-base sm:text-lg font-black text-white tracking-wide flex items-center gap-1.5 drop-shadow">
+                        <span>{revealedResult.archetype.name}</span>
+                        <span className="text-amber-400 text-xs">✦</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Upright vs Reversed Orientation Badge */}
-                  <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border shadow-sm relative z-10 shrink-0 ${
+                  <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black border shadow-lg relative z-10 shrink-0 ${
                     revealedResult.isUpright
-                      ? 'bg-emerald-500 text-white border-emerald-400'
-                      : 'bg-purple-600 text-white border-purple-400'
+                      ? 'bg-emerald-950/80 text-emerald-300 border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
+                      : 'bg-purple-950/80 text-purple-300 border-purple-500/50 shadow-[0_0_15px_rgba(168,85,247,0.3)]'
                   }`}>
                     <span>{revealedResult.isUpright ? '✦ Thuận Chiều' : '✦ Nghịch Chiều'}</span>
                   </div>
                 </div>
 
-                <div className="p-5 sm:p-7">
-                  {/* Dish Photo & Basic Info with matching frame color */}
-                  <div className={`relative mb-5 rounded-2xl overflow-hidden border-2 ${theme.photoBorder} shadow-lg group`}>
+                <div className="p-5 sm:p-7 relative z-10">
+                  {/* Dish Photo & Basic Info with matching mystical frame */}
+                  <div className={`relative mb-5 rounded-2xl overflow-hidden border-2 ${theme.photoBorder} shadow-[0_10px_30px_rgba(0,0,0,0.8)] group`}>
                     <img
                       src={revealedResult.dish.image}
                       alt={`Quẻ bài Tarot ẩm thực: ${revealedResult.dish.vietnameseName || revealedResult.dish.name} chiêm tinh cung ${revealedResult.zodiac.name} - Hôm Nay Ăn Gì`}
                       referrerPolicy="no-referrer"
-                      className={`w-full h-56 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-500 ${
-                        !revealedResult.isUpright ? 'brightness-95' : ''
+                      className={`w-full h-56 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-700 ${
+                        !revealedResult.isUpright ? 'brightness-90 contrast-110' : ''
                       }`}
                       onError={(e) => {
                         (e.target as HTMLImageElement).src =
                           'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&auto=format&fit=crop&q=80';
                       }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex flex-col justify-end p-4 text-left text-white">
-                      <div className="flex items-center justify-between gap-1 mb-1">
-                        <div className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full ${theme.dishBadgeBg} ${theme.dishBadgeText} text-[11px] font-black w-fit shadow`}>
-                          <Flame className="w-3 h-3 text-red-600 fill-red-600" />
-                          MÓN VŨ TRỤ CHỈ ĐỊNH
+                    {/* Dark Vignette Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#090214] via-[#090214]/60 to-black/20 flex flex-col justify-end p-4 text-left text-white">
+                      <div className="flex items-center justify-between gap-1 mb-1.5">
+                        <div className={`inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full ${theme.dishBadgeBg} ${theme.dishBadgeText} text-[11px] font-black w-fit shadow-md`}>
+                          <Flame className="w-3.5 h-3.5 text-amber-400 fill-amber-400 animate-pulse" />
+                          <span>MÓN VŨ TRỤ CHỈ ĐỊNH</span>
                         </div>
-                        <div className="text-[11px] font-bold text-amber-200">
-                          {revealedResult.zodiac.symbol} {revealedResult.zodiac.name}
+                        <div className="text-xs font-black text-amber-300 flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-black/60 border border-amber-400/30">
+                          <span>{revealedResult.zodiac.symbol}</span>
+                          <span>{revealedResult.zodiac.name}</span>
                         </div>
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-black drop-shadow leading-tight text-white">
+                      <h3 className="text-xl sm:text-2xl font-black drop-shadow-md leading-tight text-white tracking-wide">
                         {revealedResult.dish.vietnameseName || revealedResult.dish.name}
                       </h3>
-                      <div className="flex items-center gap-3 text-xs text-stone-200 mt-1">
-                        <span>{revealedResult.dish.calories}</span>
-                        <span>•</span>
-                        <span className={`font-black ${theme.dishPriceColor} drop-shadow-xs`}>
+                      <div className="flex items-center gap-3 text-xs text-stone-300 mt-1 font-medium">
+                        <span className="text-stone-300">{revealedResult.dish.calories}</span>
+                        <span className="text-amber-400/60">•</span>
+                        <span className={`font-black text-sm ${theme.dishPriceColor} drop-shadow`}>
                           {formatVND(revealedResult.dish.estimatedPrice)}
                         </span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Mystical Prophecy Quote & Warning with themed card tone */}
-                  <div className={`p-4 rounded-2xl ${theme.quoteBg} border ${theme.quoteBorder} ${theme.quoteText} italic text-sm sm:text-base leading-relaxed mb-5 relative text-left shadow-2xs`}>
-                    <div className={`text-xs uppercase font-extrabold ${theme.quoteHeader} tracking-wider not-italic mb-1.5 flex items-center gap-1.5`}>
-                      <Compass className="w-3.5 h-3.5 text-amber-700" />
-                      Lời Sấm Truyền Vị Giác:
+                  {/* Mystical Prophecy Quote & Warning - Phiến đá sấm truyền ma mị */}
+                  <div className={`p-4 sm:p-5 rounded-2xl ${theme.quoteBg} border ${theme.quoteBorder} leading-relaxed mb-5 relative text-left shadow-lg backdrop-blur-sm`}>
+                    <div className={`text-xs uppercase font-black ${theme.quoteHeader} tracking-wider mb-2 flex items-center gap-1.5`}>
+                      <Compass className="w-4 h-4 text-amber-400 animate-spin-slow" />
+                      <span>Lời Sấm Truyền Vị Giác:</span>
                     </div>
-                    {revealedResult.quote}
+                    <p className={`italic text-sm sm:text-[15px] ${theme.quoteText} leading-relaxed font-normal m-0`}>
+                      "{revealedResult.quote}"
+                    </p>
 
                     {/* Reversed Cosmic Warning Note */}
                     {!revealedResult.isUpright && revealedResult.warningQuote && (
-                      <div className={`mt-2.5 pt-2.5 border-t ${theme.quoteBorder} text-purple-900 text-xs sm:text-sm not-italic font-sans`}>
-                        ⚠️ <strong className="text-amber-900 font-bold">Cảnh báo nghịch chiều:</strong> {revealedResult.warningQuote}
+                      <div className={`mt-3 pt-3 border-t ${theme.quoteBorder} text-purple-200 text-xs sm:text-sm not-italic flex items-start gap-2`}>
+                        <span className="text-amber-400 shrink-0">⚠️</span>
+                        <div>
+                          <strong className="text-amber-300 font-bold">Cảnh báo nghịch chiều:</strong>{' '}
+                          <span className="text-purple-200/90">{revealedResult.warningQuote}</span>
+                        </div>
                       </div>
                     )}
                   </div>
 
-                  {/* Cosmic Stats (Lucky number, Hour, Element) */}
+                  {/* Cosmic Stats (Lucky number, Hour, Element) - 3 Phù Ấn Tâm Linh Tối Màu */}
                   <div className="grid grid-cols-3 gap-2.5 sm:gap-3 mb-5">
-                    <div className={`p-3 ${theme.quoteBg} rounded-2xl border ${theme.quoteBorder} text-center shadow-2xs`}>
-                      <div className={`text-[10px] uppercase font-bold ${theme.quoteHeader}`}>Số Thần Tài</div>
-                      <div className={`text-lg sm:text-xl font-black ${theme.quoteHeader}`}>
+                    <div className={`p-3 rounded-2xl bg-[#140628]/90 border ${theme.quoteBorder} text-center shadow-md`}>
+                      <div className="text-[10px] uppercase font-bold text-amber-300/80 tracking-wider">Số Thần Tài</div>
+                      <div className="text-lg sm:text-xl font-black text-amber-300 drop-shadow mt-0.5">
                         #{revealedResult.luckyNumber}
                       </div>
                     </div>
 
-                    <div className="p-3 bg-stone-50 rounded-2xl border border-stone-200 text-center shadow-2xs">
-                      <div className="text-[10px] uppercase font-bold text-stone-500">Giờ Hoàng Đạo</div>
-                      <div className="text-xs sm:text-sm font-extrabold text-stone-800 line-clamp-1 mt-0.5">
+                    <div className={`p-3 rounded-2xl bg-[#140628]/90 border border-purple-500/25 text-center shadow-md`}>
+                      <div className="text-[10px] uppercase font-bold text-stone-400 tracking-wider">Giờ Hoàng Đạo</div>
+                      <div className="text-xs sm:text-sm font-extrabold text-stone-200 line-clamp-1 mt-1">
                         {revealedResult.luckyHours}
                       </div>
                     </div>
 
-                    <div className="p-3 bg-purple-50 rounded-2xl border border-purple-200 text-center shadow-2xs">
-                      <div className="text-[10px] uppercase font-bold text-purple-800">Hào Quang</div>
-                      <div className="text-xs sm:text-sm font-extrabold text-purple-700 line-clamp-1 mt-0.5">
+                    <div className={`p-3 rounded-2xl bg-[#140628]/90 border border-purple-500/25 text-center shadow-md`}>
+                      <div className="text-[10px] uppercase font-bold text-purple-300/80 tracking-wider">Hào Quang</div>
+                      <div className="text-xs sm:text-sm font-extrabold text-purple-200 line-clamp-1 mt-1">
                         {revealedResult.elementText.split('(')[0]}
                       </div>
                     </div>
                   </div>
 
-                  {/* Food Amulet Card Launch Banner with matching palette */}
-                  <div className={`mb-5 p-3.5 rounded-2xl bg-gradient-to-r ${theme.talismanBanner} border ${theme.talismanBorder} flex items-center justify-between gap-2 text-left shadow-2xs`}>
-                    <div className="flex items-center gap-2.5">
-                      <Scroll className="w-5 h-5 text-amber-700 shrink-0" />
+                  {/* Food Amulet Card Launch Banner - Tấm Bùa Hộ Mệnh Huyền Bí */}
+                  <div className={`mb-5 p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r ${theme.talismanBanner} border ${theme.talismanBorder} flex items-center justify-between gap-3 text-left shadow-lg`}>
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-black/50 border border-amber-400/40 flex items-center justify-center shrink-0 shadow-inner">
+                        <Scroll className="w-5 h-5 text-amber-400" />
+                      </div>
                       <div>
-                        <div className={`text-xs font-black ${theme.talismanText}`}>Tấm Bùa Hộ Mệnh Ẩm Thực</div>
-                        <div className="text-[10px] text-stone-600">Lưu phù chú hoặc chia sẻ bạn bè</div>
+                        <div className={`text-xs sm:text-sm font-black ${theme.talismanText} flex items-center gap-1.5`}>
+                          <span>Tấm Bùa Hộ Mệnh Ẩm Thực</span>
+                          <span className="text-[10px] px-2 py-0.2 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 font-bold">Linh Phù</span>
+                        </div>
+                        <div className="text-[11px] text-stone-300 mt-0.5">Lưu phù chú vị giác hoặc chia sẻ cùng bạn bè</div>
                       </div>
                     </div>
                     <button
                       onClick={handleOpenAmulet}
-                      className={`px-3.5 py-1.5 rounded-xl ${theme.talismanBtn} font-black text-xs transition-transform active:scale-95 cursor-pointer shrink-0 shadow-sm`}
+                      className={`px-3.5 sm:px-4 py-2 rounded-xl ${theme.talismanBtn} font-black text-xs transition-all active:scale-95 cursor-pointer shrink-0`}
                     >
                       Xem Bùa Hộ Mệnh
                     </button>
                   </div>
 
-                  {/* Order Buttons with District Priority */}
-                  <div className="pt-3 border-t border-stone-200 mb-5">
-                    <div className="mb-3 max-w-md mx-auto">
-                      <DeliveryLocationBadge
-                        location={userLocation}
-                        onClick={() => onOpenLocationModal(revealedResult.dish.name)}
-                        variant="card"
-                      />
+                  {/* Order Buttons with District Priority - Khung Đặt Món Ma Mị */}
+                  <div className="pt-4 border-t border-purple-800/40 mb-5">
+                    {/* Location Badge */}
+                    <div 
+                      onClick={() => onOpenLocationModal(revealedResult.dish.name)}
+                      className="mb-3 max-w-md mx-auto flex items-center justify-between p-2.5 rounded-xl bg-[#140628]/90 border border-purple-500/30 hover:border-amber-400/60 transition-colors cursor-pointer text-xs group"
+                    >
+                      <div className="flex items-center gap-2 truncate">
+                        <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 text-stone-950 flex items-center justify-center shrink-0 shadow">
+                          <MapPin className="w-3.5 h-3.5 text-stone-950" />
+                        </div>
+                        <div className="truncate text-left">
+                          <span className="text-stone-400 text-[10px] block leading-tight font-medium">
+                            Vị trí tìm quán giao tới:
+                          </span>
+                          <span className="font-bold text-amber-200 truncate block">
+                            {formatLocationDisplay(userLocation)}
+                          </span>
+                        </div>
+                      </div>
+                      <span className="text-[11px] font-black text-amber-400 group-hover:text-amber-300 shrink-0 ml-2 underline decoration-amber-400/40">
+                        Đổi vị trí
+                      </span>
                     </div>
 
-                    <div className="text-xs font-bold text-stone-700 mb-3 flex items-center justify-center gap-1.5">
+                    <div className="text-xs font-bold text-stone-300 mb-3 flex items-center justify-center gap-2">
                       <span className="flex h-2 w-2 relative">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
                       </span>
                       <span>
-                        Bấm nút để tìm quán <strong>"{revealedResult.dish.name}"</strong> tại{' '}
-                        <strong className="text-orange-600 underline decoration-orange-400/50">
+                        Khám phá quán <strong>"{revealedResult.dish.name}"</strong> tại{' '}
+                        <strong className="text-amber-300 underline decoration-amber-400/60 font-black">
                           {targetArea}
                         </strong>
                         :
                       </span>
                     </div>
+
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
                       <button
                         onClick={() =>
                           trackAndOpenAffiliateLink('shopeefood', revealedResult.dish, affiliateConfig, userLocation)
                         }
                         title={`Chuyển qua ShopeeFood tìm quán ${revealedResult.dish.name} tại ${targetArea}`}
-                        className="py-3 px-3 rounded-2xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-sm cursor-pointer"
+                        className="py-3 px-3 rounded-2xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(238,77,45,0.35)] cursor-pointer"
                       >
                         <ShoppingBag className="w-4 h-4 shrink-0" />
                         <span>ShopeeFood</span>
@@ -1494,7 +1532,7 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                           trackAndOpenAffiliateLink('grabfood', revealedResult.dish, affiliateConfig, userLocation)
                         }
                         title={`Chuyển qua GrabFood tìm quán ${revealedResult.dish.name} tại ${targetArea}`}
-                        className="py-3 px-3 rounded-2xl bg-[#00B14F] hover:bg-[#009643] text-white font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-sm cursor-pointer"
+                        className="py-3 px-3 rounded-2xl bg-[#00B14F] hover:bg-[#009643] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(0,177,79,0.35)] cursor-pointer"
                       >
                         <ShoppingBag className="w-4 h-4 shrink-0" />
                         <span>GrabFood</span>
@@ -1505,41 +1543,41 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                           trackAndOpenAffiliateLink('befood', revealedResult.dish, affiliateConfig, userLocation)
                         }
                         title={`Chuyển qua BeFood tìm quán ${revealedResult.dish.name} tại ${targetArea}`}
-                        className="py-3 px-3 rounded-2xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-900 font-extrabold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-sm cursor-pointer"
+                        className="py-3 px-3 rounded-2xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-950 font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(255,209,0,0.35)] cursor-pointer"
                       >
-                        <ShoppingBag className="w-4 h-4 shrink-0" />
+                        <ShoppingBag className="w-4 h-4 shrink-0 text-stone-950" />
                         <span>BeFood</span>
                       </button>
                     </div>
                   </div>
 
                   {/* Secondary Navigation Buttons: Switch to another unique dish OR return to deck */}
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3 border-t border-purple-800/30">
                     <button
                       disabled={isFlipping}
                       onClick={() => drawNextUniqueDish()}
-                      className={`w-full sm:w-auto py-2.5 px-5 rounded-xl bg-gradient-to-r ${theme.actionPrimaryBtn} text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer hover:scale-[1.02] uppercase tracking-wider`}
+                      className={`w-full sm:w-auto py-3 px-5 rounded-xl bg-gradient-to-r ${theme.actionPrimaryBtn} font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer hover:scale-[1.03] uppercase tracking-wider`}
                     >
-                      <RefreshCw className={`w-4 h-4 text-white ${isFlipping ? 'animate-spin' : ''}`} />
-                      Khai quẻ món khác
+                      <RefreshCw className={`w-4 h-4 ${isFlipping ? 'animate-spin' : ''}`} />
+                      <span>Khai quẻ món khác</span>
                     </button>
 
                     {onSelectDish && (
                       <button
                         onClick={() => onSelectDish(revealedResult.dish)}
-                        className="w-full sm:w-auto py-2.5 px-4 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-800 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-colors cursor-pointer border border-stone-200"
+                        className="w-full sm:w-auto py-3 px-4 rounded-xl bg-[#1e0a38] hover:bg-[#280e4b] text-purple-200 hover:text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all cursor-pointer border border-purple-500/30 shadow-sm"
                       >
-                        <Eye className="w-4 h-4 text-amber-600" />
-                        Xem chi tiết món
+                        <Eye className="w-4 h-4 text-amber-400" />
+                        <span>Xem chi tiết món</span>
                       </button>
                     )}
 
                     <button
                       onClick={() => setRevealedResult(null)}
-                      className="w-full sm:w-auto py-2.5 px-4 rounded-xl border border-stone-300 hover:bg-stone-100 text-stone-700 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                      className="w-full sm:w-auto py-3 px-4 rounded-xl border border-purple-600/40 hover:border-amber-400/60 bg-[#120524] hover:bg-[#1b0836] text-stone-300 hover:text-amber-200 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm"
                     >
-                      <RotateCcw className="w-3.5 h-3.5" />
-                      Rút từ bộ bài
+                      <RotateCcw className="w-3.5 h-3.5 text-amber-400" />
+                      <span>Rút từ bộ bài</span>
                     </button>
                   </div>
                 </div>
