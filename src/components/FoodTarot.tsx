@@ -74,22 +74,169 @@ export interface ZodiacSign {
   symbol: string;
   element: 'Hỏa' | 'Thủy' | 'Khí' | 'Thổ' | 'Vũ Trụ';
   cravingDesc: string;
+  dates: string;
+  rulingPlanet: string;
+  mysticTitle: string;
+  astralRune: string;
 }
 
 export const ZODIAC_SIGNS: ZodiacSign[] = [
-  { id: 'all', name: 'Toàn Thể Vũ Trụ', latin: 'Cosmos', symbol: '🌌', element: 'Vũ Trụ', cravingDesc: 'Đón nhận vạn sắc thái mỹ vị nhân gian' },
-  { id: 'aries', name: 'Bạch Dương', latin: 'Aries', symbol: '♈', element: 'Hỏa', cravingDesc: 'Thèm vị cay giòn, bốc lửa tiếp thêm sinh lực bứt phá' },
-  { id: 'taurus', name: 'Kim Ngưu', latin: 'Taurus', symbol: '♉', element: 'Thổ', cravingDesc: 'Chuộng món đậm đà, thịt thà đẫm sốt, no nê sung túc' },
-  { id: 'gemini', name: 'Song Tử', latin: 'Gemini', symbol: '♊', element: 'Khí', cravingDesc: 'Ưa nhiều topping, biến tấu vui nhộn, ăn hoài không ngán' },
-  { id: 'cancer', name: 'Cự Giải', latin: 'Cancer', symbol: '♋', element: 'Thủy', cravingDesc: 'Cần nước dùng ngọt thanh, ấm áp vỗ về tâm can' },
-  { id: 'leo', name: 'Sư Tử', latin: 'Leo', symbol: '♌', element: 'Hỏa', cravingDesc: 'Đại tiệc nướng vàng ươm, hoành tráng xứng tầm vương giả' },
-  { id: 'virgo', name: 'Xử Nữ', latin: 'Virgo', symbol: '♍', element: 'Thổ', cravingDesc: 'Món thanh sạch chuẩn vị, hài hòa dưỡng chất và tinh tế' },
-  { id: 'libra', name: 'Thiên Bình', latin: 'Libra', symbol: '♎', element: 'Khí', cravingDesc: 'Trình bày đẹp mắt, cân bằng chua cay mặn ngọt hoàn mỹ' },
-  { id: 'scorpio', name: 'Bọ Cạp', latin: 'Scorpio', symbol: '♏', element: 'Thủy', cravingDesc: 'Hương vị bí ẩn, đậm sâu cuốn hút, cay tê tái càng ăn càng mê' },
-  { id: 'sagittarius', name: 'Nhân Mã', latin: 'Sagittarius', symbol: '♐', element: 'Hỏa', cravingDesc: 'Phiêu lưu phong vị mới mẻ, đường phố độc lạ' },
-  { id: 'capricorn', name: 'Ma Kết', latin: 'Capricorn', symbol: '♑', element: 'Thổ', cravingDesc: 'Cơm niêu, món kho truyền thống gia truyền vững bụng' },
-  { id: 'aquarius', name: 'Bảo Bình', latin: 'Aquarius', symbol: '♒', element: 'Khí', cravingDesc: 'Món fusion phá cách ngoài khuôn khổ thường nhật' },
-  { id: 'pisces', name: 'Song Ngư', latin: 'Pisces', symbol: '♓', element: 'Thủy', cravingDesc: 'Hải sản tươi rói, món nước êm dịu cuốn trôi muộn phiền' },
+  {
+    id: 'all',
+    name: 'Toàn Thể Vũ Trụ',
+    latin: 'Cosmos Omniverse',
+    symbol: '🌌',
+    element: 'Vũ Trụ',
+    cravingDesc: 'Đón nhận vạn sắc thái mỹ vị nhân gian',
+    dates: 'Vô Cực Giới',
+    rulingPlanet: 'Hư Không ⚝',
+    mysticTitle: 'Vạn Pháp Quy Tông',
+    astralRune: '✧',
+  },
+  {
+    id: 'aries',
+    name: 'Bạch Dương',
+    latin: 'Aries',
+    symbol: '♈',
+    element: 'Hỏa',
+    cravingDesc: 'Thèm vị cay giòn, bốc lửa tiếp thêm sinh lực bứt phá',
+    dates: '21.03 – 19.04',
+    rulingPlanet: 'Hỏa Tinh ♂',
+    mysticTitle: 'Hỏa Ngục Tiên Phong',
+    astralRune: '⚔️',
+  },
+  {
+    id: 'taurus',
+    name: 'Kim Ngưu',
+    latin: 'Taurus',
+    symbol: '♉',
+    element: 'Thổ',
+    cravingDesc: 'Chuộng món đậm đà, thịt thà đẫm sốt, no nê sung túc',
+    dates: '20.04 – 20.05',
+    rulingPlanet: 'Kim Tinh ♀',
+    mysticTitle: 'Kim Thạch Bất Diệt',
+    astralRune: '💎',
+  },
+  {
+    id: 'gemini',
+    name: 'Song Tử',
+    latin: 'Gemini',
+    symbol: '♊',
+    element: 'Khí',
+    cravingDesc: 'Ưa nhiều topping, biến tấu vui nhộn, ăn hoài không ngán',
+    dates: '21.05 – 21.06',
+    rulingPlanet: 'Thủy Tinh ☿',
+    mysticTitle: 'Linh Biến Song Hồn',
+    astralRune: '🎭',
+  },
+  {
+    id: 'cancer',
+    name: 'Cự Giải',
+    latin: 'Cancer',
+    symbol: '♋',
+    element: 'Thủy',
+    cravingDesc: 'Cần nước dùng ngọt thanh, ấm áp vỗ về tâm can',
+    dates: '22.06 – 22.07',
+    rulingPlanet: 'Mặt Trăng ☽',
+    mysticTitle: 'Nguyệt Ảnh Thâm Uyên',
+    astralRune: '🌙',
+  },
+  {
+    id: 'leo',
+    name: 'Sư Tử',
+    latin: 'Leo',
+    symbol: '♌',
+    element: 'Hỏa',
+    cravingDesc: 'Đại tiệc nướng vàng ươm, hoành tráng xứng tầm vương giả',
+    dates: '23.07 – 22.08',
+    rulingPlanet: 'Mặt Trời ☉',
+    mysticTitle: 'Thái Dương Vương Quyền',
+    astralRune: '👑',
+  },
+  {
+    id: 'virgo',
+    name: 'Xử Nữ',
+    latin: 'Virgo',
+    symbol: '♍',
+    element: 'Thổ',
+    cravingDesc: 'Món thanh sạch chuẩn vị, hài hòa dưỡng chất và tinh tế',
+    dates: '23.08 – 22.09',
+    rulingPlanet: 'Thủy Tinh ☿',
+    mysticTitle: 'Thánh Khiết Tinh Vi',
+    astralRune: '🌾',
+  },
+  {
+    id: 'libra',
+    name: 'Thiên Bình',
+    latin: 'Libra',
+    symbol: '♎',
+    element: 'Khí',
+    cravingDesc: 'Trình bày đẹp mắt, cân bằng chua cay mặn ngọt hoàn mỹ',
+    dates: '23.09 – 23.10',
+    rulingPlanet: 'Kim Tinh ♀',
+    mysticTitle: 'Minh Triết Cân Bằng',
+    astralRune: '⚖️',
+  },
+  {
+    id: 'scorpio',
+    name: 'Bọ Cạp',
+    latin: 'Scorpio',
+    symbol: '♏',
+    element: 'Thủy',
+    cravingDesc: 'Hương vị bí ẩn, đậm sâu cuốn hút, cay tê tái càng ăn càng mê',
+    dates: '24.10 – 21.11',
+    rulingPlanet: 'Diêm Vương ♇',
+    mysticTitle: 'U Hồn Hắc Ám',
+    astralRune: '🦂',
+  },
+  {
+    id: 'sagittarius',
+    name: 'Nhân Mã',
+    latin: 'Sagittarius',
+    symbol: '♐',
+    element: 'Hỏa',
+    cravingDesc: 'Phiêu lưu phong vị mới mẻ, đường phố độc lạ',
+    dates: '22.11 – 21.12',
+    rulingPlanet: 'Mộc Tinh ♃',
+    mysticTitle: 'Xuyên Tinh Thần Tiễn',
+    astralRune: '🏹',
+  },
+  {
+    id: 'capricorn',
+    name: 'Ma Kết',
+    latin: 'Capricorn',
+    symbol: '♑',
+    element: 'Thổ',
+    cravingDesc: 'Cơm niêu, món kho truyền thống gia truyền vững bụng',
+    dates: '22.12 – 19.01',
+    rulingPlanet: 'Thổ Tinh ♄',
+    mysticTitle: 'Thần Sơn Vĩnh Cửu',
+    astralRune: '🏔️',
+  },
+  {
+    id: 'aquarius',
+    name: 'Bảo Bình',
+    latin: 'Aquarius',
+    symbol: '♒',
+    element: 'Khí',
+    cravingDesc: 'Món fusion phá cách ngoài khuôn khổ thường nhật',
+    dates: '20.01 – 18.02',
+    rulingPlanet: 'Thiên Vương ♅',
+    mysticTitle: 'Huyền Khí Khai Phóng',
+    astralRune: '🏺',
+  },
+  {
+    id: 'pisces',
+    name: 'Song Ngư',
+    latin: 'Pisces',
+    symbol: '♓',
+    element: 'Thủy',
+    cravingDesc: 'Hải sản tươi rói, món nước êm dịu cuốn trôi muộn phiền',
+    dates: '19.02 – 20.03',
+    rulingPlanet: 'Hải Vương ♆',
+    mysticTitle: 'Hải Uyên Mộng Tưởng',
+    astralRune: '🌊',
+  },
 ];
 
 export const ZODIAC_ELEMENT_CONFIG: Record<
@@ -104,62 +251,80 @@ export const ZODIAC_ELEMENT_CONFIG: Record<
     buttonActive: string;
     glowShadow: string;
     symbolColor: string;
+    medallionBorder: string;
+    medallionBg: string;
+    astrolabeColor: string;
   }
 > = {
   'Hỏa': {
     name: 'Hỏa',
     icon: '🔥',
-    badgeBg: 'bg-rose-950/60',
+    badgeBg: 'bg-rose-950/70',
     badgeText: 'text-rose-300',
-    badgeBorder: 'border-rose-500/40',
-    buttonInactive: 'from-[#20070d]/85 via-[#130308]/95 to-[#260811]/90 border-rose-900/40 hover:border-rose-400/80 text-rose-100/90 hover:text-white',
-    buttonActive: 'from-[#651022] via-[#3a0812] to-[#80142b] border-rose-400 ring-2 ring-rose-400/50 text-white',
-    glowShadow: 'shadow-[0_0_22px_rgba(244,63,94,0.55)]',
+    badgeBorder: 'border-rose-500/50',
+    buttonInactive: 'from-[#170206] via-[#090103] to-[#200308] border-rose-900/50 hover:border-rose-400/90 text-rose-100/90 hover:text-white',
+    buttonActive: 'from-[#2e030a] via-[#140104] to-[#45050f] border-rose-400 ring-2 ring-rose-400/70 text-white',
+    glowShadow: 'shadow-[0_0_35px_rgba(244,63,94,0.7),inset_0_0_18px_rgba(244,63,94,0.35)]',
     symbolColor: 'text-rose-400 group-hover:text-rose-300',
+    medallionBorder: 'border-rose-500/50 group-hover:border-rose-400',
+    medallionBg: 'from-[#20040a] via-[#0f0104] to-[#2b050d]',
+    astrolabeColor: 'text-rose-400/20 group-hover:text-rose-400/40',
   },
   'Thổ': {
     name: 'Thổ',
     icon: '🌿',
-    badgeBg: 'bg-emerald-950/60',
+    badgeBg: 'bg-emerald-950/70',
     badgeText: 'text-emerald-300',
-    badgeBorder: 'border-emerald-500/40',
-    buttonInactive: 'from-[#071c14]/85 via-[#03110c]/95 to-[#0a271c]/90 border-emerald-900/40 hover:border-emerald-400/80 text-emerald-100/90 hover:text-white',
-    buttonActive: 'from-[#0d4f37] via-[#072f21] to-[#126848] border-emerald-400 ring-2 ring-emerald-400/50 text-white',
-    glowShadow: 'shadow-[0_0_22px_rgba(16,185,129,0.55)]',
+    badgeBorder: 'border-emerald-500/50',
+    buttonInactive: 'from-[#03140c] via-[#010804] to-[#051c11] border-emerald-900/50 hover:border-emerald-400/90 text-emerald-100/90 hover:text-white',
+    buttonActive: 'from-[#042817] via-[#01140b] to-[#073b22] border-emerald-400 ring-2 ring-emerald-400/70 text-white',
+    glowShadow: 'shadow-[0_0_35px_rgba(16,185,129,0.7),inset_0_0_18px_rgba(16,185,129,0.35)]',
     symbolColor: 'text-emerald-400 group-hover:text-emerald-300',
+    medallionBorder: 'border-emerald-500/50 group-hover:border-emerald-400',
+    medallionBg: 'from-[#051f12] via-[#021009] to-[#082918]',
+    astrolabeColor: 'text-emerald-400/20 group-hover:text-emerald-400/40',
   },
   'Khí': {
     name: 'Khí',
     icon: '🌪️',
-    badgeBg: 'bg-cyan-950/60',
+    badgeBg: 'bg-cyan-950/70',
     badgeText: 'text-cyan-300',
-    badgeBorder: 'border-cyan-500/40',
-    buttonInactive: 'from-[#081b26]/85 via-[#030f16]/95 to-[#0c2535]/90 border-cyan-900/40 hover:border-cyan-400/80 text-cyan-100/90 hover:text-white',
-    buttonActive: 'from-[#0d4663] via-[#072a3c] to-[#135d84] border-cyan-400 ring-2 ring-cyan-400/50 text-white',
-    glowShadow: 'shadow-[0_0_22px_rgba(6,182,212,0.55)]',
+    badgeBorder: 'border-cyan-500/50',
+    buttonInactive: 'from-[#02131c] via-[#01080d] to-[#031926] border-cyan-900/50 hover:border-cyan-400/90 text-cyan-100/90 hover:text-white',
+    buttonActive: 'from-[#05283b] via-[#02141f] to-[#083b57] border-cyan-400 ring-2 ring-cyan-400/70 text-white',
+    glowShadow: 'shadow-[0_0_35px_rgba(6,182,212,0.7),inset_0_0_18px_rgba(6,182,212,0.35)]',
     symbolColor: 'text-cyan-400 group-hover:text-cyan-300',
+    medallionBorder: 'border-cyan-500/50 group-hover:border-cyan-400',
+    medallionBg: 'from-[#041f2e] via-[#020f17] to-[#05293d]',
+    astrolabeColor: 'text-cyan-400/20 group-hover:text-cyan-400/40',
   },
   'Thủy': {
     name: 'Thủy',
     icon: '🌊',
-    badgeBg: 'bg-blue-950/60',
+    badgeBg: 'bg-blue-950/70',
     badgeText: 'text-blue-300',
-    badgeBorder: 'border-blue-500/40',
-    buttonInactive: 'from-[#0b1333]/85 via-[#050b1f]/95 to-[#101b47]/90 border-blue-900/40 hover:border-blue-400/80 text-blue-100/90 hover:text-white',
-    buttonActive: 'from-[#1a2c7a] via-[#0f1b4c] to-[#253fae] border-blue-400 ring-2 ring-blue-400/50 text-white',
-    glowShadow: 'shadow-[0_0_22px_rgba(99,102,241,0.55)]',
+    badgeBorder: 'border-blue-500/50',
+    buttonInactive: 'from-[#030922] via-[#010410] to-[#050e30] border-blue-900/50 hover:border-blue-400/90 text-blue-100/90 hover:text-white',
+    buttonActive: 'from-[#07174a] via-[#030a24] to-[#0c2269] border-blue-400 ring-2 ring-blue-400/70 text-white',
+    glowShadow: 'shadow-[0_0_35px_rgba(59,130,246,0.7),inset_0_0_18px_rgba(59,130,246,0.35)]',
     symbolColor: 'text-blue-400 group-hover:text-blue-300',
+    medallionBorder: 'border-blue-500/50 group-hover:border-blue-400',
+    medallionBg: 'from-[#05113b] via-[#02081f] to-[#07174d]',
+    astrolabeColor: 'text-blue-400/20 group-hover:text-blue-400/40',
   },
   'Vũ Trụ': {
     name: 'Vũ Trụ',
     icon: '🌌',
-    badgeBg: 'bg-purple-950/60',
+    badgeBg: 'bg-purple-950/70',
     badgeText: 'text-amber-300',
-    badgeBorder: 'border-amber-400/40',
-    buttonInactive: 'from-[#21093f]/90 via-[#100322]/95 to-[#330d61]/90 border-purple-700/50 hover:border-amber-400/80 text-purple-100 hover:text-white',
-    buttonActive: 'from-[#42127d] via-[#240846] to-[#5b19ab] border-amber-300 ring-2 ring-amber-400/60 text-white',
-    glowShadow: 'shadow-[0_0_28px_rgba(245,158,11,0.55)]',
+    badgeBorder: 'border-amber-400/50',
+    buttonInactive: 'from-[#140222] via-[#07010d] to-[#1c0330] border-purple-800/60 hover:border-amber-400/90 text-purple-100 hover:text-white',
+    buttonActive: 'from-[#2a0447] via-[#130221] to-[#3a0662] border-amber-300 ring-2 ring-amber-400/70 text-white',
+    glowShadow: 'shadow-[0_0_38px_rgba(245,158,11,0.7),inset_0_0_20px_rgba(245,158,11,0.4)]',
     symbolColor: 'text-amber-300',
+    medallionBorder: 'border-amber-400/60 group-hover:border-amber-300',
+    medallionBg: 'from-[#24053b] via-[#11011c] to-[#30064f]',
+    astrolabeColor: 'text-amber-300/25 group-hover:text-amber-300/50',
   },
 };
 
@@ -712,6 +877,63 @@ const MysticCardBackdrop: React.FC = () => {
   );
 };
 
+// Eerie Astrological Astrolabe Sigil for Zodiac Selector Cards ("Linh Phù Hoàng Đạo Ma Mị")
+const ZodiacAstrolabeSigil: React.FC<{ isSelected: boolean; astrolabeColor: string }> = ({
+  isSelected,
+  astrolabeColor,
+}) => {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl select-none">
+      {/* Deep Eerie Abyssal Vignette */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(255,255,255,0.06)_0%,transparent_65%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_20%,rgba(0,0,0,0.85)_100%)]" />
+
+      {/* Rotating Arcane Astrolabe SVG */}
+      <div className="absolute inset-0 flex items-center justify-center -translate-y-2">
+        <svg
+          viewBox="0 0 160 160"
+          className={`w-36 h-36 sm:w-40 sm:h-40 transition-all duration-700 ${astrolabeColor} ${
+            isSelected
+              ? 'scale-110 rotate-45 opacity-100'
+              : 'scale-100 group-hover:scale-115 group-hover:rotate-45'
+          }`}
+          fill="none"
+        >
+          {/* Astrological Dial Circles with Tick Marks */}
+          <circle cx="80" cy="80" r="74" stroke="currentColor" strokeWidth="0.8" strokeDasharray="1 3" />
+          <circle cx="80" cy="80" r="64" stroke="currentColor" strokeWidth="0.6" strokeDasharray="4 2" opacity="0.6" />
+          <circle cx="80" cy="80" r="50" stroke="currentColor" strokeWidth="0.7" strokeDasharray="2 2" />
+          <circle cx="80" cy="80" r="34" stroke="currentColor" strokeWidth="0.5" opacity="0.5" />
+
+          {/* 4 Cardinal Axis Rays */}
+          <line x1="80" y1="6" x2="80" y2="154" stroke="currentColor" strokeWidth="0.6" strokeDasharray="2 2" opacity="0.6" />
+          <line x1="6" y1="80" x2="154" y2="80" stroke="currentColor" strokeWidth="0.6" strokeDasharray="2 2" opacity="0.6" />
+
+          {/* 8-pointed Arcane Star */}
+          <polygon
+            points="80,22 92,68 138,80 92,92 80,138 68,92 22,80 68,68"
+            stroke="currentColor"
+            strokeWidth="0.6"
+            opacity="0.5"
+          />
+
+          {/* Planetary Alignment Nodes */}
+          <circle cx="80" cy="16" r="1.6" fill="currentColor" opacity="0.8" />
+          <circle cx="144" cy="80" r="1.6" fill="currentColor" opacity="0.8" />
+          <circle cx="80" cy="144" r="1.6" fill="currentColor" opacity="0.8" />
+          <circle cx="16" cy="80" r="1.6" fill="currentColor" opacity="0.8" />
+        </svg>
+      </div>
+
+      {/* Occult Celestial Micro-Glyphs */}
+      <div className="absolute top-2 left-2.5 text-[7px] text-amber-200/30 font-serif">✦</div>
+      <div className="absolute top-2 right-2.5 text-[7px] text-amber-200/30 font-serif">✧</div>
+      <div className="absolute bottom-2 left-2.5 text-[6px] text-amber-200/25 font-serif">⋆</div>
+      <div className="absolute bottom-2 right-2.5 text-[7px] text-amber-200/30 font-serif">✦</div>
+    </div>
+  );
+};
+
 // Ornate golden corner filigree for Tarot cards
 const TarotCornerFlourish: React.FC<{ position: 'tl' | 'tr' | 'bl' | 'br' }> = ({ position }) => {
   const rotationClass = {
@@ -1200,51 +1422,53 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
           </div>
         </div>
 
-        {/* Zodiac Horoscope Selector (Thiết kế Đền Thờ Chiêm Tinh Tinh Vân Huyền Bí) */}
-        <div className="relative z-10 w-full mb-8 p-4 sm:p-6 lg:p-7 rounded-3xl bg-gradient-to-b from-[#0a0216] via-[#140529] to-[#0c031a] border border-purple-800/40 shadow-2xl shadow-purple-950/50 overflow-hidden text-white">
-          {/* Subtle celestial stardust watermark */}
-          <div className="absolute top-0 right-0 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full border border-purple-500/10 pointer-events-none animate-tarot-spin" />
+        {/* Zodiac Horoscope Selector (Thiết kế Đài Trận Chiêm Tinh Ma Mị & Huyền Bí) */}
+        <div className="relative z-10 w-full mb-8 p-4 sm:p-6 lg:p-7 rounded-3xl bg-gradient-to-b from-[#080112] via-[#0f0321] to-[#0a0217] border-2 border-purple-700/50 shadow-[0_0_50px_rgba(30,10,60,0.8),inset_0_0_30px_rgba(0,0,0,0.9)] overflow-hidden text-white">
+          {/* Sacred Astrological Altar Backdrops & Rotating Astrolabe */}
+          <div className="absolute top-0 right-0 w-[420px] h-[420px] bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-[420px] h-[420px] bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -top-16 left-1/2 -translate-x-1/2 w-[650px] h-[650px] rounded-full border border-purple-500/10 pointer-events-none animate-tarot-spin" />
+          <div className="absolute -bottom-20 left-1/2 -translate-x-1/2 w-[550px] h-[550px] rounded-full border border-dashed border-amber-500/10 pointer-events-none animate-spin-slow" />
 
-          {/* Header với 4 Nguyên Tố Huyền Học */}
+          {/* Header với Nghi Thức Chiêm Tinh & 4 Nguyên Tố Cổ Xưa */}
           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-3 mb-5 pb-4 border-b border-purple-800/40">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#2a0b50] to-[#120324] border border-amber-400/40 flex items-center justify-center text-amber-300 shadow-md shadow-purple-950/40 shrink-0">
-                <Compass className="w-5 h-5 animate-spin-slow text-amber-300" />
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-[#2a0b50] via-[#1b0536] to-[#0c0218] border-2 border-amber-400/50 flex items-center justify-center text-amber-300 shadow-[0_0_20px_rgba(245,158,11,0.4)] shrink-0 relative">
+                <Compass className="w-6 h-6 animate-spin-slow text-amber-300 drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
+                <span className="absolute -top-1 -right-1 text-[9px] text-amber-300 animate-pulse">✦</span>
               </div>
               <div>
-                <h2 className="text-sm sm:text-base font-black uppercase tracking-wider flex items-center gap-2 m-0">
-                  <span className="bg-gradient-to-r from-amber-200 via-yellow-100 to-amber-300 bg-clip-text text-transparent">
-                    BẢN ĐỒ CHIÊM TINH HOÀNG ĐẠO • KHAI MỞ KHẨU VỊ
+                <h2 className="text-sm sm:text-base font-black uppercase tracking-widest flex items-center gap-2 m-0 font-serif">
+                  <span className="bg-gradient-to-r from-amber-200 via-yellow-100 to-amber-300 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(251,191,36,0.4)]">
+                    🕯️ ĐÀI TRẬN CHIÊM TINH HOÀNG ĐẠO • KHAI MỞ KHẨU VỊ 🕯️
                   </span>
                 </h2>
-                <p className="text-[11.5px] text-purple-200/80 font-medium mt-0.5">
-                  Chọn cung mệnh để kích hoạt tần số năng lượng vị giác cần bổ sung hôm nay
+                <p className="text-[11.5px] text-purple-200/80 font-medium mt-0.5 font-serif italic">
+                  Triệu hồi năng lượng 12 cung sao hoàng đạo để tương thích linh hồn và vị giác hôm nay
                 </p>
               </div>
             </div>
 
             {/* 4 Nguyên Tố Chiêm Tinh Indicators */}
             <div className="flex items-center gap-1.5 self-start md:self-auto flex-wrap">
-              <span className="text-[10.5px] font-bold text-purple-300/70 mr-1 hidden sm:inline">4 Nguyên Tố:</span>
-              <span className="px-2 py-0.5 rounded-lg bg-rose-950/60 border border-rose-500/30 text-rose-300 text-[11px] font-semibold flex items-center gap-1">
+              <span className="text-[10.5px] font-bold text-purple-300/80 mr-1 hidden sm:inline font-serif">4 Nguyên Tố Cổ:</span>
+              <span className="px-2 py-0.5 rounded-lg bg-rose-950/70 border border-rose-500/40 text-rose-300 text-[11px] font-semibold flex items-center gap-1 shadow-sm">
                 🔥 Hỏa
               </span>
-              <span className="px-2 py-0.5 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 text-[11px] font-semibold flex items-center gap-1">
+              <span className="px-2 py-0.5 rounded-lg bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 text-[11px] font-semibold flex items-center gap-1 shadow-sm">
                 🌿 Thổ
               </span>
-              <span className="px-2 py-0.5 rounded-lg bg-cyan-950/60 border border-cyan-500/30 text-cyan-300 text-[11px] font-semibold flex items-center gap-1">
+              <span className="px-2 py-0.5 rounded-lg bg-cyan-950/70 border border-cyan-500/40 text-cyan-300 text-[11px] font-semibold flex items-center gap-1 shadow-sm">
                 🌪️ Khí
               </span>
-              <span className="px-2 py-0.5 rounded-lg bg-blue-950/60 border border-blue-500/30 text-blue-300 text-[11px] font-semibold flex items-center gap-1">
+              <span className="px-2 py-0.5 rounded-lg bg-blue-950/70 border border-blue-500/40 text-blue-300 text-[11px] font-semibold flex items-center gap-1 shadow-sm">
                 🌊 Thủy
               </span>
             </div>
           </div>
 
-          {/* Vị trí Đặc Biệt: TOÀN THỂ VŨ TRỤ (Cosmos Nexus) */}
-          <div className="relative z-10 mb-3.5">
+          {/* Vị trí Đặc Biệt: TOÀN THỂ VŨ TRỤ (Cosmos Omniverse Tablet) */}
+          <div className="relative z-10 mb-4">
             {(() => {
               const cosmos = ZODIAC_SIGNS[0]; // Toàn Thể Vũ Trụ
               const isCosmosSelected = selectedZodiac.id === 'all';
@@ -1256,40 +1480,61 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                     setRevealedResult(null);
                     tarotAudio.playCandleSpark();
                   }}
-                  className={`w-full group relative px-4 sm:px-5 py-3 rounded-2xl border transition-all duration-300 flex items-center justify-between gap-3 text-left cursor-pointer overflow-hidden ${
+                  className={`w-full group relative px-4 sm:px-6 py-3.5 rounded-2xl border-2 transition-all duration-500 flex items-center justify-between gap-3 text-left cursor-pointer overflow-hidden select-none ${
                     isCosmosSelected
-                      ? 'bg-gradient-to-r from-[#390d63] via-[#240846] to-[#4c1285] border-amber-300/90 shadow-[0_0_25px_rgba(245,158,11,0.45)] ring-1 ring-amber-300/50'
-                      : 'bg-[#15062b]/80 hover:bg-[#200a40]/90 border-purple-700/40 hover:border-purple-400/60 text-purple-100'
+                      ? 'bg-gradient-to-r from-[#2c084d] via-[#1a0430] to-[#3a0b63] border-amber-300 shadow-[0_0_35px_rgba(245,158,11,0.55),inset_0_0_20px_rgba(245,158,11,0.25)] ring-2 ring-amber-400/50'
+                      : 'bg-gradient-to-r from-[#120324]/90 via-[#0a0115]/95 to-[#17042e]/90 hover:from-[#1d0538] hover:to-[#26074a] border-purple-700/50 hover:border-amber-400/70 text-purple-100 hover:shadow-[0_0_25px_rgba(168,85,247,0.3)]'
                   }`}
                 >
-                  <div className="flex items-center gap-3 relative z-10">
-                    <div className={`w-9 h-9 rounded-xl flex items-center justify-center text-xl shrink-0 transition-transform group-hover:scale-110 ${
+                  {/* Subtle rotating sacred geometry backdrop */}
+                  <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-25">
+                    <div className="absolute -right-8 -top-8 w-44 h-44 rounded-full border border-dashed border-amber-400/30 group-hover:rotate-45 transition-transform duration-700" />
+                  </div>
+
+                  {/* Dual Inset Hairline Golden Frame */}
+                  <div className={`absolute inset-1 rounded-xl border pointer-events-none transition-colors duration-300 ${
+                    isCosmosSelected ? 'border-amber-400/40' : 'border-amber-500/15 group-hover:border-amber-400/30'
+                  }`} />
+                  <div className="absolute inset-1.5 rounded-lg border border-dashed border-amber-400/10 pointer-events-none" />
+
+                  {/* 4 Antique Gold Corner Flourishes */}
+                  <TarotCornerFlourish position="tl" />
+                  <TarotCornerFlourish position="tr" />
+                  <TarotCornerFlourish position="bl" />
+                  <TarotCornerFlourish position="br" />
+
+                  <div className="flex items-center gap-3.5 relative z-10">
+                    <div className={`w-11 h-11 rounded-full border flex items-center justify-center text-2xl shrink-0 transition-transform duration-500 group-hover:scale-110 ${
                       isCosmosSelected
-                        ? 'bg-amber-400/20 border border-amber-300/50 text-amber-200 shadow-inner'
-                        : 'bg-purple-900/40 border border-purple-500/30 text-purple-300'
+                        ? 'bg-gradient-to-b from-amber-400/20 to-black border-amber-300 text-amber-200 shadow-[0_0_18px_rgba(251,191,36,0.6)]'
+                        : 'bg-gradient-to-b from-[#20053a] to-black border-purple-500/40 text-purple-300 group-hover:border-amber-400/60'
                     }`}>
                       🌌
                     </div>
                     <div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs sm:text-sm font-black tracking-wide text-white group-hover:text-amber-200 transition-colors">
-                          Toàn Thể Vũ Trụ (Mọi Cung Hoàng Đạo)
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="text-xs sm:text-sm font-black tracking-wide text-white group-hover:text-amber-200 transition-colors font-serif">
+                          Toàn Thể Vũ Trụ (Cosmos Omniverse)
+                        </span>
+                        <span className="text-[10px] font-serif text-amber-300/80 italic">
+                          • {cosmos.rulingPlanet} • {cosmos.mysticTitle}
                         </span>
                         {isCosmosSelected && (
-                          <span className="px-2 py-0.5 rounded-full bg-amber-400/20 border border-amber-300/50 text-amber-300 text-[10px] font-black uppercase tracking-wider animate-pulse">
-                            ✦ Đang kết nối
+                          <span className="px-2 py-0.5 rounded-full bg-amber-400/25 border border-amber-300/60 text-amber-300 text-[10px] font-black uppercase tracking-wider animate-pulse flex items-center gap-1 shadow-sm">
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-300 shadow-[0_0_6px_rgba(251,191,36,1)]" />
+                            ✦ Đang Ngự Trị
                           </span>
                         )}
                       </div>
-                      <p className="text-[11px] text-purple-200/80 line-clamp-1 mt-0.5">
-                        Đón nhận tự do toàn bộ mỹ vị 3 miền Bắc - Trung - Nam, không giới hạn khẩu vị
+                      <p className="text-[11px] text-purple-200/80 line-clamp-1 mt-0.5 font-serif">
+                        Đón nhận tự do toàn bộ linh vị 3 miền Bắc - Trung - Nam, không giới hạn khuôn mẫu
                       </p>
                     </div>
                   </div>
 
                   <div className="hidden sm:flex items-center gap-2 shrink-0 relative z-10">
-                    <span className="text-[11px] text-amber-300/90 font-medium italic">
-                      Cosmos Omniverse
+                    <span className="text-[11px] text-amber-300/90 font-serif italic font-medium">
+                      Vạn Pháp Quy Tông
                     </span>
                     <Sparkles className={`w-4 h-4 ${isCosmosSelected ? 'text-amber-300 animate-spin-slow' : 'text-purple-400'}`} />
                   </div>
@@ -1298,8 +1543,8 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
             })()}
           </div>
 
-          {/* Lưới 12 Cung Hoàng Đạo phân loại theo 4 Nguyên Tố */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-2.5 relative z-10 w-full">
+          {/* Lưới 12 Cung Hoàng Đạo - Thẻ Bài Chiêm Tinh Ma Mị Cổ Điển */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2.5 sm:gap-3 relative z-10 w-full">
             {ZODIAC_SIGNS.slice(1).map((z) => {
               const isSelected = selectedZodiac.id === z.id;
               const elementCfg = ZODIAC_ELEMENT_CONFIG[z.element];
@@ -1311,42 +1556,95 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                     setRevealedResult(null);
                     tarotAudio.playCandleSpark();
                   }}
-                  className={`group relative p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border transition-all duration-300 flex flex-col items-center justify-center text-center cursor-pointer select-none bg-gradient-to-b ${
+                  className={`group relative p-2.5 sm:p-3 min-h-[148px] sm:min-h-[160px] rounded-2xl border-2 transition-all duration-500 flex flex-col items-center justify-between text-center cursor-pointer select-none bg-gradient-to-b ${
                     isSelected
-                      ? `${elementCfg.buttonActive} ${elementCfg.glowShadow} scale-[1.02]`
-                      : `${elementCfg.buttonInactive}`
-                  }`}
+                      ? `${elementCfg.buttonActive} ${elementCfg.glowShadow} scale-[1.03] z-20`
+                      : `${elementCfg.buttonInactive} hover:-translate-y-1 hover:scale-[1.02]`
+                  } overflow-hidden shadow-xl`}
                 >
-                  {/* Active Indicator Gem */}
-                  {isSelected && (
-                    <div className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-amber-300 shadow-[0_0_8px_rgba(251,191,36,1)] animate-ping" />
-                  )}
+                  {/* Occult Astrological Sigil Backdrop (Linh Phù Trận Đồ Chiêm Tinh) */}
+                  <ZodiacAstrolabeSigil isSelected={isSelected} astrolabeColor={elementCfg.astrolabeColor} />
 
-                  {/* Zodiac Symbol Glyph */}
-                  <div className="relative mb-1 flex items-center justify-center">
-                    <span className={`text-xl sm:text-2xl transition-transform duration-300 group-hover:scale-115 ${
-                      isSelected ? 'text-amber-200 drop-shadow-[0_0_10px_rgba(251,191,36,0.8)]' : elementCfg.symbolColor
+                  {/* Dual Inset Hairline Golden Frame */}
+                  <div className={`absolute inset-1 rounded-xl border pointer-events-none transition-colors duration-300 ${
+                    isSelected ? 'border-amber-400/40' : 'border-amber-500/15 group-hover:border-amber-400/30'
+                  }`} />
+                  <div className="absolute inset-1.5 rounded-lg border border-dashed border-amber-400/10 pointer-events-none" />
+
+                  {/* 4 Antique Gold Corner Flourishes */}
+                  <TarotCornerFlourish position="tl" />
+                  <TarotCornerFlourish position="tr" />
+                  <TarotCornerFlourish position="bl" />
+                  <TarotCornerFlourish position="br" />
+
+                  {/* Subtle Arcane Light Shimmer on Hover */}
+                  <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.4s_infinite] bg-gradient-to-r from-transparent via-amber-300/10 to-transparent pointer-events-none z-10" />
+
+                  {/* Top Bar: Date Range & Active Talisman Seal */}
+                  <div className="w-full flex items-center justify-between px-1 relative z-20">
+                    <span className="text-[9px] font-serif text-amber-200/70 tracking-wider">
+                      {z.dates}
+                    </span>
+                    {isSelected ? (
+                      <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-amber-400/20 border border-amber-300/60 text-amber-300 text-[8.5px] font-black uppercase tracking-wider animate-pulse">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-300 shadow-[0_0_6px_rgba(251,191,36,1)]" />
+                        Ngự Ấn
+                      </span>
+                    ) : (
+                      <span className="text-[9.5px] text-purple-300/60 group-hover:text-amber-300/80 transition-colors">
+                        {z.astralRune}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Center: Zodiac Talisman Medallion */}
+                  <div className="relative my-1 flex flex-col items-center justify-center z-20">
+                    {/* Eerie Concentric Medallion Rim */}
+                    <div className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full border flex items-center justify-center relative transition-all duration-500 ${
+                      isSelected
+                        ? 'border-amber-300 bg-gradient-to-b from-[#1b052e] to-black shadow-[0_0_20px_rgba(251,191,36,0.7),inset_0_0_10px_rgba(251,191,36,0.3)] scale-110'
+                        : `${elementCfg.medallionBorder} bg-gradient-to-b ${elementCfg.medallionBg} group-hover:scale-105 shadow-[0_0_12px_rgba(0,0,0,0.9)]`
                     }`}>
-                      {z.symbol}
+                      {/* Inner sacred dashed ring */}
+                      <div className="absolute inset-0.5 rounded-full border border-dashed border-amber-400/25 pointer-events-none" />
+
+                      {/* Zodiac Symbol Glyph */}
+                      <span className={`text-2xl sm:text-[26px] font-serif transition-transform duration-300 ${
+                        isSelected
+                          ? 'text-amber-200 drop-shadow-[0_0_12px_rgba(251,191,36,0.9)]'
+                          : `${elementCfg.symbolColor} drop-shadow-[0_0_6px_rgba(0,0,0,0.8)]`
+                      }`}>
+                        {z.symbol}
+                      </span>
+                    </div>
+
+                    {/* Ruling Planet & Title */}
+                    <span className="text-[9px] font-serif text-purple-200/70 italic mt-1 line-clamp-1 tracking-tight">
+                      {z.rulingPlanet}
                     </span>
                   </div>
 
-                  {/* Zodiac Vietnamese Name */}
-                  <div className={`text-xs sm:text-[13px] font-black tracking-tight ${
-                    isSelected ? 'text-white drop-shadow' : 'text-stone-100 group-hover:text-white'
-                  }`}>
-                    {z.name}
-                  </div>
+                  {/* Bottom Cartouche: Vietnamese Name & Element Badge */}
+                  <div className="w-full relative z-20 pt-0.5">
+                    <div className={`text-xs sm:text-[13px] font-black tracking-wide font-serif transition-colors ${
+                      isSelected ? 'text-amber-100 drop-shadow-[0_0_8px_rgba(251,191,36,0.5)]' : 'text-stone-100 group-hover:text-white'
+                    }`}>
+                      {z.name}
+                    </div>
 
-                  {/* Latin & Element Tag */}
-                  <div className="flex items-center gap-1 mt-0.5">
-                    <span className="text-[9.5px] sm:text-[10px] text-purple-200/70 italic font-medium">
-                      {z.latin}
-                    </span>
-                    <span className="text-[9px] text-stone-400">•</span>
-                    <span className="text-[9.5px] sm:text-[10px] font-bold text-amber-300/90">
-                      {elementCfg.icon} {z.element}
-                    </span>
+                    <div className="flex items-center justify-center gap-1.5 mt-0.5">
+                      <span className="text-[9.5px] text-purple-200/60 italic font-serif">
+                        {z.latin}
+                      </span>
+                      <span className="text-[8px] text-amber-500/50">•</span>
+                      <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-md border ${
+                        isSelected
+                          ? 'bg-amber-400/20 border-amber-300/40 text-amber-200'
+                          : `${elementCfg.badgeBg} ${elementCfg.badgeBorder} ${elementCfg.badgeText}`
+                      }`}>
+                        {elementCfg.icon} {z.element}
+                      </span>
+                    </div>
                   </div>
                 </button>
               );
@@ -1354,28 +1652,31 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
           </div>
 
           {/* Sacred Oracle Prophecy Banner: Lời Sấm Khẩu Vị Cung Hoàng Đạo */}
-          <div className="mt-4 p-3.5 sm:p-4 rounded-2xl bg-black/60 backdrop-blur-md border border-purple-600/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-inner relative z-10">
+          <div className="mt-4 p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-black/80 via-[#10031f]/90 to-black/80 backdrop-blur-md border border-purple-500/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-[inset_0_0_20px_rgba(0,0,0,0.8)] relative z-10">
             <div className="flex items-center gap-3 text-left">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-900/60 to-black/80 border border-purple-400/40 flex items-center justify-center text-xl shrink-0 shadow-inner">
+              <div className="w-11 h-11 rounded-full bg-gradient-to-br from-purple-900/80 via-black to-black border-2 border-amber-400/50 flex items-center justify-center text-2xl shrink-0 shadow-[0_0_15px_rgba(245,158,11,0.3)]">
                 {selectedZodiac.symbol}
               </div>
               <div>
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="text-[11px] font-black uppercase tracking-wider text-amber-300">
+                  <span className="text-[11px] font-black uppercase tracking-wider text-amber-300 font-serif">
                     🔮 LỜI SẤM KHẨU VỊ {selectedZodiac.name.toUpperCase()} ({selectedZodiac.latin}):
                   </span>
                   <span className="px-2 py-0.5 rounded-full bg-purple-900/60 border border-purple-400/30 text-[10px] font-bold text-purple-200">
                     {ZODIAC_ELEMENT_CONFIG[selectedZodiac.element].icon} {selectedZodiac.element}
                   </span>
+                  <span className="text-[10px] font-serif text-amber-200/70 italic">
+                    • {selectedZodiac.mysticTitle}
+                  </span>
                 </div>
-                <p className="text-xs sm:text-sm text-stone-200 font-medium italic mt-0.5 leading-relaxed">
+                <p className="text-xs sm:text-sm text-stone-200 font-medium italic mt-0.5 leading-relaxed font-serif">
                   &ldquo;{selectedZodiac.cravingDesc}&rdquo;
                 </p>
               </div>
             </div>
 
             <div className="shrink-0 self-end sm:self-auto">
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-300/30 text-amber-300 text-[11px] font-semibold">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-300/30 text-amber-300 text-[11px] font-semibold font-serif">
                 <Sparkles className="w-3 h-3 text-amber-400 animate-spin-slow" />
                 Tần số vị giác sẵn sàng
               </div>
