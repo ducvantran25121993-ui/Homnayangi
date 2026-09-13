@@ -26,6 +26,7 @@ import { DeliveryLocationBadge } from './DeliveryLocationBadge';
 import { tarotAudio } from '../utils/tarotSound';
 import { FoodAmuletModal, FoodAmuletData } from './FoodAmuletModal';
 import { TarotSigilArt } from './TarotSigilArt';
+import { getZodiacArchetypes, ELEMENT_THEMES } from '../data/zodiacTarotCards';
 import confetti from 'canvas-confetti';
 
 interface FoodTarotProps {
@@ -172,13 +173,13 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badge: 'Sáng Tạo',
     astralSign: '☿',
     elementText: 'Vô Cực Linh Khí',
-    borderGlow: 'border-cyan-400/50 group-hover:border-cyan-300',
+    borderGlow: 'border-cyan-500/50 group-hover:border-cyan-300',
     badgeColor: 'bg-cyan-500/20 text-cyan-300 border-cyan-400/40',
-    glowAura: 'group-hover:shadow-[0_0_40px_rgba(6,182,212,0.55)]',
+    glowAura: 'group-hover:shadow-[0_0_45px_rgba(6,182,212,0.65)]',
     sigilType: 'magician',
-    cardBg: 'from-[#081829] via-[#040f1a] to-[#0a2036]',
-    archBg: 'bg-gradient-to-b from-cyan-500/20 via-blue-950/40 to-black/70',
-    archBorder: 'border-cyan-400/40 group-hover:border-cyan-300/80 shadow-[inset_0_0_20px_rgba(6,182,212,0.25)]',
+    cardBg: 'from-[#021422] via-[#010a11] to-[#041d30]',
+    archBg: 'bg-gradient-to-b from-cyan-600/25 via-sky-950/60 to-black/90',
+    archBorder: 'border-cyan-500/50 group-hover:border-cyan-300 shadow-[inset_0_0_25px_rgba(6,182,212,0.35),0_0_15px_rgba(6,182,212,0.2)]',
     accentText: 'text-cyan-300',
   },
   {
@@ -190,13 +191,13 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badge: 'Thanh Khiết',
     astralSign: '☽',
     elementText: 'Huyền Nguyệt Thủy',
-    borderGlow: 'border-blue-400/50 group-hover:border-blue-300',
+    borderGlow: 'border-blue-500/50 group-hover:border-blue-300',
     badgeColor: 'bg-blue-500/20 text-blue-300 border-blue-400/40',
-    glowAura: 'group-hover:shadow-[0_0_40px_rgba(59,130,246,0.55)]',
+    glowAura: 'group-hover:shadow-[0_0_45px_rgba(59,130,246,0.65)]',
     sigilType: 'high_priestess',
-    cardBg: 'from-[#0a1236] via-[#050a22] to-[#0e1747]',
-    archBg: 'bg-gradient-to-b from-blue-500/20 via-indigo-950/40 to-black/70',
-    archBorder: 'border-blue-400/40 group-hover:border-blue-300/80 shadow-[inset_0_0_20px_rgba(59,130,246,0.25)]',
+    cardBg: 'from-[#040a24] via-[#010411] to-[#071138]',
+    archBg: 'bg-gradient-to-b from-blue-600/25 via-indigo-950/60 to-black/90',
+    archBorder: 'border-blue-500/50 group-hover:border-blue-300 shadow-[inset_0_0_25px_rgba(59,130,246,0.35),0_0_15px_rgba(59,130,246,0.2)]',
     accentText: 'text-blue-300',
   },
   {
@@ -208,13 +209,13 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badge: 'Trù Phú',
     astralSign: '♀',
     elementText: 'Địa Mẫu Phồn Vinh',
-    borderGlow: 'border-emerald-400/50 group-hover:border-emerald-300',
+    borderGlow: 'border-emerald-500/50 group-hover:border-emerald-300',
     badgeColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-400/40',
-    glowAura: 'group-hover:shadow-[0_0_40px_rgba(16,185,129,0.55)]',
+    glowAura: 'group-hover:shadow-[0_0_45px_rgba(16,185,129,0.65)]',
     sigilType: 'empress',
-    cardBg: 'from-[#06241b] via-[#031711] to-[#093326]',
-    archBg: 'bg-gradient-to-b from-emerald-500/20 via-teal-950/40 to-black/70',
-    archBorder: 'border-emerald-400/40 group-hover:border-emerald-300/80 shadow-[inset_0_0_20px_rgba(16,185,129,0.25)]',
+    cardBg: 'from-[#02180e] via-[#010b06] to-[#052416]',
+    archBg: 'bg-gradient-to-b from-emerald-600/25 via-teal-950/60 to-black/90',
+    archBorder: 'border-emerald-500/50 group-hover:border-emerald-300 shadow-[inset_0_0_25px_rgba(16,185,129,0.35),0_0_15px_rgba(16,185,129,0.2)]',
     accentText: 'text-emerald-300',
   },
   {
@@ -226,13 +227,13 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badge: 'Vương Giả',
     astralSign: '♈',
     elementText: 'Vương Quyền Tối Thượng',
-    borderGlow: 'border-rose-400/50 group-hover:border-rose-300',
+    borderGlow: 'border-rose-500/50 group-hover:border-rose-300',
     badgeColor: 'bg-rose-500/20 text-rose-300 border-rose-400/40',
-    glowAura: 'group-hover:shadow-[0_0_40px_rgba(244,63,94,0.55)]',
+    glowAura: 'group-hover:shadow-[0_0_45px_rgba(244,63,94,0.65)]',
     sigilType: 'emperor',
-    cardBg: 'from-[#290812] via-[#17030a] to-[#380b19]',
-    archBg: 'bg-gradient-to-b from-rose-500/20 via-red-950/40 to-black/70',
-    archBorder: 'border-rose-400/40 group-hover:border-rose-300/80 shadow-[inset_0_0_20px_rgba(244,63,94,0.25)]',
+    cardBg: 'from-[#1c0207] via-[#0b0103] to-[#260309]',
+    archBg: 'bg-gradient-to-b from-rose-600/25 via-red-950/60 to-black/90',
+    archBorder: 'border-rose-500/50 group-hover:border-rose-300 shadow-[inset_0_0_25px_rgba(244,63,94,0.35),0_0_15px_rgba(244,63,94,0.2)]',
     accentText: 'text-rose-300',
   },
   {
@@ -244,13 +245,13 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badge: 'Gắn Kết',
     astralSign: '♊',
     elementText: 'Giao Thoa Tình Duyên',
-    borderGlow: 'border-pink-400/50 group-hover:border-pink-300',
+    borderGlow: 'border-pink-500/50 group-hover:border-pink-300',
     badgeColor: 'bg-pink-500/20 text-pink-300 border-pink-400/40',
-    glowAura: 'group-hover:shadow-[0_0_40px_rgba(236,72,153,0.55)]',
+    glowAura: 'group-hover:shadow-[0_0_45px_rgba(236,72,153,0.65)]',
     sigilType: 'lovers',
-    cardBg: 'from-[#290820] via-[#170313] to-[#380b2c]',
-    archBg: 'bg-gradient-to-b from-pink-500/20 via-fuchsia-950/40 to-black/70',
-    archBorder: 'border-pink-400/40 group-hover:border-pink-300/80 shadow-[inset_0_0_20px_rgba(236,72,153,0.25)]',
+    cardBg: 'from-[#1c0316] via-[#0b010d] to-[#26051e]',
+    archBg: 'bg-gradient-to-b from-pink-600/25 via-fuchsia-950/60 to-black/90',
+    archBorder: 'border-pink-500/50 group-hover:border-pink-300 shadow-[inset_0_0_25px_rgba(236,72,153,0.35),0_0_15px_rgba(236,72,153,0.2)]',
     accentText: 'text-pink-300',
   },
   {
@@ -262,13 +263,13 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badge: 'Tiến Công',
     astralSign: '♋',
     elementText: 'Chiến Xa Hỏa Lực',
-    borderGlow: 'border-orange-400/50 group-hover:border-orange-300',
+    borderGlow: 'border-orange-500/50 group-hover:border-orange-300',
     badgeColor: 'bg-orange-500/20 text-orange-300 border-orange-400/40',
-    glowAura: 'group-hover:shadow-[0_0_40px_rgba(249,115,22,0.55)]',
+    glowAura: 'group-hover:shadow-[0_0_45px_rgba(249,115,22,0.65)]',
     sigilType: 'chariot',
-    cardBg: 'from-[#291304] via-[#170a02] to-[#381a06]',
-    archBg: 'bg-gradient-to-b from-orange-500/20 via-amber-950/40 to-black/70',
-    archBorder: 'border-orange-400/40 group-hover:border-orange-300/80 shadow-[inset_0_0_20px_rgba(249,115,22,0.25)]',
+    cardBg: 'from-[#1c0a02] via-[#0b0401] to-[#260f03]',
+    archBg: 'bg-gradient-to-b from-orange-600/25 via-amber-950/60 to-black/90',
+    archBorder: 'border-orange-500/50 group-hover:border-orange-300 shadow-[inset_0_0_25px_rgba(249,115,22,0.35),0_0_15px_rgba(249,115,22,0.2)]',
     accentText: 'text-orange-300',
   },
   {
@@ -280,13 +281,13 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badge: 'Sinh Lực',
     astralSign: '♌',
     elementText: 'Dũng Khí Bất Diệt',
-    borderGlow: 'border-yellow-400/50 group-hover:border-yellow-300',
+    borderGlow: 'border-yellow-500/50 group-hover:border-yellow-300',
     badgeColor: 'bg-yellow-500/20 text-yellow-300 border-yellow-400/40',
-    glowAura: 'group-hover:shadow-[0_0_40px_rgba(234,179,8,0.55)]',
+    glowAura: 'group-hover:shadow-[0_0_45px_rgba(234,179,8,0.65)]',
     sigilType: 'strength',
-    cardBg: 'from-[#291c04] via-[#170f02] to-[#382606]',
-    archBg: 'bg-gradient-to-b from-yellow-500/20 via-amber-950/40 to-black/70',
-    archBorder: 'border-yellow-400/40 group-hover:border-yellow-300/80 shadow-[inset_0_0_20px_rgba(234,179,8,0.25)]',
+    cardBg: 'from-[#1c1202] via-[#0c0701] to-[#261903]',
+    archBg: 'bg-gradient-to-b from-yellow-600/25 via-amber-950/60 to-black/90',
+    archBorder: 'border-yellow-500/50 group-hover:border-yellow-300 shadow-[inset_0_0_25px_rgba(234,179,8,0.35),0_0_15px_rgba(234,179,8,0.2)]',
     accentText: 'text-yellow-300',
   },
   {
@@ -298,13 +299,13 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badge: 'Tinh Hoa',
     astralSign: '♍',
     elementText: 'Ngọn Đèn Bát Nhã',
-    borderGlow: 'border-indigo-400/50 group-hover:border-indigo-300',
+    borderGlow: 'border-indigo-500/50 group-hover:border-indigo-300',
     badgeColor: 'bg-indigo-500/20 text-indigo-300 border-indigo-400/40',
-    glowAura: 'group-hover:shadow-[0_0_40px_rgba(99,102,241,0.55)]',
+    glowAura: 'group-hover:shadow-[0_0_45px_rgba(99,102,241,0.65)]',
     sigilType: 'hermit',
-    cardBg: 'from-[#0d0f30] via-[#06081f] to-[#131642]',
-    archBg: 'bg-gradient-to-b from-indigo-500/20 via-violet-950/40 to-black/70',
-    archBorder: 'border-indigo-400/40 group-hover:border-indigo-300/80 shadow-[inset_0_0_20px_rgba(99,102,241,0.25)]',
+    cardBg: 'from-[#060824] via-[#020311] to-[#0c0f38]',
+    archBg: 'bg-gradient-to-b from-indigo-600/25 via-violet-950/60 to-black/90',
+    archBorder: 'border-indigo-500/50 group-hover:border-indigo-300 shadow-[inset_0_0_25px_rgba(99,102,241,0.35),0_0_15px_rgba(99,102,241,0.2)]',
     accentText: 'text-indigo-300',
   },
   {
@@ -316,13 +317,13 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badge: 'Duyên Phận',
     astralSign: '♃',
     elementText: 'Luân Hồi Mỹ Vị',
-    borderGlow: 'border-purple-400/50 group-hover:border-purple-300',
+    borderGlow: 'border-purple-500/50 group-hover:border-purple-300',
     badgeColor: 'bg-purple-500/20 text-purple-300 border-purple-400/40',
-    glowAura: 'group-hover:shadow-[0_0_40px_rgba(168,85,247,0.55)]',
+    glowAura: 'group-hover:shadow-[0_0_45px_rgba(168,85,247,0.65)]',
     sigilType: 'wheel',
-    cardBg: 'from-[#1f0b36] via-[#110520] to-[#2b0f4a]',
-    archBg: 'bg-gradient-to-b from-purple-500/20 via-fuchsia-950/40 to-black/70',
-    archBorder: 'border-purple-400/40 group-hover:border-purple-300/80 shadow-[inset_0_0_20px_rgba(168,85,247,0.25)]',
+    cardBg: 'from-[#140424] via-[#080112] to-[#1e0736]',
+    archBg: 'bg-gradient-to-b from-purple-600/25 via-fuchsia-950/60 to-black/90',
+    archBorder: 'border-purple-500/50 group-hover:border-purple-300 shadow-[inset_0_0_25px_rgba(168,85,247,0.35),0_0_15px_rgba(168,85,247,0.2)]',
     accentText: 'text-purple-300',
   },
   {
@@ -334,13 +335,13 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badge: 'Chữa Lành',
     astralSign: '♒',
     elementText: 'Tinh Tú Dẫn Lối',
-    borderGlow: 'border-teal-400/50 group-hover:border-teal-300',
+    borderGlow: 'border-teal-500/50 group-hover:border-teal-300',
     badgeColor: 'bg-teal-500/20 text-teal-300 border-teal-400/40',
-    glowAura: 'group-hover:shadow-[0_0_40px_rgba(20,184,166,0.55)]',
+    glowAura: 'group-hover:shadow-[0_0_45px_rgba(20,184,166,0.65)]',
     sigilType: 'star',
-    cardBg: 'from-[#052424] via-[#021616] to-[#073030]',
-    archBg: 'bg-gradient-to-b from-teal-500/20 via-cyan-950/40 to-black/70',
-    archBorder: 'border-teal-400/40 group-hover:border-teal-300/80 shadow-[inset_0_0_20px_rgba(20,184,166,0.25)]',
+    cardBg: 'from-[#021817] via-[#010c0b] to-[#042423]',
+    archBg: 'bg-gradient-to-b from-teal-600/25 via-cyan-950/60 to-black/90',
+    archBorder: 'border-teal-500/50 group-hover:border-teal-300 shadow-[inset_0_0_25px_rgba(20,184,166,0.35),0_0_15px_rgba(20,184,166,0.2)]',
     accentText: 'text-teal-300',
   },
   {
@@ -354,11 +355,11 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     elementText: 'Thái Dương Quang',
     borderGlow: 'border-amber-400/50 group-hover:border-amber-300',
     badgeColor: 'bg-amber-500/20 text-amber-300 border-amber-400/40',
-    glowAura: 'group-hover:shadow-[0_0_40px_rgba(245,158,11,0.55)]',
+    glowAura: 'group-hover:shadow-[0_0_45px_rgba(245,158,11,0.65)]',
     sigilType: 'sun',
-    cardBg: 'from-[#291704] via-[#170c02] to-[#382005]',
-    archBg: 'bg-gradient-to-b from-amber-500/20 via-orange-950/40 to-black/70',
-    archBorder: 'border-amber-400/40 group-hover:border-amber-300/80 shadow-[inset_0_0_20px_rgba(245,158,11,0.25)]',
+    cardBg: 'from-[#1c0f02] via-[#0b0601] to-[#261503]',
+    archBg: 'bg-gradient-to-b from-amber-600/25 via-orange-950/60 to-black/90',
+    archBorder: 'border-amber-400/50 group-hover:border-amber-300 shadow-[inset_0_0_25px_rgba(245,158,11,0.35),0_0_15px_rgba(245,158,11,0.2)]',
     accentText: 'text-amber-300',
   },
   {
@@ -370,13 +371,13 @@ export const TAROT_ARCHETYPES: TarotArchetype[] = [
     badge: 'Viên Mãn',
     astralSign: '♄',
     elementText: 'Đại Viên Mãn Giới',
-    borderGlow: 'border-fuchsia-400/50 group-hover:border-fuchsia-300',
+    borderGlow: 'border-fuchsia-500/50 group-hover:border-fuchsia-300',
     badgeColor: 'bg-fuchsia-500/20 text-fuchsia-300 border-fuchsia-400/40',
-    glowAura: 'group-hover:shadow-[0_0_40px_rgba(217,70,239,0.55)]',
+    glowAura: 'group-hover:shadow-[0_0_45px_rgba(217,70,239,0.65)]',
     sigilType: 'world',
-    cardBg: 'from-[#27062a] via-[#160218] to-[#36083a]',
-    archBg: 'bg-gradient-to-b from-fuchsia-500/20 via-purple-950/40 to-black/70',
-    archBorder: 'border-fuchsia-400/40 group-hover:border-fuchsia-300/80 shadow-[inset_0_0_20px_rgba(217,70,239,0.25)]',
+    cardBg: 'from-[#16021c] via-[#09010e] to-[#23042c]',
+    archBg: 'bg-gradient-to-b from-fuchsia-600/25 via-purple-950/60 to-black/90',
+    archBorder: 'border-fuchsia-500/50 group-hover:border-fuchsia-300 shadow-[inset_0_0_25px_rgba(217,70,239,0.35),0_0_15px_rgba(217,70,239,0.2)]',
     accentText: 'text-fuchsia-300',
   },
 ];
@@ -663,6 +664,54 @@ interface RevealedTarotResult {
   drawOrder: number;
 }
 
+// Occult & Eerie Mystic Backdrop for Tarot Cards ("Ma Mị")
+const MysticCardBackdrop: React.FC = () => {
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl select-none">
+      {/* 1. Eerie Occult Radial Vignette */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_35%,rgba(255,255,255,0.07)_0%,transparent_65%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_25%,rgba(0,0,0,0.85)_100%)]" />
+
+      {/* 2. Arcane Sacred Astrolabe / Occult Mandala (Rotates & pulses softly on hover) */}
+      <div className="absolute inset-0 flex items-center justify-center -translate-y-3">
+        <svg
+          viewBox="0 0 200 200"
+          className="w-44 h-44 sm:w-52 sm:h-52 text-amber-300/15 group-hover:text-amber-300/25 transition-all duration-700 group-hover:scale-105 group-hover:rotate-45"
+          fill="none"
+        >
+          {/* Outer Astrological Degree Markings Ring */}
+          <circle cx="100" cy="100" r="92" stroke="currentColor" strokeWidth="0.8" strokeDasharray="1 3" />
+          <circle cx="100" cy="100" r="84" stroke="currentColor" strokeWidth="0.6" opacity="0.6" />
+          <circle cx="100" cy="100" r="70" stroke="currentColor" strokeWidth="0.8" strokeDasharray="3 4" />
+
+          {/* 8-Pointed Arcane Star / Occult Octagram */}
+          <polygon points="100,20 118,78 178,100 118,122 100,180 82,122 22,100 82,78" stroke="currentColor" strokeWidth="0.7" opacity="0.5" />
+          <polygon points="44,44 100,74 156,44 126,100 156,156 100,126 44,156 74,100" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 3" opacity="0.4" />
+
+          {/* Moon Phase Crescents on Cardinal Directions */}
+          <path d="M100 10 A8 8 0 0 1 100 26 A5 5 0 0 0 100 10 Z" fill="currentColor" opacity="0.7" />
+          <path d="M190 100 A8 8 0 0 1 174 100 A5 5 0 0 0 190 100 Z" fill="currentColor" opacity="0.7" />
+          <path d="M100 190 A8 8 0 0 1 100 174 A5 5 0 0 0 100 190 Z" fill="currentColor" opacity="0.7" />
+          <path d="M10 100 A8 8 0 0 1 26 100 A5 5 0 0 0 10 100 Z" fill="currentColor" opacity="0.7" />
+
+          {/* Concentric Mystic Inner Rings */}
+          <circle cx="100" cy="100" r="48" stroke="currentColor" strokeWidth="0.8" strokeDasharray="2 2" />
+          <circle cx="100" cy="100" r="32" stroke="currentColor" strokeWidth="0.5" opacity="0.4" />
+        </svg>
+      </div>
+
+      {/* 3. Mystical Constellation Micro-Stars */}
+      <div className="absolute top-3 left-3.5 text-[9px] text-amber-200/40 font-serif">✦</div>
+      <div className="absolute top-6 right-4 text-[7px] text-amber-200/30 font-serif">✧</div>
+      <div className="absolute bottom-11 left-4 text-[8px] text-amber-200/35 font-serif">⋆</div>
+      <div className="absolute bottom-12 right-3.5 text-[9px] text-amber-200/30 font-serif">✦</div>
+
+      {/* 4. Deep Eerie Midnight Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/40 pointer-events-none" />
+    </div>
+  );
+};
+
 // Ornate golden corner filigree for Tarot cards
 const TarotCornerFlourish: React.FC<{ position: 'tl' | 'tr' | 'bl' | 'br' }> = ({ position }) => {
   const rotationClass = {
@@ -874,6 +923,11 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
   const [selectedZodiac, setSelectedZodiac] = useState<ZodiacSign>(ZODIAC_SIGNS[0]);
   const [amuletData, setAmuletData] = useState<FoodAmuletData | null>(null);
 
+  // Dynamic Tarot Archetypes deck corresponding to the selected Zodiac
+  const activeArchetypes = useMemo(() => {
+    return getZodiacArchetypes(selectedZodiac, TAROT_ARCHETYPES);
+  }, [selectedZodiac]);
+
   useEffect(() => {
     try {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(drawnDishIds));
@@ -905,7 +959,7 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
 
     const chosenArchetype =
       archetype ||
-      TAROT_ARCHETYPES[Math.floor(Math.random() * TAROT_ARCHETYPES.length)];
+      activeArchetypes[Math.floor(Math.random() * activeArchetypes.length)];
 
     // Draw STRICTLY from active realm's dishes pool!
     let pool = activeRealmDishes.filter((d) => !drawnDishIds.includes(d.id));
@@ -1199,6 +1253,7 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                   type="button"
                   onClick={() => {
                     setSelectedZodiac(cosmos);
+                    setRevealedResult(null);
                     tarotAudio.playCandleSpark();
                   }}
                   className={`w-full group relative px-4 sm:px-5 py-3 rounded-2xl border transition-all duration-300 flex items-center justify-between gap-3 text-left cursor-pointer overflow-hidden ${
@@ -1253,6 +1308,7 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                   key={z.id}
                   onClick={() => {
                     setSelectedZodiac(z);
+                    setRevealedResult(null);
                     tarotAudio.playCandleSpark();
                   }}
                   className={`group relative p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border transition-all duration-300 flex flex-col items-center justify-center text-center cursor-pointer select-none bg-gradient-to-b ${
@@ -1333,28 +1389,38 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
             <div className="text-center mb-6">
               <h2 className="text-xs sm:text-sm md:text-base font-black text-stone-800 uppercase tracking-widest flex items-center justify-center gap-2 m-0">
                 <Sparkles className="w-4 h-4 text-amber-500" />
-                <span>Chọn 1 lá bài bạn cảm thấy gắn kết tâm linh nhất để khai quẻ</span>
+                <span>
+                  {selectedZodiac.id === 'all'
+                    ? 'Chọn 1 lá bài bạn cảm thấy gắn kết tâm linh nhất để khai quẻ'
+                    : `Quẻ bài Tarot linh ứng cung ${selectedZodiac.name} (${selectedZodiac.symbol})`}
+                </span>
                 <Sparkles className="w-4 h-4 text-amber-500" />
               </h2>
               <p className="text-xs text-purple-900/70 font-semibold mt-1">
-                ✦ Đang cộng hưởng cùng trường năng lượng <strong className="text-purple-950 font-bold">{selectedZodiac.name}</strong> ({selectedZodiac.symbol}) ✦
+                ✦ Đang cộng hưởng cùng trường năng lượng <strong className="text-purple-950 font-bold">{selectedZodiac.name}</strong> ({selectedZodiac.symbol} • Cung {selectedZodiac.element}) ✦
               </p>
             </div>
 
-          {/* 12 Majestic 3D Holographic Tarot Cards - Mở rộng to đẹp, thoáng đãng */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5 sm:gap-4 md:gap-5 mb-10 w-full">
-            {TAROT_ARCHETYPES.map((arc) => {
+          {/* Dynamic Majestic Holographic Tarot Cards matching selected Zodiac */}
+          <div
+            key={selectedZodiac.id}
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5 sm:gap-4 md:gap-5 mb-10 w-full animate-fade-in"
+          >
+            {activeArchetypes.map((arc) => {
               return (
                 <button
                   key={arc.id}
                   disabled={isFlipping}
                   onClick={() => drawNextUniqueDish(arc)}
-                  className={`group relative aspect-[1/1.6] min-h-[290px] sm:min-h-[330px] rounded-2xl bg-gradient-to-b ${arc.cardBg} p-3 sm:p-3.5 flex flex-col items-center justify-between border-2 ${arc.borderGlow} ${arc.glowAura} hover:-translate-y-2.5 hover:scale-[1.03] transition-all duration-500 shadow-xl cursor-pointer overflow-hidden text-center select-none ${
+                  className={`group relative aspect-[1/1.6] min-h-[295px] sm:min-h-[335px] rounded-2xl bg-gradient-to-b ${arc.cardBg} p-3 sm:p-3.5 flex flex-col items-center justify-between border-2 ${arc.borderGlow} ${arc.glowAura} hover:-translate-y-2.5 hover:scale-[1.03] transition-all duration-500 shadow-2xl cursor-pointer overflow-hidden text-center select-none ${
                     isFlipping ? 'opacity-50 pointer-events-none scale-95' : ''
                   }`}
                 >
+                  {/* Occult & Eerie Mystic Backdrop with Sacred Astrolabe */}
+                  <MysticCardBackdrop />
+
                   {/* Subtle Shimmer Sweeper on Hover */}
-                  <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.4s_infinite] bg-gradient-to-r from-transparent via-amber-300/15 to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 -translate-x-full group-hover:animate-[shimmer_1.4s_infinite] bg-gradient-to-r from-transparent via-amber-300/15 to-transparent pointer-events-none z-10" />
 
                   {/* 4 Antique Ornate Gold Corners */}
                   <TarotCornerFlourish position="tl" />
@@ -1363,8 +1429,8 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                   <TarotCornerFlourish position="br" />
 
                   {/* Secondary Inset Gold Hairline Frame */}
-                  <div className="absolute inset-1.5 rounded-xl border border-amber-400/25 pointer-events-none" />
-                  <div className="absolute inset-2 rounded-lg border border-dashed border-amber-500/15 pointer-events-none" />
+                  <div className="absolute inset-1.5 rounded-xl border border-amber-400/25 pointer-events-none z-10" />
+                  <div className="absolute inset-2 rounded-lg border border-dashed border-amber-500/15 pointer-events-none z-10" />
 
                   {/* Top Tarot Cartouche: Roman Numeral & Astral Glyph */}
                   <div className="w-full relative z-10 pt-1 flex items-center justify-between px-1.5">
@@ -1453,12 +1519,18 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
       ) : (
         /* State 2: Revealed Non-Duplicate Tarot Card - Bảng đồ ăn phong cách ma mị, huyền bí, dạ nguyệt */
         (() => {
-          const theme = ARCHETYPE_THEMES[revealedResult.archetype.id] || DEFAULT_THEME;
+          const theme =
+            ARCHETYPE_THEMES[revealedResult.archetype.id] ||
+            ELEMENT_THEMES[revealedResult.zodiac.element] ||
+            DEFAULT_THEME;
           return (
             <div className="relative z-10 max-w-xl mx-auto animate-fade-in">
               {/* Thẻ bài Tarot ma mị với nền vũ trụ bóng đêm, viền vàng cổ điển và hào quang nguyên tố */}
               <div className={`relative rounded-3xl bg-gradient-to-b from-[#120526] via-[#090214] to-[#15062c] border-2 ${theme.borderCard} ${theme.shadowAura} overflow-hidden text-center text-white transition-all duration-500 shadow-2xl`}>
                 
+                {/* Occult Sacred Geometry Backdrop */}
+                <MysticCardBackdrop />
+
                 {/* 4 Góc Họa Tiết Cổ Điển Hoàng Gia Cho Bảng Thần Thoại */}
                 <TarotCornerFlourish position="tl" />
                 <TarotCornerFlourish position="tr" />
