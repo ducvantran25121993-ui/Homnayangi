@@ -1,8 +1,9 @@
-import React from 'react';
-import { UtensilsCrossed, Sparkles, Disc, Compass, Share2, MapPin, Check } from 'lucide-react';
+import React, { useState } from 'react';
+import { UtensilsCrossed, Sparkles, Disc, Compass, Share2, MapPin } from 'lucide-react';
 import { motion } from 'motion/react';
 import { UserLocation } from '../types';
 import { TAB_CONFIG, TabType } from '../utils/navigation';
+import { ShareModal } from './ShareModal';
 
 interface NavbarProps {
   activeTab: TabType;
@@ -20,12 +21,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   userLocation,
   onOpenLocationModal,
 }) => {
-  const [copied, setCopied] = React.useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleOpenShare = () => {
+    setIsShareModalOpen(true);
   };
 
   const handleNavClick = (tab: TabType, e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -149,25 +148,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
 
             <button
-              onClick={handleShare}
-              title="Chia sẻ liên kết"
-              className={`px-3.5 py-1.5 rounded-full border transition-all duration-200 flex items-center gap-1.5 text-xs font-medium cursor-pointer shadow-2xs ${
-                copied
-                  ? 'bg-emerald-50 border-emerald-300 text-emerald-700'
-                  : 'border-stone-200/80 bg-white hover:bg-stone-50 text-stone-700'
-              }`}
+              onClick={handleOpenShare}
+              title="Chia sẻ cùng bạn bè qua mạng xã hội"
+              className="px-3.5 py-1.5 rounded-full border border-stone-200/80 bg-white hover:bg-stone-50 hover:border-orange-300 text-stone-700 transition-all duration-200 flex items-center gap-1.5 text-xs font-medium cursor-pointer shadow-2xs group"
             >
-              {copied ? (
-                <>
-                  <Check className="w-3.5 h-3.5 text-emerald-600" />
-                  <span className="font-semibold">Đã chép</span>
-                </>
-              ) : (
-                <>
-                  <Share2 className="w-3.5 h-3.5 text-stone-500" />
-                  <span className="hidden sm:inline">Chia sẻ</span>
-                </>
-              )}
+              <Share2 className="w-3.5 h-3.5 text-stone-500 group-hover:text-orange-600 transition-colors" />
+              <span className="hidden sm:inline font-semibold">Chia sẻ</span>
             </button>
           </div>
         </div>
@@ -204,6 +190,14 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
         </nav>
       </div>
+
+      {/* Share to Social Media Modal */}
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        title="Hôm Nay Ăn Gì? • Gợi ý món ngon chuẩn vị"
+        text="Cùng quay bánh xe may mắn, bốc quẻ Tarot và tìm món ngon hôm nay nhé!"
+      />
     </header>
   );
 };

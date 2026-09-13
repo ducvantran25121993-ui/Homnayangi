@@ -14,6 +14,7 @@ import {
 import { Dish, UserLocation, AffiliateConfig } from '../types';
 import { trackAndOpenAffiliateLink, formatVND } from '../utils/affiliate';
 import { formatLocationDisplay } from '../utils/location';
+import { ShareModal } from './ShareModal';
 
 export interface FoodAmuletData {
   dish: Dish;
@@ -46,6 +47,7 @@ export const FoodAmuletModal: React.FC<FoodAmuletModalProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
   const [savedLocally, setSavedLocally] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   if (!data) return null;
 
@@ -228,32 +230,32 @@ export const FoodAmuletModal: React.FC<FoodAmuletModalProps> = ({
           </div>
         </div>
 
-        {/* Action Buttons: Copy Talisman, Share, Close */}
-        <div className="flex items-center justify-center gap-2.5 mt-4">
+        {/* Action Buttons: Copy Talisman, Share to Socials, Close */}
+        <div className="flex items-center justify-center gap-2 mt-4">
           <button
             onClick={handleCopyTalisman}
-            className="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-stone-950 font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition-transform active:scale-95 shadow-lg shadow-amber-500/25 cursor-pointer uppercase tracking-wider"
+            className="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-yellow-400 hover:from-amber-300 hover:to-yellow-300 text-stone-950 font-black text-xs flex items-center justify-center gap-1.5 transition-transform active:scale-95 shadow-lg shadow-amber-500/25 cursor-pointer uppercase tracking-wider"
           >
             {copied ? (
               <>
                 <Check className="w-4 h-4 text-stone-950" />
-                <span>Đã Sao Chép Bùa</span>
+                <span>Đã Sao Chép</span>
               </>
             ) : (
               <>
                 <Copy className="w-4 h-4 text-stone-950" />
-                <span>Sao Chép Bùa Hộ Mệnh</span>
+                <span>Sao Chép Bùa</span>
               </>
             )}
           </button>
 
           <button
-            onClick={handleSaveToDevice}
-            title="Lưu bùa hộ mệnh"
-            className="py-2.5 px-3 rounded-xl bg-white/10 hover:bg-white/20 text-amber-300 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+            onClick={() => setIsShareModalOpen(true)}
+            title="Chia sẻ bùa hộ mệnh lên mạng xã hội"
+            className="py-2.5 px-3.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-md shadow-purple-900/30 cursor-pointer"
           >
-            <Share2 className="w-4 h-4" />
-            <span className="hidden sm:inline">Lưu Bùa</span>
+            <Share2 className="w-4 h-4 text-amber-300" />
+            <span>Chia sẻ MXH</span>
           </button>
         </div>
 
@@ -263,6 +265,14 @@ export const FoodAmuletModal: React.FC<FoodAmuletModalProps> = ({
           </div>
         )}
       </div>
+
+      {/* Social Share Modal for Amulet */}
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        title={`🏮 Tấm Bùa Hộ Mệnh Ẩm Thực: ${data.tarotName} - Món ${dishName}!`}
+        text={`Tôi vừa thỉnh được Tấm Bùa Hộ Mệnh Ẩm Thực "${data.tarotName}" (${data.romanNumeral}) cho món "${dishName}". Số thần tài #${data.luckyNumber}, giờ hoàng đạo ${data.luckyHours}!`}
+      />
     </div>
   );
 };

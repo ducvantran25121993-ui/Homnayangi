@@ -16,6 +16,7 @@ import {
   Shield,
   MapPin,
   Sparkle,
+  Share2,
 } from 'lucide-react';
 import { INITIAL_DISHES } from '../data/dishes';
 import { TAROT_REALMS, TarotRealmId, isDishInRealm } from '../data/tarotRealms';
@@ -27,6 +28,7 @@ import { tarotAudio } from '../utils/tarotSound';
 import { FoodAmuletModal, FoodAmuletData } from './FoodAmuletModal';
 import { TarotSigilArt } from './TarotSigilArt';
 import { getZodiacArchetypes, ELEMENT_THEMES } from '../data/zodiacTarotCards';
+import { ShareModal } from './ShareModal';
 import confetti from 'canvas-confetti';
 
 interface FoodTarotProps {
@@ -1144,6 +1146,7 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
   const [isMuted, setIsMuted] = useState(() => tarotAudio.getIsMuted());
   const [selectedZodiac, setSelectedZodiac] = useState<ZodiacSign>(ZODIAC_SIGNS[0]);
   const [amuletData, setAmuletData] = useState<FoodAmuletData | null>(null);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   // Dynamic Tarot Archetypes deck corresponding to the selected Zodiac
   const activeArchetypes = useMemo(() => {
@@ -2091,6 +2094,15 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                       <RotateCcw className="w-3.5 h-3.5 text-amber-400" />
                       <span>Rút từ bộ bài</span>
                     </button>
+
+                    <button
+                      onClick={() => setIsShareModalOpen(true)}
+                      title="Chia sẻ quẻ bài Tarot lên mạng xã hội"
+                      className="w-full sm:w-auto py-3 px-4 rounded-xl border border-amber-500/50 hover:border-amber-400 bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500/30 hover:to-orange-500/30 text-amber-300 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm"
+                    >
+                      <Share2 className="w-4 h-4 text-amber-400" />
+                      <span>Chia sẻ quẻ</span>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -2106,6 +2118,16 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
           onClose={() => setAmuletData(null)}
           userLocation={userLocation}
           affiliateConfig={affiliateConfig}
+        />
+      )}
+
+      {/* Social Share Modal */}
+      {revealedResult && (
+        <ShareModal
+          isOpen={isShareModalOpen}
+          onClose={() => setIsShareModalOpen(false)}
+          title={`Quẻ bài Tarot ẩm thực: ${revealedResult.archetype.name} - ${revealedResult.dish.name}!`}
+          text={`Tôi vừa bốc được quẻ "${revealedResult.archetype.name}" (${revealedResult.isUpright ? 'Thuận Chiều' : 'Nghịch Chiều'}) với món định mệnh "${revealedResult.dish.name}".\nLời sấm truyền: "${revealedResult.quote}"`}
         />
       )}
       </div>

@@ -26,12 +26,14 @@ import {
   Layers,
   Zap,
   Cookie,
-  Leaf
+  Leaf,
+  Share2
 } from 'lucide-react';
 import { WHEEL_PRESETS, INITIAL_DISHES } from '../data/dishes';
 import { Dish, AffiliateConfig, UserLocation } from '../types';
 import { trackAndOpenAffiliateLink, formatVND } from '../utils/affiliate';
 import { DeliveryLocationBadge } from './DeliveryLocationBadge';
+import { ShareModal } from './ShareModal';
 
 interface LuckyWheelProps {
   affiliateConfig: AffiliateConfig;
@@ -80,6 +82,7 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
   const [winner, setWinner] = useState<string | null>(null);
   const [matchedDish, setMatchedDish] = useState<Dish | null>(null);
   const [audioEnabled, setAudioEnabled] = useState(true);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   // Fixed spin speed: ~2s smooth duration
   const spinSpeed: 'fast' = 'fast';
 
@@ -726,6 +729,20 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
                     <ExternalLink className="w-3.5 h-3.5 opacity-80" />
                   </button>
                 </div>
+
+                {/* Share result with friends */}
+                <div className="mt-3 pt-3 border-t border-orange-200/60 flex items-center justify-between">
+                  <span className="text-xs text-stone-500 font-medium">
+                    Rủ bạn bè hoặc nhóm cùng ăn món này:
+                  </span>
+                  <button
+                    onClick={() => setIsShareModalOpen(true)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-orange-50 border border-orange-200 text-orange-700 hover:text-orange-800 text-xs font-bold transition-all shadow-2xs cursor-pointer"
+                  >
+                    <Share2 className="w-3.5 h-3.5 text-orange-600" />
+                    <span>Chia sẻ kết quả</span>
+                  </button>
+                </div>
               </div>
             </div>
           )}
@@ -951,6 +968,14 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
         </div>
 
       </div>
+
+      {/* Social Share Modal */}
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        title={`Vòng quay Hôm Nay Ăn Gì đã chọn: ${winner || 'Món ngon'}!`}
+        text={`Vũ trụ ẩm thực vừa chỉ định món "${winner || 'món ngon'}" cho bữa ăn hôm nay. Bạn có muốn cùng ăn không?`}
+      />
     </div>
   );
 };

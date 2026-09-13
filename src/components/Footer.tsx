@@ -1,11 +1,14 @@
-import React from 'react';
-import { UtensilsCrossed, Heart } from 'lucide-react';
+import React, { useState } from 'react';
+import { UtensilsCrossed, Heart, Share2 } from 'lucide-react';
 import { TAB_CONFIG, TabType } from '../utils/navigation';
+import { ShareModal } from './ShareModal';
 
 export const Footer: React.FC<{
   onOpenAffiliateModal: () => void;
   onNavigate?: (tab: TabType) => void;
 }> = ({ onNavigate }) => {
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+
   const handleLinkClick = (tab: TabType, e: React.MouseEvent<HTMLAnchorElement>) => {
     if (e.ctrlKey || e.metaKey || e.button === 1) return;
     if (onNavigate) {
@@ -67,6 +70,14 @@ export const Footer: React.FC<{
             >
               Món Ngon 3 Miền
             </a>
+            <span className="text-stone-300">•</span>
+            <button
+              onClick={() => setIsShareModalOpen(true)}
+              className="inline-flex items-center gap-1 text-orange-600 hover:text-orange-700 font-bold transition-colors cursor-pointer"
+            >
+              <Share2 className="w-3.5 h-3.5" />
+              <span>Chia sẻ MXH</span>
+            </button>
           </nav>
 
         </div>
@@ -81,6 +92,13 @@ export const Footer: React.FC<{
           </div>
         </div>
       </div>
+
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        title="Hôm Nay Ăn Gì? • Gợi ý món ngon chuẩn vị"
+        text="Rủ bạn bè cùng tìm món ngon, quay bánh xe ẩm thực và bốc quẻ Tarot!"
+      />
     </footer>
   );
 };

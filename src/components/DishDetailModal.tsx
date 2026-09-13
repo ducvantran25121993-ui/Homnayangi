@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
-import { X, ShoppingBag, MapPin } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { X, ShoppingBag, MapPin, Share2 } from 'lucide-react';
 import { Dish, AffiliateConfig, UserLocation } from '../types';
 import { trackAndOpenAffiliateLink } from '../utils/affiliate';
 import { formatLocationDisplay } from '../utils/location';
+import { ShareModal } from './ShareModal';
 
 interface DishDetailModalProps {
   dish: Dish | null;
@@ -19,6 +20,8 @@ export const DishDetailModal: React.FC<DishDetailModalProps> = ({
   userLocation,
   onOpenLocationModal,
 }) => {
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+
   // Support Escape key to close
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -50,14 +53,24 @@ export const DishDetailModal: React.FC<DishDetailModalProps> = ({
             className="w-full h-full object-cover"
           />
 
-          {/* Close button at top right */}
-          <button
-            onClick={onClose}
-            aria-label="Đóng"
-            className="absolute top-3.5 right-3.5 w-9 h-9 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-colors cursor-pointer shadow-md backdrop-blur-xs z-10"
-          >
-            <X className="w-5 h-5 text-white" strokeWidth={2.5} />
-          </button>
+          {/* Action buttons at top right: Share & Close */}
+          <div className="absolute top-3.5 right-3.5 flex items-center gap-2 z-10">
+            <button
+              onClick={() => setIsShareModalOpen(true)}
+              aria-label="Chia sẻ món này lên mạng xã hội"
+              title="Chia sẻ món ăn cùng bạn bè"
+              className="w-9 h-9 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-colors cursor-pointer shadow-md backdrop-blur-xs"
+            >
+              <Share2 className="w-4 h-4 text-white" />
+            </button>
+            <button
+              onClick={onClose}
+              aria-label="Đóng"
+              className="w-9 h-9 rounded-full bg-black/60 hover:bg-black/80 text-white flex items-center justify-center transition-colors cursor-pointer shadow-md backdrop-blur-xs"
+            >
+              <X className="w-5 h-5 text-white" strokeWidth={2.5} />
+            </button>
+          </div>
 
           {/* Bottom Left Badge: Price Range */}
           <div className="absolute bottom-3 left-3">
@@ -178,6 +191,14 @@ export const DishDetailModal: React.FC<DishDetailModalProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Social Share Modal */}
+      <ShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        title={`${dish.name} - Món ngon chuẩn vị tại Hôm Nay Ăn Gì!`}
+        text={`Ghé xem món ngon "${dish.name}" (${dish.calories}, ${dish.priceRange}): ${dish.description}`}
+      />
     </div>
   );
 };
