@@ -52,7 +52,7 @@ export const TAROT_REALMS: TarotRealm[] = [
     tagline: 'Tiên Dược Dạng Nước • Tỉnh Thức Thanh Khiết',
     shortDesc: 'Trà Sữa, Cà Phê, Nước Ép, Sinh Tố, Trà Thơm',
     icon: 'Coffee',
-    emoji: '🧋',
+    emoji: '🍵',
     activeGradient: 'from-cyan-600 via-teal-600 to-blue-700',
     activeBorder: 'border-cyan-400',
     glowColor: 'rgba(6, 182, 212, 0.45)',

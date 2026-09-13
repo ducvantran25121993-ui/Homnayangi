@@ -1084,7 +1084,7 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                   }`}
                   style={isActive ? { boxShadow: `0 8px 25px ${realm.glowColor}` } : undefined}
                 >
-                  {/* Top row: Emoji, Active Star & Count badge */}
+                  {/* Top row: Emoji & Count badge */}
                   <div className="flex items-center justify-between gap-1.5 mb-2">
                     <span className="text-2xl sm:text-3xl filter drop-shadow group-hover:scale-110 transition-transform duration-300">
                       {realm.emoji}
