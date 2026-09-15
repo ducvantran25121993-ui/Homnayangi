@@ -15,7 +15,7 @@
     <meta name="theme-color" content="#ea580c" />
     <link rel="canonical" href="https://www.angigio.com/" />
 
-    <!-- PWA & Mobile Web App Meta Tags -->
+    <!-- Google Search, Browser Favicon & Mobile Web App Meta Tags -->
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -23,9 +23,15 @@
     <meta name="application-name" content="Hôm Nay Ăn Gì" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
     <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64x64.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="144x144" href="/favicon-144x144.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/pwa-512x512.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="mask-icon" href="/logo.svg" color="#ea580c" />
+    <link rel="image_src" href="https://www.angigio.com/logo.png" />
 
     <!-- Open Graph / Facebook Meta Tags -->
     <meta property="og:type" content="website" />
@@ -38,6 +44,7 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Hôm Nay Ăn Gì - Tarot Ẩm Thực 12 Cung Hoàng Đạo & Gợi Ý Món Chuẩn Vị" />
+    <meta property="og:logo" content="https://www.angigio.com/logo.png" />
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -84,10 +91,21 @@
           "url": "https://www.angigio.com/",
           "logo": {
             "@type": "ImageObject",
+            "@id": "https://www.angigio.com/#logo",
             "url": "https://www.angigio.com/logo.png",
-            "caption": "Logo Hôm Nay Ăn Gì"
+            "contentUrl": "https://www.angigio.com/logo.png",
+            "caption": "Logo Thương Hiệu Hôm Nay Ăn Gì",
+            "width": 1024,
+            "height": 1024
           },
-          "image": "https://www.angigio.com/logo.png",
+          "image": {
+            "@type": "ImageObject",
+            "@id": "https://www.angigio.com/#brandImage",
+            "url": "https://www.angigio.com/logo.png",
+            "caption": "Biểu Tượng Hôm Nay Ăn Gì",
+            "width": 1024,
+            "height": 1024
+          },
           "email": "ducvantran25121993@gmail.com",
           "contactPoint": {
             "@type": "ContactPoint",
@@ -106,7 +124,13 @@
           "@id": "https://www.angigio.com/#website",
           "url": "https://www.angigio.com/",
           "name": "Hôm Nay Ăn Gì",
+          "alternateName": [
+            "Ăn Gì Giờ",
+            "Hom Nay An Gi",
+            "Angigio"
+          ],
           "description": "Gợi ý món ăn chuẩn vị • Tarot ẩm thực chiêm tinh • Vòng quay ngẫu nhiên",
+          "image": "https://www.angigio.com/logo.png",
           "publisher": {
             "@id": "https://www.angigio.com/#organization"
           }
