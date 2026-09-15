@@ -17,6 +17,7 @@ import {
   MapPin,
   Sparkle,
   Share2,
+  Bell,
 } from 'lucide-react';
 import { INITIAL_DISHES } from '../data/dishes';
 import { TAROT_REALMS, TarotRealmId, isDishInRealm } from '../data/tarotRealms';
@@ -25,6 +26,8 @@ import { trackAndOpenAffiliateLink, formatVND } from '../utils/affiliate';
 import { formatLocationDisplay } from '../utils/location';
 import { DeliveryLocationBadge } from './DeliveryLocationBadge';
 import { tarotAudio } from '../utils/tarotSound';
+import { zenAudio } from '../utils/zenAudio';
+import { ZenSoundModal, useZenAudioStatus } from './ZenSoundWidget';
 import { FoodAmuletModal, FoodAmuletData } from './FoodAmuletModal';
 import { TarotSigilArt } from './TarotSigilArt';
 import { getZodiacArchetypes, ELEMENT_THEMES } from '../data/zodiacTarotCards';
@@ -1147,6 +1150,8 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
   const [selectedZodiac, setSelectedZodiac] = useState<ZodiacSign>(ZODIAC_SIGNS[0]);
   const [amuletData, setAmuletData] = useState<FoodAmuletData | null>(null);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [isZenSoundOpen, setIsZenSoundOpen] = useState(false);
+  const zenStatus = useZenAudioStatus();
 
   // Dynamic Tarot Archetypes deck corresponding to the selected Zodiac
   const activeArchetypes = useMemo(() => {
@@ -1309,22 +1314,30 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
             </span>
           </button>
 
-          {/* Tibetan Sound Toggle */}
+          {/* Integrated Chuông Tây Tạng & Âm Thanh Thiền Button */}
           <button
-            onClick={handleToggleMute}
-            title={isMuted ? 'Bật âm thanh huyền ảo' : 'Tắt âm thanh'}
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-50 hover:bg-purple-100 border border-purple-200 text-purple-900 text-xs font-bold transition-colors cursor-pointer shadow-xs"
+            type="button"
+            onClick={() => {
+              setIsZenSoundOpen(true);
+              zenAudio.strikeBowl(432);
+            }}
+            title="Mở Chuông Tây Tạng & Âm thanh thiền chữa lành (432Hz)"
+            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-bold transition-all cursor-pointer shadow-xs group ${
+              zenStatus.isPlaying
+                ? 'bg-amber-950/90 border-amber-500/80 text-amber-300 shadow-md shadow-amber-900/30 ring-2 ring-amber-500/20'
+                : 'bg-purple-50 hover:bg-purple-100 hover:border-purple-300 border-purple-200 text-purple-950'
+            }`}
           >
-            {isMuted ? (
-              <>
-                <VolumeX className="w-4 h-4 text-stone-500" />
-                <span className="text-xs text-stone-600 font-medium">Âm Thanh: Tắt</span>
-              </>
+            <Bell className={`w-4 h-4 transition-transform group-hover:rotate-12 ${
+              zenStatus.isPlaying ? 'text-amber-400 animate-bounce' : 'text-purple-600'
+            }`} />
+            <span className="text-xs font-bold">
+              {zenStatus.isPlaying ? 'Chuông Tây Tạng (Đang phát)' : 'Chuông Tây Tạng'}
+            </span>
+            {zenStatus.isPlaying ? (
+              <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
             ) : (
-              <>
-                <Volume2 className="w-4 h-4 text-purple-600 animate-pulse" />
-                <span className="text-xs text-purple-950 font-bold">Chuông Tây Tạng</span>
-              </>
+              <Sparkles className="w-3.5 h-3.5 text-amber-500 opacity-90" />
             )}
           </button>
         </div>
@@ -2130,6 +2143,12 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
           text={`Tôi vừa bốc được quẻ "${revealedResult.archetype.name}" (${revealedResult.isUpright ? 'Thuận Chiều' : 'Nghịch Chiều'}) với món định mệnh "${revealedResult.dish.name}".\nLời sấm truyền: "${revealedResult.quote}"`}
         />
       )}
+
+      {/* Zen Sound & Chuông Tây Tạng Modal */}
+      <ZenSoundModal
+        isOpen={isZenSoundOpen}
+        onClose={() => setIsZenSoundOpen(false)}
+      />
       </div>
     </div>
   );

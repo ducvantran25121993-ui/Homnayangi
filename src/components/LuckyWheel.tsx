@@ -374,7 +374,14 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
         const found = INITIAL_DISHES.find((d) => {
           const vn = (d.vietnameseName || '').toLowerCase();
           const nm = (d.name || '').toLowerCase();
-          return vn === cleanWin || nm === cleanWin || vn.includes(cleanWin) || cleanWin.includes(vn);
+          return (
+            vn === cleanWin ||
+            nm === cleanWin ||
+            vn.includes(cleanWin) ||
+            cleanWin.includes(vn) ||
+            nm.includes(cleanWin) ||
+            cleanWin.includes(nm)
+          );
         });
 
         if (found) {
