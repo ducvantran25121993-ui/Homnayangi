@@ -25,7 +25,18 @@ import {
   Users,
   Target,
   Lightbulb,
-  RotateCcw
+  RotateCcw,
+  Bot,
+  BrainCircuit,
+  Cpu,
+  CloudSun,
+  MapPin,
+  MessageSquare,
+  Check,
+  X,
+  Smile,
+  ThermometerSun,
+  Sliders
 } from 'lucide-react';
 import { TabType } from '../utils/navigation';
 
@@ -1500,7 +1511,1055 @@ export const SeoContentFaq: React.FC<{
     );
   }
 
-  // Standard FAQ section for Tarot, Wheel, AI, Catalog
+  // Dedicated Rich SEO Editorial Guide for AI Culinary Assistant (Trợ Lý Gợi Ý Món Ăn)
+  // Viết bằng giọng văn gần gũi, mộc mạc, sẻ chia nỗi niềm "Hôm nay ăn gì" của người dùng mỗi bữa
+  if (activeTab === 'ai') {
+    return (
+      <article
+        aria-label="Cẩm nang Trợ Lý Gợi Ý Món Ăn - Người Bạn Đồng Hành Cho Từng Bữa Cơm Ngon"
+        className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-12 mb-10 sm:mb-14"
+      >
+        <div className="bg-white rounded-3xl border border-stone-200/90 shadow-sm p-6 sm:p-10 lg:p-12 space-y-12">
+          
+          {/* Header & Lead Hero Section */}
+          <header className="border-b border-stone-100 pb-8 sm:pb-10">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-stone-900 tracking-tight leading-snug mb-4">
+              Trợ Lý Gợi Ý Món Ăn: Người Bạn Đồng Hành Gỡ Rối Câu Hỏi &quot;Hôm Nay Ăn Gì?&quot;
+            </h1>
+            
+            <p className="text-stone-700 text-base sm:text-lg leading-relaxed mb-4">
+              Mỗi ngày cứ đến bữa trưa hay bữa tối, câu hỏi quen thuộc nhất mà ai trong chúng ta cũng từng thở dài tự hỏi chính là: <strong>&quot;Hôm nay ăn gì bây giờ?&quot;</strong>. Mở các ứng dụng đặt đồ ăn lên lướt mỏi cả tay giữa hàng trăm quán xá, quay sang hỏi đồng nghiệp hay người thân thì ai cũng bảo <em>&quot;Ăn gì cũng được&quot;</em>. Rốt cuộc, bụng thì đói meo mà đầu óc vẫn luẩn quẩn chưa chọn xong món.
+            </p>
+            <p className="text-stone-600 text-sm sm:text-base leading-relaxed mb-6">
+              Hiểu được nỗi niềm rất đỗi đời thường ấy, <strong>Trợ Lý Gợi Ý Món Ăn</strong> của <em>Hôm Nay Ăn Gì</em> ra đời như một người bạn sành ăn kề bên. Không cần công thức phức tạp, chỉ cần bạn chia sẻ một chút về cảm xúc hôm nay, thời tiết ngoài trời se lạnh hay oi ả, túi tiền muốn chi tiêu, hay khẩu vị thích ăn thanh đạm... trợ lý sẽ gợi ý ngay cho bạn những món ngon chuẩn vị, dễ tìm và ấm lòng nhất.
+            </p>
+
+            {/* Quick Metrics Bar (Các điểm tựa thân quen) */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+              <div className="p-3.5 rounded-2xl bg-amber-50/60 border border-amber-200/70">
+                <div className="text-xs font-semibold text-stone-500 uppercase tracking-wider">Chọn Món Nhanh</div>
+                <div className="text-lg sm:text-xl font-black text-stone-900 mt-0.5">Trong Vài Giây</div>
+                <div className="text-[11px] text-amber-700 font-medium">Không còn đau đầu nghĩ ngợi</div>
+              </div>
+              <div className="p-3.5 rounded-2xl bg-orange-50/60 border border-orange-200/70">
+                <div className="text-xs font-semibold text-stone-500 uppercase tracking-wider">Món Ngon 3 Miền</div>
+                <div className="text-lg sm:text-xl font-black text-stone-900 mt-0.5">160+ Món Thuần Việt</div>
+                <div className="text-[11px] text-stone-600 font-medium">Từ cơm nhà đến bún phở</div>
+              </div>
+              <div className="p-3.5 rounded-2xl bg-emerald-50/60 border border-emerald-200/70">
+                <div className="text-xs font-semibold text-stone-500 uppercase tracking-wider">Hợp Ví Tiền</div>
+                <div className="text-lg sm:text-xl font-black text-stone-900 mt-0.5">Vừa Túi &amp; Hợp Gu</div>
+                <div className="text-[11px] text-emerald-700 font-medium">Từ bình dân đến tiệc tùng</div>
+              </div>
+              <div className="p-3.5 rounded-2xl bg-blue-50/60 border border-blue-200/70">
+                <div className="text-xs font-semibold text-stone-500 uppercase tracking-wider">Giao Tận Cửa</div>
+                <div className="text-lg sm:text-xl font-black text-stone-900 mt-0.5">Quán Gần Quanh Bạn</div>
+                <div className="text-[11px] text-blue-700 font-medium">ShopeeFood &amp; GrabFood</div>
+              </div>
+            </div>
+          </header>
+
+          {/* CẤU TRÚC 1: BẢNG SO SÁNH ĐỐI LẬP TRỰC QUAN GẦN GŨI */}
+          <section className="space-y-5">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold">
+                <Sliders className="w-4 h-4" />
+              </div>
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold text-stone-900 tracking-tight">
+                  Chuyện Ăn Uống: Tự Đắn Đo So Với Có Bạn Gợi Ý Món
+                </h2>
+                <p className="text-xs sm:text-sm text-stone-500">
+                  Tại sao có một người bạn gợi ý món ăn lại giúp bữa cơm mỗi ngày của bạn vui vẻ hơn nhiều?
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+              {/* Cột 1: Cách chọn món cũ */}
+              <div className="p-6 rounded-3xl bg-rose-50/40 border border-rose-200/70 relative flex flex-col justify-between">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between pb-3 border-b border-rose-200/60">
+                    <span className="text-sm font-black text-rose-900 uppercase tracking-wider flex items-center gap-1.5">
+                      <X className="w-4 h-4 text-rose-600" />
+                      Những Lúc Tự Đắn Đo Chọn Món
+                    </span>
+                    <span className="px-2 py-0.5 rounded-md bg-rose-100 text-rose-700 text-[10px] font-bold">
+                      Mệt Mỏi &amp; Tốn Giờ
+                    </span>
+                  </div>
+                  
+                  <ul className="space-y-3.5 text-xs sm:text-sm text-stone-700">
+                    <li className="flex items-start gap-2.5">
+                      <div className="w-4 h-4 rounded-full bg-rose-200 text-rose-700 flex items-center justify-center text-[10px] shrink-0 mt-0.5 font-bold">✕</div>
+                      <span><strong>Lướt app đến hoa cả mắt:</strong> Mở ứng dụng giao hàng kéo lên kéo xuống 30-40 phút, xem qua hàng chục quán mà bụng đói meo vẫn chưa chốt được.</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <div className="w-4 h-4 rounded-full bg-rose-200 text-rose-700 flex items-center justify-center text-[10px] shrink-0 mt-0.5 font-bold">✕</div>
+                      <span><strong>Ăn đi ăn lại vài món quen:</strong> Vì ngại nghĩ nên tuần nào cũng chỉ lặp lại cơm sườn, bún chả hay mì xào, lâu dần thấy bữa ăn nhạt nhẽo.</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <div className="w-4 h-4 rounded-full bg-rose-200 text-rose-700 flex items-center justify-center text-[10px] shrink-0 mt-0.5 font-bold">✕</div>
+                      <span><strong>Đùn đẩy nhau khi đi ăn chung:</strong> Cả nhóm bạn hay đồng nghiệp cùng lúng túng câu &quot;Ăn gì cũng được&quot;, đứng tần ngần giữa trưa nắng.</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <div className="w-4 h-4 rounded-full bg-rose-200 text-rose-700 flex items-center justify-center text-[10px] shrink-0 mt-0.5 font-bold">✕</div>
+                      <span><strong>Ăn uống thất thường:</strong> Quá giờ trưa đành gọi đại món nhiều dầu mỡ hay đồ ăn nhanh, vừa tốn kém vừa không tốt cho sức khỏe.</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Cột 2: Với Trợ Lý Gợi Ý */}
+              <div className="p-6 rounded-3xl bg-emerald-50/50 border border-emerald-300/80 relative flex flex-col justify-between shadow-xs">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between pb-3 border-b border-emerald-200/80">
+                    <span className="text-sm font-black text-emerald-900 uppercase tracking-wider flex items-center gap-1.5">
+                      <Check className="w-4 h-4 text-emerald-600" />
+                      Khi Có Trợ Lý Gợi Ý Cùng Bạn
+                    </span>
+                    <span className="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                      Thảnh Thơi &amp; Ấm Bụng
+                    </span>
+                  </div>
+                  
+                  <ul className="space-y-3.5 text-xs sm:text-sm text-stone-700">
+                    <li className="flex items-start gap-2.5">
+                      <div className="w-4 h-4 rounded-full bg-emerald-200 text-emerald-800 flex items-center justify-center text-[10px] shrink-0 mt-0.5 font-bold">✓</div>
+                      <span><strong>Chốt món nhẹ nhàng trong chớp mắt:</strong> Chỉ cần chọn vài mong muốn đơn giản, có ngay gợi ý món ngon chuẩn gu kèm lý do ấm lòng.</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <div className="w-4 h-4 rounded-full bg-emerald-200 text-emerald-800 flex items-center justify-center text-[10px] shrink-0 mt-0.5 font-bold">✓</div>
+                      <span><strong>Đổi món mỗi ngày cho vị giác:</strong> Luân phiên kho tàng hơn 160 món Việt thân thương (món nước, cơm niêu, gỏi cuốn, lẩu nướng, đồ chay).</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <div className="w-4 h-4 rounded-full bg-emerald-200 text-emerald-800 flex items-center justify-center text-[10px] shrink-0 mt-0.5 font-bold">✓</div>
+                      <span><strong>Hợp thời tiết và tâm trạng:</strong> Mưa lạnh nhớ bát phở nóng hổi, trưa nắng có bát canh chua thanh mát, làm việc mệt mỏi có món tiếp sức.</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <div className="w-4 h-4 rounded-full bg-emerald-200 text-emerald-800 flex items-center justify-center text-[10px] shrink-0 mt-0.5 font-bold">✓</div>
+                      <span><strong>Dễ dàng tìm quán gần bạn:</strong> Tự động tìm kiếm quán ngon quanh khu vực bạn ở trên GrabFood, ShopeeFood, BeFood để món giao tới còn nóng hổi.</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* CẤU TRÚC 2: 5 ĐIỀU NHỎ BÉ GIÚP CHỌN ĐÚNG MÓN BẠN THÍCH */}
+          <section className="space-y-5">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
+                <BrainCircuit className="w-4 h-4" />
+              </div>
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold text-stone-900 tracking-tight">
+                  5 Điều Nhỏ Bé Giúp Trợ Lý Hiểu Và Gợi Ý Đúng Gu Bạn
+                </h2>
+                <p className="text-xs sm:text-sm text-stone-500">
+                  Một bữa ăn trọn vẹn bắt nguồn từ sự thấu hiểu những điều bình dị quanh bạn:
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {/* Chiều 1: Tâm trạng */}
+              <div className="p-5 rounded-3xl bg-stone-50 border border-stone-200/90 hover:border-orange-300 hover:shadow-xs transition-all flex flex-col justify-between">
+                <div>
+                  <div className="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center mb-3">
+                    <Smile className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-bold text-stone-900 text-base mb-1.5">
+                    1. Tâm Trạng Hôm Nay Của Bạn
+                  </h3>
+                  <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                    Có những ngày bạn cảm thấy mệt mỏi vì công việc bận rộn, chỉ cần một bát phở bò bốc khói hay đĩa cơm niêu thơm giòn để tiếp thêm năng lượng. Lại có những ngày vui vẻ muốn rủ bạn bè nhâm nhi bún đậu mắm tôm hay đĩa ốc cay xè chuyện trò rôm rả.
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-stone-200/60 text-[11px] font-bold text-amber-800">
+                  Gợi ý: Món ăn vỗ về cảm xúc &amp; nạp lại năng lượng
+                </div>
+              </div>
+
+              {/* Chiều 2: Thời tiết */}
+              <div className="p-5 rounded-3xl bg-stone-50 border border-stone-200/90 hover:border-orange-300 hover:shadow-xs transition-all flex flex-col justify-between">
+                <div>
+                  <div className="w-10 h-10 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center mb-3">
+                    <ThermometerSun className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-bold text-stone-900 text-base mb-1.5">
+                    2. Tiết Trời Ngoài Phố
+                  </h3>
+                  <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                    Người Việt mình luôn thích ăn uống theo thời tiết. Trưa hè oi ả thèm bát canh cua mồng tơi ăn cùng cà pháo giòn tan, hay đĩa bún chả quạt than thơm lừng. Chiều thu đông mưa rả rích lại chẳng gì sánh bằng nồi lẩu riêu cua hay đĩa bánh xèo giòn rụm.
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-stone-200/60 text-[11px] font-bold text-blue-800">
+                  Gợi ý: Món ăn điều hòa theo từng mùa trong năm
+                </div>
+              </div>
+
+              {/* Chiều 3: Ngân sách */}
+              <div className="p-5 rounded-3xl bg-stone-50 border border-stone-200/90 hover:border-orange-300 hover:shadow-xs transition-all flex flex-col justify-between">
+                <div>
+                  <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mb-3">
+                    <Coins className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-bold text-stone-900 text-base mb-1.5">
+                    3. Vừa Vặn Chiếc Ví Của Bạn
+                  </h3>
+                  <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                    Dù hôm nay bạn là sinh viên tìm suất cơm bình dân 30.000đ - 45.000đ cuối tháng thật ấm bụng, hay nhân ngày lĩnh lương muốn tự thưởng cho mình và người thân một bữa ăn thịnh soạn 150.000đ - 300.000đ, trợ lý đều luôn có lựa chọn vừa vặn nhất.
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-stone-200/60 text-[11px] font-bold text-emerald-800">
+                  Gợi ý: Từ đĩa cơm sinh viên đến mâm tiệc sum vầy
+                </div>
+              </div>
+
+              {/* Chiều 4: Chế độ dinh dưỡng */}
+              <div className="p-5 rounded-3xl bg-stone-50 border border-stone-200/90 hover:border-orange-300 hover:shadow-xs transition-all flex flex-col justify-between">
+                <div>
+                  <div className="w-10 h-10 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center mb-3">
+                    <HeartPulse className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-bold text-stone-900 text-base mb-1.5">
+                    4. Khẩu Vị &amp; Thói Quen Ăn Uống
+                  </h3>
+                  <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                    Bạn đang theo đuổi lối sống lành mạnh Eat Clean, ăn chay vào ngày mùng một rằm, muốn giảm dầu mỡ hay kiêng ăn cay? Trợ lý sẽ lắng nghe để chọn lọc những món thanh đạm, lành bụng mà vẫn giữ trọn vẹn hương vị thơm ngon của ẩm thực quê nhà.
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-stone-200/60 text-[11px] font-bold text-purple-800">
+                  Gợi ý: Ăn chay, Eat Clean, lành bụng và thanh mát
+                </div>
+              </div>
+
+              {/* Chiều 5: Vị trí & Bán kính giao hàng */}
+              <div className="p-5 rounded-3xl bg-stone-50 border border-stone-200/90 hover:border-orange-300 hover:shadow-xs transition-all flex flex-col justify-between sm:col-span-2 lg:col-span-2">
+                <div>
+                  <div className="w-10 h-10 rounded-2xl bg-orange-100 text-orange-700 flex items-center justify-center mb-3">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-bold text-stone-900 text-base mb-1.5">
+                    5. Quán Ngon Tiện Đường Ngay Quanh Bạn
+                  </h3>
+                  <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                    Một món ăn ngon nhất là khi thưởng thức lúc còn nóng hổi. Không để chiếc bụng đói của bạn phải đợi lâu, trợ lý luôn ưu tiên tìm các món ăn phổ biến có quán gần nơi bạn ở (Hà Nội, TP.HCM, Đà Nẵng, Hải Phòng, Cần Thơ...), tiện ghé quán ăn ngay hoặc đặt ship giao tới trong chớp mắt.
+                  </p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-stone-200/60 flex items-center justify-between text-[11px] font-bold text-orange-800">
+                  <span>Tiện lợi đặt ngay: ShopeeFood, GrabFood, BeFood</span>
+                  <span className="text-stone-500 font-normal">Ưu tiên quán gần bạn</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* CẤU TRÚC 3: TRÌNH DIỄN HỘI THOẠI MẪU (PROMPT SHOWCASE GẦN GŨI) */}
+          <section className="space-y-5">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+                <MessageSquare className="w-4 h-4" />
+              </div>
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold text-stone-900 tracking-tight">
+                  Gợi Ý Câu Hỏi Thân Quen: Bạn Có Thể Hỏi Trợ Lý Như Thế Nào?
+                </h2>
+                <p className="text-xs sm:text-sm text-stone-500">
+                  Cứ nhắn tin thoải mái và tự nhiên như đang trò chuyện với một người bạn thân:
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Kịch bản 1 */}
+              <div className="p-5 rounded-3xl bg-stone-50/80 border border-stone-200/80 space-y-3">
+                <div className="flex items-center gap-2 text-xs font-bold text-stone-500 uppercase tracking-wider">
+                  <span className="w-2 h-2 rounded-full bg-amber-500" />
+                  Bữa Trưa Văn Phòng
+                </div>
+                <div className="p-3 bg-white rounded-2xl border border-stone-200/70 text-xs text-stone-800 font-medium italic shadow-2xs">
+                  &quot;Trưa nay trời mưa se lạnh, ví còn khoảng 50k - 60k, ăn gì cho ấm bụng mà tỉnh táo làm việc chiều nhỉ?&quot;
+                </div>
+                <div className="p-3 bg-amber-50/70 rounded-2xl border border-amber-200/60 text-xs text-stone-700 space-y-1">
+                  <div className="font-bold text-orange-700 flex items-center gap-1">
+                    <Sparkles className="w-3.5 h-3.5" /> Gợi ý: Cơm Niêu Bò Sốt Tiêu Đen
+                  </div>
+                  <p className="text-[11px] text-stone-600 leading-relaxed">
+                    Hương tiêu đen cay thơm nồng xua tan cái lạnh, thịt bò đậm đà ăn cùng lớp cơm cháy giòn rụm sẽ giúp bạn tỉnh táo suốt buổi chiều.
+                  </p>
+                </div>
+              </div>
+
+              {/* Kịch bản 2 */}
+              <div className="p-5 rounded-3xl bg-stone-50/80 border border-stone-200/80 space-y-3">
+                <div className="flex items-center gap-2 text-xs font-bold text-stone-500 uppercase tracking-wider">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                  Bữa Tối Nhẹ Bụng &amp; Lành Sạch
+                </div>
+                <div className="p-3 bg-white rounded-2xl border border-stone-200/70 text-xs text-stone-800 font-medium italic shadow-2xs">
+                  &quot;Tối nay muốn ăn nhẹ nhàng thanh đạm, nhiều rau củ xanh, ít dầu mỡ để ngủ cho ngon giấc.&quot;
+                </div>
+                <div className="p-3 bg-emerald-50/70 rounded-2xl border border-emerald-200/60 text-xs text-stone-700 space-y-1">
+                  <div className="font-bold text-emerald-700 flex items-center gap-1">
+                    <Sparkles className="w-3.5 h-3.5" /> Gợi ý: Gỏi Cuốn Tôm Thịt &amp; Canh Chua
+                  </div>
+                  <p className="text-[11px] text-stone-600 leading-relaxed">
+                    Tôm thịt luộc thanh ngọt cuốn cùng nhiều rau sống giòn mát chấm tương bùi, kèm thêm bát canh chua giải nhiệt nhẹ bụng.
+                  </p>
+                </div>
+              </div>
+
+              {/* Kịch bản 3 */}
+              <div className="p-5 rounded-3xl bg-stone-50/80 border border-stone-200/80 space-y-3">
+                <div className="flex items-center gap-2 text-xs font-bold text-stone-500 uppercase tracking-wider">
+                  <span className="w-2 h-2 rounded-full bg-blue-500" />
+                  Cuối Tuần Tụ Tập Bạn Bè
+                </div>
+                <div className="p-3 bg-white rounded-2xl border border-stone-200/70 text-xs text-stone-800 font-medium italic shadow-2xs">
+                  &quot;Tối thứ 7 hội bạn 4 người muốn đi ăn gì vui vui lai rai, tầm 120k mỗi người quanh khu vực này.&quot;
+                </div>
+                <div className="p-3 bg-blue-50/70 rounded-2xl border border-blue-200/60 text-xs text-stone-700 space-y-1">
+                  <div className="font-bold text-blue-700 flex items-center gap-1">
+                    <Sparkles className="w-3.5 h-3.5" /> Gợi ý: Nồi Lẩu Riêu Cua Bắp Bò
+                  </div>
+                  <p className="text-[11px] text-stone-600 leading-relaxed">
+                    Nước dùng chua thanh đậm vị từ giấm bỗng, riêu cua thơm nức và đĩa bắp bò nhúng giòn sần sật, vừa ăn vừa chuyện trò rôm rả.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* CẤU TRÚC 4: FAQ CHUYÊN SÂU 2 CỘT GẦN GŨI (THAY THẾ ACCORDION THƯỜNG) */}
+          <section className="space-y-6">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold">
+                <HelpCircle className="w-4 h-4" />
+              </div>
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold text-stone-900 tracking-tight">
+                  Những Điều Bạn Có Thể Thắc Mắc Về Trợ Lý Gợi Ý Món Ăn (FAQ)
+                </h2>
+                <p className="text-xs sm:text-sm text-stone-500">
+                  Giải đáp chi tiết và chân thành những câu hỏi thường gặp khi dùng tiện ích:
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+              <div className="p-5 rounded-2xl bg-stone-50/70 border border-stone-200/80 space-y-2">
+                <h3 className="font-bold text-stone-900 text-sm sm:text-base flex items-start gap-2">
+                  <span className="w-5 h-5 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-xs shrink-0 mt-0.5 font-bold">1</span>
+                  <span>Trợ lý gợi ý món ăn dựa vào những thông tin gì?</span>
+                </h3>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed pl-7">
+                  Trợ lý sẽ lắng nghe thời điểm trong ngày (bữa sáng, trưa hay tối), mức tiền bạn muốn chi, cảm xúc hiện tại của bạn, thời tiết bên ngoài và cả những mong muốn riêng như thích ăn thanh đạm, ăn chay hay hạn chế đồ dầu mỡ.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-stone-50/70 border border-stone-200/80 space-y-2">
+                <h3 className="font-bold text-stone-900 text-sm sm:text-base flex items-start gap-2">
+                  <span className="w-5 h-5 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-xs shrink-0 mt-0.5 font-bold">2</span>
+                  <span>Món ăn được gợi ý có dễ tìm mua trên các app giao hàng không?</span>
+                </h3>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed pl-7">
+                  Rất dễ tìm! Toàn bộ hơn 160 món ăn trong danh sách đều là những món ăn quen thuộc, phổ biến khắp mọi ngõ phố Việt Nam. Kèm theo mỗi món luôn có sẵn nút mở nhanh ShopeeFood, GrabFood hoặc BeFood để bạn đặt ngay.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-stone-50/70 border border-stone-200/80 space-y-2">
+                <h3 className="font-bold text-stone-900 text-sm sm:text-base flex items-start gap-2">
+                  <span className="w-5 h-5 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-xs shrink-0 mt-0.5 font-bold">3</span>
+                  <span>Dùng trợ lý gợi ý món ăn có mất phí hay bắt buộc đăng ký không?</span>
+                </h3>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed pl-7">
+                  Hoàn toàn miễn phí và không cần đăng ký tài khoản! Bạn có thể thoải mái hỏi và nhận gợi ý món ăn bao nhiêu lần tùy thích mỗi ngày mà không bị làm phiền bởi quảng cáo.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-stone-50/70 border border-stone-200/80 space-y-2">
+                <h3 className="font-bold text-stone-900 text-sm sm:text-base flex items-start gap-2">
+                  <span className="w-5 h-5 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-xs shrink-0 mt-0.5 font-bold">4</span>
+                  <span>Nếu mình bị dị ứng đồ ăn hay ăn chay thì trợ lý có giúp được không?</span>
+                </h3>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed pl-7">
+                  Chắc chắn có! Bạn chỉ cần gõ yêu cầu như &quot;mình không ăn được hải sản&quot;, &quot;hôm nay mình ăn chay&quot; hay &quot;không ăn cay&quot;, trợ lý sẽ tự động chọn lọc những món an toàn và thơm ngon nhất cho bạn.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-stone-50/70 border border-stone-200/80 space-y-2">
+                <h3 className="font-bold text-stone-900 text-sm sm:text-base flex items-start gap-2">
+                  <span className="w-5 h-5 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-xs shrink-0 mt-0.5 font-bold">5</span>
+                  <span>Trợ lý có biết mình ở thành phố nào để gợi ý đúng món địa phương không?</span>
+                </h3>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed pl-7">
+                  Có! Bạn có thể chọn nhanh tỉnh/thành phố trên thanh menu hoặc cho phép định vị. Trợ lý sẽ ưu tiên những món ăn mang nét đặc sắc và các quán ngon đúng điệu quanh nơi bạn sinh sống.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-stone-50/70 border border-stone-200/80 space-y-2">
+                <h3 className="font-bold text-stone-900 text-sm sm:text-base flex items-start gap-2">
+                  <span className="w-5 h-5 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-xs shrink-0 mt-0.5 font-bold">6</span>
+                  <span>Nếu muốn tự nấu cơm tại nhà thì có xem được nguyên liệu không?</span>
+                </h3>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed pl-7">
+                  Có sẵn luôn! Mỗi món ăn đều có ghi rõ nguyên liệu chính, mức calo ước tính và mẹo nhỏ khi ăn giúp bạn dễ dàng ghé chợ mua đồ và vào bếp nấu bữa cơm ấm cúng cho gia đình.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* CẤU TRÚC 5: HỆ SINH THÁI KHÁM PHÁ THÊM (INTERNAL CROSS-LINKING) */}
+          <section className="pt-6 border-t border-stone-100">
+            <h3 className="text-base sm:text-lg font-bold text-stone-900 mb-3.5 flex items-center gap-2">
+              <Compass className="w-4 h-4 text-orange-600" />
+              <span>Khám Phá Thêm Những Cách Chọn Món Thú Vị Khác</span>
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <a
+                href="/"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate('tarot');
+                  }
+                }}
+                className="p-4 rounded-2xl bg-stone-50/80 hover:bg-orange-50/80 border border-stone-200/80 hover:border-orange-200 transition-all group flex items-center justify-between"
+              >
+                <div>
+                  <div className="font-bold text-stone-900 group-hover:text-orange-600 text-sm">
+                    Tarot Ẩm Thực
+                  </div>
+                  <div className="text-xs text-stone-500 mt-0.5">
+                    Quẻ bói 12 cung hoàng đạo &amp; lá bùa may mắn
+                  </div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-orange-600 group-hover:translate-x-0.5 transition-all" />
+              </a>
+
+              <a
+                href="/vong-quay"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate('wheel');
+                  }
+                }}
+                className="p-4 rounded-2xl bg-stone-50/80 hover:bg-orange-50/80 border border-stone-200/80 hover:border-orange-200 transition-all group flex items-center justify-between"
+              >
+                <div>
+                  <div className="font-bold text-stone-900 group-hover:text-orange-600 text-sm">
+                    Vòng Quay Ăn Gì
+                  </div>
+                  <div className="text-xs text-stone-500 mt-0.5">
+                    Chốt món ngẫu nhiên vui vẻ trong 3 giây
+                  </div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-orange-600 group-hover:translate-x-0.5 transition-all" />
+              </a>
+
+              <a
+                href="/len-lich-an"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate('planner');
+                  }
+                }}
+                className="p-4 rounded-2xl bg-stone-50/80 hover:bg-orange-50/80 border border-stone-200/80 hover:border-orange-200 transition-all group flex items-center justify-between"
+              >
+                <div>
+                  <div className="font-bold text-stone-900 group-hover:text-orange-600 text-sm">
+                    Lịch Ăn Tuần
+                  </div>
+                  <div className="text-xs text-stone-500 mt-0.5">
+                    Thực đơn 7 ngày ngon miệng &amp; không lo trùng món
+                  </div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-orange-600 group-hover:translate-x-0.5 transition-all" />
+              </a>
+            </div>
+          </section>
+
+          {/* Structured Data (Schema.org JSON-LD for AI Culinary Assistant) */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@graph": [
+                  {
+                    "@type": "WebPage",
+                    "@id": "https://www.angigio.com/ai-goi-y-mon-an#webpage",
+                    "url": "https://www.angigio.com/ai-goi-y-mon-an",
+                    "name": "Trợ Lý Gợi Ý Món Ăn - Người Bạn Đồng Hành Bữa Cơm Ngon | Hôm Nay Ăn Gì",
+                    "description": "Trợ lý gợi ý món ăn thông minh và gần gũi, giúp bạn chọn món theo tâm trạng, thời tiết, ngân sách và khẩu vị, kết nối tìm quán ngon gần nhất.",
+                    "inLanguage": "vi-VN",
+                    "isPartOf": {
+                      "@type": "WebSite",
+                      "@id": "https://www.angigio.com/#website",
+                      "name": "Hôm Nay Ăn Gì",
+                      "url": "https://www.angigio.com/"
+                    }
+                  },
+                  {
+                    "@type": "SoftwareApplication",
+                    "name": "Trợ Lý Gợi Ý Món Ăn - Hôm Nay Ăn Gì",
+                    "operatingSystem": "Web, iOS, Android",
+                    "applicationCategory": "FoodAndDrinkApplication",
+                    "offers": {
+                      "@type": "Offer",
+                      "price": "0",
+                      "priceCurrency": "VND"
+                    },
+                    "description": "Người bạn đồng hành giải đáp câu hỏi Hôm nay ăn gì mỗi ngày"
+                  },
+                  {
+                    "@type": "BreadcrumbList",
+                    "@id": "https://www.angigio.com/ai-goi-y-mon-an#breadcrumb",
+                    "itemListElement": [
+                      {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Trang Chủ",
+                        "item": "https://www.angigio.com/"
+                      },
+                      {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Trợ Lý Gợi Ý Món Ăn",
+                        "item": "https://www.angigio.com/ai-goi-y-mon-an"
+                      }
+                    ]
+                  },
+                  {
+                    "@type": "FAQPage",
+                    "@id": "https://www.angigio.com/ai-goi-y-mon-an#faq",
+                    "mainEntity": [
+                      {
+                        "@type": "Question",
+                        "name": "Trợ lý gợi ý món ăn dựa vào những thông tin gì?",
+                        "acceptedAnswer": {
+                          "@type": "Answer",
+                          "text": "Trợ lý sẽ lắng nghe thời điểm trong ngày (bữa sáng, trưa hay tối), mức tiền bạn muốn chi, cảm xúc hiện tại của bạn, thời tiết bên ngoài và cả những mong muốn riêng như thích ăn thanh đạm, ăn chay hay hạn chế đồ dầu mỡ."
+                        }
+                      },
+                      {
+                        "@type": "Question",
+                        "name": "Món ăn được gợi ý có dễ tìm mua trên các app giao hàng không?",
+                        "acceptedAnswer": {
+                          "@type": "Answer",
+                          "text": "Rất dễ tìm! Toàn bộ hơn 160 món ăn trong danh sách đều là những món ăn quen thuộc, phổ biến khắp mọi ngõ phố Việt Nam. Kèm theo mỗi món luôn có sẵn nút mở nhanh ShopeeFood, GrabFood hoặc BeFood để bạn đặt ngay."
+                        }
+                      },
+                      {
+                        "@type": "Question",
+                        "name": "Dùng trợ lý gợi ý món ăn có mất phí hay bắt buộc đăng ký không?",
+                        "acceptedAnswer": {
+                          "@type": "Answer",
+                          "text": "Hoàn toàn miễn phí và không cần đăng ký tài khoản! Bạn có thể thoải mái hỏi và nhận gợi ý món ăn bao nhiêu lần tùy thích mỗi ngày mà không bị làm phiền bởi quảng cáo."
+                        }
+                      },
+                      {
+                        "@type": "Question",
+                        "name": "Nếu mình bị dị ứng đồ ăn hay ăn chay thì trợ lý có giúp được không?",
+                        "acceptedAnswer": {
+                          "@type": "Answer",
+                          "text": "Chắc chắn có! Bạn chỉ cần gõ yêu cầu như 'mình không ăn được hải sản', 'hôm nay mình ăn chay' hay 'không ăn cay', trợ lý sẽ tự động chọn lọc những món an toàn và thơm ngon nhất cho bạn."
+                        }
+                      },
+                      {
+                        "@type": "Question",
+                        "name": "Trợ lý có biết mình ở thành phố nào để gợi ý đúng món địa phương không?",
+                        "acceptedAnswer": {
+                          "@type": "Answer",
+                          "text": "Có! Bạn có thể chọn nhanh tỉnh/thành phố trên thanh menu hoặc cho phép định vị. Trợ lý sẽ ưu tiên những món ăn mang nét đặc sắc và các quán ngon đúng điệu quanh nơi bạn sinh sống."
+                        }
+                      },
+                      {
+                        "@type": "Question",
+                        "name": "Nếu muốn tự nấu cơm tại nhà thì có xem được nguyên liệu không?",
+                        "acceptedAnswer": {
+                          "@type": "Answer",
+                          "text": "Có sẵn luôn! Mỗi món ăn đều có ghi rõ nguyên liệu chính, mức calo ước tính và mẹo nhỏ khi ăn giúp bạn dễ dàng ghé chợ mua đồ và vào bếp nấu bữa cơm ấm cúng cho gia đình."
+                        }
+                      }
+                    ]
+                  }
+                ]
+              })
+            }}
+          />
+        </div>
+      </article>
+    );
+  }
+
+  // Dedicated Rich SEO Editorial Guide for Dish Catalog (Thực Đơn 160+ Món Ngon Việt Nam)
+  if (activeTab === 'catalog') {
+    return (
+      <article
+        aria-label="Cẩm nang Thực Đơn 160+ Món Ngon 3 Miền & Bách Khoa Toàn Thư Ẩm Thực Việt Nam"
+        className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-12 mb-10 sm:mb-14"
+      >
+        <div className="bg-white rounded-3xl border border-stone-200/90 shadow-xs p-6 sm:p-10 space-y-10">
+          
+          {/* Header & Lead */}
+          <header className="border-b border-stone-100 pb-8">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-bold mb-3.5 border border-orange-200/60">
+              <Utensils className="w-3.5 h-3.5 text-orange-600" />
+              <span>BÁCH KHOA TOÀN THƯ ẨM THỰC 3 MIỀN VIỆT NAM</span>
+            </div>
+            
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-stone-900 tracking-tight leading-tight mb-4">
+              Thực Đơn Món Ngon 3 Miền: Tuyển Tập 160+ Đặc Sản Việt Nam Chuẩn Vị
+            </h2>
+            
+            <p className="text-stone-700 text-base sm:text-lg leading-relaxed mb-4">
+              Nền ẩm thực Việt Nam là một bức tranh muôn màu rực rỡ với sự hòa quyện hoàn hảo giữa hương thơm thảo mộc tươi mát, vị mặn mòi của nước mắm cá cơm truyền thống và nghệ thuật cân bằng âm dương ngũ hành. Bách khoa toàn thư <strong className="text-orange-600 font-bold">160+ Món Ngon 3 Miền</strong> của chúng tôi được dày công chọn lọc nhằm mang đến cho bạn danh mục món ăn phong phú, từ những bát phở Hà Nội nước trong ngọt thanh, đĩa cơm tấm Sài Gòn sườn bì chả mỡ hành thơm ngậy, cho đến tô bún bò xứ Huế cay nồng thơm lừng mùi sả.
+            </p>
+            <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
+              Mỗi món ăn đều được tổng hợp đầy đủ thông tin dinh dưỡng hữu ích: lượng calo ước tính, phân loại bữa ăn (sáng, trưa, xế chiều, tối, ăn đêm), tầm giá trung bình, thành phần nguyên liệu chính và gợi ý các món ăn kèm tròn vị nhất. Đặc biệt, bạn có thể bấm đặt món ngay trên ShopeeFood, GrabFood hoặc BeFood với định vị quán chuẩn xác gần vị trí của bạn.
+            </p>
+          </header>
+
+          {/* 4 Giá Trị Nổi Bật Của Danh Mục Món Ngon */}
+          <section>
+            <h3 className="text-lg sm:text-xl font-bold text-stone-900 mb-6 flex items-center gap-2">
+              <Award className="w-5 h-5 text-orange-600" />
+              <span>4 Lợi Ích Vượt Trội Khi Tra Cứu Thực Đơn Món Ngon</span>
+            </h3>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+              <div className="p-5 rounded-2xl bg-orange-50/70 border border-orange-200/70 flex flex-col justify-between">
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-700 flex items-center justify-center font-bold mb-3">
+                    <Utensils className="w-5 h-5 text-orange-600" />
+                  </div>
+                  <h4 className="font-bold text-stone-900 text-base mb-1.5">
+                    1. 160+ Món Ngon Chọn Lọc
+                  </h4>
+                  <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                    Bao quát trọn vẹn đặc sản 3 miền Bắc - Trung - Nam, từ món nước giải nhiệt, cơm văn phòng chắc bụng đến đồ ăn vặt xế chiều và lẩu nướng sum vầy.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-amber-50/70 border border-amber-200/70 flex flex-col justify-between">
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center font-bold mb-3">
+                    <Flame className="w-5 h-5 text-amber-600" />
+                  </div>
+                  <h4 className="font-bold text-stone-900 text-base mb-1.5">
+                    2. Minh Bạch Calo & Dinh Dưỡng
+                  </h4>
+                  <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                    Cung cấp mức calo ước tính chuẩn khoa học cho từng khẩu phần, hỗ trợ hiệu quả cho người đang tập gym, giảm mỡ hoặc theo đuổi chế độ ăn lành mạnh.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-emerald-50/70 border border-emerald-200/70 flex flex-col justify-between">
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-700 flex items-center justify-center font-bold mb-3">
+                    <Coins className="w-5 h-5 text-emerald-600" />
+                  </div>
+                  <h4 className="font-bold text-stone-900 text-base mb-1.5">
+                    3. Khoảng Giá Phù Hợp Ví Tiền
+                  </h4>
+                  <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                    Phân khúc giá rõ ràng từ 25.000đ cho sinh viên đến các set ăn liên hoan, giúp bạn chủ động chi tiêu hợp lý mà bữa ăn vẫn luôn thịnh soạn.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-blue-50/70 border border-blue-200/70 flex flex-col justify-between">
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-700 flex items-center justify-center font-bold mb-3">
+                    <ShoppingBag className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <h4 className="font-bold text-stone-900 text-base mb-1.5">
+                    4. Đặt Món Ship Nhanh 1 Chạm
+                  </h4>
+                  <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                    Tích hợp nút kết nối trực tiếp đến ShopeeFood, GrabFood và BeFood theo địa bàn bạn sinh sống, giao đồ ăn còn nóng hổi tới tận cửa nhà.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Phân Loại 6 Nhóm Món Ăn Tiêu Biểu */}
+          <section className="bg-stone-50/70 p-6 sm:p-8 rounded-2xl border border-stone-200/70">
+            <h3 className="text-lg sm:text-xl font-bold text-stone-900 mb-3 flex items-center gap-2">
+              <Layers className="w-5 h-5 text-orange-600" />
+              <span>Khám Phá Các Nhóm Ẩm Thực Đặc Trưng Của Bữa Cơm Việt</span>
+            </h3>
+            <p className="text-stone-600 text-xs sm:text-sm leading-relaxed mb-6">
+              Để bạn dễ dàng tìm kiếm theo sở thích và hoàn cảnh, 160+ món ngon được phân chia thành các nhóm ẩm thực khoa học và dễ lựa chọn:
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="bg-white p-4 sm:p-5 rounded-xl border border-stone-200/80">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xl">🍚</span>
+                  <h4 className="font-bold text-stone-900 text-sm sm:text-base">
+                    Cơm & Xôi Chắc Bụng
+                  </h4>
+                </div>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                  Trọng tâm của bữa trưa và bữa tối gia đình: Cơm tấm sườn bì chả, cơm gà Hội An, cơm niêu cá kho tộ, xôi xéo gà xé, xôi khúc bùi béo dẻo thơm.
+                </p>
+              </div>
+
+              <div className="bg-white p-4 sm:p-5 rounded-xl border border-stone-200/80">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xl">🍜</span>
+                  <h4 className="font-bold text-stone-900 text-sm sm:text-base">
+                    Bún, Phở & Mì Đậm Vị
+                  </h4>
+                </div>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                  Lựa chọn hoàn hảo cho bữa sáng hoặc đổi gió ngày nóng: Phở bò tái nạm, bún chả Hà Nội, bún bò Huế, bánh đa cua Hải Phòng, hủ tiếu Nam Vang.
+                </p>
+              </div>
+
+              <div className="bg-white p-4 sm:p-5 rounded-xl border border-stone-200/80">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xl">🥖</span>
+                  <h4 className="font-bold text-stone-900 text-sm sm:text-base">
+                    Bánh Mì & Món Cuốn
+                  </h4>
+                </div>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                  Nhanh gọn, tiện lợi và giàu rau xanh: Bánh mì pate trứng chả giòn rụm, gỏi cuốn tôm thịt, phở cuốn thanh mát chấm nước mắm chua ngọt.
+                </p>
+              </div>
+
+              <div className="bg-white p-4 sm:p-5 rounded-xl border border-stone-200/80">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xl">🍲</span>
+                  <h4 className="font-bold text-stone-900 text-sm sm:text-base">
+                    Lẩu & Cháo Ấm Lòng
+                  </h4>
+                </div>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                  Lý tưởng cho những buổi tụ tập hay ngày mưa lạnh: Lẩu riêu cua bắp bò, lẩu gà lá é, lẩu mắm miền Tây, cháo sườn sụn, cháo ếch Singapore.
+                </p>
+              </div>
+
+              <div className="bg-white p-4 sm:p-5 rounded-xl border border-stone-200/80">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xl">🍗</span>
+                  <h4 className="font-bold text-stone-900 text-sm sm:text-base">
+                    Nướng & Chiên Giòn Rụm
+                  </h4>
+                </div>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                  Khơi dậy vị giác cho bữa tối rộn ràng: Nem nướng Nha Trang, bò nướng lá lốt, gà rán giòn cay, cánh gà chiên mắm thơm ngậy.
+                </p>
+              </div>
+
+              <div className="bg-white p-4 sm:p-5 rounded-xl border border-stone-200/80">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xl">🥬</span>
+                  <h4 className="font-bold text-stone-900 text-sm sm:text-base">
+                    Món Chay Thanh Tịnh
+                  </h4>
+                </div>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                  Nhẹ bụng, thanh lọc cơ thể cho ngày rằm mùng một: Cơm hạt sen nấm đông cô, bún riêu chay tàu hũ ky, lẩu nấm dưỡng sinh bổ dưỡng.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Bí Quyết Cân Bằng Dinh Dưỡng Bữa Cơm Việt */}
+          <section className="space-y-4">
+            <h3 className="text-lg sm:text-xl font-bold text-stone-900 flex items-center gap-2">
+              <HeartPulse className="w-5 h-5 text-emerald-600" />
+              <span>Quy Tắc Vàng Giúp Bữa Ăn Ngon Miệng Mà Không Lo Tăng Cân</span>
+            </h3>
+            <p className="text-stone-600 text-sm leading-relaxed">
+              Theo các chuyên gia dinh dưỡng, một bữa ăn hoàn chỉnh nên tuân thủ nguyên tắc &quot;Chiếc đĩa lành mạnh&quot; (Healthy Plate):
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <div className="p-4 rounded-xl border border-stone-200 bg-white">
+                <div className="text-xs font-bold text-emerald-700 uppercase mb-1">50% Rau Củ & Chất Xơ</div>
+                <div className="text-sm font-semibold text-stone-900 mb-1">Canh rau & Rau luộc</div>
+                <p className="text-xs text-stone-500">Giúp làm chậm quá trình hấp thu đường, tạo cảm giác no lâu và cung cấp vitamin dồi dào.</p>
+              </div>
+
+              <div className="p-4 rounded-xl border border-stone-200 bg-white">
+                <div className="text-xs font-bold text-orange-700 uppercase mb-1">25% Chất Đạm (Protein)</div>
+                <div className="text-sm font-semibold text-stone-900 mb-1">Thịt nạc, Cá & Trứng</div>
+                <p className="text-xs text-stone-500">Nuôi dưỡng cơ bắp, hỗ trợ trao đổi chất và duy trì năng lượng làm việc suốt buổi chiều.</p>
+              </div>
+
+              <div className="p-4 rounded-xl border border-stone-200 bg-white">
+                <div className="text-xs font-bold text-amber-700 uppercase mb-1">25% Tinh Bột Phức Hợp</div>
+                <div className="text-sm font-semibold text-stone-900 mb-1">Cơm, Bún, Khoai lang</div>
+                <p className="text-xs text-stone-500">Cung cấp glucose cho não bộ hoạt động linh hoạt, ưu tiên các loại ngũ cốc nguyên cám.</p>
+              </div>
+
+              <div className="p-4 rounded-xl border border-stone-200 bg-white">
+                <div className="text-xs font-bold text-blue-700 uppercase mb-1">Đủ Nước & Khoáng Chất</div>
+                <div className="text-sm font-semibold text-stone-900 mb-1">Nước lọc & Nước canh</div>
+                <p className="text-xs text-stone-500">Thưởng thức một bát canh thanh mát cuối bữa giúp hệ tiêu hóa vận hành trơn tru và dễ chịu.</p>
+              </div>
+            </div>
+          </section>
+
+          {/* FAQ Chuyên Sâu Chuẩn Schema */}
+          <section className="pt-6 border-t border-stone-100">
+            <div className="flex items-center gap-2 mb-6">
+              <HelpCircle className="w-5 h-5 text-orange-600" />
+              <h3 className="text-lg sm:text-xl font-bold text-stone-900">
+                Câu Hỏi Thường Gặp Về Thực Đơn Món Ngon (FAQ)
+              </h3>
+            </div>
+
+            <div className="space-y-4">
+              <div className="p-5 rounded-2xl bg-stone-50/70 border border-stone-200/80 space-y-2">
+                <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-start gap-2">
+                  <span className="w-5 h-5 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-xs shrink-0 mt-0.5 font-bold">1</span>
+                  <span>Danh mục 160+ món ăn này được tổng hợp dựa trên tiêu chí nào?</span>
+                </h4>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed pl-7">
+                  Toàn bộ món ăn được đội ngũ biên tập chọn lọc kỹ lưỡng dựa trên mức độ phổ biến, sự đón nhận của thực khách ba miền và tính sẵn có trên các ứng dụng giao thức ăn tại các thành phố lớn (Hà Nội, TP.HCM, Đà Nẵng, Hải Phòng, Cần Thơ...). Bạn hoàn toàn yên tâm sẽ dễ dàng tìm thấy quán phục vụ ngon miệng ngay gần mình.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-stone-50/70 border border-stone-200/80 space-y-2">
+                <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-start gap-2">
+                  <span className="w-5 h-5 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-xs shrink-0 mt-0.5 font-bold">2</span>
+                  <span>Mức calo hiển thị trên mỗi món ăn có chuẩn xác không?</span>
+                </h4>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed pl-7">
+                  Lượng calo được ước tính dựa trên khẩu phần tiêu chuẩn của Viện Dinh Dưỡng Quốc Gia và các bảng tra cứu thực phẩm Việt Nam. Tùy thuộc vào cách nêm nếm gia vị, lượng dầu mỡ hoặc các món ăn kèm của từng quán ăn cụ thể, con số này có thể chênh lệch khoảng 10 - 15%, đủ tin cậy để bạn theo dõi năng lượng nạp vào mỗi ngày.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-stone-50/70 border border-stone-200/80 space-y-2">
+                <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-start gap-2">
+                  <span className="w-5 h-5 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-xs shrink-0 mt-0.5 font-bold">3</span>
+                  <span>Làm thế nào để tìm quán ngon bán đúng món ăn quanh khu vực của tôi?</span>
+                </h4>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed pl-7">
+                  Rất đơn giản! Bạn chỉ cần nhấn vào bất kỳ món ăn nào bạn thích, bấm nút &quot;Đặt Món Ngay&quot; và chọn ứng dụng giao hàng bạn yêu thích (ShopeeFood, GrabFood hoặc BeFood). Nếu bạn đã cấp quyền định vị hoặc chọn khu vực ở thanh đầu trang, hệ thống sẽ mở danh sách quán ăn gần bạn nhất kèm đánh giá sao và cự ly ship.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-stone-50/70 border border-stone-200/80 space-y-2">
+                <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-start gap-2">
+                  <span className="w-5 h-5 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-xs shrink-0 mt-0.5 font-bold">4</span>
+                  <span>Tôi đang ăn chay hoặc ăn kiêng thì có bộ lọc món riêng không?</span>
+                </h4>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed pl-7">
+                  Có! Ngay phía trên danh sách món ăn, bạn có thể bấm vào tab &quot;Đồ chay&quot; hoặc &quot;Salad & món nhẹ&quot; để lọc nhanh các món ăn thanh đạm, giàu chất xơ và không chứa thịt. Ngoài ra, bạn cũng có thể gõ các từ khóa như &quot;chay&quot;, &quot;healthy&quot;, &quot;nấm&quot; vào thanh tìm kiếm để tra cứu trong 1 giây.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-stone-50/70 border border-stone-200/80 space-y-2">
+                <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-start gap-2">
+                  <span className="w-5 h-5 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-xs shrink-0 mt-0.5 font-bold">5</span>
+                  <span>Tôi có thể đưa các món ăn yêu thích này vào Lịch Ăn Tuần không?</span>
+                </h4>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed pl-7">
+                  Chắc chắn có! Toàn bộ 160+ món ăn trong danh mục đều được liên kết đồng bộ với tính năng Lịch Ăn Tuần. Khi xem thực đơn tuần, bạn có thể bấm nút &quot;Đổi Món&quot; ở bất kỳ bữa ăn nào để chọn ngay món ăn bạn thích từ danh mục này.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-stone-50/70 border border-stone-200/80 space-y-2">
+                <h4 className="font-bold text-stone-900 text-sm sm:text-base flex items-start gap-2">
+                  <span className="w-5 h-5 rounded-full bg-orange-100 text-orange-700 flex items-center justify-center text-xs shrink-0 mt-0.5 font-bold">6</span>
+                  <span>Trang web có thu phí tra cứu hay xem công thức món ăn không?</span>
+                </h4>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed pl-7">
+                  Hoàn toàn miễn phí 100%! Bạn có thể tra cứu món ăn, xem dinh dưỡng, bốc bài Tarot, quay vòng quay hay tạo lịch ăn tuần không giới hạn mà không phải trả bất kỳ chi phí nào.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* CẤU TRÚC: HỆ SINH THÁI KHÁM PHÁ THÊM (INTERNAL CROSS-LINKING) */}
+          <section className="pt-6 border-t border-stone-100">
+            <h3 className="text-base sm:text-lg font-bold text-stone-900 mb-3.5 flex items-center gap-2">
+              <Compass className="w-4 h-4 text-orange-600" />
+              <span>Khám Phá Thêm Những Cách Chọn Món Thú Vị Khác</span>
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <a
+                href="/"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate('tarot');
+                  }
+                }}
+                className="p-4 rounded-2xl bg-stone-50/80 hover:bg-orange-50/80 border border-stone-200/80 hover:border-orange-200 transition-all group flex items-center justify-between"
+              >
+                <div>
+                  <div className="font-bold text-stone-900 group-hover:text-orange-600 text-sm">
+                    Tarot Ẩm Thực
+                  </div>
+                  <div className="text-xs text-stone-500 mt-0.5">
+                    Quẻ bói 12 cung hoàng đạo &amp; lá bùa may mắn
+                  </div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-orange-600 group-hover:translate-x-0.5 transition-all" />
+              </a>
+
+              <a
+                href="/vong-quay"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate('wheel');
+                  }
+                }}
+                className="p-4 rounded-2xl bg-stone-50/80 hover:bg-orange-50/80 border border-stone-200/80 hover:border-orange-200 transition-all group flex items-center justify-between"
+              >
+                <div>
+                  <div className="font-bold text-stone-900 group-hover:text-orange-600 text-sm">
+                    Vòng Quay Ăn Gì
+                  </div>
+                  <div className="text-xs text-stone-500 mt-0.5">
+                    Chốt món ngẫu nhiên vui vẻ trong 3 giây
+                  </div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-orange-600 group-hover:translate-x-0.5 transition-all" />
+              </a>
+
+              <a
+                href="/len-lich-an"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate('planner');
+                  }
+                }}
+                className="p-4 rounded-2xl bg-stone-50/80 hover:bg-orange-50/80 border border-stone-200/80 hover:border-orange-200 transition-all group flex items-center justify-between"
+              >
+                <div>
+                  <div className="font-bold text-stone-900 group-hover:text-orange-600 text-sm">
+                    Lịch Ăn Tuần
+                  </div>
+                  <div className="text-xs text-stone-500 mt-0.5">
+                    Thực đơn 7 ngày ngon miệng &amp; không lo trùng món
+                  </div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-orange-600 group-hover:translate-x-0.5 transition-all" />
+              </a>
+            </div>
+          </section>
+
+          {/* Structured Data (Schema.org JSON-LD for Dish Catalog) */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@graph": [
+                  {
+                    "@type": "WebPage",
+                    "@id": "https://www.angigio.com/mon-ngon#webpage",
+                    "url": "https://www.angigio.com/mon-ngon",
+                    "name": "Thực Đơn 160+ Món Ngon Việt Nam - Món Ngon 3 Miền Chuẩn Vị | Hôm Nay Ăn Gì",
+                    "description": "Bách khoa toàn thư ẩm thực với hơn 160 món ngon đặc sản 3 miền Bắc - Trung - Nam, minh bạch calo, nguyên liệu, tầm giá và đặt ship ShopeeFood, GrabFood.",
+                    "inLanguage": "vi-VN",
+                    "isPartOf": {
+                      "@type": "WebSite",
+                      "@id": "https://www.angigio.com/#website",
+                      "name": "Hôm Nay Ăn Gì",
+                      "url": "https://www.angigio.com/"
+                    }
+                  },
+                  {
+                    "@type": "BreadcrumbList",
+                    "@id": "https://www.angigio.com/mon-ngon#breadcrumb",
+                    "itemListElement": [
+                      {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Trang Chủ",
+                        "item": "https://www.angigio.com/"
+                      },
+                      {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Thực Đơn Món Ngon",
+                        "item": "https://www.angigio.com/mon-ngon"
+                      }
+                    ]
+                  },
+                  {
+                    "@type": "FAQPage",
+                    "@id": "https://www.angigio.com/mon-ngon#faq",
+                    "mainEntity": [
+                      {
+                        "@type": "Question",
+                        "name": "Danh mục 160+ món ăn này được tổng hợp dựa trên tiêu chí nào?",
+                        "acceptedAnswer": {
+                          "@type": "Answer",
+                          "text": "Toàn bộ món ăn được đội ngũ biên tập chọn lọc kỹ lưỡng dựa trên mức độ phổ biến, sự đón nhận của thực khách ba miền và tính sẵn có trên các ứng dụng giao thức ăn tại các thành phố lớn."
+                        }
+                      },
+                      {
+                        "@type": "Question",
+                        "name": "Mức calo hiển thị trên mỗi món ăn có chuẩn xác không?",
+                        "acceptedAnswer": {
+                          "@type": "Answer",
+                          "text": "Lượng calo được ước tính dựa trên khẩu phần tiêu chuẩn của Viện Dinh Dưỡng Quốc Gia và các bảng tra cứu thực phẩm Việt Nam, đủ tin cậy để bạn theo dõi năng lượng nạp vào mỗi ngày."
+                        }
+                      },
+                      {
+                        "@type": "Question",
+                        "name": "Làm thế nào để tìm quán ngon bán đúng món ăn quanh khu vực của tôi?",
+                        "acceptedAnswer": {
+                          "@type": "Answer",
+                          "text": "Bạn chỉ cần nhấn vào món ăn bất kỳ và chọn ứng dụng giao hàng bạn yêu thích (ShopeeFood, GrabFood, BeFood). Hệ thống sẽ mở danh sách quán ăn gần bạn nhất kèm đánh giá sao và cự ly ship."
+                        }
+                      },
+                      {
+                        "@type": "Question",
+                        "name": "Tôi đang ăn chay hoặc ăn kiêng thì có bộ lọc món riêng không?",
+                        "acceptedAnswer": {
+                          "@type": "Answer",
+                          "text": "Có! Ngay phía trên danh sách món ăn, bạn có thể bấm vào tab 'Đồ chay' hoặc 'Salad & món nhẹ' để lọc nhanh các món ăn thanh đạm, giàu chất xơ và không chứa thịt."
+                        }
+                      },
+                      {
+                        "@type": "Question",
+                        "name": "Tôi có thể đưa các món ăn yêu thích này vào Lịch Ăn Tuần không?",
+                        "acceptedAnswer": {
+                          "@type": "Answer",
+                          "text": "Chắc chắn có! Toàn bộ 160+ món ăn trong danh mục đều được liên kết đồng bộ với tính năng Lịch Ăn Tuần, cho phép bạn đổi món linh hoạt theo sở thích."
+                        }
+                      },
+                      {
+                        "@type": "Question",
+                        "name": "Trang web có thu phí tra cứu hay xem công thức món ăn không?",
+                        "acceptedAnswer": {
+                          "@type": "Answer",
+                          "text": "Hoàn toàn miễn phí 100%! Bạn có thể tra cứu món ăn, xem dinh dưỡng, bốc bài Tarot, quay vòng quay hay tạo lịch ăn tuần không giới hạn số lần."
+                        }
+                      }
+                    ]
+                  }
+                ]
+              })
+            }}
+          />
+        </div>
+      </article>
+    );
+  }
+
+  // Standard FAQ section for other tabs fallback
   const data = COMMON_FAQ_DATA[activeTab];
   if (!data) return null;
 
