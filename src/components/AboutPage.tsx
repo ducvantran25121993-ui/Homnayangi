@@ -43,8 +43,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
       <div className="space-y-8">
         <section className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200/80 shadow-xs">
           <div className="flex items-center gap-3 text-orange-600 font-extrabold text-lg sm:text-xl mb-4">
-            <div className="w-10 h-10 rounded-2xl bg-orange-500/10 flex items-center justify-center">
-              <UtensilsCrossed className="w-5 h-5" />
+            <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-200/80 p-0.5 flex items-center justify-center shrink-0">
+              <img src="/logo.svg" alt="Logo Hôm Nay Ăn Gì" className="w-full h-full object-contain" />
             </div>
             <h2>Câu Chuyện Khởi Nguồn & Sứ Mệnh</h2>
           </div>
