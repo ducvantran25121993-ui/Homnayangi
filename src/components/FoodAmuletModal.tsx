@@ -193,7 +193,7 @@ export const FoodAmuletModal: React.FC<FoodAmuletModalProps> = ({
               <MapPin className="w-3.5 h-3.5 text-orange-400" />
               <span>Tìm quán giao tại <strong>{targetArea}</strong>:</span>
             </div>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               <button
                 onClick={() =>
                   trackAndOpenAffiliateLink('shopeefood', data.dish, affiliateConfig, userLocation)
@@ -225,6 +225,17 @@ export const FoodAmuletModal: React.FC<FoodAmuletModalProps> = ({
               >
                 <ShoppingBag className="w-3.5 h-3.5 shrink-0" />
                 <span>BeFood</span>
+              </button>
+
+              <button
+                onClick={() =>
+                  trackAndOpenAffiliateLink('googlemaps', data.dish, affiliateConfig, userLocation)
+                }
+                title={`Mở Google Maps tìm quán ${dishName} gần bạn`}
+                className="py-2.5 px-2 rounded-xl bg-[#4285F4] hover:bg-[#3367D6] text-white font-extrabold text-xs flex items-center justify-center gap-1 transition-transform active:scale-95 shadow cursor-pointer"
+              >
+                <MapPin className="w-3.5 h-3.5 shrink-0 text-white" />
+                <span>Maps</span>
               </button>
             </div>
           </div>

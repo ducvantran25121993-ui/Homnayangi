@@ -373,7 +373,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
                     </button>
                   )}
                 </div>
-                <div className="grid grid-cols-3 gap-1.5">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
                   <button
                     onClick={() =>
                       trackAndOpenAffiliateLink(
@@ -420,6 +420,22 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
                   >
                     <span className="text-[11px] font-black">BeFood</span>
                     <span className="text-[9px] font-bold">Tìm quán gần</span>
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      trackAndOpenAffiliateLink(
+                        'googlemaps',
+                        { name: item.searchKeyword || item.name },
+                        affiliateConfig,
+                        userLocation
+                      )
+                    }
+                    title={`Mở Google Maps tìm quán ${item.name} gần bạn`}
+                    className="flex flex-col items-center justify-center p-2 rounded-xl bg-[#4285F4] hover:bg-[#3367D6] text-white transition-all active:scale-95 cursor-pointer shadow-xs"
+                  >
+                    <span className="text-[11px] font-black">Google Maps</span>
+                    <span className="text-[9px] opacity-85">Tìm quanh đây</span>
                   </button>
                 </div>
               </div>

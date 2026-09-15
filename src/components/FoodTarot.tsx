@@ -2043,13 +2043,13 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                       </span>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
                       <button
                         onClick={() =>
                           trackAndOpenAffiliateLink('shopeefood', revealedResult.dish, affiliateConfig, userLocation)
                         }
                         title={`Chuyển qua ShopeeFood tìm quán ${revealedResult.dish.name} tại ${targetArea}`}
-                        className="py-3 px-3 rounded-2xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(238,77,45,0.35)] cursor-pointer"
+                        className="py-3 px-2.5 rounded-2xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(238,77,45,0.35)] cursor-pointer"
                       >
                         <ShoppingBag className="w-4 h-4 shrink-0" />
                         <span>ShopeeFood</span>
@@ -2060,7 +2060,7 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                           trackAndOpenAffiliateLink('grabfood', revealedResult.dish, affiliateConfig, userLocation)
                         }
                         title={`Chuyển qua GrabFood tìm quán ${revealedResult.dish.name} tại ${targetArea}`}
-                        className="py-3 px-3 rounded-2xl bg-[#00B14F] hover:bg-[#009643] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(0,177,79,0.35)] cursor-pointer"
+                        className="py-3 px-2.5 rounded-2xl bg-[#00B14F] hover:bg-[#009643] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(0,177,79,0.35)] cursor-pointer"
                       >
                         <ShoppingBag className="w-4 h-4 shrink-0" />
                         <span>GrabFood</span>
@@ -2071,10 +2071,21 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                           trackAndOpenAffiliateLink('befood', revealedResult.dish, affiliateConfig, userLocation)
                         }
                         title={`Chuyển qua BeFood tìm quán ${revealedResult.dish.name} tại ${targetArea}`}
-                        className="py-3 px-3 rounded-2xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-950 font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(255,209,0,0.35)] cursor-pointer"
+                        className="py-3 px-2.5 rounded-2xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-950 font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(255,209,0,0.35)] cursor-pointer"
                       >
                         <ShoppingBag className="w-4 h-4 shrink-0 text-stone-950" />
                         <span>BeFood</span>
+                      </button>
+
+                      <button
+                        onClick={() =>
+                          trackAndOpenAffiliateLink('googlemaps', revealedResult.dish, affiliateConfig, userLocation)
+                        }
+                        title={`Mở Google Maps tìm quán ${revealedResult.dish.name} gần bạn`}
+                        className="py-3 px-2.5 rounded-2xl bg-[#4285F4] hover:bg-[#3367D6] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(66,133,244,0.35)] cursor-pointer"
+                      >
+                        <MapPin className="w-4 h-4 shrink-0 text-white" />
+                        <span>Google Maps</span>
                       </button>
                     </div>
                   </div>
