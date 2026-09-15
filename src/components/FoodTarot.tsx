@@ -1343,14 +1343,14 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
         </div>
 
         {/* Altar Header */}
-        <div className="relative z-10 text-center w-full max-w-4xl mx-auto mb-6 sm:mb-8">
+        <div className="relative z-10 text-center w-full max-w-5xl xl:max-w-6xl mx-auto mb-6 sm:mb-8">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#1c0836] via-[#381163] to-[#1c0836] text-amber-300 text-xs font-black uppercase tracking-wider mb-3 shadow-md shadow-purple-950/20 border border-purple-500/40 backdrop-blur-sm">
             <Compass className="w-4 h-4 text-amber-300 animate-spin-slow" />
             <span className="bg-gradient-to-r from-amber-200 via-yellow-300 to-amber-200 bg-clip-text text-transparent font-black drop-shadow-xs">
               TAROT ẨM THỰC VIỆT NAM • TRẢI BÀI CHIÊM TINH
             </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-black text-stone-900 tracking-tight mb-3">
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-black text-stone-900 tracking-tight mb-3 md:whitespace-nowrap">
             Tarot Ẩm Thực: Hôm nay <span className="text-[#4f46e5] font-black">Vũ Trụ</span> mách bạn ăn gì?
           </h1>
           <p className="text-sm sm:text-base text-stone-600 max-w-2xl mx-auto font-normal leading-relaxed">
