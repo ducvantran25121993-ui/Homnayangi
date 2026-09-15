@@ -38,12 +38,15 @@ export default function App() {
       window.history.pushState({ tab: newTab }, '', targetPath);
     }
     updateTabSEO(newTab);
+    // Cuộn lên đầu trang ngay lập tức khi chuyển tab hoặc chuyển trang
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, []);
 
   // Sync with browser Back/Forward buttons, secret admin URL query, and keyboard shortcut
   useEffect(() => {
-    // Initial SEO update
+    // Initial SEO update & scroll to top on tab change
     updateTabSEO(activeTab);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
     // Check if URL has secret query ?admin=1 or ?admin=inbox
     const params = new URLSearchParams(window.location.search);
@@ -59,6 +62,7 @@ export default function App() {
       const currentTab = getTabFromUrl();
       setActiveTab(currentTab);
       updateTabSEO(currentTab);
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     };
 
     // Secret shortcut: Press Shift + A to toggle Admin Inbox
