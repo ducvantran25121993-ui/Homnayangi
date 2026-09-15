@@ -28,8 +28,8 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
           <Sparkles className="w-3.5 h-3.5" />
           <span>Về Chúng Tôi • Hôm Nay Ăn Gì</span>
         </div>
-        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-stone-900 tracking-tight leading-tight mb-4 max-w-4xl mx-auto">
-          Nền Tảng Gợi Ý Ẩm Thực Thông Minh <br className="hidden sm:inline" />
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-black text-stone-900 tracking-tight leading-tight mb-4 max-w-5xl xl:max-w-6xl mx-auto md:whitespace-nowrap">
+          Nền Tảng Gợi Ý Ẩm Thực Thông Minh{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-amber-600 to-red-600">
             Hàng Đầu Cho Người Việt
           </span>
