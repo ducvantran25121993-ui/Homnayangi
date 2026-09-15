@@ -27,7 +27,8 @@ import {
   Zap,
   Cookie,
   Leaf,
-  Share2
+  Share2,
+  MapPin
 } from 'lucide-react';
 import { WHEEL_PRESETS, INITIAL_DISHES } from '../data/dishes';
 import { Dish, AffiliateConfig, UserLocation } from '../types';
@@ -677,7 +678,7 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
                     :
                   </span>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   <button
                     onClick={() =>
                       trackAndOpenAffiliateLink(
@@ -688,11 +689,10 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
                       )
                     }
                     title={`Chuyển qua ShopeeFood tìm quán ${winner} tại ${userLocation.district || userLocation.city}`}
-                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-extrabold text-xs sm:text-sm transition-all shadow-sm hover:scale-[1.02] cursor-pointer"
+                    className="flex items-center justify-center gap-1.5 px-2.5 py-2.5 rounded-xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-extrabold text-xs sm:text-sm transition-all shadow-sm hover:scale-[1.02] cursor-pointer"
                   >
                     <ShoppingBag className="w-4 h-4 shrink-0" />
                     <span>ShopeeFood</span>
-                    <ExternalLink className="w-3.5 h-3.5 opacity-80" />
                   </button>
 
                   <button
@@ -705,11 +705,10 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
                       )
                     }
                     title={`Chuyển qua GrabFood tìm quán ${winner} tại ${userLocation.district || userLocation.city}`}
-                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-[#00B14F] hover:bg-[#009643] text-white font-extrabold text-xs sm:text-sm transition-all shadow-sm hover:scale-[1.02] cursor-pointer"
+                    className="flex items-center justify-center gap-1.5 px-2.5 py-2.5 rounded-xl bg-[#00B14F] hover:bg-[#009643] text-white font-extrabold text-xs sm:text-sm transition-all shadow-sm hover:scale-[1.02] cursor-pointer"
                   >
                     <ShoppingBag className="w-4 h-4 shrink-0" />
                     <span>GrabFood</span>
-                    <ExternalLink className="w-3.5 h-3.5 opacity-80" />
                   </button>
 
                   <button
@@ -722,11 +721,26 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
                       )
                     }
                     title={`Chuyển qua BeFood tìm quán ${winner} tại ${userLocation.district || userLocation.city}`}
-                    className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-900 font-extrabold text-xs sm:text-sm transition-all shadow-sm hover:scale-[1.02] cursor-pointer"
+                    className="flex items-center justify-center gap-1.5 px-2.5 py-2.5 rounded-xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-900 font-extrabold text-xs sm:text-sm transition-all shadow-sm hover:scale-[1.02] cursor-pointer"
                   >
                     <ShoppingBag className="w-4 h-4 shrink-0" />
                     <span>BeFood</span>
-                    <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+                  </button>
+
+                  <button
+                    onClick={() =>
+                      trackAndOpenAffiliateLink(
+                        'googlemaps',
+                        matchedDish || { name: winner || 'Món ngon' },
+                        affiliateConfig,
+                        userLocation
+                      )
+                    }
+                    title={`Mở Google Maps tìm quán ${winner} gần bạn`}
+                    className="flex items-center justify-center gap-1.5 px-2.5 py-2.5 rounded-xl bg-[#4285F4] hover:bg-[#3367D6] text-white font-extrabold text-xs sm:text-sm transition-all shadow-sm hover:scale-[1.02] cursor-pointer"
+                  >
+                    <MapPin className="w-4 h-4 shrink-0 text-white" />
+                    <span>Maps</span>
                   </button>
                 </div>
 

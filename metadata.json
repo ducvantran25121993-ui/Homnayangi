@@ -1,6 +1,6 @@
 {
-  "name": "Copy of Hôm Nay Ăn Gì - Gợi Ý Món Ăn \u0026 Affiliate App Food",
-  "description": "Web app gợi ý món ăn hôm nay với Tarot ẩm thực 12 cung hoàng đạo, Vòng quay may mắn, Trợ lý AI thông minh và thực đơn hơn 160 món ngon Việt Nam chuẩn vị kết nối ShopeeFood, GrabFood.",
+  "name": "Hôm Nay Ăn Gì - Tarot Ẩm Thực 12 Cung Hoàng Đạo Chuẩn Vị",
+  "description": "Ứng dụng gợi ý món ăn thông minh với Tarot ẩm thực 12 cung hoàng đạo, Lịch ăn tuần, Vòng quay may mắn, Trợ lý AI và thực đơn 160+ món ngon kết nối đặt ship ShopeeFood, GrabFood.",
   "requestFramePermissions": [
     "geolocation"
   ],

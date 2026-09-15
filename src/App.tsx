@@ -4,6 +4,10 @@ import { LuckyWheel } from './components/LuckyWheel';
 import { AIAssistant } from './components/AIAssistant';
 import { FoodTarot } from './components/FoodTarot';
 import { DishCatalog } from './components/DishCatalog';
+import { MealPlanner } from './components/MealPlanner';
+import { AboutPage } from './components/AboutPage';
+import { ContactPage } from './components/ContactPage';
+import { AdminInboxModal } from './components/AdminInboxModal';
 import { AffiliateModal } from './components/AffiliateModal';
 import { DishDetailModal } from './components/DishDetailModal';
 import { LocationModal } from './components/LocationModal';
@@ -24,6 +28,7 @@ export default function App() {
   const [userLocation, setUserLocation] = useState<UserLocation>(getStoredUserLocation);
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [locationTargetDish, setLocationTargetDish] = useState<string | undefined>(undefined);
+  const [isAdminInboxOpen, setIsAdminInboxOpen] = useState(false);
 
   // Navigate tab with clean URL & History API
   const handleNavigateTab = useCallback((newTab: TabType) => {
@@ -35,10 +40,20 @@ export default function App() {
     updateTabSEO(newTab);
   }, []);
 
-  // Sync with browser Back/Forward buttons and initial SEO metadata
+  // Sync with browser Back/Forward buttons, secret admin URL query, and keyboard shortcut
   useEffect(() => {
     // Initial SEO update
     updateTabSEO(activeTab);
+
+    // Check if URL has secret query ?admin=1 or ?admin=inbox
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('admin') === '1' || params.get('admin') === 'inbox') {
+      setIsAdminInboxOpen(true);
+      // Clean query parameter from address bar without page reload
+      params.delete('admin');
+      const newQuery = params.toString() ? `?${params.toString()}` : '';
+      window.history.replaceState(null, '', window.location.pathname + newQuery);
+    }
 
     const handlePopState = () => {
       const currentTab = getTabFromUrl();
@@ -46,8 +61,24 @@ export default function App() {
       updateTabSEO(currentTab);
     };
 
+    // Secret shortcut: Press Shift + A to toggle Admin Inbox
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't trigger if user is typing inside an input or textarea
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)) {
+        return;
+      }
+      if (e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+        e.preventDefault();
+        setIsAdminInboxOpen((prev) => !prev);
+      }
+    };
+
     window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, [activeTab]);
 
   const [clickStats, setClickStats] = useState<{
@@ -177,6 +208,16 @@ export default function App() {
           />
         )}
 
+        {activeTab === 'planner' && (
+          <MealPlanner
+            affiliateConfig={affiliateConfig}
+            userLocation={userLocation}
+            onOpenLocationModal={openLocationPicker}
+            onSelectDish={(dish) => setSelectedDish(dish)}
+            onNavigate={handleNavigateTab}
+          />
+        )}
+
         {activeTab === 'ai' && (
           <AIAssistant
             affiliateConfig={affiliateConfig}
@@ -203,11 +244,24 @@ export default function App() {
             selectedDish={selectedDish}
             userLocation={userLocation}
             onOpenLocationModal={openLocationPicker}
+            onNavigate={handleNavigateTab}
+          />
+        )}
+
+        {activeTab === 'about' && (
+          <AboutPage
+            onNavigate={handleNavigateTab}
+          />
+        )}
+
+        {activeTab === 'contact' && (
+          <ContactPage
+            onNavigate={handleNavigateTab}
           />
         )}
 
         {/* Editorial SEO Content & FAQ Accordion */}
-        <SeoContentFaq activeTab={activeTab} />
+        <SeoContentFaq activeTab={activeTab} onNavigate={handleNavigateTab} />
       </main>
 
       {/* Dish Detail Modal (Displays with integrated location and food apps) */}
@@ -242,10 +296,17 @@ export default function App() {
         clickStats={clickStats}
       />
 
+      {/* Admin Inbox Modal (Quản lý tin nhắn khách gửi) */}
+      <AdminInboxModal
+        isOpen={isAdminInboxOpen}
+        onClose={() => setIsAdminInboxOpen(false)}
+      />
+
       {/* Footer */}
       <Footer
         onOpenAffiliateModal={() => setIsAffiliateModalOpen(true)}
         onNavigate={handleNavigateTab}
+        onOpenAdminInbox={() => setIsAdminInboxOpen(true)}
       />
     </div>
   );

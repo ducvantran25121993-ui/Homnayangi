@@ -1,19 +1,29 @@
 import React, { useState } from 'react';
-import { UtensilsCrossed, Heart, Share2 } from 'lucide-react';
-import { TAB_CONFIG, TabType } from '../utils/navigation';
+import { UtensilsCrossed, Heart, Share2, Info, Mail, Lock } from 'lucide-react';
+import { TabType } from '../utils/navigation';
 import { ShareModal } from './ShareModal';
 
 export const Footer: React.FC<{
   onOpenAffiliateModal: () => void;
   onNavigate?: (tab: TabType) => void;
-}> = ({ onNavigate }) => {
+  onOpenAdminInbox?: () => void;
+}> = ({ onNavigate, onOpenAdminInbox }) => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
-  const handleLinkClick = (tab: TabType, e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleAboutClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (e.ctrlKey || e.metaKey || e.button === 1) return;
     if (onNavigate) {
       e.preventDefault();
-      onNavigate(tab);
+      onNavigate('about');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (e.ctrlKey || e.metaKey || e.button === 1) return;
+    if (onNavigate) {
+      e.preventDefault();
+      onNavigate('contact');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -37,43 +47,34 @@ export const Footer: React.FC<{
             </div>
           </div>
 
-          {/* Internal links for SEO & fast navigation */}
+          {/* Trang Giới Thiệu (/gioi-thieu) & Liên Hệ (/lien-he) là trang riêng chuẩn SEO */}
           <nav aria-label="Liên kết chân trang" className="flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-stone-600">
             <a
-              href={TAB_CONFIG.tarot.path}
-              onClick={(e) => handleLinkClick('tarot', e)}
-              className="hover:text-orange-600 transition-colors"
+              href="/gioi-thieu"
+              onClick={handleAboutClick}
+              className="inline-flex items-center gap-1.5 hover:text-orange-600 transition-colors py-1 px-2 rounded-lg hover:bg-stone-50"
             >
-              Tarot Ẩm Thực
+              <Info className="w-3.5 h-3.5 text-stone-500" />
+              <span>Giới Thiệu</span>
             </a>
+
             <span className="text-stone-300">•</span>
+
             <a
-              href={TAB_CONFIG.wheel.path}
-              onClick={(e) => handleLinkClick('wheel', e)}
-              className="hover:text-orange-600 transition-colors"
+              href="/lien-he"
+              onClick={handleContactClick}
+              className="inline-flex items-center gap-1.5 hover:text-orange-600 transition-colors py-1 px-2 rounded-lg hover:bg-stone-50"
             >
-              Vòng Quay Ăn Gì
+              <Mail className="w-3.5 h-3.5 text-stone-500" />
+              <span>Liên Hệ</span>
             </a>
+
             <span className="text-stone-300">•</span>
-            <a
-              href={TAB_CONFIG.ai.path}
-              onClick={(e) => handleLinkClick('ai', e)}
-              className="hover:text-orange-600 transition-colors"
-            >
-              AI Gợi Ý Món Ăn
-            </a>
-            <span className="text-stone-300">•</span>
-            <a
-              href={TAB_CONFIG.catalog.path}
-              onClick={(e) => handleLinkClick('catalog', e)}
-              className="hover:text-orange-600 transition-colors"
-            >
-              Món Ngon 3 Miền
-            </a>
-            <span className="text-stone-300">•</span>
+
             <button
+              type="button"
               onClick={() => setIsShareModalOpen(true)}
-              className="inline-flex items-center gap-1 text-orange-600 hover:text-orange-700 font-bold transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-orange-600 hover:text-orange-700 font-bold transition-colors cursor-pointer py-1 px-2 rounded-lg hover:bg-orange-50/60"
             >
               <Share2 className="w-3.5 h-3.5" />
               <span>Chia sẻ MXH</span>
@@ -83,8 +84,18 @@ export const Footer: React.FC<{
         </div>
 
         <div className="mt-8 pt-6 border-t border-stone-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-stone-400">
-          <p>
-            © {new Date().getFullYear()} Hôm Nay Ăn Gì. Nền tảng gợi ý món ngon và hỗ trợ đặt món trực tuyến qua ShopeeFood, GrabFood, BeFood.
+          <p className="flex items-center gap-1.5">
+            <span>© {new Date().getFullYear()} Hôm Nay Ăn Gì. Nền tảng gợi ý món ngon và hỗ trợ đặt món trực tuyến qua ShopeeFood, GrabFood, BeFood.</span>
+            {onOpenAdminInbox && (
+              <button
+                type="button"
+                onClick={onOpenAdminInbox}
+                title="Quản trị"
+                className="opacity-20 hover:opacity-100 transition-opacity p-0.5 cursor-pointer text-stone-400 hover:text-stone-700"
+              >
+                <Lock className="w-2.5 h-2.5" />
+              </button>
+            )}
           </p>
           <div className="flex items-center gap-1">
             <span>Thiết kế vì người yêu ẩm thực Việt Nam</span>

@@ -1,7 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { Search, UtensilsCrossed, Flame, ShoppingBag, ExternalLink, Filter } from 'lucide-react';
+import { Search, UtensilsCrossed, Flame, ShoppingBag, ExternalLink, Filter, MapPin, CalendarDays } from 'lucide-react';
 import { INITIAL_DISHES } from '../data/dishes';
 import { Dish, AffiliateConfig, UserLocation } from '../types';
+import { TabType } from '../utils/navigation';
 import { trackAndOpenAffiliateLink, formatVND } from '../utils/affiliate';
 
 interface DishCatalogProps {
@@ -10,6 +11,7 @@ interface DishCatalogProps {
   userLocation: UserLocation;
   onOpenLocationModal: (dishName?: string) => void;
   selectedDish?: Dish | null;
+  onNavigate?: (tab: TabType) => void;
 }
 
 export const DishCatalog: React.FC<DishCatalogProps> = ({
@@ -18,6 +20,7 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
   userLocation,
   onOpenLocationModal,
   selectedDish,
+  onNavigate,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -85,14 +88,31 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
 
   return (
     <div className="py-6 sm:py-8 max-w-7xl mx-auto px-4">
+      {/* Submenu tab switcher for Món Ngon */}
+      {onNavigate && (
+        <div className="flex justify-center mb-6">
+          <div className="inline-flex p-1 rounded-2xl bg-stone-100/90 border border-stone-200/80 shadow-2xs">
+            <button
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white shadow-xs text-stone-900 text-xs sm:text-sm font-bold border border-stone-200/60"
+            >
+              <UtensilsCrossed className="w-4 h-4 text-orange-600" />
+              <span>Tất Cả Món Ngon (160+)</span>
+            </button>
+            <button
+              onClick={() => onNavigate('planner')}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-stone-600 hover:text-stone-900 text-xs sm:text-sm font-semibold transition-all cursor-pointer hover:bg-stone-50"
+            >
+              <CalendarDays className="w-4 h-4 text-stone-500" />
+              <span>Lịch Ăn Tuần</span>
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto mb-8">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-bold mb-3">
-          <UtensilsCrossed className="w-3.5 h-3.5 text-orange-600" />
-          MENU MÓN NGON 3 MIỀN
-        </div>
         <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mb-2">
-          Thực Đơn Món Ngon - <span className="text-orange-600">160+ Đặc Sản Việt Nam Chuẩn Vị</span>
+          Thực Đơn Món Ngon 3 Miền - <span className="text-orange-600">160+ Đặc Sản Việt Nam Chuẩn Vị</span>
         </h1>
         <p className="text-sm sm:text-base text-stone-600">
           Tra cứu nhanh danh sách các món ngon 3 miền Bắc - Trung - Nam được yêu thích nhất kèm liên kết đặt món trực tiếp trên ShopeeFood, GrabFood & BeFood.
@@ -255,13 +275,13 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-1.5">
+                  <div className="grid grid-cols-4 gap-1.5">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         trackAndOpenAffiliateLink('shopeefood', dish, affiliateConfig, userLocation);
                       }}
-                      className="py-2 px-1.5 rounded-xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs cursor-pointer"
+                      className="py-2 px-1 rounded-xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs cursor-pointer"
                       title={`Chuyển qua ShopeeFood tìm quán ${dish.name} tại ${userLocation.district || userLocation.city}`}
                     >
                       <ShoppingBag className="w-3.5 h-3.5 shrink-0" />
@@ -273,7 +293,7 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
                         e.stopPropagation();
                         trackAndOpenAffiliateLink('grabfood', dish, affiliateConfig, userLocation);
                       }}
-                      className="py-2 px-1.5 rounded-xl bg-[#00B14F] hover:bg-[#009643] text-white font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs cursor-pointer"
+                      className="py-2 px-1 rounded-xl bg-[#00B14F] hover:bg-[#009643] text-white font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs cursor-pointer"
                       title={`Chuyển qua GrabFood tìm quán ${dish.name} tại ${userLocation.district || userLocation.city}`}
                     >
                       <ShoppingBag className="w-3.5 h-3.5 shrink-0" />
@@ -285,11 +305,23 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
                         e.stopPropagation();
                         trackAndOpenAffiliateLink('befood', dish, affiliateConfig, userLocation);
                       }}
-                      className="py-2 px-1.5 rounded-xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-900 font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs cursor-pointer"
+                      className="py-2 px-1 rounded-xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-900 font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs cursor-pointer"
                       title={`Chuyển qua BeFood tìm quán ${dish.name} tại ${userLocation.district || userLocation.city}`}
                     >
                       <ShoppingBag className="w-3.5 h-3.5 shrink-0" />
                       <span>BeFood</span>
+                    </button>
+
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        trackAndOpenAffiliateLink('googlemaps', dish, affiliateConfig, userLocation);
+                      }}
+                      className="py-2 px-1 rounded-xl bg-[#4285F4] hover:bg-[#3367D6] text-white font-extrabold text-[11px] flex items-center justify-center gap-1 transition-transform active:scale-95 shadow-xs cursor-pointer"
+                      title={`Mở Google Maps tìm quán ${dish.name} gần bạn`}
+                    >
+                      <MapPin className="w-3.5 h-3.5 shrink-0" />
+                      <span>Maps</span>
                     </button>
                   </div>
                 </div>

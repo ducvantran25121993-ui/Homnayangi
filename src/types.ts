@@ -86,3 +86,37 @@ export interface AISuggestion {
   calories: string;
   pairWith: string;
 }
+
+export interface ContactMessage {
+  id: string;
+  fullName: string;
+  email: string;
+  phone?: string;
+  subject: string;
+  message: string;
+  createdAt: string;
+  status: 'unread' | 'read' | 'replied';
+  notes?: string;
+}
+
+export type MealSlot = 'breakfast' | 'lunch' | 'dinner';
+
+export interface DayPlan {
+  dayId: 't2' | 't3' | 't4' | 't5' | 't6' | 't7' | 'cn';
+  dayName: string;
+  dayShort: string;
+  breakfast?: Dish | null;
+  lunch?: Dish | null;
+  dinner?: Dish | null;
+  note?: string;
+}
+
+export interface WeeklyMealPlan {
+  id: string;
+  name: string;
+  presetKey?: string;
+  weekKey?: string;
+  weekLabel?: string;
+  updatedAt: string;
+  days: Record<string, DayPlan>;
+}

@@ -153,8 +153,8 @@ export const DishDetailModal: React.FC<DishDetailModalProps> = ({
               </span>
             </div>
 
-            {/* 3 Food App Buttons side-by-side */}
-            <div className="grid grid-cols-3 gap-2 sm:gap-2.5">
+            {/* 4 Food App & Map Buttons side-by-side */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5">
               <button
                 onClick={() =>
                   trackAndOpenAffiliateLink('shopeefood', dish, affiliateConfig, userLocation)
@@ -186,6 +186,17 @@ export const DishDetailModal: React.FC<DishDetailModalProps> = ({
               >
                 <ShoppingBag className="w-4 h-4 shrink-0 text-stone-950" />
                 <span className="truncate">BeFood</span>
+              </button>
+
+              <button
+                onClick={() =>
+                  trackAndOpenAffiliateLink('googlemaps', dish, affiliateConfig, userLocation)
+                }
+                title={`Mở Google Maps tìm quán ${dish.name} gần bạn`}
+                className="py-3 px-1.5 sm:px-2 rounded-2xl bg-[#4285F4] hover:bg-[#3367D6] text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-sm cursor-pointer"
+              >
+                <MapPin className="w-4 h-4 shrink-0 text-white" />
+                <span className="truncate">Google Maps</span>
               </button>
             </div>
           </div>

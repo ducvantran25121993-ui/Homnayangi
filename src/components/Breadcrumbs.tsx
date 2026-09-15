@@ -33,6 +33,22 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ activeTab, onNavigate 
             <span>Trang chủ</span>
           </a>
         </li>
+        {activeTab === 'planner' && (
+          <li className="flex items-center gap-1.5">
+            <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+            <a
+              href="/mon-ngon"
+              onClick={(e) => {
+                if (e.ctrlKey || e.metaKey || e.button === 1) return;
+                e.preventDefault();
+                onNavigate('catalog');
+              }}
+              className="hover:text-orange-600 transition-colors"
+            >
+              Món Ngon
+            </a>
+          </li>
+        )}
         <li className="flex items-center gap-1.5">
           <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
           <span className="text-stone-800 font-semibold" aria-current="page">

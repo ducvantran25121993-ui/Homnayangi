@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <!-- 1. Trang Chủ / Tarot Ẩm Thực -->
+  <url>
+    <loc>https://www.angigio.com/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Hôm Nay Ăn Gì - Tarot Ẩm Thực Chiêm Tinh Món Ăn Chuẩn Vị</image:title>
+    </image:image>
+  </url>
+
+  <!-- 2. Vòng Quay Ăn Gì May Mắn -->
+  <url>
+    <loc>https://www.angigio.com/vong-quay</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Vòng Quay Ăn Gì Ngẫu Nhiên - Hôm Nay Ăn Gì</image:title>
+    </image:image>
+  </url>
+
+  <!-- 3. Trợ Lý AI Gợi Ý Món Ăn Thông Minh -->
+  <url>
+    <loc>https://www.angigio.com/ai-goi-y-mon-an</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Trợ Lý AI Gợi Ý Món Ăn Chuẩn Vị - Hôm Nay Ăn Gì</image:title>
+    </image:image>
+  </url>
+
+  <!-- 4. Thực Đơn Món Ngon 3 Miền -->
+  <url>
+    <loc>https://www.angigio.com/mon-ngon</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Thực Đơn Hơn 160 Món Ngon Việt Nam Chuẩn Vị 3 Miền</image:title>
+    </image:image>
+  </url>
+
+  <!-- 5. Trang Giới Thiệu & Sứ Mệnh Ẩm Thực -->
+  <url>
+    <loc>https://www.angigio.com/gioi-thieu</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Giới Thiệu Hôm Nay Ăn Gì - Nền Tảng Gợi Ý Ẩm Thực Hàng Đầu</image:title>
+    </image:image>
+  </url>
+
+  <!-- 6. Trang Liên Hệ & Hợp Tác -->
+  <url>
+    <loc>https://www.angigio.com/lien-he</loc>
+    <lastmod>2026-09-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Liên Hệ Hôm Nay Ăn Gì - Góp Ý Món Ăn &amp; Hợp Tác Truyền Thông</image:title>
+    </image:image>
+  </url>
+</urlset>
