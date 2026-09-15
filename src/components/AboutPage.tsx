@@ -21,57 +21,91 @@ interface AboutPageProps {
 
 export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
   return (
-    <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 text-stone-800">
+    <article className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 text-stone-800">
       {/* Hero Banner */}
       <header className="text-center mb-10 sm:mb-14">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100/70 text-orange-700 text-xs font-bold uppercase tracking-wider mb-4 border border-orange-200/60">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Về Chúng Tôi • Hôm Nay Ăn Gì</span>
         </div>
-        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-stone-900 tracking-tight leading-tight mb-4">
+        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-stone-900 tracking-tight leading-tight mb-4 max-w-4xl mx-auto">
           Nền Tảng Gợi Ý Ẩm Thực Thông Minh <br className="hidden sm:inline" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-amber-600 to-red-600">
             Hàng Đầu Cho Người Việt
           </span>
         </h1>
-        <p className="max-w-2xl mx-auto text-sm sm:text-base text-stone-600 leading-relaxed">
+        <p className="max-w-3xl mx-auto text-sm sm:text-base lg:text-lg text-stone-600 leading-relaxed">
           Chúng tôi ra đời để giải quyết dứt điểm câu hỏi nan giải mỗi ngày: <strong className="text-stone-900 font-bold">&quot;Hôm nay ăn gì?&quot;</strong>, mang đến nguồn cảm hứng vị giác bất tận cùng trải nghiệm đặt món nhanh gọn, tiện lợi nhất.
         </p>
       </header>
 
       {/* Main Story & Sứ mệnh */}
-      <div className="space-y-8">
-        <section className="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200/80 shadow-xs">
-          <div className="flex items-center gap-3 text-orange-600 font-extrabold text-lg sm:text-xl mb-4">
-            <img 
-              src="/logo.png" 
-              alt="Logo Hôm Nay Ăn Gì" 
-              className="w-11 h-11 object-contain drop-shadow-xs shrink-0" 
-            />
-            <h2>Câu Chuyện Khởi Nguồn & Sứ Mệnh</h2>
-          </div>
-          <div className="space-y-3.5 text-stone-600 leading-relaxed text-sm sm:text-base">
-            <p>
-              Mỗi ngày, hàng triệu bạn trẻ, giới văn phòng và các gia đình Việt Nam mất từ 15 đến 30 phút chỉ để suy nghĩ xem trưa nay hay tối nay ăn món gì. Sự chần chừ này không chỉ gây mất thời gian mà còn làm giảm đi niềm vui thưởng thức ẩm thực.
-            </p>
-            <p>
-              <strong>Hôm Nay Ăn Gì (Angigio.com)</strong> được phát triển nhằm biến việc chọn món từ một nỗi đắn đo mệt mỏi thành trải nghiệm giải trí kỳ thú, tràn đầy cảm xúc và đậm chất văn hóa Việt.
-            </p>
+      <div className="space-y-8 lg:space-y-10">
+        <section className="bg-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-stone-200/80 shadow-xs">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Story text */}
+            <div className="lg:col-span-7 xl:col-span-8 space-y-4">
+              <div className="flex items-center gap-3 text-orange-600 font-extrabold text-lg sm:text-2xl">
+                <img 
+                  src="/logo.png" 
+                  alt="Logo Hôm Nay Ăn Gì" 
+                  className="w-11 h-11 sm:w-12 sm:h-12 object-contain drop-shadow-xs shrink-0" 
+                />
+                <h2>Câu Chuyện Khởi Nguồn & Sứ Mệnh</h2>
+              </div>
+              <div className="space-y-3.5 text-stone-600 leading-relaxed text-sm sm:text-base">
+                <p>
+                  Mỗi ngày, hàng triệu bạn trẻ, giới văn phòng và các gia đình Việt Nam mất từ 15 đến 30 phút chỉ để suy nghĩ xem trưa nay hay tối nay ăn món gì. Sự chần chừ này không chỉ gây mất thời gian mà còn làm giảm đi niềm vui thưởng thức ẩm thực.
+                </p>
+                <p>
+                  <strong>Hôm Nay Ăn Gì (Angigio.com)</strong> được phát triển nhằm biến việc chọn món từ một nỗi đắn đo mệt mỏi thành trải nghiệm giải trí kỳ thú, tràn đầy cảm xúc và đậm chất văn hóa ẩm thực Việt Nam.
+                </p>
+                <p className="text-stone-500 text-xs sm:text-sm">
+                  Dù bạn đang thèm món nước thanh ngọt, cơm trưa chắc bụng, món cay nồng đậm vị hay ăn kiêng healthy nhẹ nhàng, nền tảng luôn có giải pháp tức thì giúp bạn quyết định chỉ trong 3 giây.
+                </p>
+              </div>
+            </div>
+
+            {/* Highlights stats badge grid */}
+            <div className="lg:col-span-5 xl:col-span-4 bg-orange-50/60 border border-orange-200/60 rounded-2xl p-5 sm:p-6">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-orange-800 mb-4 flex items-center gap-1.5">
+                <Heart className="w-4 h-4 text-orange-600 fill-orange-500" />
+                <span>Giá Trị Tinh Hoa Nền Tảng</span>
+              </h3>
+              <div className="grid grid-cols-2 gap-3.5">
+                <div className="bg-white p-3.5 rounded-xl border border-orange-100 shadow-2xs">
+                  <div className="text-xl sm:text-2xl font-black text-orange-600">160+</div>
+                  <div className="text-xs text-stone-600 font-medium mt-0.5">Món ngon 3 miền</div>
+                </div>
+                <div className="bg-white p-3.5 rounded-xl border border-orange-100 shadow-2xs">
+                  <div className="text-xl sm:text-2xl font-black text-amber-600">4 Mode</div>
+                  <div className="text-xs text-stone-600 font-medium mt-0.5">Gợi ý đa trải nghiệm</div>
+                </div>
+                <div className="bg-white p-3.5 rounded-xl border border-orange-100 shadow-2xs">
+                  <div className="text-xl sm:text-2xl font-black text-emerald-600">100%</div>
+                  <div className="text-xs text-stone-600 font-medium mt-0.5">Miễn phí trọn đời</div>
+                </div>
+                <div className="bg-white p-3.5 rounded-xl border border-orange-100 shadow-2xs">
+                  <div className="text-xl sm:text-2xl font-black text-red-600">3 Apps</div>
+                  <div className="text-xs text-stone-600 font-medium mt-0.5">Grab, Shopee, Be</div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
         {/* 4 Trụ Cột Tính Năng Đột Phá */}
         <section>
-          <div className="text-center mb-6">
-            <h2 className="text-xl sm:text-2xl font-black text-stone-900">
+          <div className="text-center mb-6 sm:mb-8">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-stone-900">
               Công Nghệ Độc Đáo Giúp Bạn Quyết Định Trong Tích Tắc
             </h2>
-            <p className="text-xs sm:text-sm text-stone-500 mt-1">
+            <p className="text-xs sm:text-sm text-stone-500 mt-1.5 max-w-2xl mx-auto">
               Sự kết hợp hoàn hảo giữa chiêm tinh học, xác suất thống kê và trí tuệ nhân tạo
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {/* 1. Tarot */}
             <div className="bg-white p-5 sm:p-6 rounded-3xl border border-stone-200/80 shadow-xs flex flex-col justify-between hover:border-purple-300 transition-all group">
               <div>
@@ -167,45 +201,45 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
         </section>
 
         {/* Cam Kết & Giá Trị Cốt Lõi */}
-        <section className="bg-gradient-to-br from-stone-900 to-stone-800 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
-          <div className="flex items-center gap-3 font-extrabold text-lg sm:text-xl text-orange-400 mb-4">
-            <ShieldCheck className="w-6 h-6" />
+        <section className="bg-gradient-to-br from-stone-900 to-stone-800 text-white rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xl">
+          <div className="flex items-center gap-3 font-extrabold text-lg sm:text-2xl text-orange-400 mb-6">
+            <ShieldCheck className="w-6 h-6 sm:w-7 sm:h-7" />
             <h2>Cam Kết Của Chúng Tôi</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs sm:text-sm text-stone-300">
-            <div className="p-4 rounded-2xl bg-stone-800/80 border border-stone-700/60">
-              <h4 className="font-bold text-white mb-1.5 flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 text-xs sm:text-sm text-stone-300">
+            <div className="p-5 rounded-2xl bg-stone-800/80 border border-stone-700/60">
+              <h4 className="font-bold text-white mb-2 flex items-center gap-2 text-sm sm:text-base">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span>100% Miễn Phí</span>
               </h4>
-              <p>Mọi tính năng bốc bài Tarot, quay vòng quay, tư vấn AI đều hoàn toàn miễn phí cho tất cả người dùng.</p>
+              <p className="leading-relaxed">Mọi tính năng bốc bài Tarot, quay vòng quay, tư vấn AI đều hoàn toàn miễn phí cho tất cả người dùng.</p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-stone-800/80 border border-stone-700/60">
-              <h4 className="font-bold text-white mb-1.5 flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <div className="p-5 rounded-2xl bg-stone-800/80 border border-stone-700/60">
+              <h4 className="font-bold text-white mb-2 flex items-center gap-2 text-sm sm:text-base">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span>Khách Quan & Đa Dạng</span>
               </h4>
-              <p>Không thiên vị bất kỳ quán ăn nào, thuật toán phân phối đều dựa trên sở thích và vị trí thực tế của bạn.</p>
+              <p className="leading-relaxed">Không thiên vị bất kỳ quán ăn nào, thuật toán phân phối đều dựa trên sở thích và vị trí thực tế của bạn.</p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-stone-800/80 border border-stone-700/60">
-              <h4 className="font-bold text-white mb-1.5 flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+            <div className="p-5 rounded-2xl bg-stone-800/80 border border-stone-700/60">
+              <h4 className="font-bold text-white mb-2 flex items-center gap-2 text-sm sm:text-base">
+                <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span>Bảo Mật Quyền Riêng Tư</span>
               </h4>
-              <p>Không lưu trữ dữ liệu cá nhân nhạy cảm; vị trí địa lý chỉ dùng phục vụ tìm kiếm quán ngon gần bạn nhất.</p>
+              <p className="leading-relaxed">Không lưu trữ dữ liệu cá nhân nhạy cảm; vị trí địa lý chỉ dùng phục vụ tìm kiếm quán ngon gần bạn nhất.</p>
             </div>
           </div>
         </section>
 
         {/* Thông tin liên hệ nhanh & Kêu gọi hành động */}
-        <section className="bg-orange-50 border border-orange-200/80 rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 text-center sm:text-left">
-          <div>
-            <h3 className="font-black text-stone-900 text-lg sm:text-xl mb-1.5">
+        <section className="bg-gradient-to-r from-orange-50 via-amber-50 to-orange-50 border border-orange-200/80 rounded-3xl p-6 sm:p-8 lg:p-10 flex flex-col lg:flex-row items-center justify-between gap-6 text-center lg:text-left">
+          <div className="max-w-3xl">
+            <h3 className="font-black text-stone-900 text-lg sm:text-2xl mb-2">
               Bạn có đóng góp ý kiến hoặc muốn hợp tác?
             </h3>
-            <p className="text-xs sm:text-sm text-stone-600 max-w-xl">
+            <p className="text-xs sm:text-sm lg:text-base text-stone-600 leading-relaxed">
               Chúng tôi luôn chào đón các đề xuất món ăn mới, đánh giá trải nghiệm hoặc hợp tác truyền thông cùng các thương hiệu ẩm thực tại Việt Nam.
             </p>
           </div>
@@ -217,7 +251,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
               onNavigate('contact');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="px-6 py-3 rounded-2xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm shadow-md transition-all shrink-0 text-center"
+            className="px-8 py-3.5 rounded-2xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm sm:text-base shadow-md hover:shadow-lg transition-all shrink-0 text-center cursor-pointer"
           >
             Liên Hệ Với Chúng Tôi
           </a>
