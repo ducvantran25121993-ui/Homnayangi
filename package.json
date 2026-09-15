@@ -9,6 +9,7 @@
     "start": "node dist/server.cjs",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
+    "optimize:images": "node scripts/optimize-image.cjs",
     "lint": "tsc --noEmit"
   },
   "dependencies": {
