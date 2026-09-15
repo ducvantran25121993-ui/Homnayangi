@@ -15,7 +15,13 @@ import { OrderToast } from './components/OrderToast';
 import { Footer } from './components/Footer';
 import { Dish, AffiliateConfig, ClickRecord, UserLocation } from './types';
 import { DEFAULT_AFFILIATE_CONFIG } from './utils/affiliate';
-import { getStoredUserLocation, saveUserLocation } from './utils/location';
+import {
+  getStoredUserLocation,
+  saveUserLocation,
+  autoDetectUserLocation,
+  formatLocationDisplay,
+  isAutoDetectLocationEnabled,
+} from './utils/location';
 import { getTabFromUrl, updateTabSEO, TAB_CONFIG, TabType } from './utils/navigation';
 import { Breadcrumbs } from './components/Breadcrumbs';
 import { SeoContentFaq } from './components/SeoContentFaq';
@@ -30,6 +36,7 @@ export default function App() {
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [locationTargetDish, setLocationTargetDish] = useState<string | undefined>(undefined);
   const [isAdminInboxOpen, setIsAdminInboxOpen] = useState(false);
+  const [gpsToast, setGpsToast] = useState<{ message: string; city: string; district?: string } | null>(null);
 
   // Navigate tab with clean URL & History API
   const handleNavigateTab = useCallback((newTab: TabType) => {
@@ -161,6 +168,36 @@ export default function App() {
     return () => {
       window.removeEventListener('user-location-updated', handleLocationUpdated);
       window.removeEventListener('open-location-modal', handleOpenLocationModal);
+    };
+  }, []);
+
+  // Tự động định vị vị trí thực tế của người dùng khi truy cập app
+  useEffect(() => {
+    let isCancelled = false;
+    const triggerAutoDetect = async () => {
+      if (!isAutoDetectLocationEnabled()) return;
+      try {
+        const detected = await autoDetectUserLocation();
+        if (!isCancelled && detected) {
+          setUserLocation(detected);
+          setGpsToast({
+            message: 'Đã tự động xác định vị trí của bạn',
+            city: detected.city,
+            district: detected.district,
+          });
+          setTimeout(() => {
+            if (!isCancelled) setGpsToast(null);
+          }, 4500);
+        }
+      } catch {
+        // Silent fallback
+      }
+    };
+
+    const timer = setTimeout(triggerAutoDetect, 900);
+    return () => {
+      isCancelled = true;
+      clearTimeout(timer);
     };
   }, []);
 
@@ -309,6 +346,44 @@ export default function App() {
         isOpen={isAdminInboxOpen}
         onClose={() => setIsAdminInboxOpen(false)}
       />
+
+      {/* GPS Auto-Detection Toast Notification */}
+      {gpsToast && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-50 max-w-sm bg-stone-900/95 backdrop-blur-md text-white p-3 sm:p-3.5 rounded-2xl shadow-2xl border border-stone-700/80 flex items-center justify-between gap-3 animate-fade-in text-xs"
+        >
+          <div className="flex items-center gap-2.5 truncate">
+            <div className="w-8 h-8 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center shrink-0">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+            </div>
+            <div className="truncate text-left">
+              <div className="text-[10px] uppercase font-bold text-emerald-400 tracking-wider">
+                Định vị GPS tự động
+              </div>
+              <div className="font-extrabold text-stone-100 truncate">
+                {gpsToast.district ? `${gpsToast.district}, ` : ''}{gpsToast.city}
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-1.5 shrink-0">
+            <button
+              onClick={() => setIsLocationModalOpen(true)}
+              className="text-[11px] font-bold text-orange-400 hover:text-orange-300 underline cursor-pointer px-1 py-0.5"
+            >
+              Đổi
+            </button>
+            <button
+              onClick={() => setGpsToast(null)}
+              className="text-stone-400 hover:text-stone-200 p-1 rounded-lg hover:bg-stone-800 transition-colors cursor-pointer"
+              title="Đóng thông báo"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <Footer

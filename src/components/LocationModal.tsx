@@ -17,6 +17,8 @@ import {
   CityPreset,
   formatLocationDisplay,
   getDistrictCoordinates,
+  isAutoDetectLocationEnabled,
+  setAutoDetectLocationEnabled,
 } from '../utils/location';
 
 interface LocationModalProps {
@@ -67,6 +69,12 @@ export const LocationModal: React.FC<LocationModalProps> = ({
   const [isDetectingGps, setIsDetectingGps] = useState(false);
   const [gpsError, setGpsError] = useState<string | null>(null);
   const [gpsSuccess, setGpsSuccess] = useState<string | null>(null);
+  const [autoDetectChecked, setAutoDetectChecked] = useState<boolean>(isAutoDetectLocationEnabled);
+
+  const handleToggleAutoDetect = (enabled: boolean) => {
+    setAutoDetectChecked(enabled);
+    setAutoDetectLocationEnabled(enabled);
+  };
 
   if (!isOpen) return null;
 
@@ -222,6 +230,29 @@ export const LocationModal: React.FC<LocationModalProps> = ({
                 <span>{gpsError}</span>
               </div>
             )}
+
+            {/* Auto-detect setting switch */}
+            <label className="mt-2.5 flex items-center justify-between p-3 rounded-2xl bg-emerald-50/60 border border-emerald-200/80 cursor-pointer hover:bg-emerald-100/50 transition-colors select-none">
+              <div className="flex items-center gap-2.5">
+                <div className="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                  <Sparkles className="w-3.5 h-3.5" />
+                </div>
+                <div>
+                  <span className="text-xs font-bold text-stone-900 block leading-tight">
+                    Tự động định vị khi mở ứng dụng
+                  </span>
+                  <span className="text-[10px] text-stone-500">
+                    Ứng dụng sẽ ưu tiên tìm quán gần tọa độ GPS thực tế của bạn
+                  </span>
+                </div>
+              </div>
+              <input
+                type="checkbox"
+                checked={autoDetectChecked}
+                onChange={(e) => handleToggleAutoDetect(e.target.checked)}
+                className="w-4 h-4 accent-emerald-600 rounded cursor-pointer ml-3 shrink-0"
+              />
+            </label>
           </div>
 
           <div className="relative flex py-1 items-center">

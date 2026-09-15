@@ -302,6 +302,61 @@ export function findClosestCity(latitude: number, longitude: number): CityPreset
   return closest;
 }
 
+// Find closest district within a city by exact geometric distance
+export function findClosestDistrict(
+  latitude: number,
+  longitude: number,
+  cityIdOrKey: string
+): string | undefined {
+  let cityKey = cityIdOrKey.toLowerCase();
+  if (cityKey.includes('hcm') || cityKey.includes('ho-chi-minh') || cityKey.includes('hồ chí minh')) cityKey = 'hcm';
+  else if (cityKey.includes('hn') || cityKey.includes('ha-noi') || cityKey.includes('hà nội')) cityKey = 'hn';
+  else if (cityKey.includes('dn') || cityKey.includes('da-nang') || cityKey.includes('đà nẵng')) cityKey = 'dn';
+  else if (cityKey.includes('ct') || cityKey.includes('can-tho') || cityKey.includes('cần thơ')) cityKey = 'ct';
+  else if (cityKey.includes('hp') || cityKey.includes('hai-phong') || cityKey.includes('hải phòng')) cityKey = 'hp';
+  else if (cityKey.includes('bd') || cityKey.includes('binh-duong') || cityKey.includes('bình dương')) cityKey = 'bd';
+  else if (cityKey.includes('dnai') || cityKey.includes('dong-nai') || cityKey.includes('đồng nai') || cityKey.includes('biên hòa')) cityKey = 'dnai';
+  else if (cityKey.includes('vt') || cityKey.includes('vung-tau') || cityKey.includes('vũng tàu')) cityKey = 'vt';
+  else if (cityKey.includes('nt') || cityKey.includes('nha-trang') || cityKey.includes('khánh hòa')) cityKey = 'nt';
+  else if (cityKey.includes('hue') || cityKey.includes('huế')) cityKey = 'hue';
+
+  const cityDistricts = DISTRICT_COORDINATES[cityKey];
+  if (!cityDistricts) return undefined;
+
+  let closestDistrict: string | undefined = undefined;
+  let minDistance = Infinity;
+
+  for (const [dName, coords] of Object.entries(cityDistricts)) {
+    const dist = calculateDistance(latitude, longitude, coords.latitude, coords.longitude);
+    if (dist < minDistance) {
+      minDistance = dist;
+      closestDistrict = dName;
+    }
+  }
+
+  return closestDistrict;
+}
+
+export const AUTO_DETECT_LOCATION_KEY = 'homnayangi_auto_detect_gps_v1';
+
+export function isAutoDetectLocationEnabled(): boolean {
+  try {
+    const val = localStorage.getItem(AUTO_DETECT_LOCATION_KEY);
+    // Defaults to true so users get automatic location detection
+    return val !== 'false';
+  } catch {
+    return true;
+  }
+}
+
+export function setAutoDetectLocationEnabled(enabled: boolean): void {
+  try {
+    localStorage.setItem(AUTO_DETECT_LOCATION_KEY, enabled ? 'true' : 'false');
+  } catch {
+    // ignore
+  }
+}
+
 export function getStoredUserLocation(): UserLocation {
   try {
     const raw = localStorage.getItem(LOCATION_STORAGE_KEY);
@@ -328,21 +383,54 @@ export function saveUserLocation(loc: UserLocation): void {
 }
 
 /**
- * Reverse geocode coordinates using OpenStreetMap Nominatim with graceful fallback
+ * Reverse geocode coordinates using BigDataCloud / OpenStreetMap with robust geometric fallback
  */
 async function reverseGeocodeCoordinates(
   lat: number,
   lng: number
 ): Promise<{ address?: string; district?: string; city?: string; citySlug?: string }> {
+  const closestCity = findClosestCity(lat, lng);
+  const closestDistrict = findClosestDistrict(lat, lng, closestCity.id) || closestCity.districts[0];
+
+  // Try fast reverse geocoding API (BigDataCloud)
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 2500);
+    const timeout = setTimeout(() => controller.abort(), 2000);
+
+    const bdcRes = await fetch(
+      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=vi`,
+      { signal: controller.signal }
+    );
+    clearTimeout(timeout);
+
+    if (bdcRes.ok) {
+      const data = await bdcRes.json();
+      const detectedDistrict = data.locality || closestDistrict;
+      const detectedCity = data.city || data.principalSubdivision || closestCity.name;
+      return {
+        address: `${detectedDistrict}, ${detectedCity}`,
+        district: detectedDistrict,
+        city: closestCity.name,
+        citySlug: closestCity.citySlug,
+      };
+    }
+  } catch {
+    // continue to fallback
+  }
+
+  // Fallback to OpenStreetMap Nominatim
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 2000);
 
     const res = await fetch(
       `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=14&addressdetails=1`,
       {
         signal: controller.signal,
-        headers: { 'Accept-Language': 'vi,en;q=0.8' },
+        headers: {
+          'Accept-Language': 'vi,en;q=0.8',
+          'User-Agent': 'HomNayAnGi-App/1.0',
+        },
       }
     );
     clearTimeout(timeout);
@@ -355,36 +443,66 @@ async function reverseGeocodeCoordinates(
         addr.city_district ||
         addr.district ||
         addr.quarter ||
-        addr.county;
+        addr.county ||
+        closestDistrict;
       const city =
         addr.city ||
         addr.state ||
         addr.province ||
-        addr.town;
+        addr.town ||
+        closestCity.name;
 
-      let addressParts = [district, city].filter(Boolean);
-      let address = addressParts.length > 0 ? addressParts.join(', ') : data.display_name;
-
-      const matchedCity = findClosestCity(lat, lng);
       return {
-        address: address || `${matchedCity.name}`,
-        district: district || matchedCity.districts[0],
-        city: matchedCity.name,
-        citySlug: matchedCity.citySlug,
+        address: `${district}, ${closestCity.name}`,
+        district,
+        city: closestCity.name,
+        citySlug: closestCity.citySlug,
       };
     }
   } catch {
-    // Network or abort timeout
+    // Fallback to geometric closest
   }
 
-  // Fallback to geometric closest city
-  const closestCity = findClosestCity(lat, lng);
   return {
-    address: `${closestCity.name}`,
-    district: closestCity.districts[0],
+    address: `${closestDistrict}, ${closestCity.name}`,
+    district: closestDistrict,
     city: closestCity.name,
     citySlug: closestCity.citySlug,
   };
+}
+
+/**
+ * Automatically attempts to detect user location on app startup or when enabled.
+ * If permission was previously granted, it silent-resolves immediately.
+ * If permission is prompt and auto-detect is enabled, it requests smoothly.
+ */
+export async function autoDetectUserLocation(): Promise<UserLocation | null> {
+  if (typeof window === 'undefined' || !navigator.geolocation) {
+    return null;
+  }
+
+  if (!isAutoDetectLocationEnabled()) {
+    return null;
+  }
+
+  try {
+    // Check permission status if browser supports Permissions API
+    if (navigator.permissions && navigator.permissions.query) {
+      try {
+        const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
+        if (permissionStatus.state === 'denied') {
+          return null;
+        }
+      } catch {
+        // Permissions API query not supported in all browsers
+      }
+    }
+
+    const detected = await detectGpsLocation();
+    return detected;
+  } catch {
+    return null;
+  }
 }
 
 /**

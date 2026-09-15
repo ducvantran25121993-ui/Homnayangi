@@ -293,12 +293,17 @@ export const Navbar: React.FC<NavbarProps> = ({
             {onOpenLocationModal && (
               <button
                 onClick={onOpenLocationModal}
-                title="Vị trí của bạn"
-                className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-stone-200/80 bg-white hover:bg-stone-50 text-stone-700 transition-colors text-xs font-medium cursor-pointer shadow-2xs"
+                title={`Vị trí: ${userLocation?.district ? `${userLocation.district}, ` : ''}${userLocation?.city || 'Việt Nam'}${userLocation?.source === 'gps' ? ' (Định vị GPS tự động)' : ''}`}
+                className="flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-full border border-stone-200/80 bg-white hover:bg-stone-50 text-stone-700 transition-colors text-xs font-medium cursor-pointer shadow-2xs group"
               >
-                <MapPin className="w-3.5 h-3.5 text-orange-500" />
-                <span className="max-w-[110px] truncate">
-                  {userLocation?.city || 'Vị trí'}
+                <div className="relative shrink-0">
+                  <MapPin className="w-3.5 h-3.5 text-orange-500 group-hover:scale-110 transition-transform" />
+                  {userLocation?.source === 'gps' && (
+                    <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-emerald-500 ring-2 ring-white animate-pulse" />
+                  )}
+                </div>
+                <span className="max-w-[80px] sm:max-w-[120px] truncate font-semibold text-stone-800">
+                  {userLocation?.district || userLocation?.city || 'Vị trí'}
                 </span>
               </button>
             )}
