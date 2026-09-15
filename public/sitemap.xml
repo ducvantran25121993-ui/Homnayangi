@@ -17,7 +17,7 @@
   <!-- 2. Vòng Quay Ăn Gì May Mắn -->
   <url>
     <loc>https://www.angigio.com/vong-quay</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -26,10 +26,22 @@
     </image:image>
   </url>
 
-  <!-- 3. Trợ Lý AI Gợi Ý Món Ăn Thông Minh -->
+  <!-- 3. Lịch Ăn Theo Tuần - Thực Đơn 7 Ngày Chuẩn Vị -->
+  <url>
+    <loc>https://www.angigio.com/lich-an-theo-tuan</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Lịch Ăn Theo Tuần - Thực Đơn 7 Ngày Đủ Dinh Dưỡng Chuẩn Vị 3 Miền</image:title>
+    </image:image>
+  </url>
+
+  <!-- 4. Trợ Lý AI Gợi Ý Món Ăn Thông Minh -->
   <url>
     <loc>https://www.angigio.com/ai-goi-y-mon-an</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -38,22 +50,22 @@
     </image:image>
   </url>
 
-  <!-- 4. Thực Đơn Món Ngon 3 Miền -->
+  <!-- 5. Thực Đơn Món Ngon 3 Miền -->
   <url>
     <loc>https://www.angigio.com/mon-ngon</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.85</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
       <image:title>Thực Đơn Hơn 160 Món Ngon Việt Nam Chuẩn Vị 3 Miền</image:title>
     </image:image>
   </url>
 
-  <!-- 5. Trang Giới Thiệu & Sứ Mệnh Ẩm Thực -->
+  <!-- 6. Trang Giới Thiệu & Sứ Mệnh Ẩm Thực -->
   <url>
     <loc>https://www.angigio.com/gioi-thieu</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -62,10 +74,10 @@
     </image:image>
   </url>
 
-  <!-- 6. Trang Liên Hệ & Hợp Tác -->
+  <!-- 7. Trang Liên Hệ & Hợp Tác -->
   <url>
     <loc>https://www.angigio.com/lien-he</loc>
-    <lastmod>2026-09-13</lastmod>
+    <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>

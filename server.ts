@@ -463,6 +463,11 @@ Yêu cầu trả về đúng định dạng JSON:
 });
 
 async function startServer() {
+  // 301 Permanent Redirect for SEO: migrate old /len-lich-an URL to new keyword-optimized /lich-an-theo-tuan
+  app.get(["/len-lich-an", "/len-lich-an/"], (_req, res) => {
+    res.redirect(301, "/lich-an-theo-tuan");
+  });
+
   // Static SEO routes for Googlebot and search crawlers
   app.get("/robots.txt", (_req, res) => {
     res.type("text/plain");

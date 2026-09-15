@@ -30,11 +30,13 @@ export const TAB_CONFIG: Record<TabType, TabMeta> = {
     ogImageAlt: 'Vòng Quay Ăn Gì - Quyết Định Bữa Ăn Nhanh 3 Giây',
   },
   planner: {
-    path: '/len-lich-an',
-    title: 'Lịch Ăn Tuần - Lên Thực Đơn 7 Ngày Chuẩn Vị & Tiết Kiệm | Hôm Nay Ăn Gì',
-    description: 'Lên lịch ăn tuần thông minh từ Thứ 2 đến Chủ Nhật: Tự động chống trùng món, tính calo & chi phí, đổi món linh hoạt, gợi ý bữa sáng trưa tối chuẩn ngon.',
+    path: '/lich-an-theo-tuan',
+    title: 'Lịch Ăn Theo Tuần - Thực Đơn 7 Ngày Chuẩn Vị & Tiết Kiệm | Hôm Nay Ăn Gì',
+    description: 'Lịch ăn theo tuần thông minh từ Thứ 2 đến Chủ Nhật: Tự động chống trùng món, tính calo & chi phí, đổi món linh hoạt, gợi ý bữa sáng trưa tối chuẩn ngon.',
     label: 'Lịch Ăn Tuần',
     shortLabel: 'Lịch Ăn Tuần',
+    keywords: 'lịch ăn theo tuần, lịch ăn tuần, thực đơn theo tuần, thực đơn 7 ngày, lên lịch ăn, thực đơn gia đình theo tuần, thực đơn giảm cân theo tuần, ăn gì hôm nay',
+    ogImageAlt: 'Lịch Ăn Theo Tuần - Thực Đơn 7 Ngày Chuẩn Vị',
   },
   ai: {
     path: '/ai-goi-y-mon-an',
@@ -75,7 +77,7 @@ export function getTabFromUrl(): TabType {
   const pathname = window.location.pathname.replace(/\/$/, '') || '/';
   
   if (pathname === '/vong-quay') return 'wheel';
-  if (pathname === '/len-lich-an' || pathname === '/lich-an' || pathname === '/thuc-don-tuan' || pathname === '/meal-planner') return 'planner';
+  if (pathname === '/lich-an-theo-tuan' || pathname === '/len-lich-an' || pathname === '/lich-an' || pathname === '/thuc-don-tuan' || pathname === '/meal-planner') return 'planner';
   if (pathname === '/ai-goi-y-mon-an') return 'ai';
   if (pathname === '/mon-ngon') return 'catalog';
   if (pathname === '/gioi-thieu' || pathname === '/about') return 'about';
@@ -85,7 +87,7 @@ export function getTabFromUrl(): TabType {
     const params = new URLSearchParams(window.location.search);
     const tabParam = params.get('tab');
     if (tabParam === 'vong-quay' || tabParam === 'wheel') return 'wheel';
-    if (tabParam === 'len-lich-an' || tabParam === 'planner' || tabParam === 'lich-an' || tabParam === 'thuc-don-tuan') return 'planner';
+    if (tabParam === 'lich-an-theo-tuan' || tabParam === 'len-lich-an' || tabParam === 'planner' || tabParam === 'lich-an' || tabParam === 'thuc-don-tuan') return 'planner';
     if (tabParam === 'ai-goi-y-mon-an' || tabParam === 'ai' || tabParam === 'tro-ly-ai' || tabParam === 'goi-y-mon') return 'ai';
     if (tabParam === 'mon-ngon' || tabParam === 'catalog') return 'catalog';
     if (tabParam === 'gioi-thieu' || tabParam === 'about') return 'about';

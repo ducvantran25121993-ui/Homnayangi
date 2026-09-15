@@ -28,7 +28,16 @@ import { SeoContentFaq } from './components/SeoContentFaq';
 import { OfflineIndicator } from './components/OfflineIndicator';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<TabType>(getTabFromUrl);
+  const [activeTab, setActiveTab] = useState<TabType>(() => {
+    const tab = getTabFromUrl();
+    if (typeof window !== 'undefined') {
+      const pathname = window.location.pathname.replace(/\/$/, '') || '/';
+      if (pathname === '/len-lich-an' || pathname === '/lich-an' || pathname === '/thuc-don-tuan' || pathname === '/meal-planner') {
+        window.history.replaceState({ tab: 'planner' }, '', '/lich-an-theo-tuan');
+      }
+    }
+    return tab;
+  });
   const [affiliateConfig, setAffiliateConfig] = useState<AffiliateConfig>(DEFAULT_AFFILIATE_CONFIG);
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
   const [isAffiliateModalOpen, setIsAffiliateModalOpen] = useState(false);
