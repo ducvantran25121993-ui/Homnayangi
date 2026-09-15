@@ -135,9 +135,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             role="img"
             aria-label="Logo thương hiệu Hôm Nay Ăn Gì"
           >
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-amber-50/90 border border-amber-200/80 flex items-center justify-center p-0.5 shadow-sm shadow-orange-500/15 group-hover:scale-105 transition-transform duration-200 overflow-hidden shrink-0">
-              <img src="/logo.svg" alt="Logo Hôm Nay Ăn Gì" className="w-full h-full object-contain" />
-            </div>
+            <img 
+              src="/logo.png" 
+              alt="Logo Hôm Nay Ăn Gì" 
+              className="w-10 h-10 sm:w-11 sm:h-11 object-contain drop-shadow-xs group-hover:scale-105 transition-transform duration-200 shrink-0" 
+            />
             <div className="flex flex-col">
               <span className="font-extrabold text-base sm:text-xl tracking-tight text-stone-900 leading-tight">
                 Hôm Nay <span className="text-orange-600">Ăn Gì?</span>

@@ -35,9 +35,11 @@ export const Footer: React.FC<{
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
           
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-amber-50/90 border border-amber-200/80 flex items-center justify-center p-0.5 shadow-xs overflow-hidden shrink-0">
-              <img src="/logo.svg" alt="Logo Hôm Nay Ăn Gì" className="w-full h-full object-contain" />
-            </div>
+            <img 
+              src="/logo.png" 
+              alt="Logo Hôm Nay Ăn Gì" 
+              className="w-11 h-11 object-contain drop-shadow-xs shrink-0" 
+            />
             <div>
               <div className="font-extrabold text-stone-900 text-sm">
                 Hôm Nay Ăn Gì? • Smart Food Decider

@@ -1,4 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+const fs = require('fs');
+const { Resvg } = require('@resvg/resvg-js');
+
+// Dimension: 512 x 512
+// Question Mark & Plate Emblem
+// Plate center: (256, 218), Radius: 104
+// Question mark wraps from top-left, around top, right, down to stem at (256, 404)
+// Bottom Dot: Center (256, 460), Radius: 26
+
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
   <defs>
     <!-- Metallic 3D Gold / Copper Gradients -->
     <linearGradient id="goldRibbon" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -244,4 +253,13 @@
     <circle cx="256" cy="460" r="24.5" fill="none" stroke="url(#specularGlint)" stroke-width="1.8" opacity="0.85" />
     <circle cx="251" cy="454" r="16" fill="url(#specularGlint)" opacity="0.45" />
   </g>
-</svg>
+</svg>`;
+
+fs.writeFileSync('public/logo.svg', svg.trim());
+fs.writeFileSync('public/icon.svg', svg.trim());
+
+// Render ultra high-res 1024px PNG with antialiasing
+const resvg = new Resvg(svg, { fitTo: { mode: "width", value: 1024 } });
+const pngBuffer = resvg.render().asPng();
+fs.writeFileSync('public/logo.png', pngBuffer);
+console.log("Master logo.png rendered at 1024x1024, size:", pngBuffer.length);
