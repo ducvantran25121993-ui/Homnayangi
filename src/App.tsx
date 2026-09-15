@@ -19,6 +19,7 @@ import { getStoredUserLocation, saveUserLocation } from './utils/location';
 import { getTabFromUrl, updateTabSEO, TAB_CONFIG, TabType } from './utils/navigation';
 import { Breadcrumbs } from './components/Breadcrumbs';
 import { SeoContentFaq } from './components/SeoContentFaq';
+import { OfflineIndicator } from './components/OfflineIndicator';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>(getTabFromUrl);
@@ -287,6 +288,9 @@ export default function App() {
         targetDishName={locationTargetDish}
         pendingDishName={locationTargetDish}
       />
+
+      {/* Offline Status Connectivity Banner */}
+      <OfflineIndicator />
 
       {/* Order Toast */}
       <OrderToast />

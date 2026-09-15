@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { UserLocation } from '../types';
 import { TAB_CONFIG, TabType } from '../utils/navigation';
 import { ShareModal } from './ShareModal';
+import { PWAInstallButton } from './PWAInstallButton';
 
 interface NavbarProps {
   activeTab: TabType;
@@ -299,6 +300,9 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </span>
               </button>
             )}
+
+            {/* PWA Install App Button */}
+            <PWAInstallButton variant="navbar" />
 
             <button
               onClick={handleOpenShare}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { UtensilsCrossed, Heart, Share2, Info, Mail, Lock } from 'lucide-react';
 import { TabType } from '../utils/navigation';
 import { ShareModal } from './ShareModal';
+import { PWAInstallButton } from './PWAInstallButton';
 
 export const Footer: React.FC<{
   onOpenAffiliateModal: () => void;
@@ -68,6 +69,10 @@ export const Footer: React.FC<{
               <Mail className="w-3.5 h-3.5 text-stone-500" />
               <span>Liên Hệ</span>
             </a>
+
+            <span className="text-stone-300">•</span>
+
+            <PWAInstallButton variant="footer" />
 
             <span className="text-stone-300">•</span>
 
