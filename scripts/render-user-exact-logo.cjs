@@ -1,4 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 560" width="100%" height="100%">
+const fs = require('fs');
+const path = require('path');
+const { Resvg } = require('@resvg/resvg-js');
+const sharp = require('sharp');
+
+// Create the exact SVG matching user's image_9d81f281-removebg-preview.png:
+// 1. Warm orange-gold metallic foil gradient
+// 2. Exact spiral paths forming the question mark
+// 3. Central disc with transparent cut-out spoon and fork with white outlines
+// 4. Floating round dot at bottom
+
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 560" width="100%" height="100%">
   <defs>
     <!-- Rich warm orange-gold metallic gradient matching user's image -->
     <linearGradient id="userGold" x1="10%" y1="0%" x2="90%" y2="100%">
@@ -123,4 +134,47 @@
     <!-- Centered at (250, 482), radius 22 -->
     <circle cx="250" cy="482" r="22" fill="url(#discGold)" />
   </g>
-</svg>
+</svg>`;
+
+const publicDir = path.resolve(__dirname, '..', 'public');
+const distDir = path.resolve(__dirname, '..', 'dist');
+
+function renderToPng(size) {
+  const resvg = new Resvg(svg, {
+    fitTo: { mode: 'width', value: size }
+  });
+  return resvg.render().asPng();
+}
+
+// Write SVG files
+fs.writeFileSync(path.join(publicDir, 'logo.svg'), svg);
+fs.writeFileSync(path.join(publicDir, 'icon.svg'), svg);
+fs.writeFileSync(path.join(publicDir, 'favicon.svg'), svg);
+
+if (fs.existsSync(distDir)) {
+  fs.writeFileSync(path.join(distDir, 'logo.svg'), svg);
+}
+
+// Render PNGs for all touchpoints
+const sizes = [
+  { name: 'logo.png', size: 512 },
+  { name: 'pwa-512x512.png', size: 512 },
+  { name: 'pwa-maskable-512x512.png', size: 512 },
+  { name: 'pwa-192x192.png', size: 192 },
+  { name: 'apple-touch-icon.png', size: 180 },
+  { name: 'favicon-144x144.png', size: 144 },
+  { name: 'favicon-96x96.png', size: 96 },
+  { name: 'favicon-64x64.png', size: 64 },
+  { name: 'favicon-48x48.png', size: 48 }
+];
+
+for (const item of sizes) {
+  const pngBuf = renderToPng(item.size);
+  fs.writeFileSync(path.join(publicDir, item.name), pngBuf);
+  if (fs.existsSync(distDir)) {
+    fs.writeFileSync(path.join(distDir, item.name), pngBuf);
+  }
+  console.log(`Rendered ${item.name} (${item.size}x${item.size}) - ${pngBuf.length} bytes`);
+}
+
+console.log('Finished updating logo assets with exact user geometry!');

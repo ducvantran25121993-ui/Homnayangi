@@ -137,6 +137,33 @@ const COMMON_FAQ_DATA: Record<
       },
     ],
   },
+  discover: {
+    badge: 'CẨM NANG KHÁM PHÁ ẨM THỰC',
+    title: 'Khám Phá Ẩm Thực 3 Miền, Thực Đơn Mỗi Ngày & Cách Nấu Món Ngon',
+    desc: 'Chuyên trang cẩm nang ẩm thực tổng hợp: Tìm hiểu nét độc đáo văn hóa ăn uống Bắc - Trung - Nam, tham khảo lịch thực đơn mỗi ngày cân đối dinh dưỡng và xem cặn kẽ cách nấu, mẹo ướp gia vị hơn 160+ món ngon gia đình Việt Nam.',
+    faqs: [
+      {
+        question: 'Ẩm thực 3 miền Bắc - Trung - Nam có gì khác biệt về khẩu vị?',
+        answer:
+          'Ẩm thực miền Bắc chuộng sự thanh tao, vị ngọt tự nhiên của nước hầm xương và thơm nhẹ mùi tiêu gừng; miền Trung thiên về vị đậm đà sâu thẳm, cay nồng nàn của ớt và mắm ruốc; còn miền Nam và miền Tây lại nổi bật với vị béo thơm của nước cốt dừa, nước dừa tươi ngọt lành và nguồn rau đồng sông nước phong phú.',
+      },
+      {
+        question: 'Thực đơn mỗi ngày được thiết kế theo tiêu chí dinh dưỡng nào?',
+        answer:
+          'Thực đơn mỗi ngày từ Thứ 2 đến Chủ Nhật được cân bằng khoa học: Bữa sáng giàu protein nạp năng lượng tỉnh táo, bữa trưa chắc dạ dễ tiêu hóa, xế chiều giải khát bổ sung vitamin, và bữa tối ấm cúng nhẹ bụng giúp giấc ngủ sâu.',
+      },
+      {
+        question: 'Mục "Cách Nấu" lấy thông tin từ đâu và có dễ làm theo không?',
+        answer:
+          'Mục Cách Nấu được đúc kết trực tiếp từ kho dữ liệu 160+ Món Ngon của ứng dụng, phân tích chi tiết định lượng nguyên liệu, các bước sơ chế, tẩm ướp, căn chỉnh nhiệt độ lửa và bí quyết gia truyền của bếp trưởng để bạn có thể tự tin nấu thành công ngay tại nhà.',
+      },
+      {
+        question: 'Nếu tôi không có thời gian tự nấu thì có thể đặt ship món ngay không?',
+        answer:
+          'Hoàn toàn có thể! Mỗi công thức nấu ăn đều tích hợp nút "Đặt Món Ship Ngay" kết nối đến ShopeeFood, GrabFood hoặc BeFood giúp bạn tìm ngay các quán gần nhà bán món đó khi bận rộn.',
+      },
+    ],
+  },
 };
 
 export const SeoContentFaq: React.FC<{
@@ -472,7 +499,7 @@ export const SeoContentFaq: React.FC<{
               </a>
 
               <a
-                href="/lich-an-theo-tuan"
+                href="/mon-ngon/lich-an-theo-tuan"
                 onClick={(e) => {
                   if (onNavigate) {
                     e.preventDefault();
@@ -938,7 +965,7 @@ export const SeoContentFaq: React.FC<{
               </a>
 
               <a
-                href="/lich-an-theo-tuan"
+                href="/mon-ngon/lich-an-theo-tuan"
                 onClick={(e) => {
                   if (onNavigate) {
                     e.preventDefault();
@@ -1434,8 +1461,8 @@ export const SeoContentFaq: React.FC<{
                 "@graph": [
                   {
                     "@type": "WebPage",
-                    "@id": "https://www.angigio.com/lich-an-theo-tuan#webpage",
-                    "url": "https://www.angigio.com/lich-an-theo-tuan",
+                    "@id": "https://www.angigio.com/mon-ngon/lich-an-theo-tuan#webpage",
+                    "url": "https://www.angigio.com/mon-ngon/lich-an-theo-tuan",
                     "name": "Lịch Ăn Theo Tuần - Thực Đơn 7 Ngày Chuẩn Vị & Tiết Kiệm | Hôm Nay Ăn Gì",
                     "description": "Lên lịch ăn tuần thông minh từ Thứ 2 đến Chủ Nhật: Tự động chống trùng món, tính calo & chi phí, đổi món linh hoạt, gợi ý bữa sáng trưa tối chuẩn ngon.",
                     "inLanguage": "vi-VN",
@@ -1448,7 +1475,7 @@ export const SeoContentFaq: React.FC<{
                   },
                   {
                     "@type": "BreadcrumbList",
-                    "@id": "https://www.angigio.com/lich-an-theo-tuan#breadcrumb",
+                    "@id": "https://www.angigio.com/mon-ngon/lich-an-theo-tuan#breadcrumb",
                     "itemListElement": [
                       {
                         "@type": "ListItem",
@@ -1459,14 +1486,20 @@ export const SeoContentFaq: React.FC<{
                       {
                         "@type": "ListItem",
                         "position": 2,
+                        "name": "Món Ngon",
+                        "item": "https://www.angigio.com/mon-ngon"
+                      },
+                      {
+                        "@type": "ListItem",
+                        "position": 3,
                         "name": "Lịch Ăn Theo Tuần",
-                        "item": "https://www.angigio.com/lich-an-theo-tuan"
+                        "item": "https://www.angigio.com/mon-ngon/lich-an-theo-tuan"
                       }
                     ]
                   },
                   {
                     "@type": "FAQPage",
-                    "@id": "https://www.angigio.com/lich-an-theo-tuan#faq",
+                    "@id": "https://www.angigio.com/mon-ngon/lich-an-theo-tuan#faq",
                     "mainEntity": [
                       {
                         "@type": "Question",
@@ -1961,7 +1994,7 @@ export const SeoContentFaq: React.FC<{
               </a>
 
               <a
-                href="/lich-an-theo-tuan"
+                href="/mon-ngon/lich-an-theo-tuan"
                 onClick={(e) => {
                   if (onNavigate) {
                     e.preventDefault();
@@ -2435,7 +2468,7 @@ export const SeoContentFaq: React.FC<{
               </a>
 
               <a
-                href="/lich-an-theo-tuan"
+                href="/mon-ngon/lich-an-theo-tuan"
                 onClick={(e) => {
                   if (onNavigate) {
                     e.preventDefault();

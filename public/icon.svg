@@ -1,247 +1,126 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 560" width="100%" height="100%">
   <defs>
-    <!-- Metallic 3D Gold / Copper Gradients -->
-    <linearGradient id="goldRibbon" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#C25E08" />
-      <stop offset="12%" stop-color="#D97706" />
-      <stop offset="28%" stop-color="#F59E0B" />
-      <stop offset="42%" stop-color="#FDE68A" />
-      <stop offset="55%" stop-color="#F59E0B" />
-      <stop offset="70%" stop-color="#D97706" />
-      <stop offset="85%" stop-color="#B45309" />
-      <stop offset="100%" stop-color="#78350F" />
+    <!-- Rich warm orange-gold metallic gradient matching user's image -->
+    <linearGradient id="userGold" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#FFA826" />
+      <stop offset="18%" stop-color="#F58E00" />
+      <stop offset="38%" stop-color="#FFBD3D" />
+      <stop offset="60%" stop-color="#E87600" />
+      <stop offset="82%" stop-color="#FFA826" />
+      <stop offset="100%" stop-color="#D46000" />
     </linearGradient>
 
-    <!-- Outer Swirl Arc Gradient -->
-    <linearGradient id="outerSwirlGrad" x1="20%" y1="10%" x2="80%" y2="90%">
-      <stop offset="0%" stop-color="#D97706" />
-      <stop offset="25%" stop-color="#FDE68A" />
-      <stop offset="50%" stop-color="#F59E0B" />
-      <stop offset="75%" stop-color="#C25E08" />
-      <stop offset="100%" stop-color="#78350F" />
-    </linearGradient>
-
-    <!-- Deep Plate Radial 3D Shading -->
-    <radialGradient id="plateDome" cx="36%" cy="32%" r="68%">
-      <stop offset="0%" stop-color="#FEF08A" />
-      <stop offset="20%" stop-color="#FBBF24" />
-      <stop offset="50%" stop-color="#F59E0B" />
-      <stop offset="78%" stop-color="#D97706" />
-      <stop offset="92%" stop-color="#B45309" />
-      <stop offset="100%" stop-color="#6B2504" />
+    <radialGradient id="discGold" cx="45%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#FFBE40" />
+      <stop offset="35%" stop-color="#FFA11C" />
+      <stop offset="70%" stop-color="#E67500" />
+      <stop offset="100%" stop-color="#C25400" />
     </radialGradient>
 
-    <!-- Plate Inner Cavity Shading -->
-    <radialGradient id="innerCavity" cx="42%" cy="38%" r="60%">
-      <stop offset="0%" stop-color="#FDE68A" stop-opacity="0.9" />
-      <stop offset="45%" stop-color="#F59E0B" stop-opacity="0.8" />
-      <stop offset="85%" stop-color="#B45309" stop-opacity="0.9" />
-      <stop offset="100%" stop-color="#78350F" stop-opacity="0.95" />
-    </radialGradient>
-
-    <!-- Metallic Specular Edge Shine -->
-    <linearGradient id="specularGlint" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95" />
-      <stop offset="35%" stop-color="#FEF08A" stop-opacity="0.6" />
-      <stop offset="70%" stop-color="#F59E0B" stop-opacity="0.2" />
-      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.8" />
-    </linearGradient>
-
-    <!-- Cutlery Emboss Shading -->
-    <linearGradient id="cutleryGrad" x1="20%" y1="0%" x2="80%" y2="100%">
-      <stop offset="0%" stop-color="#FFFFFF" />
-      <stop offset="40%" stop-color="#FFFBEB" />
-      <stop offset="80%" stop-color="#FEF3C7" />
-      <stop offset="100%" stop-color="#FDE68A" />
-    </linearGradient>
-
-    <linearGradient id="cutleryShadow" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#9A3412" stop-opacity="0.7" />
-      <stop offset="100%" stop-color="#451A03" stop-opacity="0.9" />
-    </linearGradient>
-
-    <!-- Dot Dome 3D Shading -->
-    <radialGradient id="dotDome" cx="35%" cy="30%" r="70%">
-      <stop offset="0%" stop-color="#FEF08A" />
-      <stop offset="30%" stop-color="#FBBF24" />
-      <stop offset="65%" stop-color="#F59E0B" />
-      <stop offset="85%" stop-color="#D97706" />
-      <stop offset="100%" stop-color="#78350F" />
-    </radialGradient>
-
-    <!-- Soft Drop Shadow Filter for Rich Depth -->
-    <filter id="badgeShadow" x="-12%" y="-12%" width="124%" height="124%">
-      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#451A03" flood-opacity="0.28" />
-      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#301202" flood-opacity="0.32" />
+    <!-- Subtle texture filter simulating gold foil grain -->
+    <filter id="goldGrain" x="0%" y="0%" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0.95  0 0 0 0 0.55  0 0 0 0 0.05  0 0 0 0.12 0" />
+      <feComposite in="SourceGraphic" in2="noise" operator="over" />
     </filter>
 
-    <filter id="plateDepth" x="-10%" y="-10%" width="120%" height="120%">
-      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#301202" flood-opacity="0.35" />
-    </filter>
+    <!-- Mask to punch transparent spoon & fork cutout out of the center gold disc -->
+    <mask id="cutoutMask">
+      <!-- White everywhere keeps the gold disc -->
+      <rect x="0" y="0" width="500" height="560" fill="#FFFFFF" />
 
-    <filter id="cutleryEmboss" x="-15%" y="-15%" width="130%" height="130%">
-      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#451A03" flood-opacity="0.45" />
-    </filter>
+      <!-- Black cutouts make the spoon and fork bodies completely transparent! -->
+      <g transform="translate(250, 230) rotate(-45)">
+        <!-- Spoon Scoop Cutout -->
+        <ellipse cx="-20" cy="-28" rx="16" ry="24" fill="#000000" />
+        <!-- Spoon Handle Cutout -->
+        <path d="M -22 -6 C -23 15, -24 45, -24 62 C -24 68, -20 70, -17 70 C -14 70, -11 68, -12 62 C -13 45, -16 15, -17 -6 Z" fill="#000000" />
+
+        <!-- Fork Tines Cutout -->
+        <path d="M 8 2 C 9 -10, 11 -22, 11 -28 L 33 -28 C 33 -22, 35 -10, 36 2 C 30 8, 16 8, 8 2 Z" fill="#000000" />
+        <rect x="10" y="-62" width="4" height="36" rx="2" fill="#000000" />
+        <rect x="17" y="-66" width="4" height="40" rx="2" fill="#000000" />
+        <rect x="24" y="-66" width="4" height="40" rx="2" fill="#000000" />
+        <rect x="31" y="-62" width="4" height="36" rx="2" fill="#000000" />
+
+        <!-- Fork Handle Cutout -->
+        <path d="M 17 2 C 18 20, 21 45, 22 62 C 23 68, 26 70, 29 70 C 32 70, 33 68, 32 62 C 29 45, 25 20, 23 2 Z" fill="#000000" />
+      </g>
+    </mask>
   </defs>
 
-  <g filter="url(#badgeShadow)">
-    
-    <!-- 1. Outer Sculptural Ribbon / Question Mark Outer Loop -->
-    <!-- Starts at bottom-right, wraps 360 deg around outer contour to bottom-left -->
-    <path 
-      d="
-        M 284 402
-        A 192 192 0 1 0 228 402
-      "
-      fill="none"
-      stroke="url(#outerSwirlGrad)"
-      stroke-width="26"
-      stroke-linecap="round"
-    />
-    <!-- Specular Highlight Line on Outer Rim -->
-    <path 
-      d="
-        M 284 402
-        A 192 192 0 1 0 228 402
-      "
-      fill="none"
-      stroke="url(#specularGlint)"
-      stroke-width="2"
-      stroke-linecap="round"
-      opacity="0.8"
-    />
+  <g id="user-logo-group">
+    <!-- 1. Center Disc with Transparent Cutouts -->
+    <circle cx="250" cy="230" r="96" fill="url(#discGold)" mask="url(#cutoutMask)" />
 
-    <!-- 2. Question Mark Inner Swirl & Stem -->
-    <!-- Sweeps from top-left, wraps clockwise around the plate, down to the stem base -->
+    <!-- 2. White Outlines for Spoon & Fork inside Center Disc -->
+    <g transform="translate(250, 230) rotate(-45)">
+      <!-- Spoon Outline -->
+      <ellipse cx="-20" cy="-28" rx="16" ry="24" fill="none" stroke="#FFFFFF" stroke-width="3.5" />
+      <path
+        d="M -22 -6 C -23 15, -24 45, -24 62 C -24 68, -20 70, -17 70 C -14 70, -11 68, -12 62 C -13 45, -16 15, -17 -6 Z"
+        fill="none"
+        stroke="#FFFFFF"
+        stroke-width="3.5"
+      />
+
+      <!-- Fork Outline -->
+      <path
+        d="M 8 2 C 9 -10, 11 -22, 11 -28 L 33 -28 C 33 -22, 35 -10, 36 2 C 30 8, 16 8, 8 2 Z"
+        fill="none"
+        stroke="#FFFFFF"
+        stroke-width="3.5"
+      />
+      <!-- Tines Outlines -->
+      <path d="M 12 -28 L 12 -62" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" />
+      <path d="M 19 -28 L 19 -66" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" />
+      <path d="M 26 -28 L 26 -66" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" />
+      <path d="M 33 -28 L 33 -62" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" />
+
+      <!-- Fork Handle Outline -->
+      <path
+        d="M 17 2 C 18 20, 21 45, 22 62 C 23 68, 26 70, 29 70 C 32 70, 33 68, 32 62 C 29 45, 25 20, 23 2 Z"
+        fill="none"
+        stroke="#FFFFFF"
+        stroke-width="3.5"
+      />
+    </g>
+
+    <!-- 3. Question Mark Spiral Ribbon -->
+    <!-- Inner Question Mark Spiral Body: Loops tightly around the disc -->
     <path
       d="
-        M 154 278
-        A 146 146 0 1 1 336 322
-        C 308 354 268 368 256 396
-        L 256 414
+        M 148 245
+        C 142 195, 172 135, 224 116
+        C 285 92, 348 118, 368 174
+        C 386 222, 368 290, 314 345
+        C 280 380, 252 402, 248 418
       "
       fill="none"
-      stroke="url(#goldRibbon)"
-      stroke-width="26"
+      stroke="url(#userGold)"
+      stroke-width="24"
       stroke-linecap="round"
       stroke-linejoin="round"
     />
-    <!-- Stem Specular Highlight Spine -->
+
+    <!-- Outer Circular Ring of Question Mark -->
+    <!-- Begins at bottom opening (210, 436), goes clockwise around to (290, 436) -->
     <path
       d="
-        M 154 278
-        A 146 146 0 1 1 336 322
-        C 308 354 268 368 256 396
-        L 256 414
+        M 210 436
+        C 105 404, 38 322, 38 230
+        C 38 112, 132 18, 250 18
+        C 368 18, 462 112, 462 230
+        C 462 322, 395 404, 290 436
       "
       fill="none"
-      stroke="url(#specularGlint)"
-      stroke-width="2"
+      stroke="url(#userGold)"
+      stroke-width="20"
       stroke-linecap="round"
-      opacity="0.75"
     />
 
-    <!-- 3. Central Dining Plate (Solid 3D Rim + Inset Cavity) -->
-    <g filter="url(#plateDepth)">
-      <!-- Outer Plate Disc -->
-      <circle cx="256" cy="216" r="102" fill="url(#plateDome)" />
-      
-      <!-- Outer Plate Beveled Rim Ring -->
-      <circle cx="256" cy="216" r="101" fill="none" stroke="url(#specularGlint)" stroke-width="1.8" opacity="0.85" />
-      <circle cx="256" cy="216" r="92" fill="none" stroke="#78350F" stroke-width="2.5" opacity="0.7" />
-
-      <!-- Inner Plate Depression Cavity -->
-      <circle cx="256" cy="216" r="88" fill="url(#innerCavity)" />
-      <circle cx="256" cy="216" r="87" fill="none" stroke="#FEF08A" stroke-width="1.5" opacity="0.6" />
-    </g>
-
-    <!-- 4. Cutlery: Spoon & Fork inside plate tilted at 45 degrees -->
-    <g transform="translate(256, 216) rotate(45) translate(-256, -216)" filter="url(#cutleryEmboss)">
-      
-      <!-- SPOON (Left) -->
-      <g transform="translate(-23, 0)">
-        <!-- Spoon Bowl 3D Silhouette -->
-        <ellipse cx="256" cy="154" rx="18" ry="28" fill="url(#cutleryGrad)" />
-        <ellipse cx="256" cy="154" rx="14" ry="23" fill="url(#plateDome)" />
-        <ellipse cx="254" cy="152" rx="9" ry="16" fill="#FEF08A" opacity="0.7" />
-
-        <!-- Spoon Stem & Handle -->
-        <path
-          d="
-            M 252 181
-            C 252 195 249 220 247 246
-            C 246 266 244 280 244 289
-            C 244 297 248 302 256 302
-            C 264 302 268 297 268 289
-            C 268 280 266 266 265 246
-            C 263 220 260 195 260 181
-            Z
-          "
-          fill="url(#cutleryGrad)"
-        />
-        <!-- Inner Spoon Handle Gold Groove -->
-        <path
-          d="
-            M 254 190
-            L 251 280
-            C 251 286 253 290 256 290
-            C 259 290 261 286 261 280
-            L 258 190
-            Z
-          "
-          fill="url(#plateDome)"
-        />
-      </g>
-
-      <!-- FORK (Right) -->
-      <g transform="translate(23, 0)">
-        <!-- Fork Tines and Base -->
-        <path
-          d="
-            M 238 134
-            L 238 168
-            C 238 182 245 193 251 196
-            L 247 289
-            C 247 297 251 302 256 302
-            C 261 302 265 297 265 289
-            L 261 196
-            C 267 193 274 182 274 168
-            L 274 134
-            L 268 134
-            L 268 165
-            C 268 171 265 174 262 174
-            L 262 134
-            L 258 134
-            L 258 174
-            C 255 174 254 171 254 165
-            L 254 134
-            L 250 134
-            L 250 174
-            C 247 174 244 171 244 165
-            L 244 134
-            Z
-          "
-          fill="url(#cutleryGrad)"
-        />
-        <!-- Inner Fork Handle Gold Groove -->
-        <path
-          d="
-            M 254 204
-            L 252 281
-            C 252 287 254 290 256 290
-            C 258 290 260 287 260 281
-            L 258 204
-            Z
-          "
-          fill="url(#plateDome)"
-        />
-      </g>
-    </g>
-
-    <!-- 5. Question Mark Bottom Dot (3D Metallic Sphere) -->
-    <circle cx="256" cy="460" r="25" fill="url(#dotDome)" />
-    <!-- Dot Edge Bevel & Specular Highlight -->
-    <circle cx="256" cy="460" r="24.5" fill="none" stroke="url(#specularGlint)" stroke-width="1.8" opacity="0.85" />
-    <circle cx="251" cy="454" r="16" fill="url(#specularGlint)" opacity="0.45" />
+    <!-- 4. Floating Round Golden Dot at Bottom -->
+    <!-- Centered at (250, 482), radius 22 -->
+    <circle cx="250" cy="482" r="22" fill="url(#discGold)" />
   </g>
 </svg>

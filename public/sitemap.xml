@@ -28,7 +28,7 @@
 
   <!-- 3. Lịch Ăn Theo Tuần - Thực Đơn 7 Ngày Chuẩn Vị -->
   <url>
-    <loc>https://www.angigio.com/lich-an-theo-tuan</loc>
+    <loc>https://www.angigio.com/mon-ngon/lich-an-theo-tuan</loc>
     <lastmod>2026-09-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
@@ -62,7 +62,55 @@
     </image:image>
   </url>
 
-  <!-- 6. Trang Giới Thiệu & Sứ Mệnh Ẩm Thực -->
+  <!-- 6. Khám Phá Ẩm Thực 3 Miền, Thực Đơn Mỗi Ngày & Cách Nấu Món Ngon -->
+  <url>
+    <loc>https://www.angigio.com/kham-pha-am-thuc</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1540420773420-3366772f4999?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Khám Phá Ẩm Thực 3 Miền, Thực Đơn Mỗi Ngày &amp; Cách Nấu Món Ngon</image:title>
+    </image:image>
+  </url>
+
+  <!-- 6.1. Ẩm Thực Vùng Miền 3 Miền Bắc - Trung - Nam -->
+  <url>
+    <loc>https://www.angigio.com/kham-pha-am-thuc/am-thuc-vung-mien</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Ẩm Thực Vùng Miền - Tinh Hoa Hương Vị Bắc Trung Nam</image:title>
+    </image:image>
+  </url>
+
+  <!-- 6.2. Thực Đơn Mỗi Ngày Cân Bằng Dinh Dưỡng -->
+  <url>
+    <loc>https://www.angigio.com/kham-pha-am-thuc/thuc-don-moi-ngay</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Thực Đơn Mỗi Ngày - Gợi Ý Món Ngon Gia Đình &amp; Đủ Chất</image:title>
+    </image:image>
+  </url>
+
+  <!-- 6.3. Cách Nấu Món Ngon Chuẩn Vị Gia Đình -->
+  <url>
+    <loc>https://www.angigio.com/kham-pha-am-thuc/cach-nau-mon-ngon</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Cách Nấu Món Ngon - Công Thức Chuẩn Xác &amp; Bí Quyết Bếp Trưởng</image:title>
+    </image:image>
+  </url>
+
+  <!-- 7. Trang Giới Thiệu & Sứ Mệnh Ẩm Thực -->
   <url>
     <loc>https://www.angigio.com/gioi-thieu</loc>
     <lastmod>2026-09-15</lastmod>

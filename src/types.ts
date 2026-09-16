@@ -120,3 +120,99 @@ export interface WeeklyMealPlan {
   updatedAt: string;
   days: Record<string, DayPlan>;
 }
+
+export interface DishRecipe {
+  dishId: string;
+  dishName: string;
+  prepTime: string;
+  cookTime: string;
+  difficulty: 'Dễ' | 'Trung bình' | 'Cầu kỳ';
+  servings: string;
+  ingredients: {
+    category: string;
+    items: string[];
+  }[];
+  steps: {
+    step: number;
+    title: string;
+    description: string;
+    tip?: string;
+  }[];
+  chefSecret: string;
+  recommendedSauce?: string;
+}
+
+export interface RegionalCuisine {
+  id: 'bac' | 'trung' | 'nam' | 'mientay';
+  name: string;
+  title: string;
+  badge: string;
+  description: string;
+  tasteProfile: string[];
+  iconicKeyIngredients: string[];
+  dishIds: string[];
+  highlightTip: string;
+}
+
+export interface FamilyMealDish {
+  role: 'Món Mặn' | 'Món Canh' | 'Món Xào / Rau' | 'Ăn Kèm / Tráng Miệng';
+  roleTag: string; // e.g. "Món mặn chính", "Canh thanh mát", "Rau xanh củ quả", "Kèm đưa cơm"
+  dishId: string;
+  name: string;
+  description: string;
+  cookingTime?: string;
+  calories?: string;
+}
+
+export interface FamilyMealTray {
+  trayName: string; // e.g. "Mâm Cơm Trưa Gia Đình", "Mâm Cơm Chiều Ấm Cúng"
+  slot: 'Trưa' | 'Tối';
+  description: string;
+  trayImage?: string; // e.g. "/images/mam_com_gia_dinh.jpg"
+  servings?: string; // e.g. "3 - 4 người ăn"
+  dishes: FamilyMealDish[];
+  ingredients?: {
+    category: string; // e.g. "Thực phẩm chính (Thịt, cá, tôm)", "Rau củ quả tươi", "Gia vị & Phụ liệu"
+    items: string[];
+  }[];
+}
+
+export interface DailyMealOption {
+  id: string;
+  dayName: string;
+  title: string;
+  tagline: string;
+  targetAudience: string;
+  estimatedTotalCalories: string;
+  avgBudget: string;
+  // Mâm cơm 3 món chuẩn vị gia đình cho từng ngày
+  familyLunch: FamilyMealTray;
+  familyDinner: FamilyMealTray;
+  meals?: {
+    slot: 'Sáng' | 'Trưa' | 'Xế Chiều' | 'Tối';
+    dishId: string;
+    dishName: string;
+    pairing: string;
+    reason: string;
+  }[];
+}
+
+export interface SponsoredPartner {
+  id: string;
+  restaurantName: string;
+  verifiedBadge?: string; // e.g. "Đối tác chính thức", "Quán ngon đề xuất"
+  dishIds: string[]; // List of dish IDs this restaurant sponsors (e.g. ['com-tam', 'com-tam-suon-bi-cha'])
+  logo?: string;
+  rating: number; // e.g. 4.9
+  reviewCount?: number; // e.g. 1280
+  address: string; // e.g. "128 Nguyễn Đình Chiểu, P. Đa Kao, Quận 1, TP.HCM"
+  district: string; // e.g. "Quận 1"
+  city: string; // e.g. "TP. Hồ Chí Minh"
+  promoBadge?: string; // e.g. "Giảm 20% đơn đầu", "Tặng trà đào"
+  phone?: string;
+  shopeeFoodUrl?: string;
+  grabFoodUrl?: string;
+  directBookingUrl?: string; // e.g. Fanpage, Zalo or Hotline
+  googleMapsUrl?: string;
+  isActive: boolean;
+}

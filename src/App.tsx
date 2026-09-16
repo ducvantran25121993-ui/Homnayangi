@@ -5,6 +5,7 @@ import { AIAssistant } from './components/AIAssistant';
 import { FoodTarot } from './components/FoodTarot';
 import { DishCatalog } from './components/DishCatalog';
 import { MealPlanner } from './components/MealPlanner';
+import { FoodDiscoveryPage } from './components/FoodDiscoveryPage';
 import { AboutPage } from './components/AboutPage';
 import { ContactPage } from './components/ContactPage';
 import { AdminInboxModal } from './components/AdminInboxModal';
@@ -32,8 +33,8 @@ export default function App() {
     const tab = getTabFromUrl();
     if (typeof window !== 'undefined') {
       const pathname = window.location.pathname.replace(/\/$/, '') || '/';
-      if (pathname === '/len-lich-an' || pathname === '/lich-an' || pathname === '/thuc-don-tuan' || pathname === '/meal-planner') {
-        window.history.replaceState({ tab: 'planner' }, '', '/lich-an-theo-tuan');
+      if (pathname === '/lich-an-theo-tuan' || pathname === '/len-lich-an' || pathname === '/lich-an' || pathname === '/thuc-don-tuan' || pathname === '/meal-planner') {
+        window.history.replaceState({ tab: 'planner' }, '', '/mon-ngon/lich-an-theo-tuan');
       }
     }
     return tab;
@@ -50,7 +51,12 @@ export default function App() {
   // Navigate tab with clean URL & History API
   const handleNavigateTab = useCallback((newTab: TabType) => {
     setActiveTab(newTab);
-    const targetPath = TAB_CONFIG[newTab]?.path || '/';
+    const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+    // If navigating to discover and already on a discover subpath, don't overwrite it
+    let targetPath = TAB_CONFIG[newTab]?.path || '/';
+    if (newTab === 'discover' && currentPath.startsWith('/kham-pha-am-thuc/')) {
+      targetPath = currentPath;
+    }
     if (window.location.pathname !== targetPath) {
       window.history.pushState({ tab: newTab }, '', targetPath);
     }
@@ -151,8 +157,8 @@ export default function App() {
 
   useEffect(() => {
     fetchAffiliateData();
-    // Poll stats occasionally
-    const interval = setInterval(fetchAffiliateData, 15000);
+    // Poll stats occasionally (every 60s)
+    const interval = setInterval(fetchAffiliateData, 60000);
     return () => clearInterval(interval);
   }, []);
 
@@ -296,6 +302,15 @@ export default function App() {
             userLocation={userLocation}
             onOpenLocationModal={openLocationPicker}
             onNavigate={handleNavigateTab}
+          />
+        )}
+
+        {activeTab === 'discover' && (
+          <FoodDiscoveryPage
+            onSelectDish={(dish) => setSelectedDish(dish)}
+            onNavigate={handleNavigateTab}
+            userLocation={userLocation}
+            affiliateConfig={affiliateConfig}
           />
         )}
 

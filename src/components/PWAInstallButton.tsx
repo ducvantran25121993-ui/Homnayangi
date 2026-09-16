@@ -1,193 +1,380 @@
-import React, { useState } from 'react';
-import { Download, Smartphone, Share, PlusSquare, X, CheckCircle2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import { Download, X, Smartphone, Monitor, Share, ExternalLink, Check, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { usePWAInstall } from '../utils/usePWAInstall';
 
-interface PWAInstallButtonProps {
-  variant?: 'navbar' | 'mobile-banner' | 'menu-item' | 'footer';
-  onInstalledCallback?: () => void;
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 }
 
-export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
-  variant = 'navbar',
-}) => {
-  const { isInstallable, isInstalled, isIOS, install } = usePWAInstall();
-  const [showIOSModal, setShowIOSModal] = useState(false);
-  const [showSuccessToast, setShowSuccessToast] = useState(false);
+export const PWAInstallButton: React.FC<{
+  className?: string;
+  variant?: 'nav' | 'navbar' | 'footer' | 'pill';
+}> = ({ className = '', variant = 'navbar' }) => {
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [isStandalone, setIsStandalone] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [isInIframe, setIsInIframe] = useState(false);
+  const [activeGuideTab, setActiveGuideTab] = useState<'ios' | 'android' | 'desktop'>('android');
 
-  // If already running as an installed standalone PWA app, hide install CTA
-  if (isInstalled) {
-    return null;
-  }
+  useEffect(() => {
+    // Check standalone
+    const isRunningStandalone = 
+      window.matchMedia('(display-mode: standalone)').matches || 
+      (window.navigator as any).standalone === true;
+    setIsStandalone(isRunningStandalone);
 
-  const handleInstallClick = async () => {
-    if (isInstallable) {
-      const success = await install();
-      if (success) {
-        setShowSuccessToast(true);
-        setTimeout(() => setShowSuccessToast(false), 4000);
-      }
-    } else {
-      // For iOS or browsers without native prompt support, show the interactive guide
-      setShowIOSModal(true);
+    // Check iframe
+    try {
+      setIsInIframe(window.self !== window.top);
+    } catch {
+      setIsInIframe(true);
     }
+
+    // Auto-detect device for guide tab
+    const ua = navigator.userAgent.toLowerCase();
+    if (/iphone|ipad|ipod/.test(ua)) {
+      setActiveGuideTab('ios');
+    } else if (/android/.test(ua)) {
+      setActiveGuideTab('android');
+    } else {
+      setActiveGuideTab('desktop');
+    }
+
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
+    };
+
+    const handleAppInstalled = () => {
+      setIsStandalone(true);
+      setDeferredPrompt(null);
+      setShowModal(false);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', handleAppInstalled);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
+    };
+  }, []);
+
+  const handleInstallClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // If native prompt is ready and not in iframe, try triggering it
+    if (deferredPrompt && !isInIframe) {
+      try {
+        await deferredPrompt.prompt();
+        const choice = await deferredPrompt.userChoice;
+        if (choice.outcome === 'accepted') {
+          setIsStandalone(true);
+        }
+        setDeferredPrompt(null);
+        return;
+      } catch {
+        // Fallback to guide modal
+      }
+    }
+
+    // Otherwise show the rich guide modal
+    setShowModal(true);
   };
 
-  // Render modal for iOS or manual install instruction
-  const renderIOSGuideModal = () => (
-    <AnimatePresence>
-      {showIOSModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-xs">
+  const openInNewTab = () => {
+    window.open(window.location.origin, '_blank');
+  };
+
+  const renderModal = () => {
+    if (!showModal) return null;
+
+    return createPortal(
+      <AnimatePresence>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShowModal(false)}
+            className="fixed inset-0 bg-stone-900/60 backdrop-blur-xs"
+          />
+
+          {/* Dialog */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
-            className="w-full max-w-sm bg-white rounded-3xl shadow-2xl border border-stone-200 p-5 sm:p-6 overflow-hidden relative"
+            className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-stone-200 overflow-hidden z-10"
+            onClick={(e) => e.stopPropagation()}
           >
-            {/* Close button */}
-            <button
-              onClick={() => setShowIOSModal(false)}
-              className="absolute top-4 right-4 p-1.5 rounded-full text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors"
-              aria-label="Đóng hướng dẫn"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
             {/* Header */}
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-600 flex items-center justify-center text-white shadow-md shadow-orange-500/20 shrink-0">
-                <Smartphone className="w-6 h-6" />
+            <div className="flex items-center justify-between px-5 py-4 border-b border-stone-100 bg-linear-to-r from-orange-50/70 to-amber-50/50">
+              <div className="flex items-center gap-3">
+                <img 
+                  src="/logo.png?v=5" 
+                  alt="Logo" 
+                  className="w-9 h-9 object-contain drop-shadow-xs"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).src = '/logo.svg';
+                  }}
+                />
+                <div>
+                  <h3 className="font-extrabold text-stone-900 text-sm sm:text-base leading-tight">
+                    Cài Đặt Hôm Nay Ăn Gì?
+                  </h3>
+                  <p className="text-[11px] text-stone-500 font-medium">
+                    Mở nhanh như App, mượt mà và không tốn dung lượng
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-base font-bold text-stone-900 leading-tight">
-                  Cài Đặt App "Ăn Gì?"
-                </h3>
-                <p className="text-xs text-stone-500 mt-0.5">
-                  Mở nhanh như ứng dụng native, dùng mượt mà kể cả khi mất mạng.
-                </p>
+              <button
+                onClick={() => setShowModal(false)}
+                className="p-1.5 rounded-full hover:bg-stone-200/60 text-stone-400 hover:text-stone-700 transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="p-5 space-y-4 max-h-[80vh] overflow-y-auto">
+              {/* If inside iframe warning & direct button */}
+              {isInIframe && (
+                <div className="p-3 rounded-xl bg-orange-50 border border-orange-200/80 text-orange-950 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                  <div className="flex items-start gap-2">
+                    <Sparkles className="w-4 h-4 text-orange-600 shrink-0 mt-0.5" />
+                    <span>
+                      Trình duyệt yêu cầu mở ở tab độc lập để kích hoạt tính năng cài đặt App.
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={openInNewTab}
+                    className="shrink-0 inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-bold text-xs shadow-xs transition-colors cursor-pointer"
+                  >
+                    <span>Mở tab mới</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              )}
+
+              {/* Native Prompt Available Action */}
+              {deferredPrompt && (
+                <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-950 flex items-center justify-between gap-3">
+                  <div>
+                    <div className="font-bold text-xs text-emerald-900">Thiết bị sẵn sàng!</div>
+                    <div className="text-[11px] text-emerald-700">Nhấn nút bên cạnh để cài đặt ngay.</div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (deferredPrompt) {
+                        await deferredPrompt.prompt();
+                        const c = await deferredPrompt.userChoice;
+                        if (c.outcome === 'accepted') setIsStandalone(true);
+                        setDeferredPrompt(null);
+                        setShowModal(false);
+                      }
+                    }}
+                    className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold shadow-xs cursor-pointer"
+                  >
+                    Cài Đặt Ngay
+                  </button>
+                </div>
+              )}
+
+              {/* Platform Selector Tabs */}
+              <div className="flex rounded-xl bg-stone-100 p-1 gap-1 text-xs font-bold">
+                <button
+                  type="button"
+                  onClick={() => setActiveGuideTab('android')}
+                  className={`flex-1 py-1.5 px-2 rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    activeGuideTab === 'android'
+                      ? 'bg-white text-stone-900 shadow-xs'
+                      : 'text-stone-500 hover:text-stone-800'
+                  }`}
+                >
+                  <Smartphone className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Android / Chrome</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveGuideTab('ios')}
+                  className={`flex-1 py-1.5 px-2 rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    activeGuideTab === 'ios'
+                      ? 'bg-white text-stone-900 shadow-xs'
+                      : 'text-stone-500 hover:text-stone-800'
+                  }`}
+                >
+                  <Share className="w-3.5 h-3.5 text-blue-600" />
+                  <span>iPhone (Safari)</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveGuideTab('desktop')}
+                  className={`flex-1 py-1.5 px-2 rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                    activeGuideTab === 'desktop'
+                      ? 'bg-white text-stone-900 shadow-xs'
+                      : 'text-stone-500 hover:text-stone-800'
+                  }`}
+                >
+                  <Monitor className="w-3.5 h-3.5 text-orange-600" />
+                  <span>Máy Tính PC/Mac</span>
+                </button>
+              </div>
+
+              {/* Step instructions */}
+              <div className="p-4 rounded-xl bg-stone-50 border border-stone-200/70 text-xs text-stone-700 space-y-3">
+                {activeGuideTab === 'android' && (
+                  <>
+                    <div className="flex items-start gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-orange-100 text-orange-700 font-bold flex items-center justify-center shrink-0 text-[11px]">1</div>
+                      <p>Mở trang trên trình duyệt <strong>Google Chrome</strong> hoặc <strong>Cốc Cốc</strong>.</p>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-orange-100 text-orange-700 font-bold flex items-center justify-center shrink-0 text-[11px]">2</div>
+                      <p>Bấm vào biểu tượng <strong>dấu 3 chấm (⋮)</strong> ở góc trên bên phải màn hình.</p>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-orange-100 text-orange-700 font-bold flex items-center justify-center shrink-0 text-[11px]">3</div>
+                      <p>Chọn mục <strong>"Cài đặt ứng dụng"</strong> (hoặc <strong>"Thêm vào Màn hình chính"</strong>) và bấm <strong>Cài đặt</strong>.</p>
+                    </div>
+                  </>
+                )}
+
+                {activeGuideTab === 'ios' && (
+                  <>
+                    <div className="flex items-start gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center shrink-0 text-[11px]">1</div>
+                      <p>Mở trang web bằng trình duyệt <strong>Safari</strong> trên iPhone / iPad.</p>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center shrink-0 text-[11px]">2</div>
+                      <p>Bấm vào biểu tượng <strong>Chia sẻ</strong> (hình ô vuông có mũi tên trỏ lên) ở thanh điều hướng phía dưới.</p>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center shrink-0 text-[11px]">3</div>
+                      <p>Cuộn xuống và chọn <strong>"Thêm vào MH chính" (Add to Home Screen)</strong> ➔ Bấm <strong>Thêm</strong> ở góc trên.</p>
+                    </div>
+                  </>
+                )}
+
+                {activeGuideTab === 'desktop' && (
+                  <>
+                    <div className="flex items-start gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-stone-200 text-stone-800 font-bold flex items-center justify-center shrink-0 text-[11px]">1</div>
+                      <p>Mở trang web trên Google Chrome, Cốc Cốc, Edge hoặc Brave.</p>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-stone-200 text-stone-800 font-bold flex items-center justify-center shrink-0 text-[11px]">2</div>
+                      <p>Để ý biểu tượng <strong>Cài đặt (Màn hình / Mũi tên tải xuống)</strong> nằm ở góc phải thanh địa chỉ URL.</p>
+                    </div>
+                    <div className="flex items-start gap-2.5">
+                      <div className="w-5 h-5 rounded-full bg-stone-200 text-stone-800 font-bold flex items-center justify-center shrink-0 text-[11px]">3</div>
+                      <p>Bấm vào và chọn <strong>"Cài đặt"</strong> để mở trang dưới dạng một ứng dụng riêng biệt trên máy tính.</p>
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* Perks list */}
+              <div className="grid grid-cols-2 gap-2 text-[11px] text-stone-600 pt-1">
+                <div className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>Không cần vào App Store</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>Dung lượng siêu nhẹ (~1MB)</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>Mở toàn màn hình không viền</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>Tự động cập nhật phiên bản mới</span>
+                </div>
               </div>
             </div>
 
-            {/* Steps */}
-            <div className="space-y-3.5 my-5 text-xs text-stone-700">
-              <div className="flex items-start gap-3 p-2.5 rounded-2xl bg-stone-50 border border-stone-100">
-                <div className="w-6 h-6 rounded-lg bg-orange-100 text-orange-700 flex items-center justify-center shrink-0 font-bold text-xs mt-0.5">
-                  1
-                </div>
-                <div>
-                  <p className="font-semibold text-stone-900 flex items-center gap-1.5">
-                    Nhấn nút Chia Sẻ <Share className="w-3.5 h-3.5 text-blue-600 inline" />
-                  </p>
-                  <p className="text-stone-500 text-[11px] mt-0.5">
-                    {isIOS
-                      ? 'Nằm ở thanh công cụ dưới cùng trên Safari của iPhone/iPad.'
-                      : 'Trên thanh địa chỉ hoặc menu góc phải trình duyệt.'}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 p-2.5 rounded-2xl bg-stone-50 border border-stone-100">
-                <div className="w-6 h-6 rounded-lg bg-orange-100 text-orange-700 flex items-center justify-center shrink-0 font-bold text-xs mt-0.5">
-                  2
-                </div>
-                <div>
-                  <p className="font-semibold text-stone-900 flex items-center gap-1.5">
-                    Chọn "Thêm vào MH chính" <PlusSquare className="w-3.5 h-3.5 text-orange-600 inline" />
-                  </p>
-                  <p className="text-stone-500 text-[11px] mt-0.5">
-                    Cuộn danh sách tùy chọn và chọn "Thêm vào Màn hình chính" (Add to Home Screen).
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 p-2.5 rounded-2xl bg-stone-50 border border-stone-100">
-                <div className="w-6 h-6 rounded-lg bg-orange-100 text-orange-700 flex items-center justify-center shrink-0 font-bold text-xs mt-0.5">
-                  3
-                </div>
-                <div>
-                  <p className="font-semibold text-stone-900">
-                    Xác nhận "Thêm" (Add)
-                  </p>
-                  <p className="text-stone-500 text-[11px] mt-0.5">
-                    Biểu tượng Hôm Nay Ăn Gì sẽ xuất hiện trên màn hình điện thoại như một App thực thụ!
-                  </p>
-                </div>
-              </div>
+            {/* Footer */}
+            <div className="p-4 border-t border-stone-100 bg-stone-50 flex items-center justify-between gap-3">
+              <button
+                type="button"
+                onClick={openInNewTab}
+                className="text-xs text-orange-600 hover:text-orange-700 font-semibold inline-flex items-center gap-1 cursor-pointer"
+              >
+                <span>Mở trong tab mới</span>
+                <ExternalLink className="w-3 h-3" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowModal(false)}
+                className="px-4 py-1.5 bg-stone-900 hover:bg-stone-800 text-white rounded-xl text-xs font-bold shadow-xs cursor-pointer"
+              >
+                Đã hiểu
+              </button>
             </div>
-
-            {/* Action button */}
-            <button
-              onClick={() => setShowIOSModal(false)}
-              className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-orange-600 to-amber-600 text-white text-xs sm:text-sm font-semibold hover:brightness-105 active:scale-98 transition shadow-md shadow-orange-600/20"
-            >
-              Đã hiểu, tiến hành cài đặt
-            </button>
           </motion.div>
         </div>
-      )}
-    </AnimatePresence>
-  );
-
-  // Variant for Navbar header
-  if (variant === 'navbar') {
-    return (
-      <>
-        <button
-          type="button"
-          onClick={handleInstallClick}
-          title="Cài đặt ứng dụng vào điện thoại / máy tính"
-          aria-label="Cài đặt app Hôm Nay Ăn Gì"
-          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gradient-to-r from-orange-600 to-amber-600 text-white hover:brightness-105 transition-all text-xs font-semibold shadow-xs hover:shadow-orange-500/20 cursor-pointer group"
-        >
-          <Download className="w-3.5 h-3.5 group-hover:-translate-y-0.5 transition-transform" />
-          <span>Cài App</span>
-        </button>
-
-        {/* Small icon-only button for mobile header next to Share */}
-        <button
-          type="button"
-          onClick={handleInstallClick}
-          title="Cài đặt app"
-          aria-label="Cài đặt ứng dụng"
-          className="sm:hidden flex items-center justify-center w-8 h-8 rounded-full bg-orange-50 border border-orange-200 text-orange-600 hover:bg-orange-100 transition-colors"
-        >
-          <Download className="w-4 h-4" />
-        </button>
-
-        {renderIOSGuideModal()}
-      </>
+      </AnimatePresence>,
+      document.body
     );
-  }
+  };
 
-  // Variant for footer
   if (variant === 'footer') {
     return (
       <>
         <button
           type="button"
           onClick={handleInstallClick}
-          className="inline-flex items-center gap-1.5 hover:text-orange-600 transition-colors py-1 px-2 rounded-lg hover:bg-stone-50 text-xs font-semibold text-stone-600 cursor-pointer"
+          className={`inline-flex items-center gap-1.5 text-xs text-stone-600 hover:text-orange-600 transition-colors py-1 px-2 rounded-lg hover:bg-stone-50 cursor-pointer font-medium ${className}`}
+          title={isStandalone ? "Ứng dụng đã được cài đặt" : "Cài đặt Hôm Nay Ăn Gì về điện thoại / máy tính"}
         >
-          <Download className="w-3.5 h-3.5 text-orange-600" />
-          <span>Cài Đặt App</span>
+          <Download className="w-3.5 h-3.5 text-orange-500" />
+          <span>{isStandalone ? 'Đã cài đặt' : 'Cài đặt App'}</span>
         </button>
-        {renderIOSGuideModal()}
+        {renderModal()}
       </>
     );
   }
 
-  // Variant for menu or footer item
+  if (variant === 'pill') {
+    return (
+      <>
+        <button
+          type="button"
+          onClick={handleInstallClick}
+          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold transition-all cursor-pointer shadow-xs ${className}`}
+          title="Cài đặt App"
+        >
+          <Download className="w-3.5 h-3.5" />
+          <span>{isStandalone ? 'Đã cài đặt' : 'Cài App'}</span>
+        </button>
+        {renderModal()}
+      </>
+    );
+  }
+
+  // Default navbar variant
   return (
     <>
       <button
         type="button"
         onClick={handleInstallClick}
-        className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-stone-700 hover:bg-orange-50 hover:text-orange-600 transition-colors w-full text-left"
+        className={`px-3 py-1.5 rounded-full border border-orange-200/90 bg-orange-50/70 hover:bg-orange-100 hover:border-orange-300 text-orange-700 transition-all duration-200 flex items-center gap-1.5 text-xs font-semibold cursor-pointer shadow-2xs group ${className}`}
+        title="Cài đặt Hôm Nay Ăn Gì trên điện thoại / máy tính"
       >
-        <Download className="w-4 h-4 text-orange-600" />
-        <span>Cài đặt ứng dụng vào điện thoại</span>
+        <Download className="w-3.5 h-3.5 text-orange-600 group-hover:scale-110 transition-transform" />
+        <span className="hidden sm:inline">{isStandalone ? 'Đã cài' : 'Cài App'}</span>
       </button>
-      {renderIOSGuideModal()}
+      {renderModal()}
     </>
   );
 };
+

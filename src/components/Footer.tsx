@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { UtensilsCrossed, Heart, Share2, Info, Mail, Lock } from 'lucide-react';
+import { Heart, Share2, Info, Mail, Lock } from 'lucide-react';
 import { TabType } from '../utils/navigation';
 import { ShareModal } from './ShareModal';
 import { PWAInstallButton } from './PWAInstallButton';
@@ -36,7 +36,13 @@ export const Footer: React.FC<{
           
           <div className="flex items-center gap-3">
             <img 
-              src="/logo.png" 
+              src="/logo.png?v=5" 
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (!target.src.includes('/logo.svg')) {
+                  target.src = '/logo.svg?v=5';
+                }
+              }}
               alt="Logo Hôm Nay Ăn Gì" 
               className="w-11 h-11 object-contain drop-shadow-xs shrink-0" 
             />

@@ -1,15 +1,17 @@
 import express from "express";
+import http from "http";
 import path from "path";
-import { createServer as createViteServer } from "vite";
+import fs from "fs";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const isProduction = process.env.NODE_ENV === "production";
+const PORT = isProduction ? (Number(process.env.PORT) || 8080) : 3000;
 
-app.use(express.json());
+app.use(express.json({ limit: "25mb" }));
 
 // In-memory click tracking & stats
 interface ClickEvent {
@@ -277,6 +279,32 @@ app.get("/api/health", (_req, res) => {
   res.json({ status: "ok", service: "HomNayAnGi-Affiliate-Engine" });
 });
 
+// Direct Logo Upload API to support original image placement without alterations
+app.post("/api/upload-logo", (req, res) => {
+  try {
+    const { imageBase64 } = req.body;
+    if (!imageBase64) {
+      return res.status(400).json({ error: "Chưa có dữ liệu hình ảnh." });
+    }
+    const cleanBase64 = imageBase64.replace(/^data:image\/\w+;base64,/, "");
+    const buffer = Buffer.from(cleanBase64, "base64");
+
+    const publicLogo = path.join(process.cwd(), "public", "logo.png");
+    if (fs.existsSync(path.join(process.cwd(), "public"))) {
+      fs.writeFileSync(publicLogo, buffer);
+    }
+
+    const distLogo = path.join(process.cwd(), "dist", "logo.png");
+    if (fs.existsSync(path.join(process.cwd(), "dist"))) {
+      fs.writeFileSync(distLogo, buffer);
+    }
+
+    return res.json({ success: true, message: "Logo đã được cập nhật thành công!" });
+  } catch (err: any) {
+    return res.status(500).json({ error: err.message || "Không thể lưu logo" });
+  }
+});
+
 // Affiliate config API
 app.get("/api/affiliate/config", (_req, res) => {
   res.json({
@@ -463,9 +491,13 @@ Yêu cầu trả về đúng định dạng JSON:
 });
 
 async function startServer() {
-  // 301 Permanent Redirect for SEO: migrate old /len-lich-an URL to new keyword-optimized /lich-an-theo-tuan
-  app.get(["/len-lich-an", "/len-lich-an/"], (_req, res) => {
-    res.redirect(301, "/lich-an-theo-tuan");
+  // 301 Permanent Redirect for SEO: migrate old planner URLs to hierarchical /mon-ngon/lich-an-theo-tuan
+  app.get(["/len-lich-an", "/len-lich-an/", "/lich-an-theo-tuan", "/lich-an-theo-tuan/"], (_req, res) => {
+    res.redirect(301, "/mon-ngon/lich-an-theo-tuan");
+  });
+
+  app.get(["/kham-pha", "/kham-pha/", "/cam-nang", "/cam-nang/", "/cam-nang-am-thuc", "/cam-nang-am-thuc/"], (_req, res) => {
+    res.redirect(301, "/kham-pha-am-thuc");
   });
 
   // Static SEO routes for Googlebot and search crawlers
@@ -479,23 +511,61 @@ async function startServer() {
     res.sendFile(path.join(process.cwd(), "public", "sitemap.xml"));
   });
 
+  const httpServer = http.createServer(app);
+
   if (process.env.NODE_ENV !== "production") {
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
-      server: { middlewareMode: true },
+      server: {
+        middlewareMode: true,
+        hmr: {
+          server: httpServer,
+        },
+      },
       appType: "spa",
     });
     app.use(vite.middlewares);
   } else {
-    const distPath = path.join(process.cwd(), "dist");
+    const distPath = fs.existsSync(path.join(process.cwd(), "dist", "index.html"))
+      ? path.join(process.cwd(), "dist")
+      : fs.existsSync(path.join(__dirname, "index.html"))
+      ? __dirname
+      : path.resolve(process.cwd(), "dist");
+
     app.use(express.static(distPath));
     app.get("*", (_req, res) => {
-      res.sendFile(path.join(distPath, "index.html"));
+      const indexPath = path.join(distPath, "index.html");
+      if (fs.existsSync(indexPath)) {
+        res.sendFile(indexPath);
+      } else {
+        res.status(404).send("Application dist index.html not found");
+      }
     });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
-    console.log(`Server listening on http://0.0.0.0:${PORT}`);
+  httpServer.listen(PORT, "0.0.0.0", () => {
+    console.log(`Server listening on http://0.0.0.0:${PORT} (${isProduction ? "production" : "development"} mode)`);
   });
+
+  // In production Cloud Run, if PORT is not 3000, also bind a secondary listener on 3000 if available
+  if (isProduction && PORT !== 3000) {
+    try {
+      const secondaryServer = http.createServer(app);
+      secondaryServer.on("error", (err: any) => {
+        if (err.code !== "EADDRINUSE") {
+          console.warn("Secondary port 3000 note:", err.message);
+        }
+      });
+      secondaryServer.listen(3000, "0.0.0.0", () => {
+        console.log("Secondary listener active on http://0.0.0.0:3000");
+      });
+    } catch {
+      // Ignore
+    }
+  }
 }
 
-startServer();
+startServer().catch((err) => {
+  console.error("Failed to start server:", err);
+  process.exit(1);
+});

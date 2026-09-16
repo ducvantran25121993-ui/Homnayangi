@@ -75,14 +75,11 @@ export default defineConfig(() => {
         registerType: 'autoUpdate',
         includeAssets: [
           'favicon.ico',
-          'favicon-48x48.png',
           'favicon-64x64.png',
-          'favicon-96x96.png',
-          'favicon-144x144.png',
           'apple-touch-icon.png',
-          'logo.png',
-          'logo.svg',
           'icon.svg',
+          'logo.svg',
+          'logo.png',
           'pwa-192x192.png',
           'pwa-512x512.png',
           'pwa-maskable-512x512.png',
@@ -136,10 +133,10 @@ export default defineConfig(() => {
               icons: [{ src: '/pwa-192x192.png', sizes: '192x192' }],
             },
             {
-              name: 'Lịch Ăn Theo Tuần',
-              short_name: 'Lịch Ăn Tuần',
-              description: 'Thực đơn 7 ngày và danh sách mua sắm',
-              url: '/lich-an-theo-tuan',
+              name: 'Lên Lịch Ăn Tuần',
+              short_name: 'Lịch Ăn',
+              description: 'Lên thực đơn 7 ngày và danh sách mua sắm',
+              url: '/len-lich-an',
               icons: [{ src: '/pwa-192x192.png', sizes: '192x192' }],
             },
           ],
@@ -204,7 +201,7 @@ export default defineConfig(() => {
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
       // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
-      hmr: false,
+      hmr: process.env.DISABLE_HMR !== 'true',
       // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
     },

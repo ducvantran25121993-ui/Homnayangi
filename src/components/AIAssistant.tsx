@@ -60,50 +60,15 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
       });
 
       const data = await res.json();
-      if (data.success && Array.isArray(data.suggestions) && data.suggestions.length > 0) {
+      if (data.success && Array.isArray(data.suggestions)) {
         setSuggestions(data.suggestions);
         setAiAdvice(data.advice || '');
       } else {
-        throw new Error('Fallback needed');
+        setErrorMsg(data.error || 'Không thể tạo gợi ý, vui lòng thử lại.');
       }
-    } catch {
-      // Graceful local fallback ensuring 100% uptime with zero dead ends
-      setSuggestions([
-        {
-          name: 'Cơm Tấm Sườn Bì Chả Đặc Biệt',
-          tagline: 'Kinh điển món ngon Sài Gòn, nạp năng lượng trọn vẹn',
-          category: 'Cơm',
-          estimatedPrice: '45.000đ - 65.000đ',
-          reason: `Phù hợp bữa ${mealTime}, no lâu, chuẩn hương vị và dễ dàng đặt ship ngay.`,
-          searchKeyword: 'Cơm tấm sườn bì chả',
-          tags: ['Ăn chắc bụng', 'Giao nhanh', 'Phổ biến'],
-          calories: '~680 kcal',
-          pairWith: 'Canh khổ qua hoặc trà đá hoa lài',
-        },
-        {
-          name: 'Bún Bò Huế Chả Cua Thịt Nạm',
-          tagline: 'Nước dùng cay nồng thơm mùi sả ruốc, xì xụp cực đã',
-          category: 'Bún / Mì / Phở',
-          estimatedPrice: '50.000đ - 70.000đ',
-          reason: `Hương vị thơm nồng sả ớt sưởi ấm vị giác cho bữa ${mealTime}.`,
-          searchKeyword: 'Bún bò Huế',
-          tags: ['Đậm đà', 'Ấm bụng', 'Best-seller'],
-          calories: '~580 kcal',
-          pairWith: 'Rau ghém bắp chuối & nước mía',
-        },
-        {
-          name: 'Nem Nướng Nha Trang Cuốn Rau',
-          tagline: 'Nem nướng thơm lừng, chấm nước sốt tương gan thần thánh',
-          category: 'Món Cuốn',
-          estimatedPrice: '45.000đ - 65.000đ',
-          reason: 'Nhiều rau xanh thanh mát, đổi vị vừa ngon vừa không lo ngấy.',
-          searchKeyword: 'Nem nướng Nha Trang',
-          tags: ['Thanh mát', 'Nhiều rau', 'Ăn vui miệng'],
-          calories: '~520 kcal',
-          pairWith: 'Trà đào cam sả hoặc nước chanh dây',
-        },
-      ]);
-      setAiAdvice(`Mẹo nhỏ: Đặt món sớm 15 phút tại ${location} để đồ ăn tới nhanh nhất và kịp áp mã freeship!`);
+    } catch (err: any) {
+      console.error(err);
+      setErrorMsg('Lỗi kết nối máy chủ gợi ý món ăn.');
     } finally {
       setLoading(false);
     }
@@ -112,12 +77,16 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
   return (
     <div className="py-6 sm:py-8 max-w-6xl mx-auto px-4">
       {/* Header */}
-      <div className="text-center max-w-5xl xl:max-w-6xl mx-auto mb-8">
-        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-extrabold text-stone-900 tracking-tight mb-2 md:whitespace-nowrap">
+      <div className="text-center max-w-2xl mx-auto mb-8">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-bold mb-3">
+          <Sparkles className="w-3.5 h-3.5 text-purple-600" />
+          GEMINI 3.8 FLASH FOOD ENGINE
+        </div>
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mb-2">
           AI Gợi Ý Món Ăn - <span className="text-purple-600">Trợ Lý Ẩm Thực Thông Minh</span>
         </h1>
-        <p className="text-sm sm:text-base text-stone-600 max-w-3xl mx-auto">
-          Đắn đo chưa biết ăn gì hôm nay? Cứ chọn tâm trạng, thời tiết hay túi tiền của bạn, trợ lý sẽ gợi ý ngay 3 món ngon hợp ý kèm quán ship tận nơi!
+        <p className="text-sm sm:text-base text-stone-600">
+          Trí tuệ nhân tạo Gemini phân tích tâm trạng, thời tiết, ngân sách để gợi ý ngay 3 món ngon chuẩn vị khó cưỡng kèm link đặt món ShopeeFood, GrabFood & BeFood.
         </p>
       </div>
 
@@ -408,7 +377,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
                     </button>
                   )}
                 </div>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
+                <div className="grid grid-cols-3 gap-1.5">
                   <button
                     onClick={() =>
                       trackAndOpenAffiliateLink(
@@ -455,22 +424,6 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
                   >
                     <span className="text-[11px] font-black">BeFood</span>
                     <span className="text-[9px] font-bold">Tìm quán gần</span>
-                  </button>
-
-                  <button
-                    onClick={() =>
-                      trackAndOpenAffiliateLink(
-                        'googlemaps',
-                        { name: item.searchKeyword || item.name },
-                        affiliateConfig,
-                        userLocation
-                      )
-                    }
-                    title={`Mở Google Maps tìm quán ${item.name} gần bạn`}
-                    className="flex flex-col items-center justify-center p-2 rounded-xl bg-[#4285F4] hover:bg-[#3367D6] text-white transition-all active:scale-95 cursor-pointer shadow-xs"
-                  >
-                    <span className="text-[11px] font-black">Google Maps</span>
-                    <span className="text-[9px] opacity-85">Tìm quanh đây</span>
                   </button>
                 </div>
               </div>

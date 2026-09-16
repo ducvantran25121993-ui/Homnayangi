@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { X, ShoppingBag, MapPin, Share2 } from 'lucide-react';
+import { X, ShoppingBag, MapPin, Share2, Sparkles, Building2, ChevronRight } from 'lucide-react';
 import { Dish, AffiliateConfig, UserLocation } from '../types';
 import { trackAndOpenAffiliateLink } from '../utils/affiliate';
 import { formatLocationDisplay } from '../utils/location';
 import { ShareModal } from './ShareModal';
+import { findSponsoredPartnerForDish } from '../data/sponsoredPartners';
+import { SponsoredRestaurantCard } from './SponsoredRestaurantCard';
 
 interface DishDetailModalProps {
   dish: Dish | null;
@@ -21,6 +23,11 @@ export const DishDetailModal: React.FC<DishDetailModalProps> = ({
   onOpenLocationModal,
 }) => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+
+  // Check if there is an active sponsored partner restaurant for this dish
+  const sponsoredPartner = dish
+    ? findSponsoredPartnerForDish(dish.id, userLocation.city)
+    : undefined;
 
   // Support Escape key to close
   useEffect(() => {
@@ -137,6 +144,35 @@ export const DishDetailModal: React.FC<DishDetailModalProps> = ({
               Đổi vị trí
             </button>
           </div>
+
+          {/* SPONSORED PARTNER / QUÁN ĐƯỢC ĐỀ XUẤT */}
+          {sponsoredPartner ? (
+            <div className="pt-1">
+              <SponsoredRestaurantCard partner={sponsoredPartner} dishName={dish.name} />
+            </div>
+          ) : (
+            <div className="rounded-xl border border-dashed border-amber-300 bg-amber-50/60 p-2.5 sm:p-3 flex items-center justify-between gap-2 text-xs text-amber-900">
+              <div className="flex items-center gap-2 min-w-0">
+                <Building2 className="w-4 h-4 text-amber-600 shrink-0" />
+                <span className="truncate text-[11px] sm:text-xs">
+                  Bạn là chủ quán <strong>{dish.name}</strong>? Đăng ký xuất hiện tại đây
+                </span>
+              </div>
+              <a
+                href="/lien-he"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onClose();
+                  window.history.pushState({ tab: 'contact' }, '', '/lien-he');
+                  window.dispatchEvent(new PopStateEvent('popstate'));
+                }}
+                className="shrink-0 font-bold text-orange-600 hover:text-orange-700 underline flex items-center gap-0.5 text-[11px] sm:text-xs"
+              >
+                Đặt chỗ
+                <ChevronRight className="w-3 h-3" />
+              </a>
+            </div>
+          )}
 
           {/* Action Row: Order Delivery with Promo Code */}
           <div className="pt-1 space-y-2.5">

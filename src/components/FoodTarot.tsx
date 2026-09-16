@@ -17,7 +17,6 @@ import {
   MapPin,
   Sparkle,
   Share2,
-  Bell,
 } from 'lucide-react';
 import { INITIAL_DISHES } from '../data/dishes';
 import { TAROT_REALMS, TarotRealmId, isDishInRealm } from '../data/tarotRealms';
@@ -26,8 +25,6 @@ import { trackAndOpenAffiliateLink, formatVND } from '../utils/affiliate';
 import { formatLocationDisplay } from '../utils/location';
 import { DeliveryLocationBadge } from './DeliveryLocationBadge';
 import { tarotAudio } from '../utils/tarotSound';
-import { zenAudio } from '../utils/zenAudio';
-import { ZenSoundModal, useZenAudioStatus } from './ZenSoundWidget';
 import { FoodAmuletModal, FoodAmuletData } from './FoodAmuletModal';
 import { TarotSigilArt } from './TarotSigilArt';
 import { getZodiacArchetypes, ELEMENT_THEMES } from '../data/zodiacTarotCards';
@@ -1150,8 +1147,6 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
   const [selectedZodiac, setSelectedZodiac] = useState<ZodiacSign>(ZODIAC_SIGNS[0]);
   const [amuletData, setAmuletData] = useState<FoodAmuletData | null>(null);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
-  const [isZenSoundOpen, setIsZenSoundOpen] = useState(false);
-  const zenStatus = useZenAudioStatus();
 
   // Dynamic Tarot Archetypes deck corresponding to the selected Zodiac
   const activeArchetypes = useMemo(() => {
@@ -1314,43 +1309,35 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
             </span>
           </button>
 
-          {/* Integrated Chuông Tây Tạng & Âm Thanh Thiền Button */}
+          {/* Tibetan Sound Toggle */}
           <button
-            type="button"
-            onClick={() => {
-              setIsZenSoundOpen(true);
-              zenAudio.strikeBowl(432);
-            }}
-            title="Mở Chuông Tây Tạng & Âm thanh thiền chữa lành (432Hz)"
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full border text-xs font-bold transition-all cursor-pointer shadow-xs group ${
-              zenStatus.isPlaying
-                ? 'bg-amber-950/90 border-amber-500/80 text-amber-300 shadow-md shadow-amber-900/30 ring-2 ring-amber-500/20'
-                : 'bg-purple-50 hover:bg-purple-100 hover:border-purple-300 border-purple-200 text-purple-950'
-            }`}
+            onClick={handleToggleMute}
+            title={isMuted ? 'Bật âm thanh huyền ảo' : 'Tắt âm thanh'}
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-50 hover:bg-purple-100 border border-purple-200 text-purple-900 text-xs font-bold transition-colors cursor-pointer shadow-xs"
           >
-            <Bell className={`w-4 h-4 transition-transform group-hover:rotate-12 ${
-              zenStatus.isPlaying ? 'text-amber-400 animate-bounce' : 'text-purple-600'
-            }`} />
-            <span className="text-xs font-bold">
-              {zenStatus.isPlaying ? 'Chuông Tây Tạng (Đang phát)' : 'Chuông Tây Tạng'}
-            </span>
-            {zenStatus.isPlaying ? (
-              <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+            {isMuted ? (
+              <>
+                <VolumeX className="w-4 h-4 text-stone-500" />
+                <span className="text-xs text-stone-600 font-medium">Âm Thanh: Tắt</span>
+              </>
             ) : (
-              <Sparkles className="w-3.5 h-3.5 text-amber-500 opacity-90" />
+              <>
+                <Volume2 className="w-4 h-4 text-purple-600 animate-pulse" />
+                <span className="text-xs text-purple-950 font-bold">Chuông Tây Tạng</span>
+              </>
             )}
           </button>
         </div>
 
         {/* Altar Header */}
-        <div className="relative z-10 text-center w-full max-w-5xl xl:max-w-6xl mx-auto mb-6 sm:mb-8">
+        <div className="relative z-10 text-center w-full max-w-4xl mx-auto mb-6 sm:mb-8">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#1c0836] via-[#381163] to-[#1c0836] text-amber-300 text-xs font-black uppercase tracking-wider mb-3 shadow-md shadow-purple-950/20 border border-purple-500/40 backdrop-blur-sm">
             <Compass className="w-4 h-4 text-amber-300 animate-spin-slow" />
             <span className="bg-gradient-to-r from-amber-200 via-yellow-300 to-amber-200 bg-clip-text text-transparent font-black drop-shadow-xs">
               TAROT ẨM THỰC VIỆT NAM • TRẢI BÀI CHIÊM TINH
             </span>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-black text-stone-900 tracking-tight mb-3 md:whitespace-nowrap">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-black text-stone-900 tracking-tight mb-3">
             Tarot Ẩm Thực: Hôm nay <span className="text-[#4f46e5] font-black">Vũ Trụ</span> mách bạn ăn gì?
           </h1>
           <p className="text-sm sm:text-base text-stone-600 max-w-2xl mx-auto font-normal leading-relaxed">
@@ -2043,13 +2030,13 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                       </span>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
                       <button
                         onClick={() =>
                           trackAndOpenAffiliateLink('shopeefood', revealedResult.dish, affiliateConfig, userLocation)
                         }
                         title={`Chuyển qua ShopeeFood tìm quán ${revealedResult.dish.name} tại ${targetArea}`}
-                        className="py-3 px-2.5 rounded-2xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(238,77,45,0.35)] cursor-pointer"
+                        className="py-3 px-3 rounded-2xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(238,77,45,0.35)] cursor-pointer"
                       >
                         <ShoppingBag className="w-4 h-4 shrink-0" />
                         <span>ShopeeFood</span>
@@ -2060,7 +2047,7 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                           trackAndOpenAffiliateLink('grabfood', revealedResult.dish, affiliateConfig, userLocation)
                         }
                         title={`Chuyển qua GrabFood tìm quán ${revealedResult.dish.name} tại ${targetArea}`}
-                        className="py-3 px-2.5 rounded-2xl bg-[#00B14F] hover:bg-[#009643] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(0,177,79,0.35)] cursor-pointer"
+                        className="py-3 px-3 rounded-2xl bg-[#00B14F] hover:bg-[#009643] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(0,177,79,0.35)] cursor-pointer"
                       >
                         <ShoppingBag className="w-4 h-4 shrink-0" />
                         <span>GrabFood</span>
@@ -2071,21 +2058,10 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                           trackAndOpenAffiliateLink('befood', revealedResult.dish, affiliateConfig, userLocation)
                         }
                         title={`Chuyển qua BeFood tìm quán ${revealedResult.dish.name} tại ${targetArea}`}
-                        className="py-3 px-2.5 rounded-2xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-950 font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(255,209,0,0.35)] cursor-pointer"
+                        className="py-3 px-3 rounded-2xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-950 font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(255,209,0,0.35)] cursor-pointer"
                       >
                         <ShoppingBag className="w-4 h-4 shrink-0 text-stone-950" />
                         <span>BeFood</span>
-                      </button>
-
-                      <button
-                        onClick={() =>
-                          trackAndOpenAffiliateLink('googlemaps', revealedResult.dish, affiliateConfig, userLocation)
-                        }
-                        title={`Mở Google Maps tìm quán ${revealedResult.dish.name} gần bạn`}
-                        className="py-3 px-2.5 rounded-2xl bg-[#4285F4] hover:bg-[#3367D6] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(66,133,244,0.35)] cursor-pointer"
-                      >
-                        <MapPin className="w-4 h-4 shrink-0 text-white" />
-                        <span>Google Maps</span>
                       </button>
                     </div>
                   </div>
@@ -2154,12 +2130,6 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
           text={`Tôi vừa bốc được quẻ "${revealedResult.archetype.name}" (${revealedResult.isUpright ? 'Thuận Chiều' : 'Nghịch Chiều'}) với món định mệnh "${revealedResult.dish.name}".\nLời sấm truyền: "${revealedResult.quote}"`}
         />
       )}
-
-      {/* Zen Sound & Chuông Tây Tạng Modal */}
-      <ZenSoundModal
-        isOpen={isZenSoundOpen}
-        onClose={() => setIsZenSoundOpen(false)}
-      />
       </div>
     </div>
   );

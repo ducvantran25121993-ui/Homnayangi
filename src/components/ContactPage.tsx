@@ -232,6 +232,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                       className="w-full px-3.5 py-2.5 text-xs sm:text-sm rounded-xl border border-stone-200 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 bg-white text-stone-800"
                     >
                       <option value="Góp ý món mới & Cải tiến">Góp ý món mới & Cải tiến tính năng</option>
+                      <option value="Đặt suất xuất hiện: Quán Ngon Đề Xuất (Theo Món)">Đặt suất xuất hiện: Quán Ngon Đề Xuất (Theo Món)</option>
                       <option value="Hợp tác quảng cáo nhà hàng / quán ăn">Hợp tác quảng cáo nhà hàng / quán ăn</option>
                       <option value="Hợp tác đối tác giao đồ ăn">Hợp tác đối tác giao đồ ăn (ShopeeFood, Grab, Be)</option>
                       <option value="Báo cáo lỗi kỹ thuật hoặc nội dung">Báo cáo lỗi kỹ thuật hoặc nội dung</option>

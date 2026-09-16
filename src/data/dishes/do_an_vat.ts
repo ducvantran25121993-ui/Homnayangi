@@ -115,7 +115,7 @@ export const DO_AN_VAT_DISHES: Dish[] = [
   },
   {
     id: 'trung-cut-lon-xao-me',
-    name: 'Trứng Cút Lộn Xào Me Chua Ngọt',
+    name: 'Trứng Cút Lộn Xào Me Chua Ngọt Rắc Đậu Phộng',
     vietnameseName: 'Cút Lộn Xào Me',
     category: 'an_vat',
     mealTime: ['an_vat', 'toi', 'an_dem'],
@@ -123,7 +123,7 @@ export const DO_AN_VAT_DISHES: Dish[] = [
     estimatedPrice: 30000,
     calories: '290 - 380 kcal',
     description: 'Từng quả cút lộn thấm đẫm sốt me sánh sệt chua chua ngọt ngọt cay the, rắc ngập rau răm thơm nồng và hành phi, đậu phộng giòn bùi.',
-    image: '/images/trung_cut_lon_xao_me.jpg',
+    image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&auto=format&fit=crop&q=80',
     popularTags: ['Sốt me chua ngọt', 'Rau răm cay thơm', 'Bổ dưỡng'],
     searchKeyword: 'Cút lộn xào me',
   },

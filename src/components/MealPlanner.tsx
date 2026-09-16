@@ -279,20 +279,20 @@ export const MealPlanner: React.FC<MealPlannerProps> = ({
       )}
 
       {/* Hero Header */}
-      <div className="text-center max-w-5xl xl:max-w-6xl mx-auto mb-8 sm:mb-10">
+      <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 text-orange-700 text-xs font-bold uppercase tracking-wider mb-3.5 border border-orange-200/80">
           <CalendarDays className="w-3.5 h-3.5" />
           <span>Gợi Ý Lịch Ăn Theo Tuần Thông Minh</span>
         </div>
         
-        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-black text-stone-900 tracking-tight leading-tight mb-3 md:whitespace-nowrap">
+        <h1 className="text-2xl sm:text-4xl font-black text-stone-900 tracking-tight leading-tight mb-3">
           <span>Lịch Ăn Tuần: </span>
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-amber-600 to-red-600">
             Thực Đơn 7 Ngày Chuẩn Vị & Tiết Kiệm
           </span>
         </h1>
         
-        <p className="text-sm sm:text-base text-stone-600 leading-relaxed max-w-3xl mx-auto">
+        <p className="text-sm sm:text-base text-stone-600 leading-relaxed">
           Không còn mất 30 phút mỗi ngày đau đầu nghĩ <strong className="text-stone-900">&quot;Ăn gì hôm nay?&quot;</strong>. Lập sẵn thực đơn 21 bữa sáng, trưa, tối đủ calo, chuẩn vị truyền thống 3 miền, tự do đổi món và đặt đồ ăn nhanh trong tích tắc.
         </p>
       </div>

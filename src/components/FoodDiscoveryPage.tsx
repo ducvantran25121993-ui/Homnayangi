@@ -1,0 +1,1344 @@
+import React, { useState, useMemo, useEffect } from 'react';
+import {
+  MapPin,
+  Calendar,
+  ChefHat,
+  Sparkles,
+  Clock,
+  Flame,
+  Users,
+  Search,
+  BookOpen,
+  ArrowRight,
+  CheckCircle2,
+  Share2,
+  Copy,
+  Check,
+  ShoppingBag,
+  RotateCcw,
+  Utensils,
+  Lightbulb,
+  Heart,
+  ChevronRight,
+  Compass,
+  Soup,
+  Fish,
+  Sun,
+  Moon,
+} from 'lucide-react';
+import { Dish, UserLocation, AffiliateConfig } from '../types';
+import {
+  TabType,
+  DiscoverSubSection,
+  DISCOVER_SUB_CONFIG,
+  getDiscoverSubSectionFromUrl,
+  updateDiscoverSubSEO,
+} from '../utils/navigation';
+import { INITIAL_DISHES } from '../data/dishes';
+import { REGIONAL_CUISINES } from '../data/regionalCuisine';
+import {
+  DAILY_DAY_MENUS,
+  THEMATIC_MENUS,
+  DEFAULT_TRAY_IMAGE,
+  getTrayIngredients,
+} from '../data/dailyMenus';
+import { getDishRecipe, FEATURED_RECIPE_IDS } from '../data/recipes';
+
+interface FoodDiscoveryPageProps {
+  onSelectDish: (dish: Dish) => void;
+  onNavigate: (tab: TabType) => void;
+  userLocation?: UserLocation;
+  affiliateConfig?: AffiliateConfig;
+}
+
+export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
+  onSelectDish,
+  onNavigate,
+}) => {
+  // Main discovery section tabs: 'region' | 'daily' | 'recipe'
+  const [sectionTab, setSectionTab] = useState<DiscoverSubSection>(() => getDiscoverSubSectionFromUrl());
+
+  // Listen to browser Back/Forward navigation for sub-sections
+  useEffect(() => {
+    const handlePopState = () => {
+      const currentSub = getDiscoverSubSectionFromUrl();
+      setSectionTab(currentSub);
+      updateDiscoverSubSEO(currentSub);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Switch sub-section with URL history and SEO update
+  const handleSwitchSection = (sub: DiscoverSubSection, e?: React.MouseEvent) => {
+    if (e) {
+      if (e.ctrlKey || e.metaKey || e.button === 1) return;
+      e.preventDefault();
+    }
+    setSectionTab(sub);
+    const targetPath = DISCOVER_SUB_CONFIG[sub].path;
+    if (window.location.pathname !== targetPath) {
+      window.history.pushState({ tab: 'discover', sub }, '', targetPath);
+    }
+    updateDiscoverSubSEO(sub);
+  };
+
+  // Sub-state for Regional Cuisine
+  const [selectedRegionId, setSelectedRegionId] = useState<'bac' | 'trung' | 'nam' | 'mientay'>('bac');
+
+  // Sub-state for Daily Menus
+  const [selectedDayId, setSelectedDayId] = useState<string>('t2');
+  const [mealSlotTab, setMealSlotTab] = useState<'lunch' | 'dinner'>('dinner');
+  const [menuMode, setMenuMode] = useState<'weekly' | 'thematic'>('weekly');
+  const [selectedThematicId, setSelectedThematicId] = useState<string>('com-nha-me-nau');
+  const [checkedIngredients, setCheckedIngredients] = useState<Record<string, boolean>>({});
+  const [copiedIngredientsToast, setCopiedIngredientsToast] = useState(false);
+
+  const toggleIngredientCheck = (itemKey: string) => {
+    setCheckedIngredients((prev) => ({
+      ...prev,
+      [itemKey]: !prev[itemKey],
+    }));
+  };
+
+  const handleCopyIngredients = (
+    trayName: string,
+    ingredients: { category: string; items: string[] }[]
+  ) => {
+    const text =
+      `📋 DANH SÁCH NGUYÊN LIỆU ĐI CHỢ - ${trayName.toUpperCase()}\n` +
+      ingredients
+        .map((cat) => `\n【${cat.category}】\n` + cat.items.map((it) => `• ${it}`).join('\n'))
+        .join('\n') +
+      `\n\nNấu chuẩn vị cùng Ăn Gì Đây!`;
+    navigator.clipboard.writeText(text);
+    setCopiedIngredientsToast(true);
+    setTimeout(() => setCopiedIngredientsToast(false), 2500);
+  };
+
+  // Sub-state for Cooking Recipes (Cách Nấu)
+  const [recipeSearchQuery, setRecipeSearchQuery] = useState<string>('');
+  const [selectedRecipeDish, setSelectedRecipeDish] = useState<Dish>(() => {
+    return INITIAL_DISHES.find((d) => d.id === 'pho-bo-tai-lan') || INITIAL_DISHES[0];
+  });
+  const [copiedRecipe, setCopiedRecipe] = useState(false);
+
+  // Filtered dishes for recipe selection
+  const recipeFilteredDishes = useMemo(() => {
+    if (!recipeSearchQuery.trim()) {
+      return INITIAL_DISHES.slice(0, 24);
+    }
+    const q = recipeSearchQuery.toLowerCase().trim();
+    return INITIAL_DISHES.filter(
+      (d) =>
+        d.name.toLowerCase().includes(q) ||
+        d.vietnameseName.toLowerCase().includes(q) ||
+        d.searchKeyword.toLowerCase().includes(q) ||
+        d.popularTags.some((t) => t.toLowerCase().includes(q))
+    ).slice(0, 30);
+  }, [recipeSearchQuery]);
+
+  // Current active recipe
+  const currentRecipe = useMemo(() => {
+    return getDishRecipe(selectedRecipeDish);
+  }, [selectedRecipeDish]);
+
+  // Current region data
+  const currentRegion = useMemo(() => {
+    return REGIONAL_CUISINES.find((r) => r.id === selectedRegionId) || REGIONAL_CUISINES[0];
+  }, [selectedRegionId]);
+
+  // Dishes for current region
+  const regionDishes = useMemo(() => {
+    const dishMap = new Map(INITIAL_DISHES.map((d) => [d.id, d]));
+    return currentRegion.dishIds
+      .map((id) => dishMap.get(id))
+      .filter((d): d is Dish => Boolean(d));
+  }, [currentRegion]);
+
+  // Current day menu
+  const currentDayMenu = useMemo(() => {
+    return DAILY_DAY_MENUS.find((m) => m.id === selectedDayId) || DAILY_DAY_MENUS[0];
+  }, [selectedDayId]);
+
+  // Current thematic menu
+  const currentThematicMenu = useMemo(() => {
+    return THEMATIC_MENUS.find((m) => m.id === selectedThematicId) || THEMATIC_MENUS[0];
+  }, [selectedThematicId]);
+
+  // Helper to jump to a recipe from another section
+  const handleViewDishRecipe = (dish: Dish) => {
+    setSelectedRecipeDish(dish);
+    handleSwitchSection('recipe');
+    window.scrollTo({ top: 400, behavior: 'smooth' });
+  };
+
+  // Helper to jump to recipe by dish ID
+  const handleViewRecipeById = (dishId: string) => {
+    const dish = INITIAL_DISHES.find((d) => d.id === dishId);
+    if (dish) {
+      handleViewDishRecipe(dish);
+    }
+  };
+
+  // Copy recipe text to clipboard
+  const handleCopyRecipe = () => {
+    const lines = [
+      `🍳 CÔNG THỨC NẤU: ${currentRecipe.dishName}`,
+      `⏱ Chuẩn bị: ${currentRecipe.prepTime} | Nấu: ${currentRecipe.cookTime} | Độ khó: ${currentRecipe.difficulty}`,
+      `👥 Khẩu phần: ${currentRecipe.servings}`,
+      '',
+      '📋 NGUYÊN LIỆU:',
+      ...currentRecipe.ingredients.flatMap((cat) => [
+        `• ${cat.category}:`,
+        ...cat.items.map((it) => `  - ${it}`),
+      ]),
+      '',
+      '👩‍🍳 CÁC BƯỚC THỰC HIỆN:',
+      ...currentRecipe.steps.flatMap((st) => [
+        `Bước ${st.step}: ${st.title}`,
+        st.description,
+        st.tip ? `(Mẹo: ${st.tip})` : '',
+      ]),
+      '',
+      `💡 BÍ QUYẾT BẾP TRƯỞNG: ${currentRecipe.chefSecret}`,
+      currentRecipe.recommendedSauce ? `🥢 Nước chấm & đồ ăn kèm: ${currentRecipe.recommendedSauce}` : '',
+      '',
+      'Khám phá thêm 160+ món ngon tại: https://www.angigio.com/kham-pha-am-thuc',
+    ].filter(Boolean);
+
+    navigator.clipboard.writeText(lines.join('\n')).then(() => {
+      setCopiedRecipe(true);
+      setTimeout(() => setCopiedRecipe(false), 2500);
+    });
+  };
+
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
+      {/* 1. Header Banner */}
+      <div className="relative rounded-3xl overflow-hidden bg-radial from-amber-500/15 via-orange-500/10 to-transparent border border-orange-200/80 p-6 sm:p-10 mb-8 sm:mb-12 shadow-sm text-center">
+        <div className="max-w-3xl mx-auto flex flex-col items-center">
+          <div className="inline-flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100/90 text-orange-800 text-xs sm:text-sm font-bold mb-4 border border-orange-200">
+            <Compass className="w-4 h-4 text-orange-600 animate-spin-slow" />
+            <span>Chuyên Trang Khám Phá Ẩm Thực & Cẩm Nang Nấu Bếp</span>
+          </div>
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight leading-tight mb-3">
+            Khám Phá Ẩm Thực 3 Miền, Thực Đơn Mỗi Ngày &amp; Cách Nấu Món Ngon
+          </h1>
+          <p className="text-stone-600 text-sm sm:text-base leading-relaxed mb-6 max-w-2xl mx-auto">
+            Bản đồ ẩm thực tinh hoa Việt Nam: Thưởng thức phong vị đặc trưng Bắc - Trung - Nam, gợi ý thực đơn
+            3 bữa cân bằng dinh dưỡng và hướng dẫn chi tiết cách nấu hơn 160+ món ngon chuẩn vị gia đình.
+          </p>
+
+          {/* 3 Main Pillars Navigation Tabs */}
+          <nav aria-label="Chuyên mục khám phá ẩm thực" className="w-full max-w-2xl grid grid-cols-3 gap-2 p-1.5 bg-stone-900/5 backdrop-blur-md rounded-2xl border border-stone-200">
+            <a
+              href={DISCOVER_SUB_CONFIG.region.path}
+              onClick={(e) => handleSwitchSection('region', e)}
+              className={`flex items-center justify-center gap-2 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer ${
+                sectionTab === 'region'
+                  ? 'bg-white text-orange-600 shadow-md scale-[1.02]'
+                  : 'text-stone-600 hover:text-stone-900 hover:bg-white/50'
+              }`}
+            >
+              <MapPin className="w-4 h-4 shrink-0" />
+              <span className="truncate">Ẩm Thực Vùng Miền</span>
+            </a>
+
+            <a
+              href={DISCOVER_SUB_CONFIG.daily.path}
+              onClick={(e) => handleSwitchSection('daily', e)}
+              className={`flex items-center justify-center gap-2 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer ${
+                sectionTab === 'daily'
+                  ? 'bg-white text-orange-600 shadow-md scale-[1.02]'
+                  : 'text-stone-600 hover:text-stone-900 hover:bg-white/50'
+              }`}
+            >
+              <Calendar className="w-4 h-4 shrink-0" />
+              <span className="truncate">Thực Đơn Mỗi Ngày</span>
+            </a>
+
+            <a
+              href={DISCOVER_SUB_CONFIG.recipe.path}
+              onClick={(e) => handleSwitchSection('recipe', e)}
+              className={`flex items-center justify-center gap-2 py-3 px-3 rounded-xl font-bold text-xs sm:text-sm transition-all cursor-pointer ${
+                sectionTab === 'recipe'
+                  ? 'bg-white text-orange-600 shadow-md scale-[1.02]'
+                  : 'text-stone-600 hover:text-stone-900 hover:bg-white/50'
+              }`}
+            >
+              <ChefHat className="w-4 h-4 shrink-0" />
+              <span className="truncate">Cách Nấu Món Ngon</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 2. SECTION 1: ẨM THỰC VÙNG MIỀN */}
+      {/* ========================================================================= */}
+      {sectionTab === 'region' && (
+        <div className="space-y-8 animate-fade-in">
+          {/* Region Tabs */}
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+            {REGIONAL_CUISINES.map((region) => (
+              <button
+                key={region.id}
+                onClick={() => setSelectedRegionId(region.id)}
+                className={`flex items-center px-4 py-2.5 rounded-2xl font-bold text-xs sm:text-sm transition-all cursor-pointer border ${
+                  selectedRegionId === region.id
+                    ? 'bg-gradient-to-r from-orange-500 via-orange-600 to-amber-500 text-white border-transparent shadow-md shadow-orange-500/25 ring-2 ring-orange-400/30'
+                    : 'bg-white text-stone-700 border-stone-200 hover:border-orange-300 hover:bg-orange-50/50 hover:text-orange-950'
+                }`}
+              >
+                <span>{region.name}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Selected Region Detailed Card */}
+          <div className="bg-white rounded-3xl border border-stone-200 p-6 sm:p-8 shadow-xs">
+            <div className="flex flex-col lg:flex-row items-start justify-between gap-6 mb-6 pb-6 border-b border-stone-100">
+              <div className="space-y-2">
+                <div className="text-xs font-extrabold uppercase tracking-wider text-orange-600">
+                  {currentRegion.badge}
+                </div>
+                <h2 className="text-xl sm:text-2xl font-black text-stone-900">
+                  {currentRegion.title}
+                </h2>
+                <p className="text-stone-600 text-sm leading-relaxed max-w-3xl">
+                  {currentRegion.description}
+                </p>
+              </div>
+
+              {/* Taste Profile Badges */}
+              <div className="flex flex-wrap gap-1.5 shrink-0">
+                {currentRegion.tasteProfile.map((t, idx) => (
+                  <span
+                    key={idx}
+                    className="px-3 py-1 rounded-xl bg-orange-50 text-orange-700 text-xs font-bold border border-orange-200"
+                  >
+                    ✨ {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Key Ingredients & Chef's Tip */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+              <div className="p-4 rounded-2xl bg-amber-50/70 border border-amber-200/80">
+                <h3 className="font-bold text-stone-900 text-xs uppercase tracking-wider mb-2 flex items-center gap-1.5 text-amber-900">
+                  <Utensils className="w-4 h-4 text-amber-600" />
+                  Gia vị &amp; Linh hồn vùng đất
+                </h3>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-stone-700">
+                  {currentRegion.iconicKeyIngredients.map((ing, i) => (
+                    <li key={i} className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                      <span>{ing}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200">
+                <h3 className="font-bold text-stone-900 text-xs uppercase tracking-wider mb-2 flex items-center gap-1.5 text-stone-800">
+                  <Lightbulb className="w-4 h-4 text-orange-500" />
+                  Nghệ thuật thưởng thức
+                </h3>
+                <p className="text-xs text-stone-600 leading-relaxed">
+                  {currentRegion.highlightTip}
+                </p>
+              </div>
+            </div>
+
+            {/* Grid of Dishes in this Region */}
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-black text-stone-900 text-base sm:text-lg flex items-center gap-2">
+                  <span>Món Ngon Tiêu Biểu ({regionDishes.length} món)</span>
+                </h3>
+                <span className="text-xs text-stone-500">
+                  Bấm vào món để xem cách nấu hoặc đặt ship
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {regionDishes.map((dish) => (
+                  <div
+                    key={dish.id}
+                    className="group bg-stone-50 hover:bg-white rounded-2xl border border-stone-200 hover:border-orange-300 p-3.5 transition-all hover:shadow-md flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="relative aspect-video rounded-xl overflow-hidden mb-3 bg-stone-200">
+                        <img
+                          src={dish.image}
+                          alt={dish.name}
+                          referrerPolicy="no-referrer"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <div className="absolute top-2 right-2 bg-stone-900/80 backdrop-blur-xs text-white text-[11px] font-bold px-2 py-0.5 rounded-lg">
+                          {dish.calories}
+                        </div>
+                      </div>
+
+                      <h4 className="font-extrabold text-stone-900 text-sm group-hover:text-orange-600 transition-colors line-clamp-1 mb-1">
+                        {dish.vietnameseName}
+                      </h4>
+                      <p className="text-stone-500 text-xs line-clamp-2 mb-3">
+                        {dish.description}
+                      </p>
+                    </div>
+
+                    <div className="pt-3 border-t border-stone-200/80 flex items-center justify-between gap-2">
+                      <button
+                        onClick={() => handleViewDishRecipe(dish)}
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl bg-orange-100/80 hover:bg-orange-200 text-orange-800 text-xs font-bold transition-colors cursor-pointer"
+                      >
+                        <ChefHat className="w-3.5 h-3.5 text-orange-600" />
+                        <span>Xem Cách Nấu</span>
+                      </button>
+
+                      <button
+                        onClick={() => onSelectDish(dish)}
+                        className="flex-1 inline-flex items-center justify-center gap-1.5 py-1.5 px-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold transition-colors cursor-pointer shadow-xs"
+                      >
+                        <ShoppingBag className="w-3.5 h-3.5 text-amber-200" />
+                        <span>Đặt Món Ship</span>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* 3. SECTION 2: THỰC ĐƠN MỖI NGÀY */}
+      {/* ========================================================================= */}
+      {sectionTab === 'daily' && (
+        <div className="space-y-8 animate-fade-in">
+          {/* Mode switch: 7 ngày trong tuần vs Chủ đề chuyên biệt */}
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="inline-flex p-1 rounded-2xl bg-stone-100 border border-stone-200">
+              <button
+                onClick={() => setMenuMode('weekly')}
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
+                  menuMode === 'weekly'
+                    ? 'bg-white text-stone-900 shadow-xs'
+                    : 'text-stone-600 hover:text-stone-900'
+                }`}
+              >
+                📅 Thực Đơn 7 Ngày (Thứ 2 - CN)
+              </button>
+              <button
+                onClick={() => setMenuMode('thematic')}
+                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
+                  menuMode === 'thematic'
+                    ? 'bg-white text-stone-900 shadow-xs'
+                    : 'text-stone-600 hover:text-stone-900'
+                }`}
+              >
+                🍱 Mâm Cơm &amp; Bộ Chủ Đề Hot
+              </button>
+            </div>
+
+            <button
+              onClick={() => onNavigate('planner')}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-bold transition-colors cursor-pointer shadow-xs"
+            >
+              <span>Mở Lịch Ăn Tuần Đầy Đủ</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Mode 1: 7 Days Weekly Menus */}
+          {menuMode === 'weekly' && (
+            <div className="space-y-6">
+              {/* Day Pills */}
+              <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
+                {DAILY_DAY_MENUS.map((day) => (
+                  <button
+                    key={day.id}
+                    onClick={() => setSelectedDayId(day.id)}
+                    className={`p-3 rounded-2xl text-center border transition-all cursor-pointer ${
+                      selectedDayId === day.id
+                        ? 'bg-orange-600 text-white border-orange-600 shadow-sm scale-[1.02]'
+                        : 'bg-white text-stone-700 border-stone-200 hover:border-orange-300 hover:bg-orange-50/40'
+                    }`}
+                  >
+                    <div className="font-extrabold text-sm sm:text-base">{day.dayName}</div>
+                    <div
+                      className={`text-[10px] truncate ${
+                        selectedDayId === day.id ? 'text-orange-100' : 'text-stone-500'
+                      }`}
+                    >
+                      {day.estimatedTotalCalories}
+                    </div>
+                  </button>
+                ))}
+              </div>
+
+              {/* Day Menu Detail */}
+              <div className="bg-white rounded-3xl border border-stone-200 p-6 sm:p-8 shadow-xs">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 border-b border-stone-100 mb-6">
+                  <div>
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-orange-100 text-orange-800 text-xs font-bold mb-2">
+                      <span>{currentDayMenu.dayName}</span>
+                      <span>•</span>
+                      <span>{currentDayMenu.estimatedTotalCalories}</span>
+                    </div>
+                    <h2 className="text-xl sm:text-2xl font-black text-stone-900">
+                      {currentDayMenu.title}
+                    </h2>
+                    <p className="text-stone-500 text-xs sm:text-sm mt-1">
+                      {currentDayMenu.tagline}
+                    </p>
+                  </div>
+
+                  <div className="text-left md:text-right shrink-0">
+                    <div className="text-xs text-stone-400">Ngân sách dự kiến</div>
+                    <div className="font-extrabold text-orange-600 text-sm sm:text-base">
+                      {currentDayMenu.avgBudget}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Slot Switch: Mâm Cơm Trưa vs Mâm Cơm Tối */}
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 bg-orange-50/60 p-3 rounded-2xl border border-orange-100">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-bold text-stone-700">Chọn bữa ăn gia đình:</span>
+                    <div className="inline-flex p-1 rounded-xl bg-white border border-stone-200 shadow-xs">
+                      <button
+                        onClick={() => setMealSlotTab('lunch')}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                          mealSlotTab === 'lunch'
+                            ? 'bg-orange-500 text-white shadow-xs'
+                            : 'text-stone-600 hover:text-stone-900'
+                        }`}
+                      >
+                        <Sun className="w-3.5 h-3.5" />
+                        <span>Mâm Cơm Trưa</span>
+                      </button>
+                      <button
+                        onClick={() => setMealSlotTab('dinner')}
+                        className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                          mealSlotTab === 'dinner'
+                            ? 'bg-orange-500 text-white shadow-xs'
+                            : 'text-stone-600 hover:text-stone-900'
+                        }`}
+                      >
+                        <Moon className="w-3.5 h-3.5" />
+                        <span>Mâm Cơm Tối</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="text-xs text-stone-500 italic">
+                    {mealSlotTab === 'lunch'
+                      ? currentDayMenu.familyLunch?.description
+                      : currentDayMenu.familyDinner?.description}
+                  </div>
+                </div>
+
+                {/* 3-Dish Meal Tray Presentation: Image + Ingredients + Dish Details */}
+                {(() => {
+                  const currentTray =
+                    mealSlotTab === 'lunch'
+                      ? currentDayMenu.familyLunch
+                      : currentDayMenu.familyDinner;
+                  const dishes = currentTray?.dishes || [];
+                  const trayIngredients = getTrayIngredients(currentTray);
+
+                  return (
+                    <div className="space-y-6">
+                      {/* 1. ẢNH LÀ MÂM CƠM 3 MÓN (Hero Meal Tray Showcase) */}
+                      <div className="relative rounded-3xl overflow-hidden border border-stone-200/80 shadow-md bg-stone-900 group">
+                        <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full overflow-hidden">
+                          <img
+                            src={currentTray?.trayImage || DEFAULT_TRAY_IMAGE}
+                            alt={currentTray?.trayName || 'Mâm cơm gia đình 3 món'}
+                            referrerPolicy="no-referrer"
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                          {/* Rich atmospheric contrast gradient */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/50 to-stone-950/20" />
+
+                          {/* Top Badges */}
+                          <div className="absolute top-3.5 sm:top-5 left-3.5 sm:left-5 right-3.5 sm:right-5 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+                            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-stone-900 text-xs font-black shadow-sm">
+                              <span className="w-2 h-2 rounded-full bg-orange-500 animate-pulse" />
+                              <span>MÂM CƠM GIA ĐÌNH 3 MÓN</span>
+                            </div>
+
+                            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-stone-900/85 backdrop-blur-md text-amber-200 text-xs font-semibold border border-white/20">
+                              <Users className="w-3.5 h-3.5 text-amber-300" />
+                              <span>{currentTray?.servings || 'Khẩu phần 3 - 5 người'}</span>
+                            </div>
+                          </div>
+
+                          {/* Bottom Content inside Tray Image */}
+                          <div className="absolute bottom-3.5 sm:bottom-6 left-3.5 sm:left-6 right-3.5 sm:right-6">
+                            <div className="max-w-3xl">
+                              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-orange-500 text-white text-[11px] font-extrabold mb-1.5 uppercase tracking-wide">
+                                <span>{mealSlotTab === 'lunch' ? 'Bữa Trưa' : 'Bữa Tối'} Chuẩn Cơm Mẹ Nấu</span>
+                              </div>
+                              <h3 className="text-lg sm:text-2xl font-black text-white leading-tight drop-shadow-sm">
+                                {currentTray?.trayName || 'Mâm Cơm 3 Món Chuẩn Vị Gia Đình'}
+                              </h3>
+                              <p className="text-xs sm:text-sm text-stone-200 mt-1 line-clamp-2 drop-shadow-sm font-medium">
+                                {currentTray?.description}
+                              </p>
+
+                              {/* 3 Dishes Quick Summary Chips on Tray */}
+                              <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-3">
+                                {dishes.slice(0, 3).map((d, i) => (
+                                  <div
+                                    key={i}
+                                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-stone-900/75 backdrop-blur-md border border-white/20 text-white text-[11px] sm:text-xs font-bold"
+                                  >
+                                    <span className="text-amber-400">
+                                      {d.role === 'Món Mặn' ? '🥩' : d.role === 'Món Canh' ? '🥣' : '🥗'}
+                                    </span>
+                                    <span className="text-stone-300 font-normal">{d.role}:</span>
+                                    <span className="text-white truncate max-w-[130px] sm:max-w-[190px]">{d.name}</span>
+                                  </div>
+                                ))}
+                                {dishes[3] && (
+                                  <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-orange-600/80 backdrop-blur-md text-white text-[11px] sm:text-xs font-bold">
+                                    <span>🍚 {dishes[3].name}</span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* 2. BÊN DƯỚI LÀ NGUYÊN LIỆU NẤU (Cooking Ingredients & Shopping List) */}
+                      <div className="bg-gradient-to-b from-amber-50/70 to-orange-50/40 rounded-3xl border border-amber-200/80 p-5 sm:p-7 shadow-xs">
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-amber-200/70 mb-5">
+                          <div>
+                            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-800 uppercase tracking-wider mb-1">
+                              <ShoppingBag className="w-3.5 h-3.5 text-orange-600" />
+                              <span>Nguyên Liệu Đi Chợ &amp; Chuẩn Bị Bếp</span>
+                            </div>
+                            <h3 className="text-base sm:text-xl font-black text-stone-900 flex flex-wrap items-center gap-2">
+                              <span>Nguyên Liệu Nấu Cho Cả Mâm Cơm 3 Món</span>
+                              <span className="text-xs font-bold text-orange-700 px-2.5 py-0.5 rounded-full bg-white border border-amber-200 shadow-2xs">
+                                {currentTray?.servings || '3 - 5 người'}
+                              </span>
+                            </h3>
+                            <p className="text-xs text-stone-600 mt-1">
+                              Đầy đủ định lượng thực phẩm đạm, rau củ tươi và gia vị để nấu trọn vẹn cả 3 món cho bữa cơm ấm cúng.
+                            </p>
+                          </div>
+
+                          <div className="flex items-center gap-2 shrink-0 w-full sm:w-auto">
+                            <button
+                              onClick={() => handleCopyIngredients(currentTray?.trayName || 'Mâm Cơm', trayIngredients)}
+                              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 active:scale-95 text-white text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-xs"
+                            >
+                              {copiedIngredientsToast ? (
+                                <>
+                                  <Check className="w-4 h-4 text-white" />
+                                  <span>Đã sao chép danh sách!</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Copy className="w-4 h-4" />
+                                  <span>Sao chép nguyên liệu</span>
+                                </>
+                              )}
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Categorized Ingredients Columns */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          {trayIngredients.map((cat, catIdx) => (
+                            <div
+                              key={catIdx}
+                              className="bg-white rounded-2xl border border-amber-200/60 p-4 sm:p-5 shadow-2xs flex flex-col justify-between"
+                            >
+                              <div>
+                                <h4 className="font-extrabold text-xs sm:text-sm text-stone-900 pb-2.5 border-b border-stone-100 flex items-center justify-between">
+                                  <span>{cat.category}</span>
+                                  <span className="text-[11px] font-bold text-stone-400">
+                                    {cat.items.length} món
+                                  </span>
+                                </h4>
+                                <ul className="mt-3 space-y-2.5">
+                                  {cat.items.map((item, itemIdx) => {
+                                    const itemKey = `${selectedDayId}-${mealSlotTab}-${catIdx}-${itemIdx}`;
+                                    const isChecked = Boolean(checkedIngredients[itemKey]);
+
+                                    return (
+                                      <li
+                                        key={itemIdx}
+                                        onClick={() => toggleIngredientCheck(itemKey)}
+                                        className="flex items-start gap-2.5 text-xs text-stone-700 cursor-pointer group select-none"
+                                      >
+                                        <input
+                                          type="checkbox"
+                                          checked={isChecked}
+                                          onChange={() => toggleIngredientCheck(itemKey)}
+                                          className="mt-0.5 rounded border-stone-300 text-orange-600 focus:ring-orange-500 cursor-pointer"
+                                        />
+                                        <span
+                                          className={`leading-relaxed transition-colors ${
+                                            isChecked
+                                              ? 'line-through text-stone-400'
+                                              : 'group-hover:text-stone-900 font-medium'
+                                          }`}
+                                        >
+                                          {item}
+                                        </span>
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
+                              </div>
+
+                              <div className="pt-3 mt-3 border-t border-stone-100 text-[11px] text-stone-400 flex items-center justify-between">
+                                <span>Tích chọn khi đã mua</span>
+                                <span className="text-orange-600 font-medium text-[10px]">Cơm nhà tươi sạch</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="mt-4 p-3 rounded-xl bg-white/70 border border-amber-200/60 text-xs text-stone-600 flex items-center justify-between flex-wrap gap-2">
+                          <span className="flex items-center gap-1.5">
+                            <span className="text-orange-500 font-bold">💡 Mẹo chuẩn bị:</span>
+                            <span>Bấm "Sao chép nguyên liệu" để dán vào Zalo/Tin nhắn gửi người đi chợ tiện lợi!</span>
+                          </span>
+                          <span className="text-[11px] text-stone-400">Dự kiến chi phí: {currentDayMenu.avgBudget}</span>
+                        </div>
+                      </div>
+
+                      {/* 3. CHI TIẾT 3 MÓN ĂN & CÔNG THỨC */}
+                      <div className="space-y-4 pt-2">
+                        <div className="flex items-center justify-between flex-wrap gap-2">
+                          <div className="flex items-center gap-2">
+                            <span className="w-2.5 h-2.5 rounded-full bg-orange-500"></span>
+                            <h3 className="font-extrabold text-base sm:text-lg text-stone-900">
+                              Chi Tiết Các Món Trong Mâm Cơm
+                            </h3>
+                          </div>
+                          <span className="text-xs text-stone-500 font-medium">
+                            Đủ 1 Món Mặn + 1 Món Canh + 1 Món Xào/Rau + Ăn Kèm
+                          </span>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                          {dishes.map((dishItem, index) => {
+                            const matchedDish = INITIAL_DISHES.find((d) => d.id === dishItem.dishId);
+                            const roleColor =
+                              dishItem.role === 'Món Mặn'
+                                ? 'bg-amber-100 text-amber-900 border-amber-200'
+                                : dishItem.role === 'Món Canh'
+                                ? 'bg-blue-100 text-blue-900 border-blue-200'
+                                : dishItem.role === 'Món Xào / Rau'
+                                ? 'bg-emerald-100 text-emerald-900 border-emerald-200'
+                                : 'bg-stone-100 text-stone-800 border-stone-200';
+
+                            return (
+                              <div
+                                key={index}
+                                className="bg-stone-50 hover:bg-stone-100/90 rounded-2xl border border-stone-200 p-4 transition-all flex flex-col justify-between"
+                              >
+                                <div>
+                                  <div className="flex items-center justify-between gap-2 mb-2.5">
+                                    <span
+                                      className={`px-2.5 py-0.5 rounded-full border text-[11px] font-extrabold ${roleColor}`}
+                                    >
+                                      {dishItem.roleTag || dishItem.role}
+                                    </span>
+
+                                    <div className="flex items-center gap-2 text-xs text-stone-500">
+                                      {dishItem.cookingTime && (
+                                        <span className="inline-flex items-center gap-1 font-medium">
+                                          <Clock className="w-3 h-3 text-stone-400" />
+                                          {dishItem.cookingTime}
+                                        </span>
+                                      )}
+                                      {dishItem.calories && (
+                                        <span className="inline-flex items-center gap-1 font-medium">
+                                          <Flame className="w-3 h-3 text-orange-400" />
+                                          {dishItem.calories}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </div>
+
+                                  <div className="flex gap-3 mb-3">
+                                    {matchedDish?.image && (
+                                      <img
+                                        src={matchedDish.image}
+                                        alt={dishItem.name}
+                                        referrerPolicy="no-referrer"
+                                        className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover shrink-0 border border-stone-200 shadow-2xs"
+                                      />
+                                    )}
+                                    <div>
+                                      <h4 className="font-extrabold text-stone-900 text-sm sm:text-base leading-snug">
+                                        {dishItem.name}
+                                      </h4>
+                                      <p className="text-xs text-stone-600 mt-1 leading-relaxed line-clamp-2">
+                                        {dishItem.description}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div className="pt-3 border-t border-stone-200 flex items-center justify-between gap-2">
+                                  <span className="text-[11px] font-medium text-stone-400 italic truncate max-w-[140px] sm:max-w-[180px]">
+                                    {dishItem.role} chuẩn vị cơm nhà
+                                  </span>
+
+                                  <div className="flex items-center gap-1.5 shrink-0">
+                                    <button
+                                      onClick={() => handleViewRecipeById(dishItem.dishId)}
+                                      className="inline-flex items-center gap-1 text-xs font-bold text-orange-600 hover:text-orange-700 px-2.5 py-1.5 rounded-lg hover:bg-orange-100/60 transition-colors cursor-pointer"
+                                    >
+                                      <ChefHat className="w-3.5 h-3.5" />
+                                      <span>Công thức</span>
+                                    </button>
+
+                                    {matchedDish && (
+                                      <button
+                                        onClick={() => onSelectDish(matchedDish)}
+                                        className="inline-flex items-center gap-1 text-xs font-bold text-stone-800 hover:text-stone-950 px-2.5 py-1.5 rounded-lg bg-stone-200/70 hover:bg-stone-200 transition-colors cursor-pointer"
+                                      >
+                                        <ShoppingBag className="w-3.5 h-3.5" />
+                                        <span>Đặt ship</span>
+                                      </button>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()}
+              </div>
+            </div>
+          )}
+
+          {/* Mode 2: Thematic Curated Menus */}
+          {menuMode === 'thematic' && (
+            <div className="space-y-6">
+              {/* Thematic Tabs */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                {THEMATIC_MENUS.map((theme) => (
+                  <button
+                    key={theme.id}
+                    onClick={() => setSelectedThematicId(theme.id)}
+                    className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
+                      selectedThematicId === theme.id
+                        ? 'bg-gradient-to-br from-orange-500 via-orange-600 to-amber-600 text-white border-transparent shadow-lg shadow-orange-500/20 ring-2 ring-orange-400/30'
+                        : 'bg-white text-stone-800 border-stone-200 hover:border-orange-300 hover:bg-orange-50/50'
+                    }`}
+                  >
+                    <span
+                      className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded-md mb-2 ${
+                        selectedThematicId === theme.id
+                          ? 'bg-white/25 text-white backdrop-blur-xs'
+                          : 'bg-orange-100 text-orange-800'
+                      }`}
+                    >
+                      {theme.badge}
+                    </span>
+                    <h4 className="font-extrabold text-xs sm:text-sm line-clamp-1">{theme.title}</h4>
+                    <p
+                      className={`text-[11px] mt-1 line-clamp-1 ${
+                        selectedThematicId === theme.id ? 'text-orange-100' : 'text-stone-500'
+                      }`}
+                    >
+                      {theme.calories}
+                    </p>
+                  </button>
+                ))}
+              </div>
+
+              {/* Thematic Detail */}
+              <div className="bg-white rounded-3xl border border-stone-200 p-6 sm:p-8 shadow-xs">
+                <div className="mb-6 pb-6 border-b border-stone-100">
+                  <div className="text-xs font-bold uppercase text-orange-600 tracking-wider">
+                    {currentThematicMenu.badge}
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-black text-stone-900 mt-1">
+                    {currentThematicMenu.title}
+                  </h3>
+                  <p className="text-stone-600 text-sm mt-1">
+                    {currentThematicMenu.description}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {currentThematicMenu.items.map((it, idx) => {
+                    const dish = INITIAL_DISHES.find((d) => d.id === it.dishId);
+                    return (
+                      <div
+                        key={idx}
+                        className="p-4 rounded-2xl bg-stone-50 border border-stone-200 flex items-center justify-between gap-3"
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-xl bg-orange-100 text-orange-700 font-extrabold text-xs flex items-center justify-center shrink-0">
+                            {idx + 1}
+                          </div>
+                          <div>
+                            <span className="text-[10px] uppercase font-bold text-stone-400">
+                              {it.role}
+                            </span>
+                            <div className="font-bold text-stone-900 text-sm">{it.name}</div>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          <button
+                            onClick={() => handleViewRecipeById(it.dishId)}
+                            title="Xem cách nấu món này"
+                            className="p-2 rounded-xl bg-white hover:bg-orange-50 text-orange-600 border border-stone-200 hover:border-orange-300 transition-colors cursor-pointer text-xs font-bold flex items-center gap-1"
+                          >
+                            <ChefHat className="w-3.5 h-3.5" />
+                            <span className="hidden sm:inline">Nấu</span>
+                          </button>
+
+                          {dish && (
+                            <button
+                              onClick={() => onSelectDish(dish)}
+                              title="Đặt ship món này"
+                              className="p-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white transition-colors cursor-pointer text-xs font-bold flex items-center gap-1 shadow-xs"
+                            >
+                              <ShoppingBag className="w-3.5 h-3.5 text-amber-200" />
+                              <span className="hidden sm:inline">Ship</span>
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* 4. SECTION 3: CÁCH NẤU (LẤY TỪ MÓN NGON QUA) */}
+      {/* ========================================================================= */}
+      {sectionTab === 'recipe' && (
+        <div className="space-y-8 animate-fade-in">
+          {/* Search bar & quick picker from INITIAL_DISHES */}
+          <div className="bg-white rounded-3xl border border-stone-200 p-6 sm:p-8 shadow-xs">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+              <div>
+                <h2 className="text-xl sm:text-2xl font-black text-stone-900 flex items-center gap-2">
+                  <ChefHat className="w-6 h-6 text-orange-500" />
+                  <span>Tra Cứu Cách Nấu &amp; Công Thức Món Ngon</span>
+                </h2>
+                <p className="text-stone-600 text-xs sm:text-sm mt-1">
+                  Chọn hoặc tìm kiếm bất kỳ món ăn nào từ thực đơn 160+ món ngon để xem công thức, tỷ lệ gia vị
+                  và bí quyết nấu gia truyền.
+                </p>
+              </div>
+
+              {/* Search input */}
+              <div className="relative w-full md:w-80">
+                <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="Tìm món muốn học nấu..."
+                  value={recipeSearchQuery}
+                  onChange={(e) => setRecipeSearchQuery(e.target.value)}
+                  className="w-full pl-9.5 pr-4 py-2.5 rounded-xl bg-stone-50 border border-stone-200 text-xs sm:text-sm focus:outline-hidden focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all"
+                />
+              </div>
+            </div>
+
+            {/* Quick horizontal chips for popular recipe dishes */}
+            <div className="mb-6 pb-4 border-b border-stone-100">
+              <div className="text-xs font-bold text-stone-500 mb-2">Món phổ biến được tìm nhiều nhất:</div>
+              <div className="flex flex-wrap gap-2">
+                {FEATURED_RECIPE_IDS.map((id) => {
+                  const dish = INITIAL_DISHES.find((d) => d.id === id);
+                  if (!dish) return null;
+                  const isCurrent = selectedRecipeDish.id === dish.id;
+                  return (
+                    <button
+                      key={dish.id}
+                      onClick={() => setSelectedRecipeDish(dish)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+                        isCurrent
+                          ? 'bg-orange-600 text-white border-orange-600 shadow-xs'
+                          : 'bg-stone-50 text-stone-700 border-stone-200 hover:bg-orange-50 hover:border-orange-300'
+                      }`}
+                    >
+                      {dish.vietnameseName}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Horizontal Scroll / Grid of selectable dishes */}
+            <div className="mb-8">
+              <div className="text-xs font-semibold text-stone-500 mb-2.5">
+                Danh sách món ăn ({recipeFilteredDishes.length} món):
+              </div>
+              <div className="flex gap-2.5 overflow-x-auto pb-2 scrollbar-thin">
+                {recipeFilteredDishes.map((dish) => {
+                  const isCurrent = selectedRecipeDish.id === dish.id;
+                  return (
+                    <button
+                      key={dish.id}
+                      onClick={() => setSelectedRecipeDish(dish)}
+                      className={`shrink-0 flex items-center gap-2 p-1.5 pr-3 rounded-xl border transition-all cursor-pointer ${
+                        isCurrent
+                          ? 'bg-amber-500/15 border-amber-500 text-stone-900 font-extrabold ring-2 ring-amber-500/30'
+                          : 'bg-stone-50 border-stone-200 text-stone-700 hover:bg-white hover:border-stone-300'
+                      }`}
+                    >
+                      <img
+                        src={dish.image}
+                        alt={dish.name}
+                        referrerPolicy="no-referrer"
+                        className="w-9 h-9 rounded-lg object-cover"
+                      />
+                      <span className="text-xs truncate max-w-[140px]">{dish.vietnameseName}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Selected Recipe Display Box */}
+            <div className="bg-stone-50 rounded-3xl border border-stone-200 p-6 sm:p-8">
+              {/* Recipe Hero banner */}
+              <div className="flex flex-col md:flex-row items-start gap-6 mb-8 pb-8 border-b border-stone-200">
+                <img
+                  src={selectedRecipeDish.image}
+                  alt={currentRecipe.dishName}
+                  referrerPolicy="no-referrer"
+                  className="w-full md:w-64 h-48 rounded-2xl object-cover border border-stone-200 shadow-sm shrink-0"
+                />
+
+                <div className="flex-1 space-y-3">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="px-3 py-1 rounded-full bg-orange-100 text-orange-800 text-xs font-bold border border-orange-200">
+                      Công Thức Món Ngon
+                    </span>
+                    <span className="px-3 py-1 rounded-full bg-stone-200 text-stone-700 text-xs font-bold">
+                      {selectedRecipeDish.calories}
+                    </span>
+                  </div>
+
+                  <h3 className="text-2xl sm:text-3xl font-black text-stone-900 tracking-tight">
+                    {currentRecipe.dishName}
+                  </h3>
+
+                  <p className="text-stone-600 text-sm leading-relaxed">
+                    {selectedRecipeDish.description}
+                  </p>
+
+                  {/* Metadata pills: Prep Time, Cook Time, Difficulty, Servings */}
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                    <div className="p-2.5 rounded-xl bg-white border border-stone-200 text-center">
+                      <div className="text-[10px] text-stone-400 font-bold uppercase flex items-center justify-center gap-1">
+                        <Clock className="w-3 h-3 text-orange-500" />
+                        Sơ chế
+                      </div>
+                      <div className="font-extrabold text-stone-800 text-xs mt-0.5">
+                        {currentRecipe.prepTime}
+                      </div>
+                    </div>
+
+                    <div className="p-2.5 rounded-xl bg-white border border-stone-200 text-center">
+                      <div className="text-[10px] text-stone-400 font-bold uppercase flex items-center justify-center gap-1">
+                        <Flame className="w-3 h-3 text-red-500" />
+                        Nấu chín
+                      </div>
+                      <div className="font-extrabold text-stone-800 text-xs mt-0.5">
+                        {currentRecipe.cookTime}
+                      </div>
+                    </div>
+
+                    <div className="p-2.5 rounded-xl bg-white border border-stone-200 text-center">
+                      <div className="text-[10px] text-stone-400 font-bold uppercase flex items-center justify-center gap-1">
+                        <ChefHat className="w-3 h-3 text-amber-500" />
+                        Độ khó
+                      </div>
+                      <div className="font-extrabold text-stone-800 text-xs mt-0.5">
+                        {currentRecipe.difficulty}
+                      </div>
+                    </div>
+
+                    <div className="p-2.5 rounded-xl bg-white border border-stone-200 text-center">
+                      <div className="text-[10px] text-stone-400 font-bold uppercase flex items-center justify-center gap-1">
+                        <Users className="w-3 h-3 text-emerald-500" />
+                        Khẩu phần
+                      </div>
+                      <div className="font-extrabold text-stone-800 text-xs mt-0.5">
+                        {currentRecipe.servings}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Ingredients & Steps Layout */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                {/* Ingredients Column (4 cols) */}
+                <div className="lg:col-span-4 space-y-4">
+                  <h4 className="text-base font-extrabold text-stone-900 flex items-center gap-2">
+                    <Utensils className="w-4 h-4 text-orange-500" />
+                    <span>Nguyên Liệu Chuẩn Bị</span>
+                  </h4>
+
+                  <div className="bg-white rounded-2xl border border-stone-200 p-5 space-y-5">
+                    {currentRecipe.ingredients.map((cat, idx) => (
+                      <div key={idx} className="space-y-2">
+                        <div className="text-xs font-bold uppercase tracking-wider text-orange-700 bg-orange-50 px-2.5 py-1 rounded-lg inline-block">
+                          {cat.category}
+                        </div>
+                        <ul className="space-y-1.5 text-xs text-stone-700">
+                          {cat.items.map((it, i) => (
+                            <li key={i} className="flex items-start gap-2">
+                              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                              <span>{it}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Sauce & Pairing */}
+                  {currentRecipe.recommendedSauce && (
+                    <div className="bg-amber-50/90 rounded-2xl border border-amber-200 p-4">
+                      <div className="text-xs font-bold text-amber-900 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                        🥢 Đồ chấm &amp; Ăn kèm
+                      </div>
+                      <p className="text-xs text-amber-950 leading-relaxed">
+                        {currentRecipe.recommendedSauce}
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Steps Column (8 cols) */}
+                <div className="lg:col-span-8 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-base font-extrabold text-stone-900 flex items-center gap-2">
+                      <BookOpen className="w-4 h-4 text-orange-500" />
+                      <span>Các Bước Nấu Từng Bước</span>
+                    </h4>
+
+                    <button
+                      onClick={handleCopyRecipe}
+                      className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl bg-white hover:bg-stone-100 text-stone-700 border border-stone-200 transition-colors cursor-pointer"
+                    >
+                      {copiedRecipe ? (
+                        <>
+                          <Check className="w-3.5 h-3.5 text-emerald-600" />
+                          <span className="text-emerald-700">Đã sao chép!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-3.5 h-3.5 text-stone-500" />
+                          <span>Sao chép công thức</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  <div className="space-y-4">
+                    {currentRecipe.steps.map((st) => (
+                      <div
+                        key={st.step}
+                        className="bg-white rounded-2xl border border-stone-200 p-5 space-y-2 shadow-2xs"
+                      >
+                        <div className="flex items-center gap-2.5">
+                          <span className="w-6 h-6 rounded-full bg-orange-600 text-white font-black text-xs flex items-center justify-center shrink-0">
+                            {st.step}
+                          </span>
+                          <h5 className="font-extrabold text-stone-900 text-sm">
+                            {st.title}
+                          </h5>
+                        </div>
+                        <p className="text-xs sm:text-sm text-stone-700 leading-relaxed pl-8.5">
+                          {st.description}
+                        </p>
+                        {st.tip && (
+                          <div className="ml-8.5 mt-2 p-2.5 rounded-xl bg-orange-50/70 border border-orange-200/60 text-xs text-orange-900 flex items-start gap-2">
+                            <Lightbulb className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
+                            <span>
+                              <strong>Mẹo bếp:</strong> {st.tip}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Chef's Secret Box */}
+                  <div className="bg-radial from-amber-500/20 via-orange-500/10 to-transparent border border-amber-300 rounded-2xl p-5 shadow-2xs">
+                    <h5 className="font-black text-amber-950 text-xs sm:text-sm uppercase tracking-wider mb-2 flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-amber-600" />
+                      Bí Quyết Gia Truyền Của Bếp Trưởng
+                    </h5>
+                    <p className="text-xs sm:text-sm text-stone-800 leading-relaxed font-medium">
+                      {currentRecipe.chefSecret}
+                    </p>
+                  </div>
+
+                  {/* If lazy to cook -> Order ship button */}
+                  <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white rounded-2xl border border-stone-200 p-4 sm:p-5">
+                    <div>
+                      <div className="font-extrabold text-stone-900 text-sm">
+                        Hôm nay bận rộn không có thời gian nấu nướng?
+                      </div>
+                      <div className="text-xs text-stone-500">
+                        Đặt giao ngay món {selectedRecipeDish.vietnameseName} nóng hổi qua ShopeeFood / GrabFood
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => onSelectDish(selectedRecipeDish)}
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-extrabold text-xs sm:text-sm transition-colors cursor-pointer shadow-md"
+                    >
+                      <ShoppingBag className="w-4 h-4 text-amber-200" />
+                      <span>Đặt Món Ship Ngay</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 5. Bottom Engagement CTA: Connect to Wheel & Tarot */}
+      <div className="mt-12 bg-gradient-to-br from-amber-600 via-orange-600 to-amber-700 text-white rounded-3xl p-6 sm:p-10 text-center relative overflow-hidden shadow-xl shadow-orange-500/15">
+        <div className="max-w-2xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-xs text-white text-xs font-bold border border-white/20">
+            <Sparkles className="w-3.5 h-3.5 text-amber-200" />
+            <span>Vẫn Chưa Biết Nên Chọn Món Gì?</span>
+          </div>
+
+          <h3 className="text-xl sm:text-3xl font-black tracking-tight">
+            Hãy Để Vòng Quay Hoặc Bài Tarot Quyết Định Bữa Ăn Giúp Bạn!
+          </h3>
+
+          <p className="text-amber-100 text-xs sm:text-sm leading-relaxed">
+            Chỉ mất 3 giây để quay bánh xe ngẫu nhiên hoặc bốc một quẻ Tarot ẩm thực 12 cung hoàng đạo tìm
+            món ăn định mệnh hôm nay.
+          </p>
+
+          <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+            <button
+              onClick={() => onNavigate('wheel')}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-orange-50 text-orange-600 font-bold text-xs sm:text-sm transition-all cursor-pointer shadow-md"
+            >
+              <RotateCcw className="w-4 h-4 text-orange-600" />
+              <span>Quay Vòng Quay Món Ăn</span>
+            </button>
+
+            <button
+              onClick={() => onNavigate('tarot')}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/15 hover:bg-white/25 text-white border border-white/30 font-bold text-xs sm:text-sm transition-all cursor-pointer backdrop-blur-xs"
+            >
+              <Compass className="w-4 h-4 text-amber-200" />
+              <span>Bốc Quẻ Bài Tarot Ẩm Thực</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Structured Data (Schema.org JSON-LD for Discovery & Recipe) */}
+      {/* Schema.org Structured Data (JSON-LD) for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "WebPage",
+                "@id": `https://www.angigio.com${DISCOVER_SUB_CONFIG[sectionTab].path}#webpage`,
+                "url": `https://www.angigio.com${DISCOVER_SUB_CONFIG[sectionTab].path}`,
+                "name": DISCOVER_SUB_CONFIG[sectionTab].title,
+                "description": DISCOVER_SUB_CONFIG[sectionTab].description,
+                "inLanguage": "vi-VN",
+                "isPartOf": {
+                  "@type": "WebSite",
+                  "@id": "https://www.angigio.com/#website",
+                  "name": "Hôm Nay Ăn Gì",
+                  "url": "https://www.angigio.com/"
+                }
+              },
+              {
+                "@type": "BreadcrumbList",
+                "@id": `https://www.angigio.com${DISCOVER_SUB_CONFIG[sectionTab].path}#breadcrumb`,
+                "itemListElement": [
+                  {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Trang Chủ",
+                    "item": "https://www.angigio.com/"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Khám Phá Ẩm Thực",
+                    "item": "https://www.angigio.com/kham-pha-am-thuc"
+                  },
+                  {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": DISCOVER_SUB_CONFIG[sectionTab].label,
+                    "item": `https://www.angigio.com${DISCOVER_SUB_CONFIG[sectionTab].path}`
+                  }
+                ]
+              },
+              {
+                "@type": "Recipe",
+                "@id": `https://www.angigio.com/kham-pha-am-thuc/cach-nau-mon-ngon#recipe-${selectedRecipeDish.id}`,
+                "name": `Cách Nấu ${currentRecipe.dishName} Chuẩn Vị`,
+                "headline": `Công thức nấu ${currentRecipe.dishName} thơm ngon đúng điệu`,
+                "image": [selectedRecipeDish.image],
+                "description": selectedRecipeDish.description || `Hướng dẫn chi tiết từng bước nấu món ${currentRecipe.dishName} đậm đà hương vị truyền thống Việt Nam.`,
+                "recipeCategory": selectedRecipeDish.category,
+                "recipeCuisine": "Vietnamese",
+                "recipeYield": currentRecipe.servings,
+                "prepTime": currentRecipe.prepTime,
+                "cookTime": currentRecipe.cookTime,
+                "recipeIngredient": currentRecipe.ingredients.flatMap((cat) => cat.items),
+                "recipeInstructions": currentRecipe.steps.map((st) => ({
+                  "@type": "HowToStep",
+                  "position": st.step,
+                  "name": st.title,
+                  "text": st.description
+                })),
+                "author": {
+                  "@type": "Organization",
+                  "name": "Hôm Nay Ăn Gì",
+                  "url": "https://www.angigio.com/"
+                }
+              }
+            ]
+          })
+        }}
+      />
+    </div>
+  );
+};

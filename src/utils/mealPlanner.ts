@@ -637,6 +637,6 @@ export function formatPlanAsShareText(plan: WeeklyMealPlan): string {
   });
 
   lines.push(`\n------------------------------------`);
-  lines.push(`👉 Xem chi tiết & đặt món tại: https://www.angigio.com/lich-an-theo-tuan`);
+  lines.push(`👉 Xem chi tiết & đặt món tại: https://www.angigio.com/mon-ngon/lich-an-theo-tuan`);
   return lines.join('\n');
 }
