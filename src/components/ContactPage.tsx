@@ -50,12 +50,12 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
   return (
     <article className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 text-stone-800">
       {/* Header */}
-      <header className="text-center mb-10 sm:mb-14">
+      <header className="text-center max-w-5xl xl:max-w-6xl mx-auto mb-10 sm:mb-14">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100/70 text-orange-700 text-xs font-bold uppercase tracking-wider mb-4 border border-orange-200/60">
           <Sparkles className="w-3.5 h-3.5" />
           <span>Kênh Kết Nối Trực Tiếp</span>
         </div>
-        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-black text-stone-900 tracking-tight leading-tight mb-4 max-w-5xl xl:max-w-6xl mx-auto md:whitespace-nowrap">
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-black text-stone-900 tracking-tight leading-tight mb-4 md:whitespace-nowrap">
           Liên Hệ Đội Ngũ{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-amber-600 to-red-600">
             Hôm Nay Ăn Gì (Angigio.com)

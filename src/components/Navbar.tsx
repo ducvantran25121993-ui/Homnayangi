@@ -24,7 +24,7 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [logoSrc, setLogoSrc] = useState<string>('/logo.png?v=5');
+  const [logoSrc, setLogoSrc] = useState<string>('/logo.png?v=6');
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [logoToast, setLogoToast] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);

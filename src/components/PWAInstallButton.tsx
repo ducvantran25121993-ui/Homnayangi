@@ -116,11 +116,11 @@ export const PWAInstallButton: React.FC<{
             <div className="flex items-center justify-between px-5 py-4 border-b border-stone-100 bg-linear-to-r from-orange-50/70 to-amber-50/50">
               <div className="flex items-center gap-3">
                 <img 
-                  src="/logo.png?v=5" 
+                  src="/logo.png?v=6" 
                   alt="Logo" 
                   className="w-9 h-9 object-contain drop-shadow-xs"
                   onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = '/logo.svg';
+                    (e.currentTarget as HTMLImageElement).src = '/logo.svg?v=6';
                   }}
                 />
                 <div>

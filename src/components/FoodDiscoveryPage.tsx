@@ -218,15 +218,15 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10">
       {/* 1. Header Banner */}
       <div className="relative rounded-3xl overflow-hidden bg-radial from-amber-500/15 via-orange-500/10 to-transparent border border-orange-200/80 p-6 sm:p-10 mb-8 sm:mb-12 shadow-sm text-center">
-        <div className="max-w-3xl mx-auto flex flex-col items-center">
+        <div className="max-w-5xl xl:max-w-6xl mx-auto flex flex-col items-center">
           <div className="inline-flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100/90 text-orange-800 text-xs sm:text-sm font-bold mb-4 border border-orange-200">
             <Compass className="w-4 h-4 text-orange-600 animate-spin-slow" />
             <span>Chuyên Trang Khám Phá Ẩm Thực & Cẩm Nang Nấu Bếp</span>
           </div>
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight leading-tight mb-3">
-            Khám Phá Ẩm Thực 3 Miền, Thực Đơn Mỗi Ngày &amp; Cách Nấu Món Ngon
+          <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-extrabold text-stone-900 tracking-tight leading-tight mb-3 md:whitespace-nowrap">
+            Khám Phá Ẩm Thực 3 Miền, Thực Đơn &amp; Cách Nấu Món Ngon
           </h1>
-          <p className="text-stone-600 text-sm sm:text-base leading-relaxed mb-6 max-w-2xl mx-auto">
+          <p className="text-stone-600 text-sm sm:text-base leading-relaxed mb-6 max-w-3xl mx-auto">
             Bản đồ ẩm thực tinh hoa Việt Nam: Thưởng thức phong vị đặc trưng Bắc - Trung - Nam, gợi ý thực đơn
             3 bữa cân bằng dinh dưỡng và hướng dẫn chi tiết cách nấu hơn 160+ món ngon chuẩn vị gia đình.
           </p>

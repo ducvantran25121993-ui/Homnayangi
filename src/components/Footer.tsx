@@ -36,11 +36,11 @@ export const Footer: React.FC<{
           
           <div className="flex items-center gap-3">
             <img 
-              src="/logo.png?v=5" 
+              src="/logo.png?v=6" 
               onError={(e) => {
                 const target = e.currentTarget;
                 if (!target.src.includes('/logo.svg')) {
-                  target.src = '/logo.svg?v=5';
+                  target.src = '/logo.svg?v=6';
                 }
               }}
               alt="Logo Hôm Nay Ăn Gì" 

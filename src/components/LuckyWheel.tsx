@@ -503,15 +503,15 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
   return (
     <div className="py-6 sm:py-8">
       {/* Hero Title */}
-      <div className="text-center max-w-3xl mx-auto mb-8 px-4">
+      <div className="text-center max-w-5xl xl:max-w-6xl mx-auto mb-8 px-4">
         <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-orange-100 text-orange-800 text-xs font-bold mb-3">
           <Sparkles className="w-3.5 h-3.5 text-orange-600" />
           VÒNG QUAY ẨM THỰC THẦN KỲ - ĐÃ KẾT NỐI {INITIAL_DISHES.length} MÓN NGON
         </div>
-        <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mb-2">
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-extrabold text-stone-900 tracking-tight mb-2 md:whitespace-nowrap">
           Vòng Quay Ăn Gì - <span className="text-orange-600">Quay Món Ăn May Mắn Ngẫu Nhiên</span>
         </h1>
-        <p className="text-sm sm:text-base text-stone-600">
+        <p className="text-sm sm:text-base text-stone-600 max-w-3xl mx-auto">
           Phân vân trưa nay, tối nay ăn gì? Hãy để Vòng Quay Ăn Gì chọn ngẫu nhiên từ hơn {INITIAL_DISHES.length} món ngon Việt Nam chuẩn vị và đặt món giao ngay tận nơi!
         </p>
       </div>

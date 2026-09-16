@@ -77,15 +77,15 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
   return (
     <div className="py-6 sm:py-8 max-w-6xl mx-auto px-4">
       {/* Header */}
-      <div className="text-center max-w-2xl mx-auto mb-8">
+      <div className="text-center max-w-5xl xl:max-w-6xl mx-auto mb-8">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-100 text-purple-800 text-xs font-bold mb-3">
           <Sparkles className="w-3.5 h-3.5 text-purple-600" />
           GEMINI 3.8 FLASH FOOD ENGINE
         </div>
-        <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mb-2">
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-extrabold text-stone-900 tracking-tight mb-2 md:whitespace-nowrap">
           AI Gợi Ý Món Ăn - <span className="text-purple-600">Trợ Lý Ẩm Thực Thông Minh</span>
         </h1>
-        <p className="text-sm sm:text-base text-stone-600">
+        <p className="text-sm sm:text-base text-stone-600 max-w-3xl mx-auto">
           Trí tuệ nhân tạo Gemini phân tích tâm trạng, thời tiết, ngân sách để gợi ý ngay 3 món ngon chuẩn vị khó cưỡng kèm link đặt món ShopeeFood, GrabFood & BeFood.
         </p>
       </div>

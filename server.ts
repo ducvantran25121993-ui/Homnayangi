@@ -299,6 +299,11 @@ app.post("/api/upload-logo", (req, res) => {
       fs.writeFileSync(distLogo, buffer);
     }
 
+    const srcLogo = path.join(process.cwd(), "src", "assets", "images", "logo.png");
+    if (fs.existsSync(path.join(process.cwd(), "src", "assets", "images"))) {
+      fs.writeFileSync(srcLogo, buffer);
+    }
+
     return res.json({ success: true, message: "Logo đã được cập nhật thành công!" });
   } catch (err: any) {
     return res.status(500).json({ error: err.message || "Không thể lưu logo" });

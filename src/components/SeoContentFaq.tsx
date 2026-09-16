@@ -1556,9 +1556,9 @@ export const SeoContentFaq: React.FC<{
           
           {/* Header & Lead Hero Section */}
           <header className="border-b border-stone-100 pb-8 sm:pb-10">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-stone-900 tracking-tight leading-snug mb-4">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-stone-900 tracking-tight leading-snug mb-4">
               Trợ Lý Gợi Ý Món Ăn: Người Bạn Đồng Hành Gỡ Rối Câu Hỏi &quot;Hôm Nay Ăn Gì?&quot;
-            </h1>
+            </h2>
             
             <p className="text-stone-700 text-base sm:text-lg leading-relaxed mb-4">
               Mỗi ngày cứ đến bữa trưa hay bữa tối, câu hỏi quen thuộc nhất mà ai trong chúng ta cũng từng thở dài tự hỏi chính là: <strong>&quot;Hôm nay ăn gì bây giờ?&quot;</strong>. Mở các ứng dụng đặt đồ ăn lên lướt mỏi cả tay giữa hàng trăm quán xá, quay sang hỏi đồng nghiệp hay người thân thì ai cũng bảo <em>&quot;Ăn gì cũng được&quot;</em>. Rốt cuộc, bụng thì đói meo mà đầu óc vẫn luẩn quẩn chưa chọn xong món.
