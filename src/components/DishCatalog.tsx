@@ -110,11 +110,11 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
       )}
 
       {/* Header */}
-      <div className="text-center max-w-2xl mx-auto mb-8">
-        <h1 className="text-2xl sm:text-4xl font-extrabold text-stone-900 tracking-tight mb-2">
+      <div className="text-center max-w-5xl xl:max-w-6xl mx-auto mb-8">
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-extrabold text-stone-900 tracking-tight mb-2 md:whitespace-nowrap">
           Thực Đơn Món Ngon 3 Miền - <span className="text-orange-600">160+ Đặc Sản Việt Nam Chuẩn Vị</span>
         </h1>
-        <p className="text-sm sm:text-base text-stone-600">
+        <p className="text-sm sm:text-base text-stone-600 max-w-3xl mx-auto">
           Tra cứu nhanh danh sách các món ngon 3 miền Bắc - Trung - Nam được yêu thích nhất kèm liên kết đặt món trực tiếp trên ShopeeFood, GrabFood & BeFood.
         </p>
       </div>
