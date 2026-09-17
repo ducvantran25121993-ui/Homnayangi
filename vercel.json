@@ -1,5 +1,42 @@
 {
+  "cleanUrls": true,
   "rewrites": [
+    {
+      "source": "/lien-he",
+      "destination": "/lien-he/index.html"
+    },
+    {
+      "source": "/gioi-thieu",
+      "destination": "/gioi-thieu/index.html"
+    },
+    {
+      "source": "/am-thuc-vung-mien",
+      "destination": "/am-thuc-vung-mien/index.html"
+    },
+    {
+      "source": "/thuc-don-moi-ngay",
+      "destination": "/thuc-don-moi-ngay/index.html"
+    },
+    {
+      "source": "/cach-nau-mon-ngon",
+      "destination": "/cach-nau-mon-ngon/index.html"
+    },
+    {
+      "source": "/lich-an-theo-tuan",
+      "destination": "/lich-an-theo-tuan/index.html"
+    },
+    {
+      "source": "/vong-quay",
+      "destination": "/vong-quay/index.html"
+    },
+    {
+      "source": "/mon-ngon",
+      "destination": "/mon-ngon/index.html"
+    },
+    {
+      "source": "/ai-goi-y-mon-an",
+      "destination": "/ai-goi-y-mon-an/index.html"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
