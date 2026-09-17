@@ -155,13 +155,22 @@ export interface RegionalCuisine {
 }
 
 export interface FamilyMealDish {
-  role: 'Món Mặn' | 'Món Canh' | 'Món Xào / Rau' | 'Ăn Kèm / Tráng Miệng';
+  role: 'Món Mặn' | 'Món Canh' | 'Món Xào / Rau' | 'Ăn Kèm / Tráng Miệng' | string;
   roleTag: string; // e.g. "Món mặn chính", "Canh thanh mát", "Rau xanh củ quả", "Kèm đưa cơm"
   dishId: string;
   name: string;
   description: string;
   cookingTime?: string;
   calories?: string;
+  image?: string;
+  recipe?: {
+    prepTime?: string;
+    cookTime?: string;
+    servings?: string;
+    ingredients: string[];
+    steps: string[];
+    tip?: string;
+  };
 }
 
 export interface FamilyMealTray {

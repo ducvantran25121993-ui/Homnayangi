@@ -43,6 +43,7 @@ import {
   getTrayIngredients,
 } from '../data/dailyMenus';
 import { getDishRecipe, FEATURED_RECIPE_IDS } from '../data/recipes';
+import { getFamilyMealDishRecipe, FamilyDishRecipe } from '../data/familyDishRecipes';
 
 interface FoodDiscoveryPageProps {
   onSelectDish: (dish: Dish) => void;
@@ -123,6 +124,135 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
     return INITIAL_DISHES.find((d) => d.id === 'pho-bo-tai-lan') || INITIAL_DISHES[0];
   });
   const [copiedRecipe, setCopiedRecipe] = useState(false);
+  const [copiedFamilyDishRecipe, setCopiedFamilyDishRecipe] = useState<string | null>(null);
+
+  // Helper to copy a dish's recipe
+  const handleCopyFamilyRecipe = (dishName: string, recipe: FamilyDishRecipe) => {
+    const text = [
+      `🍳 CÔNG THỨC: ${dishName}`,
+      `⏱ Chuẩn bị: ${recipe.prepTime} | Nấu: ${recipe.cookTime} | Khẩu phần: ${recipe.servings}`,
+      '',
+      '📋 NGUYÊN LIỆU CHÍNH:',
+      ...recipe.ingredients.map((it) => `• ${it}`),
+      '',
+      '👩‍🍳 CÁC BƯỚC NẤU NHANH:',
+      ...recipe.steps.map((st) => `Bước ${st.step} (${st.title}): ${st.desc}`),
+      '',
+      recipe.tip ? `💡 MẸO NẤU CHUẨN VỊ: ${recipe.tip}` : '',
+      '',
+      'Mâm cơm gia đình chuẩn vị Việt: https://www.angigio.com',
+    ].filter(Boolean).join('\n');
+
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedFamilyDishRecipe(dishName);
+      setTimeout(() => setCopiedFamilyDishRecipe(null), 2500);
+    });
+  };
+
+  // Helper to guarantee an accurate, mouthwatering image for every dish
+  const getDishDisplayImage = (dishItem: { name: string; dishId: string; image?: string }, matchedDish?: Dish): string => {
+    if (dishItem.image) return dishItem.image;
+
+    const n = dishItem.name.toLowerCase();
+
+    // 1. Precise dish-specific images
+    if (n.includes('bí đỏ') && (n.includes('sườn') || n.includes('đậu phộng'))) {
+      return '/images/canh_suon_bi_do.jpg';
+    }
+    if (n.includes('cải thìa') || (n.includes('nấm đông cô') && n.includes('dầu hào'))) {
+      return '/images/cai_thia_xao_nam.jpg';
+    }
+    if (n.includes('kim chi') || (n.includes('xoài') && n.includes('kim chi'))) {
+      return '/images/kim_chi_xoai_cat.jpg';
+    }
+    if (n.includes('tôm đồng') || (n.includes('tôm') && n.includes('cháy cạnh'))) {
+      return '/images/tom_dong_rim_ba_chi.jpg';
+    }
+    if (n.includes('bắp cải') && n.includes('cà chua')) {
+      return '/images/bap_cai_xao_ca_chua.jpg';
+    }
+    if (n.includes('dưa giá') || (n.includes('giá đỗ') && n.includes('quýt'))) {
+      return '/images/dua_gia_he_quyt_duong.jpg';
+    }
+    if (n.includes('canh bí') || (n.includes('bí đao') && n.includes('tôm')) || (n.includes('bí xanh') && n.includes('tôm'))) {
+      return '/images/canh_bi_xanh_tom.jpg';
+    }
+    if (n.includes('ổi') || (n.includes('cà pháo') && n.includes('xí muội'))) {
+      return '/images/ca_phao_oi_xi_muoi.jpg';
+    }
+    if (n.includes('bầu') || n.includes('kho quẹt')) {
+      return '/images/bau_luoc_kho_quet.jpg';
+    }
+    if (n.includes('cà pháo') || n.includes('dưa hấu')) {
+      return '/images/ca_phao_muoi_dua_hau.jpg';
+    }
+    if (n.includes('mắm nhĩ') || n.includes('chuối cau')) {
+      return '/images/chen_mam_nhi_chuoi_cau.jpg';
+    }
+
+    // 2. Safe matchedDish (ONLY for non-beverages that actually match the dish id)
+    if (
+      matchedDish?.image &&
+      matchedDish.category !== 'do_uong' &&
+      !matchedDish.id.includes('tra-dao') &&
+      !matchedDish.image.includes('photo-1513558161293') &&
+      dishItem.dishId === matchedDish.id
+    ) {
+      return matchedDish.image;
+    }
+
+    // 3. Keyword-based matching for home-cooked meal staples
+    if (n.includes('dưa giá') || n.includes('dưa chua') || n.includes('dưa leo') || n.includes('cà bát') || n.includes('kim chi') || n.includes('đồ chua')) {
+      return '/images/ca_phao_muoi_dua_hau.jpg';
+    }
+    if (n.includes('tráng miệng') || n.includes('bưởi') || n.includes('quýt') || n.includes('nhãn') || n.includes('thanh long') || n.includes('cam sành') || n.includes('chè hạt sen')) {
+      return '/images/chen_mam_nhi_chuoi_cau.jpg';
+    }
+    if (n.includes('cá') && (n.includes('kho') || n.includes('tộ') || n.includes('nục') || n.includes('diêu hồng'))) {
+      return '/images/com_ca_kho_to.jpg';
+    }
+    if (n.includes('canh') && (n.includes('chua') || n.includes('cá') || n.includes('nghêu') || n.includes('măng') || n.includes('sấu'))) {
+      return '/images/canh_chua_ca_loc.jpg';
+    }
+    if (n.includes('canh cua') || n.includes('mồng tơi') || n.includes('bí') || n.includes('mướp') || n.includes('gà hầm')) {
+      return '/images/canh_cua_dong.jpg';
+    }
+    if (n.includes('canh rau ngót') || n.includes('rau dền') || n.includes('cải ngọt') || n.includes('mọc') || n.includes('khổ qua') || n.includes('cải cúc') || n.includes('tần ô')) {
+      return '/images/canh_rau_ngot_thit_bam.jpg';
+    }
+    if (n.includes('rau muống') || n.includes('cải thìa') || n.includes('rau cải')) {
+      return '/images/rau_muong_xao_toi.jpg';
+    }
+    if (n.includes('đậu que') || n.includes('su su') || n.includes('giá đỗ') || n.includes('nấm') || n.includes('bắp cải') || n.includes('su hào') || n.includes('thiên lý')) {
+      return '/images/dau_que_xao_toi.jpg';
+    }
+    if (n.includes('sườn') && (n.includes('rim') || n.includes('xào chua ngọt') || n.includes('hầm'))) {
+      return '/images/suon_heo_rim_man_ngot.jpg';
+    }
+    if (n.includes('thịt kho') || n.includes('kho tàu') || n.includes('trứng')) {
+      return '/images/thit_kho_tau.jpg';
+    }
+    if (n.includes('ba chỉ') || n.includes('tôm rim') || n.includes('cháy cạnh') || n.includes('thịt luộc')) {
+      return '/images/ba_chi_rang.jpg';
+    }
+    if (n.includes('gà')) {
+      return '/images/com_ga_hoi_an.jpg';
+    }
+    if (n.includes('bò')) {
+      return '/images/com_bo_luc_lac.jpg';
+    }
+    if (n.includes('nem rán') || n.includes('chả giò') || n.includes('chả cá')) {
+      return '/images/cha_gio.jpg';
+    }
+    if (n.includes('gỏi cuốn')) {
+      return '/images/goi_cuon.jpg';
+    }
+    if (n.includes('mực')) {
+      return '/images/muc_nuong.jpg';
+    }
+
+    return '/images/mam_com_gia_dinh.jpg';
+  };
 
   // Filtered dishes for recipe selection
   const recipeFilteredDishes = useMemo(() => {
@@ -734,9 +864,11 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                           </span>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                           {dishes.map((dishItem, index) => {
                             const matchedDish = INITIAL_DISHES.find((d) => d.id === dishItem.dishId);
+                            const displayImage = getDishDisplayImage(dishItem, matchedDish);
+                            const recipe = dishItem.recipe || getFamilyMealDishRecipe(dishItem);
                             const roleColor =
                               dishItem.role === 'Món Mặn'
                                 ? 'bg-amber-100 text-amber-900 border-amber-200'
@@ -749,10 +881,11 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                             return (
                               <div
                                 key={index}
-                                className="bg-stone-50 hover:bg-stone-100/90 rounded-2xl border border-stone-200 p-4 transition-all flex flex-col justify-between"
+                                className="bg-stone-50 hover:bg-stone-100/90 rounded-2xl border border-stone-200 p-4 sm:p-5 transition-all flex flex-col justify-between shadow-2xs"
                               >
                                 <div>
-                                  <div className="flex items-center justify-between gap-2 mb-2.5">
+                                  {/* Badge & Timing */}
+                                  <div className="flex items-center justify-between gap-2 mb-3">
                                     <span
                                       className={`px-2.5 py-0.5 rounded-full border text-[11px] font-extrabold ${roleColor}`}
                                     >
@@ -775,38 +908,108 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                                     </div>
                                   </div>
 
-                                  <div className="flex gap-3 mb-3">
-                                    {matchedDish?.image && (
-                                      <img
-                                        src={matchedDish.image}
-                                        alt={dishItem.name}
-                                        referrerPolicy="no-referrer"
-                                        className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl object-cover shrink-0 border border-stone-200 shadow-2xs"
-                                      />
-                                    )}
-                                    <div>
+                                  {/* Dish Image, Title & Description */}
+                                  <div className="flex gap-3.5 mb-3.5">
+                                    <img
+                                      src={displayImage}
+                                      alt={dishItem.name}
+                                      referrerPolicy="no-referrer"
+                                      className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover shrink-0 border border-stone-200 shadow-2xs"
+                                    />
+                                    <div className="flex-1 min-w-0">
                                       <h4 className="font-extrabold text-stone-900 text-sm sm:text-base leading-snug">
                                         {dishItem.name}
                                       </h4>
-                                      <p className="text-xs text-stone-600 mt-1 leading-relaxed line-clamp-2">
+                                      <p className="text-xs text-stone-600 mt-1 leading-relaxed">
                                         {dishItem.description}
                                       </p>
                                     </div>
                                   </div>
+
+                                  {/* Công Thức Chế Biến - HIỆN RA LUÔN */}
+                                  <div className="bg-white/90 border border-stone-200/90 rounded-xl p-3 sm:p-3.5 mt-2 shadow-2xs">
+                                    <div className="flex items-center justify-between gap-2 pb-2 mb-2.5 border-b border-stone-100">
+                                      <div className="flex items-center gap-1.5 text-xs font-black text-orange-700">
+                                        <ChefHat className="w-4 h-4 text-orange-600" />
+                                        <span>Công Thức Nấu Chuẩn Vị ({recipe.prepTime} chuẩn bị • {recipe.cookTime} nấu)</span>
+                                      </div>
+                                      <button
+                                        onClick={() => handleCopyFamilyRecipe(dishItem.name, recipe)}
+                                        className="inline-flex items-center gap-1 text-[11px] font-bold text-stone-500 hover:text-orange-600 px-2 py-0.5 rounded hover:bg-stone-100 transition-colors cursor-pointer"
+                                        title="Sao chép công thức món ăn này"
+                                      >
+                                        {copiedFamilyDishRecipe === dishItem.name ? (
+                                          <span className="text-emerald-600 flex items-center gap-1">
+                                            <Check className="w-3 h-3" /> Đã chép
+                                          </span>
+                                        ) : (
+                                          <span className="flex items-center gap-1">
+                                            <Copy className="w-3 h-3" /> Chép công thức
+                                          </span>
+                                        )}
+                                      </button>
+                                    </div>
+
+                                    {/* Nguyên liệu chính */}
+                                    <div className="mb-2.5">
+                                      <span className="text-[11px] font-extrabold text-stone-700 block mb-1">
+                                        Nguyên liệu chính:
+                                      </span>
+                                      <ul className="grid grid-cols-1 gap-1 text-xs text-stone-600 pl-3 list-disc marker:text-orange-400">
+                                        {recipe.ingredients.map((ing, iIdx) => (
+                                          <li key={iIdx} className="leading-snug">
+                                            {ing}
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+
+                                    {/* Các bước nấu nhanh */}
+                                    <div className="mb-2.5">
+                                      <span className="text-[11px] font-extrabold text-stone-700 block mb-1">
+                                        Các bước nấu nhanh:
+                                      </span>
+                                      <div className="space-y-1.5">
+                                        {recipe.steps.map((st) => (
+                                          <div key={st.step} className="flex gap-2 text-xs leading-relaxed">
+                                            <span className="w-4 h-4 rounded-full bg-orange-100 text-orange-700 font-black text-[10px] flex items-center justify-center shrink-0 mt-0.5">
+                                              {st.step}
+                                            </span>
+                                            <p className="text-stone-700">
+                                              <strong className="text-stone-900">{st.title}:</strong> {st.desc}
+                                            </p>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </div>
+
+                                    {/* Mẹo đầu bếp */}
+                                    {recipe.tip && (
+                                      <div className="p-2 rounded-lg bg-amber-50/80 border border-amber-200/60 text-[11px] text-amber-900 leading-snug flex items-start gap-1.5">
+                                        <Lightbulb className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                                        <span>
+                                          <strong>Mẹo chuẩn vị:</strong> {recipe.tip}
+                                        </span>
+                                      </div>
+                                    )}
+                                  </div>
                                 </div>
 
-                                <div className="pt-3 border-t border-stone-200 flex items-center justify-between gap-2">
+                                {/* Footer actions */}
+                                <div className="pt-3 mt-3 border-t border-stone-200 flex items-center justify-between gap-2">
                                   <span className="text-[11px] font-medium text-stone-400 italic truncate max-w-[140px] sm:max-w-[180px]">
                                     {dishItem.role} chuẩn vị cơm nhà
                                   </span>
 
                                   <div className="flex items-center gap-1.5 shrink-0">
                                     <button
-                                      onClick={() => handleViewRecipeById(dishItem.dishId)}
+                                      onClick={() => handleCopyFamilyRecipe(dishItem.name, recipe)}
                                       className="inline-flex items-center gap-1 text-xs font-bold text-orange-600 hover:text-orange-700 px-2.5 py-1.5 rounded-lg hover:bg-orange-100/60 transition-colors cursor-pointer"
                                     >
                                       <ChefHat className="w-3.5 h-3.5" />
-                                      <span>Công thức</span>
+                                      <span>
+                                        {copiedFamilyDishRecipe === dishItem.name ? 'Đã chép' : 'Sao chép'}
+                                      </span>
                                     </button>
 
                                     {matchedDish && (
