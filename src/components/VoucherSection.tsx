@@ -58,9 +58,9 @@ export const VoucherSection: React.FC<VoucherSectionProps> = ({ affiliateConfig 
           <Ticket className="w-3.5 h-3.5 text-emerald-600" />
           KHO DEAL & MÃ GIẢM GIÁ APP FOOD
         </div>
-        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-extrabold text-stone-900 tracking-tight mb-2 md:whitespace-nowrap">
+        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-extrabold text-stone-900 tracking-tight mb-2 md:whitespace-nowrap">
           Săn Voucher <span className="text-emerald-600">Tiết Kiệm Tới 50k</span>
-        </h1>
+        </h2>
         <p className="text-sm sm:text-base text-stone-600 max-w-3xl mx-auto">
           Thu thập mã giảm giá độc quyền ShopeeFood, GrabFood & BeFood. Bấm "Lấy mã" để tự động sao chép mã và mở app đặt món!
         </p>

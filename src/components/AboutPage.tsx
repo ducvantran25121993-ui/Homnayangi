@@ -29,9 +29,9 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
           <span>Về Chúng Tôi • Hôm Nay Ăn Gì</span>
         </div>
         <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-black text-stone-900 tracking-tight leading-tight mb-4 md:whitespace-nowrap">
-          Nền Tảng Gợi Ý Ẩm Thực Thông Minh{' '}
+          Giới Thiệu Hôm Nay Ăn Gì -{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-amber-600 to-red-600">
-            Hàng Đầu Cho Người Việt
+            Nền Tảng Gợi Ý Ẩm Thực Hàng Đầu
           </span>
         </h1>
         <p className="max-w-2xl mx-auto text-sm sm:text-base text-stone-600 leading-relaxed">
