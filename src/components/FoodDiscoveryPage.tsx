@@ -9,7 +9,6 @@ import {
   Users,
   Search,
   BookOpen,
-  ArrowRight,
   CheckCircle2,
   Share2,
   Copy,
@@ -38,7 +37,6 @@ import { INITIAL_DISHES } from '../data/dishes';
 import { REGIONAL_CUISINES } from '../data/regionalCuisine';
 import {
   DAILY_DAY_MENUS,
-  THEMATIC_MENUS,
   DEFAULT_TRAY_IMAGE,
   getTrayIngredients,
 } from '../data/dailyMenus';
@@ -91,8 +89,6 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
   // Sub-state for Daily Menus
   const [selectedDayId, setSelectedDayId] = useState<string>('t2');
   const [mealSlotTab, setMealSlotTab] = useState<'lunch' | 'dinner'>('dinner');
-  const [menuMode, setMenuMode] = useState<'weekly' | 'thematic'>('weekly');
-  const [selectedThematicId, setSelectedThematicId] = useState<string>('com-nha-me-nau');
   const [checkedIngredients, setCheckedIngredients] = useState<Record<string, boolean>>({});
   const [copiedIngredientsToast, setCopiedIngredientsToast] = useState(false);
 
@@ -394,11 +390,6 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
     return DAILY_DAY_MENUS.find((m) => m.id === selectedDayId) || DAILY_DAY_MENUS[0];
   }, [selectedDayId]);
 
-  // Current thematic menu
-  const currentThematicMenu = useMemo(() => {
-    return THEMATIC_MENUS.find((m) => m.id === selectedThematicId) || THEMATIC_MENUS[0];
-  }, [selectedThematicId]);
-
   // Helper to jump to a recipe from another section
   const handleViewDishRecipe = (dish: Dish) => {
     setSelectedRecipeDish(dish);
@@ -653,45 +644,10 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
       {/* ========================================================================= */}
       {sectionTab === 'daily' && (
         <div className="space-y-8 animate-fade-in">
-          {/* Mode switch: 7 ngày trong tuần vs Chủ đề chuyên biệt */}
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="inline-flex p-1 rounded-2xl bg-stone-100 border border-stone-200">
-              <button
-                onClick={() => setMenuMode('weekly')}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
-                  menuMode === 'weekly'
-                    ? 'bg-white text-stone-900 shadow-xs'
-                    : 'text-stone-600 hover:text-stone-900'
-                }`}
-              >
-                📅 Thực Đơn 7 Ngày (Thứ 2 - CN)
-              </button>
-              <button
-                onClick={() => setMenuMode('thematic')}
-                className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer ${
-                  menuMode === 'thematic'
-                    ? 'bg-white text-stone-900 shadow-xs'
-                    : 'text-stone-600 hover:text-stone-900'
-                }`}
-              >
-                🍱 Mâm Cơm &amp; Bộ Chủ Đề Hot
-              </button>
-            </div>
-
-            <button
-              onClick={() => onNavigate('planner')}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-bold transition-colors cursor-pointer shadow-xs"
-            >
-              <span>Mở Lịch Ăn Tuần Đầy Đủ</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* Mode 1: 7 Days Weekly Menus */}
-          {menuMode === 'weekly' && (
-            <div className="space-y-6">
-              {/* Day Pills */}
-              <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
+          {/* 7 Days Weekly Menus */}
+          <div className="space-y-6">
+            {/* Day Pills */}
+            <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
                 {DAILY_DAY_MENUS.map((day) => (
                   <button
                     key={day.id}
@@ -1135,106 +1091,6 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                 })()}
               </div>
             </div>
-          )}
-
-          {/* Mode 2: Thematic Curated Menus */}
-          {menuMode === 'thematic' && (
-            <div className="space-y-6">
-              {/* Thematic Tabs */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                {THEMATIC_MENUS.map((theme) => (
-                  <button
-                    key={theme.id}
-                    onClick={() => setSelectedThematicId(theme.id)}
-                    className={`p-4 rounded-2xl border text-left transition-all cursor-pointer ${
-                      selectedThematicId === theme.id
-                        ? 'bg-gradient-to-br from-orange-500 via-orange-600 to-amber-600 text-white border-transparent shadow-lg shadow-orange-500/20 ring-2 ring-orange-400/30'
-                        : 'bg-white text-stone-800 border-stone-200 hover:border-orange-300 hover:bg-orange-50/50'
-                    }`}
-                  >
-                    <span
-                      className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded-md mb-2 ${
-                        selectedThematicId === theme.id
-                          ? 'bg-white/25 text-white backdrop-blur-xs'
-                          : 'bg-orange-100 text-orange-800'
-                      }`}
-                    >
-                      {theme.badge}
-                    </span>
-                    <h4 className="font-extrabold text-xs sm:text-sm line-clamp-1">{theme.title}</h4>
-                    <p
-                      className={`text-[11px] mt-1 line-clamp-1 ${
-                        selectedThematicId === theme.id ? 'text-orange-100' : 'text-stone-500'
-                      }`}
-                    >
-                      {theme.calories}
-                    </p>
-                  </button>
-                ))}
-              </div>
-
-              {/* Thematic Detail */}
-              <div className="bg-white rounded-3xl border border-stone-200 p-6 sm:p-8 shadow-xs">
-                <div className="mb-6 pb-6 border-b border-stone-100">
-                  <div className="text-xs font-bold uppercase text-orange-600 tracking-wider">
-                    {currentThematicMenu.badge}
-                  </div>
-                  <h3 className="text-xl sm:text-2xl font-black text-stone-900 mt-1">
-                    {currentThematicMenu.title}
-                  </h3>
-                  <p className="text-stone-600 text-sm mt-1">
-                    {currentThematicMenu.description}
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {currentThematicMenu.items.map((it, idx) => {
-                    const dish = INITIAL_DISHES.find((d) => d.id === it.dishId);
-                    return (
-                      <div
-                        key={idx}
-                        className="p-4 rounded-2xl bg-stone-50 border border-stone-200 flex items-center justify-between gap-3"
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-xl bg-orange-100 text-orange-700 font-extrabold text-xs flex items-center justify-center shrink-0">
-                            {idx + 1}
-                          </div>
-                          <div>
-                            <span className="text-[10px] uppercase font-bold text-stone-400">
-                              {it.role}
-                            </span>
-                            <div className="font-bold text-stone-900 text-sm">{it.name}</div>
-                          </div>
-                        </div>
-
-                        <div className="flex items-center gap-1.5 shrink-0">
-                          <button
-                            onClick={() => handleViewRecipeById(it.dishId)}
-                            title="Xem cách nấu món này"
-                            className="p-2 rounded-xl bg-white hover:bg-orange-50 text-orange-600 border border-stone-200 hover:border-orange-300 transition-colors cursor-pointer text-xs font-bold flex items-center gap-1"
-                          >
-                            <ChefHat className="w-3.5 h-3.5" />
-                            <span className="hidden sm:inline">Nấu</span>
-                          </button>
-
-                          {dish && (
-                            <button
-                              onClick={() => onSelectDish(dish)}
-                              title="Đặt ship món này"
-                              className="p-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white transition-colors cursor-pointer text-xs font-bold flex items-center gap-1 shadow-xs"
-                            >
-                              <ShoppingBag className="w-3.5 h-3.5 text-amber-200" />
-                              <span className="hidden sm:inline">Ship</span>
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       )}
 
