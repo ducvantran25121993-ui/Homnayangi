@@ -428,7 +428,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
       `💡 BÍ QUYẾT BẾP TRƯỞNG: ${currentRecipe.chefSecret}`,
       currentRecipe.recommendedSauce ? `🥢 Nước chấm & đồ ăn kèm: ${currentRecipe.recommendedSauce}` : '',
       '',
-      'Khám phá thêm 160+ món ngon tại: https://www.angigio.com/kham-pha-am-thuc',
+      'Khám phá thêm 160+ món ngon tại: https://www.angigio.com/am-thuc-vung-mien',
     ].filter(Boolean);
 
     navigator.clipboard.writeText(lines.join('\n')).then(() => {
@@ -444,14 +444,27 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
         <div className="max-w-5xl xl:max-w-6xl mx-auto flex flex-col items-center">
           <div className="inline-flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100/90 text-orange-800 text-xs sm:text-sm font-bold mb-4 border border-orange-200">
             <Compass className="w-4 h-4 text-orange-600 animate-spin-slow" />
-            <span>Chuyên Trang Khám Phá Ẩm Thực & Cẩm Nang Nấu Bếp</span>
+            <span>
+              {sectionTab === 'region'
+                ? 'Bản Đồ Ẩm Thực Vùng Miền 3 Miền Việt Nam'
+                : sectionTab === 'daily'
+                ? 'Thực Đơn Mỗi Ngày Cân Bằng Dinh Dưỡng'
+                : 'Công Thức Nấu Ăn Chuẩn Vị & Bí Quyết Bếp Trưởng'}
+            </span>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-extrabold text-stone-900 tracking-tight leading-tight mb-3 md:whitespace-nowrap">
-            Khám Phá Ẩm Thực 3 Miền, Thực Đơn &amp; Cách Nấu Món Ngon
+            {sectionTab === 'region'
+              ? 'Ẩm Thực Vùng Miền - Tinh Hoa Hương Vị 3 Miền Bắc, Trung, Nam'
+              : sectionTab === 'daily'
+              ? 'Thực Đơn Mỗi Ngày - Gợi Ý Bữa Cơm Gia Đình Chuẩn Vị & Đủ Chất'
+              : 'Cách Nấu Món Ngon - Công Thức Chuẩn Xác & Bí Quyết Bếp Trưởng'}
           </h1>
           <p className="text-stone-600 text-sm sm:text-base leading-relaxed mb-6 max-w-3xl mx-auto">
-            Bản đồ ẩm thực tinh hoa Việt Nam: Thưởng thức phong vị đặc trưng Bắc - Trung - Nam, gợi ý thực đơn
-            3 bữa cân bằng dinh dưỡng và hướng dẫn chi tiết cách nấu hơn 160+ món ngon chuẩn vị gia đình.
+            {sectionTab === 'region'
+              ? 'Khám phá hương vị thanh tao miền Bắc, đậm đà cay nồng miền Trung, phóng khoáng miền Nam và trù phú miền Tây sông nước cùng danh mục hơn 160+ món ngon đặc sắc.'
+              : sectionTab === 'daily'
+              ? 'Gợi ý thực đơn từ Thứ 2 đến Chủ Nhật, cơm trưa văn phòng, bữa tối gia đình ấm cúng và mẹo chuẩn bị nguyên liệu nhanh gọn, tiết kiệm thời gian.'
+              : 'Hướng dẫn chi tiết từng bước nấu hơn 160+ món ngon gia đình Việt Nam với định lượng nguyên liệu chuẩn xác, mẹo sơ chế và bí quyết nêm nếm gia truyền.'}
           </p>
 
           {/* 3 Main Pillars Navigation Tabs */}
@@ -1460,12 +1473,6 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                   {
                     "@type": "ListItem",
                     "position": 2,
-                    "name": "Khám Phá Ẩm Thực",
-                    "item": "https://www.angigio.com/kham-pha-am-thuc"
-                  },
-                  {
-                    "@type": "ListItem",
-                    "position": 3,
                     "name": DISCOVER_SUB_CONFIG[sectionTab].label,
                     "item": `https://www.angigio.com${DISCOVER_SUB_CONFIG[sectionTab].path}`
                   }
@@ -1473,7 +1480,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
               },
               {
                 "@type": "Recipe",
-                "@id": `https://www.angigio.com/kham-pha-am-thuc/cach-nau-mon-ngon#recipe-${selectedRecipeDish.id}`,
+                "@id": `https://www.angigio.com/cach-nau-mon-ngon#recipe-${selectedRecipeDish.id}`,
                 "name": `Cách Nấu ${currentRecipe.dishName} Chuẩn Vị`,
                 "headline": `Công thức nấu ${currentRecipe.dishName} thơm ngon đúng điệu`,
                 "image": [selectedRecipeDish.image],

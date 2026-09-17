@@ -184,7 +184,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     },
     {
       id: 'discover',
-      shortLabel: 'Khám Phá',
+      shortLabel: 'Ẩm Thực',
       path: TAB_CONFIG.discover.path,
       icon: <Compass className="w-3.5 h-3.5" />,
     },
@@ -401,7 +401,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}>
                 <Compass className="w-4 h-4" />
               </span>
-              <span className="relative z-10 tracking-tight">Khám Phá</span>
+              <span className="relative z-10 tracking-tight">Ẩm Thực</span>
             </a>
           </nav>
 

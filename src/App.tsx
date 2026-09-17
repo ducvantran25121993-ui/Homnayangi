@@ -33,8 +33,14 @@ export default function App() {
     const tab = getTabFromUrl();
     if (typeof window !== 'undefined') {
       const pathname = window.location.pathname.replace(/\/$/, '') || '/';
-      if (pathname === '/lich-an-theo-tuan' || pathname === '/len-lich-an' || pathname === '/lich-an' || pathname === '/thuc-don-tuan' || pathname === '/meal-planner') {
-        window.history.replaceState({ tab: 'planner' }, '', '/mon-ngon/lich-an-theo-tuan');
+      if (pathname === '/mon-ngon/lich-an-theo-tuan' || pathname === '/len-lich-an' || pathname === '/lich-an' || pathname === '/thuc-don-tuan' || pathname === '/meal-planner') {
+        window.history.replaceState({ tab: 'planner' }, '', '/lich-an-theo-tuan');
+      } else if (pathname === '/kham-pha-am-thuc/am-thuc-vung-mien' || pathname === '/kham-pha-am-thuc' || pathname === '/kham-pha') {
+        window.history.replaceState({ tab: 'discover', sub: 'region' }, '', '/am-thuc-vung-mien');
+      } else if (pathname === '/kham-pha-am-thuc/thuc-don-moi-ngay') {
+        window.history.replaceState({ tab: 'discover', sub: 'daily' }, '', '/thuc-don-moi-ngay');
+      } else if (pathname === '/kham-pha-am-thuc/cach-nau-mon-ngon') {
+        window.history.replaceState({ tab: 'discover', sub: 'recipe' }, '', '/cach-nau-mon-ngon');
       }
     }
     return tab;
@@ -54,8 +60,12 @@ export default function App() {
     const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
     // If navigating to discover and already on a discover subpath, don't overwrite it
     let targetPath = TAB_CONFIG[newTab]?.path || '/';
-    if (newTab === 'discover' && currentPath.startsWith('/kham-pha-am-thuc/')) {
-      targetPath = currentPath;
+    if (newTab === 'discover') {
+      if (currentPath === '/thuc-don-moi-ngay' || currentPath === '/cach-nau-mon-ngon' || currentPath === '/am-thuc-vung-mien') {
+        targetPath = currentPath;
+      } else {
+        targetPath = '/am-thuc-vung-mien';
+      }
     }
     if (window.location.pathname !== targetPath) {
       window.history.pushState({ tab: newTab }, '', targetPath);

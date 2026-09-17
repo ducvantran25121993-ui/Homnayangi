@@ -48,7 +48,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ activeTab, onNavigate 
           <meta itemProp="position" content="1" />
         </li>
 
-        {activeTab === 'planner' && (
+        {isDiscover && discoverSubMeta ? (
           <li
             className="flex items-center gap-1.5"
             itemProp="itemListElement"
@@ -56,61 +56,12 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ activeTab, onNavigate 
             itemType="https://schema.org/ListItem"
           >
             <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-            <a
-              href="/mon-ngon"
-              onClick={(e) => {
-                if (e.ctrlKey || e.metaKey || e.button === 1) return;
-                e.preventDefault();
-                onNavigate('catalog');
-              }}
-              itemProp="item"
-              className="hover:text-orange-600 transition-colors"
-            >
-              <span itemProp="name">Món Ngon</span>
-            </a>
+            <span className="text-stone-800 font-semibold" aria-current="page" itemProp="name">
+              {discoverSubMeta.label}
+            </span>
+            <link itemProp="item" href={`https://www.angigio.com${discoverSubMeta.path}`} />
             <meta itemProp="position" content="2" />
           </li>
-        )}
-
-        {isDiscover ? (
-          <>
-            <li
-              className="flex items-center gap-1.5"
-              itemProp="itemListElement"
-              itemScope
-              itemType="https://schema.org/ListItem"
-            >
-              <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-              <a
-                href="/kham-pha-am-thuc"
-                onClick={(e) => {
-                  if (e.ctrlKey || e.metaKey || e.button === 1) return;
-                  e.preventDefault();
-                  onNavigate('discover');
-                }}
-                itemProp="item"
-                className="hover:text-orange-600 transition-colors"
-              >
-                <span itemProp="name">Khám Phá Ẩm Thực</span>
-              </a>
-              <meta itemProp="position" content="2" />
-            </li>
-            {discoverSubMeta && (
-              <li
-                className="flex items-center gap-1.5"
-                itemProp="itemListElement"
-                itemScope
-                itemType="https://schema.org/ListItem"
-              >
-                <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-                <span className="text-stone-800 font-semibold" aria-current="page" itemProp="name">
-                  {discoverSubMeta.label}
-                </span>
-                <link itemProp="item" href={`https://www.angigio.com${discoverSubMeta.path}`} />
-                <meta itemProp="position" content="3" />
-              </li>
-            )}
-          </>
         ) : (
           <li
             className="flex items-center gap-1.5"
@@ -123,7 +74,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ activeTab, onNavigate 
               {currentTabMeta.label}
             </span>
             <link itemProp="item" href={`https://www.angigio.com${currentTabMeta.path}`} />
-            <meta itemProp="position" content={activeTab === 'planner' ? '3' : '2'} />
+            <meta itemProp="position" content="2" />
           </li>
         )}
       </ol>

@@ -499,7 +499,7 @@ export const SeoContentFaq: React.FC<{
               </a>
 
               <a
-                href="/mon-ngon/lich-an-theo-tuan"
+                href="/lich-an-theo-tuan"
                 onClick={(e) => {
                   if (onNavigate) {
                     e.preventDefault();
@@ -965,7 +965,7 @@ export const SeoContentFaq: React.FC<{
               </a>
 
               <a
-                href="/mon-ngon/lich-an-theo-tuan"
+                href="/lich-an-theo-tuan"
                 onClick={(e) => {
                   if (onNavigate) {
                     e.preventDefault();
@@ -1461,8 +1461,8 @@ export const SeoContentFaq: React.FC<{
                 "@graph": [
                   {
                     "@type": "WebPage",
-                    "@id": "https://www.angigio.com/mon-ngon/lich-an-theo-tuan#webpage",
-                    "url": "https://www.angigio.com/mon-ngon/lich-an-theo-tuan",
+                    "@id": "https://www.angigio.com/lich-an-theo-tuan#webpage",
+                    "url": "https://www.angigio.com/lich-an-theo-tuan",
                     "name": "Lịch Ăn Theo Tuần - Thực Đơn 7 Ngày Chuẩn Vị & Tiết Kiệm | Hôm Nay Ăn Gì",
                     "description": "Lên lịch ăn tuần thông minh từ Thứ 2 đến Chủ Nhật: Tự động chống trùng món, tính calo & chi phí, đổi món linh hoạt, gợi ý bữa sáng trưa tối chuẩn ngon.",
                     "inLanguage": "vi-VN",
@@ -1475,7 +1475,7 @@ export const SeoContentFaq: React.FC<{
                   },
                   {
                     "@type": "BreadcrumbList",
-                    "@id": "https://www.angigio.com/mon-ngon/lich-an-theo-tuan#breadcrumb",
+                    "@id": "https://www.angigio.com/lich-an-theo-tuan#breadcrumb",
                     "itemListElement": [
                       {
                         "@type": "ListItem",
@@ -1486,20 +1486,14 @@ export const SeoContentFaq: React.FC<{
                       {
                         "@type": "ListItem",
                         "position": 2,
-                        "name": "Món Ngon",
-                        "item": "https://www.angigio.com/mon-ngon"
-                      },
-                      {
-                        "@type": "ListItem",
-                        "position": 3,
                         "name": "Lịch Ăn Theo Tuần",
-                        "item": "https://www.angigio.com/mon-ngon/lich-an-theo-tuan"
+                        "item": "https://www.angigio.com/lich-an-theo-tuan"
                       }
                     ]
                   },
                   {
                     "@type": "FAQPage",
-                    "@id": "https://www.angigio.com/mon-ngon/lich-an-theo-tuan#faq",
+                    "@id": "https://www.angigio.com/lich-an-theo-tuan#faq",
                     "mainEntity": [
                       {
                         "@type": "Question",
@@ -1994,7 +1988,7 @@ export const SeoContentFaq: React.FC<{
               </a>
 
               <a
-                href="/mon-ngon/lich-an-theo-tuan"
+                href="/lich-an-theo-tuan"
                 onClick={(e) => {
                   if (onNavigate) {
                     e.preventDefault();
@@ -2468,7 +2462,7 @@ export const SeoContentFaq: React.FC<{
               </a>
 
               <a
-                href="/mon-ngon/lich-an-theo-tuan"
+                href="/lich-an-theo-tuan"
                 onClick={(e) => {
                   if (onNavigate) {
                     e.preventDefault();
