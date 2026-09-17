@@ -156,6 +156,108 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
     const n = dishItem.name.toLowerCase();
 
     // 1. Precise dish-specific images
+    if (n.includes('măng tươi') || (n.includes('măng') && n.includes('sườn'))) {
+      return '/images/canh_mang_tuoi_suon.jpg';
+    }
+    if (n.includes('gà đồi') || (n.includes('gà') && (n.includes('muối hột') || n.includes('lá chanh')))) {
+      return '/images/ga_doi_hap_la_chanh.jpg';
+    }
+    if (n.includes('chè hạt sen') || (n.includes('long nhãn') && n.includes('đồ chua'))) {
+      return '/images/do_chua_che_hat_sen.jpg';
+    }
+    if (n.includes('diêu hồng') && (n.includes('hấp') || n.includes('xì dầu') || n.includes('gừng'))) {
+      return '/images/ca_dieu_hong_hap.jpg';
+    }
+    if (n.includes('nước rau muống') || (n.includes('dầm sấu') || (n.includes('rau muống') && n.includes('sấu')))) {
+      return '/images/nuoc_rau_muong_dam_sau.jpg';
+    }
+    if (n.includes('rau muống') && (n.includes('tương bần') || n.includes('luộc'))) {
+      return '/images/rau_muong_luoc_tuong_ban.jpg';
+    }
+    if (n.includes('cà bát') || (n.includes('bơ sáp') && n.includes('dầm'))) {
+      return '/images/ca_bat_bo_sap_dam.jpg';
+    }
+    if (n.includes('bò') && (n.includes('kho gừng') || (n.includes('gừng') && n.includes('sả')))) {
+      return '/images/bo_kho_gung_sa.jpg';
+    }
+    if (n.includes('gà') && (n.includes('hạt sen') || n.includes('táo đỏ') || n.includes('kỷ tử'))) {
+      return '/images/canh_ga_ham_hat_sen.jpg';
+    }
+    if (n.includes('cải xanh') || (n.includes('trứng') && n.includes('lòng đào'))) {
+      return '/images/rau_cai_luoc_trung_long_dao.jpg';
+    }
+    if (n.includes('cam sành') || n.includes('đu đủ chín')) {
+      return '/images/cam_sanh_du_du.jpg';
+    }
+    if (n.includes('gỏi cuốn') && (n.includes('tôm thịt') || n.includes('tương bơ') || n.includes('đậu phộng'))) {
+      return '/images/goi_cuon_tom_thit_chuan.jpg';
+    }
+    if (n.includes('mọc') && (n.includes('nấm hương') || n.includes('su hào') || n.includes('cà rốt'))) {
+      return '/images/canh_moc_nam_huong.jpg';
+    }
+    if (n.includes('nấm đùi gà') && (n.includes('húng quế') || n.includes('tiêu đen'))) {
+      return '/images/nam_dui_ga_xao_hung_que.jpg';
+    }
+    if (n.includes('nho xanh') || (n.includes('dưa leo') && n.includes('muối hột'))) {
+      return '/images/dua_leo_nho_xanh.jpg';
+    }
+    if (n.includes('ba chỉ') && (n.includes('luộc') || n.includes('mắm nêm') || n.includes('mắm tôm'))) {
+      return '/images/thit_ba_chi_luoc.jpg';
+    }
+    if (n.includes('mướp') && (n.includes('lạc') || n.includes('đậu phộng'))) {
+      return '/images/canh_muop_huong_lac.jpg';
+    }
+    if ((n.includes('su hào') || n.includes('cà rốt')) && (n.includes('mực khô') || n.includes('thái chỉ'))) {
+      return '/images/su_hao_ca_rot_muc.jpg';
+    }
+    if (n.includes('thanh long') || (n.includes('cà pháo') && n.includes('dầm'))) {
+      return '/images/ca_phao_thanh_long.jpg';
+    }
+    if (n.includes('cuộn trứng') || n.includes('vân mây') || (n.includes('trứng') && n.includes('thịt nạc băm'))) {
+      return '/images/trung_cuon_van_may.jpg';
+    }
+    if (n.includes('nghêu') || n.includes('ngao')) {
+      return '/images/canh_ngheu_nau_chua.jpg';
+    }
+    if (n.includes('thiên lý') || (n.includes('bò') && n.includes('hoa'))) {
+      return '/images/bo_xao_thien_ly.jpg';
+    }
+    if (n.includes('nhãn xuồng') || (n.includes('ớt chuông') && n.includes('ngâm chua'))) {
+      return '/images/ot_chuong_nhan_xuong.jpg';
+    }
+    if (n.includes('cải cúc') || n.includes('tần ô')) {
+      return '/images/canh_cai_cuc_tom.jpg';
+    }
+    if (n.includes('mực') && (n.includes('cần tây') || n.includes('hành tây') || n.includes('xào'))) {
+      return '/images/muc_xao_can_tay.jpg';
+    }
+    if ((n.includes('ớt xiêm') || n.includes('bưởi')) && (n.includes('nước mắm') || n.includes('da xanh'))) {
+      return '/images/mam_ot_xiem_buoi.jpg';
+    }
+    if (n.includes('gà') && (n.includes('gừng') || n.includes('sả'))) {
+      return '/images/ga_kho_gung_sa_ot.jpg';
+    }
+    if (n.includes('khổ qua') || n.includes('mướp đắng')) {
+      return '/images/canh_kho_qua_don_thit.jpg';
+    }
+    if (n.includes('huyết') || (n.includes('giá') && n.includes('hẹ'))) {
+      return '/images/gia_xao_huyet_he.jpg';
+    }
+    if ((n.includes('dưa chua') || n.includes('dưa cải')) && (n.includes('thơm') || n.includes('dứa') || n.includes('muối xổi'))) {
+      return '/images/dua_chua_thom_muoi_ot.jpg';
+    }
+    if (n.includes('chả cá') || (n.includes('cá thu') && n.includes('sốt cà'))) {
+      return '/images/cha_ca_sot_ca.jpg';
+    }
+    if (n.includes('rau dền') || (n.includes('dền đỏ') && n.includes('tôm khô'))) {
+      return '/images/canh_rau_den_tom.jpg';
+    }
+    if (n.includes('su su') && (n.includes('tỏi') || n.includes('xào'))) {
+      return '/images/su_su_xao_toi.jpg';
+    }
+    if (n.includes('dưa leo') || n.includes('mận hậu')) {
+      return '/images/dua_leo_man_hau.jpg';
+    }
     if (n.includes('bí đỏ') && (n.includes('sườn') || n.includes('đậu phộng'))) {
       return '/images/canh_suon_bi_do.jpg';
     }
