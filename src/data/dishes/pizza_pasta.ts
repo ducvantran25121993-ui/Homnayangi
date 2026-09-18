@@ -151,7 +151,7 @@ export const PIZZA_PASTA_DISHES: Dish[] = [
     estimatedPrice: 45000,
     calories: '520 - 620 kcal',
     description: 'Món ăn tuổi thơ thân thuộc với sợi nui luộc mềm xào bơ tỏi săn chắc, thịt bò mềm ngọt ngập sốt cà chua và trứng ốp la.',
-    image: 'https://images.unsplash.com/photo-1621996346565-e3d5d6281699?w=800&auto=format&fit=crop&q=80',
+    image: '/images/nui_xao_bo.jpg?v=2',
     popularTags: ['Nui xào bò', 'Tuổi thơ', 'Dễ ăn'],
     searchKeyword: 'Nui xào bò',
   },

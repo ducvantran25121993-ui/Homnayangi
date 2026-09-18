@@ -396,7 +396,7 @@ export const BUN_PHO_MI_DISHES: Dish[] = [
   },
   {
     id: 'mi-xao-bo-rau-cai',
-    name: 'Mì Xào Bò Rau Cải Sốt Tỏi',
+    name: 'Mì Xào Bò Rau Cải',
     vietnameseName: 'Mì Xào Bò',
     category: 'bun_pho_mi',
     mealTime: ['trua', 'toi', 'an_dem'],
@@ -404,9 +404,9 @@ export const BUN_PHO_MI_DISHES: Dish[] = [
     estimatedPrice: 50000,
     calories: '580 - 680 kcal',
     description: 'Bò xào lửa lớn giữ trọn vị ngọt tự nhiên, sợi mì tơi săn không nát quyện sốt dầu hào và rau cải xanh giòn.',
-    image: 'https://images.unsplash.com/photo-1612927601601-6638404737ce?w=800&auto=format&fit=crop&q=80',
+    image: '/images/mi_xao_bo.jpg?v=2',
     popularTags: ['Bò xào mềm', 'Mì xào', 'Quán quen'],
-    searchKeyword: 'Mì xào bò rau cải',
+    searchKeyword: 'Mì xào bò',
   },
   {
     id: 'mi-udon-bo-xao',
