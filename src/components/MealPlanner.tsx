@@ -46,6 +46,7 @@ import {
   parseCalories,
   WeekInfo
 } from '../utils/mealPlanner';
+import { INITIAL_DISHES } from '../data/dishes';
 import { MealDishPickerModal } from './MealDishPickerModal';
 
 interface MealPlannerProps {
@@ -123,6 +124,14 @@ export const MealPlanner: React.FC<MealPlannerProps> = ({
   });
 
   const todayId = useMemo(() => getCurrentDayId(), []);
+
+  const dishLookup = useMemo(() => {
+    const map = new Map<string, Dish>();
+    for (const d of INITIAL_DISHES) {
+      map.set(d.id, d);
+    }
+    return map;
+  }, []);
 
   // Update plan when weekOffset changes
   useEffect(() => {
@@ -654,28 +663,35 @@ export const MealPlanner: React.FC<MealPlannerProps> = ({
                   </div>
 
                   {/* Meal Content */}
-                  {dish ? (
+                  {dish ? (() => {
+                    const fresh = dishLookup.get(dish.id);
+                    const displayImage = fresh?.image || dish.image;
+                    const displayName = fresh?.vietnameseName || dish.vietnameseName;
+                    const displayDesc = fresh?.description || dish.description;
+                    const displayPrice = fresh?.estimatedPrice ?? dish.estimatedPrice;
+                    const displayCalories = fresh?.calories || dish.calories;
+                    return (
                     <div className="p-4 flex-1 flex flex-col justify-between">
                       <div>
                         <div className="relative aspect-16/10 rounded-2xl overflow-hidden mb-3.5 bg-stone-100 border border-stone-200/60">
                           <img
-                            src={dish.image}
-                            alt={`Món ${cfg.title.toLowerCase()} ${activeDay.dayName}: ${dish.vietnameseName}`}
+                            src={displayImage}
+                            alt={`Món ${cfg.title.toLowerCase()} ${activeDay.dayName}: ${displayName}`}
                             referrerPolicy="no-referrer"
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                             loading="lazy"
                           />
                           <div className="absolute top-2.5 right-2.5 bg-black/60 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                            {dish.calories || '450 kcal'}
+                            {displayCalories || '450 kcal'}
                           </div>
                         </div>
 
                         <div className="space-y-1.5">
                           <h3 className="font-black text-stone-900 text-base sm:text-lg group-hover:text-orange-600 transition-colors line-clamp-1">
-                            {dish.vietnameseName}
+                            {displayName}
                           </h3>
                           <p className="text-xs text-stone-500 line-clamp-2 leading-relaxed">
-                            {dish.description}
+                            {displayDesc}
                           </p>
                         </div>
                       </div>
@@ -684,12 +700,12 @@ export const MealPlanner: React.FC<MealPlannerProps> = ({
                         <div>
                           <span className="text-[10px] text-stone-400 block font-medium">Giá ước tính</span>
                           <span className="font-extrabold text-orange-600 text-sm">
-                            {dish.estimatedPrice ? `${dish.estimatedPrice.toLocaleString('vi-VN')}đ` : '35.000đ - 50.000đ'}
+                            {displayPrice ? `${displayPrice.toLocaleString('vi-VN')}đ` : '35.000đ - 50.000đ'}
                           </span>
                         </div>
 
                         <button
-                          onClick={() => onSelectDish(dish)}
+                          onClick={() => onSelectDish(fresh || dish)}
                           className="px-3.5 py-1.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer active:scale-95"
                         >
                           <span>Đặt món</span>
@@ -697,7 +713,8 @@ export const MealPlanner: React.FC<MealPlannerProps> = ({
                         </button>
                       </div>
                     </div>
-                  ) : (
+                    );
+                  })() : (
                     <div className="p-8 flex-1 flex flex-col items-center justify-center text-center text-stone-400">
                       <div className="w-12 h-12 rounded-2xl bg-stone-100 flex items-center justify-center mb-3">
                         <Utensils className="w-6 h-6 text-stone-300" />
@@ -780,29 +797,36 @@ export const MealPlanner: React.FC<MealPlannerProps> = ({
 
                         return (
                           <td key={d.id} className="p-2.5 align-top border-l border-stone-100">
-                            {dish ? (
+                            {dish ? (() => {
+                              const fresh = dishLookup.get(dish.id);
+                              const displayImage = fresh?.image || dish.image;
+                              const displayName = fresh?.vietnameseName || dish.vietnameseName;
+                              const displayPrice = fresh?.estimatedPrice ?? dish.estimatedPrice;
+                              const displayCalories = fresh?.calories || dish.calories;
+                              return (
                               <div
-                                onClick={() => onSelectDish(dish)}
+                                onClick={() => onSelectDish(fresh || dish)}
                                 className="p-2 rounded-2xl bg-white border border-stone-200/70 hover:border-orange-300 hover:shadow-xs transition-all cursor-pointer group"
                               >
                                 <img
-                                  src={dish.image}
-                                  alt={`Thực đơn ${d.name} ${SLOT_CONFIG[slot].title.toLowerCase()}: ${dish.vietnameseName}`}
+                                  src={displayImage}
+                                  alt={`Thực đơn ${d.name} ${SLOT_CONFIG[slot].title.toLowerCase()}: ${displayName}`}
                                   referrerPolicy="no-referrer"
                                   className="w-full h-16 object-cover rounded-xl mb-1.5"
                                   loading="lazy"
                                 />
                                 <div className="font-bold text-stone-900 group-hover:text-orange-600 transition-colors line-clamp-1 text-[11.5px]">
-                                  {dish.vietnameseName}
+                                  {displayName}
                                 </div>
                                 <div className="flex items-center justify-between text-[10px] text-stone-500 mt-1 font-medium">
                                   <span className="text-orange-600 font-bold">
-                                    {dish.estimatedPrice ? `${Math.round(dish.estimatedPrice / 1000)}k` : ''}
+                                    {displayPrice ? `${Math.round(displayPrice / 1000)}k` : ''}
                                   </span>
-                                  <span>{dish.calories ? `${parseCalories(dish.calories)} cal` : ''}</span>
+                                  <span>{displayCalories ? `${parseCalories(displayCalories)} cal` : ''}</span>
                                 </div>
                               </div>
-                            ) : (
+                              );
+                            })() : (
                               <div
                                 onClick={() => handleOpenPicker(d.id, slot)}
                                 className="p-4 rounded-2xl border border-dashed border-stone-200 text-center text-stone-400 hover:border-orange-300 hover:text-orange-600 transition-colors cursor-pointer"

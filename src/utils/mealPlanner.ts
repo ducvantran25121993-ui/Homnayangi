@@ -465,7 +465,7 @@ export function sanitizePlanFoodOnly(plan: WeeklyMealPlan): {
     const day = { ...newDays[dayId] };
     const slots: MealSlot[] = ['breakfast', 'lunch', 'dinner'];
     for (const slot of slots) {
-      const dish = day[slot];
+      let dish = day[slot];
       if (!dish || !isMealFoodDish(dish)) {
         // Exclude currently used dish IDs to avoid in-week duplicates
         const replacement = getRandomDishForSlot(
@@ -477,6 +477,13 @@ export function sanitizePlanFoodOnly(plan: WeeklyMealPlan): {
         if (replacement) {
           day[slot] = replacement;
           currentDishIds.push(replacement.id);
+          modified = true;
+        }
+      } else {
+        // Ensure image and metadata stay in sync with latest INITIAL_DISHES catalogue
+        const freshDish = INITIAL_DISHES.find((d) => d.id === dish.id);
+        if (freshDish && (dish.image !== freshDish.image || dish.vietnameseName !== freshDish.vietnameseName)) {
+          day[slot] = { ...dish, image: freshDish.image, vietnameseName: freshDish.vietnameseName };
           modified = true;
         }
       }

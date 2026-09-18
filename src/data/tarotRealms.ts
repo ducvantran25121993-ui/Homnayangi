@@ -91,6 +91,7 @@ export function isDishInRealm(dish: Dish, realmId: TarotRealmId): boolean {
     if (
       dish.id === 'bach-tuoc-nuong-sa-te' ||
       dish.id === 'nuong-ngoi-bo-toi' ||
+      dish.id === 'mien-xao-cua' ||
       dish.popularTags?.some((t) => t.toLowerCase().includes('ăn nhậu') || t.toLowerCase().includes('mồi'))
     ) {
       return true;

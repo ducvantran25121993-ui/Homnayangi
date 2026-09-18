@@ -12,7 +12,6 @@ import {
   Wand2,
   Volume2,
   VolumeX,
-  Scroll,
   Shield,
   MapPin,
   Sparkle,
@@ -970,6 +969,12 @@ function getTarotQuoteWithZodiac(dish: Dish, zodiac: ZodiacSign, isUpright: bool
   const name = dish.vietnameseName || dish.name;
 
   if (!isUpright) {
+    if (dish.id === 'mien-xao-cua') {
+      return {
+        quote: `"Lá bài nghịch chiều cảnh báo: Đĩa Miến Xào Cua hôm nay quá đỗi thơm ngon đẫm vị, thịt cua biển ngọt lịm dễ khiến bạn ăn say mê đến quên cả giờ giấc!"`,
+        warning: `Hãy thưởng thức từ tốn, nhai kỹ để cảm nhận từng thớ thịt cua biển thơm lừng hòa quyện cùng sợi miến dong dai mềm nhé!`,
+      };
+    }
     if (dish.category === 'do_uong') {
       return {
         quote: `"Lá bài nghịch chiều cảnh báo: Thức uống ${name} hôm nay thơm ngon mê đắm, coi chừng uống ngon quá lại gọi thêm ly nữa không ngủ được nhé!"`,
@@ -1012,6 +1017,12 @@ function getTarotQuoteWithZodiac(dish: Dish, zodiac: ZodiacSign, isUpright: bool
       break;
     default:
       zodiacAdvice = `Vũ Trụ quy tụ tinh hoa tứ phương để ban tặng cho bạn khoảnh khắc vị giác thăng hoa nhất.`;
+  }
+
+  if (dish.id === 'mien-xao-cua') {
+    return {
+      quote: `"Vũ trụ hội tụ tinh hoa biển cả: Đĩa Miến Xào Cua óng ả chính là quẻ bói đại cát hôm nay! ${zodiacAdvice} Từng sợi miến dong tơi mềm thấm đượm vị ngọt béo của thịt cua biển sẽ kích hoạt năng lượng dồi dào và tài lộc rực rỡ!"`,
+    };
   }
 
   if (dish.category === 'do_uong') {
@@ -1828,7 +1839,7 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
             ELEMENT_THEMES[revealedResult.zodiac.element] ||
             DEFAULT_THEME;
           return (
-            <div className="relative z-10 max-w-xl mx-auto animate-fade-in">
+            <div className="relative z-10 max-w-xl md:max-w-2xl lg:max-w-3xl mx-auto animate-fade-in">
               {/* Thẻ bài Tarot ma mị với nền vũ trụ bóng đêm, viền vàng cổ điển và hào quang nguyên tố */}
               <div className={`relative rounded-3xl bg-gradient-to-b from-[#120526] via-[#090214] to-[#15062c] border-2 ${theme.borderCard} ${theme.shadowAura} overflow-hidden text-center text-white transition-all duration-500 shadow-2xl`}>
                 
@@ -1846,40 +1857,44 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                 <div className="absolute -bottom-24 -left-24 w-72 h-72 rounded-full border border-amber-500/10 pointer-events-none blur-[1px]" />
 
                 {/* Top banner đồng bộ màu sắc và linh ấn cổ điển */}
-                <div className={`relative bg-gradient-to-r ${theme.headerGradient} p-4 sm:p-5 text-white flex items-center justify-between border-b ${theme.headerBorder} overflow-hidden`}>
+                <div className={`relative bg-gradient-to-r ${theme.headerGradient} p-3.5 sm:p-5 text-white border-b ${theme.headerBorder} overflow-hidden`}>
                   {/* Subtle Inset Glow */}
                   <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent pointer-events-none" />
 
-                  <div className="flex items-center gap-2.5 relative z-10">
-                    <div className="w-12 h-12 rounded-xl bg-black/60 border border-amber-300/40 flex items-center justify-center text-white shadow-[inset_0_0_15px_rgba(0,0,0,0.8)] shrink-0 p-1">
-                      <TarotSigilArt type={revealedResult.archetype.sigilType} sizeClass="w-9 h-9" />
+                  {/* Hàng 1: Thẻ phân loại cõi + Số thứ tự quẻ & Trạng thái Thuận/Nghịch chiều */}
+                  <div className="flex items-center justify-between gap-2 mb-2.5 relative z-10">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black border tracking-wider uppercase ${currentRealmObj.badgeColor} shadow-sm`}>
+                        {currentRealmObj.emoji} CÕI {currentRealmObj.name.toUpperCase()}
+                      </span>
+                      <span className="text-[11px] font-extrabold text-amber-300/90 tracking-wide drop-shadow">
+                        QUẺ #{revealedResult.drawOrder}
+                      </span>
                     </div>
-                    <div className="text-left">
-                      <div className={`text-[11px] font-bold ${theme.headerSubtext} uppercase tracking-wider flex items-center gap-1.5 flex-wrap`}>
-                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-black border ${currentRealmObj.badgeColor}`}>
-                          {currentRealmObj.emoji} CÕI {currentRealmObj.name.toUpperCase()}
-                        </span>
-                        <span>•</span>
-                        <span>{revealedResult.archetype.romanNumeral}</span>
-                        <span>•</span>
-                        <span>{revealedResult.archetype.latin}</span>
-                        <span>•</span>
-                        <span className="font-extrabold text-amber-300 drop-shadow">QUẺ #{revealedResult.drawOrder}</span>
-                      </div>
-                      <div className="text-base sm:text-lg font-black text-white tracking-wide flex items-center gap-1.5 drop-shadow">
-                        <span>{revealedResult.archetype.name}</span>
-                        <span className="text-amber-400 text-xs">✦</span>
-                      </div>
+
+                    <div className={`inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-[11px] font-black border shadow-md shrink-0 ${
+                      revealedResult.isUpright
+                        ? 'bg-emerald-950/80 text-emerald-300 border-emerald-500/50 shadow-[0_0_12px_rgba(16,185,129,0.25)]'
+                        : 'bg-purple-950/80 text-purple-300 border-purple-500/50 shadow-[0_0_12px_rgba(168,85,247,0.25)]'
+                    }`}>
+                      <span>{revealedResult.isUpright ? '✦ Thuận Chiều' : '✦ Nghịch Chiều'}</span>
                     </div>
                   </div>
 
-                  {/* Upright vs Reversed Orientation Badge */}
-                  <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black border shadow-lg relative z-10 shrink-0 ${
-                    revealedResult.isUpright
-                      ? 'bg-emerald-950/80 text-emerald-300 border-emerald-500/50 shadow-[0_0_15px_rgba(16,185,129,0.3)]'
-                      : 'bg-purple-950/80 text-purple-300 border-purple-500/50 shadow-[0_0_15px_rgba(168,85,247,0.3)]'
-                  }`}>
-                    <span>{revealedResult.isUpright ? '✦ Thuận Chiều' : '✦ Nghịch Chiều'}</span>
+                  {/* Hàng 2: Linh ấn Tarot + Tên lá bài & Tên Arcana Latinh rõ ràng, không bị chèn ép */}
+                  <div className="flex items-center gap-3 relative z-10 text-left">
+                    <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-black/60 border border-amber-300/40 flex items-center justify-center text-white shadow-[inset_0_0_15px_rgba(0,0,0,0.8)] shrink-0 p-1">
+                      <TarotSigilArt type={revealedResult.archetype.sigilType} sizeClass="w-8 h-8 sm:w-9 sm:h-9" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className={`text-[11px] font-bold ${theme.headerSubtext} uppercase tracking-wider`}>
+                        LÁ {revealedResult.archetype.romanNumeral} • {revealedResult.archetype.latin}
+                      </div>
+                      <div className="text-base sm:text-xl font-black text-white tracking-wide flex items-center gap-2 drop-shadow mt-0.5">
+                        <span className="truncate">{revealedResult.archetype.name}</span>
+                        <span className="text-amber-400 text-xs shrink-0">✦</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -1890,7 +1905,7 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                       src={revealedResult.dish.image}
                       alt={`Quẻ bài Tarot ẩm thực: ${revealedResult.dish.vietnameseName || revealedResult.dish.name} chiêm tinh cung ${revealedResult.zodiac.name} - Hôm Nay Ăn Gì`}
                       referrerPolicy="no-referrer"
-                      className={`w-full h-56 sm:h-64 object-cover group-hover:scale-105 transition-transform duration-700 ${
+                      className={`w-full h-56 sm:h-64 md:h-72 lg:h-80 object-cover group-hover:scale-105 transition-transform duration-700 ${
                         !revealedResult.isUpright ? 'brightness-90 contrast-110' : ''
                       }`}
                       onError={(e) => {
@@ -1945,50 +1960,32 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                     )}
                   </div>
 
-                  {/* Cosmic Stats (Lucky number, Hour, Element) - 3 Phù Ấn Tâm Linh Tối Màu */}
-                  <div className="grid grid-cols-3 gap-2.5 sm:gap-3 mb-5">
-                    <div className={`p-3 rounded-2xl bg-[#140628]/90 border ${theme.quoteBorder} text-center shadow-md`}>
-                      <div className="text-[10px] uppercase font-bold text-amber-300/80 tracking-wider">Số Thần Tài</div>
-                      <div className="text-lg sm:text-xl font-black text-amber-300 drop-shadow mt-0.5">
-                        #{revealedResult.luckyNumber}
+                  {/* Cosmic Stats (Lucky number & Element, with Lucky Hours underneath) */}
+                  <div className="space-y-2 sm:space-y-2.5 mb-5">
+                    <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                      <div className={`p-3 rounded-2xl bg-[#140628]/90 border ${theme.quoteBorder} text-center shadow-md`}>
+                        <div className="text-[10px] uppercase font-bold text-amber-300/80 tracking-wider">Số Thần Tài</div>
+                        <div className="text-lg sm:text-xl font-black text-amber-300 drop-shadow mt-0.5">
+                          #{revealedResult.luckyNumber}
+                        </div>
+                      </div>
+
+                      <div className={`p-3 rounded-2xl bg-[#140628]/90 border border-purple-500/25 text-center shadow-md`}>
+                        <div className="text-[10px] uppercase font-bold text-purple-300/80 tracking-wider">Hào Quang</div>
+                        <div className="text-xs sm:text-sm font-extrabold text-purple-200 mt-1">
+                          {revealedResult.elementText.split('(')[0]}
+                        </div>
                       </div>
                     </div>
 
-                    <div className={`p-3 rounded-2xl bg-[#140628]/90 border border-purple-500/25 text-center shadow-md`}>
-                      <div className="text-[10px] uppercase font-bold text-stone-400 tracking-wider">Giờ Hoàng Đạo</div>
-                      <div className="text-xs sm:text-sm font-extrabold text-stone-200 line-clamp-1 mt-1">
+                    <div className="py-2.5 px-3.5 sm:px-4 rounded-2xl bg-[#140628]/90 border border-purple-500/25 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2.5 text-center shadow-md">
+                      <div className="text-[10px] sm:text-xs uppercase font-bold text-stone-400 tracking-wider shrink-0">
+                        Giờ Hoàng Đạo:
+                      </div>
+                      <div className="text-xs sm:text-sm font-extrabold text-amber-200">
                         {revealedResult.luckyHours}
                       </div>
                     </div>
-
-                    <div className={`p-3 rounded-2xl bg-[#140628]/90 border border-purple-500/25 text-center shadow-md`}>
-                      <div className="text-[10px] uppercase font-bold text-purple-300/80 tracking-wider">Hào Quang</div>
-                      <div className="text-xs sm:text-sm font-extrabold text-purple-200 line-clamp-1 mt-1">
-                        {revealedResult.elementText.split('(')[0]}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Food Amulet Card Launch Banner - Tấm Bùa Hộ Mệnh Huyền Bí */}
-                  <div className={`mb-5 p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r ${theme.talismanBanner} border ${theme.talismanBorder} flex items-center justify-between gap-3 text-left shadow-lg`}>
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-black/50 border border-amber-400/40 flex items-center justify-center shrink-0 shadow-inner">
-                        <Scroll className="w-5 h-5 text-amber-400" />
-                      </div>
-                      <div>
-                        <div className={`text-xs sm:text-sm font-black ${theme.talismanText} flex items-center gap-1.5`}>
-                          <span>Tấm Bùa Hộ Mệnh Ẩm Thực</span>
-                          <span className="text-[10px] px-2 py-0.2 rounded-full bg-amber-400/20 text-amber-300 border border-amber-400/30 font-bold">Linh Phù</span>
-                        </div>
-                        <div className="text-[11px] text-stone-300 mt-0.5">Lưu phù chú vị giác hoặc chia sẻ cùng bạn bè</div>
-                      </div>
-                    </div>
-                    <button
-                      onClick={handleOpenAmulet}
-                      className={`px-3.5 sm:px-4 py-2 rounded-xl ${theme.talismanBtn} font-black text-xs transition-all active:scale-95 cursor-pointer shrink-0`}
-                    >
-                      Xem Bùa Hộ Mệnh
-                    </button>
                   </div>
 
                   {/* Order Buttons with District Priority - Khung Đặt Món Ma Mị */}
@@ -2030,7 +2027,7 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                       </span>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
                       <button
                         onClick={() =>
                           trackAndOpenAffiliateLink('shopeefood', revealedResult.dish, affiliateConfig, userLocation)
@@ -2063,6 +2060,17 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                         <ShoppingBag className="w-4 h-4 shrink-0 text-stone-950" />
                         <span>BeFood</span>
                       </button>
+
+                      <button
+                        onClick={() =>
+                          trackAndOpenAffiliateLink('googlemaps', revealedResult.dish, affiliateConfig, userLocation)
+                        }
+                        title={`Mở Google Maps tìm quán ${revealedResult.dish.name} gần bạn`}
+                        className="py-3 px-3 rounded-2xl bg-[#1a73e8] hover:bg-[#1557b0] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(26,115,232,0.35)] cursor-pointer"
+                      >
+                        <MapPin className="w-4 h-4 shrink-0 text-white" />
+                        <span>Google Maps</span>
+                      </button>
                     </div>
                   </div>
 
@@ -2077,32 +2085,36 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                       <span>Khai quẻ món khác</span>
                     </button>
 
-                    {onSelectDish && (
+                    <div className="flex w-full sm:w-auto items-center justify-center gap-2 sm:gap-3">
+                      {onSelectDish && (
+                        <button
+                          onClick={() => onSelectDish(revealedResult.dish)}
+                          title="Xem chi tiết món"
+                          className="flex-1 sm:flex-initial py-3 px-3.5 sm:px-4 rounded-xl bg-[#1e0a38] hover:bg-[#280e4b] text-purple-200 hover:text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all cursor-pointer border border-purple-500/30 shadow-sm"
+                        >
+                          <Eye className="w-4 h-4 text-amber-400" />
+                          <span className="hidden sm:inline">Xem chi tiết món</span>
+                        </button>
+                      )}
+
                       <button
-                        onClick={() => onSelectDish(revealedResult.dish)}
-                        className="w-full sm:w-auto py-3 px-4 rounded-xl bg-[#1e0a38] hover:bg-[#280e4b] text-purple-200 hover:text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all cursor-pointer border border-purple-500/30 shadow-sm"
+                        onClick={() => setRevealedResult(null)}
+                        title="Rút từ bộ bài"
+                        className="flex-1 sm:flex-initial py-3 px-3.5 sm:px-4 rounded-xl border border-purple-600/40 hover:border-amber-400/60 bg-[#120524] hover:bg-[#1b0836] text-stone-300 hover:text-amber-200 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm"
                       >
-                        <Eye className="w-4 h-4 text-amber-400" />
-                        <span>Xem chi tiết món</span>
+                        <RotateCcw className="w-3.5 h-3.5 text-amber-400" />
+                        <span className="hidden sm:inline">Rút từ bộ bài</span>
                       </button>
-                    )}
 
-                    <button
-                      onClick={() => setRevealedResult(null)}
-                      className="w-full sm:w-auto py-3 px-4 rounded-xl border border-purple-600/40 hover:border-amber-400/60 bg-[#120524] hover:bg-[#1b0836] text-stone-300 hover:text-amber-200 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm"
-                    >
-                      <RotateCcw className="w-3.5 h-3.5 text-amber-400" />
-                      <span>Rút từ bộ bài</span>
-                    </button>
-
-                    <button
-                      onClick={() => setIsShareModalOpen(true)}
-                      title="Chia sẻ quẻ bài Tarot lên mạng xã hội"
-                      className="w-full sm:w-auto py-3 px-4 rounded-xl border border-amber-500/50 hover:border-amber-400 bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500/30 hover:to-orange-500/30 text-amber-300 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm"
-                    >
-                      <Share2 className="w-4 h-4 text-amber-400" />
-                      <span>Chia sẻ quẻ</span>
-                    </button>
+                      <button
+                        onClick={() => setIsShareModalOpen(true)}
+                        title="Chia sẻ quẻ bài Tarot lên mạng xã hội"
+                        className="flex-1 sm:flex-initial py-3 px-3.5 sm:px-4 rounded-xl border border-amber-500/50 hover:border-amber-400 bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500/30 hover:to-orange-500/30 text-amber-300 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm"
+                      >
+                        <Share2 className="w-4 h-4 text-amber-400" />
+                        <span className="hidden sm:inline">Chia sẻ quẻ</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

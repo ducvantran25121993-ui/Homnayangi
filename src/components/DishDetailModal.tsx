@@ -48,7 +48,7 @@ export const DishDetailModal: React.FC<DishDetailModalProps> = ({
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-[28px] sm:rounded-[32px] max-w-[440px] w-full overflow-hidden shadow-2xl border border-stone-200/80 flex flex-col transition-all relative"
+        className="bg-white rounded-[28px] sm:rounded-[32px] max-w-[520px] sm:max-w-[600px] md:max-w-[640px] w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-stone-200/80 flex flex-col transition-all relative"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Image */}
@@ -196,10 +196,10 @@ export const DishDetailModal: React.FC<DishDetailModalProps> = ({
                   trackAndOpenAffiliateLink('shopeefood', dish, affiliateConfig, userLocation)
                 }
                 title={`Chuyển qua ShopeeFood tìm quán ${dish.name} tại ${userLocation.district || userLocation.city}`}
-                className="py-3 px-1.5 sm:px-2 rounded-2xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-sm cursor-pointer"
+                className="py-3 px-2 sm:px-2.5 rounded-2xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-sm cursor-pointer whitespace-nowrap"
               >
                 <ShoppingBag className="w-4 h-4 shrink-0" />
-                <span className="truncate">ShopeeFood</span>
+                <span>ShopeeFood</span>
               </button>
 
               <button
@@ -207,10 +207,10 @@ export const DishDetailModal: React.FC<DishDetailModalProps> = ({
                   trackAndOpenAffiliateLink('grabfood', dish, affiliateConfig, userLocation)
                 }
                 title={`Chuyển qua GrabFood tìm quán ${dish.name} tại ${userLocation.district || userLocation.city}`}
-                className="py-3 px-1.5 sm:px-2 rounded-2xl bg-[#00B14F] hover:bg-[#009643] text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-sm cursor-pointer"
+                className="py-3 px-2 sm:px-2.5 rounded-2xl bg-[#00B14F] hover:bg-[#009643] text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-sm cursor-pointer whitespace-nowrap"
               >
                 <ShoppingBag className="w-4 h-4 shrink-0" />
-                <span className="truncate">GrabFood</span>
+                <span>GrabFood</span>
               </button>
 
               <button
@@ -218,10 +218,10 @@ export const DishDetailModal: React.FC<DishDetailModalProps> = ({
                   trackAndOpenAffiliateLink('befood', dish, affiliateConfig, userLocation)
                 }
                 title={`Chuyển qua BeFood tìm quán ${dish.name} tại ${userLocation.district || userLocation.city}`}
-                className="py-3 px-1.5 sm:px-2 rounded-2xl bg-[#FFC400] hover:bg-[#F2BA00] text-stone-950 font-extrabold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-sm cursor-pointer"
+                className="py-3 px-2 sm:px-2.5 rounded-2xl bg-[#FFC400] hover:bg-[#F2BA00] text-stone-950 font-extrabold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-sm cursor-pointer whitespace-nowrap"
               >
                 <ShoppingBag className="w-4 h-4 shrink-0 text-stone-950" />
-                <span className="truncate">BeFood</span>
+                <span>BeFood</span>
               </button>
 
               <button
@@ -229,10 +229,10 @@ export const DishDetailModal: React.FC<DishDetailModalProps> = ({
                   trackAndOpenAffiliateLink('googlemaps', dish, affiliateConfig, userLocation)
                 }
                 title={`Mở Google Maps tìm quán ${dish.name} gần bạn`}
-                className="py-3 px-1.5 sm:px-2 rounded-2xl bg-[#4285F4] hover:bg-[#3367D6] text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-sm cursor-pointer"
+                className="py-3 px-2 sm:px-2.5 rounded-2xl bg-[#4285F4] hover:bg-[#3367D6] text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-sm cursor-pointer whitespace-nowrap"
               >
                 <MapPin className="w-4 h-4 shrink-0 text-white" />
-                <span className="truncate">Google Maps</span>
+                <span>Google Maps</span>
               </button>
             </div>
           </div>

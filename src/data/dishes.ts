@@ -142,13 +142,14 @@ export const WHEEL_PRESETS: WheelPreset[] = [
   {
     id: 'sieu_to_khong_lo',
     name: 'Đại Tiệc Siêu To',
-    badge: '20 Món Ngon',
+    badge: '21 Món Ngon',
     group: 'themes',
     iconName: 'Flame',
     items: [
       'Cơm tấm sườn bì chả',
       'Phở bò sốt vang',
       'Bún bò giò gân',
+      'Miến Xào Cua',
       'Gà rán giòn cay',
       'Bún đậu mẹt đầy đủ',
       'Bánh mì chảo xíu mại',
@@ -171,11 +172,12 @@ export const WHEEL_PRESETS: WheelPreset[] = [
   {
     id: 'van_phong',
     name: 'Dân Văn Phòng',
-    badge: '16 Món Trưa',
+    badge: '17 Món Trưa',
     group: 'themes',
     iconName: 'Briefcase',
     items: [
       'Cơm tấm sườn bì chả',
+      'Miến Xào Cua',
       'Bún bò Huế đặc biệt',
       'Bún đậu mắm tôm',
       'Cơm gà xối mỡ giòn da',
@@ -329,10 +331,11 @@ export const WHEEL_PRESETS: WheelPreset[] = [
   {
     id: 'cuoi_tuan',
     name: 'Cuối Tuần Tụ Tập',
-    badge: '32 Món Lẩu Nướng & Tụ Tập',
+    badge: '33 Món Lẩu Nướng & Tụ Tập',
     group: 'themes',
     iconName: 'PartyPopper',
     items: [
+      'Miến Xào Cua',
       'Lẩu Thái Hải Sản Chua Cay',
       'Lẩu Riêu Cua Bắp Bò Sườn Sụn',
       'Lẩu Bò Nhúng Dấm Ba Toa',
@@ -470,5 +473,13 @@ export const FOOD_TAROT_CARDS = [
     recommendedDish: 'Salad Ức Gà Áp Chảo Eat Clean',
     luckyNumber: 1,
     appPick: 'grabfood',
+  },
+  {
+    id: 'tarot_7',
+    title: 'Lá Bài: Mỹ Vị Biển Cả Vương Giả',
+    quote: '"Vũ trụ sấm truyền hôm nay bạn xứng đáng với sự thịnh soạn! Một đĩa Miến Xào Cua đẫm thịt cua biển tươi ngọt, miến dong dai mướt và hành phi thơm nức sẽ mang lại may mắn và tài lộc đỉnh cao!"',
+    recommendedDish: 'Miến Xào Cua',
+    luckyNumber: 88,
+    appPick: 'shopeefood',
   },
 ];

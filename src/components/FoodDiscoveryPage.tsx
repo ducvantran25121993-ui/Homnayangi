@@ -45,17 +45,32 @@ import { getFamilyMealDishRecipe, FamilyDishRecipe } from '../data/familyDishRec
 
 interface FoodDiscoveryPageProps {
   onSelectDish: (dish: Dish) => void;
-  onNavigate: (tab: TabType) => void;
+  onNavigate: (tab: TabType, sub?: DiscoverSubSection) => void;
   userLocation?: UserLocation;
   affiliateConfig?: AffiliateConfig;
+  currentSubSection?: DiscoverSubSection;
+  onSubSectionChange?: (sub: DiscoverSubSection) => void;
 }
 
 export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
   onSelectDish,
   onNavigate,
+  userLocation,
+  affiliateConfig,
+  currentSubSection,
+  onSubSectionChange,
 }) => {
   // Main discovery section tabs: 'region' | 'daily' | 'recipe'
-  const [sectionTab, setSectionTab] = useState<DiscoverSubSection>(() => getDiscoverSubSectionFromUrl());
+  const [sectionTab, setSectionTab] = useState<DiscoverSubSection>(
+    () => currentSubSection || getDiscoverSubSectionFromUrl()
+  );
+
+  // Sync internal sub-tab state if prop changes from outside
+  useEffect(() => {
+    if (currentSubSection && currentSubSection !== sectionTab) {
+      setSectionTab(currentSubSection);
+    }
+  }, [currentSubSection]);
 
   // Listen to browser Back/Forward navigation for sub-sections
   useEffect(() => {
@@ -63,11 +78,14 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
       const currentSub = getDiscoverSubSectionFromUrl();
       setSectionTab(currentSub);
       updateDiscoverSubSEO(currentSub);
+      if (onSubSectionChange) {
+        onSubSectionChange(currentSub);
+      }
     };
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
+  }, [onSubSectionChange]);
 
   // Switch sub-section with URL history and SEO update
   const handleSwitchSection = (sub: DiscoverSubSection, e?: React.MouseEvent) => {
@@ -79,8 +97,12 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
     const targetPath = DISCOVER_SUB_CONFIG[sub].path;
     if (window.location.pathname !== targetPath) {
       window.history.pushState({ tab: 'discover', sub }, '', targetPath);
+      window.dispatchEvent(new Event('locationchange'));
     }
     updateDiscoverSubSEO(sub);
+    if (onSubSectionChange) {
+      onSubSectionChange(sub);
+    }
   };
 
   // Sub-state for Regional Cuisine
