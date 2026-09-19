@@ -197,4 +197,18 @@ export const DO_AN_VAT_DISHES: Dish[] = [
     popularTags: ['Chuối nướng ngọt bùi', 'Cốt dừa béo ngậy', 'Món quê ấm áp'],
     searchKeyword: 'Bánh chuối nướng cốt dừa',
   },
+  {
+    id: 'che-thap-cam-ba-mien',
+    name: 'Chè Thập Cẩm Ba Miền Nước Cốt Dừa Thơm Mát',
+    vietnameseName: 'Chè Thập Cẩm',
+    category: 'an_vat',
+    mealTime: ['an_vat', 'trua', 'toi'],
+    priceRange: '20.000đ - 35.000đ',
+    estimatedPrice: 25000,
+    calories: '250 - 350 kcal',
+    description: 'Ly chè đầy đặn với đậu đỏ bùi bở, thạch sương sáo thanh mát, hạt sen, trân châu dai giòn và nước cốt dừa béo ngậy đá xay mát lạnh.',
+    image: 'https://images.unsplash.com/photo-1579954115545-a95591f28bfc?w=800&auto=format&fit=crop&q=80',
+    popularTags: ['Chè thập cẩm', 'Tráng miệng', 'Giải nhiệt', 'Ăn vặt giải khát'],
+    searchKeyword: 'Chè thập cẩm',
+  },
 ];

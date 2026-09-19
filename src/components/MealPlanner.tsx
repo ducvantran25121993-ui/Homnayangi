@@ -26,7 +26,8 @@ import {
   ListFilter,
   CheckCircle2,
   Info,
-  ShieldCheck
+  ShieldCheck,
+  Coffee
 } from 'lucide-react';
 import { Dish, MealSlot, UserLocation, AffiliateConfig, DayPlan, WeeklyMealPlan } from '../types';
 import { TabType } from '../utils/navigation';
@@ -275,7 +276,14 @@ export const MealPlanner: React.FC<MealPlannerProps> = ({
               className="flex items-center gap-2 px-4 py-2 rounded-xl text-stone-600 hover:text-stone-900 text-xs sm:text-sm font-semibold transition-all cursor-pointer hover:bg-stone-50"
             >
               <UtensilsCrossed className="w-4 h-4 text-stone-500" />
-              <span>Tất Cả Món Ngon (160+)</span>
+              <span>Món Ngon</span>
+            </button>
+            <button
+              onClick={() => onNavigate('snacks')}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-stone-600 hover:text-stone-900 text-xs sm:text-sm font-semibold transition-all cursor-pointer hover:bg-stone-50"
+            >
+              <Coffee className="w-4 h-4 text-stone-500" />
+              <span>Đồ Uống & Ăn Vặt</span>
             </button>
             <button
               className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white shadow-xs text-stone-900 text-xs sm:text-sm font-bold border border-stone-200/60"

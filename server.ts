@@ -607,6 +607,22 @@ async function startServer() {
       image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=1200&auto=format&fit=crop&q=80",
       imageAlt: "Thực Đơn Hơn 160 Món Ngon Việt Nam Chuẩn Vị 3 Miền",
     },
+    "/do-uong-an-vat": {
+      path: "/do-uong-an-vat",
+      title: "Đồ Uống & Ăn Vặt - Trà Sữa, Cà Phê, Sinh Tố & Món Ăn Vặt Xế Chiều Hot Trend | Hôm Nay Ăn Gì",
+      description: "Thưởng thức thế giới trà sữa trân châu, cà phê muối, trà trái cây tươi mát cùng bánh tráng trộn, nem chua rán, bánh tráng nướng giòn rụm kèm liên kết đặt ship hỏa tốc gần bạn.",
+      keywords: "đồ uống ăn vặt, trà sữa ăn vặt, trà sữa trân châu, đồ ăn vặt, ăn vặt đường phố, trà đào cam sả, cà phê muối, bánh tráng trộn, bánh tráng nướng, ăn xế chiều",
+      image: "https://images.unsplash.com/photo-1558857563-b37cf5429e5a?w=1200&auto=format&fit=crop&q=80",
+      imageAlt: "Đồ Uống & Ăn Vặt - Trà Sữa & Đồ Ăn Xế Chiều Hot Trend",
+    },
+    "/tra-sua-an-vat": {
+      path: "/do-uong-an-vat",
+      title: "Đồ Uống & Ăn Vặt - Trà Sữa, Cà Phê, Sinh Tố & Món Ăn Vặt Xế Chiều Hot Trend | Hôm Nay Ăn Gì",
+      description: "Thưởng thức thế giới trà sữa trân châu, cà phê muối, trà trái cây tươi mát cùng bánh tráng trộn, nem chua rán, bánh tráng nướng giòn rụm kèm liên kết đặt ship hỏa tốc gần bạn.",
+      keywords: "đồ uống ăn vặt, trà sữa ăn vặt, trà sữa trân châu, đồ ăn vặt, ăn vặt đường phố, trà đào cam sả, cà phê muối, bánh tráng trộn, bánh tráng nướng, ăn xế chiều",
+      image: "https://images.unsplash.com/photo-1558857563-b37cf5429e5a?w=1200&auto=format&fit=crop&q=80",
+      imageAlt: "Đồ Uống & Ăn Vặt - Trà Sữa & Đồ Ăn Xế Chiều Hot Trend",
+    },
     "/vong-quay": {
       path: "/vong-quay",
       title: "Vòng Quay Ăn Gì - Quay Món Ngẫu Nhiên Trong 3 Giây | Hôm Nay Ăn Gì",

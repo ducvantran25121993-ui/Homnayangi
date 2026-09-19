@@ -53,12 +53,24 @@
   <!-- 5. Thực Đơn Món Ngon 3 Miền -->
   <url>
     <loc>https://www.angigio.com/mon-ngon</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
       <image:title>Thực Đơn Hơn 160 Món Ngon Việt Nam Chuẩn Vị 3 Miền</image:title>
+    </image:image>
+  </url>
+
+  <!-- 5.1. Đồ Uống & Ăn Vặt Giờ Xế Chiều -->
+  <url>
+    <loc>https://www.angigio.com/do-uong-an-vat</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1558857563-b37cf5429e5a?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Đồ Uống &amp; Ăn Vặt - Trà Sữa, Cà Phê &amp; Ăn Vặt Xế Chiều Hot Trend</image:title>
     </image:image>
   </url>
 

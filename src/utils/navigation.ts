@@ -1,4 +1,4 @@
-export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms';
+export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'snacks' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms';
 
 export type DiscoverSubSection = 'region' | 'daily' | 'recipe';
 
@@ -99,6 +99,16 @@ export const TAB_CONFIG: Record<TabType, TabMeta> = {
     ogImage: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=1200&auto=format&fit=crop&q=80',
     ogImageAlt: 'Thực Đơn Hơn 160 Món Ngon Việt Nam Chuẩn Vị 3 Miền',
   },
+  snacks: {
+    path: '/do-uong-an-vat',
+    title: 'Đồ Uống & Ăn Vặt - Trà Sữa, Cà Phê, Sinh Tố & Món Ăn Vặt Xế Chiều Hot Trend | Hôm Nay Ăn Gì',
+    description: 'Thưởng thức thế giới trà sữa trân châu, cà phê muối, trà trái cây tươi mát cùng bánh tráng trộn, nem chua rán, bánh tráng nướng giòn rụm kèm liên kết đặt ship hỏa tốc gần bạn.',
+    label: 'Đồ Uống & Ăn Vặt',
+    shortLabel: 'Đồ Uống & Ăn Vặt',
+    keywords: 'đồ uống ăn vặt, trà sữa ăn vặt, trà sữa trân châu, đồ ăn vặt, ăn vặt đường phố, trà đào cam sả, cà phê muối, bánh tráng trộn, bánh tráng nướng, ăn xế chiều',
+    ogImage: 'https://images.unsplash.com/photo-1558857563-b37cf5429e5a?w=1200&auto=format&fit=crop&q=80',
+    ogImageAlt: 'Đồ Uống & Ăn Vặt - Trà Sữa & Đồ Ăn Xế Chiều Hot Trend',
+  },
   discover: {
     path: '/am-thuc-vung-mien',
     title: 'Ẩm Thực Vùng Miền - Tinh Hoa Ẩm Thực 3 Miền Bắc, Trung, Nam & Miền Tây | Hôm Nay Ăn Gì',
@@ -174,6 +184,7 @@ export function getTabFromUrl(): TabType {
   if (pathname === '/lich-an-theo-tuan' || pathname === '/mon-ngon/lich-an-theo-tuan' || pathname === '/len-lich-an' || pathname === '/lich-an' || pathname === '/thuc-don-tuan' || pathname === '/meal-planner') return 'planner';
   if (pathname === '/ai-goi-y-mon-an') return 'ai';
   if (pathname === '/mon-ngon') return 'catalog';
+  if (pathname === '/tra-sua-an-vat' || pathname === '/tra-sua' || pathname === '/an-vat' || pathname === '/do-uong-an-vat') return 'snacks';
   if (
     pathname === '/am-thuc-vung-mien' ||
     pathname === '/thuc-don-moi-ngay' ||
@@ -196,6 +207,7 @@ export function getTabFromUrl(): TabType {
     if (tabParam === 'lich-an-theo-tuan' || tabParam === 'mon-ngon/lich-an-theo-tuan' || tabParam === 'len-lich-an' || tabParam === 'planner' || tabParam === 'lich-an' || tabParam === 'thuc-don-tuan') return 'planner';
     if (tabParam === 'ai-goi-y-mon-an' || tabParam === 'ai' || tabParam === 'tro-ly-ai' || tabParam === 'goi-y-mon') return 'ai';
     if (tabParam === 'mon-ngon' || tabParam === 'catalog') return 'catalog';
+    if (tabParam === 'do-uong-an-vat' || tabParam === 'tra-sua-an-vat' || tabParam === 'snacks' || tabParam === 'do-uong' || tabParam === 'tra-sua' || tabParam === 'an-vat') return 'snacks';
     if (tabParam === 'am-thuc-vung-mien' || tabParam === 'thuc-don-moi-ngay' || tabParam === 'cach-nau-mon-ngon' || tabParam === 'kham-pha-am-thuc' || tabParam === 'kham-pha' || tabParam === 'discover' || tabParam === 'cam-nang') return 'discover';
     if (tabParam === 'gioi-thieu' || tabParam === 'about') return 'about';
     if (tabParam === 'lien-he' || tabParam === 'contact') return 'contact';

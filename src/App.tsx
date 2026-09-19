@@ -4,6 +4,7 @@ import { LuckyWheel } from './components/LuckyWheel';
 import { AIAssistant } from './components/AIAssistant';
 import { FoodTarot } from './components/FoodTarot';
 import { DishCatalog } from './components/DishCatalog';
+import { SnacksTeaPage } from './components/SnacksTeaPage';
 import { MealPlanner } from './components/MealPlanner';
 import { FoodDiscoveryPage } from './components/FoodDiscoveryPage';
 import { AboutPage } from './components/AboutPage';
@@ -37,6 +38,8 @@ export default function App() {
       const pathname = window.location.pathname.replace(/\/$/, '') || '/';
       if (pathname === '/mon-ngon/lich-an-theo-tuan' || pathname === '/len-lich-an' || pathname === '/lich-an' || pathname === '/thuc-don-tuan' || pathname === '/meal-planner') {
         window.history.replaceState({ tab: 'planner' }, '', '/lich-an-theo-tuan');
+      } else if (pathname === '/tra-sua-an-vat' || pathname === '/tra-sua' || pathname === '/an-vat') {
+        window.history.replaceState({ tab: 'snacks' }, '', '/do-uong-an-vat');
       } else if (pathname === '/kham-pha-am-thuc/am-thuc-vung-mien' || pathname === '/kham-pha-am-thuc' || pathname === '/kham-pha') {
         window.history.replaceState({ tab: 'discover', sub: 'region' }, '', '/am-thuc-vung-mien');
       } else if (pathname === '/kham-pha-am-thuc/thuc-don-moi-ngay') {
@@ -308,6 +311,17 @@ export default function App() {
 
         {activeTab === 'catalog' && (
           <DishCatalog
+            affiliateConfig={affiliateConfig}
+            onSelectDish={(dish) => setSelectedDish(dish)}
+            selectedDish={selectedDish}
+            userLocation={userLocation}
+            onOpenLocationModal={openLocationPicker}
+            onNavigate={handleNavigateTab}
+          />
+        )}
+
+        {activeTab === 'snacks' && (
+          <SnacksTeaPage
             affiliateConfig={affiliateConfig}
             onSelectDish={(dish) => setSelectedDish(dish)}
             selectedDish={selectedDish}

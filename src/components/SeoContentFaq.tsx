@@ -36,7 +36,9 @@ import {
   X,
   Smile,
   ThermometerSun,
-  Sliders
+  Sliders,
+  CupSoda,
+  Cookie
 } from 'lucide-react';
 import { TabType } from '../utils/navigation';
 
@@ -134,6 +136,28 @@ const COMMON_FAQ_DATA: Record<
         question: 'Làm thế nào để tìm món ăn theo khu vực quận/huyện của tôi?',
         answer:
           'Bạn chỉ cần chọn vị trí của mình (Hà Nội, TP.HCM, Đà Nẵng...) ở góc trên, hệ thống sẽ tự động tối ưu đường dẫn tìm quán ăn gần nhất tương ứng với vị trí đó.',
+      },
+    ],
+  },
+  snacks: {
+    badge: 'THẾ GIỚI ĂN VẶT & ĐỒ UỐNG',
+    title: 'Đồ Uống & Ăn Vặt Giờ Xế Chiều: Trà Sữa, Cà Phê & Bánh Tráng Chuẩn Gu',
+    desc: 'Cứ mỗi 3 - 4 giờ chiều lại buồn miệng? Khám phá trọn bộ trà sữa trân châu hoàng gia, cà phê muối béo ngậy, trà đào cam sả cùng bánh tráng trộn sa tế, nem chua rán, bánh tráng nướng Đà Lạt giòn rụm với liên kết đặt món hỏa tốc gần bạn.',
+    faqs: [
+      {
+        question: 'Chuyên mục Đồ Uống & Ăn Vặt gồm những món nào?',
+        answer:
+          'Chuyên mục tập hợp đầy đủ các dòng trà sữa trân châu, trà trái cây tươi, cà phê truyền thống, sinh tố nước ép giải nhiệt cùng các món ăn vặt đường phố hot trend như bánh tráng trộn, bánh tráng nướng, bắp xào tép mỡ, nem chua rán, chân gà sả tắc...',
+      },
+      {
+        question: 'Làm thế nào để lọc món theo mức giá túi tiền học sinh, sinh viên?',
+        answer:
+          'Trang tích hợp bộ lọc nhanh thông minh: Dưới 30k, từ 30k - 50k và trên 50k, giúp bạn dễ dàng chọn món hợp khẩu vị lẫn ngân sách trong nháy mắt.',
+      },
+      {
+        question: 'Đặt ship đồ uống và đồ ăn vặt qua ứng dụng nào nhanh nhất?',
+        answer:
+          'Tại mỗi món, bạn có thể bấm trực tiếp vào biểu tượng ShopeeFood, GrabFood, BeFood hoặc Google Maps để hệ thống tự động tìm các quán trà sữa và quán ăn vặt gần bạn nhất với nhiều mã freeship.',
       },
     ],
   },
@@ -2576,6 +2600,282 @@ export const SeoContentFaq: React.FC<{
                         }
                       }
                     ]
+                  }
+                ]
+              })
+            }}
+          />
+        </div>
+      </article>
+    );
+  }
+
+  // Dedicated Rich SEO Editorial Article for Snacks & Drinks (Đồ Uống & Ăn Vặt /do-uong-an-vat)
+  if (activeTab === 'snacks') {
+    const snacksFaqs: FaqItem[] = [
+      {
+        question: 'Chuyên trang Đồ Uống & Ăn Vặt gồm những nhóm món đặc trưng nào?',
+        answer:
+          'Chuyên trang tuyển tập hơn 31+ món hot trend được giới trẻ và dân văn phòng săn đón nhất hiện nay, chia làm 2 nhánh chính: (1) Trà sữa & Đồ uống (Trà sữa trân châu đường đen, Cà phê muối Huế, Cà phê sữa đá Sài Gòn, Trà đào cam sả, Trà dâu tằm tuyết, Trà chanh giã tay, Sinh tố bơ sáp, Matcha latte...) và (2) Đồ ăn vặt xế chiều (Bánh tráng trộn sa tế bò khô tép mỡ, Bánh tráng nướng Đà Lạt, Chè khúc bạch, Chè bưởi An Giang, Bắp xào bơ tép, Khoai lang lắc phô mai, Cá viên chiên nước mắm tỏi ớt, Nem chua rán phố cổ...).',
+      },
+      {
+        question: 'Tại sao thời điểm 3 - 4 giờ chiều lại thích hợp đặt đồ ăn vặt & trà sữa?',
+        answer:
+          'Khoảng 15h - 16h là thời điểm lượng đường huyết tự nhiên sau bữa trưa có xu hướng hạ thấp, dễ gây mỏi mệt, uể oải và giảm hiệu suất công việc. Một ly trà trái cây giàu vitamin C, một ngụm trà sữa thơm béo hay đĩa bánh tráng giòn cay chua ngọt giúp kích thích vị giác tức thì, kích hoạt dopamine mang lại năng lượng sảng khoái cho cả nhóm bạn hay phòng ban văn phòng.',
+      },
+      {
+        question: 'Làm thế nào để tìm quán trà sữa hay ăn vặt ship gần vị trí của tôi nhanh nhất?',
+        answer:
+          'Tại từng thẻ món, hệ thống tích hợp sẵn 4 nút bấm tiện lợi: ShopeeFood, GrabFood, BeFood và Google Maps. Khi bạn nhấn vào, ứng dụng sẽ tự động kết nối và ưu tiên hiển thị các quán ngon có cự ly ship gần nhất quanh khu vực bạn đang đứng (Hà Nội, TP.HCM, Đà Nẵng...), kèm các mã freeship và khuyến mãi hỏa tốc.',
+      },
+      {
+        question: 'Tôi có ngân sách tiết kiệm (học sinh, sinh viên) thì lọc món như thế nào?',
+        answer:
+          'Ngay dưới thanh tìm kiếm, ứng dụng trang bị bộ lọc ngân sách thông minh 1 chạm: Dưới 30k (bánh chuối nướng, xoài lắc, bánh tráng nướng, cà phê sữa đá...), từ 30k - 50k (trà sữa trân châu, trà đào cam sả, bingsu, cá viên chiên mắm...) và Trên 50k giúp bạn cân đối chi tiêu dễ dàng.',
+      },
+      {
+        question: 'Thông tin calo và mức giá dự tính có đáng tin cậy không?',
+        answer:
+          'Mỗi món đều được nghiên cứu và niêm yết khoảng calo chuẩn xác (ví dụ: trà đào ~120-180 kcal, bánh tráng trộn ~320-420 kcal) cùng khoảng giá thị trường thực tế, giúp bạn vừa thỏa thích tận hưởng ẩm thực đường phố vừa dễ dàng kiểm soát chế độ dinh dưỡng hàng ngày.',
+      },
+    ];
+
+    return (
+      <article
+        aria-label="Cẩm nang Đồ Uống & Ăn Vặt Xế Chiều Hot Trend"
+        className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-12 mb-10 sm:mb-14"
+      >
+        <div className="bg-white rounded-3xl border border-stone-200/90 shadow-sm p-6 sm:p-10 lg:p-12 space-y-12">
+          {/* Header & Lead Hero Section */}
+          <header className="border-b border-stone-100 pb-8 sm:pb-10">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold mb-3.5 border border-amber-200/80">
+              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+              <span>THẾ GIỚI ĂN VẶT &amp; ĐỒ UỐNG HOT TREND</span>
+            </div>
+
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-black text-stone-900 tracking-tight leading-snug mb-4">
+              Cẩm Nang Đồ Uống &amp; Ăn Vặt: Vũ Điệu Vị Giác Giờ Xế Chiều &amp; Trà Chiều Dân Văn Phòng
+            </h2>
+
+            <p className="text-stone-700 text-base sm:text-lg leading-relaxed mb-4">
+              Văn hóa ăn vặt xế chiều và nhâm nhi trà sữa đã trở thành một phần không thể thiếu trong nhịp sống hiện đại của giới trẻ và dân công sở Việt Nam. Cứ mỗi độ 3 đến 4 giờ chiều, tiếng gọi <em>&quot;Lên đơn trà sữa chưa cả nhà ơi?&quot;</em> hay <em>&quot;Bánh tráng nướng, nem chua rán ship chung không?&quot;</em> lại vang lên rộn rã khắp các văn phòng làm việc.
+            </p>
+            <p className="text-stone-600 text-sm sm:text-base leading-relaxed mb-6">
+              Chuyên trang <strong>Đồ Uống &amp; Ăn Vặt</strong> của <em>Hôm Nay Ăn Gì</em> được xây dựng độc lập nhằm giúp bạn tra cứu siêu tốc các món giải khát mát lạnh, đồ ăn đường phố chuẩn gu với bảng calo minh bạch, khoảng giá sinh viên và liên kết đặt hàng tức thì đến các shipper gần bạn nhất.
+            </p>
+
+            {/* Quick Metrics Bar */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+              <div className="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200/80">
+                <div className="text-xs font-semibold text-stone-500 uppercase tracking-wider">Bộ Sưu Tập</div>
+                <div className="text-lg sm:text-xl font-black text-stone-900 mt-0.5">31+ Món Hot Trend</div>
+                <div className="text-[11px] text-amber-800 font-medium">Trà sữa &amp; ăn vặt đường phố</div>
+              </div>
+              <div className="p-3.5 rounded-2xl bg-orange-50/70 border border-orange-200/80">
+                <div className="text-xs font-semibold text-stone-500 uppercase tracking-wider">Thời Gian Vàng</div>
+                <div className="text-lg sm:text-xl font-black text-stone-900 mt-0.5">14h30 - 17h00</div>
+                <div className="text-[11px] text-orange-800 font-medium">Bơm dopamine tan biến mệt mỏi</div>
+              </div>
+              <div className="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200/80">
+                <div className="text-xs font-semibold text-stone-500 uppercase tracking-wider">Mức Giá Túi Tiền</div>
+                <div className="text-lg sm:text-xl font-black text-stone-900 mt-0.5">Từ 20k - 55k</div>
+                <div className="text-[11px] text-emerald-800 font-medium">Hợp ví học sinh &amp; văn phòng</div>
+              </div>
+              <div className="p-3.5 rounded-2xl bg-blue-50/70 border border-blue-200/80">
+                <div className="text-xs font-semibold text-stone-500 uppercase tracking-wider">Giao Hỏa Tốc</div>
+                <div className="text-lg sm:text-xl font-black text-stone-900 mt-0.5">Shopee • Grab • Be</div>
+                <div className="text-[11px] text-blue-800 font-medium">Tìm quán bán gần nhất quanh bạn</div>
+              </div>
+            </div>
+          </header>
+
+          {/* Section 1: Top đồ uống giải nhiệt */}
+          <section className="space-y-4">
+            <h3 className="text-lg sm:text-xl font-bold text-stone-900 tracking-tight flex items-center gap-2">
+              <CupSoda className="w-5 h-5 text-amber-600" />
+              <span>Top Đồ Uống Giải Khát &amp; Bừng Tỉnh Năng Lượng</span>
+            </h3>
+            <p className="text-sm sm:text-base text-stone-600 leading-relaxed">
+              Từ ly cà phê sữa đá đậm đà vị truyền thống, cà phê muối béo mặn xứ Huế gây nghiện, cho tới các dòng trà ô long thanh mát kết hợp đào miếng giòn sần sật hay trà chanh giã tay thơm lừng tinh dầu chanh nước hoa. Dù bạn cần nạp caffeine để tập trung chạy deadline hay cần ngụm trà trái cây mát lạnh xua tan cái oi ả của thời tiết, menu đều sẵn sàng phục vụ.
+            </p>
+          </section>
+
+          {/* Section 2: Top đồ ăn vặt xế chiều */}
+          <section className="space-y-4">
+            <h3 className="text-lg sm:text-xl font-bold text-stone-900 tracking-tight flex items-center gap-2">
+              <Cookie className="w-5 h-5 text-orange-600" />
+              <span>Thiên Đường Ăn Vặt Đường Phố Ba Miền Giòn Cay Khó Cưỡng</span>
+            </h3>
+            <p className="text-sm sm:text-base text-stone-600 leading-relaxed">
+              Không thể thiếu linh hồn của các buổi tụ tập chiều: Bánh tráng trộn sa tế bò khô dai mềm, bánh tráng nướng Đà Lạt giòn rụm béo ngậy trứng cút mỡ hành, mẹt cá viên chiên xóc nước mắm tỏi ớt thơm nức mũi, hay đĩa nem chua rán phố cổ Hà Nội vỏ xù giòn tan bên trong dẻo ngọt. Tất cả tạo nên sự cân bằng hương vị chua - cay - mặn - ngọt bùng nổ vị giác.
+            </p>
+          </section>
+
+          {/* Section 3: FAQ Accordion */}
+          <section className="space-y-5 pt-4 border-t border-stone-100">
+            <div className="flex items-center gap-2">
+              <HelpCircle className="w-5 h-5 text-orange-600" />
+              <h3 className="text-lg sm:text-xl font-bold text-stone-900">
+                Câu Hỏi Thường Gặp Về Đồ Uống &amp; Ăn Vặt
+              </h3>
+            </div>
+
+            <div className="space-y-3">
+              {snacksFaqs.map((faq, index) => {
+                const isOpen = openIndex === index;
+                return (
+                  <div
+                    key={index}
+                    className="rounded-2xl border border-stone-200/80 overflow-hidden transition-all duration-200"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => toggleFaq(index)}
+                      aria-expanded={isOpen}
+                      className="w-full px-4 sm:px-5 py-3.5 sm:py-4 flex items-center justify-between text-left gap-4 bg-stone-50/70 hover:bg-stone-100/80 transition-colors cursor-pointer"
+                    >
+                      <span className="text-sm sm:text-base font-semibold text-stone-900">
+                        {faq.question}
+                      </span>
+                      <ChevronDown
+                        className={`w-4 h-4 text-stone-500 shrink-0 transition-transform duration-200 ${
+                          isOpen ? 'rotate-180 text-orange-600' : ''
+                        }`}
+                      />
+                    </button>
+                    {isOpen && (
+                      <div className="px-4 sm:px-5 py-3.5 sm:py-4 bg-white text-xs sm:text-sm text-stone-600 leading-relaxed border-t border-stone-100">
+                        {faq.answer}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+
+          {/* Section 4: Internal Cross-Linking */}
+          <section className="pt-6 border-t border-stone-100">
+            <h3 className="text-base sm:text-lg font-bold text-stone-900 mb-3.5 flex items-center gap-2">
+              <Compass className="w-4 h-4 text-orange-600" />
+              <span>Khám Phá Thêm Những Trải Nghiệm Ẩm Thực Khác</span>
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <a
+                href="/mon-ngon"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate('catalog');
+                  }
+                }}
+                className="p-4 rounded-2xl bg-stone-50/80 hover:bg-orange-50/80 border border-stone-200/80 hover:border-orange-200 transition-all group flex items-center justify-between"
+              >
+                <div>
+                  <div className="font-bold text-stone-900 group-hover:text-orange-600 text-sm">
+                    Thực Đơn Món Ngon
+                  </div>
+                  <div className="text-xs text-stone-500 mt-0.5">
+                    Hơn 160+ món chính đặc sản 3 miền chuẩn vị
+                  </div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-orange-600 group-hover:translate-x-0.5 transition-all" />
+              </a>
+
+              <a
+                href="/lich-an-theo-tuan"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate('planner');
+                  }
+                }}
+                className="p-4 rounded-2xl bg-stone-50/80 hover:bg-orange-50/80 border border-stone-200/80 hover:border-orange-200 transition-all group flex items-center justify-between"
+              >
+                <div>
+                  <div className="font-bold text-stone-900 group-hover:text-orange-600 text-sm">
+                    Lịch Ăn Tuần
+                  </div>
+                  <div className="text-xs text-stone-500 mt-0.5">
+                    Thực đơn 7 ngày khoa học, không lo trùng món
+                  </div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-orange-600 group-hover:translate-x-0.5 transition-all" />
+              </a>
+
+              <a
+                href="/vong-quay"
+                onClick={(e) => {
+                  if (onNavigate) {
+                    e.preventDefault();
+                    onNavigate('wheel');
+                  }
+                }}
+                className="p-4 rounded-2xl bg-stone-50/80 hover:bg-orange-50/80 border border-stone-200/80 hover:border-orange-200 transition-all group flex items-center justify-between"
+              >
+                <div>
+                  <div className="font-bold text-stone-900 group-hover:text-orange-600 text-sm">
+                    Vòng Quay Ăn Gì
+                  </div>
+                  <div className="text-xs text-stone-500 mt-0.5">
+                    Chốt món ngẫu nhiên vui vẻ trong 3 giây
+                  </div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-orange-600 group-hover:translate-x-0.5 transition-all" />
+              </a>
+            </div>
+          </section>
+
+          {/* Structured Data (Schema.org JSON-LD for Snacks and Drinks) */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@graph": [
+                  {
+                    "@type": "WebPage",
+                    "@id": "https://www.angigio.com/do-uong-an-vat#webpage",
+                    "url": "https://www.angigio.com/do-uong-an-vat",
+                    "name": "Đồ Uống & Ăn Vặt - Trà Sữa, Cà Phê, Sinh Tố & Món Ăn Vặt Xế Chiều Hot Trend | Hôm Nay Ăn Gì",
+                    "description": "Thưởng thức thế giới trà sữa trân châu, cà phê muối, trà trái cây tươi mát cùng bánh tráng trộn, nem chua rán, bánh tráng nướng giòn rụm kèm liên kết đặt ship hỏa tốc gần bạn.",
+                    "inLanguage": "vi-VN",
+                    "isPartOf": {
+                      "@type": "WebSite",
+                      "@id": "https://www.angigio.com/#website",
+                      "name": "Hôm Nay Ăn Gì",
+                      "url": "https://www.angigio.com/"
+                    }
+                  },
+                  {
+                    "@type": "BreadcrumbList",
+                    "@id": "https://www.angigio.com/do-uong-an-vat#breadcrumb",
+                    "itemListElement": [
+                      {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Trang Chủ",
+                        "item": "https://www.angigio.com/"
+                      },
+                      {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Đồ Uống & Ăn Vặt",
+                        "item": "https://www.angigio.com/do-uong-an-vat"
+                      }
+                    ]
+                  },
+                  {
+                    "@type": "FAQPage",
+                    "@id": "https://www.angigio.com/do-uong-an-vat#faq",
+                    "mainEntity": snacksFaqs.map((faq) => ({
+                      "@type": "Question",
+                      "name": faq.question,
+                      "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": faq.answer,
+                      },
+                    })),
                   }
                 ]
               })

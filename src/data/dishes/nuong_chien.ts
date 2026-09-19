@@ -33,7 +33,7 @@ export const NUONG_CHIEN_DISHES: Dish[] = [
     id: 'dau-hu-chien-gion',
     name: 'Đậu Hũ Chiên Giòn Rụm Chấm Mắm Tôm',
     vietnameseName: 'Đậu Hũ Chiên Giòn',
-    category: 'mon_nhau',
+    category: 'nuong_chien',
     mealTime: ['trua', 'toi', 'an_vat', 'an_dem'],
     priceRange: '25.000đ - 45.000đ',
     estimatedPrice: 35000,

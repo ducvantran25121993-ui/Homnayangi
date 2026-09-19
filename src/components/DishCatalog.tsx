@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, UtensilsCrossed, Flame, ShoppingBag, ExternalLink, Filter, MapPin, CalendarDays } from 'lucide-react';
+import { Search, UtensilsCrossed, Flame, ShoppingBag, ExternalLink, Filter, MapPin, CalendarDays, Coffee } from 'lucide-react';
 import { INITIAL_DISHES } from '../data/dishes';
 import { Dish, AffiliateConfig, UserLocation } from '../types';
 import { TabType } from '../utils/navigation';
@@ -26,6 +26,11 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedMeal, setSelectedMeal] = useState<string>('all');
 
+  // Trang Món Ngon chỉ hiển thị các món ăn mặn/chay chính, loại bỏ đồ uống và ăn vặt vì trang Đồ Uống & Ăn Vặt đã có riêng
+  const foodDishes = useMemo(() => {
+    return INITIAL_DISHES.filter((d) => d.category !== 'do_uong' && d.category !== 'an_vat');
+  }, []);
+
   const categories = [
     { id: 'all', label: 'Tất cả', icon: null },
     { id: 'com_xoi', label: 'Cơm & xôi', icon: '🍚' },
@@ -41,7 +46,7 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
 
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = {
-      all: INITIAL_DISHES.length,
+      all: foodDishes.length,
       com_xoi: 0,
       bun_pho_mi: 0,
       banhmi_cuon: 0,
@@ -52,14 +57,14 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
       do_chay: 0,
       mon_khac: 0,
     };
-    INITIAL_DISHES.forEach((d) => {
+    foodDishes.forEach((d) => {
       const cat = d.category;
       if (counts[cat] !== undefined) {
         counts[cat]++;
       }
     });
     return counts;
-  }, []);
+  }, [foodDishes]);
 
   const mealTimes = [
     { id: 'all', label: 'Mọi bữa ăn' },
@@ -71,7 +76,7 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
   ];
 
   const filteredDishes = useMemo(() => {
-    return INITIAL_DISHES.filter((dish) => {
+    return foodDishes.filter((dish) => {
       const query = searchQuery.toLowerCase();
       const matchSearch =
         dish.name.toLowerCase().includes(query) ||
@@ -84,7 +89,7 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
 
       return matchSearch && matchCategory && matchMeal;
     });
-  }, [searchQuery, selectedCategory, selectedMeal]);
+  }, [foodDishes, searchQuery, selectedCategory, selectedMeal]);
 
   return (
     <div className="py-6 sm:py-8 max-w-7xl mx-auto px-4">
@@ -96,7 +101,14 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
               className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white shadow-xs text-stone-900 text-xs sm:text-sm font-bold border border-stone-200/60"
             >
               <UtensilsCrossed className="w-4 h-4 text-orange-600" />
-              <span>Tất Cả Món Ngon (160+)</span>
+              <span>Món Ngon</span>
+            </button>
+            <button
+              onClick={() => onNavigate('snacks')}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl text-stone-600 hover:text-stone-900 text-xs sm:text-sm font-semibold transition-all cursor-pointer hover:bg-stone-50"
+            >
+              <Coffee className="w-4 h-4 text-stone-500" />
+              <span>Đồ Uống & Ăn Vặt</span>
             </button>
             <button
               onClick={() => onNavigate('planner')}
@@ -112,7 +124,7 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
       {/* Header */}
       <div className="text-center max-w-5xl xl:max-w-6xl mx-auto mb-8">
         <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-extrabold text-stone-900 tracking-tight mb-2 md:whitespace-nowrap">
-          Thực Đơn Món Ngon 3 Miền - <span className="text-orange-600">160+ Đặc Sản Việt Nam Chuẩn Vị</span>
+          Thực Đơn Món Ngon 3 Miền - <span className="text-orange-600">{foodDishes.length}+ Đặc Sản Việt Nam Chuẩn Vị</span>
         </h1>
         <p className="text-sm sm:text-base text-stone-600 max-w-3xl mx-auto">
           Tra cứu nhanh danh sách các món ngon 3 miền Bắc - Trung - Nam được yêu thích nhất kèm liên kết đặt món trực tiếp trên ShopeeFood, GrabFood & BeFood.

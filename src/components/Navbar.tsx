@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { UtensilsCrossed, Sparkles, Disc, Compass, Share2, MapPin, CalendarDays, ChevronDown, Check, Camera } from 'lucide-react';
+import { UtensilsCrossed, Sparkles, Disc, Compass, Share2, MapPin, CalendarDays, ChevronDown, Check, Camera, Coffee } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { UserLocation } from '../types';
 import { TAB_CONFIG, TabType } from '../utils/navigation';
@@ -97,7 +97,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     }, 180);
   };
 
-  const isFoodGroupActive = activeTab === 'catalog' || activeTab === 'planner';
+  const isFoodGroupActive = activeTab === 'catalog' || activeTab === 'snacks' || activeTab === 'planner';
 
   const mainNavItems: Array<{
     id: TabType;
@@ -130,7 +130,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   ];
 
   const foodSubItems: Array<{
-    id: 'catalog' | 'planner';
+    id: 'catalog' | 'snacks' | 'planner';
     label: string;
     description: string;
     path: string;
@@ -138,10 +138,17 @@ export const Navbar: React.FC<NavbarProps> = ({
   }> = [
     {
       id: 'catalog',
-      label: 'Tất Cả Món Ngon',
+      label: 'Món Ngon',
       description: 'Khám phá 160+ món ngon Việt Nam 3 miền',
       path: TAB_CONFIG.catalog.path,
       icon: <UtensilsCrossed className="w-4 h-4" />,
+    },
+    {
+      id: 'snacks',
+      label: 'Đồ Uống & Ăn Vặt',
+      description: 'Trà sữa, cà phê, trà trái cây & ăn vặt xế chiều',
+      path: TAB_CONFIG.snacks.path,
+      icon: <Coffee className="w-4 h-4" />,
     },
     {
       id: 'planner',
@@ -317,7 +324,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </span>
 
                 <span className="relative z-10 tracking-tight">
-                  {activeTab === 'planner' ? 'Lịch Ăn Tuần' : 'Món Ngon'}
+                  {activeTab === 'planner'
+                    ? 'Lịch Ăn Tuần'
+                    : activeTab === 'snacks'
+                    ? 'Đồ Uống & Ăn Vặt'
+                    : 'Món Ngon'}
                 </span>
 
                 <ChevronDown className={`relative z-10 w-3.5 h-3.5 text-stone-400 transition-transform duration-200 ${
@@ -446,7 +457,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         >
           {mobileNavItems.map((item) => {
             const isActive = item.id === 'catalog' 
-              ? (activeTab === 'catalog' || activeTab === 'planner') 
+              ? (activeTab === 'catalog' || activeTab === 'snacks' || activeTab === 'planner') 
               : (activeTab === item.id);
             return (
               <a
