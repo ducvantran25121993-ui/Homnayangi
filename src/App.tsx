@@ -8,6 +8,8 @@ import { MealPlanner } from './components/MealPlanner';
 import { FoodDiscoveryPage } from './components/FoodDiscoveryPage';
 import { AboutPage } from './components/AboutPage';
 import { ContactPage } from './components/ContactPage';
+import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
+import { TermsOfServicePage } from './components/TermsOfServicePage';
 import { AdminInboxModal } from './components/AdminInboxModal';
 import { AffiliateModal } from './components/AffiliateModal';
 import { DishDetailModal } from './components/DishDetailModal';
@@ -332,6 +334,18 @@ export default function App() {
 
         {activeTab === 'contact' && (
           <ContactPage
+            onNavigate={handleNavigateTab}
+          />
+        )}
+
+        {activeTab === 'privacy' && (
+          <PrivacyPolicyPage
+            onNavigate={handleNavigateTab}
+          />
+        )}
+
+        {activeTab === 'terms' && (
+          <TermsOfServicePage
             onNavigate={handleNavigateTab}
           />
         )}

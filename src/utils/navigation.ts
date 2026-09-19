@@ -1,4 +1,4 @@
-export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'discover' | 'about' | 'contact';
+export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms';
 
 export type DiscoverSubSection = 'region' | 'daily' | 'recipe';
 
@@ -129,6 +129,26 @@ export const TAB_CONFIG: Record<TabType, TabMeta> = {
     ogImage: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&auto=format&fit=crop&q=80',
     ogImageAlt: 'Liên Hệ Hôm Nay Ăn Gì - Góp Ý Món Ăn & Hợp Tác Truyền Thông',
   },
+  privacy: {
+    path: '/chinh-sach-bao-mat',
+    title: 'Chính Sách Bảo Mật - Bảo Vệ Quyền Riêng Tư & An Toàn Dữ Liệu | Hôm Nay Ăn Gì',
+    description: 'Chính sách bảo mật minh bạch của Hôm Nay Ăn Gì: Tối giản thu thập dữ liệu, tôn trọng quyền riêng tư, an toàn khi trải nghiệm gợi ý ẩm thực và liên kết đặt món.',
+    label: 'Chính Sách Bảo Mật',
+    shortLabel: 'Bảo Mật',
+    keywords: 'chính sách bảo mật, bảo mật hôm nay ăn gì, quyền riêng tư, an toàn thông tin angigio',
+    ogImage: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&auto=format&fit=crop&q=80',
+    ogImageAlt: 'Chính Sách Bảo Mật - Hôm Nay Ăn Gì',
+  },
+  terms: {
+    path: '/dieu-khoan-su-dung',
+    title: 'Điều Khoản Sử Dụng - Thỏa Thuận Người Dùng & Quy Định Dịch Vụ | Hôm Nay Ăn Gì',
+    description: 'Điều khoản sử dụng dịch vụ Hôm Nay Ăn Gì: Quy định về trải nghiệm gợi ý món ăn, bách khoa ẩm thực, tính năng liên kết đối tác và quyền sở hữu trí tuệ.',
+    label: 'Điều Khoản Sử Dụng',
+    shortLabel: 'Điều Khoản',
+    keywords: 'điều khoản sử dụng, quy định hôm nay ăn gì, thỏa thuận dịch vụ, điều khoản angigio',
+    ogImage: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&auto=format&fit=crop&q=80',
+    ogImageAlt: 'Điều Khoản Sử Dụng - Hôm Nay Ăn Gì',
+  },
 };
 
 /**
@@ -166,6 +186,8 @@ export function getTabFromUrl(): TabType {
   ) return 'discover';
   if (pathname === '/gioi-thieu' || pathname === '/about') return 'about';
   if (pathname === '/lien-he' || pathname === '/contact') return 'contact';
+  if (pathname === '/chinh-sach-bao-mat' || pathname === '/privacy' || pathname === '/bao-mat') return 'privacy';
+  if (pathname === '/dieu-khoan-su-dung' || pathname === '/terms' || pathname === '/dieu-khoan') return 'terms';
   if (pathname === '/') {
     // Check fallback query param ?tab=
     const params = new URLSearchParams(window.location.search);
@@ -177,6 +199,8 @@ export function getTabFromUrl(): TabType {
     if (tabParam === 'am-thuc-vung-mien' || tabParam === 'thuc-don-moi-ngay' || tabParam === 'cach-nau-mon-ngon' || tabParam === 'kham-pha-am-thuc' || tabParam === 'kham-pha' || tabParam === 'discover' || tabParam === 'cam-nang') return 'discover';
     if (tabParam === 'gioi-thieu' || tabParam === 'about') return 'about';
     if (tabParam === 'lien-he' || tabParam === 'contact') return 'contact';
+    if (tabParam === 'chinh-sach-bao-mat' || tabParam === 'privacy' || tabParam === 'bao-mat') return 'privacy';
+    if (tabParam === 'dieu-khoan-su-dung' || tabParam === 'terms' || tabParam === 'dieu-khoan') return 'terms';
     return 'tarot';
   }
 

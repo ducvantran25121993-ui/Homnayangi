@@ -1,16 +1,12 @@
-import React, { useState } from 'react';
-import { Heart, Share2, Info, Mail, Lock } from 'lucide-react';
+import React from 'react';
+import { Heart, Info, Mail, Lock, ShieldCheck, FileText } from 'lucide-react';
 import { TabType } from '../utils/navigation';
-import { ShareModal } from './ShareModal';
-import { PWAInstallButton } from './PWAInstallButton';
 
 export const Footer: React.FC<{
   onOpenAffiliateModal: () => void;
   onNavigate?: (tab: TabType) => void;
   onOpenAdminInbox?: () => void;
 }> = ({ onNavigate, onOpenAdminInbox }) => {
-  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
-
   const handleAboutClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (e.ctrlKey || e.metaKey || e.button === 1) return;
     if (onNavigate) {
@@ -25,6 +21,24 @@ export const Footer: React.FC<{
     if (onNavigate) {
       e.preventDefault();
       onNavigate('contact');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handlePrivacyClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (e.ctrlKey || e.metaKey || e.button === 1) return;
+    if (onNavigate) {
+      e.preventDefault();
+      onNavigate('privacy');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleTermsClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (e.ctrlKey || e.metaKey || e.button === 1) return;
+    if (onNavigate) {
+      e.preventDefault();
+      onNavigate('terms');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -56,8 +70,8 @@ export const Footer: React.FC<{
             </div>
           </div>
 
-          {/* Trang Giới Thiệu (/gioi-thieu) & Liên Hệ (/lien-he) là trang riêng chuẩn SEO */}
-          <nav aria-label="Liên kết chân trang" className="flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-stone-600">
+          {/* Các liên kết chân trang: Giới Thiệu, Liên Hệ, Chính Sách Bảo Mật, Điều Khoản Sử Dụng */}
+          <nav aria-label="Liên kết chân trang" className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs font-semibold text-stone-600">
             <a
               href="/gioi-thieu"
               onClick={handleAboutClick}
@@ -80,18 +94,25 @@ export const Footer: React.FC<{
 
             <span className="text-stone-300">•</span>
 
-            <PWAInstallButton variant="footer" />
+            <a
+              href="/chinh-sach-bao-mat"
+              onClick={handlePrivacyClick}
+              className="inline-flex items-center gap-1.5 hover:text-orange-600 transition-colors py-1 px-2 rounded-lg hover:bg-stone-50"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-stone-500" />
+              <span>Chính Sách Bảo Mật</span>
+            </a>
 
             <span className="text-stone-300">•</span>
 
-            <button
-              type="button"
-              onClick={() => setIsShareModalOpen(true)}
-              className="inline-flex items-center gap-1.5 text-orange-600 hover:text-orange-700 font-bold transition-colors cursor-pointer py-1 px-2 rounded-lg hover:bg-orange-50/60"
+            <a
+              href="/dieu-khoan-su-dung"
+              onClick={handleTermsClick}
+              className="inline-flex items-center gap-1.5 hover:text-orange-600 transition-colors py-1 px-2 rounded-lg hover:bg-stone-50"
             >
-              <Share2 className="w-3.5 h-3.5" />
-              <span>Chia sẻ MXH</span>
-            </button>
+              <FileText className="w-3.5 h-3.5 text-stone-500" />
+              <span>Điều Khoản Sử Dụng</span>
+            </a>
           </nav>
 
         </div>
@@ -116,13 +137,6 @@ export const Footer: React.FC<{
           </div>
         </div>
       </div>
-
-      <ShareModal
-        isOpen={isShareModalOpen}
-        onClose={() => setIsShareModalOpen(false)}
-        title="Hôm Nay Ăn Gì? • Gợi ý món ngon chuẩn vị"
-        text="Rủ bạn bè cùng tìm món ngon, quay bánh xe ẩm thực và bốc quẻ Tarot!"
-      />
     </footer>
   );
 };

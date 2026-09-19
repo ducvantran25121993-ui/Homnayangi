@@ -110,15 +110,39 @@
     </image:image>
   </url>
 
-  <!-- 7. Trang Liên Hệ & Hợp Tác -->
+  <!-- 8. Trang Liên Hệ & Hợp Tác -->
   <url>
     <loc>https://www.angigio.com/lien-he</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
       <image:title>Liên Hệ Hôm Nay Ăn Gì - Góp Ý Món Ăn &amp; Hợp Tác Truyền Thông</image:title>
+    </image:image>
+  </url>
+
+  <!-- 9. Chính Sách Bảo Mật -->
+  <url>
+    <loc>https://www.angigio.com/chinh-sach-bao-mat</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Chính Sách Bảo Mật Quyền Riêng Tư - Hôm Nay Ăn Gì</image:title>
+    </image:image>
+  </url>
+
+  <!-- 10. Điều Khoản Sử Dụng -->
+  <url>
+    <loc>https://www.angigio.com/dieu-khoan-su-dung</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Điều Khoản Sử Dụng Dịch Vụ - Hôm Nay Ăn Gì</image:title>
     </image:image>
   </url>
 </urlset>
