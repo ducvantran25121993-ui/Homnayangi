@@ -119,7 +119,7 @@ export const Footer: React.FC<{
 
         <div className="mt-8 pt-6 border-t border-stone-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-stone-400">
           <p className="flex items-center gap-1.5">
-            <span>© {new Date().getFullYear()} Hôm Nay Ăn Gì. Nền tảng gợi ý món ngon và hỗ trợ đặt món trực tuyến qua ShopeeFood, GrabFood, BeFood.</span>
+            <span>Copyright by {new Date().getFullYear()} © Hôm Nay Ăn Gì (angigio.com). Nền tảng gợi ý món ngon</span>
             {onOpenAdminInbox && (
               <button
                 type="button"
