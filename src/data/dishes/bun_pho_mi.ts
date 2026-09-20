@@ -489,7 +489,7 @@ export const BUN_PHO_MI_DISHES: Dish[] = [
     estimatedPrice: 55000,
     calories: '450 - 530 kcal',
     description: 'Sợi miến dong dai ngon trong nước dùng gà ngọt lịm từ xương, từng thớ thịt đùi gà vàng ươm chấm muối tiêu chanh.',
-    image: 'https://images.unsplash.com/photo-1574484284002-952d92456975?w=800&auto=format&fit=crop&q=80',
+    image: '/images/mien_ga.jpg',
     popularTags: ['Gà ta thả vườn', 'Thanh ngọt', 'Dễ tiêu hóa'],
     searchKeyword: 'Miến gà ta',
   },

@@ -67,15 +67,67 @@ const SLICE_COLORS = [
   '#6D28D9', // Deep Violet
 ];
 
+const WHEEL_ITEMS_STORAGE_KEY = 'homnayangi_luckywheel_items_v1';
+const WHEEL_PRESET_STORAGE_KEY = 'homnayangi_luckywheel_preset_v1';
+
 export const LuckyWheel: React.FC<LuckyWheelProps> = ({
   affiliateConfig,
   onDishSelect,
   userLocation,
   onOpenLocationModal,
 }) => {
-  // Default to the first category preset: Toàn bộ 128 món (or 20 món đại tiệc)
-  const [items, setItems] = useState<string[]>(WHEEL_PRESETS[1].items); // Default: Cơm & Xôi (31 món)
-  const [selectedPreset, setSelectedPreset] = useState<string>(WHEEL_PRESETS[1].id);
+  // Default to saved items or first category preset (Cơm & Xôi)
+  const [items, setItems] = useState<string[]>(() => {
+    if (typeof window === 'undefined') return WHEEL_PRESETS[1].items;
+    try {
+      const saved = localStorage.getItem(WHEEL_ITEMS_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length >= 2) {
+          return parsed;
+        }
+      }
+    } catch (e) {
+      console.error('Error loading wheel items from localStorage:', e);
+    }
+    return WHEEL_PRESETS[1].items;
+  });
+
+  const [selectedPreset, setSelectedPreset] = useState<string>(() => {
+    if (typeof window === 'undefined') return WHEEL_PRESETS[1].id;
+    try {
+      const savedPreset = localStorage.getItem(WHEEL_PRESET_STORAGE_KEY);
+      if (savedPreset) {
+        return savedPreset;
+      }
+    } catch (e) {
+      console.error('Error loading wheel preset from localStorage:', e);
+    }
+    return WHEEL_PRESETS[1].id;
+  });
+
+  // Automatically persist items to localStorage whenever updated
+  useEffect(() => {
+    try {
+      if (items && items.length >= 2) {
+        localStorage.setItem(WHEEL_ITEMS_STORAGE_KEY, JSON.stringify(items));
+      }
+    } catch (e) {
+      console.error('Error saving wheel items to localStorage:', e);
+    }
+  }, [items]);
+
+  // Automatically persist selectedPreset to localStorage
+  useEffect(() => {
+    try {
+      if (selectedPreset) {
+        localStorage.setItem(WHEEL_PRESET_STORAGE_KEY, selectedPreset);
+      }
+    } catch (e) {
+      console.error('Error saving wheel preset to localStorage:', e);
+    }
+  }, [selectedPreset]);
+
   const [presetTab, setPresetTab] = useState<'categories' | 'themes'>('categories');
   const [newItemText, setNewItemText] = useState('');
   const [quickSearchText, setQuickSearchText] = useState('');
@@ -451,9 +503,11 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
 
   const handleAddItem = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newItemText.trim()) return;
-    if (items.includes(newItemText.trim())) return;
-    setItems([...items, newItemText.trim()]);
+    const text = newItemText.trim();
+    if (!text) return;
+    if (items.includes(text)) return;
+    setItems([...items, text]);
+    setSelectedPreset('custom');
     setNewItemText('');
   };
 
@@ -461,6 +515,7 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
     const name = dish.vietnameseName || dish.name;
     if (!items.includes(name)) {
       setItems([...items, name]);
+      setSelectedPreset('custom');
     }
     setQuickSearchText('');
   };
@@ -472,6 +527,16 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
     }
     const updated = items.filter((_, i) => i !== index);
     setItems(updated);
+    setSelectedPreset('custom');
+  };
+
+  const handleResetToDefault = () => {
+    const defaultPreset = WHEEL_PRESETS[1];
+    setItems([...defaultPreset.items]);
+    setSelectedPreset(defaultPreset.id);
+    setWinner(null);
+    setMatchedDish(null);
+    playTickSound();
   };
 
   // Filter presets based on selected tab
@@ -867,10 +932,31 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
           {/* List of items & Quick Search / Add tool */}
           <div className="bg-white p-5 sm:p-6 rounded-3xl border border-stone-200/80 shadow-xs">
             <div className="flex items-center justify-between mb-3">
-              <h2 className="text-base sm:text-lg font-bold text-stone-900">
-                Món Trên Vòng Quay ({items.length})
-              </h2>
-              <span className="text-xs text-stone-500">Hỗ trợ không giới hạn món</span>
+              <div className="flex items-center gap-2">
+                <h2 className="text-base sm:text-lg font-bold text-stone-900">
+                  Món Trên Vòng Quay ({items.length})
+                </h2>
+                <span
+                  className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60"
+                  title="Danh sách món được tự động lưu trên trình duyệt, không bị mất khi tải lại trang"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  Đã tự động lưu
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                {selectedPreset === 'custom' && (
+                  <button
+                    type="button"
+                    onClick={handleResetToDefault}
+                    className="text-xs text-stone-500 hover:text-orange-600 transition-colors underline decoration-dotted"
+                    title="Khôi phục danh sách món về mặc định (Cơm & Xôi)"
+                  >
+                    Đặt lại mặc định
+                  </button>
+                )}
+                <span className="text-xs text-stone-500 hidden sm:inline">Hỗ trợ không giới hạn món</span>
+              </div>
             </div>
 
             {/* Quick search & add from all dishes */}

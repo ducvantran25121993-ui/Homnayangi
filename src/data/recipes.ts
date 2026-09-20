@@ -357,6 +357,345 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
       'Dùng đường phèn thay đường cát trắng giúp nước canh chua có hậu vị ngọt thanh dịu mát, không bị gắt cổ.',
     recommendedSauce: 'Ăn cùng cơm nóng hoặc bún tươi, chấm cá vào chén nước mắm mặn dầm ớt hiểm cay xé lưỡi.',
   },
+  'bao-tu-ham-tieu': {
+    dishId: 'bao-tu-ham-tieu',
+    dishName: 'Bao Tử Hầm Tiêu Xanh',
+    prepTime: '30 phút (sơ chế kỹ)',
+    cookTime: '45 - 60 phút',
+    difficulty: 'Trung bình',
+    servings: '4 - 5 người',
+    ingredients: [
+      {
+        category: 'Nguyên liệu chính',
+        items: [
+          '1 cái bao tử heo tươi (khoảng 700g - 900g, chọn loại dày mình, màu hồng tươi)',
+          '50g - 70g tiêu xanh tươi nguyên chùm (chọn chùm hạt tròn bóng)',
+          '1 trái dừa xiêm lấy nước ngọt tự nhiên (khoảng 500ml)',
+          '100g nấm rơm búp tươi cạo sạch chân',
+          '1 củ sen nhỏ (hoặc củ cải trắng, cà rốt tỉa hoa)',
+        ],
+      },
+      {
+        category: 'Gia vị sơ chế & khử mùi bao tử',
+        items: [
+          '1 củ gừng già giã nát, 2 quả chanh tươi, 1 chén giấm gạo',
+          '3 thìa canh muối hạt trắng, 1/2 chén rượu trắng',
+        ],
+      },
+      {
+        category: 'Gia vị ướp & nấu nước dùng',
+        items: [
+          '3 củ hành tím đập dập, 1 củ tỏi băm nhuyễn',
+          'Gia vị: 2 thìa canh nước mắm nhĩ, 1 thìa canh hạt nêm, 1 thìa đường phèn, 1 thìa cà phê tiêu sọ trắng đập giập',
+          'Rau mồng tơi, rau xà lách xoong, cải bẹ xanh, mì trứng hoặc bún tươi ăn kèm',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Bí quyết sơ chế bao tử heo giòn sần sật, không hôi',
+        description:
+          'Lộn trái bao tử, cạo sạch màng nhầy dưới vòi nước. Bóp kỹ lần 1 với muối hạt và nước cốt chanh. Cho bao tử vào chảo gang khô không dầu áp chảo đảo nhanh 2-3 phút cho săn lại và ra bọt tanh rồi vớt ra cạo sạch lần nữa. Rửa lại lần cuối với rượu trắng và gừng đập dập, sau đó chần qua nước sôi rồi ngâm ngay vào thau nước đá lạnh để bao tử giữ độ giòn trắng.',
+        tip: 'Khâu áp chảo khô với muối và giấm/rượu là bí quyết của đầu bếp nhà hàng giúp khử mùi hôi tuyệt đối và tạo độ giòn sần sật.',
+      },
+      {
+        step: 2,
+        title: 'Ướp bao tử và xào thơm',
+        description:
+          'Cắt bao tử thành từng miếng vừa ăn (bản dày khoảng 1.5 - 2 ngón tay). Ướp cùng 1 thìa canh nước mắm, hành tỏi băm, tiêu đập dập và một nửa số tiêu xanh giã dập trong 20 phút. Phi thơm hành tỏi trên chảo, cho bao tử vào xào săn với lửa lớn để ngấm gia vị.',
+      },
+      {
+        step: 3,
+        title: 'Ninh chậm cùng nước dừa và tiêu xanh',
+        description:
+          'Cho bao tử đã xào vào nồi cùng 500ml nước dừa xiêm và 700ml nước dùng hầm xương (hoặc nước lọc). Thả các chùm tiêu xanh nguyên hạt, củ sen và đun sôi rồi hạ nhỏ lửa ninh liu riu trong 40 - 45 phút đến khi bao tử chín mềm vừa tới nhưng vẫn giữ độ giòn sần sật đặc trưng. Cho nấm rơm vào đun thêm 5 phút, nêm đường phèn và nước mắm vừa khẩu vị.',
+      },
+      {
+        step: 4,
+        title: 'Thưởng thức nóng hổi theo kiểu lẩu',
+        description:
+          'Múc bao tử và nước hầm tiêu xanh ra nồi lẩu hoặc thố đất giữ nhiệt. Đặt lên bếp gas mini liu riu, rắc thêm hành lá, ngò rí và tiêu sọ thơm nức. Nhúng rau mồng tơi, cải bẹ xanh hoặc xà lách xoong ăn kèm mì trứng hoặc bún tươi.',
+      },
+    ],
+    chefSecret:
+      'Không nên ninh bao tử quá lâu trên lửa lớn sẽ bị dai nhũn mất độ giòn. Ninh lửa nhỏ cùng nước dừa tươi giúp thịt mềm mọng ngọt tự nhiên, nước dùng trong vắt thơm cay the ngát của tiêu xanh.',
+    recommendedSauce:
+      'Chấm từng miếng bao tử giòn sần sật vào chén nước mắm mặn nguyên chất dầm ớt hiểm xanh hoặc muối tiêu chanh ớt cay nồng.',
+  },
+  'long-nuong': {
+    dishId: 'long-nuong',
+    dishName: 'Lòng Nướng Sa Tế Cay Giòn Than Hoa',
+    prepTime: '25 phút (sơ chế sạch)',
+    cookTime: '15 - 20 phút nướng than hoa',
+    difficulty: 'Dễ',
+    servings: '3 - 4 người lai rai',
+    ingredients: [
+      {
+        category: 'Nguyên liệu chính',
+        items: [
+          '500g lòng non heo (chọn lòng bé, ống tròn đều, màu trắng hồng căng mọng)',
+          '300g dồi trường hoặc bao tử heo kèm theo',
+          'Khử mùi: Muối hạt, nước cốt chanh, gừng đập dập, rượu trắng',
+        ],
+      },
+      {
+        category: 'Sốt ướp sa tế nướng than hoa',
+        items: [
+          '2 thìa canh sa tế tôm hoặc sa tế ớt hiểm cay nồng',
+          '1 thìa canh dầu hào, 1 thìa canh mật ong rừng',
+          '1 thìa canh nước mắm nhĩ ngon, 1/2 thìa ngũ vị hương',
+          '2 củ sả băm nhuyễn, 1 củ tỏi và 2 củ hành tím băm nhỏ, 1 thìa dầu màu điều',
+        ],
+      },
+      {
+        category: 'Rau ăn kèm & Nước chấm bén mồi',
+        items: [
+          'Rau húng quế, ngò gai, dưa leo, chuối chát, khế chua',
+          'Nước chấm: Chao đỏ pha đường ớt sa tế, sốt me chua ngọt hoặc muối ớt xanh sữa đặc',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế lòng non giòn ngọt, không bị đắng hay dai',
+        description:
+          'Dùng tay vuốt nhẹ lòng non từ đầu tới cuối dưới vòi nước (không vuốt quá kỹ làm mất chất ngọt). Bóp nhẹ với muối hạt và nước cốt chanh để khử nhớt. Chần lòng qua nồi nước sôi có gừng đập dập và rượu trắng trong đúng 30 giây rồi vớt ngay ra thả vào âu nước đá lạnh để lòng giòn sần sật và giữ màu trắng sáng.',
+        tip: 'Tuyệt đối không luộc lòng quá lâu lúc sơ chế vì nhiệt độ cao sẽ khiến lòng bị dai teo lại.',
+      },
+      {
+        step: 2,
+        title: 'Cắt khúc và tẩm ướp sốt sa tế óng ả',
+        description:
+          'Cắt lòng thành từng đoạn vừa ăn (dài khoảng 4-5cm). Trộn đều sa tế, dầu hào, mật ong, dầu điều, sả, hành tỏi băm. Đeo găng tay xoa đều sốt vào từng miếng lòng, ướp trong 20 - 30 phút cho ngấm sâu gia vị.',
+      },
+      {
+        step: 3,
+        title: 'Nướng xèo xèo trên than hoa đỏ rực',
+        description:
+          'Kẹp lòng vào vỉ hoặc xiên que tre nướng trên bếp than hoa đỏ rực. Trong lúc nướng, liên tục phết phần nước sốt ướp còn lại lên bề mặt để lòng không bị khô. Nướng đến khi lòng vàng óng, mặt ngoài xèo xèo phồng rộp dậy mùi thơm nức mũi.',
+      },
+      {
+        step: 4,
+        title: 'Bày đĩa và thưởng thức cùng bia lạnh',
+        description:
+          'Gắp lòng nướng ra đĩa, rắc thêm chút mè rang vàng thơm phức. Ăn kèm dưa leo giòn rụm, rau răm, khế chua và chấm đẫm vào chén chao sa tế béo cay.',
+      },
+    ],
+    chefSecret:
+      'Chần nhanh lòng 30 giây rồi ngâm đá lạnh trước khi nướng than là bí quyết vàng để lòng nướng ngoài giòn rụm, trong béo mềm ngọt ngào mà không hề bị dai.',
+    recommendedSauce:
+      'Chấm cùng sốt chao sa tế béo cay hoặc chén muối ớt chanh chua cay mặn ngọt bùng nổ hương vị.',
+  },
+  'buffet': {
+    dishId: 'buffet',
+    dishName: 'Đại Tiệc Buffet Nướng Lẩu Hải Sản Thả Ga Tại Nhà',
+    prepTime: '35 - 40 phút (chuẩn bị đồ tươi & sốt ướp)',
+    cookTime: 'Nướng & nhúng lẩu ăn lai rai không giới hạn',
+    difficulty: 'Dễ',
+    servings: '4 - 6 người tụ tập bia bọt',
+    ingredients: [
+      {
+        category: 'Thịt tươi nướng lẩu thượng hạng',
+        items: [
+          '500g ba chỉ bò Mỹ thái mỏng cuộn nấm kim châm',
+          '400g thăn bò hoặc dẻ sườn ướp sốt tiêu đen',
+          '400g ba chỉ heo rút sườn ướp sốt cay Hàn Quốc',
+          '300g sụn non heo hoặc lòng nướng',
+        ],
+      },
+      {
+        category: 'Hải sản tươi sống thả ga',
+        items: [
+          '400g tôm sú tươi nhảy tanh tách',
+          '400g mực trứng hoặc bạch tuộc giòn sần sật',
+          '500g ngao hai cùi hoặc hàu nướng mỡ hành phô mai',
+        ],
+      },
+      {
+        category: 'Nước dùng lẩu Thái & Rau nấm quầy line',
+        items: [
+          'Nước cốt lẩu Thái Tomyum chua cay thơm nồng lá chanh sả ớt',
+          'Nấm kim châm, nấm đùi gà, ngô ngọt, đậu phụ non, rau muống, cải thảo',
+          'Bún tươi, mì tôm ăn lẩu',
+        ],
+      },
+      {
+        category: 'Sốt chấm chuẩn quán nhậu',
+        items: [
+          'Sốt chấm thịt nướng Hàn Quốc (Ssamjang mè rang)',
+          'Muối ớt xanh sữa đặc chấm hải sản đậm đà tê cay',
+          'Xà lách, kim chi cay giòn ăn giải ngấy',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế quầy line nguyên liệu thịt và hải sản tươi rói',
+        description:
+          'Thịt bò và ba chỉ heo rửa sạch, thấm khô. Thịt bò cuộn chặt từng cuộn nấm kim châm; dẻ sườn ướp sốt tiêu đen dầu hào; ba chỉ ướp sốt sa tế cay mật ong. Hải sản tôm cắt râu, mực làm sạch khứa vảy rồng ướp chút sốt sa tế hành tỏi.',
+        tip: 'Khứa vảy rồng trên thân mực giúp mực khi nướng cong tròn đẹp mắt và ngấm trọn gia vị.',
+      },
+      {
+        step: 2,
+        title: 'Nấu nước dùng lẩu Thái chua cay thơm nức',
+        description:
+          'Hầm nước xương heo hoặc gà cho ngọt nước. Phi thơm sả đập dập, riềng, hành tím và ớt rồi trút cà chua băm vào xào mềm. Đổ nước dùng vào đun sôi, nêm gia vị lẩu Thái, nước cốt me, nước mắm ngon và vò nhẹ lá chanh Thái thả vào tạo hương thơm quyến rũ đặc trưng.',
+      },
+      {
+        step: 3,
+        title: 'Bày biện bàn tiệc buffet nướng lẩu và sốt chấm',
+        description:
+          'Đặt bếp nướng lẩu 2 trong 1 (hoặc 1 bếp nướng và 1 bếp lẩu) ở giữa bàn. Bày các đĩa thịt, hải sản, rau nấm xung quanh thành vòng tròn rực rỡ. Rót sẵn các loại sốt chấm: muối ớt xanh cho hải sản và sốt tương đậu mè rang cho thịt nướng.',
+      },
+      {
+        step: 4,
+        title: 'Bật bếp, khai tiệc nướng xèo xèo và nâng ly',
+        description:
+          'Phết chút bơ lên vỉ nướng, lần lượt thả ba chỉ bò cuộn nấm, mực, tôm xèo xèo thơm nức mũi. Thả ngao, nấm và rau vào nồi lẩu Thái đang sôi sùng sục. Nâng ly bia mát lạnh chúc tụng nhau trong tiếng xèo xèo vui tai.',
+      },
+    ],
+    chefSecret:
+      'Kết hợp song song cả nướng than/chảo bơ và nhúng lẩu chua cay giúp bữa tiệc buffet không bao giờ bị ngấy, ai thích ăn nướng đậm đà hay nhúng lẩu thanh ngọt đều thỏa sức lựa chọn.',
+    recommendedSauce:
+      'Muối ớt xanh Nha Trang sánh quyện cho hải sản và chén sốt tương đậu Hàn Quốc rắc mè rang thơm bùi cuốn cùng xà lách kim chi.',
+  },
+  'be-thui': {
+    dishId: 'be-thui',
+    dishName: 'Bê Thui Cầu Mống Chấm Mắm Nêm Chuẩn Vị Xứ Quảng',
+    prepTime: '20 phút (chuẩn bị rau rừng & pha mắm nêm)',
+    cookTime: '30 - 45 phút (thui rơm/nướng giòn da)',
+    difficulty: 'Trung bình',
+    servings: '3 - 4 người lai rai mồi nhậu',
+    ingredients: [
+      {
+        category: 'Thịt bê tươi ngon',
+        items: [
+          '600g - 800g thịt đùi bê còn nguyên da (chọn thịt bê tơ non mềm, da mỏng)',
+          'Sả cây đập dập, gừng, rượu trắng để hấp và tạo mùi thơm',
+          'Mè (vừng) trắng rang vàng thơm lừng',
+        ],
+      },
+      {
+        category: 'Rau sống ăn kèm & Bánh tráng cuốn',
+        items: [
+          'Bánh tráng Đại Lộc nhúng nước dẻo dai',
+          'Bánh tráng nướng mè giòn rụm bóp vụn ăn cùng',
+          'Chuối chát thái mỏng ngâm chanh, khế chua, dưa leo',
+          'Rau thơm: Húng quế, ngò tàu, tía tô, rau thơm, diếp cá, cải mầm hoặc rau rừng',
+        ],
+      },
+      {
+        category: 'Chén mắm nêm bí truyền xứ Quảng',
+        items: [
+          '1 chén mắm nêm cá cơm nguyên chất thơm nồng',
+          '1/3 quả dứa (thơm) băm nhuyễn vắt lấy nước cốt ngọt thanh',
+          'Tỏi băm, ớt xiêm xanh đập dập, đường phèn, nước cốt chanh',
+          '1 thìa dầu mè hoặc mè rang rắc lên mặt chén chấm',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Thui da bê giòn rụm và hấp chín tái hồng mọng nước',
+        description:
+          'Dùng khò nhiệt hoặc nướng da bê trên than hoa/rơm rạ cho phần da phồng rộp, vàng óng giòn sần sật. Sau đó đặt miếng thịt bê lên xửng hấp cùng sả đập dập và gừng tươi trong khoảng 15-20 phút đến khi thịt chín tới (bên ngoài chín đều, thớ thịt bên trong phớt hồng đào ngọt lịm mọng nước).',
+        tip: 'Thịt bê thui ngon nhất là khi vừa chín tới hai tầng thịt - da giòn, thịt hồng mềm mọng nước, tuyệt đối không hấp quá kỹ làm thịt khô dai.',
+      },
+      {
+        step: 2,
+        title: 'Thái lát thịt bê điêu luyện',
+        description:
+          'Dùng dao thật sắc thái thịt bê thành từng lát mỏng, dính liền cả phần da vàng ruộm giòn tan và thớ thịt hồng tươi. Xếp thịt xoay tròn đều trên đĩa rồi rắc mè rang vàng thơm phức lên bề mặt.',
+      },
+      {
+        step: 3,
+        title: 'Pha chén mắm nêm cá cơm trứ danh xứ Quảng',
+        description:
+          'Cho mắm nêm vào bát, thêm nước cốt dứa băm nhuyễn, đường phèn, nước cốt chanh khuấy tan đều vị chua ngọt mặn mà. Thêm thật nhiều tỏi băm, ớt hiểm xanh cay xé lưỡi và rắc chút mè rang lên trên.',
+      },
+      {
+        step: 4,
+        title: 'Cuốn bánh tráng Đại Lộc và thưởng thức mồi nhậu bén bia',
+        description:
+          'Trải miếng bánh tráng dẻo, đặt lên vài cọng rau thơm, lát chuối chát, khế chua, gắp 1-2 miếng thịt bê thui hồng hào cuộn chặt tay. Chấm ngập chén mắm nêm đậm đà, cắn ngập miệng cảm nhận vị ngọt thơm, giòn rụm xốn xang.',
+      },
+    ],
+    chefSecret:
+      'Linh hồn của món bê thui nằm ở chén mắm nêm: Dứa băm giúp giảm vị mặn gắt của mắm, tạo độ sánh sánh và hương thơm thanh dịu hòa cùng tỏi ớt cay nồng cực kỳ kích thích vị giác.',
+    recommendedSauce:
+      'Chén mắm nêm cá cơm pha dứa, tỏi ớt xiêm xanh cay nồng nàn không thể thay thế của người miền Trung.',
+  },
+  'banh-beo': {
+    dishId: 'banh-beo',
+    dishName: 'Bánh Bèo Chén Tôm Chấy Tóp Mỡ Chuẩn Vị Huế',
+    prepTime: '25 phút (pha bột & làm tôm chấy)',
+    cookTime: '15 - 20 phút (hấp bánh)',
+    difficulty: 'Dễ',
+    servings: '15 - 20 chén nhỏ (3 - 4 người ăn)',
+    ingredients: [
+      {
+        category: 'Phần bột bánh bèo xoáy lòng',
+        items: [
+          '150g bột gạo tẻ nguyên chất',
+          '30g bột năng (tạo độ dai nhẹ mềm mướt)',
+          '250ml nước lạnh + 250ml nước sôi ấm',
+          '1/2 thìa cà phê muối tinh, 1 thìa canh dầu ăn',
+        ],
+      },
+      {
+        category: 'Nhân tôm chấy & Tóp mỡ vàng giòn',
+        items: [
+          '200g tôm tươi (hoặc tôm khô ngâm mềm) giã nhuyễn sao vàng tơi xốp',
+          '150g mỡ gáy heo thái hạt lựu rán vàng giòn thành tóp mỡ',
+          'Hành lá cắt nhỏ phi mỡ thơm lừng (mỡ hành)',
+          'Bánh mì khô cắt hạt lựu chiên giòn (tùy thích)',
+        ],
+      },
+      {
+        category: 'Nước mắm ngọt ấm chan bánh',
+        items: [
+          'Nước luộc tôm tươi ngọt thanh',
+          'Nước mắm ngon, đường cát vàng, chút giấm hoặc nước cốt chanh',
+          'Ớt sừng hoặc ớt chỉ thiên cắt khoanh cay tê đầu lưỡi',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Pha bột và ủ để bánh tạo xoáy đẹp mắt',
+        description:
+          'Khuấy đều bột gạo, bột năng, muối với nước lạnh cho tan hoàn toàn. Sau đó từ từ châm nước sôi ấm vào quấy đều tay, thêm thìa dầu ăn. Để bột nghỉ khoảng 30 - 45 phút trước khi đổ chén giúp bánh khi hấp tạo thành hình xoáy lõm chính giữa chuẩn điệu.',
+        tip: 'Tỷ lệ bột gạo và bột năng chuẩn kết hợp nước ấm sẽ giúp bánh mềm mướt không bị nát cũng không bị cứng.',
+      },
+      {
+        step: 2,
+        title: 'Làm tôm chấy đỏ au và mỡ hành, tóp mỡ giòn rụm',
+        description:
+          'Tôm bóc vỏ luộc chín (giữ lại nước luộc làm nước mắm), đem giã nhuyễn rồi cho vào chảo chống dính sao nhỏ lửa đến khi sợi tôm khô tơi xốp, màu cam đỏ tự nhiên. Mỡ heo thắng vàng giòn vớt tóp mỡ ra, trút hành lá cắt nhỏ vào dầu nóng làm mỡ hành óng ả.',
+      },
+      {
+        step: 3,
+        title: 'Hấp bánh bèo từng chén nóng hổi',
+        description:
+          'Xếp các chén sành nhỏ vào xửng hấp, đun sôi nước cho chén nóng lên trong 3 phút. Quấy đều thau bột rồi múc bột đổ vào từng chén (khoảng 1/2 đến 2/3 chén). Đậy nắp hấp lửa lớn trong 7 - 8 phút đến khi bánh chín trắng đục, giữa chén xoáy lõm sâu là đạt.',
+      },
+      {
+        step: 4,
+        title: 'Trang trí và thưởng thức nóng',
+        description:
+          'Lấy chén bánh ra, phết một thìa mỡ hành óng ả, rắc tôm chấy đỏ au và vài hạt tóp mỡ giòn rụm lên trên. Khi ăn chan 1 thìa nước mắm ngọt ấm pha ớt cay, dùng thìa tre xắn từng góc bánh thưởng thức trọn vẹn sự dẻo mềm, béo ngậy giòn tan.',
+      },
+    ],
+    chefSecret:
+      'Làm nóng chén trong nồi hấp trước khi đổ bột vào là bí quyết vàng để bánh bèo nở xoáy sâu ở giữa lòng chén và không hề bị dính chén khi xắn bánh.',
+    recommendedSauce:
+      'Nước mắm ngọt pha từ nước luộc tôm tươi, có vị mặn ngọt thanh nhẹ, điểm xuyết vài lát ớt tươi cay nồng.',
+  },
 };
 
 /**

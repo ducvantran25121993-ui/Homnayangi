@@ -166,7 +166,7 @@ export const NUONG_CHIEN_DISHES: Dish[] = [
     estimatedPrice: 110000,
     calories: '680 - 850 kcal',
     description: 'Thăn bò mềm tan áp chảo thơm lừng bơ tỏi, rưới đẫm nước sốt tiêu đen cay nồng đậm đà, ăn kèm khoai tây chiên vàng giòn và bánh mì nóng.',
-    image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1558030006-450675393462?w=800&auto=format&fit=crop&q=80',
     popularTags: ['Bò Bít Tết', 'Beefsteak', 'Sốt tiêu đen', 'Món Tây'],
     searchKeyword: 'Bò bít tết',
   },
@@ -222,7 +222,7 @@ export const NUONG_CHIEN_DISHES: Dish[] = [
     estimatedPrice: 150000,
     calories: '520 - 700 kcal',
     description: 'Ốc hương tươi giòn sần sật quyện nước sốt trứng muối vàng óng béo bùi, thơm lừng bơ tỏi và ớt lát, chấm kèm bánh mì đặc ruột nóng hổi giòn rụm.',
-    image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=800&auto=format&fit=crop&q=80',
+    image: '/images/oc_huong_trung_muoi.jpg',
     popularTags: ['Ốc hương', 'Sốt trứng muối', 'Bánh mì chấm', 'Ăn nhậu cuối tuần'],
     searchKeyword: 'Ốc hương xào bơ tỏi trứng muối',
   }

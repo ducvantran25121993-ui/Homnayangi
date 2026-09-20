@@ -14,43 +14,33 @@ async function optimizeImage(inputPath, outputPath) {
   const metadata = await sharp(inputPath).metadata();
   const targetWidth = Math.min(metadata.width || 680, 680);
 
-  // Iteratively adjust quality to hit 50KB - 60KB
-  let minQ = 50;
-  let maxQ = 95;
+  // Iteratively adjust width and quality to hit 50KB - 60KB (51,200 - 61,440 bytes)
   let bestBuffer = null;
   let bestQuality = 80;
+  for (const w of [680, 640, 600, 580, 540, 500, 480]) {
+    for (let q = 88; q >= 40; q -= 2) {
+      const buffer = await sharp(inputPath)
+        .resize({ width: w, withoutEnlargement: true })
+        .jpeg({
+          quality: q,
+          progressive: true,
+          chromaSubsampling: '4:2:0',
+        })
+        .toBuffer();
 
-  for (let q = 88; q >= 50; q -= 3) {
-    const buffer = await sharp(inputPath)
-      .resize({ width: targetWidth, withoutEnlargement: true })
-      .jpeg({
-        quality: q,
-        progressive: true,
-        chromaSubsampling: '4:2:0',
-      })
-      .toBuffer();
-
-    if (buffer.length <= targetMax) {
-      if (!bestBuffer || buffer.length >= targetMin || buffer.length > bestBuffer.length) {
+      if (buffer.length >= targetMin && buffer.length <= targetMax) {
         bestBuffer = buffer;
         bestQuality = q;
-        if (buffer.length >= targetMin && buffer.length <= targetMax) {
-          break;
-        }
+        break;
+      }
+      if (buffer.length <= targetMax && (!bestBuffer || buffer.length > bestBuffer.length)) {
+        bestBuffer = buffer;
+        bestQuality = q;
       }
     }
-  }
-
-  if (!bestBuffer) {
-    // Fallback resize width slightly smaller if still > 60KB
-    bestBuffer = await sharp(inputPath)
-      .resize({ width: 560, withoutEnlargement: true })
-      .jpeg({
-        quality: 68,
-        progressive: true,
-        chromaSubsampling: '4:2:0',
-      })
-      .toBuffer();
+    if (bestBuffer && bestBuffer.length >= targetMin && bestBuffer.length <= targetMax) {
+      break;
+    }
   }
 
   fs.writeFileSync(outputPath, bestBuffer);

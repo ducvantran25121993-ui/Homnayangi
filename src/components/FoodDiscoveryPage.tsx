@@ -438,17 +438,41 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
     if (n.includes('ba chỉ') || n.includes('tôm rim') || n.includes('cháy cạnh') || n.includes('thịt luộc')) {
       return '/images/ba_chi_rang.jpg';
     }
+    if (n.includes('nộm bò') || n.includes('nộm đu đủ') || n.includes('bò khô')) {
+      return '/images/nom_bo_kho.jpg';
+    }
+    if (n.includes('ngó sen')) {
+      return '/images/goi_ngo_sen.jpg';
+    }
+    if (n.includes('rau mầm')) {
+      return '/images/salad_rau_mam_bo.jpg';
+    }
+    if (n.includes('lá é')) {
+      return '/images/lau_ga_la_e.jpg';
+    }
+    if (n.includes('ớt hiểm') || n.includes('gà tiềm')) {
+      return '/images/lau_ga_ot_hiem.jpg';
+    }
     if (n.includes('gà')) {
       return '/images/com_ga_hoi_an.jpg';
     }
     if (n.includes('bò')) {
       return '/images/com_bo_luc_lac.jpg';
     }
+    if (n.includes('nem lụi')) {
+      return '/images/nem_lui.jpg';
+    }
     if (n.includes('nem rán') || n.includes('chả giò') || n.includes('chả cá')) {
       return '/images/cha_gio.jpg';
     }
     if (n.includes('gỏi cuốn')) {
       return '/images/goi_cuon.jpg';
+    }
+    if (n.includes('ốc hương') || n.includes('trứng muối')) {
+      return '/images/oc_huong_trung_muoi.jpg';
+    }
+    if (n.includes('ốc')) {
+      return '/images/oc_huong_bo_toi.jpg';
     }
     if (n.includes('mực')) {
       return '/images/muc_nuong.jpg';
