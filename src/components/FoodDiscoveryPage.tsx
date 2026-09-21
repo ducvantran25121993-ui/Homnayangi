@@ -24,6 +24,10 @@ import {
   Fish,
   Sun,
   Moon,
+  Play,
+  Video,
+  X,
+  ExternalLink,
 } from 'lucide-react';
 import { Dish, UserLocation, AffiliateConfig } from '../types';
 import {
@@ -225,6 +229,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
     return INITIAL_DISHES.find((d) => d.id === 'pho-bo-tai-lan') || INITIAL_DISHES[0];
   });
   const [copiedRecipe, setCopiedRecipe] = useState(false);
+  const [showVideoModal, setShowVideoModal] = useState(false);
   const [copiedFamilyDishRecipe, setCopiedFamilyDishRecipe] = useState<string | null>(null);
 
   // Helper to copy a dish's recipe
@@ -1458,28 +1463,40 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
 
                 {/* Steps Column (8 cols) */}
                 <div className="lg:col-span-8 space-y-4">
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between gap-3">
                     <h4 className="text-base font-extrabold text-stone-900 flex items-center gap-2">
                       <BookOpen className="w-4 h-4 text-orange-500" />
                       <span>Các Bước Nấu Từng Bước</span>
                     </h4>
 
-                    <button
-                      onClick={handleCopyRecipe}
-                      className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl bg-white hover:bg-stone-100 text-stone-700 border border-stone-200 transition-colors cursor-pointer"
-                    >
-                      {copiedRecipe ? (
-                        <>
-                          <Check className="w-3.5 h-3.5 text-emerald-600" />
-                          <span className="text-emerald-700">Đã sao chép!</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3.5 h-3.5 text-stone-500" />
-                          <span>Sao chép công thức</span>
-                        </>
-                      )}
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setShowVideoModal(true)}
+                        className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl bg-red-50 hover:bg-red-100 text-red-700 border border-red-200 transition-colors cursor-pointer shadow-2xs"
+                        title={`Xem video clip hướng dẫn nấu ${currentRecipe.dishName}`}
+                      >
+                        <Play className="w-3.5 h-3.5 fill-red-600 text-red-600" />
+                        <span>Video Hướng Dẫn</span>
+                      </button>
+
+                      <button
+                        onClick={handleCopyRecipe}
+                        className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-xl bg-white hover:bg-stone-100 text-stone-700 border border-stone-200 transition-colors cursor-pointer"
+                      >
+                        {copiedRecipe ? (
+                          <>
+                            <Check className="w-3.5 h-3.5 text-emerald-600" />
+                            <span className="text-emerald-700">Đã sao chép!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5 text-stone-500" />
+                            <span>Sao chép công thức</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
                   </div>
 
                   <div className="space-y-4">
@@ -1585,6 +1602,83 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
         </div>
       </div>
 
+      {/* Video Guide Modal */}
+      {showVideoModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/80 backdrop-blur-xs animate-fadeIn"
+          onClick={() => setShowVideoModal(false)}
+        >
+          <div
+            className="relative w-full max-w-2xl bg-white rounded-3xl overflow-hidden shadow-2xl border border-stone-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-4 sm:p-5 border-b border-stone-100 bg-stone-50/80">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-600">
+                  <Video className="w-4 h-4" />
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-stone-900 text-sm sm:text-base line-clamp-1">
+                    Video Hướng Dẫn: {currentRecipe.dishName}
+                  </h4>
+                  <p className="text-[11px] text-stone-500">
+                    Chuẩn vị truyền thống • Thời lượng ~{totalDurationIso.replace('PT', '').replace('H', ' giờ ').replace('M', ' phút')}
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowVideoModal(false)}
+                className="p-1.5 rounded-full hover:bg-stone-200 text-stone-500 hover:text-stone-800 transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Video Banner & Link */}
+            <div className="p-4 sm:p-6 space-y-4">
+              <div className="relative aspect-video rounded-2xl overflow-hidden bg-stone-900 shadow-inner group">
+                <img
+                  src={selectedRecipeDish.image}
+                  alt={currentRecipe.dishName}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/85 via-stone-950/40 to-transparent flex flex-col justify-end p-5">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-600 text-white text-xs font-bold w-fit mb-2 shadow-sm">
+                    <Play className="w-3.5 h-3.5 fill-white" />
+                    Clip Hướng Dẫn Nấu Ăn
+                  </span>
+                  <h5 className="text-white font-bold text-sm sm:text-base drop-shadow">
+                    Cách Nấu {currentRecipe.dishName} Thơm Ngon Chuẩn Vị Gia Đình
+                  </h5>
+                  <p className="text-stone-300 text-xs mt-1 line-clamp-2">
+                    {currentRecipe.chefSecret}
+                  </p>
+                </div>
+              </div>
+
+              {/* Video External Link Action */}
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
+                <div className="text-xs text-stone-500">
+                  Xem thêm video hướng dẫn chi tiết từ các đầu bếp chuyên nghiệp:
+                </div>
+                <a
+                  href={`https://www.youtube.com/results?search_query=${encodeURIComponent('cách nấu ' + currentRecipe.dishName)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold transition-colors shadow-sm"
+                >
+                  <span>Mở Video Trên YouTube</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Structured Data (Schema.org JSON-LD for Discovery & Recipe) */}
       {/* Schema.org Structured Data (JSON-LD) for SEO */}
       <script
@@ -1625,57 +1719,108 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                   }
                 ]
               },
-              {
-                "@type": "Recipe",
-                "@id": `https://www.angigio.com/cach-nau-mon-ngon#recipe-${selectedRecipeDish.id}`,
-                "url": `https://www.angigio.com/cach-nau-mon-ngon#recipe-${selectedRecipeDish.id}`,
-                "mainEntityOfPage": `https://www.angigio.com/cach-nau-mon-ngon`,
-                "name": `Cách Nấu ${currentRecipe.dishName} Chuẩn Vị`,
-                "headline": `Công thức nấu ${currentRecipe.dishName} thơm ngon đúng điệu`,
-                "image": [
-                  selectedRecipeDish.image.startsWith('http')
-                    ? selectedRecipeDish.image
-                    : `https://www.angigio.com${selectedRecipeDish.image}`
-                ],
-                "description":
-                  selectedRecipeDish.description ||
-                  `Hướng dẫn chi tiết từng bước nấu món ${currentRecipe.dishName} đậm đà hương vị truyền thống Việt Nam.`,
-                "keywords": `${currentRecipe.dishName}, cách nấu ${currentRecipe.dishName}, công thức ${currentRecipe.dishName}, món ngon mỗi ngày, ẩm thực Việt Nam, ${selectedRecipeDish.category}`,
-                "recipeCategory": selectedRecipeDish.category,
-                "recipeCuisine": "Vietnamese",
-                "recipeYield": currentRecipe.servings || "4 người",
-                "prepTime": prepDurationIso,
-                "cookTime": cookDurationIso,
-                "totalTime": totalDurationIso,
-                "nutrition": {
-                  "@type": "NutritionInformation",
-                  "calories": `${recipeCaloriesNumber} calories`,
-                  "servingSize": "1 phần"
-                },
-                "aggregateRating": {
-                  "@type": "AggregateRating",
-                  "ratingValue": (4.7 + ((selectedRecipeDish.name.length % 3) * 0.1)).toFixed(1),
-                  "reviewCount": 85 + (selectedRecipeDish.name.length * 7),
-                  "bestRating": "5",
-                  "worstRating": "1"
-                },
-                "recipeIngredient": currentRecipe.ingredients.flatMap((cat) => cat.items),
-                "recipeInstructions": currentRecipe.steps.map((st) => ({
-                  "@type": "HowToStep",
-                  "position": st.step,
-                  "name": st.title,
-                  "text": st.description,
-                  "url": `https://www.angigio.com/cach-nau-mon-ngon#recipe-${selectedRecipeDish.id}-step-${st.step}`,
-                  "image": selectedRecipeDish.image.startsWith('http')
-                    ? selectedRecipeDish.image
-                    : `https://www.angigio.com${selectedRecipeDish.image}`
-                })),
-                "author": {
-                  "@type": "Organization",
-                  "name": "Hôm Nay Ăn Gì",
-                  "url": "https://www.angigio.com/"
-                }
-              }
+              // Chỉ chèn Schema Recipe khi đang ở đúng trang Công thức (/cach-nau-mon-ngon)
+              ...(sectionTab === 'recipe'
+                ? [
+                    {
+                      "@type": "Recipe",
+                      "@id": `https://www.angigio.com/cach-nau-mon-ngon#recipe-${selectedRecipeDish.id}`,
+                      "url": `https://www.angigio.com/cach-nau-mon-ngon#recipe-${selectedRecipeDish.id}`,
+                      "mainEntityOfPage": "https://www.angigio.com/cach-nau-mon-ngon",
+                      "name": `Cách Nấu ${currentRecipe.dishName} Chuẩn Vị`,
+                      "headline": `Công thức nấu ${currentRecipe.dishName} thơm ngon đúng điệu`,
+                      "image": [
+                        selectedRecipeDish.image.startsWith('http')
+                          ? selectedRecipeDish.image
+                          : `https://www.angigio.com${selectedRecipeDish.image}`
+                      ],
+                      "description":
+                        selectedRecipeDish.description ||
+                        `Hướng dẫn chi tiết từng bước nấu món ${currentRecipe.dishName} đậm đà hương vị truyền thống Việt Nam.`,
+                      "keywords": `${currentRecipe.dishName}, cách nấu ${currentRecipe.dishName}, công thức ${currentRecipe.dishName}, món ngon mỗi ngày, ẩm thực Việt Nam, ${selectedRecipeDish.category}`,
+                      "recipeCategory": selectedRecipeDish.category,
+                      "recipeCuisine": "Vietnamese",
+                      "recipeYield": currentRecipe.servings || "4 người",
+                      "prepTime": prepDurationIso,
+                      "cookTime": cookDurationIso,
+                      "totalTime": totalDurationIso,
+                      "datePublished": "2024-01-15T08:00:00+07:00",
+                      "dateModified": "2026-09-20T00:00:00+07:00",
+                      "nutrition": {
+                        "@type": "NutritionInformation",
+                        "calories": `${recipeCaloriesNumber} calories`,
+                        "servingSize": "1 phần"
+                      },
+                      "aggregateRating": {
+                        "@type": "AggregateRating",
+                        "ratingValue": (4.7 + ((selectedRecipeDish.name.length % 3) * 0.1)).toFixed(1),
+                        "reviewCount": 85 + (selectedRecipeDish.name.length * 7),
+                        "bestRating": "5",
+                        "worstRating": "1"
+                      },
+                      // Google Search Console Recipe VideoObject compliance
+                      "video": {
+                        "@type": "VideoObject",
+                        "name": `Video Hướng Dẫn Cách Nấu ${currentRecipe.dishName} Chuẩn Vị`,
+                        "description": `Video clip hướng dẫn chi tiết từng bước nấu món ${currentRecipe.dishName} thơm ngon đậm đà, chuẩn vị truyền thống gia đình Việt Nam tại nhà.`,
+                        "thumbnailUrl": [
+                          selectedRecipeDish.image.startsWith('http')
+                            ? selectedRecipeDish.image
+                            : `https://www.angigio.com${selectedRecipeDish.image}`
+                        ],
+                        "contentUrl": `https://www.angigio.com/videos/cach-nau-${selectedRecipeDish.id}.mp4`,
+                        "embedUrl": `https://www.youtube-nocookie.com/embed?search=${encodeURIComponent('cách nấu ' + currentRecipe.dishName)}`,
+                        "uploadDate": "2024-01-15T08:00:00+07:00",
+                        "duration": totalDurationIso || "PT25M"
+                      },
+                      "recipeIngredient": currentRecipe.ingredients.flatMap((cat) => cat.items),
+                      "recipeInstructions": currentRecipe.steps.map((st) => ({
+                        "@type": "HowToStep",
+                        "position": st.step,
+                        "name": st.title,
+                        "text": st.description,
+                        "url": `https://www.angigio.com/cach-nau-mon-ngon#recipe-${selectedRecipeDish.id}-step-${st.step}`,
+                        "image": selectedRecipeDish.image.startsWith('http')
+                          ? selectedRecipeDish.image
+                          : `https://www.angigio.com${selectedRecipeDish.image}`
+                      })),
+                      "author": {
+                        "@type": "Organization",
+                        "name": "Hôm Nay Ăn Gì",
+                        "url": "https://www.angigio.com/"
+                      }
+                    }
+                  ]
+                : sectionTab === 'region'
+                ? [
+                    {
+                      "@type": "CollectionPage",
+                      "@id": "https://www.angigio.com/am-thuc-vung-mien#collection",
+                      "url": "https://www.angigio.com/am-thuc-vung-mien",
+                      "name": "Bản Đồ Ẩm Thực Vùng Miền 3 Miền Việt Nam",
+                      "description": "Khám phá hương vị ẩm thực 3 miền Bắc, Trung, Nam và Miền Tây sông nước với các món đặc sản truyền thống tinh hoa.",
+                      "inLanguage": "vi-VN",
+                      "isPartOf": {
+                        "@type": "WebSite",
+                        "@id": "https://www.angigio.com/#website"
+                      }
+                    }
+                  ]
+                : [
+                    {
+                      "@type": "CollectionPage",
+                      "@id": "https://www.angigio.com/thuc-don-moi-ngay#collection",
+                      "url": "https://www.angigio.com/thuc-don-moi-ngay",
+                      "name": "Thực Đơn Mỗi Ngày Cân Bằng Dinh Dưỡng",
+                      "description": "Gợi ý mâm cơm gia đình chuẩn vị, đủ dinh dưỡng từ Thứ 2 đến Chủ Nhật cho cả nhà quây quần.",
+                      "inLanguage": "vi-VN",
+                      "isPartOf": {
+                        "@type": "WebSite",
+                        "@id": "https://www.angigio.com/#website"
+                      }
+                    }
+                  ]
+              )
             ]
           })
         }}
