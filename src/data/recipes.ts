@@ -1,9 +1,10 @@
 import { Dish, DishRecipe } from '../types';
+import { INITIAL_DISHES } from './dishes';
 
 export const CURATED_RECIPES: Record<string, DishRecipe> = {
   'pho-bo-tai-lan': {
     dishId: 'pho-bo-tai-lan',
-    dishName: 'Phở Bò Tái Lăn Hà Nội',
+    dishName: 'Cách Nấu Phở Bò Tái Lăn Hà Nội Thơm Ngon Chuẩn Vị',
     prepTime: '25 phút',
     cookTime: '3 - 4 giờ (nước dùng) / 5 phút (xào bò)',
     difficulty: 'Trung bình',
@@ -72,7 +73,7 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
 
   'com-tam-suon-bi-cha': {
     dishId: 'com-tam-suon-bi-cha',
-    dishName: 'Cơm Tấm Sườn Bì Chả Đặc Biệt Sài Gòn',
+    dishName: 'Cách Nấu Cơm Tấm Sườn Bì Chả Đặc Biệt Sài Gòn Chuẩn Vị',
     prepTime: '40 phút (ướp thịt qua đêm)',
     cookTime: '35 phút',
     difficulty: 'Trung bình',
@@ -140,7 +141,7 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
 
   'bun-bo-hue': {
     dishId: 'bun-bo-hue',
-    dishName: 'Bún Bò Huế Chả Cua Thịt Nạm',
+    dishName: 'Cách Nấu Bún Bò Huế Chả Cua Đậm Đà Chuẩn Vị Cố Đô',
     prepTime: '35 phút',
     cookTime: '2.5 - 3 giờ',
     difficulty: 'Cầu kỳ',
@@ -203,7 +204,7 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
 
   'thit-kho-tau': {
     dishId: 'thit-kho-tau',
-    dishName: 'Thịt Kho Tàu Nước Dừa Trứng Cút',
+    dishName: 'Cách Nấu Thịt Kho Tàu Nước Dừa Trứng Cút Mềm Tan Đậm Đà',
     prepTime: '20 phút',
     cookTime: '60 - 75 phút',
     difficulty: 'Dễ',
@@ -253,7 +254,7 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
 
   'nem-nuong-nha-trang': {
     dishId: 'nem-nuong-nha-trang',
-    dishName: 'Nem Nướng Nha Trang Cuốn Bánh Tráng',
+    dishName: 'Cách Làm Nem Nướng Nha Trang Cuốn Bánh Tráng Chuẩn Vị',
     prepTime: '30 phút',
     cookTime: '25 phút',
     difficulty: 'Trung bình',
@@ -309,7 +310,7 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
 
   'canh-chua-ca-loc': {
     dishId: 'canh-chua-ca-loc',
-    dishName: 'Canh Chua Cá Lóc Nam Bộ',
+    dishName: 'Cách Nấu Canh Chua Cá Lóc Nam Bộ Thanh Mát Chuẩn Vị',
     prepTime: '20 phút',
     cookTime: '20 phút',
     difficulty: 'Dễ',
@@ -359,7 +360,7 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
   },
   'bao-tu-ham-tieu': {
     dishId: 'bao-tu-ham-tieu',
-    dishName: 'Bao Tử Hầm Tiêu Xanh',
+    dishName: 'Cách Nấu Bao Tử Hầm Tiêu Xanh Giòn Ngon Đậm Đà Chuẩn Vị',
     prepTime: '30 phút (sơ chế kỹ)',
     cookTime: '45 - 60 phút',
     difficulty: 'Trung bình',
@@ -425,7 +426,7 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
   },
   'long-nuong': {
     dishId: 'long-nuong',
-    dishName: 'Lòng Nướng Sa Tế Cay Giòn Than Hoa',
+    dishName: 'Cách Làm Lòng Nướng Sa Tế Giòn Cay Than Hoa Chuẩn Vị',
     prepTime: '25 phút (sơ chế sạch)',
     cookTime: '15 - 20 phút nướng than hoa',
     difficulty: 'Dễ',
@@ -490,7 +491,7 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
   },
   'buffet': {
     dishId: 'buffet',
-    dishName: 'Đại Tiệc Buffet Nướng Lẩu Hải Sản Thả Ga Tại Nhà',
+    dishName: 'Cách Làm Tiệc Lẩu Nướng Thập Cẩm Đậm Đà Tại Nhà',
     prepTime: '35 - 40 phút (chuẩn bị đồ tươi & sốt ướp)',
     cookTime: 'Nướng & nhúng lẩu ăn lai rai không giới hạn',
     difficulty: 'Dễ',
@@ -564,7 +565,7 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
   },
   'be-thui': {
     dishId: 'be-thui',
-    dishName: 'Bê Thui Cầu Mống Chấm Mắm Nêm Chuẩn Vị Xứ Quảng',
+    dishName: 'Cách Làm Bê Thui Cầu Mống Chấm Mắm Nêm Chuẩn Vị Xứ Quảng',
     prepTime: '20 phút (chuẩn bị rau rừng & pha mắm nêm)',
     cookTime: '30 - 45 phút (thui rơm/nướng giòn da)',
     difficulty: 'Trung bình',
@@ -631,7 +632,7 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
   },
   'banh-beo': {
     dishId: 'banh-beo',
-    dishName: 'Bánh Bèo Chén Tôm Chấy Tóp Mỡ Chuẩn Vị Huế',
+    dishName: 'Cách Làm Bánh Bèo Chén Tôm Chấy Tóp Mỡ Chuẩn Vị Huế',
     prepTime: '25 phút (pha bột & làm tôm chấy)',
     cookTime: '15 - 20 phút (hấp bánh)',
     difficulty: 'Dễ',
@@ -699,6 +700,97 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
 };
 
 /**
+ * Formats a clean, highly optimized Vietnamese culinary SEO title for a recipe
+ */
+export function formatRecipeSeoTitle(dish: Dish, recipe?: DishRecipe): string {
+  if (
+    recipe?.dishName &&
+    (recipe.dishName.startsWith('Cách Nấu') ||
+      recipe.dishName.startsWith('Cách Làm') ||
+      recipe.dishName.startsWith('Cách Pha'))
+  ) {
+    return recipe.dishName;
+  }
+
+  const rawName = dish.vietnameseName || dish.name;
+  const lower = rawName.toLowerCase();
+
+  if (
+    dish.category === 'do_uong' ||
+    lower.includes('trà') ||
+    lower.includes('cà phê') ||
+    lower.includes('sinh tố') ||
+    lower.includes('nước ép')
+  ) {
+    return `Cách Pha ${rawName} Thơm Ngon Thanh Mát Tại Nhà`;
+  }
+
+  if (
+    dish.category === 'bun_pho_mi' ||
+    dish.category === 'lau_chao' ||
+    dish.category === 'com_xoi' ||
+    lower.includes('bún') ||
+    lower.includes('phở') ||
+    lower.includes('mì') ||
+    lower.includes('hủ tiếu') ||
+    lower.includes('canh') ||
+    lower.includes('cháo') ||
+    lower.includes('lẩu') ||
+    lower.includes('súp') ||
+    lower.includes('cơm') ||
+    lower.includes('xôi') ||
+    lower.includes('kho') ||
+    lower.includes('hầm') ||
+    lower.includes('om') ||
+    lower.includes('riêu')
+  ) {
+    return `Cách Nấu ${rawName} Thơm Ngon Chuẩn Vị Tại Nhà`;
+  }
+
+  return `Cách Làm ${rawName} Chuẩn Vị Thơm Ngon Tại Nhà`;
+}
+
+/**
+ * Standard SEO slug generator for a recipe page: e.g. "cach-nau-pho-bo-tai-lan"
+ */
+export function getRecipeSlug(dishOrId: Dish | string): string {
+  const id = typeof dishOrId === 'string' ? dishOrId : dishOrId.id;
+  if (id.startsWith('cach-nau-')) return id;
+  return `cach-nau-${id}`;
+}
+
+/**
+ * Standard SEO full pathname for a recipe page: e.g. "/cach-nau-pho-bo-tai-lan"
+ */
+export function getRecipePath(dishOrId: Dish | string): string {
+  return `/${getRecipeSlug(dishOrId)}`;
+}
+
+/**
+ * Robust dish lookup by SEO slug or legacy hash/id
+ */
+export function findDishByRecipeSlug(slug: string, dishes: Dish[] = INITIAL_DISHES): Dish | undefined {
+  if (!slug) return undefined;
+  const clean = slug
+    .replace(/^#recipe-/, '')
+    .replace(/^#/, '')
+    .replace(/^\/cach-nau-mon-ngon\//, '')
+    .replace(/^\//, '')
+    .split('-step-')[0]
+    .split('?')[0]
+    .trim();
+
+  const strippedPrefix = clean.replace(/^cach-nau-/, '').replace(/^cach-lam-/, '');
+
+  return (
+    dishes.find((d) => d.id === clean) ||
+    dishes.find((d) => d.id === strippedPrefix) ||
+    dishes.find((d) => `cach-nau-${d.id}` === clean) ||
+    dishes.find((d) => `cach-lam-${d.id}` === clean)
+  );
+}
+
+/**
  * Intelligent Recipe Generator for any dish from INITIAL_DISHES
  * If a hand-crafted recipe exists in CURATED_RECIPES, returns it.
  * Otherwise, generates a structured, culturally accurate Vietnamese recipe based on the dish characteristics.
@@ -707,6 +799,8 @@ export function getDishRecipe(dish: Dish): DishRecipe {
   if (CURATED_RECIPES[dish.id]) {
     return CURATED_RECIPES[dish.id];
   }
+
+  const generatedSeoTitle = formatRecipeSeoTitle(dish);
 
   // Derive cooking method & ingredients intelligently based on categories and tags
   const isSoupOrNoodle =
@@ -742,7 +836,7 @@ export function getDishRecipe(dish: Dish): DishRecipe {
   if (isSoupOrNoodle) {
     return {
       dishId: dish.id,
-      dishName: dish.name,
+      dishName: generatedSeoTitle,
       prepTime: '25 phút',
       cookTime: '60 - 90 phút (nước dùng ngọt thanh)',
       difficulty: 'Trung bình',
@@ -805,7 +899,7 @@ export function getDishRecipe(dish: Dish): DishRecipe {
   if (isRiceOrStickyRice) {
     return {
       dishId: dish.id,
-      dishName: dish.name,
+      dishName: generatedSeoTitle,
       prepTime: '20 phút',
       cookTime: '30 - 45 phút',
       difficulty: 'Dễ',
@@ -867,7 +961,7 @@ export function getDishRecipe(dish: Dish): DishRecipe {
   // Fallback for roll, grilled, snack or general dish
   return {
     dishId: dish.id,
-    dishName: dish.name,
+    dishName: generatedSeoTitle,
     prepTime: '20 phút',
     cookTime: '25 phút',
     difficulty: 'Dễ',

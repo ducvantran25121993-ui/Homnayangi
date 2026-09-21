@@ -63,10 +63,20 @@ export default function App() {
   const handleNavigateTab = useCallback((newTab: TabType) => {
     setActiveTab(newTab);
     const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+    const isRecipePath =
+      currentPath.startsWith('/cach-nau-') ||
+      currentPath.startsWith('/cach-lam-') ||
+      currentPath.startsWith('/cach-nau-mon-ngon/');
+
     // If navigating to discover and already on a discover subpath, don't overwrite it
     let targetPath = TAB_CONFIG[newTab]?.path || '/';
     if (newTab === 'discover') {
-      if (currentPath === '/thuc-don-moi-ngay' || currentPath === '/cach-nau-mon-ngon' || currentPath === '/am-thuc-vung-mien') {
+      if (
+        currentPath === '/thuc-don-moi-ngay' ||
+        currentPath === '/cach-nau-mon-ngon' ||
+        isRecipePath ||
+        currentPath === '/am-thuc-vung-mien'
+      ) {
         targetPath = currentPath;
       } else {
         targetPath = '/am-thuc-vung-mien';
@@ -75,15 +85,28 @@ export default function App() {
     if (window.location.pathname !== targetPath) {
       window.history.pushState({ tab: newTab }, '', targetPath);
     }
-    updateTabSEO(newTab);
+    const targetIsRecipe =
+      targetPath.startsWith('/cach-nau-') ||
+      targetPath.startsWith('/cach-lam-') ||
+      targetPath.startsWith('/cach-nau-mon-ngon/');
+    if (!targetIsRecipe) {
+      updateTabSEO(newTab);
+    }
     // Cuộn lên đầu trang ngay lập tức khi chuyển tab hoặc chuyển trang
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, []);
 
   // Sync with browser Back/Forward buttons, secret admin URL query, and keyboard shortcut
   useEffect(() => {
+    const isCurrentPathRecipe =
+      window.location.pathname.startsWith('/cach-nau-') ||
+      window.location.pathname.startsWith('/cach-lam-') ||
+      window.location.pathname.startsWith('/cach-nau-mon-ngon/');
+
     // Initial SEO update & scroll to top on tab change
-    updateTabSEO(activeTab);
+    if (!isCurrentPathRecipe) {
+      updateTabSEO(activeTab);
+    }
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
     // Check if URL has secret query ?admin=1 or ?admin=inbox
@@ -99,7 +122,13 @@ export default function App() {
     const handlePopState = () => {
       const currentTab = getTabFromUrl();
       setActiveTab(currentTab);
-      updateTabSEO(currentTab);
+      const isPopRecipe =
+        window.location.pathname.startsWith('/cach-nau-') ||
+        window.location.pathname.startsWith('/cach-lam-') ||
+        window.location.pathname.startsWith('/cach-nau-mon-ngon/');
+      if (!isPopRecipe) {
+        updateTabSEO(currentTab);
+      }
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     };
 

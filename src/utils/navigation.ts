@@ -1,3 +1,6 @@
+import { Dish, DishRecipe } from '../types';
+import { getRecipeSlug } from '../data/recipes';
+
 export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'snacks' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms';
 
 export type DiscoverSubSection = 'region' | 'daily' | 'recipe';
@@ -11,6 +14,10 @@ export interface TabMeta {
   keywords?: string;
   ogImage?: string;
   ogImageAlt?: string;
+  ogType?: 'website' | 'article';
+  articleSection?: string;
+  articlePublishedTime?: string;
+  articleModifiedTime?: string;
 }
 
 const DEFAULT_OG_IMAGE = 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&auto=format&fit=crop&q=80';
@@ -168,7 +175,14 @@ export function getDiscoverSubSectionFromUrl(): DiscoverSubSection {
   if (typeof window === 'undefined') return 'region';
   const pathname = window.location.pathname.replace(/\/$/, '') || '/';
   if (pathname === '/thuc-don-moi-ngay' || pathname === '/kham-pha-am-thuc/thuc-don-moi-ngay') return 'daily';
-  if (pathname === '/cach-nau-mon-ngon' || pathname === '/kham-pha-am-thuc/cach-nau-mon-ngon') return 'recipe';
+  if (
+    pathname === '/cach-nau-mon-ngon' ||
+    pathname.startsWith('/cach-nau-mon-ngon/') ||
+    pathname.startsWith('/cach-nau-') ||
+    pathname.startsWith('/cach-lam-') ||
+    pathname === '/kham-pha-am-thuc/cach-nau-mon-ngon' ||
+    pathname.startsWith('/kham-pha-am-thuc/cach-nau-mon-ngon/')
+  ) return 'recipe';
   return 'region';
 }
 
@@ -189,6 +203,9 @@ export function getTabFromUrl(): TabType {
     pathname === '/am-thuc-vung-mien' ||
     pathname === '/thuc-don-moi-ngay' ||
     pathname === '/cach-nau-mon-ngon' ||
+    pathname.startsWith('/cach-nau-mon-ngon/') ||
+    pathname.startsWith('/cach-nau-') ||
+    pathname.startsWith('/cach-lam-') ||
     pathname === '/kham-pha-am-thuc' ||
     pathname.startsWith('/kham-pha-am-thuc/') ||
     pathname === '/kham-pha' ||
@@ -241,19 +258,22 @@ function applyMetaToDOM(meta: TabMeta): void {
   const fullUrl = 'https://www.angigio.com' + meta.path;
   const image = meta.ogImage || DEFAULT_OG_IMAGE;
   const imageAlt = meta.ogImageAlt || meta.title;
+  const ogType = meta.ogType || 'website';
 
   // 1. Title & meta[name="title"]
   document.title = meta.title;
   setOrCreateMeta('meta[name="title"]', 'name', 'title', meta.title);
 
-  // 2. Meta description & keywords
+  // 2. Meta description, keywords & robots
   setOrCreateMeta('meta[name="description"]', 'name', 'description', meta.description);
   if (meta.keywords) {
     setOrCreateMeta('meta[name="keywords"]', 'name', 'keywords', meta.keywords);
   }
+  setOrCreateMeta('meta[name="robots"]', 'name', 'robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
+  setOrCreateMeta('meta[name="googlebot"]', 'name', 'googlebot', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
 
   // 3. Open Graph
-  setOrCreateMeta('meta[property="og:type"]', 'property', 'og:type', 'website');
+  setOrCreateMeta('meta[property="og:type"]', 'property', 'og:type', ogType);
   setOrCreateMeta('meta[property="og:site_name"]', 'property', 'og:site_name', 'Hôm Nay Ăn Gì');
   setOrCreateMeta('meta[property="og:locale"]', 'property', 'og:locale', 'vi_VN');
   setOrCreateMeta('meta[property="og:title"]', 'property', 'og:title', meta.title);
@@ -263,6 +283,16 @@ function applyMetaToDOM(meta: TabMeta): void {
   setOrCreateMeta('meta[property="og:image:width"]', 'property', 'og:image:width', '1200');
   setOrCreateMeta('meta[property="og:image:height"]', 'property', 'og:image:height', '630');
   setOrCreateMeta('meta[property="og:image:alt"]', 'property', 'og:image:alt', imageAlt);
+
+  // 3.1 Article specific meta tags (if applicable)
+  if (ogType === 'article') {
+    setOrCreateMeta('meta[property="article:published_time"]', 'property', 'article:published_time', meta.articlePublishedTime || '2024-01-15T08:00:00+07:00');
+    setOrCreateMeta('meta[property="article:modified_time"]', 'property', 'article:modified_time', meta.articleModifiedTime || '2026-09-21T00:00:00+07:00');
+    setOrCreateMeta('meta[property="article:author"]', 'property', 'article:author', 'Hôm Nay Ăn Gì');
+    if (meta.articleSection) {
+      setOrCreateMeta('meta[property="article:section"]', 'property', 'article:section', meta.articleSection);
+    }
+  }
 
   // 4. Twitter Cards
   setOrCreateMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
@@ -310,3 +340,33 @@ export function updateDiscoverSubSEO(sub: DiscoverSubSection): void {
     applyMetaToDOM(meta);
   }
 }
+
+/**
+ * Update document title, meta tags, and canonical link specifically for an individual Recipe Article
+ */
+export function updateRecipeArticleSEO(dish: Dish, recipe: DishRecipe): void {
+  if (typeof document === 'undefined') return;
+  const slug = getRecipeSlug(dish);
+  const path = `/${slug}`;
+  const title = `${recipe.dishName} - Công Thức Chuẩn Vị | Hôm Nay Ăn Gì`;
+  const description = dish.description
+    ? `${recipe.dishName}: ${dish.description}. Hướng dẫn chi tiết từng bước, định lượng chuẩn xác và mẹo bí quyết gia truyền.`
+    : `Hướng dẫn chi tiết cách làm ${recipe.dishName} chuẩn vị gia đình Việt Nam: định lượng nguyên liệu chuẩn xác, sơ chế khử mùi tanh và bí quyết nấu thơm ngon.`;
+  const image = dish.image.startsWith('http') ? dish.image : `https://www.angigio.com${dish.image}`;
+
+  applyMetaToDOM({
+    path,
+    title,
+    description,
+    label: recipe.dishName,
+    shortLabel: dish.vietnameseName,
+    keywords: `${recipe.dishName}, cách nấu ${dish.vietnameseName}, công thức ${dish.vietnameseName}, cách làm ${dish.vietnameseName}, món ngon mỗi ngày, ẩm thực việt nam, ${dish.category}`,
+    ogImage: image,
+    ogImageAlt: recipe.dishName,
+    ogType: 'article',
+    articleSection: dish.category,
+    articlePublishedTime: '2024-01-15T08:00:00+07:00',
+    articleModifiedTime: '2026-09-21T00:00:00+07:00',
+  });
+}
+

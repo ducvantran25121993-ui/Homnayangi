@@ -31,6 +31,7 @@ import {
   ArrowLeft,
   ArrowRight,
   Filter,
+  HelpCircle,
 } from 'lucide-react';
 import { Dish, UserLocation, AffiliateConfig } from '../types';
 import {
@@ -39,6 +40,7 @@ import {
   DISCOVER_SUB_CONFIG,
   getDiscoverSubSectionFromUrl,
   updateDiscoverSubSEO,
+  updateRecipeArticleSEO,
 } from '../utils/navigation';
 import { INITIAL_DISHES } from '../data/dishes';
 import { REGIONAL_CUISINES } from '../data/regionalCuisine';
@@ -47,7 +49,13 @@ import {
   DEFAULT_TRAY_IMAGE,
   getTrayIngredients,
 } from '../data/dailyMenus';
-import { getDishRecipe, FEATURED_RECIPE_IDS } from '../data/recipes';
+import {
+  getDishRecipe,
+  getRecipeSlug,
+  getRecipePath,
+  findDishByRecipeSlug,
+  formatRecipeSeoTitle,
+} from '../data/recipes';
 import { getFamilyMealDishRecipe, FamilyDishRecipe } from '../data/familyDishRecipes';
 
 export const RECIPE_CATEGORIES = [
@@ -273,37 +281,108 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
   const [recipeSearchQuery, setRecipeSearchQuery] = useState<string>('');
   const [selectedRecipeCategory, setSelectedRecipeCategory] = useState<string>('all');
   const [selectedRecipeDish, setSelectedRecipeDish] = useState<Dish>(() => {
+    if (typeof window !== 'undefined') {
+      const pathname = window.location.pathname;
+      const isRecipePath =
+        (pathname.startsWith('/cach-nau-') ||
+          pathname.startsWith('/cach-lam-') ||
+          pathname.startsWith('/cach-nau-mon-ngon/')) &&
+        pathname !== '/cach-nau-mon-ngon';
+
+      if (isRecipePath) {
+        const slug = pathname.replace('/cach-nau-mon-ngon/', '').replace(/^\//, '');
+        const match = findDishByRecipeSlug(slug, INITIAL_DISHES);
+        if (match) return match;
+      }
+      if (window.location.hash.startsWith('#recipe-')) {
+        const match = findDishByRecipeSlug(window.location.hash, INITIAL_DISHES);
+        if (match) return match;
+      }
+    }
     return INITIAL_DISHES.find((d) => d.id === 'pho-bo-tai-lan') || INITIAL_DISHES[0];
   });
-  const [viewingRecipeArticle, setViewingRecipeArticle] = useState<boolean>(false);
+  const [viewingRecipeArticle, setViewingRecipeArticle] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const pathname = window.location.pathname;
+      const isRecipePath =
+        (pathname.startsWith('/cach-nau-') ||
+          pathname.startsWith('/cach-lam-') ||
+          pathname.startsWith('/cach-nau-mon-ngon/')) &&
+        pathname !== '/cach-nau-mon-ngon';
+
+      if (isRecipePath) {
+        const slug = pathname.replace('/cach-nau-mon-ngon/', '').replace(/^\//, '');
+        const match = findDishByRecipeSlug(slug, INITIAL_DISHES);
+        if (match) return true;
+      }
+      if (window.location.hash.startsWith('#recipe-')) {
+        return true;
+      }
+    }
+    return false;
+  });
   const [recipeDisplayLimit, setRecipeDisplayLimit] = useState<number>(24);
   const [copiedRecipe, setCopiedRecipe] = useState(false);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [copiedFamilyDishRecipe, setCopiedFamilyDishRecipe] = useState<string | null>(null);
 
-  // Sync hash deep-linking for recipes (e.g., #recipe-pho-bo-tai-lan)
+  // Sync URL deep-linking for recipes (supports international clean URL /:slug, /cach-nau-mon-ngon/:slug, and legacy #recipe-...)
   useEffect(() => {
-    const handleHash = () => {
-      if (sectionTab === 'recipe' && window.location.hash.startsWith('#recipe-')) {
-        const targetId = window.location.hash.replace('#recipe-', '').split('-step-')[0];
-        const match = INITIAL_DISHES.find((d) => d.id === targetId);
+    const syncRecipeFromLocation = () => {
+      if (sectionTab !== 'recipe') return;
+
+      const pathname = window.location.pathname;
+      const isRecipePath =
+        (pathname.startsWith('/cach-nau-') ||
+          pathname.startsWith('/cach-lam-') ||
+          pathname.startsWith('/cach-nau-mon-ngon/')) &&
+        pathname !== '/cach-nau-mon-ngon';
+
+      if (isRecipePath) {
+        const slug = pathname.replace('/cach-nau-mon-ngon/', '').replace(/^\//, '');
+        const match = findDishByRecipeSlug(slug, INITIAL_DISHES);
         if (match) {
           setSelectedRecipeDish(match);
           setViewingRecipeArticle(true);
+          // Canonicalize legacy /cach-nau-mon-ngon/:slug into international clean URL /:slug
+          if (pathname.startsWith('/cach-nau-mon-ngon/')) {
+            window.history.replaceState({ section: 'recipe', dishId: match.id }, '', getRecipePath(match));
+          }
+          updateRecipeArticleSEO(match, getDishRecipe(match));
+          return;
         }
+      } else if (window.location.hash.startsWith('#recipe-')) {
+        const match = findDishByRecipeSlug(window.location.hash, INITIAL_DISHES);
+        if (match) {
+          setSelectedRecipeDish(match);
+          setViewingRecipeArticle(true);
+          // Canonicalize legacy hash into international clean SEO path
+          window.history.replaceState({ section: 'recipe', dishId: match.id }, '', getRecipePath(match));
+          updateRecipeArticleSEO(match, getDishRecipe(match));
+          return;
+        }
+      } else if (pathname === '/cach-nau-mon-ngon') {
+        setViewingRecipeArticle(false);
+        updateDiscoverSubSEO('recipe');
       }
     };
 
-    handleHash();
-    window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
+    syncRecipeFromLocation();
+    window.addEventListener('popstate', syncRecipeFromLocation);
+    window.addEventListener('hashchange', syncRecipeFromLocation);
+    return () => {
+      window.removeEventListener('popstate', syncRecipeFromLocation);
+      window.removeEventListener('hashchange', syncRecipeFromLocation);
+    };
   }, [sectionTab]);
 
-  // Click on a dish card to open the article
+  // Click on a dish card to open the article with SEO clean URL
   const handleSelectDishRecipe = (dish: Dish) => {
     setSelectedRecipeDish(dish);
     setViewingRecipeArticle(true);
-    window.history.replaceState(null, '', `${DISCOVER_SUB_CONFIG.recipe.path}#recipe-${dish.id}`);
+    const targetPath = getRecipePath(dish);
+    window.history.pushState({ section: 'recipe', dishId: dish.id }, '', targetPath);
+    updateRecipeArticleSEO(dish, getDishRecipe(dish));
     const el = document.getElementById('recipe-article-container');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -312,10 +391,11 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
     }
   };
 
-  // Back to gallery list
+  // Back to gallery list with SEO clean URL
   const handleBackToRecipeList = () => {
     setViewingRecipeArticle(false);
-    window.history.replaceState(null, '', DISCOVER_SUB_CONFIG.recipe.path);
+    window.history.pushState({ section: 'recipe' }, '', DISCOVER_SUB_CONFIG.recipe.path);
+    updateDiscoverSubSEO('recipe');
     const el = document.getElementById('recipe-discovery-section');
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -644,7 +724,9 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
     setSelectedRecipeDish(dish);
     setViewingRecipeArticle(true);
     handleSwitchSection('recipe');
-    window.history.replaceState(null, '', `${DISCOVER_SUB_CONFIG.recipe.path}#recipe-${dish.id}`);
+    const targetPath = getRecipePath(dish);
+    window.history.pushState({ section: 'recipe', dishId: dish.id }, '', targetPath);
+    updateRecipeArticleSEO(dish, getDishRecipe(dish));
     window.scrollTo({ top: 350, behavior: 'smooth' });
   };
 
@@ -1395,13 +1477,22 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                   <span>Quay lại danh sách món ngon</span>
                 </button>
 
-                <div className="flex items-center gap-2 text-xs text-stone-500 font-medium overflow-hidden">
-                  <span className="shrink-0">Cách Nấu Món Ngon</span>
+                <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-stone-500 font-medium overflow-hidden">
+                  <a
+                    href="/cach-nau-mon-ngon"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleBackToRecipeList();
+                    }}
+                    className="shrink-0 hover:text-orange-600 transition-colors underline-offset-2 hover:underline"
+                  >
+                    Cách Nấu Món Ngon
+                  </a>
                   <ChevronRight className="w-3.5 h-3.5 text-stone-300 shrink-0" />
                   <span className="shrink-0 text-stone-600">{getCategoryDisplayName(selectedRecipeDish.category)}</span>
                   <ChevronRight className="w-3.5 h-3.5 text-stone-300 shrink-0" />
-                  <span className="font-extrabold text-orange-700 truncate">{selectedRecipeDish.vietnameseName}</span>
-                </div>
+                  <span className="font-extrabold text-orange-700 truncate">{currentRecipe.dishName}</span>
+                </nav>
               </div>
 
               {/* Selected Recipe Display Box / Article */}
@@ -1428,9 +1519,9 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                       </span>
                     </div>
 
-                    <h3 className="text-2xl sm:text-3xl font-black text-stone-900 tracking-tight">
+                    <h1 className="text-2xl sm:text-3xl font-black text-stone-900 tracking-tight">
                       {currentRecipe.dishName}
-                    </h3>
+                    </h1>
 
                     <p className="text-stone-600 text-sm leading-relaxed">
                       {selectedRecipeDish.description || `Hướng dẫn chi tiết từng bước nấu món ${currentRecipe.dishName} đậm đà hương vị truyền thống gia đình Việt Nam.`}
@@ -1485,10 +1576,10 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                   {/* Ingredients Column (4 cols) */}
                   <div className="lg:col-span-4 space-y-4">
-                    <h4 className="text-base font-extrabold text-stone-900 flex items-center gap-2">
+                    <h2 className="text-base font-extrabold text-stone-900 flex items-center gap-2">
                       <Utensils className="w-4 h-4 text-orange-500" />
                       <span>Nguyên Liệu Chuẩn Bị</span>
-                    </h4>
+                    </h2>
 
                     <div className="bg-white rounded-2xl border border-stone-200 p-5 space-y-5">
                       {currentRecipe.ingredients.map((cat, idx) => (
@@ -1524,10 +1615,10 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                   {/* Steps Column (8 cols) */}
                   <div className="lg:col-span-8 space-y-4">
                     <div className="flex items-center justify-between gap-3">
-                      <h4 className="text-base font-extrabold text-stone-900 flex items-center gap-2">
+                      <h2 className="text-base font-extrabold text-stone-900 flex items-center gap-2">
                         <BookOpen className="w-4 h-4 text-orange-500" />
                         <span>Các Bước Nấu Từng Bước</span>
-                      </h4>
+                      </h2>
 
                       <div className="flex items-center gap-2">
                         <button
@@ -1569,9 +1660,9 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                             <span className="w-6 h-6 rounded-full bg-orange-600 text-white font-black text-xs flex items-center justify-center shrink-0">
                               {st.step}
                             </span>
-                            <h5 className="font-extrabold text-stone-900 text-sm">
+                            <h3 className="font-extrabold text-stone-900 text-sm">
                               {st.title}
-                            </h5>
+                            </h3>
                           </div>
                           <p className="text-xs sm:text-sm text-stone-700 leading-relaxed pl-8.5">
                             {st.description}
@@ -1590,17 +1681,51 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
 
                     {/* Chef's Secret Box */}
                     <div className="bg-radial from-amber-500/20 via-orange-500/10 to-transparent border border-amber-300 rounded-2xl p-5 shadow-2xs">
-                      <h5 className="font-black text-amber-950 text-xs sm:text-sm uppercase tracking-wider mb-2 flex items-center gap-2">
+                      <h3 className="font-black text-amber-950 text-xs sm:text-sm uppercase tracking-wider mb-2 flex items-center gap-2">
                         <Sparkles className="w-4 h-4 text-amber-600" />
                         Bí Quyết Gia Truyền Của Bếp Trưởng
-                      </h5>
+                      </h3>
                       <p className="text-xs sm:text-sm text-stone-800 leading-relaxed font-medium">
                         {currentRecipe.chefSecret}
                       </p>
                     </div>
 
+                    {/* Recipe FAQs Section */}
+                    <div className="bg-white rounded-2xl border border-stone-200 p-5 space-y-3">
+                      <h2 className="font-extrabold text-stone-900 text-sm sm:text-base flex items-center gap-2 border-b border-stone-100 pb-2">
+                        <HelpCircle className="w-4 h-4 text-orange-500" />
+                        <span>Câu Hỏi Thường Gặp Khi Nấu {selectedRecipeDish.vietnameseName}</span>
+                      </h2>
+                      <div className="space-y-3 pt-1">
+                        <div className="rounded-xl bg-stone-50 p-3.5 border border-stone-100">
+                          <h4 className="font-bold text-xs sm:text-sm text-stone-900">
+                            Bí quyết quan trọng nhất để nấu món {selectedRecipeDish.vietnameseName} thơm ngon là gì?
+                          </h4>
+                          <p className="text-xs text-stone-600 mt-1 leading-relaxed">
+                            {currentRecipe.chefSecret || `Lựa chọn nguyên liệu tươi mới, nêm nếm gia vị cân bằng và canh chuẩn thời gian lửa nấu để giữ trọn vị ngọt tự nhiên của món ăn.`}
+                          </p>
+                        </div>
+                        <div className="rounded-xl bg-stone-50 p-3.5 border border-stone-100">
+                          <h4 className="font-bold text-xs sm:text-sm text-stone-900">
+                            Cách sơ chế nguyên liệu không bị mùi tanh và giữ được độ ngọt?
+                          </h4>
+                          <p className="text-xs text-stone-600 mt-1 leading-relaxed">
+                            Sử dụng muối hạt, gừng đập dập hoặc chút rượu trắng chà xát nhẹ lên bề mặt thực phẩm, sau đó xả sạch lại bằng nước mát và để thật ráo nước trước khi tẩm ướp.
+                          </p>
+                        </div>
+                        <div className="rounded-xl bg-stone-50 p-3.5 border border-stone-100">
+                          <h4 className="font-bold text-xs sm:text-sm text-stone-900">
+                            Món {selectedRecipeDish.vietnameseName} chứa bao nhiêu calo và bảo quản thế nào?
+                          </h4>
+                          <p className="text-xs text-stone-600 mt-1 leading-relaxed">
+                            Mỗi phần ăn cung cấp khoảng {selectedRecipeDish.calories || '450 calo'}. Món ăn ngon nhất khi thưởng thức nóng ngay; nếu dùng thừa có thể để nguội, bảo quản trong hộp kín ở ngăn mát tủ lạnh trong 24–48 giờ.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
                     {/* If lazy to cook -> Order ship button */}
-                    <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white rounded-2xl border border-stone-200 p-4 sm:p-5">
+                    <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 bg-white rounded-2xl border border-stone-200 p-4 sm:p-5">
                       <div>
                         <div className="font-extrabold text-stone-900 text-sm">
                           Hôm nay bận rộn không có thời gian nấu nướng?
@@ -1640,10 +1765,10 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
 
                   {/* Related Dishes to discover */}
                   <div className="pt-4">
-                    <h4 className="text-sm sm:text-base font-extrabold text-stone-900 mb-4 flex items-center gap-2">
+                    <h2 className="text-sm sm:text-base font-extrabold text-stone-900 mb-4 flex items-center gap-2">
                       <Sparkles className="w-4 h-4 text-orange-500" />
                       <span>Gợi Ý Các Món Ngon Khác Có Thể Bạn Thích</span>
-                    </h4>
+                    </h2>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                       {INITIAL_DISHES
                         .filter((d) => d.id !== selectedRecipeDish.id)
@@ -1714,26 +1839,6 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                 </div>
               </div>
 
-              {/* Quick horizontal chips for popular recipe dishes */}
-              <div className="pb-4 border-b border-stone-100">
-                <div className="text-xs font-bold text-stone-500 mb-2">Món phổ biến được tìm nhiều nhất:</div>
-                <div className="flex flex-wrap gap-2">
-                  {FEATURED_RECIPE_IDS.map((id) => {
-                    const dish = INITIAL_DISHES.find((d) => d.id === id);
-                    if (!dish) return null;
-                    return (
-                      <button
-                        key={dish.id}
-                        onClick={() => handleSelectDishRecipe(dish)}
-                        className="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border bg-stone-50 text-stone-700 border-stone-200 hover:bg-orange-50 hover:border-orange-300 hover:text-orange-700 shadow-2xs"
-                      >
-                        {dish.vietnameseName}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
               {/* Category Filter Pills */}
               <div className="space-y-3">
                 <div className="flex items-center justify-between gap-2">
@@ -1796,18 +1901,23 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
                     {recipeFilteredDishes.slice(0, recipeDisplayLimit).map((dish) => {
                       const recipe = getDishRecipe(dish);
+                      const recipePath = getRecipePath(dish);
                       return (
-                        <article
+                        <a
                           key={dish.id}
                           id={`recipe-card-${dish.id}`}
-                          onClick={() => handleSelectDishRecipe(dish)}
-                          className="group flex flex-col bg-white rounded-2xl border border-stone-200 hover:border-orange-400 hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer"
+                          href={recipePath}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleSelectDishRecipe(dish);
+                          }}
+                          className="group flex flex-col bg-white rounded-2xl border border-stone-200 hover:border-orange-400 hover:shadow-lg transition-all duration-300 overflow-hidden cursor-pointer text-inherit no-underline"
                         >
                           {/* Khung ảnh đại diện riêng */}
                           <div className="relative aspect-[4/3] w-full overflow-hidden bg-stone-100">
                             <img
                               src={dish.image}
-                              alt={`Cách nấu ${dish.vietnameseName}`}
+                              alt={recipe.dishName}
                               loading="lazy"
                               referrerPolicy="no-referrer"
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
@@ -1838,8 +1948,8 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                           {/* Tiêu đề riêng & Nội dung tóm tắt */}
                           <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
                             <div>
-                              <h3 className="text-base sm:text-lg font-black text-stone-900 group-hover:text-orange-600 transition-colors line-clamp-1 mb-1.5">
-                                {dish.vietnameseName}
+                              <h3 className="text-base font-black text-stone-900 group-hover:text-orange-600 transition-colors line-clamp-2 mb-1.5 leading-snug">
+                                {recipe.dishName}
                               </h3>
                               <p className="text-stone-500 text-xs sm:text-sm line-clamp-2 leading-relaxed mb-4">
                                 {dish.description || `Bí quyết nấu ${dish.vietnameseName} thơm ngon, chuẩn vị với các bước sơ chế và nêm nếm gia truyền.`}
@@ -1853,12 +1963,12 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                               </span>
 
                               <span className="inline-flex items-center gap-1 text-xs font-extrabold text-orange-600 group-hover:translate-x-0.5 transition-transform">
-                                <span>Xem bài viết</span>
+                                <span>Xem công thức</span>
                                 <ArrowRight className="w-3.5 h-3.5" />
                               </span>
                             </div>
                           </div>
-                        </article>
+                        </a>
                       );
                     })}
                   </div>
@@ -2005,10 +2115,14 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
             "@graph": [
               {
                 "@type": "WebPage",
-                "@id": `https://www.angigio.com${DISCOVER_SUB_CONFIG[sectionTab].path}#webpage`,
-                "url": `https://www.angigio.com${DISCOVER_SUB_CONFIG[sectionTab].path}`,
-                "name": DISCOVER_SUB_CONFIG[sectionTab].title,
-                "description": DISCOVER_SUB_CONFIG[sectionTab].description,
+                "@id": `https://www.angigio.com${viewingRecipeArticle ? getRecipePath(selectedRecipeDish) : DISCOVER_SUB_CONFIG[sectionTab].path}#webpage`,
+                "url": `https://www.angigio.com${viewingRecipeArticle ? getRecipePath(selectedRecipeDish) : DISCOVER_SUB_CONFIG[sectionTab].path}`,
+                "name": viewingRecipeArticle
+                  ? `${currentRecipe.dishName} - Công Thức Chuẩn Vị | Hôm Nay Ăn Gì`
+                  : DISCOVER_SUB_CONFIG[sectionTab].title,
+                "description": viewingRecipeArticle
+                  ? (selectedRecipeDish.description || `Hướng dẫn chi tiết cách nấu ${currentRecipe.dishName} chuẩn vị gia đình Việt Nam.`)
+                  : DISCOVER_SUB_CONFIG[sectionTab].description,
                 "inLanguage": "vi-VN",
                 "isPartOf": {
                   "@type": "WebSite",
@@ -2019,7 +2133,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
               },
               {
                 "@type": "BreadcrumbList",
-                "@id": `https://www.angigio.com${DISCOVER_SUB_CONFIG[sectionTab].path}#breadcrumb`,
+                "@id": `https://www.angigio.com${viewingRecipeArticle ? getRecipePath(selectedRecipeDish) : DISCOVER_SUB_CONFIG[sectionTab].path}#breadcrumb`,
                 "itemListElement": [
                   {
                     "@type": "ListItem",
@@ -2030,21 +2144,31 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                   {
                     "@type": "ListItem",
                     "position": 2,
-                    "name": DISCOVER_SUB_CONFIG[sectionTab].label,
-                    "item": `https://www.angigio.com${DISCOVER_SUB_CONFIG[sectionTab].path}`
-                  }
+                    "name": "Cách Nấu Món Ngon",
+                    "item": "https://www.angigio.com/cach-nau-mon-ngon"
+                  },
+                  ...(viewingRecipeArticle
+                    ? [
+                        {
+                          "@type": "ListItem",
+                          "position": 3,
+                          "name": currentRecipe.dishName,
+                          "item": `https://www.angigio.com${getRecipePath(selectedRecipeDish)}`
+                        }
+                      ]
+                    : [])
                 ]
               },
-              // Chỉ chèn Schema Recipe khi đang ở đúng trang Công thức (/cach-nau-mon-ngon)
+              // Chỉ chèn Schema Recipe & FAQ khi đang ở đúng trang Công thức (/cach-nau-mon-ngon)
               ...(sectionTab === 'recipe'
                 ? [
                     {
                       "@type": "Recipe",
-                      "@id": `https://www.angigio.com/cach-nau-mon-ngon#recipe-${selectedRecipeDish.id}`,
-                      "url": `https://www.angigio.com/cach-nau-mon-ngon#recipe-${selectedRecipeDish.id}`,
-                      "mainEntityOfPage": "https://www.angigio.com/cach-nau-mon-ngon",
-                      "name": `Cách Nấu ${currentRecipe.dishName} Chuẩn Vị`,
-                      "headline": `Công thức nấu ${currentRecipe.dishName} thơm ngon đúng điệu`,
+                      "@id": `https://www.angigio.com${getRecipePath(selectedRecipeDish)}`,
+                      "url": `https://www.angigio.com${getRecipePath(selectedRecipeDish)}`,
+                      "mainEntityOfPage": `https://www.angigio.com${getRecipePath(selectedRecipeDish)}`,
+                      "name": currentRecipe.dishName,
+                      "headline": `${currentRecipe.dishName} - Hướng dẫn chi tiết định lượng và các bước nấu chuẩn vị`,
                       "image": [
                         selectedRecipeDish.image.startsWith('http')
                           ? selectedRecipeDish.image
@@ -2053,7 +2177,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                       "description":
                         selectedRecipeDish.description ||
                         `Hướng dẫn chi tiết từng bước nấu món ${currentRecipe.dishName} đậm đà hương vị truyền thống Việt Nam.`,
-                      "keywords": `${currentRecipe.dishName}, cách nấu ${currentRecipe.dishName}, công thức ${currentRecipe.dishName}, món ngon mỗi ngày, ẩm thực Việt Nam, ${selectedRecipeDish.category}`,
+                      "keywords": `${currentRecipe.dishName}, cách nấu ${selectedRecipeDish.vietnameseName}, công thức ${selectedRecipeDish.vietnameseName}, cách làm ${selectedRecipeDish.vietnameseName}, món ngon mỗi ngày, ẩm thực Việt Nam, ${selectedRecipeDish.category}`,
                       "recipeCategory": selectedRecipeDish.category,
                       "recipeCuisine": "Vietnamese",
                       "recipeYield": currentRecipe.servings || "4 người",
@@ -2077,15 +2201,15 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                       // Google Search Console Recipe VideoObject compliance
                       "video": {
                         "@type": "VideoObject",
-                        "name": `Video Hướng Dẫn Cách Nấu ${currentRecipe.dishName} Chuẩn Vị`,
+                        "name": `Video Hướng Dẫn ${currentRecipe.dishName}`,
                         "description": `Video clip hướng dẫn chi tiết từng bước nấu món ${currentRecipe.dishName} thơm ngon đậm đà, chuẩn vị truyền thống gia đình Việt Nam tại nhà.`,
                         "thumbnailUrl": [
                           selectedRecipeDish.image.startsWith('http')
                             ? selectedRecipeDish.image
                             : `https://www.angigio.com${selectedRecipeDish.image}`
                         ],
-                        "contentUrl": `https://www.angigio.com/videos/cach-nau-${selectedRecipeDish.id}.mp4`,
-                        "embedUrl": `https://www.youtube-nocookie.com/embed?search=${encodeURIComponent('cách nấu ' + currentRecipe.dishName)}`,
+                        "contentUrl": `https://www.angigio.com/videos/${getRecipeSlug(selectedRecipeDish)}.mp4`,
+                        "embedUrl": `https://www.youtube-nocookie.com/embed?search=${encodeURIComponent(currentRecipe.dishName)}`,
                         "uploadDate": "2024-01-15T08:00:00+07:00",
                         "duration": totalDurationIso || "PT25M"
                       },
@@ -2095,7 +2219,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                         "position": st.step,
                         "name": st.title,
                         "text": st.description,
-                        "url": `https://www.angigio.com/cach-nau-mon-ngon#recipe-${selectedRecipeDish.id}-step-${st.step}`,
+                        "url": `https://www.angigio.com${getRecipePath(selectedRecipeDish)}#step-${st.step}`,
                         "image": selectedRecipeDish.image.startsWith('http')
                           ? selectedRecipeDish.image
                           : `https://www.angigio.com${selectedRecipeDish.image}`
@@ -2105,6 +2229,36 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                         "name": "Hôm Nay Ăn Gì",
                         "url": "https://www.angigio.com/"
                       }
+                    },
+                    {
+                      "@type": "FAQPage",
+                      "@id": `https://www.angigio.com${getRecipePath(selectedRecipeDish)}#faq`,
+                      "mainEntity": [
+                        {
+                          "@type": "Question",
+                          "name": `Bí quyết quan trọng nhất để nấu món ${selectedRecipeDish.vietnameseName} thơm ngon là gì?`,
+                          "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": currentRecipe.chefSecret || `Lựa chọn nguyên liệu tươi mới, nêm nếm gia vị cân bằng và canh chuẩn thời gian lửa nấu để giữ trọn vị ngọt tự nhiên của món ăn.`
+                          }
+                        },
+                        {
+                          "@type": "Question",
+                          "name": `Cách sơ chế nguyên liệu nấu ${selectedRecipeDish.vietnameseName} không bị mùi tanh và giữ được độ ngọt?`,
+                          "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Sử dụng muối hạt, gừng đập dập hoặc chút rượu trắng chà xát nhẹ lên bề mặt thực phẩm, sau đó xả sạch lại bằng nước mát và để thật ráo nước trước khi tẩm ướp."
+                          }
+                        },
+                        {
+                          "@type": "Question",
+                          "name": `Món ${selectedRecipeDish.vietnameseName} chứa bao nhiêu calo và bảo quản thế nào?`,
+                          "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": `Mỗi phần ăn cung cấp khoảng ${selectedRecipeDish.calories || '450 calo'}. Món ăn ngon nhất khi thưởng thức nóng ngay; nếu dùng thừa có thể để nguội, bảo quản trong hộp kín ở ngăn mát tủ lạnh trong 24–48 giờ.`
+                          }
+                        }
+                      ]
                     }
                   ]
                 : sectionTab === 'region'

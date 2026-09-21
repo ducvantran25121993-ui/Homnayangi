@@ -575,6 +575,15 @@ async function startServer() {
     }
   });
 
+  // 301 Permanent Redirect for legacy nested recipe URLs to international clean root URLs (/cach-nau-mon-ngon/:slug -> /:slug)
+  app.get("/cach-nau-mon-ngon/:slug", (req, res) => {
+    const slug = req.params.slug;
+    if (slug) {
+      return res.redirect(301, `/${slug}`);
+    }
+    return res.redirect(301, "/cach-nau-mon-ngon");
+  });
+
   // Comprehensive SEO routes config for server-rendered HTML meta tags
   const SEO_ROUTES_CONFIG: Record<string, {
     title: string;
@@ -615,6 +624,94 @@ async function startServer() {
       keywords: "cách nấu món ngon, công thức nấu ăn, hướng dẫn nấu ăn, bí quyết nấu ăn ngon, cách nấu phở, cách nấu bún bò huế, món ngon mỗi ngày, công thức chuẩn vị",
       image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=1200&auto=format&fit=crop&q=80",
       imageAlt: "Cách Nấu Món Ngon - Công Thức Nấu Ăn Chuẩn Vị & Bí Quyết Bếp Trưởng",
+    },
+    "/cach-nau-pho-bo-tai-lan": {
+      path: "/cach-nau-pho-bo-tai-lan",
+      title: "Cách Nấu Phở Bò Tái Lăn Hà Nội Thơm Ngon Chuẩn Vị | Hôm Nay Ăn Gì",
+      description: "Hướng dẫn chi tiết cách nấu Phở Bò Tái Lăn Hà Nội chuẩn vị: Bí quyết xào thịt bò tái lăn lửa lớn thơm mùi tỏi gừng, nước dùng xương bò hầm trong ngọt thanh và bánh phở mềm mướt.",
+      keywords: "cách nấu phở bò tái lăn hà nội thơm ngon chuẩn vị, cách nấu phở bò tái lăn, công thức phở bò tái lăn, phở hà nội, cách làm phở bò, món ngon mỗi ngày",
+      image: "/images/dishes/pho_bo_tai_lan.webp",
+      imageAlt: "Cách Nấu Phở Bò Tái Lăn Hà Nội Thơm Ngon Chuẩn Vị",
+    },
+    "/cach-nau-com-tam-suon-bi-cha": {
+      path: "/cach-nau-com-tam-suon-bi-cha",
+      title: "Cách Nấu Cơm Tấm Sườn Bì Chả Đặc Biệt Sài Gòn Chuẩn Vị | Hôm Nay Ăn Gì",
+      description: "Hướng dẫn cách nấu Cơm Tấm Sườn Bì Chả Đặc Biệt Sài Gòn: Bí quyết ướp sườn nướng than hoa mềm mọng đậm vị, hấp chả trứng vàng ươm và nước mắm chua ngọt chuẩn vị quán cơm tấm.",
+      keywords: "cách nấu cơm tấm sườn bì chả đặc biệt sài gòn chuẩn vị, cách làm cơm tấm sườn bì chả, ướp sườn cơm tấm, chả trứng hấp, cơm tấm sài gòn",
+      image: "/images/dishes/com_tam_suon_bi_cha.webp",
+      imageAlt: "Cách Nấu Cơm Tấm Sườn Bì Chả Đặc Biệt Sài Gòn Chuẩn Vị",
+    },
+    "/cach-nau-bun-bo-hue": {
+      path: "/cach-nau-bun-bo-hue",
+      title: "Cách Nấu Bún Bò Huế Chả Cua Đậm Đà Chuẩn Vị Cố Đô | Hôm Nay Ăn Gì",
+      description: "Công thức chi tiết cách nấu Bún Bò Huế chả cua đậm đà chuẩn vị Cố Đô: Nước lèo hầm xương thơm lừng mùi mắm ruốc sả cây, chả cua giòn ngọt và nạm bắp hoa mềm thơm.",
+      keywords: "cách nấu bún bò huế chả cua đậm đà chuẩn vị cố đô, cách nấu bún bò huế, công thức bún bò huế chuẩn vị, bún bò huế, ẩm thực huế",
+      image: "/images/dishes/bun_bo_hue.webp",
+      imageAlt: "Cách Nấu Bún Bò Huế Chả Cua Đậm Đà Chuẩn Vị Cố Đô",
+    },
+    "/cach-nau-thit-kho-tau": {
+      path: "/cach-nau-thit-kho-tau",
+      title: "Cách Nấu Thịt Kho Tàu Nước Dừa Trứng Cút Mềm Tan Đậm Đà | Hôm Nay Ăn Gì",
+      description: "Bí quyết nấu Thịt Kho Tàu nước dừa xiêm cùng trứng cút mềm tan đậm đà: Thịt ba chỉ trong veo béo ngậy không ngấy, nước kho màu cánh gián tự nhiên chuẩn vị Tết Nam Bộ.",
+      keywords: "cách nấu thịt kho tàu nước dừa trứng cút mềm tan đậm đà, cách nấu thịt kho tàu, thịt kho nước dừa, thịt kho tàu miền nam",
+      image: "/images/dishes/thit_kho_tau.webp",
+      imageAlt: "Cách Nấu Thịt Kho Tàu Nước Dừa Trứng Cút Mềm Tan Đậm Đà",
+    },
+    "/cach-nau-nem-nuong-nha-trang": {
+      path: "/cach-nau-nem-nuong-nha-trang",
+      title: "Cách Làm Nem Nướng Nha Trang Cuốn Bánh Tráng Chuẩn Vị | Hôm Nay Ăn Gì",
+      description: "Hướng dẫn cách làm Nem Nướng Nha Trang cuốn bánh tráng rau sống giòn rụm: Công thức quết nem dai ngọt tự nhiên và bí quyết nấu nước sốt chấm tương bơ đậu phộng béo bùi độc quyền.",
+      keywords: "cách làm nem nướng nha trang cuốn bánh tráng chuẩn vị, cách làm nem nướng nha trang, sốt chấm nem nướng, nem nướng cuốn bánh tráng",
+      image: "/images/dishes/nem_nuong_nha_trang.webp",
+      imageAlt: "Cách Làm Nem Nướng Nha Trang Cuốn Bánh Tráng Chuẩn Vị",
+    },
+    "/cach-nau-canh-chua-ca-loc": {
+      path: "/cach-nau-canh-chua-ca-loc",
+      title: "Cách Nấu Canh Chua Cá Lóc Nam Bộ Thanh Mát Chuẩn Vị | Hôm Nay Ăn Gì",
+      description: "Cách nấu Canh Chua Cá Lóc Nam Bộ thanh mát giải nhiệt chuẩn vị: Bí quyết khử tanh cá lóc đồng, nước canh chua thanh dịu từ me chín, bạc hà giòn và ngò gai rau ngổ thơm lừng.",
+      keywords: "cách nấu canh chua cá lóc nam bộ thanh mát chuẩn vị, cách nấu canh chua cá lóc, canh chua nam bộ, món canh ngon gia đình",
+      image: "/images/dishes/canh_chua_ca_loc.webp",
+      imageAlt: "Cách Nấu Canh Chua Cá Lóc Nam Bộ Thanh Mát Chuẩn Vị",
+    },
+    "/cach-nau-bao-tu-ham-tieu": {
+      path: "/cach-nau-bao-tu-ham-tieu",
+      title: "Cách Nấu Bao Tử Hầm Tiêu Xanh Giòn Ngon Đậm Đà Chuẩn Vị | Hôm Nay Ăn Gì",
+      description: "Hướng dẫn cách nấu Bao Tử Hầm Tiêu Xanh nước dừa tươi giòn sần sật: Mẹo làm sạch bao tử heo không hôi, nước hầm ngọt thanh cay the ấm bụng bồi bổ sức khỏe.",
+      keywords: "cách nấu bao tử hầm tiêu xanh giòn ngon đậm đà chuẩn vị, cách nấu bao tử hầm tiêu, bao tử hầm tiêu xanh, món hầm bổ dưỡng",
+      image: "/images/dishes/bao_tu_ham_tieu.webp",
+      imageAlt: "Cách Nấu Bao Tử Hầm Tiêu Xanh Giòn Ngon Đậm Đà Chuẩn Vị",
+    },
+    "/cach-nau-long-nuong": {
+      path: "/cach-nau-long-nuong",
+      title: "Cách Làm Lòng Nướng Sa Tế Giòn Cay Than Hoa Chuẩn Vị | Hôm Nay Ăn Gì",
+      description: "Công thức cách làm Lòng Nướng Sa Tế giòn sần sật cay thơm than hoa: Bí quyết sơ chế lòng heo trắng sạch không đắng, ướp sốt sa tế óng ả và nước chấm muối ớt xanh chuẩn vị mồi nhậu.",
+      keywords: "cách làm lòng nướng sa tế giòn cay than hoa chuẩn vị, cách làm lòng nướng sa tế, lòng nướng than hoa, món nhậu ngon",
+      image: "/images/dishes/long_nuong.webp",
+      imageAlt: "Cách Làm Lòng Nướng Sa Tế Giòn Cay Than Hoa Chuẩn Vị",
+    },
+    "/cach-nau-buffet": {
+      path: "/cach-nau-buffet",
+      title: "Cách Làm Tiệc Lẩu Nướng Thập Cẩm Đậm Đà Tại Nhà | Hôm Nay Ăn Gì",
+      description: "Bí quyết chuẩn bị đại tiệc buffet lẩu nướng thập cẩm tại nhà cho gia đình và bạn bè: Tẩm ướp thịt bò, hải sản tươi sống, pha chế sốt chấm BBQ và nước lẩu chua cay chuẩn vị nhà hàng.",
+      keywords: "cách làm tiệc lẩu nướng thập cẩm đậm đà tại nhà, lẩu nướng tại nhà, tiệc nướng gia đình, cách ướp thịt nướng lẩu",
+      image: "/images/dishes/buffet.webp",
+      imageAlt: "Cách Làm Tiệc Lẩu Nướng Thập Cẩm Đậm Đà Tại Nhà",
+    },
+    "/cach-nau-be-thui": {
+      path: "/cach-nau-be-thui",
+      title: "Cách Làm Bê Thui Cầu Mống Chấm Mắm Nêm Chuẩn Vị Xứ Quảng | Hôm Nay Ăn Gì",
+      description: "Hướng dẫn cách làm Bê Thui Cầu Mống chuẩn vị Xứ Quảng: Da giòn rụm thịt mềm ngọt mọng nước, pha chén mắm nêm cá cơm đậm đà ăn kèm chuối chát, khế chua và rau rừng tươi non.",
+      keywords: "cách làm bê thui cầu mống chấm mắm nêm chuẩn vị xứ quảng, cách làm bê thui, bê thui cầu mống, mắm nêm bê thui, đặc sản quảng nam",
+      image: "/images/dishes/be_thui.webp",
+      imageAlt: "Cách Làm Bê Thui Cầu Mống Chấm Mắm Nêm Chuẩn Vị Xứ Quảng",
+    },
+    "/cach-nau-banh-beo": {
+      path: "/cach-nau-banh-beo",
+      title: "Cách Làm Bánh Bèo Chén Tôm Chấy Tóp Mỡ Chuẩn Vị Huế | Hôm Nay Ăn Gì",
+      description: "Công thức làm Bánh Bèo Chén tôm chấy tóp mỡ chuẩn vị Cố Đô Huế: Bột bánh mềm mướt xoáy sâu lòng chén, tôm chấy đỏ cam ngọt thanh, tóp mỡ giòn rụm và nước mắm ruốc pha ngọt thanh tao.",
+      keywords: "cách làm bánh bèo chén tôm chấy tóp mỡ chuẩn vị huế, cách làm bánh bèo huế, bánh bèo chén, tôm chấy bánh bèo, ẩm thực huế",
+      image: "/images/dishes/banh_beo.webp",
+      imageAlt: "Cách Làm Bánh Bèo Chén Tôm Chấy Tóp Mỡ Chuẩn Vị Huế",
     },
     "/lich-an-theo-tuan": {
       path: "/lich-an-theo-tuan",
@@ -700,10 +797,41 @@ async function startServer() {
 
   function injectSeoMeta(html: string, requestedPath: string): string {
     const cleanPath = requestedPath.replace(/\/$/, "") || "/";
-    const meta = SEO_ROUTES_CONFIG[cleanPath] || SEO_ROUTES_CONFIG["/"];
+    const isRecipeRoute =
+      cleanPath.startsWith("/cach-nau-") ||
+      cleanPath.startsWith("/cach-lam-") ||
+      cleanPath.startsWith("/cach-nau-mon-ngon/");
+    let meta = SEO_ROUTES_CONFIG[cleanPath];
+
+    if (!meta && cleanPath.startsWith("/cach-nau-mon-ngon/")) {
+      const slug = cleanPath.replace("/cach-nau-mon-ngon/", "");
+      meta = SEO_ROUTES_CONFIG[`/${slug}`];
+    }
+
+    if (!meta && (cleanPath.startsWith("/cach-nau-") || cleanPath.startsWith("/cach-lam-"))) {
+      const slug = cleanPath.replace(/^\//, "");
+      const normalizedName = slug
+        .replace(/^cach-(?:nau|lam)-/, "")
+        .split("-")
+        .map((w) => (w ? w.charAt(0).toUpperCase() + w.slice(1) : ""))
+        .join(" ")
+        .trim();
+      meta = {
+        path: cleanPath,
+        title: `Cách Nấu ${normalizedName} Thơm Ngon Chuẩn Vị | Hôm Nay Ăn Gì`,
+        description: `Hướng dẫn chi tiết từng bước nấu món ${normalizedName} thơm ngon, chuẩn vị gia đình Việt Nam: Định lượng nguyên liệu, mẹo sơ chế và bí quyết nêm nếm.`,
+        keywords: `cách nấu ${normalizedName.toLowerCase()}, công thức nấu ${normalizedName.toLowerCase()}, hướng dẫn làm ${normalizedName.toLowerCase()}, món ngon mỗi ngày, ẩm thực việt nam`,
+        image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=1200&auto=format&fit=crop&q=80",
+        imageAlt: `Cách Nấu ${normalizedName} Thơm Ngon Chuẩn Vị`,
+      };
+    }
+
+    if (!meta) {
+      meta = SEO_ROUTES_CONFIG["/"];
+    }
     const fullUrl = `https://www.angigio.com${meta.path === "/" ? "/" : meta.path}`;
 
-    return html
+    let updatedHtml = html
       .replace(/<title>.*?<\/title>/i, `<title>${meta.title}</title>`)
       .replace(/<meta\s+name="title"\s+content=".*?"\s*\/?>/i, `<meta name="title" content="${meta.title}" />`)
       .replace(/<meta\s+name="description"\s+content=".*?"\s*\/?>/i, `<meta name="description" content="${meta.description}" />`)
@@ -718,6 +846,15 @@ async function startServer() {
       .replace(/<meta\s+name="twitter:description"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:description" content="${meta.description}" />`)
       .replace(/<meta\s+name="twitter:url"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:url" content="${fullUrl}" />`)
       .replace(/<meta\s+name="twitter:image"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:image" content="${meta.image}" />`);
+
+    if (isRecipeRoute) {
+      updatedHtml = updatedHtml.replace(
+        /<meta\s+property="og:type"\s+content=".*?"\s*\/?>/i,
+        `<meta property="og:type" content="article" />\n    <meta property="article:published_time" content="2024-01-15T08:00:00+07:00" />\n    <meta property="article:modified_time" content="2026-09-21T00:00:00+07:00" />\n    <meta property="article:author" content="Hôm Nay Ăn Gì" />\n    <meta property="article:section" content="Món ngon" />`
+      );
+    }
+
+    return updatedHtml;
   }
 
   const httpServer = http.createServer(app);
