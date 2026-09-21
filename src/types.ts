@@ -142,8 +142,12 @@ export interface DishRecipe {
   recommendedSauce?: string;
 }
 
+export type RegionId = 'bac' | 'trung' | 'nam' | 'mientay';
+
 export interface RegionalCuisine {
-  id: 'bac' | 'trung' | 'nam' | 'mientay';
+  id: RegionId;
+  slug?: string;
+  path?: string;
   name: string;
   title: string;
   badge: string;
@@ -152,6 +156,10 @@ export interface RegionalCuisine {
   iconicKeyIngredients: string[];
   dishIds: string[];
   highlightTip: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  keywords?: string;
+  ogImage?: string;
 }
 
 export interface FamilyMealDish {

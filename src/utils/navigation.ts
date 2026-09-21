@@ -1,5 +1,6 @@
-import { Dish, DishRecipe } from '../types';
+import { Dish, DishRecipe, RegionId } from '../types';
 import { getRecipeSlug } from '../data/recipes';
+import { getRegionById, getRegionFromUrl } from '../data/regionalCuisine';
 
 export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'snacks' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms';
 
@@ -52,6 +53,57 @@ export const DISCOVER_SUB_CONFIG: Record<DiscoverSubSection, TabMeta> = {
     keywords: 'cách nấu món ngon, công thức nấu ăn, hướng dẫn nấu ăn, bí quyết nấu ăn ngon, cách nấu phở, cách nấu bún bò huế, món ngon mỗi ngày, công thức chuẩn vị',
     ogImage: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&auto=format&fit=crop&q=80',
     ogImageAlt: 'Cách Nấu Món Ngon - Công Thức Chuẩn Vị Gia Đình',
+  },
+};
+
+export const REGIONAL_SEO_CONFIG: Record<RegionId, TabMeta> = {
+  bac: {
+    path: '/am-thuc-mien-bac',
+    title: 'Ẩm Thực Miền Bắc - Tinh Hoa Hương Vị Thanh Tao Đất Kinh Kỳ | Hôm Nay Ăn Gì',
+    description:
+      'Khám phá tinh hoa ẩm thực miền Bắc: Hương vị thanh tao, hài hòa gia vị của phở bò tái lăn, bún chả than hoa, chả cá Lã Vọng, bún thang, xôi xéo và phở cuốn trứ danh.',
+    label: 'Ẩm Thực Miền Bắc',
+    shortLabel: 'Miền Bắc',
+    keywords:
+      'ẩm thực miền bắc, món ngon miền bắc, đặc sản miền bắc, ẩm thực hà nội, phở bò tái lăn, bún chả hà nội, chả cá lã vọng, bún thang, xôi xéo, phở cuốn',
+    ogImage: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&auto=format&fit=crop&q=80',
+    ogImageAlt: 'Ẩm Thực Miền Bắc - Tinh Hoa Hương Vị Thanh Tao Đất Kinh Kỳ',
+  },
+  trung: {
+    path: '/am-thuc-mien-trung',
+    title: 'Ẩm Thực Miền Trung - Đậm Đà Cay Nồng Nàn Xứ Cố Đô | Hôm Nay Ăn Gì',
+    description:
+      'Khám phá ẩm thực miền Trung đặc sắc: Vị cay nồng nàn, đậm đà mắm ruốc của bún bò Huế, mì Quảng, nem nướng Nha Trang, bánh canh chả cá, cơm gà Hội An và bánh bèo chén.',
+    label: 'Ẩm Thực Miền Trung',
+    shortLabel: 'Miền Trung',
+    keywords:
+      'ẩm thực miền trung, món ngon miền trung, đặc sản miền trung, ẩm thực huế, ẩm thực đà nẵng, bún bò huế, mì quảng, nem nướng nha trang, cơm gà hội an, bánh bèo chén',
+    ogImage: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1200&auto=format&fit=crop&q=80',
+    ogImageAlt: 'Ẩm Thực Miền Trung - Đậm Đà Cay Nồng Nàn Xứ Cố Đô',
+  },
+  nam: {
+    path: '/am-thuc-mien-nam',
+    title: 'Ẩm Thực Miền Nam & Sài Gòn - Hào Sảng & Đậm Vị Phố Thị | Hôm Nay Ăn Gì',
+    description:
+      'Thưởng thức ẩm thực miền Nam & Sài Gòn: Hương vị béo ngọt, hào sảng phóng khoáng với cơm tấm sườn bì chả, hủ tiếu Nam Vang, bánh mì chảo, bò kho, phá lấu và gỏi cuốn tôm thịt.',
+    label: 'Ẩm Thực Miền Nam & Sài Gòn',
+    shortLabel: 'Miền Nam',
+    keywords:
+      'ẩm thực miền nam, ẩm thực sài gòn, món ngon miền nam, món ngon sài gòn, cơm tấm sườn bì chả, hủ tiếu nam vang, bánh mì thịt nướng, phá lấu bò, gỏi cuốn tôm thịt',
+    ogImage: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&auto=format&fit=crop&q=80',
+    ogImageAlt: 'Ẩm Thực Miền Nam & Sài Gòn - Hào Sảng Phóng Khoáng',
+  },
+  mientay: {
+    path: '/am-thuc-mien-tay',
+    title: 'Ẩm Thực Miền Tây Sông Nước - Hương Đồng Gió Nội & Đậm Tình Phù Sa | Hôm Nay Ăn Gì',
+    description:
+      'Khám phá ẩm thực miền Tây Nam Bộ: Nét mộc mạc dân dã, thơm ngon ngây ngất với lẩu mắm miền Tây, cá kho tộ, canh chua cá lóc, lẩu cá kèo lá giang và bánh xèo giòn rụm.',
+    label: 'Ẩm Thực Miền Tây Sông Nước',
+    shortLabel: 'Miền Tây',
+    keywords:
+      'ẩm thực miền tây, ẩm thực miền tây sông nước, đặc sản miền tây, món ngon miền tây, lẩu mắm miền tây, canh chua cá lóc, cá kho tộ, lẩu cá kèo, bánh xèo miền tây',
+    ogImage: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=1200&auto=format&fit=crop&q=80',
+    ogImageAlt: 'Ẩm Thực Miền Tây Sông Nước - Hương Đồng Gió Nội',
   },
 };
 
@@ -201,6 +253,12 @@ export function getTabFromUrl(): TabType {
   if (pathname === '/tra-sua-an-vat' || pathname === '/tra-sua' || pathname === '/an-vat' || pathname === '/do-uong-an-vat') return 'snacks';
   if (
     pathname === '/am-thuc-vung-mien' ||
+    pathname === '/am-thuc-mien-bac' ||
+    pathname === '/am-thuc-mien-trung' ||
+    pathname === '/am-thuc-mien-nam' ||
+    pathname === '/am-thuc-mien-tay' ||
+    pathname === '/am-thuc-mien-nam-sai-gon' ||
+    pathname === '/am-thuc-mien-tay-song-nuoc' ||
     pathname === '/thuc-don-moi-ngay' ||
     pathname === '/cach-nau-mon-ngon' ||
     pathname.startsWith('/cach-nau-mon-ngon/') ||
@@ -225,7 +283,19 @@ export function getTabFromUrl(): TabType {
     if (tabParam === 'ai-goi-y-mon-an' || tabParam === 'ai' || tabParam === 'tro-ly-ai' || tabParam === 'goi-y-mon') return 'ai';
     if (tabParam === 'mon-ngon' || tabParam === 'catalog') return 'catalog';
     if (tabParam === 'do-uong-an-vat' || tabParam === 'tra-sua-an-vat' || tabParam === 'snacks' || tabParam === 'do-uong' || tabParam === 'tra-sua' || tabParam === 'an-vat') return 'snacks';
-    if (tabParam === 'am-thuc-vung-mien' || tabParam === 'thuc-don-moi-ngay' || tabParam === 'cach-nau-mon-ngon' || tabParam === 'kham-pha-am-thuc' || tabParam === 'kham-pha' || tabParam === 'discover' || tabParam === 'cam-nang') return 'discover';
+    if (
+      tabParam === 'am-thuc-vung-mien' ||
+      tabParam === 'am-thuc-mien-bac' ||
+      tabParam === 'am-thuc-mien-trung' ||
+      tabParam === 'am-thuc-mien-nam' ||
+      tabParam === 'am-thuc-mien-tay' ||
+      tabParam === 'thuc-don-moi-ngay' ||
+      tabParam === 'cach-nau-mon-ngon' ||
+      tabParam === 'kham-pha-am-thuc' ||
+      tabParam === 'kham-pha' ||
+      tabParam === 'discover' ||
+      tabParam === 'cam-nang'
+    ) return 'discover';
     if (tabParam === 'gioi-thieu' || tabParam === 'about') return 'about';
     if (tabParam === 'lien-he' || tabParam === 'contact') return 'contact';
     if (tabParam === 'chinh-sach-bao-mat' || tabParam === 'privacy' || tabParam === 'bao-mat') return 'privacy';
@@ -318,6 +388,11 @@ export function updateTabSEO(tab: TabType): void {
   if (typeof document === 'undefined') return;
 
   if (tab === 'discover') {
+    const regionId = getRegionFromUrl();
+    if (regionId) {
+      updateRegionSEO(regionId);
+      return;
+    }
     const sub = getDiscoverSubSectionFromUrl();
     const subMeta = DISCOVER_SUB_CONFIG[sub];
     if (subMeta) {
@@ -329,6 +404,16 @@ export function updateTabSEO(tab: TabType): void {
   const meta = TAB_CONFIG[tab];
   if (!meta) return;
   applyMetaToDOM(meta);
+}
+
+/**
+ * Update document title, meta tags, and canonical link specifically for Regional Cuisine page
+ */
+export function updateRegionSEO(regionId: RegionId): void {
+  const meta = REGIONAL_SEO_CONFIG[regionId];
+  if (meta) {
+    applyMetaToDOM(meta);
+  }
 }
 
 /**

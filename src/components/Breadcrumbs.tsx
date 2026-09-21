@@ -8,6 +8,7 @@ import {
   getDiscoverSubSectionFromUrl,
 } from '../utils/navigation';
 import { findDishByRecipeSlug, getDishRecipe } from '../data/recipes';
+import { getRegionByPath } from '../data/regionalCuisine';
 
 interface BreadcrumbsProps {
   activeTab: TabType;
@@ -63,6 +64,8 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
     }
   }
 
+  const currentRegion = getRegionByPath(pathname);
+
   const currentLabel =
     isDiscover && discoverSubMeta ? discoverSubMeta.label : currentTabMeta?.label;
   const currentPath =
@@ -78,6 +81,12 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
     if (e.ctrlKey || e.metaKey || e.button === 1) return;
     e.preventDefault();
     onNavigate('discover', 'recipe');
+  };
+
+  const handleRegionHubClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (e.ctrlKey || e.metaKey || e.button === 1) return;
+    e.preventDefault();
+    onNavigate('discover', 'region');
   };
 
   return (
@@ -141,6 +150,45 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
                 {activeRecipe.dishName}
               </span>
               <link itemProp="item" href={`https://www.angigio.com${pathname}`} />
+              <meta itemProp="position" content="3" />
+            </li>
+          </>
+        ) : currentRegion ? (
+          <>
+            <li
+              className="flex items-center gap-1.5"
+              itemProp="itemListElement"
+              itemScope
+              itemType="https://schema.org/ListItem"
+            >
+              <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+              <a
+                href="/am-thuc-vung-mien"
+                onClick={handleRegionHubClick}
+                itemProp="item"
+                className="hover:text-orange-600 transition-colors"
+              >
+                <span itemProp="name">Ẩm Thực Vùng Miền</span>
+              </a>
+              <meta itemProp="position" content="2" />
+            </li>
+
+            <li
+              className="flex items-center gap-1.5 min-w-0"
+              itemProp="itemListElement"
+              itemScope
+              itemType="https://schema.org/ListItem"
+            >
+              <ChevronRight className="w-3.5 h-3.5 text-stone-400 shrink-0" />
+              <span
+                className="text-stone-800 font-semibold truncate"
+                aria-current="page"
+                itemProp="name"
+                title={currentRegion.name}
+              >
+                {currentRegion.name}
+              </span>
+              <link itemProp="item" href={`https://www.angigio.com${currentRegion.path}`} />
               <meta itemProp="position" content="3" />
             </li>
           </>
