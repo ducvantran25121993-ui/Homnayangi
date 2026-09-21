@@ -7,8 +7,21 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+// Compile-time define replaced by esbuild for the production bundle
+declare const __IS_PRODUCTION_BUILD__: boolean | undefined;
+
 const app = express();
-const isProduction = process.env.NODE_ENV === "production";
+const isBundled =
+  typeof __IS_PRODUCTION_BUILD__ !== "undefined" && __IS_PRODUCTION_BUILD__ === true;
+const isProduction =
+  process.env.NODE_ENV === "production" ||
+  isBundled ||
+  (typeof __filename !== "undefined" && (__filename.endsWith(".cjs") || __filename.includes("dist")));
+
+if (isProduction && process.env.NODE_ENV !== "production") {
+  process.env.NODE_ENV = "production";
+}
+
 const DEFAULT_PORT = 3000;
 
 app.use(express.json({ limit: "25mb" }));
@@ -541,13 +554,25 @@ async function startServer() {
 
   // Static SEO routes for Googlebot and search crawlers
   app.get("/robots.txt", (_req, res) => {
-    res.type("text/plain");
-    res.sendFile(path.join(process.cwd(), "public", "robots.txt"));
+    const distFile = path.join(process.cwd(), "dist", "robots.txt");
+    const pubFile = path.join(process.cwd(), "public", "robots.txt");
+    const target = fs.existsSync(distFile) ? distFile : pubFile;
+    if (fs.existsSync(target)) {
+      res.type("text/plain").sendFile(target);
+    } else {
+      res.type("text/plain").send("User-agent: *\nAllow: /\nSitemap: https://www.angigio.com/sitemap.xml\n");
+    }
   });
 
   app.get("/sitemap.xml", (_req, res) => {
-    res.type("application/xml");
-    res.sendFile(path.join(process.cwd(), "public", "sitemap.xml"));
+    const distFile = path.join(process.cwd(), "dist", "sitemap.xml");
+    const pubFile = path.join(process.cwd(), "public", "sitemap.xml");
+    const target = fs.existsSync(distFile) ? distFile : pubFile;
+    if (fs.existsSync(target)) {
+      res.type("application/xml").sendFile(target);
+    } else {
+      res.status(404).send("Sitemap not found");
+    }
   });
 
   // Comprehensive SEO routes config for server-rendered HTML meta tags
@@ -697,7 +722,7 @@ async function startServer() {
 
   const httpServer = http.createServer(app);
 
-  if (process.env.NODE_ENV !== "production") {
+  if (!isProduction) {
     const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: {
@@ -749,36 +774,47 @@ async function startServer() {
   }
 
   // Primary listener binds to internal port 3000 (required for reverse proxy routing in AI Studio containers)
+  httpServer.on("error", (err: any) => {
+    if (err.code === "EADDRINUSE") {
+      console.warn(`Primary port ${DEFAULT_PORT} is already in use by another process.`);
+    } else {
+      console.error(`Server error on primary port ${DEFAULT_PORT}:`, err);
+    }
+  });
+
   httpServer.listen(DEFAULT_PORT, "0.0.0.0", () => {
     console.log(`Server listening on http://0.0.0.0:${DEFAULT_PORT} (${isProduction ? "production" : "development"} mode)`);
   });
 
-  httpServer.on("error", (err: any) => {
-    if (err.code === "EADDRINUSE") {
-      console.warn(`Port ${DEFAULT_PORT} is already in use by another process.`);
-    } else {
-      console.error(`Primary server error on port ${DEFAULT_PORT}:`, err);
-    }
-  });
-
-  // In standalone Cloud Run containers without an Nginx proxy, Cloud Run expects the application
-  // to listen on the port specified by process.env.PORT (typically 8080).
-  const cloudRunPort = Number(process.env.PORT);
-  if (cloudRunPort && cloudRunPort !== DEFAULT_PORT) {
-    const cloudRunServer = http.createServer(app);
-    cloudRunServer.on("error", (err: any) => {
-      if (err.code === "EADDRINUSE") {
-        // Expected when Nginx already owns port 8080 in the AI Studio container environment.
-        console.log(`Port ${cloudRunPort} already bound (reverse proxy active). Ingress served via port ${DEFAULT_PORT}.`);
-      } else {
-        console.warn(`Secondary server error on port ${cloudRunPort}:`, err);
+  // Standalone Cloud Run deployment support:
+  // In standalone Cloud Run containers without an Nginx proxy, Cloud Run routes traffic to process.env.PORT (e.g. 8080).
+  const envPort = process.env.PORT ? parseInt(process.env.PORT, 10) : 0;
+  if (envPort && envPort !== DEFAULT_PORT) {
+    const standaloneServer = http.createServer(app);
+    standaloneServer.on("error", (err: any) => {
+      // In AI Studio container environments, port 8080 is used by Nginx which forwards to port 3000.
+      if (err.code !== "EADDRINUSE") {
+        console.warn(`Standalone port ${envPort} warning:`, err);
       }
     });
 
-    cloudRunServer.listen(cloudRunPort, "0.0.0.0", () => {
-      console.log(`Cloud Run ingress server listening on http://0.0.0.0:${cloudRunPort}`);
+    standaloneServer.listen(envPort, "0.0.0.0", () => {
+      console.log(`Cloud Run direct ingress listening on http://0.0.0.0:${envPort}`);
     });
   }
+
+  // Graceful shutdown handling for container platforms (Cloud Run / Docker)
+  const shutdown = () => {
+    console.log("Shutting down servers gracefully...");
+    try {
+      httpServer.close();
+    } catch {
+      // ignore
+    }
+    process.exit(0);
+  };
+  process.on("SIGTERM", shutdown);
+  process.on("SIGINT", shutdown);
 }
 
 startServer().catch((err) => {
