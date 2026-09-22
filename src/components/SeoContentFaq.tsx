@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ChevronDown,
   HelpCircle,
@@ -40,7 +40,9 @@ import {
   CupSoda,
   Cookie
 } from 'lucide-react';
-import { TabType } from '../utils/navigation';
+import { TabType, DiscoverSubSection, getDiscoverSubSectionFromUrl } from '../utils/navigation';
+import { getRegionFromUrl, getRegionById, isRegionPath } from '../data/regionalCuisine';
+import { INITIAL_DISHES } from '../data/dishes';
 
 interface FaqItem {
   question: string;
@@ -190,11 +192,640 @@ const COMMON_FAQ_DATA: Record<
   },
 };
 
+interface DiscoverEditorialSection {
+  heading: string;
+  paragraphs: string[];
+  cards?: {
+    tag?: string;
+    title: string;
+    desc: string;
+  }[];
+  quote?: string;
+}
+
+interface DiscoverSeoItem {
+  badge: string;
+  title: string;
+  desc: string;
+  schemaUrl: string;
+  sections?: DiscoverEditorialSection[];
+  faqs: FaqItem[];
+}
+
+const DISCOVER_SEO_DETAILS: Record<string, DiscoverSeoItem> = {
+  bac: {
+    badge: 'CẨM NANG ẨM THỰC MIỀN BẮC',
+    title: 'Ẩm Thực Miền Bắc: Tinh Hoa Vị Giác Kinh Kỳ, Thanh Tao & Hài Hòa Đất Tràng An',
+    desc: 'Ẩm thực miền Bắc mang chiều sâu văn hóa ngàn năm Thăng Long - Hà Nội, nổi bật với triết lý cân bằng âm dương và nghệ thuật nêm nếm gia vị vừa vặn, không thiên quá ngọt, không quá béo cũng không cay gắt. Tinh hoa món Bắc nằm ở vị ngọt nguyên bản từ nước hầm xương ống, hương thơm ấm nồng của tiêu bắc, gừng già, hành hoa và vị chua thanh tao từ giấm bỗng nếp lên men tự nhiên. Thưởng thức món Bắc là thưởng thức sự cầu kỳ, tinh tế từ thị giác đến khứu giác, từ bát phở bò bốc khói nghi ngút, đĩa bún chả thơm nức than hoa đến mẹt bún đậu mắm tôm nồng đượm vị phố cổ.',
+    schemaUrl: 'https://www.angigio.com/am-thuc-mien-bac',
+    sections: [
+      {
+        heading: '1. Triết Lý Ẩm Thực Kinh Kỳ & Nghệ Thuật Nêm Nếm Cân Bằng Âm Dương',
+        paragraphs: [
+          'Nền ẩm thực đất Tràng An không chỉ là việc chế biến món ăn mà là một phong cách sống, một nghệ thuật giao hòa giữa con người với bốn mùa xuân hạ thu đông. Người miền Bắc đặc biệt coi trọng sự chuẩn mực và cân bằng: món ăn thanh tao nhưng không hề nhạt nhẽo, đậm đà mà không nồng gắt, béo nhưng không ngấy.',
+          'Để đạt được đỉnh cao của vị ngọt thanh tự nhiên, người đầu bếp kinh kỳ kiên trì hầm xương ống hàng giờ liền ở mức lửa nhỏ liu riu thay vì lạm dụng phụ gia hay đường ngọt. Vị chua trong món Bắc cũng mang sắc thái riêng biệt: chua dịu êm từ giấm bỗng nếp lên men tự nhiên, chua thanh mát từ quả sấu đầu mùa, hay vị chua giòn từ tai chua phơi khô.'
+        ],
+        cards: [
+          {
+            tag: 'VỊ GIÁC CHỦ ĐẠO',
+            title: 'Thanh Đạm & Nguyên Bản',
+            desc: 'Tôn vinh trọn vẹn vị ngọt tinh khiết của nguyên liệu tươi sống, tiết chế gia vị gắt để giữ sự hài hòa dễ chịu.'
+          },
+          {
+            tag: 'GIA VỊ LINH HỒN',
+            title: 'Giấm Bỗng & Mắm Tôm',
+            desc: 'Hèm rượu nếp lên men cùng mắm tôm Thanh Hóa đánh sủi bọt quất ớt tạo chiều sâu vị giác khó quên.'
+          },
+          {
+            tag: 'THẢO MỘC ĐẶC SẢN',
+            title: 'Rau Thơm Bản Địa',
+            desc: 'Mỗi món ăn luôn gắn liền với một loại rau thơm tương ứng: chả cá với thì là, bún ốc với tía tô, bún chả với kinh giới.'
+          }
+        ],
+        quote: 'Nước dùng phở bò và bún ốc miền Bắc muốn trong vắt, thơm thanh thì xương phải nướng qua, luộc trần sạch máu bầm và ninh mở vung. Chỉ nêm nước mắm cốt ngon ở những phút cuối cùng để nước dùng không bị chua gắt.'
+      },
+      {
+        heading: '2. Những Món Ăn Làm Nên Hồn Cốt Ẩm Thực Đất Bắc',
+        paragraphs: [
+          'Nhắc đến miền Bắc là nhắc đến những món ăn đã vượt qua ranh giới địa lý để trở thành biểu tượng quốc hồn quốc túy trên bản đồ ẩm thực thế giới. Từng món ăn mang theo câu chuyện văn hóa phố phường, từ góc phố cổ Hà Nội đến làng quê đồng bằng Bắc Bộ.',
+          'Sự tinh tế còn thể hiện ở cách bài trí: mẹt bún đậu xanh mướt lá chuối, bát bún thang rực rỡ như một bức tranh ngũ sắc, hay đĩa bánh cuốn tráng mỏng tang điểm xuyết những lát hành phi giòn rụm thơm lừng.'
+        ],
+        cards: [
+          {
+            tag: 'BIỂU TƯỢNG KINH KỲ',
+            title: 'Phở Bò Hà Nội',
+            desc: 'Bánh phở mềm mướt, thịt bò tái lăn mềm ngọt hòa cùng nước dùng hầm xương ống thơm ngào ngạt quế, hồi, gừng nướng.'
+          },
+          {
+            tag: 'ĐẬM ĐÀ THAN HOA',
+            title: 'Bún Chả Nướng Que Tre',
+            desc: 'Chả miếng ba chỉ giòn xém cạnh, chả băm kẹp que tre đượm mùi khói nướng, chấm nước mắm giấm đường ấm nóng.'
+          },
+          {
+            tag: 'ĐẲNG CẤP HOÀNG GIA',
+            title: 'Chả Cá Lã Vọng',
+            desc: 'Cá lăng ướp riềng mẻ nướng vàng rồi xào lăn trên chảo nóng cùng hành hoa, thì là ngập tràn hương sắc.'
+          },
+          {
+            tag: 'CẦU KỲ TỈ MỈ',
+            title: 'Bún Thang Phố Cổ',
+            desc: 'Bức tranh ẩm thực kết hợp từ giò lụa thái chỉ, gà xé, trứng tráng mỏng sợi, nấm hương và củ cải dầm chua ngọt.'
+          },
+          {
+            tag: 'DÂN DÃ PHỐ PHƯỜNG',
+            title: 'Bún Đậu Mắm Tôm',
+            desc: 'Đậu phụ Mơ chiên vàng lướt ván giòn tan, chả cốm dẻo quánh, thịt luộc chân giò chấm mắm tôm quất ớt sủi bọt.'
+          },
+          {
+            tag: 'MỀM MƯỚT THANH TAO',
+            title: 'Bánh Cuốn Thanh Trì',
+            desc: 'Từng lớp bánh tráng mỏng như cánh ve, thoa lớp mỡ hành bóng bẩy, chấm nước mắm cà cuống thơm lừng khó cưỡng.'
+          }
+        ]
+      },
+      {
+        heading: '3. Mùa Nào Thức Nấy: Nghệ Thuật Thưởng Thức Theo Tiết Trời 4 Mùa',
+        paragraphs: [
+          'Khác với miền Nam chỉ có hai mùa mưa nắng, miền Bắc đón trọn vẹn 4 mùa xuân, hạ, thu, đông rõ rệt. Chính sự biến chuyển nhịp nhàng của đất trời đã tạo nên thói quen ăn uống thuận tự nhiên: mùa hè thanh nhiệt giải độc, mùa đông giữ ấm bồi bổ, mùa thu tận hưởng sản vật thanh tao và mùa xuân sum vầy ấm cúng.'
+        ],
+        cards: [
+          {
+            tag: 'MÙA XUÂN',
+            title: 'Ấm Cúng & Sum Vầy',
+            desc: 'Bánh chưng xanh, canh măng hầm chân giò, dưa hành giòn chua và xôi gấc đỏ tươi cầu may mắn thịnh vượng.'
+          },
+          {
+            tag: 'MÙA HẠ',
+            title: 'Thanh Mát & Giải Nhiệt',
+            desc: 'Canh cua đồng mồng tơi mướp hương ăn kèm cà pháo, bún ốc giấm bỗng chua dịu xua tan cái nắng oi ả.'
+          },
+          {
+            tag: 'MÙA THU',
+            title: 'Hương Sắc Lãng Mạn',
+            desc: 'Cốm non làng Vòng dẻo thơm hạt ngọc, chả rươi đượm vỏ quýt nồng nàn và hồng ngâm giòn ngọt đầu mùa.'
+          },
+          {
+            tag: 'MÙA ĐÔNG',
+            title: 'Nồng Ấm Tê Tái',
+            desc: 'Nồi lẩu riêu cua bắp bò sườn sụn bốc khói nghi ngút, đĩa thịt đông dưa cải chua và bát chè sắn nóng dẻo ấm lòng.'
+          }
+        ]
+      }
+    ],
+    faqs: [
+      {
+        question: 'Ẩm thực miền Bắc có nét đặc trưng gì khác biệt so với miền Trung và miền Nam?',
+        answer: 'Ẩm thực miền Bắc chuộng sự thanh đạm, hài hòa và tiết chế gia vị tối đa để tôn vinh vị ngọt tự nhiên của nguyên liệu tươi sống. Nước dùng miền Bắc thường trong veo, ngọt thanh từ tủy xương hầm kỹ chứ không lạm dụng đường hay nước cốt dừa như miền Nam, cũng không cay nồng xé lưỡi như miền Trung. Món Bắc còn đặc trưng bởi sự kết hợp tinh tế cùng các loại rau thơm bản địa như thì là, tía tô, kinh giới, lá lốt và húng láng.',
+      },
+      {
+        question: 'Những món ăn đại diện cho tinh hoa ẩm thực miền Bắc nhất định phải thử?',
+        answer: 'Khi khám phá ẩm thực miền Bắc, bạn nhất định không thể bỏ qua: Phở bò tái lăn Hà Nội với nước dùng thơm quế hồi; Bún chả than hoa nướng kẹp que tre đượm vị khói; Chả cá Lã Vọng thơm nức thì là; Bún thang cầu kỳ chuẩn vị Tràng An; Bún đậu mắm tôm Thanh Hóa; Xôi xéo mỡ hành vàng óng đậu xanh và Bánh cuốn Thanh Trì mỏng mướt thơm hành phi.',
+      },
+      {
+        question: 'Bí quyết nấu nước dùng phở bò và bún chuẩn vị Bắc trong veo, ngọt thanh tự nhiên?',
+        answer: 'Để nước dùng trong vắt ngọt thanh, xương ống bò phải được nướng xém cạnh, luộc trần sạch máu bầm và rửa thật kỹ trước khi ninh lửa nhỏ liu riu từ 8–10 tiếng. Gia vị tạo mùi gồm hành tây nướng, gừng ta nướng cạo sạch vỏ, thảo quả, hoa hồi, quế chi rang thơm bọc trong túi lọc. Tuyệt đối không đậy vung kín khi ninh và thường xuyên hớt bọt để nước dùng giữ được độ trong veo óng ánh.',
+      },
+      {
+        question: 'Tại sao người miền Bắc chuộng dùng giấm bỗng và các gia vị lên men truyền thống?',
+        answer: 'Giấm bỗng nếp được chắt lọc từ hèm rượu nếp lên men tự nhiên, sở hữu vị chua dịu êm ái, thanh thoát và hương thơm nồng ấm đặc trưng mà chanh tươi hay giấm công nghiệp không thể thay thế. Giấm bỗng có công dụng khử sạch mùi tanh của thủy sản (như ốc, cá, riêu cua), kích thích men tiêu hóa và tạo nên linh hồn cho các món bún ốc, bún riêu, canh chua cá lóc chuẩn vị kinh kỳ.',
+      },
+      {
+        question: 'Làm sao để đặt ship món ngon đặc sản miền Bắc chuẩn vị giao tận nơi nhanh nhất?',
+        answer: 'Ngay trên ứng dụng, bạn chỉ cần chọn món ăn miền Bắc ưa thích (phở, bún chả, bún thang...) và bấm nút "Đặt Món Ship". Hệ thống tự động xác định vị trí của bạn và kết nối trực tiếp đến các quán ăn miền Bắc chuẩn vị được đánh giá cao nhất trên ShopeeFood, GrabFood hoặc BeFood với nhiều mã ưu đãi freeship.',
+      },
+    ],
+  },
+  trung: {
+    badge: 'CẨM NANG ẨM THỰC MIỀN TRUNG',
+    title: 'Ẩm Thực Miền Trung: Đậm Đà Cay Nồng Cố Đô & Nắng Gió Duyên Hải Rực Rỡ',
+    desc: 'Ẩm thực miền Trung kết tinh từ vẻ đẹp cung đình Cố Đô Huế cầu kỳ trang nhã cùng sự hào sảng, kiên cường của người dân duyên hải quanh năm đối mặt nắng gió bão táp. Món ăn miền Trung sở hữu cá tính vô cùng rõ rệt: vị đậm đà sâu lắng, cay nồng xé lưỡi từ ớt chỉ thiên và tiêu cay, hòa quyện hương thơm nức mũi của mắm ruốc nguyên chất và sả cây đập dập. Màu sắc món ăn rực rỡ với sắc đỏ của dầu màu điều và ớt tươi, khơi dậy mọi giác quan từ những tô bún bò Huế thơm nức, đĩa mì Quảng trứ danh, nem nướng Nha Trang giòn rụm đến từng chén bánh bèo tôm cháy thanh tao.',
+    schemaUrl: 'https://www.angigio.com/am-thuc-mien-trung',
+    sections: [
+      {
+        heading: '1. Bản Sắc Đậm Đà, Cay Nồng Cố Đô & Nắng Gió Duyên Hải',
+        paragraphs: [
+          'Miền Trung - dải đất hẹp gánh hai đầu đất nước với lưng tựa dãy Trường Sơn hùng vĩ, mặt hướng ra biển Đông mênh mông bão gió. Chính sự khắc nghiệt của thiên nhiên cùng chiều sâu văn hóa triều Nguyễn đã tạo nên một nền ẩm thực mang cá tính vô cùng quyết liệt: mặn mà sâu sắc, cay nồng xé lưỡi nhưng cũng vô cùng tinh tế, hoa mỹ.',
+          'Người miền Trung yêu thích vị ớt không đơn thuần để kích thích vị giác mà còn là cách thức bảo vệ sức khỏe, giữ ấm cơ thể trong những ngày đông mưa dầm gió bấc và khử mùi tanh của tôm cá biển tươi sống.'
+        ],
+        cards: [
+          {
+            tag: 'CÁ TÍNH HƯƠNG VỊ',
+            title: 'Cay Nồng Xé Lưỡi',
+            desc: 'Ớt hiểm, ớt chỉ thiên, ớt bột xào dầu điều tạo nên sắc đỏ bắt mắt và hơi ấm nồng rực rỡ trong từng ngụm nước dùng.'
+          },
+          {
+            tag: 'LINH HỒN BIỂN CẢ',
+            title: 'Mắm Ruốc & Mắm Nêm',
+            desc: 'Mắm ruốc Huế và mắm nêm cá cơm ủ thủ công đem lại vị mặn mòi umami sâu lắng, không thể nhầm lẫn.'
+          },
+          {
+            tag: 'PHONG THÁI CUNG ĐÌNH',
+            title: 'Ngũ Sắc Tinh Tế',
+            desc: 'Chú trọng lối trình bày nhỏ nhắn, thanh lịch trong từng chén bánh bèo, đĩa bánh nậm gói lá chuối thơm tho.'
+          }
+        ],
+        quote: 'Khi nấu bún bò Huế, mắm ruốc phải được hòa tan trong nước lạnh rồi gạn lấy phần nước trong châm vào nồi khi đang sôi. Sả cây đập dập bó tròn thả vào cùng ớt sa tế phi dầu màu điều giúp nồi nước dùng thơm lừng dậy mùi ngạt ngào.'
+      },
+      {
+        heading: '2. Những Món Ăn Đại Diện Cho Tinh Hoa Đất Miền Trung',
+        paragraphs: [
+          'Từ ẩm thực cung đình Huế cầu kỳ cho đến những món ăn dân dã xứ Quảng, xứ Nẫu hay duyên hải Nam Trung Bộ, mỗi món ăn đều chứa đựng lòng hiếu khách và sự chịu thương chịu khó của người dân nơi đây.'
+        ],
+        cards: [
+          {
+            tag: 'BIỂU TƯỢNG HUẾ',
+            title: 'Bún Bò Huế Chân Giò',
+            desc: 'Nước dùng ngạt ngào sả ớt và mắm ruốc, sợi bún to tròn ăn kèm tiết luộc, chả cua và rau bắp chuối thái mỏng.'
+          },
+          {
+            tag: 'HỒN CỐT XỨ QUẢNG',
+            title: 'Mì Quảng Tôm Thịt',
+            desc: 'Sợi mì gạo dai mềm chan nước nhưn đậm đà tôm thịt rim keo, rắc đậu phộng rang và bánh tráng mè nướng giòn rụm.'
+          },
+          {
+            tag: 'ĐẶC SẢN NHA TRANG',
+            title: 'Nem Nướng Nha Trang',
+            desc: 'Nem thịt quết dẻo nướng than hoa thơm phức, cuốn bánh tráng, ram giòn và xoài xanh chấm sốt tương gan nếp béo bùi.'
+          },
+          {
+            tag: 'DẺO THƠM PHỐ CỔ',
+            title: 'Cơm Gà Tam Kỳ - Hội An',
+            desc: 'Cơm nấu nước luộc gà óng vàng mỡ gà, thịt gà ta xé phay bóp gỏi hành tây, rau răm thơm nồng vị tiêu sọ.'
+          },
+          {
+            tag: 'DẺO DAI XỨ THẦN KINH',
+            title: 'Bộ Sưu Tập Bánh Huế',
+            desc: 'Bánh bèo chén tôm cháy giòn rụm, bánh nậm mềm mịn tan trong miệng và bánh bột lọc trong veo tôm đỏ au đậm vị.'
+          },
+          {
+            tag: 'THANH NGỌT BIỂN KHƠI',
+            title: 'Bánh Canh Chả Cá',
+            desc: 'Nước dùng nấu từ xương cá biển ngọt lịm tự nhiên, chả cá chiên và chả cá hấp dai giòn không pha bột.'
+          }
+        ]
+      }
+    ],
+    faqs: [
+      {
+        question: 'Vì sao ẩm thực miền Trung lại có khẩu vị cay nồng và đậm đà hơn các vùng miền khác?',
+        answer: 'Khí hậu miền Trung khắc nghiệt với mùa hè nắng gắt và mùa đông mưa dầm lạnh giá. Để giữ ấm cơ thể, kích thích tỳ vị và khử tanh nguồn hải sản dồi dào từ biển cả, người miền Trung sử dụng ớt tươi, ớt bột, tiêu sọ, sả và mắm ruốc như một phương thức cân bằng thân nhiệt tự nhiên. Vị cay nồng xé lưỡi cũng giúp người lao động biển tăng cường thể lực và thưởng thức bữa ăn ngon miệng hơn.',
+      },
+      {
+        question: 'Những món ăn miền Trung nổi tiếng nào không thể bỏ lỡ khi trải nghiệm?',
+        answer: 'Top món ngon miền Trung trứ danh bao gồm: Bún bò Huế chân giò thơm nức mắm ruốc sả ớt; Mì Quảng tôm thịt đậm đà ăn kèm bánh tráng mè nướng; Nem nướng Nha Trang cuốn bánh tráng chấm tương đậu gan béo bùi; Cơm gà Tam Kỳ - Hội An dẻo thơm mỡ gà; Bánh canh chả cá ngừ đại dương nước dùng ngọt thanh; Bánh bèo, bánh nậm, bánh lọc xứ Huế dẻo dai nhân tôm thịt đậm vị.',
+      },
+      {
+        question: 'Vai trò của mắm ruốc Huế trong nghệ thuật nấu nướng món ăn miền Trung?',
+        answer: 'Mắm ruốc Huế là "linh hồn vị giác" tạo nên chiều sâu umami mặn mà cho nước dùng bún bò, canh chua hay món thịt kho sả ớt. Bí quyết của các mệ xứ Huế là lấy mắm ruốc hòa tan trong nước lạnh, khuấy đều rồi để lắng cặn trong 15–20 phút, sau đó chỉ gạn lấy phần nước trong châm vào nồi nước dùng đang sôi sùng sục. Cách làm này giúp món ăn thơm phức dậy mùi ngạt ngào mà không hề bị nồng gắt.',
+      },
+      {
+        question: 'Sự khác biệt giữa ẩm thực Cung Đình Huế và ẩm thực dân gian xứ Quảng - Duyên Hải?',
+        answer: 'Ẩm thực Cung Đình Huế kế thừa lối phục vụ hoàng gia, chú trọng phép tắc ngũ sắc, bài trí khẩu phần nhỏ nhắn tao nhã trong các chén đĩa sứ tinh xảo, thiên về sự trang nhã. Ngược lại, ẩm thực xứ Quảng (Đà Nẵng, Quảng Nam) và Nam Trung Bộ lại mộc mạc, phóng khoáng, khẩu phần đầy đặn, sợi mì to dày, nước nhưn sánh vàng nghệ và luôn đi kèm rổ rau sống đồng nội xanh tươi phong phú.',
+      },
+      {
+        question: 'Làm sao để đặt ship các món ăn đặc sản miền Trung chuẩn gốc gần tôi nhất?',
+        answer: 'Bạn chỉ cần bấm nút "Đặt Món Ship" ngay tại từng thẻ món ăn miền Trung trên trang web. Hệ thống sẽ lọc ra các quán bún bò Huế gốc Cố Đô, quán mì Quảng chuẩn vị Hội An xung quanh bạn trên ShopeeFood, GrabFood hoặc BeFood để bạn thưởng thức nóng hổi tận bàn ăn.',
+      },
+    ],
+  },
+  nam: {
+    badge: 'CẨM NANG ẨM THỰC MIỀN NAM & SÀI GÒN',
+    title: 'Ẩm Thực Miền Nam & Sài Gòn: Hào Sảng Phóng Khoáng, Béo Ngọt Đậm Chất Phố Thị',
+    desc: 'Được mệnh danh là miền đất hứa hội tụ tinh hoa đa văn hóa (Kinh, Hoa, Chăm, Khmer), ẩm thực Sài Gòn và miền Nam mang đậm tính cách con người nơi đây: hào sảng, chân chất và phóng khoáng. Món ăn miền Nam có phong vị rõ ràng dứt khoát: ngọt ra ngọt, cay ra cay, béo ngậy nước cốt dừa và thoảng thơm nức mũi mùi mỡ hành tóp mỡ giòn rụm. Đĩa cơm tấm sườn bì chả mọng nước, tô hủ tiếu Nam Vang thanh ngọt nước xương hầm mực khô, chảo bánh mì xíu mại pate bốc khói hay cuốn gỏi tôm thịt chấm tương đen đều là những mảnh ghép ẩm thực không thể thiếu của nhịp sống đô thị sôi động.',
+    schemaUrl: 'https://www.angigio.com/am-thuc-mien-nam',
+    sections: [
+      {
+        heading: '1. Vùng Đất Hào Sảng & Ngọt Béo Tự Nhiên Của Phố Thị Phương Nam',
+        paragraphs: [
+          'Miền Nam và Sài Gòn là mảnh đất của sự giao thoa kỳ diệu. Người phương Nam đón nhận tinh hoa từ khắp bốn phương: nét tinh tế của người Hoa Chợ Lớn, phong vị ngọt béo của người Khmer, kỹ thuật bánh mì của phương Tây để tạo nên một diện mạo ẩm thực sôi động bậc nhất.',
+          'Khẩu vị của người miền Nam rất rõ ràng, dứt khoát: cay ra cay, ngọt ra ngọt, chua ra chua. Đặc biệt, thiên nhiên ưu đãi bạt ngàn dừa tươi đã tạo nên thói quen dùng nước dừa xiêm để kho thịt cá, hầm phá lấu và nước cốt dừa béo ngậy để làm nên những món chè, bánh canh thơm phức.'
+        ],
+        cards: [
+          {
+            tag: 'ĐẶC TRƯNG HƯƠNG VỊ',
+            title: 'Béo Ngậy Nước Cốt Dừa',
+            desc: 'Dừa tươi Bến Tre mang lại vị ngọt thanh tự nhiên cho món kho và độ béo ngậy mịn màng cho các món cari, chè ngọt.'
+          },
+          {
+            tag: 'ĐIỂM NHẤN SÀI THÀNH',
+            title: 'Mỡ Hành & Tóp Mỡ Giòn',
+            desc: 'Lá hành tươi xắt nhuyễn xối mỡ nóng hổi cùng tóp mỡ giòn rụm là điểm nhấn không thể thiếu trên đĩa cơm tấm, bánh hỏi.'
+          },
+          {
+            tag: 'NƯỚC CHẤM THẦN THÁNH',
+            title: 'Nước Mắm Kẹo Tỏi Ớt',
+            desc: 'Nấu sánh dẻo từ nước mắm cốt, đường vàng và nước dừa, tỏi ớt băm nhuyễn nổi bồng bềnh đỏ au bắt mắt.'
+          }
+        ],
+        quote: 'Bí quyết để sườn nướng cơm tấm mềm mọng không bị khô là ướp cùng mật ong, đầu hành lá giã nát, chút sữa đặc và dầu ăn. Nướng trên than hoa đượm lửa, quét mỡ hành đều tay để miếng sườn óng ánh vàng ươm.'
+      },
+      {
+        heading: '2. Những Món Ăn Đường Phố Bất Hủ Của Sài Gòn - Nam Bộ',
+        paragraphs: [
+          'Ẩm thực đường phố Sài Gòn không chỉ phục vụ nhu cầu ăn uống mà đã trở thành nếp sống, nhịp thở của đô thị không ngủ. Từ sáng sớm tinh mơ đến đêm muộn, những gánh hàng rong, tiệm ăn nhỏ luôn tấp nập khách với hương vị ngây ngất.'
+        ],
+        cards: [
+          {
+            tag: 'BIỂU TƯỢNG SÀI GÒN',
+            title: 'Cơm Tấm Sườn Bì Chả',
+            desc: 'Hạt tấm thơm bùi ăn cùng sườn nướng than hoa thơm lừng, bì thính giòn dai, chả trứng chưng và chén nước mắm kẹo ngọt.'
+          },
+          {
+            tag: 'NGỌT THANH TÔM MỰC',
+            title: 'Hủ Tiếu Nam Vang',
+            desc: 'Nước lèo ninh xương ống, mực khô và tôm nõn trong veo ngọt lịm, đầy ắp tôm tươi, thịt nạc, tim gan và rau cần tây.'
+          },
+          {
+            tag: 'NÓNG BỎNG BỮA SÁNG',
+            title: 'Bánh Mì Chảo Thập Cẩm',
+            desc: 'Trứng ốp la lòng đào béo ngậy, pate gan bùi ngậy, xíu mại sốt cà xèo xèo trên chảo gang ăn kèm bánh mì giòn rụm.'
+          },
+          {
+            tag: 'ĂN VẶT ĐÊM MUỘN',
+            title: 'Phá Lấu Bò Nước Dừa',
+            desc: 'Nội tạng bò hầm nước dừa tươi thơm ngát ngũ vị hương, chấm nước mắm me chua ngọt cay the kích thích vị giác.'
+          },
+          {
+            tag: 'THANH MÁT LÀNH MẠNH',
+            title: 'Gỏi Cuốn Tôm Thịt',
+            desc: 'Tôm luộc đỏ au, thịt ba chỉ, bún tươi và hẹ cuộn tròn trong bánh tráng dai, chấm tương đen sốt bơ đậu phộng béo bùi.'
+          },
+          {
+            tag: 'GIÒN RỤM VÀNG ÓNG',
+            title: 'Cơm Gà Xối Mỡ',
+            desc: 'Miếng đùi gà góc tư chiên xối mỡ da giòn rụm màu cánh gián, thịt bên trong mềm mọng nước, ăn cùng cơm chiên cà chua đỏ au.'
+          }
+        ]
+      }
+    ],
+    faqs: [
+      {
+        question: 'Nét văn hóa ẩm thực đặc trưng nhất của người Sài Gòn và miền Nam là gì?',
+        answer: 'Người miền Nam chuộng sự cởi mở, nhanh nhẹn và đa dạng văn hóa. Bữa ăn phương Nam là bản giao hưởng giữa ẩm thực thuần Việt với nét tinh tế của ẩm thực Chợ Lớn (người Hoa), phong vị béo ngọt của người Khmer và kỹ thuật bánh mì của Pháp. Món ăn luôn đi kèm rổ rau sống tươi tốt quanh năm (xà lách, rau thơm, giá sống, hẹ) và chén nước mắm chua ngọt tỏi ớt đỏ au bắt mắt.',
+      },
+      {
+        question: 'Top các món ăn đường phố bất hủ tại Sài Gòn nhất định phải thưởng thức?',
+        answer: 'Những món ăn biểu tượng làm nên thương hiệu ẩm thực Sài Gòn bao gồm: Cơm tấm sườn bì chả nướng than hoa rưới mỡ hành; Hủ tiếu Nam Vang nước xương ngọt lịm tôm thịt lòng non; Bánh mì chảo pa-tê xíu mại trứng lòng đào; Phá lấu bò nước cốt dừa chấm bánh mì; Gỏi cuốn tôm thịt chấm tương bơ đậu phộng ngậy bùi; Cơm gà xối mỡ da giòn rụm và Bò kho bánh mì sả ớt.',
+      },
+      {
+        question: 'Vì sao món ăn miền Nam lại có khẩu vị ngọt béo và sử dụng nhiều nước dừa tự nhiên?',
+        answer: 'Miền Nam có thổ nhưỡng dồi dào kênh rạch và bạt ngàn dừa tươi (đặc biệt là Bến Tre). Người dân có thói quen dùng nước dừa xiêm ngọt lịm để kho thịt, kho cá, hầm phá lấu giúp thịt mềm rục tự nhiên mà không cần nhiều mì chính; đồng thời vắt nước cốt dừa đậm đặc để tạo vị béo thơm sánh mịn cho các món cà ri, bánh canh tôm nước cốt dừa và chè ngọt truyền thống.',
+      },
+      {
+        question: 'Bí quyết làm nước mắm kẹo tỏi ớt chấm cơm tấm sườn nướng chuẩn phong cách Sài Gòn?',
+        answer: 'Bí quyết nằm ở tỷ lệ vàng: Đun sôi nhẹ 1 phần nước mắm cốt ngon, 1 phần đường cát vàng và 1 phần nước dừa tươi cho đến khi đường tan hoàn toàn và hỗn hợp sánh lại như mật ong lỏng. Để nước mắm nguội hoàn toàn rồi mới cho tỏi ớt băm nhuyễn và nước cốt chanh vào. Nhờ tỷ lệ sánh đặc, tỏi ớt sẽ nổi bồng bềnh đỏ au trên mặt bát nước mắm cực kỳ bắt mắt.',
+      },
+      {
+        question: 'Làm sao để đặt ship bữa trưa văn phòng hoặc món ăn vặt Sài Gòn siêu tốc?',
+        answer: 'Chỉ cần nhấn vào món ăn trên web và chọn "Đặt Món Ship", hệ thống sẽ tự động chuyển tiếp vị trí của bạn sang ứng dụng ShopeeFood, GrabFood hoặc BeFood để tìm quán gần nhất trong bán kính 1–3km, giao hàng nóng sốt chỉ trong 15–25 phút.',
+      },
+    ],
+  },
+  mientay: {
+    badge: 'CẨM NANG ẨM THỰC MIỀN TÂY SÔNG NƯỚC',
+    title: 'Ẩm Thực Miền Tây Sông Nước: Hương Đồng Gió Nội & Đậm Đà Tình Nghĩa Phù Sa',
+    desc: 'Đồng bằng sông Cửu Long với hệ thống kênh rạch chằng chịt và phù sa màu mỡ đã ban tặng cho miền Tây một kho tàng sản vật thiên nhiên vô giá: mùa nước nổi cá linh non, ốc bươu đồng, cá lóc, cá kèo tươi sống cùng cả thiên đường rau dại hoa đồng như bông điên điển, bông súng, rau đắng, lục bình. Ẩm thực miền Tây không câu nệ khuôn mẫu, mộc mạc hoang sơ nhưng chan chứa ân tình. Hương vị mặn mà đậm đà của các loại mắm cá đồng, vị chua thanh ngọt ngào của me dốt và dừa xiêm tạo nên những kiệt tác dân dã: nồi lẩu mắm nghi ngút khói bên rổ rau rừng hơn 20 loại, ơ cá kho tộ tiêu ớt sánh keo, hay chiếc bánh xèo vỏ giòn rụm vàng thơm nước cốt dừa.',
+    schemaUrl: 'https://www.angigio.com/am-thuc-mien-tay',
+    sections: [
+      {
+        heading: '1. Kho Tàng Sản Vật Phù Sa Cửu Long & Mùa Nước Nổi',
+        paragraphs: [
+          'Đồng bằng sông Cửu Long với 9 nhánh sông rồng đổ ra biển cả đã bồi đắp nên một vùng đất trù phú bậc nhất Đông Nam Á. Ẩm thực miền Tây mang đậm dấu ấn hào sảng, chân chất và hòa hợp tuyệt đối với thiên nhiên.',
+          'Khi con nước lũ tràn về mang theo phù sa màu mỡ cũng là lúc miền Tây bước vào "mùa ăn chơi" thịnh soạn nhất trong năm: cá linh non xương mềm như sụn béo ngậy, từng vạt bông điên điển vàng rực bờ đê, bông súng ma thân dài giòn ngọt và cua đồng mầm gạch béo bùi.'
+        ],
+        cards: [
+          {
+            tag: 'SẢN VẬT ĐỒNG BẰNG',
+            title: 'Cá Tôm Nước Ngọt',
+            desc: 'Cá linh, cá lóc đồng, cá bống cát, tôm càng xanh tươi sống bắt từ kênh rạch, giữ trọn vị ngọt tự nhiên không cần ướp nhiều gia vị.'
+          },
+          {
+            tag: 'ĐẶC SẢN MÙA NƯỚC NỔI',
+            title: 'Bông Điên Điển & Bông Súng',
+            desc: 'Những loài hoa dại mọc ven sông trở thành nguyên liệu rau sạch thượng hạng cho nồi canh chua và lẩu cá linh.'
+          },
+          {
+            tag: 'TINH HOA Ủ CHƯỢP',
+            title: 'Mắm Cá Sặc & Cá Linh',
+            desc: 'Thủ phủ mắm Châu Đốc nức danh với nghệ thuật ủ cá đồng cùng thính gạo rang thơm và đường thốt nốt sánh quện.'
+          }
+        ],
+        quote: 'Nấu cá kho tộ chuẩn miền Tây phải dùng tộ đất, ướp cá cùng nước màu dừa Bến Tre và đường thốt nốt. Kho lửa liu riu cho nước dừa tươi rút cạn dần thành lớp sốt keo sánh màu hổ phách, rắc nhiều tiêu sọ và hành lá trước khi tắt bếp.'
+      },
+      {
+        heading: '2. Những Món Ăn Mộc Mạc Chan Chứa Nghĩa Tình Nam Bộ',
+        paragraphs: [
+          'Món ăn miền Tây không kiểu cách, cầu kỳ trong hình thức nhưng lại chinh phục thực khách bằng sự tươi ngon nguyên bản và sự phong phú của các loại rau cỏ đồng nội đi kèm.'
+        ],
+        cards: [
+          {
+            tag: 'VUA LẨU MIỀN TÂY',
+            title: 'Lẩu Mắm Đồng Quê',
+            desc: 'Nồi lẩu ninh từ mắm cá linh, cá sặc lọc bỏ xương, phi sả ớt thơm lừng, nhúng cùng rổ rau đồng hơn 20 loại xanh tươi mướt mắt.'
+          },
+          {
+            tag: 'ĐẬM ĐÀ ĐƯA CƠM',
+            title: 'Cá Lóc / Cá Ba Sa Kho Tộ',
+            desc: 'Thịt cá săn chắc, nước sốt keo đỏ au sóng sánh vị mặn ngọt hài hòa, thơm nức tiêu cay ăn cùng cơm nóng và dưa leo giòn rụm.'
+          },
+          {
+            tag: 'MÙA NƯỚC NỔI',
+            title: 'Canh Chua Cá Linh Điên Điển',
+            desc: 'Cá linh non béo ngậy nấu cùng bông điên điển vàng ươm, dầm me dốt chua thanh dịu ngọt, ăn tới đâu ấm lòng tới đó.'
+          },
+          {
+            tag: 'GIÒN RỤM VÀNG THƠM',
+            title: 'Bánh Xèo Vành Giòn Miền Tây',
+            desc: 'Bánh xèo chảo lớn đổ mỏng giòn rụm, nhân tép trấu, củ hủ dừa và thịt ba rọi, cuốn cải bẹ xanh chấm nước mắm tỏi ớt.'
+          },
+          {
+            tag: 'HƯƠNG VỊ NGẢI BÚN',
+            title: 'Bún Nước Lèo Sóc Trăng',
+            desc: 'Nước lèo trong vắt ngọt lịm từ mắm bò hóc và ngải bún khử mùi, ăn cùng cá lóc luộc gỡ xương, thịt quay và tôm luộc.'
+          },
+          {
+            tag: 'DÂN DÃ TUYỆT HẢO',
+            title: 'Cơm Cháy Kho Quẹt',
+            desc: 'Miếng cơm cháy đáy nồi vàng giòn rụm quẹt vào ơ mắm kho quẹt tóp mỡ tôm khô sền sệt, cay nồng ớt hiểm.'
+          }
+        ]
+      }
+    ],
+    faqs: [
+      {
+        question: 'Mùa nước nổi miền Tây mang lại những đặc sản ẩm thực độc nhất vô nhị nào?',
+        answer: 'Mùa nước nổi (từ tháng 8 đến tháng 11 âm lịch) là mùa của sản vật tự nhiên trù phú bậc nhất: Cá linh non xương mềm ngọt béo, bông điên điển vàng rực bờ đê, bông súng ma thân dài giòn ngọt, cua đồng mầm gạch. Các món ngon bất hủ mùa nước nổi gồm: Canh chua cá linh bông điên điển, Cá linh kho lạt dầm me dốt ăn kèm bông súng, và Lẩu cá linh nhúng giấm chua thanh giải nhiệt.',
+      },
+      {
+        question: 'Nghệ thuật thưởng thức Lẩu Mắm miền Tây: Nấu từ mắm gì và ăn kèm những loại rau nào?',
+        answer: 'Nồi lẩu mắm miền Tây đạt chuẩn phải phối trộn hài hòa giữa mắm cá linh (tạo vị ngọt béo bùi) và mắm cá sặc (tạo hương thơm đậm đà nồng đượm), ninh kỹ lọc bỏ xương, phi thơm cùng sả băm ớt hiểm và nước dừa tươi ngọt lành. Điểm tinh túy là đĩa rau đồng nội hơn 15–20 loại: bông điên điển, bông súng, cù nèo, rau đắng đất, bắp chuối bào, rau muống đồng, rau nhút, lục bình non.',
+      },
+      {
+        question: 'Những món ăn dân dã làm nên thương hiệu của vùng đất Tây Nam Bộ?',
+        answer: 'Du khách đến miền Tây nhất định phải thưởng thức: Canh chua cá lóc đồng bông súng; Cá lóc/cá bống kho tộ nước màu dừa sánh quánh; Lẩu cá kèo lá giang chua cay xé lưỡi; Bánh xèo miền Tây vành giòn rụm nhân tép trấu củ hủ dừa; Bún nước lèo Sóc Trăng nước lèo trong ngọt vị ngải bún; và Cơm cháy kho quẹt tóp mỡ giòn rụm.',
+      },
+      {
+        question: 'Bí quyết kho cá tộ kiểu miền Tây sao cho thịt cá săn chắc, nước sốt sánh keo đỏ au?',
+        answer: 'Cá lóc hoặc cá ba sa tươi cắt khúc dày, ướp với nước mắm ngon, đường thốt nốt, đầu hành lá đập dập, tiêu xay và nước màu dừa Bến Tre nguyên chất ít nhất 30 phút. Kho trong tộ đất lửa lớn cho thịt cá săn cứng lại, sau đó châm nước dừa tươi đun liu riu cho nước sốt ngấm sâu rút cạn sánh kẹo lại. Rưới thêm chút mỡ gà hoặc tóp mỡ và rắc tiêu sọ cay nồng trước khi bắc xuống.',
+      },
+      {
+        question: 'Tôi có thể tìm quán bán món miền Tây chính gốc ở thành phố lớn như thế nào?',
+        answer: 'Bạn chỉ cần bấm nút "Đặt Món Ship" ngay tại thẻ món lẩu mắm, cá kho tộ hoặc canh chua cá lóc trên ứng dụng. Hệ thống sẽ tự động đề xuất những nhà hàng quán ăn miền Tây chính gốc có điểm đánh giá cao gần vị trí của bạn trên ShopeeFood, GrabFood hoặc BeFood.',
+      },
+    ],
+  },
+  daily: {
+    badge: 'CẨM NANG THỰC ĐƠN MỖI NGÀY',
+    title: 'Thực Đơn Mỗi Ngày: Gợi Ý Mâm Cơm Gia Đình 7 Ngày Cân Bằng Dinh Dưỡng, Ngon Miệng & Tiết Kiệm',
+    desc: 'Băn khoăn "Hôm nay ăn gì?", "Trưa nay nấu món gì?", "Tối nay ăn cơm với gì?" là trăn trở thường trực của hàng triệu người nội trợ mỗi ngày. Chuyên trang Thực Đơn Mỗi Ngày mang đến giải pháp toàn diện: Lịch mâm cơm gia đình khoa học từ Thứ 2 đến Chủ Nhật, chuẩn hóa theo tỷ lệ vàng 4 món (Món mặn giàu protein + Món xào chất xơ + Canh thanh nhiệt + Món chua/đồ ăn kèm đưa cơm). Thực đơn được thiết kế thông minh giúp chống ngấy, tránh lặp món giữa các ngày, cân đối calo hợp lý cho cả người lớn lẫn trẻ nhỏ và tối ưu hóa thời gian đứng bếp chỉ còn 30–45 phút mỗi bữa.',
+    schemaUrl: 'https://www.angigio.com/thuc-don-moi-ngay',
+    sections: [
+      {
+        heading: '1. Nguyên Tắc "Tỷ Lệ Vàng 4 Món" Cho Bữa Cơm Gia Đình Đạt Chuẩn Dinh Dưỡng',
+        paragraphs: [
+          'Một mâm cơm gia đình hoàn hảo không nhất thiết phải có sơn hào hải vị mà cần sự cân bằng khoa học giữa các nhóm chất: đạm (protein), chất xơ, vitamin, nước khoáng và men tiêu hóa. Áp dụng quy tắc 4 món giúp cơ thể hấp thu dưỡng chất tối ưu, chống ngấy và bảo vệ sức khỏe tim mạch cho cả nhà.',
+          'Sự kết hợp giữa món mặn đậm đà, đĩa rau xào giòn ngọt, bát canh thanh mát giải nhiệt và đĩa dưa chua/cà muối giòn rụm chính là công thức tạo nên bữa ăn đưa cơm mà không một nhà hàng sang trọng nào có thể thay thế.'
+        ],
+        cards: [
+          {
+            tag: 'MÓN ĐẠM CHÍNH (PROTEIN)',
+            title: 'Thịt Kho, Cá Rán, Gà Rang',
+            desc: 'Chiếm 25-30% khẩu phần ăn, cung cấp năng lượng và axit amin thiết yếu để tái tạo cơ bắp và phục hồi thể lực.'
+          },
+          {
+            tag: 'CHẤT XƠ & VITAMIN',
+            title: 'Rau Xào, Củ Quả Luộc',
+            desc: 'Cung cấp chất xơ hòa tan, kích thích nhu động ruột, giảm cholesterol xấu và bổ sung vitamin tươi nguyên.'
+          },
+          {
+            tag: 'GIẢI NHIỆT & BÙ NƯỚC',
+            title: 'Bát Canh Thanh Mát',
+            desc: 'Canh chua, canh sườn rau củ hoặc canh cua mồng tơi giúp bữa cơm dễ nuốt, bổ sung khoáng chất và bù nước sau ngày dài.'
+          },
+          {
+            tag: 'KÍCH THÍCH VỊ GIÁC',
+            title: 'Món Ăn Kèm Chua Ngọt',
+            desc: 'Cà pháo muối, dưa cải chua hoặc nộm đu đủ giúp kích thích tiết dịch vị tiêu hóa, chống ngấy hiệu quả.'
+          }
+        ],
+        quote: 'Mẹo tối ưu thời gian nấu cơm chỉ trong 30–45 phút: Cắm cơm điện trước, bắc nồi thịt kho/om lửa nhỏ, trong lúc chờ thì xào nhanh đĩa rau trên lửa lớn và dùng nước luộc hoặc nước dùng ninh sẵn nấu nhanh bát canh.'
+      },
+      {
+        heading: '2. Lịch Mâm Cơm Gia Đình 7 Ngày Khoa Học - Chống Trùng Món',
+        paragraphs: [
+          'Bảng thực đơn mẫu từ Thứ 2 đến Chủ Nhật được thiết kế thông minh với các nhóm nguyên liệu luân chuyển đều đặn: thịt heo, cá sông/biển, thịt bò, gia cầm, hải sản và thanh đạm cuối tuần.'
+        ],
+        cards: [
+          {
+            tag: 'THỨ 2 • HỨNG KHỞI TUẦN MỚI',
+            title: 'Sườn Rim Mặn Ngọt',
+            desc: 'Sườn non rim dứa chua ngọt + Rau muống xào tỏi + Canh sườn nấu chua sấu + Cà pháo muối giòn.'
+          },
+          {
+            tag: 'THỨ 3 • ĐẬM ĐÀ BIỂN KHƠI',
+            title: 'Cá Bống Kho Tiêu Tộ',
+            desc: 'Cá kho keo tiêu cay + Đậu cô ve xào thịt băm + Canh mồng tơi nấu tôm tươi + Dưa chuột xắt lát.'
+          },
+          {
+            tag: 'THỨ 4 • TĂNG CƯỜNG ĐỀ KHÁNG',
+            title: 'Bò Xào Cần Tây',
+            desc: 'Thịt bò xào mềm ngọt cần tỏi + Trứng cuộn hành hoa + Canh bí đỏ hầm xương heo + Kim chi chua ngọt.'
+          },
+          {
+            tag: 'THỨ 5 • ĐỒNG QUÊ ẤM CÚNG',
+            title: 'Gà Ta Rang Gừng Sả',
+            desc: 'Gà rang sả ớt vàng ươm + Bắp cải luộc chấm trứng dầm mắm + Canh nước luộc bắp cải vắt chanh + Đậu rán giòn.'
+          },
+          {
+            tag: 'THỨ 6 • THANH NHẸ ĐỔI VỊ',
+            title: 'Tôm Rim Thịt Ba Rọi',
+            desc: 'Tôm rim ba chỉ bóng bẩy + Canh riêu cua đồng đậu rán mướp hương + Rau sống hoa chuối + Nộm tai heo.'
+          },
+          {
+            tag: 'THỨ 7 • SUM HỌP MÓN CUỐN',
+            title: 'Bánh Tráng Cuốn Thịt Luộc',
+            desc: 'Ba chỉ heo luộc thái mỏng cuốn bánh tráng tôm chua, dưa leo, rau rừng chấm mắm nêm đậm đà.'
+          },
+          {
+            tag: 'CHỦ NHẬT • ĐỔI VỊ GIA ĐÌNH',
+            title: 'Bún Chả Hà Nội Nướng Than',
+            desc: 'Chả viên, chả miếng nướng than hoa vàng óng, bún tươi, rổ rau kinh giới tía tô và nước chấm ấm nóng.'
+          }
+        ]
+      }
+    ],
+    faqs: [
+      {
+        question: 'Nguyên tắc "Tỷ lệ vàng 4 món" trong mâm cơm gia đình hàng ngày là gì?',
+        answer: 'Một mâm cơm gia đình chuẩn dinh dưỡng và ngon miệng nên bao gồm: 1 Món đạm chính (thịt kho, cá rán, sườn rim, gà hấp) cung cấp protein xây dựng năng lượng; 1 Món xào hoặc luộc (rau muống xào tỏi, su su xào, bông cải hấp) cung cấp chất xơ và vitamin; 1 Bát canh thanh mát giải nhiệt (canh chua, canh cua rau đay, canh sườn hầm rau củ) giúp dễ nuốt và bù nước; và 1 Món ăn kèm chua ngọt (cà pháo muối, dưa cải chua, nộm đu đủ, kim chi) kích thích vị giác đưa cơm.',
+      },
+      {
+        question: 'Làm sao để nấu bữa cơm gia đình đủ 4 món chỉ trong 30 đến 45 phút?',
+        answer: 'Áp dụng nguyên tắc nấu song song và chuẩn bị thông minh: Sơ chế, ướp thịt cá và nhặt rau từ sáng hoặc tối hôm trước cất ngăn mát tủ lạnh. Khi nấu, bạn bật nồi cơm điện trước; bắc nồi thịt kho/om lên bếp nhỏ lửa; trong lúc chờ thịt mềm, bạn xào nhanh đĩa rau trên lửa lớn; đồng thời dùng nước luộc rau hoặc nước ninh để nấu nhanh bát canh. Nếu có nồi chiên không dầu, bạn có thể nướng cá/thịt tự động mà không mất công canh bếp.',
+      },
+      {
+        question: 'Làm thế nào để lên thực đơn 7 ngày không bị trùng lặp nguyên liệu gây nhàm chán?',
+        answer: 'Hãy luân phiên các nhóm chất đạm theo chu kỳ tuần: Thứ 2 thịt heo (sườn rim mặn ngọt), Thứ 3 cá biển hoặc cá đồng (cá kho tộ), Thứ 4 thịt bò hoặc hải sản tôm mực (bò xào cần tây, tôm rim thịt), Thứ 5 thịt gà/vịt (gà rang gừng sả), Thứ 6 thanh nhẹ với đậu phụ và trứng (canh riêu cua đậu rán), Thứ 7 sum họp với món cuốn/lẩu (bò nhúng giấm, gỏi cuốn), Chủ Nhật đổi vị với bún chả hoặc phở gà.',
+      },
+      {
+        question: 'Tính năng "Danh Sách Đi Chợ" trên ứng dụng hỗ trợ người nội trợ như thế nào?',
+        answer: 'Tại mỗi ngày trong tuần trên chuyên mục Thực Đơn Mỗi Ngày, ứng dụng tự động tổng hợp toàn bộ nguyên liệu cần mua kèm theo định lượng chính xác (ví dụ: 500g sườn non, 1 bó rau muống, 2 quả cà chua) dành cho gia đình từ 3–5 người. Bạn có thể tích chọn đánh dấu món đã mua trên điện thoại hoặc bấm nút "Sao chép danh sách" để gửi nhanh qua tin nhắn Zalo cho người thân đi chợ hộ.',
+      },
+      {
+        question: 'Nếu ngày nào bận rộn không kịp nấu thì có thể đặt mâm cơm giao tận nhà không?',
+        answer: 'Có! Ứng dụng tích hợp liên kết trực tiếp với ShopeeFood, GrabFood và BeFood. Bạn chỉ cần bấm vào món ăn trong mâm cơm hàng ngày, hệ thống sẽ đề xuất các quán cơm niêu, quán cơm gia đình uy tín quanh khu vực của bạn với hàng ngàn mã giảm giá và giao nóng hổi trong 20–30 phút.',
+      },
+    ],
+  },
+  recipe: {
+    badge: 'CẨM NANG CÁCH NẤU MÓN NGON',
+    title: 'Công Thức Nấu Ăn Chuẩn Vị & Bí Quyết Nấu Ngon Tại Nhà',
+    desc: `Tuyển tập hướng dẫn chi tiết cách nấu hơn ${INITIAL_DISHES.length}+ món ngon Việt Nam từ bữa cơm nhà mộc mạc, bình dị đến những món tiệc xôm tụ cuối tuần. Không còn bỡ ngỡ với câu hỏi "Hôm nay nấu thế nào cho ngon?", cẩm nang đồng hành cùng bạn qua từng bước định lượng nguyên liệu vừa vặn, bí quyết khử mùi tanh dân dã, cách căn chỉnh ngọn lửa và mẹo nêm nếm gia truyền để mâm cơm gia đình lúc nào cũng đượm tình, tròn vị.`,
+    schemaUrl: 'https://www.angigio.com/cach-nau-mon-ngon',
+    sections: [
+      {
+        heading: '1. Bước Vào Gian Bếp Bằng Niềm Vui: Quy Trình 3 Bước Dành Cho Mọi Người',
+        paragraphs: [
+          'Vào bếp không phải là một bài kiểm tra áp lực hay nghĩa vụ nhọc nhằn, mà là cách chúng ta tìm lại sự an yên sau ngày dài bộn bề, gửi gắm yêu thương vào từng món ăn nóng hổi. Nấu ăn ngon thực ra không hề khó như bạn nghĩ, điều quan trọng nhất là nắm vững nhịp điệu phối hợp giữa khâu chuẩn bị nguyên liệu, thời gian tẩm ướp và cách điều tiết ngọn lửa.',
+          'Dù bạn là người trẻ lần đầu tự tay cầm dao thái thịt hay người đã nhiều năm gắn bó với mâm cơm gia đình, từng chỉ dẫn tại đây đều được đúc kết từ kinh nghiệm thực tế của các nghệ nhân ẩm thực và những người mẹ, người bà khéo léo. Hãy xem gian bếp như một góc sáng tạo đầy cảm hứng, nơi mỗi nguyên liệu mộc mạc đều có thể trở thành món ngon nhớ đời.'
+        ],
+        cards: [
+          {
+            tag: 'BƯỚC 1: SƠ CHẾ THẢNH THƠI',
+            title: 'Khử Mùi Tự Nhiên & Giữ Vị Tươi',
+            desc: 'Dùng chút muối hạt, lát gừng tươi hay giọt chanh giấm mộc mạc làm sạch lòng mề, khử tanh cá tôm, thịt gia cầm mà vẫn giữ trọn vẹn vị ngọt nguyên bản.'
+          },
+          {
+            tag: 'BƯỚC 2: TẨM ƯỚP VỪA VẶN',
+            title: 'Thời Gian Vàng Cho Gia Vị Ngấm',
+            desc: 'Ướp thịt cá thong thả từ 20–30 phút trước khi bật bếp. Gia vị mặn ngọt sẽ len lỏi sâu vào từng thớ thịt, lúc nấu lên thơm nức mũi mà không hề bị chảy nước.'
+          },
+          {
+            tag: 'BƯỚC 3: LẮNG NGHE NGỌN LỬA',
+            title: 'Hiểu Tiếng Xèo Xèo Của Chảo',
+            desc: 'Xào rau lửa lớn đảo nhanh tay giữ trọn màu xanh mướt và độ giòn ngọt; còn kho thịt cá thì hạ nhỏ lửa liu riu cho nước sốt sánh mịn quyện chặt.'
+          }
+        ],
+        quote: 'Bí quyết ngon nhất của mọi món ăn không nằm ở gia vị đắt đỏ, mà là sự kiên nhẫn khi sơ chế và một tâm trạng thoải mái, vui vẻ khi đứng trước bếp lửa.'
+      },
+      {
+        heading: '2. Nghệ Thuật Nêm Nếm "Vị Nhà": Bí Kíp Cân Bằng Mặn - Ngọt - Chua - Cay',
+        paragraphs: [
+          'Mỗi gia đình Việt Nam đều có một "vị nhà" thân thuộc — đó là mùi nước mắm nhĩ thơm lừng khi vừa trút vào nồi canh sôi sùng sục, là đĩa cá kho tiêu cay tê đầu lưỡi vào chiều mưa rả rích, hay bát canh cua mồng tơi thanh mát xua tan cái oi ả ngày hè.',
+          'Nghệ thuật nêm nếm món Việt chính là sự hòa hợp triết lý âm dương ngũ hành. Gia vị không chỉ để tạo vị giác kích thích, mà còn giúp cơ thể dễ tiêu hóa, giữ ấm bụng và nâng niu sức khỏe của từng thành viên trong gia đình.'
+        ],
+        cards: [
+          {
+            tag: 'NƯỚC MẮM NHĨ TRUYỀN THỐNG',
+            title: 'Linh Hồn Của Bữa Cơm Việt',
+            desc: 'Nêm nước mắm ngon vào canh lúc vừa tắt bếp để giữ trọn hương thơm nồng nàn; ướp thịt kho với nước mắm giúp thớ thịt săn chắc và dậy màu hổ phách.'
+          },
+          {
+            tag: 'HÀNH TỎI DẬY MÙI',
+            title: 'Khởi Đầu Hoàn Hảo Cho Món Xào',
+            desc: 'Phi thơm hành tím, tỏi băm ở mức lửa vừa đến khi dậy mùi thơm dìu dịu và chuyển vàng ươm là lúc lý tưởng nhất để trút nguyên liệu vào xào.'
+          },
+          {
+            tag: 'RAU THƠM ĐI KÈM',
+            title: 'Hòa Hợp Tính Hàn & Nhiệt',
+            desc: 'Thịt vịt tính hàn đi cùng gừng ớt ấm nồng; ốc đồng lạnh bụng luôn nấu cùng lá lốt tía tô thơm lừng; trứng vịt lộn không thể thiếu rau răm cay ấm.'
+          }
+        ],
+        quote: 'Nêm nếm chuẩn vị không phải là công thức cân đo khô cứng, mà là thói quen nếm thử bằng chiếc muỗng nhỏ, cảm nhận sự vừa miệng và ấm áp cho người mình thương.'
+      },
+      {
+        heading: '3. Mẹo Bỏ Túi "Cứu Cánh" Gian Bếp: Xử Lý Món Lỡ Tay Nhanh Chóng',
+        paragraphs: [
+          'Trong căn bếp hàng ngày, ngay cả những người nấu ăn lão luyện nhất cũng có lúc lỡ tay nêm hơi mặn, nấu canh bị cay nồng hay xào rau bị ngả vàng. Đừng vội buồn hay bỏ đi món ăn vừa nấu, vì gian bếp luôn có những "phép màu" mộc mạc để cứu nguy trong tích tắc.',
+          'Nắm vững những mẹo nhỏ này, bạn sẽ luôn bình tĩnh, tự tin xử lý mọi tình huống và biến những khoảnh khắc vụng về thành những trải nghiệm vào bếp nhẹ nhàng, thú vị.'
+        ],
+        cards: [
+          {
+            tag: 'KHI MÓN ĂN QUÁ MẶN',
+            title: 'Khoai Tây Hoặc Vài Giọt Chanh',
+            desc: 'Thả vài lát khoai tây sống hoặc lòng trắng trứng vào nồi canh/kho để hút bớt lượng muối thừa; hoặc vắt thêm vài giọt chanh để làm dịu vị mặn.'
+          },
+          {
+            tag: 'KHI MÓN ĂN QUÁ CAY',
+            title: 'Bổ Sung Cà Chua Hoặc Nước Dừa',
+            desc: 'Thêm cà chua thái múi cau, chút đường cát hoặc nước dừa tươi ngọt thanh sẽ trung hòa chất capsaicin gây cay, giúp món ăn dịu vị êm ái.'
+          },
+          {
+            tag: 'GIỮ RAU XANH MƯỚT',
+            title: 'Chần Nước Sôi & Ngâm Nước Đá',
+            desc: 'Luộc rau với chút muối hạt, mở vung khi sôi, vớt ngay ra âu nước đá lạnh 2–3 phút để rau giòn sần sật và giữ trọn sắc xanh tươi rói.'
+          }
+        ],
+        quote: 'Nấu ăn là một hành trình trải nghiệm và gắn kết yêu thương. Đừng sợ một vài lần chưa như ý, bởi mỗi lần vào bếp là một lần ta hiểu hơn về hương vị cuộc sống.'
+      }
+    ],
+    faqs: [],
+  },
+};
+
 export const SeoContentFaq: React.FC<{
   activeTab: TabType;
   onNavigate?: (tab: TabType) => void;
 }> = ({ activeTab, onNavigate }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [currentPath, setCurrentPath] = useState<string>(() =>
+    typeof window !== 'undefined' ? window.location.pathname : '/'
+  );
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      if (typeof window !== 'undefined') {
+        setCurrentPath(window.location.pathname);
+        setOpenIndex(0);
+      }
+    };
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('locationchange', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('locationchange', handleLocationChange);
+    };
+  }, []);
 
   // Do not display SEO FAQ block on About and Contact pages as they are standalone pages
   if (activeTab === 'about' || activeTab === 'contact') {
@@ -2887,8 +3518,36 @@ export const SeoContentFaq: React.FC<{
   }
 
   // Standard FAQ section for other tabs fallback
-  const data = COMMON_FAQ_DATA[activeTab];
-  if (!data) return null;
+  let data = COMMON_FAQ_DATA[activeTab];
+
+  // If activeTab is 'discover', customize data based on regional cuisine or discovery sub-section
+  let currentRegionData: DiscoverSeoItem | null = null;
+
+  if (activeTab === 'discover') {
+    const regionId = getRegionFromUrl();
+    const subSection = getDiscoverSubSectionFromUrl();
+
+    if (regionId && DISCOVER_SEO_DETAILS[regionId]) {
+      currentRegionData = DISCOVER_SEO_DETAILS[regionId];
+    } else if (subSection === 'daily' || currentPath.includes('/thuc-don-moi-ngay')) {
+      currentRegionData = DISCOVER_SEO_DETAILS['daily'];
+    } else if (subSection === 'recipe' || currentPath.includes('/cach-nau-')) {
+      currentRegionData = DISCOVER_SEO_DETAILS['recipe'];
+    } else if (currentPath.includes('/am-thuc-mien-bac')) {
+      currentRegionData = DISCOVER_SEO_DETAILS['bac'];
+    } else if (currentPath.includes('/am-thuc-mien-trung')) {
+      currentRegionData = DISCOVER_SEO_DETAILS['trung'];
+    } else if (currentPath.includes('/am-thuc-mien-nam')) {
+      currentRegionData = DISCOVER_SEO_DETAILS['nam'];
+    } else if (currentPath.includes('/am-thuc-mien-tay')) {
+      currentRegionData = DISCOVER_SEO_DETAILS['mientay'];
+    } else if (currentPath === '/am-thuc-vung-mien' || currentPath === '/am-thuc-vung-mien/') {
+      currentRegionData = DISCOVER_SEO_DETAILS['bac'];
+    }
+  }
+
+  const finalData = currentRegionData || data;
+  if (!finalData) return null;
 
   return (
     <section
@@ -2897,61 +3556,137 @@ export const SeoContentFaq: React.FC<{
     >
       <div className="bg-white rounded-3xl border border-stone-200/90 shadow-xs p-6 sm:p-10">
         {/* Editorial Content Section */}
-        <div className="mb-8 pb-8 border-b border-stone-100">
+        <div className={finalData.faqs && finalData.faqs.length > 0 ? "mb-8 pb-8 border-b border-stone-100" : ""}>
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-100 text-stone-700 text-xs font-bold mb-3">
             <BookOpen className="w-3.5 h-3.5 text-orange-600" />
-            <span>{data.badge}</span>
+            <span>{finalData.badge}</span>
           </div>
           <h2 className="text-xl sm:text-2xl font-bold text-stone-900 mb-3 tracking-tight">
-            {data.title}
+            {finalData.title}
           </h2>
-          <p className="text-sm sm:text-base text-stone-600 leading-relaxed">
-            {data.desc}
+          <p className="text-sm sm:text-base text-stone-600 leading-relaxed mb-6">
+            {finalData.desc}
           </p>
-        </div>
 
-        {/* FAQ Accordion */}
-        <div>
-          <div className="flex items-center gap-2 mb-5">
-            <HelpCircle className="w-5 h-5 text-orange-600" />
-            <h3 className="text-base sm:text-lg font-bold text-stone-900">
-              Câu Hỏi Thường Gặp
-            </h3>
-          </div>
+          {/* Render In-depth Editorial Content if present */}
+          {Boolean('sections' in finalData && (finalData as DiscoverSeoItem).sections && (finalData as DiscoverSeoItem).sections!.length > 0) && (
+            <div className="space-y-8 mt-6">
+              {(finalData as DiscoverSeoItem).sections!.map((section, sIdx) => (
+                <div key={sIdx} className="space-y-3.5">
+                  <h3 className="text-lg sm:text-xl font-bold text-stone-900 flex items-center gap-2">
+                    <span className="w-1.5 h-5 rounded-full bg-orange-500 inline-block shrink-0" />
+                    <span>{section.heading}</span>
+                  </h3>
 
-          <div className="space-y-3">
-            {data.faqs.map((faq, index) => {
-              const isOpen = openIndex === index;
-              return (
-                <div
-                  key={index}
-                  className="rounded-2xl border border-stone-200/80 overflow-hidden transition-all duration-200"
-                >
-                  <button
-                    type="button"
-                    onClick={() => toggleFaq(index)}
-                    aria-expanded={isOpen}
-                    className="w-full px-4 sm:px-5 py-3.5 sm:py-4 flex items-center justify-between text-left gap-4 bg-stone-50/70 hover:bg-stone-100/80 transition-colors cursor-pointer"
-                  >
-                    <span className="text-sm sm:text-base font-semibold text-stone-900">
-                      {faq.question}
-                    </span>
-                    <ChevronDown
-                      className={`w-4 h-4 text-stone-500 shrink-0 transition-transform duration-200 ${
-                        isOpen ? 'rotate-180 text-orange-600' : ''
-                      }`}
-                    />
-                  </button>
-                  {isOpen && (
-                    <div className="px-4 sm:px-5 py-3.5 sm:py-4 bg-white text-xs sm:text-sm text-stone-600 leading-relaxed border-t border-stone-100">
-                      {faq.answer}
+                  {section.paragraphs.map((p, pIdx) => (
+                    <p key={pIdx} className="text-sm sm:text-base text-stone-600 leading-relaxed">
+                      {p}
+                    </p>
+                  ))}
+
+                  {section.cards && section.cards.length > 0 && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 pt-2">
+                      {section.cards.map((c, cIdx) => (
+                        <div
+                          key={cIdx}
+                          className="bg-stone-50/80 rounded-2xl p-4 sm:p-5 border border-stone-200/70 hover:border-orange-200 transition-colors"
+                        >
+                          {c.tag && (
+                            <span className="inline-block px-2.5 py-0.5 rounded-full bg-orange-100 text-orange-800 text-[11px] font-bold mb-2">
+                              {c.tag}
+                            </span>
+                          )}
+                          <h4 className="font-bold text-stone-900 text-sm sm:text-base mb-1.5">
+                            {c.title}
+                          </h4>
+                          <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+                            {c.desc}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {section.quote && (
+                    <div className="bg-amber-50/70 border-l-4 border-amber-500 rounded-r-2xl p-4 sm:p-5 text-stone-700 text-xs sm:text-sm italic leading-relaxed my-3">
+                      <strong className="not-italic text-stone-900 font-semibold block mb-1">
+                        Bí quyết nhà bếp:
+                      </strong>
+                      "{section.quote}"
                     </div>
                   )}
                 </div>
-              );
-            })}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
+
+        {/* FAQ Accordion */}
+        {Boolean(finalData.faqs && finalData.faqs.length > 0) && (
+          <div>
+            <div className="flex items-center gap-2 mb-5">
+              <HelpCircle className="w-5 h-5 text-orange-600" />
+              <h3 className="text-base sm:text-lg font-bold text-stone-900">
+                Câu Hỏi Thường Gặp
+              </h3>
+            </div>
+
+            <div className="space-y-3">
+              {finalData.faqs.map((faq, index) => {
+                const isOpen = openIndex === index;
+                return (
+                  <div
+                    key={index}
+                    className="rounded-2xl border border-stone-200/80 overflow-hidden transition-all duration-200"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => toggleFaq(index)}
+                      aria-expanded={isOpen}
+                      className="w-full px-4 sm:px-5 py-3.5 sm:py-4 flex items-center justify-between text-left gap-4 bg-stone-50/70 hover:bg-stone-100/80 transition-colors cursor-pointer"
+                    >
+                      <span className="text-sm sm:text-base font-semibold text-stone-900">
+                        {faq.question}
+                      </span>
+                      <ChevronDown
+                        className={`w-4 h-4 text-stone-500 shrink-0 transition-transform duration-200 ${
+                          isOpen ? 'rotate-180 text-orange-600' : ''
+                        }`}
+                      />
+                    </button>
+                    {isOpen && (
+                      <div className="px-4 sm:px-5 py-3.5 sm:py-4 bg-white text-xs sm:text-sm text-stone-600 leading-relaxed border-t border-stone-100">
+                        {faq.answer}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Schema.org FAQPage Structured Data for dynamic sub-section / region */}
+        {Boolean(currentRegionData && currentRegionData.schemaUrl && currentRegionData.faqs && currentRegionData.faqs.length > 0) && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "@id": `${currentRegionData.schemaUrl}#faq`,
+                "mainEntity": currentRegionData.faqs.map((faq) => ({
+                  "@type": "Question",
+                  "name": faq.question,
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": faq.answer
+                  }
+                }))
+              })
+            }}
+          />
+        )}
       </div>
     </section>
   );

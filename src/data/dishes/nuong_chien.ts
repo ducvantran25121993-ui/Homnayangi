@@ -225,5 +225,19 @@ export const NUONG_CHIEN_DISHES: Dish[] = [
     image: '/images/oc_huong_trung_muoi.jpg',
     popularTags: ['Ốc hương', 'Sốt trứng muối', 'Bánh mì chấm', 'Ăn nhậu cuối tuần'],
     searchKeyword: 'Ốc hương xào bơ tỏi trứng muối',
+  },
+  {
+    id: 'ca-loc-nuong-trui',
+    name: 'Cá Lóc Nướng Trui Rơm Miền Tây Cuốn Bánh Tráng',
+    vietnameseName: 'Cá Lóc Nướng Trui',
+    category: 'nuong_chien',
+    mealTime: ['trua', 'toi'],
+    priceRange: '130.000đ - 220.000đ',
+    estimatedPrice: 160000,
+    calories: '450 - 620 kcal',
+    description: 'Cá lóc đồng tươi sống xiên que tre nướng vùi trong rơm rạ thơm mùi khói đồng quê. Cạo sạch vảy cháy, rưới mỡ hành đậu phộng, cuốn bánh tráng rau rừng chấm mắm me hoặc mắm nêm đậm đà.',
+    image: '/images/ca_loc_nuong_trui.jpg',
+    popularTags: ['Cá lóc nướng trui', 'Mùi khói rơm rạ', 'Mỡ hành đậu phộng', 'Đặc sản miền Tây'],
+    searchKeyword: 'Cá lóc nướng trui',
   }
 ];

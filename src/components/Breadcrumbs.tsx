@@ -7,8 +7,7 @@ import {
   DiscoverSubSection,
   getDiscoverSubSectionFromUrl,
 } from '../utils/navigation';
-import { findDishByRecipeSlug, getDishRecipe } from '../data/recipes';
-import { getRegionByPath } from '../data/regionalCuisine';
+import { getRegionFromUrl, getRegionById, isRegionPath } from '../data/regionalCuisine';
 
 interface BreadcrumbsProps {
   activeTab: TabType;
@@ -47,24 +46,13 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
     ? DISCOVER_SUB_CONFIG[effectiveDiscoverSub]
     : null;
 
-  // Check if current URL is viewing a specific Recipe article
-  const pathname = typeof window !== 'undefined' ? window.location.pathname.replace(/\/$/, '') || '/' : '/';
-  const isRecipeArticle =
-    pathname.startsWith('/cach-nau-') ||
-    pathname.startsWith('/cach-lam-') ||
-    pathname.startsWith('/cach-nau-mon-ngon/');
-
-  let activeRecipeDish = null;
-  let activeRecipe = null;
-  if (isRecipeArticle) {
-    const slug = pathname.replace('/cach-nau-mon-ngon/', '').replace(/^\//, '');
-    activeRecipeDish = findDishByRecipeSlug(slug);
-    if (activeRecipeDish) {
-      activeRecipe = getDishRecipe(activeRecipeDish);
-    }
-  }
-
-  const currentRegion = getRegionByPath(pathname);
+  // Check if currently on a specific regional page (e.g. /am-thuc-mien-bac)
+  const isSpecificRegion =
+    effectiveDiscoverSub === 'region' &&
+    typeof window !== 'undefined' &&
+    isRegionPath(window.location.pathname);
+  const activeRegionId = isSpecificRegion ? getRegionFromUrl() : null;
+  const activeRegion = activeRegionId ? getRegionById(activeRegionId) : null;
 
   const currentLabel =
     isDiscover && discoverSubMeta ? discoverSubMeta.label : currentTabMeta?.label;
@@ -75,12 +63,6 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
     if (e.ctrlKey || e.metaKey || e.button === 1) return;
     e.preventDefault();
     onNavigate('tarot');
-  };
-
-  const handleRecipeCatalogClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (e.ctrlKey || e.metaKey || e.button === 1) return;
-    e.preventDefault();
-    onNavigate('discover', 'recipe');
   };
 
   const handleRegionHubClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -114,46 +96,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
           <meta itemProp="position" content="1" />
         </li>
 
-        {activeRecipe ? (
-          <>
-            <li
-              className="flex items-center gap-1.5"
-              itemProp="itemListElement"
-              itemScope
-              itemType="https://schema.org/ListItem"
-            >
-              <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-              <a
-                href="/cach-nau-mon-ngon"
-                onClick={handleRecipeCatalogClick}
-                itemProp="item"
-                className="hover:text-orange-600 transition-colors"
-              >
-                <span itemProp="name">Cách Nấu Món Ngon</span>
-              </a>
-              <meta itemProp="position" content="2" />
-            </li>
-
-            <li
-              className="flex items-center gap-1.5 min-w-0"
-              itemProp="itemListElement"
-              itemScope
-              itemType="https://schema.org/ListItem"
-            >
-              <ChevronRight className="w-3.5 h-3.5 text-stone-400 shrink-0" />
-              <span
-                className="text-stone-800 font-semibold truncate"
-                aria-current="page"
-                itemProp="name"
-                title={activeRecipe.dishName}
-              >
-                {activeRecipe.dishName}
-              </span>
-              <link itemProp="item" href={`https://www.angigio.com${pathname}`} />
-              <meta itemProp="position" content="3" />
-            </li>
-          </>
-        ) : currentRegion ? (
+        {isSpecificRegion && activeRegion ? (
           <>
             <li
               className="flex items-center gap-1.5"
@@ -174,21 +117,20 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
             </li>
 
             <li
-              className="flex items-center gap-1.5 min-w-0"
+              className="flex items-center gap-1.5"
               itemProp="itemListElement"
               itemScope
               itemType="https://schema.org/ListItem"
             >
-              <ChevronRight className="w-3.5 h-3.5 text-stone-400 shrink-0" />
+              <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
               <span
-                className="text-stone-800 font-semibold truncate"
+                className="text-stone-800 font-semibold"
                 aria-current="page"
                 itemProp="name"
-                title={currentRegion.name}
               >
-                {currentRegion.name}
+                {activeRegion.name}
               </span>
-              <link itemProp="item" href={`https://www.angigio.com${currentRegion.path}`} />
+              <link itemProp="item" href={`https://www.angigio.com${activeRegion.path}`} />
               <meta itemProp="position" content="3" />
             </li>
           </>

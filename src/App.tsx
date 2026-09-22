@@ -26,7 +26,8 @@ import {
   formatLocationDisplay,
   isAutoDetectLocationEnabled,
 } from './utils/location';
-import { getTabFromUrl, updateTabSEO, TAB_CONFIG, TabType } from './utils/navigation';
+import { getTabFromUrl, updateTabSEO, updateRegionSEO, TAB_CONFIG, TabType } from './utils/navigation';
+import { getRegionFromUrl, isRegionPath } from './data/regionalCuisine';
 import { Breadcrumbs } from './components/Breadcrumbs';
 import { SeoContentFaq } from './components/SeoContentFaq';
 import { OfflineIndicator } from './components/OfflineIndicator';
@@ -46,6 +47,14 @@ export default function App() {
         window.history.replaceState({ tab: 'discover', sub: 'daily' }, '', '/thuc-don-moi-ngay');
       } else if (pathname === '/kham-pha-am-thuc/cach-nau-mon-ngon') {
         window.history.replaceState({ tab: 'discover', sub: 'recipe' }, '', '/cach-nau-mon-ngon');
+      } else if (pathname === '/am-thuc-vung-mien/mien-bac') {
+        window.history.replaceState({ tab: 'discover', sub: 'region', region: 'bac' }, '', '/am-thuc-mien-bac');
+      } else if (pathname === '/am-thuc-vung-mien/mien-trung') {
+        window.history.replaceState({ tab: 'discover', sub: 'region', region: 'trung' }, '', '/am-thuc-mien-trung');
+      } else if (pathname === '/am-thuc-vung-mien/mien-nam' || pathname === '/am-thuc-mien-nam-sai-gon') {
+        window.history.replaceState({ tab: 'discover', sub: 'region', region: 'nam' }, '', '/am-thuc-mien-nam');
+      } else if (pathname === '/am-thuc-vung-mien/mien-tay' || pathname === '/am-thuc-mien-tay-song-nuoc') {
+        window.history.replaceState({ tab: 'discover', sub: 'region', region: 'mientay' }, '', '/am-thuc-mien-tay');
       }
     }
     return tab;
@@ -67,6 +76,7 @@ export default function App() {
       currentPath.startsWith('/cach-nau-') ||
       currentPath.startsWith('/cach-lam-') ||
       currentPath.startsWith('/cach-nau-mon-ngon/');
+    const isRegionCurrentPath = isRegionPath(currentPath);
 
     // If navigating to discover and already on a discover subpath, don't overwrite it
     let targetPath = TAB_CONFIG[newTab]?.path || '/';
@@ -75,6 +85,7 @@ export default function App() {
         currentPath === '/thuc-don-moi-ngay' ||
         currentPath === '/cach-nau-mon-ngon' ||
         isRecipePath ||
+        isRegionCurrentPath ||
         currentPath === '/am-thuc-vung-mien'
       ) {
         targetPath = currentPath;
@@ -89,8 +100,11 @@ export default function App() {
       targetPath.startsWith('/cach-nau-') ||
       targetPath.startsWith('/cach-lam-') ||
       targetPath.startsWith('/cach-nau-mon-ngon/');
-    if (!targetIsRecipe) {
+    const targetRegionId = getRegionFromUrl();
+    if (!targetIsRecipe && !targetRegionId) {
       updateTabSEO(newTab);
+    } else if (targetRegionId) {
+      updateRegionSEO(targetRegionId);
     }
     // Cuộn lên đầu trang ngay lập tức khi chuyển tab hoặc chuyển trang
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -102,10 +116,13 @@ export default function App() {
       window.location.pathname.startsWith('/cach-nau-') ||
       window.location.pathname.startsWith('/cach-lam-') ||
       window.location.pathname.startsWith('/cach-nau-mon-ngon/');
+    const currentRegionId = getRegionFromUrl();
 
     // Initial SEO update & scroll to top on tab change
-    if (!isCurrentPathRecipe) {
+    if (!isCurrentPathRecipe && !currentRegionId) {
       updateTabSEO(activeTab);
+    } else if (currentRegionId) {
+      updateRegionSEO(currentRegionId);
     }
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
@@ -126,8 +143,11 @@ export default function App() {
         window.location.pathname.startsWith('/cach-nau-') ||
         window.location.pathname.startsWith('/cach-lam-') ||
         window.location.pathname.startsWith('/cach-nau-mon-ngon/');
-      if (!isPopRecipe) {
+      const popRegionId = getRegionFromUrl();
+      if (!isPopRecipe && !popRegionId) {
         updateTabSEO(currentTab);
+      } else if (popRegionId) {
+        updateRegionSEO(popRegionId);
       }
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     };

@@ -475,7 +475,7 @@ export const BUN_PHO_MI_DISHES: Dish[] = [
     estimatedPrice: 60000,
     calories: '520 - 620 kcal',
     description: 'Thịt ngan dé ngọt đậm đà xào cháy tỏi thơm lừng, trộn miến với xì dầu tỏi ớt, lạc rang và măng tươi chua cay.',
-    image: '/images/mien_tron_ngan.jpg',
+    image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=800&auto=format&fit=crop&q=80',
     popularTags: ['Ngan cháy tỏi', 'Miến trộn', 'Hà Nội'],
     searchKeyword: 'Miến trộn ngan',
   },

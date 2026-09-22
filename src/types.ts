@@ -121,9 +121,21 @@ export interface WeeklyMealPlan {
   days: Record<string, DayPlan>;
 }
 
+export interface RecipeStep {
+  step: number;
+  title: string;
+  description: string;
+  time?: string;
+  heat?: string;
+  goal?: string;
+  actionPoints?: string[];
+  tip?: string;
+}
+
 export interface DishRecipe {
   dishId: string;
   dishName: string;
+  seoTitle?: string;
   prepTime: string;
   cookTime: string;
   difficulty: 'Dễ' | 'Trung bình' | 'Cầu kỳ';
@@ -132,12 +144,7 @@ export interface DishRecipe {
     category: string;
     items: string[];
   }[];
-  steps: {
-    step: number;
-    title: string;
-    description: string;
-    tip?: string;
-  }[];
+  steps: RecipeStep[];
   chefSecret: string;
   recommendedSauce?: string;
 }
@@ -146,8 +153,6 @@ export type RegionId = 'bac' | 'trung' | 'nam' | 'mientay';
 
 export interface RegionalCuisine {
   id: RegionId;
-  slug?: string;
-  path?: string;
   name: string;
   title: string;
   badge: string;
@@ -156,10 +161,9 @@ export interface RegionalCuisine {
   iconicKeyIngredients: string[];
   dishIds: string[];
   highlightTip: string;
-  metaTitle?: string;
-  metaDescription?: string;
-  keywords?: string;
-  ogImage?: string;
+  path: string;
+  metaTitle: string;
+  metaDescription: string;
 }
 
 export interface FamilyMealDish {

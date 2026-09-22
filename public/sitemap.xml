@@ -77,12 +77,60 @@
   <!-- 6.1. Ẩm Thực Vùng Miền 3 Miền Bắc - Trung - Nam -->
   <url>
     <loc>https://www.angigio.com/am-thuc-vung-mien</loc>
-    <lastmod>2026-09-17</lastmod>
+    <lastmod>2026-09-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
       <image:title>Ẩm Thực Vùng Miền - Tinh Hoa Hương Vị Bắc Trung Nam</image:title>
+    </image:image>
+  </url>
+
+  <!-- 6.1.1. Ẩm Thực Miền Bắc -->
+  <url>
+    <loc>https://www.angigio.com/am-thuc-mien-bac</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Ẩm Thực Miền Bắc - Tinh Hoa Hương Vị Thanh Tao Đất Kinh Kỳ</image:title>
+    </image:image>
+  </url>
+
+  <!-- 6.1.2. Ẩm Thực Miền Trung -->
+  <url>
+    <loc>https://www.angigio.com/am-thuc-mien-trung</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Ẩm Thực Miền Trung - Đậm Đà Cay Nồng Nàn Xứ Cố Đô</image:title>
+    </image:image>
+  </url>
+
+  <!-- 6.1.3. Ẩm Thực Miền Nam & Sài Gòn -->
+  <url>
+    <loc>https://www.angigio.com/am-thuc-mien-nam</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Ẩm Thực Miền Nam &amp; Sài Gòn - Hào Sảng &amp; Đậm Vị Phố Thị</image:title>
+    </image:image>
+  </url>
+
+  <!-- 6.1.4. Ẩm Thực Miền Tây Sông Nước -->
+  <url>
+    <loc>https://www.angigio.com/am-thuc-mien-tay</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Ẩm Thực Miền Tây Sông Nước - Hương Đồng Gió Nội &amp; Đậm Tình Phù Sa</image:title>
     </image:image>
   </url>
 

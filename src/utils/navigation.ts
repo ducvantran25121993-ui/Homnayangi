@@ -1,6 +1,7 @@
 import { Dish, DishRecipe, RegionId } from '../types';
-import { getRecipeSlug } from '../data/recipes';
-import { getRegionById, getRegionFromUrl } from '../data/regionalCuisine';
+import { getRegionById } from '../data/regionalCuisine';
+import { getRecipePath, getRecipeArticleTitle, formatRecipeSeoTitle } from '../data/recipes';
+import { INITIAL_DISHES } from '../data/dishes';
 
 export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'snacks' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms';
 
@@ -15,10 +16,6 @@ export interface TabMeta {
   keywords?: string;
   ogImage?: string;
   ogImageAlt?: string;
-  ogType?: 'website' | 'article';
-  articleSection?: string;
-  articlePublishedTime?: string;
-  articleModifiedTime?: string;
 }
 
 const DEFAULT_OG_IMAGE = 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&auto=format&fit=crop&q=80';
@@ -47,63 +44,12 @@ export const DISCOVER_SUB_CONFIG: Record<DiscoverSubSection, TabMeta> = {
   recipe: {
     path: '/cach-nau-mon-ngon',
     title: 'Cách Nấu Món Ngon - Công Thức Nấu Ăn Chuẩn Vị & Bí Quyết Bếp Trưởng | Hôm Nay Ăn Gì',
-    description: 'Hướng dẫn chi tiết cách nấu hơn 160+ món ngon chuẩn vị gia đình Việt Nam: Định lượng nguyên liệu chuẩn xác, các bước thực hiện dễ hiểu và mẹo bí quyết bếp trưởng.',
+    description: `Hướng dẫn chi tiết cách nấu hơn ${INITIAL_DISHES.length}+ món ngon chuẩn vị gia đình Việt Nam: Định lượng nguyên liệu chuẩn xác, các bước thực hiện dễ hiểu và mẹo bí quyết bếp trưởng.`,
     label: 'Cách Nấu Món Ngon',
     shortLabel: 'Cách Nấu',
     keywords: 'cách nấu món ngon, công thức nấu ăn, hướng dẫn nấu ăn, bí quyết nấu ăn ngon, cách nấu phở, cách nấu bún bò huế, món ngon mỗi ngày, công thức chuẩn vị',
     ogImage: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&auto=format&fit=crop&q=80',
     ogImageAlt: 'Cách Nấu Món Ngon - Công Thức Chuẩn Vị Gia Đình',
-  },
-};
-
-export const REGIONAL_SEO_CONFIG: Record<RegionId, TabMeta> = {
-  bac: {
-    path: '/am-thuc-mien-bac',
-    title: 'Ẩm Thực Miền Bắc - Tinh Hoa Hương Vị Thanh Tao Đất Kinh Kỳ | Hôm Nay Ăn Gì',
-    description:
-      'Khám phá tinh hoa ẩm thực miền Bắc: Hương vị thanh tao, hài hòa gia vị của phở bò tái lăn, bún chả than hoa, chả cá Lã Vọng, bún thang, xôi xéo và phở cuốn trứ danh.',
-    label: 'Ẩm Thực Miền Bắc',
-    shortLabel: 'Miền Bắc',
-    keywords:
-      'ẩm thực miền bắc, món ngon miền bắc, đặc sản miền bắc, ẩm thực hà nội, phở bò tái lăn, bún chả hà nội, chả cá lã vọng, bún thang, xôi xéo, phở cuốn',
-    ogImage: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&auto=format&fit=crop&q=80',
-    ogImageAlt: 'Ẩm Thực Miền Bắc - Tinh Hoa Hương Vị Thanh Tao Đất Kinh Kỳ',
-  },
-  trung: {
-    path: '/am-thuc-mien-trung',
-    title: 'Ẩm Thực Miền Trung - Đậm Đà Cay Nồng Nàn Xứ Cố Đô | Hôm Nay Ăn Gì',
-    description:
-      'Khám phá ẩm thực miền Trung đặc sắc: Vị cay nồng nàn, đậm đà mắm ruốc của bún bò Huế, mì Quảng, nem nướng Nha Trang, bánh canh chả cá, cơm gà Hội An và bánh bèo chén.',
-    label: 'Ẩm Thực Miền Trung',
-    shortLabel: 'Miền Trung',
-    keywords:
-      'ẩm thực miền trung, món ngon miền trung, đặc sản miền trung, ẩm thực huế, ẩm thực đà nẵng, bún bò huế, mì quảng, nem nướng nha trang, cơm gà hội an, bánh bèo chén',
-    ogImage: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1200&auto=format&fit=crop&q=80',
-    ogImageAlt: 'Ẩm Thực Miền Trung - Đậm Đà Cay Nồng Nàn Xứ Cố Đô',
-  },
-  nam: {
-    path: '/am-thuc-mien-nam',
-    title: 'Ẩm Thực Miền Nam & Sài Gòn - Hào Sảng & Đậm Vị Phố Thị | Hôm Nay Ăn Gì',
-    description:
-      'Thưởng thức ẩm thực miền Nam & Sài Gòn: Hương vị béo ngọt, hào sảng phóng khoáng với cơm tấm sườn bì chả, hủ tiếu Nam Vang, bánh mì chảo, bò kho, phá lấu và gỏi cuốn tôm thịt.',
-    label: 'Ẩm Thực Miền Nam & Sài Gòn',
-    shortLabel: 'Miền Nam',
-    keywords:
-      'ẩm thực miền nam, ẩm thực sài gòn, món ngon miền nam, món ngon sài gòn, cơm tấm sườn bì chả, hủ tiếu nam vang, bánh mì thịt nướng, phá lấu bò, gỏi cuốn tôm thịt',
-    ogImage: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&auto=format&fit=crop&q=80',
-    ogImageAlt: 'Ẩm Thực Miền Nam & Sài Gòn - Hào Sảng Phóng Khoáng',
-  },
-  mientay: {
-    path: '/am-thuc-mien-tay',
-    title: 'Ẩm Thực Miền Tây Sông Nước - Hương Đồng Gió Nội & Đậm Tình Phù Sa | Hôm Nay Ăn Gì',
-    description:
-      'Khám phá ẩm thực miền Tây Nam Bộ: Nét mộc mạc dân dã, thơm ngon ngây ngất với lẩu mắm miền Tây, cá kho tộ, canh chua cá lóc, lẩu cá kèo lá giang và bánh xèo giòn rụm.',
-    label: 'Ẩm Thực Miền Tây Sông Nước',
-    shortLabel: 'Miền Tây',
-    keywords:
-      'ẩm thực miền tây, ẩm thực miền tây sông nước, đặc sản miền tây, món ngon miền tây, lẩu mắm miền tây, canh chua cá lóc, cá kho tộ, lẩu cá kèo, bánh xèo miền tây',
-    ogImage: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=1200&auto=format&fit=crop&q=80',
-    ogImageAlt: 'Ẩm Thực Miền Tây Sông Nước - Hương Đồng Gió Nội',
   },
 };
 
@@ -227,14 +173,7 @@ export function getDiscoverSubSectionFromUrl(): DiscoverSubSection {
   if (typeof window === 'undefined') return 'region';
   const pathname = window.location.pathname.replace(/\/$/, '') || '/';
   if (pathname === '/thuc-don-moi-ngay' || pathname === '/kham-pha-am-thuc/thuc-don-moi-ngay') return 'daily';
-  if (
-    pathname === '/cach-nau-mon-ngon' ||
-    pathname.startsWith('/cach-nau-mon-ngon/') ||
-    pathname.startsWith('/cach-nau-') ||
-    pathname.startsWith('/cach-lam-') ||
-    pathname === '/kham-pha-am-thuc/cach-nau-mon-ngon' ||
-    pathname.startsWith('/kham-pha-am-thuc/cach-nau-mon-ngon/')
-  ) return 'recipe';
+  if (pathname === '/cach-nau-mon-ngon' || pathname === '/kham-pha-am-thuc/cach-nau-mon-ngon') return 'recipe';
   return 'region';
 }
 
@@ -253,17 +192,8 @@ export function getTabFromUrl(): TabType {
   if (pathname === '/tra-sua-an-vat' || pathname === '/tra-sua' || pathname === '/an-vat' || pathname === '/do-uong-an-vat') return 'snacks';
   if (
     pathname === '/am-thuc-vung-mien' ||
-    pathname === '/am-thuc-mien-bac' ||
-    pathname === '/am-thuc-mien-trung' ||
-    pathname === '/am-thuc-mien-nam' ||
-    pathname === '/am-thuc-mien-tay' ||
-    pathname === '/am-thuc-mien-nam-sai-gon' ||
-    pathname === '/am-thuc-mien-tay-song-nuoc' ||
     pathname === '/thuc-don-moi-ngay' ||
     pathname === '/cach-nau-mon-ngon' ||
-    pathname.startsWith('/cach-nau-mon-ngon/') ||
-    pathname.startsWith('/cach-nau-') ||
-    pathname.startsWith('/cach-lam-') ||
     pathname === '/kham-pha-am-thuc' ||
     pathname.startsWith('/kham-pha-am-thuc/') ||
     pathname === '/kham-pha' ||
@@ -283,19 +213,7 @@ export function getTabFromUrl(): TabType {
     if (tabParam === 'ai-goi-y-mon-an' || tabParam === 'ai' || tabParam === 'tro-ly-ai' || tabParam === 'goi-y-mon') return 'ai';
     if (tabParam === 'mon-ngon' || tabParam === 'catalog') return 'catalog';
     if (tabParam === 'do-uong-an-vat' || tabParam === 'tra-sua-an-vat' || tabParam === 'snacks' || tabParam === 'do-uong' || tabParam === 'tra-sua' || tabParam === 'an-vat') return 'snacks';
-    if (
-      tabParam === 'am-thuc-vung-mien' ||
-      tabParam === 'am-thuc-mien-bac' ||
-      tabParam === 'am-thuc-mien-trung' ||
-      tabParam === 'am-thuc-mien-nam' ||
-      tabParam === 'am-thuc-mien-tay' ||
-      tabParam === 'thuc-don-moi-ngay' ||
-      tabParam === 'cach-nau-mon-ngon' ||
-      tabParam === 'kham-pha-am-thuc' ||
-      tabParam === 'kham-pha' ||
-      tabParam === 'discover' ||
-      tabParam === 'cam-nang'
-    ) return 'discover';
+    if (tabParam === 'am-thuc-vung-mien' || tabParam === 'thuc-don-moi-ngay' || tabParam === 'cach-nau-mon-ngon' || tabParam === 'kham-pha-am-thuc' || tabParam === 'kham-pha' || tabParam === 'discover' || tabParam === 'cam-nang') return 'discover';
     if (tabParam === 'gioi-thieu' || tabParam === 'about') return 'about';
     if (tabParam === 'lien-he' || tabParam === 'contact') return 'contact';
     if (tabParam === 'chinh-sach-bao-mat' || tabParam === 'privacy' || tabParam === 'bao-mat') return 'privacy';
@@ -328,22 +246,19 @@ function applyMetaToDOM(meta: TabMeta): void {
   const fullUrl = 'https://www.angigio.com' + meta.path;
   const image = meta.ogImage || DEFAULT_OG_IMAGE;
   const imageAlt = meta.ogImageAlt || meta.title;
-  const ogType = meta.ogType || 'website';
 
   // 1. Title & meta[name="title"]
   document.title = meta.title;
   setOrCreateMeta('meta[name="title"]', 'name', 'title', meta.title);
 
-  // 2. Meta description, keywords & robots
+  // 2. Meta description & keywords
   setOrCreateMeta('meta[name="description"]', 'name', 'description', meta.description);
   if (meta.keywords) {
     setOrCreateMeta('meta[name="keywords"]', 'name', 'keywords', meta.keywords);
   }
-  setOrCreateMeta('meta[name="robots"]', 'name', 'robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1');
-  setOrCreateMeta('meta[name="googlebot"]', 'name', 'googlebot', 'index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1');
 
   // 3. Open Graph
-  setOrCreateMeta('meta[property="og:type"]', 'property', 'og:type', ogType);
+  setOrCreateMeta('meta[property="og:type"]', 'property', 'og:type', 'website');
   setOrCreateMeta('meta[property="og:site_name"]', 'property', 'og:site_name', 'Hôm Nay Ăn Gì');
   setOrCreateMeta('meta[property="og:locale"]', 'property', 'og:locale', 'vi_VN');
   setOrCreateMeta('meta[property="og:title"]', 'property', 'og:title', meta.title);
@@ -353,16 +268,6 @@ function applyMetaToDOM(meta: TabMeta): void {
   setOrCreateMeta('meta[property="og:image:width"]', 'property', 'og:image:width', '1200');
   setOrCreateMeta('meta[property="og:image:height"]', 'property', 'og:image:height', '630');
   setOrCreateMeta('meta[property="og:image:alt"]', 'property', 'og:image:alt', imageAlt);
-
-  // 3.1 Article specific meta tags (if applicable)
-  if (ogType === 'article') {
-    setOrCreateMeta('meta[property="article:published_time"]', 'property', 'article:published_time', meta.articlePublishedTime || '2024-01-15T08:00:00+07:00');
-    setOrCreateMeta('meta[property="article:modified_time"]', 'property', 'article:modified_time', meta.articleModifiedTime || '2026-09-21T00:00:00+07:00');
-    setOrCreateMeta('meta[property="article:author"]', 'property', 'article:author', 'Hôm Nay Ăn Gì');
-    if (meta.articleSection) {
-      setOrCreateMeta('meta[property="article:section"]', 'property', 'article:section', meta.articleSection);
-    }
-  }
 
   // 4. Twitter Cards
   setOrCreateMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
@@ -388,11 +293,6 @@ export function updateTabSEO(tab: TabType): void {
   if (typeof document === 'undefined') return;
 
   if (tab === 'discover') {
-    const regionId = getRegionFromUrl();
-    if (regionId) {
-      updateRegionSEO(regionId);
-      return;
-    }
     const sub = getDiscoverSubSectionFromUrl();
     const subMeta = DISCOVER_SUB_CONFIG[sub];
     if (subMeta) {
@@ -407,16 +307,6 @@ export function updateTabSEO(tab: TabType): void {
 }
 
 /**
- * Update document title, meta tags, and canonical link specifically for Regional Cuisine page
- */
-export function updateRegionSEO(regionId: RegionId): void {
-  const meta = REGIONAL_SEO_CONFIG[regionId];
-  if (meta) {
-    applyMetaToDOM(meta);
-  }
-}
-
-/**
  * Update document title, meta tags, and canonical link specifically for Discover Sub-Section
  */
 export function updateDiscoverSubSEO(sub: DiscoverSubSection): void {
@@ -427,31 +317,55 @@ export function updateDiscoverSubSEO(sub: DiscoverSubSection): void {
 }
 
 /**
- * Update document title, meta tags, and canonical link specifically for an individual Recipe Article
+ * Update document title, meta tags, and canonical link specifically for Regional Cuisine
  */
-export function updateRecipeArticleSEO(dish: Dish, recipe: DishRecipe): void {
+export function updateRegionSEO(regionId: RegionId): void {
   if (typeof document === 'undefined') return;
-  const slug = getRecipeSlug(dish);
-  const path = `/${slug}`;
-  const title = `${recipe.dishName} - Công Thức Chuẩn Vị | Hôm Nay Ăn Gì`;
-  const description = dish.description
-    ? `${recipe.dishName}: ${dish.description}. Hướng dẫn chi tiết từng bước, định lượng chuẩn xác và mẹo bí quyết gia truyền.`
-    : `Hướng dẫn chi tiết cách làm ${recipe.dishName} chuẩn vị gia đình Việt Nam: định lượng nguyên liệu chuẩn xác, sơ chế khử mùi tanh và bí quyết nấu thơm ngon.`;
-  const image = dish.image.startsWith('http') ? dish.image : `https://www.angigio.com${dish.image}`;
+  const region = getRegionById(regionId);
+  if (!region) return;
+
+  const image =
+    regionId === 'bac'
+      ? 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&auto=format&fit=crop&q=80'
+      : regionId === 'trung'
+      ? 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=1200&auto=format&fit=crop&q=80'
+      : regionId === 'nam'
+      ? 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&auto=format&fit=crop&q=80'
+      : 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=1200&auto=format&fit=crop&q=80';
 
   applyMetaToDOM({
-    path,
-    title,
-    description,
-    label: recipe.dishName,
-    shortLabel: dish.vietnameseName,
-    keywords: `${recipe.dishName}, cách nấu ${dish.vietnameseName}, công thức ${dish.vietnameseName}, cách làm ${dish.vietnameseName}, món ngon mỗi ngày, ẩm thực việt nam, ${dish.category}`,
+    path: region.path,
+    title: region.metaTitle,
+    description: region.metaDescription,
+    label: region.name,
+    shortLabel: region.name,
+    keywords: `${region.name.toLowerCase()}, món ngon ${region.name.toLowerCase()}, đặc sản ${region.name.toLowerCase()}`,
     ogImage: image,
-    ogImageAlt: recipe.dishName,
-    ogType: 'article',
-    articleSection: dish.category,
-    articlePublishedTime: '2024-01-15T08:00:00+07:00',
-    articleModifiedTime: '2026-09-21T00:00:00+07:00',
+    ogImageAlt: `${region.name} - ${region.title}`,
   });
 }
 
+/**
+ * Update document title, meta tags, and canonical link specifically for Recipe Article
+ */
+export function updateRecipeArticleSEO(dish: Dish, recipe?: DishRecipe): void {
+  if (typeof document === 'undefined') return;
+  const recipePath = getRecipePath(dish);
+  const articleTitle = getRecipeArticleTitle(dish, recipe);
+  const title = formatRecipeSeoTitle(articleTitle);
+  const description =
+    dish.description ||
+    `Hướng dẫn chi tiết ${articleTitle.toLowerCase()}. Công thức định lượng nguyên liệu chuẩn xác, các bước nấu đơn giản và mẹo bí quyết giúp món ăn thơm ngon chuẩn vị.`;
+  const image = dish.image?.startsWith('http') ? dish.image : `https://www.angigio.com${dish.image}`;
+
+  applyMetaToDOM({
+    path: recipePath,
+    title,
+    description,
+    label: dish.name,
+    shortLabel: dish.name,
+    keywords: `${articleTitle.toLowerCase()}, cách nấu ${dish.name.toLowerCase()}, công thức ${dish.name.toLowerCase()}, hướng dẫn nấu ${dish.name.toLowerCase()}, món ngon mỗi ngày`,
+    ogImage: image,
+    ogImageAlt: articleTitle,
+  });
+}
