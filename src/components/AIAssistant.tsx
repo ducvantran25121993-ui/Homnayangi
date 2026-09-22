@@ -1,9 +1,58 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Send, ShoppingBag, ExternalLink, RefreshCw, AlertCircle, ChefHat, Check, Heart, MapPin } from 'lucide-react';
+import { Sparkles, Send, ShoppingBag, ExternalLink, RefreshCw, AlertCircle, ChefHat, Check, Heart, MapPin, RotateCcw } from 'lucide-react';
 import { AISuggestion, AffiliateConfig, UserLocation, Dish } from '../types';
 import { trackAndOpenAffiliateLink } from '../utils/affiliate';
 import { formatLocationDisplay } from '../utils/location';
 import { DeliveryLocationBadge } from './DeliveryLocationBadge';
+import { INITIAL_DISHES } from '../data/dishes';
+
+// Helper to generate smart fallback suggestions from curated dishes when network drops or server is offline
+function getClientFallbackDishes(mealTime: string, budget: string, mood: string, location: string): { suggestions: AISuggestion[]; advice: string } {
+  const mealMap: Record<string, 'sang' | 'trua' | 'toi' | 'an_vat' | 'an_dem'> = {
+    'Sáng': 'sang',
+    'Trưa': 'trua',
+    'Xế Chiều': 'an_vat',
+    'Tối': 'toi',
+    'Ăn Đêm': 'an_dem',
+  };
+  const targetMeal = mealMap[mealTime] || 'trua';
+
+  let pool = INITIAL_DISHES.filter((d) => d.mealTime && d.mealTime.includes(targetMeal));
+  if (pool.length < 3) {
+    pool = INITIAL_DISHES.filter((d) => d.category !== 'do_uong' && d.category !== 'an_vat');
+  }
+
+  // Filter based on mood if possible
+  let filtered = pool;
+  if (mood.includes('thanh đạm') || mood.includes('healthy')) {
+    const healthy = pool.filter((d) => d.popularTags.some((t) => t.toLowerCase().includes('thanh') || t.toLowerCase().includes('rau') || t.toLowerCase().includes('healthy')) || d.category === 'salad_monnhe' || d.category === 'healthy');
+    if (healthy.length >= 2) filtered = healthy;
+  } else if (mood.includes('cay') || mood.includes('đậm đà')) {
+    const spicy = pool.filter((d) => d.popularTags.some((t) => t.toLowerCase().includes('đậm đà') || t.toLowerCase().includes('cay') || t.toLowerCase().includes('nóng')) || d.category === 'bun_pho_mi' || d.category === 'nuong_chien');
+    if (spicy.length >= 2) filtered = spicy;
+  } else if (mood.includes('chắc bụng')) {
+    const hearty = pool.filter((d) => d.category === 'com_xoi' || d.category === 'com' || d.popularTags.some((t) => t.toLowerCase().includes('chắc bụng') || t.toLowerCase().includes('no lâu')));
+    if (hearty.length >= 2) filtered = hearty;
+  }
+
+  const selected = filtered.slice(0, 3);
+  const suggestions: AISuggestion[] = selected.map((d) => ({
+    name: d.vietnameseName || d.name,
+    tagline: d.description.slice(0, 85) + '...',
+    category: d.category === 'com_xoi' || d.category === 'com' ? 'Cơm' : d.category.includes('bun') ? 'Bún / Mì / Phở' : 'Món Ngon Đặc Sản',
+    estimatedPrice: d.priceRange || '40.000đ - 65.000đ',
+    reason: `Món ăn hoàn hảo cho bữa ${mealTime}, hương vị chuẩn vị thơm ngon và dễ dàng gọi ship tại ${location}.`,
+    searchKeyword: d.searchKeyword || d.vietnameseName || d.name,
+    tags: d.popularTags.slice(0, 3),
+    calories: d.calories || '~520 kcal',
+    pairWith: d.bestPairedWith || 'Trà đá hoặc nước mía tươi mát',
+  }));
+
+  return {
+    suggestions,
+    advice: `Tại khu vực ${location}, bạn có thể dễ dàng tìm thấy các quán ngon này trên ShopeeFood, GrabFood hoặc đặt ship quanh đây!`,
+  };
+}
 
 interface AIAssistantProps {
   affiliateConfig: AffiliateConfig;
@@ -45,6 +94,9 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
     setErrorMsg(null);
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 6500);
+
       const res = await fetch('/api/ai/suggest', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -57,18 +109,24 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
           partySize,
           cravings,
         }),
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
 
       const data = await res.json();
-      if (data.success && Array.isArray(data.suggestions)) {
+      if (data.success && Array.isArray(data.suggestions) && data.suggestions.length > 0) {
         setSuggestions(data.suggestions);
         setAiAdvice(data.advice || '');
       } else {
-        setErrorMsg(data.error || 'Không thể tạo gợi ý, vui lòng thử lại.');
+        throw new Error(data.error || 'Không thể tạo gợi ý');
       }
     } catch (err: any) {
-      console.error(err);
-      setErrorMsg('Lỗi kết nối máy chủ gợi ý món ăn.');
+      console.warn('AI suggestion using curated fallback:', err);
+      // Fallback seamlessly to local curated dishes
+      const fallback = getClientFallbackDishes(mealTime, budget, mood, location);
+      setSuggestions(fallback.suggestions);
+      setAiAdvice(fallback.advice);
+      setErrorMsg('Đang hiển thị thực đơn gợi ý chuẩn vị cho bữa ' + mealTime + '.');
     } finally {
       setLoading(false);
     }
@@ -255,11 +313,22 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
         </div>
       </div>
 
-      {/* Error state */}
+      {/* Status / Fallback Notice banner */}
       {errorMsg && (
-        <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center gap-2 mb-6">
-          <AlertCircle className="w-5 h-5 flex-shrink-0" />
-          <span>{errorMsg}</span>
+        <div className="p-3.5 sm:p-4 rounded-2xl bg-amber-50/90 border border-amber-200 text-amber-900 text-xs sm:text-sm flex items-center justify-between gap-3 mb-6">
+          <div className="flex items-center gap-2">
+            <Sparkles className="w-4 h-4 text-amber-600 shrink-0" />
+            <span>{errorMsg}</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => handleGenerate()}
+            disabled={loading}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-amber-100 text-amber-800 border border-amber-300 font-bold text-xs shrink-0 cursor-pointer shadow-2xs transition-colors"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Làm mới</span>
+          </button>
         </div>
       )}
 

@@ -445,8 +445,8 @@ Yêu cầu trả về đúng định dạng JSON:
   "advice": "Lời khuyên vui vẻ hoặc mẹo săn mã giảm giá cho bữa ăn này"
 }`;
 
-      // Resilience: Try primary gemini-3.8-flash, fallback to gemini-flash-latest if 503/load spike occurs
-      const modelsToTry = ["gemini-3.8-flash", "gemini-flash-latest"];
+      // Primary model: gemini-3.6-flash with fast 3.5s timeout, resilient fallback to curated chef
+      const modelsToTry = ["gemini-3.6-flash"];
 
       for (const modelName of modelsToTry) {
         try {
@@ -461,7 +461,7 @@ Yêu cầu trả về đúng định dạng JSON:
           });
 
           const timeoutPromise = new Promise<never>((_, reject) =>
-            setTimeout(() => reject(new Error("AI generation timeout")), 7000)
+            setTimeout(() => reject(new Error("AI generation timeout")), 3500)
           );
 
           const response = await Promise.race([generatePromise, timeoutPromise]);
@@ -475,7 +475,7 @@ Yêu cầu trả về đúng định dạng JSON:
             }
           }
         } catch {
-          // Model temporarily unavailable (503 spike, rate limit, or timeout), try next model
+          // Model temporarily slow or unavailable, proceed to immediate fallback
         }
       }
     }
