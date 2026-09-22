@@ -1091,6 +1091,90 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
     recommendedSauce:
       'Nước mắm ngọt pha từ nước luộc tôm tươi, có vị mặn ngọt thanh nhẹ, điểm xuyết vài lát ớt tươi cay nồng.',
   },
+
+  'com-ga-xoi-mo': {
+    dishId: 'com-ga-xoi-mo',
+    dishName: 'Cơm Gà Xối Mỡ Da Giòn',
+    seoTitle: 'Cách Làm Cơm Gà Xối Mỡ Thơm Ngon Đậm Đà Chuẩn Quán',
+    prepTime: '35 phút',
+    cookTime: '30 phút',
+    difficulty: 'Trung bình',
+    servings: '2 - 3 người',
+    ingredients: [
+      {
+        category: 'Nguyên liệu cần chuẩn bị',
+        items: [
+          'Thịt gà: 2 cái đùi gà (hoặc phần ức tùy thích).',
+          'Gạo: 250g.',
+          'Gia vị: Hạt nêm, bột nghệ (hoặc dầu điều), nước tương, ngũ vị hương, tỏi, gừng, hành tím.',
+          'Ăn kèm: Dưa leo, cà chua, rau xà lách.',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế và ướp gà',
+        time: '30 phút',
+        heat: 'Nhiệt độ phòng (ướp ngấm)',
+        goal: 'Khử sạch mùi hôi, đùi gà ngấm sâu gia vị ngũ vị hương và nước cốt tỏi gừng thơm lừng',
+        actionPoints: [
+          'Rửa sạch đùi gà với muối và gừng để khử mùi hôi.',
+          'Khứa vài đường trên đùi gà để nhanh thấm gia vị.',
+          'Ướp gà với: 1 muỗng cà phê hạt nêm, 1 muỗng canh nước gừng, 1 muỗng canh nước cốt tỏi, 1 muỗng canh nước tương và chút ngũ vị hương. Trộn đều và để ngấm trong 30 phút.',
+        ],
+        description:
+          'Rửa sạch đùi gà với muối và gừng để khử mùi hôi. Khứa vài đường trên đùi gà để nhanh thấm gia vị. Ướp gà với: 1 muỗng cà phê hạt nêm, 1 muỗng canh nước gừng, 1 muỗng canh nước cốt tỏi, 1 muỗng canh nước tương và chút ngũ vị hương. Trộn đều và để ngấm trong 30 phút.',
+        tip: 'Vắt lấy nước cốt gừng và tỏi để ướp gà giúp gia vị ngấm đều mà khi xối mỡ không bị cháy xém lấm tấm.',
+      },
+      {
+        step: 2,
+        title: 'Nấu cơm màu vàng nghệ',
+        time: '20 - 25 phút',
+        heat: 'Nồi cơm điện',
+        goal: 'Hạt cơm chín vàng óng ả, thơm dẻo, ngậy vị nước luộc gà và đậm đà hạt nêm',
+        actionPoints: [
+          'Vo sạch gạo.',
+          'Cho gạo vào nồi cơm điện, thêm nước (hoặc nước luộc gà nếu bạn luộc sơ gà trước), 1 muỗng cà phê hạt nêm và 1/2 muỗng cà phê bột nghệ để tạo màu vàng đẹp mắt.',
+          'Bấm nút nấu như bình thường.',
+        ],
+        description:
+          'Vo sạch gạo. Cho gạo vào nồi cơm điện, thêm nước (hoặc nước luộc gà nếu bạn luộc sơ gà trước), 1 muỗng cà phê hạt nêm và 1/2 muỗng cà phê bột nghệ để tạo màu vàng đẹp mắt. Bấm nút nấu như bình thường.',
+        tip: 'Dùng nước luộc gà nấu cơm sẽ giúp từng hạt cơm bóng bẩy, thơm phức và béo ngọt tự nhiên.',
+      },
+      {
+        step: 3,
+        title: 'Luộc sơ và chiên xối mỡ gà',
+        time: '15 - 20 phút',
+        heat: 'Lửa vừa - Dầu sôi già',
+        goal: 'Lớp da gà vàng rụm, giòn tan rôm rốp, thịt bên trong chín mềm mọng nước',
+        actionPoints: [
+          'Đem đùi gà đã ướp hấp hoặc luộc sơ cho gà chín tới, sau đó để ráo hoàn toàn nước (da khô giúp khi xối mỡ không bị bắn dầu và giòn hơn).',
+          'Đun nóng chảo dầu sâu lòng. Dùng vá múc dầu nóng xối liên tục lên phần da gà cho đến khi da chuyển màu vàng rụm, giòn tan thì vớt ra giấy thấm dầu.',
+        ],
+        description:
+          'Đem đùi gà đã ướp hấp hoặc luộc sơ cho gà chín tới, sau đó để ráo hoàn toàn nước (da khô giúp khi xối mỡ không bị bắn dầu và giòn hơn). Đun nóng chảo dầu sâu lòng. Dùng vá múc dầu nóng xối liên tục lên phần da gà cho đến khi da chuyển màu vàng rụm, giòn tan thì vớt ra giấy thấm dầu.',
+        tip: 'Da gà càng khô ráo trước khi cho vào chảo thì khi xối mỡ da càng nổ bung phồng giòn rụm và không lo bị bắn dầu.',
+      },
+      {
+        step: 4,
+        title: 'Thành phẩm',
+        time: '5 phút',
+        goal: 'Bày đĩa cơm gà xối mỡ hoàn mỹ: đùi gà vàng giòn, cơm vàng óng và rau dưa tươi mát',
+        actionPoints: [
+          'Múc cơm vàng ra đĩa, đặt đùi gà xối mỡ lên trên.',
+          'Ăn kèm dưa leo, cà chua và một chén nước mắm chua ngọt hoặc xì dầu tùy sở thích.',
+        ],
+        description:
+          'Múc cơm vàng ra đĩa, đặt đùi gà xối mỡ lên trên. Ăn kèm dưa leo, cà chua và một chén nước mắm chua ngọt hoặc xì dầu tùy sở thích.',
+        tip: 'Nên thưởng thức ngay khi đùi gà vừa xối mỡ xong để lớp da giữ trọn độ giòn tan rôm rốp tuyệt hảo.',
+      },
+    ],
+    chefSecret:
+      'Hấp hoặc luộc sơ gà cho vừa chín tới rồi để da thật khô ráo là bí quyết bất bại giúp khi xối mỡ lớp da nổ giòn tan màu cánh gián mà phần thịt đùi bên trong vẫn giữ nguyên độ ẩm ngọt mọng nước.',
+    recommendedSauce:
+      'Nước mắm chua ngọt tỏi ớt hoặc xì dầu (nước tương) tỏi ớt, ăn kèm dưa leo, cà chua và xà lách tươi.',
+  },
 };
 
 /**
@@ -1654,13 +1738,30 @@ export function getDishRecipe(dish: Dish): DishRecipe {
   };
 }
 
-export const FEATURED_RECIPE_IDS = [
-  'pho-bo-tai-lan',
+/**
+ * Danh sách các món ăn hiển thị bài viết công thức trong trang "/cach-nau-mon-ngon".
+ * Chỉ hiển thị 2 bài công thức chuẩn vị: Cơm Tấm Sườn Bì Chả & Cơm Gà Xối Mỡ.
+ * Tất cả các món ăn khác trên các trang khác (Vòng quay, Thực đơn tuần, Món ngon, Ẩm thực vùng miền...) vẫn giữ nguyên đầy đủ.
+ */
+export const ACTIVE_RECIPE_DISH_IDS: string[] = [
   'com-tam-suon-bi-cha',
-  'bun-bo-hue',
-  'nem-nuong-nha-trang',
-  'thit-kho-tau',
-  'canh-chua-ca-loc',
+  'com-ga-xoi-mo',
+];
+
+export function getActiveRecipeDishes(allDishes: Dish[]): Dish[] {
+  const activeSet = new Set(ACTIVE_RECIPE_DISH_IDS);
+  return allDishes
+    .filter((d) => activeSet.has(d.id))
+    .sort((a, b) => {
+      const idxA = ACTIVE_RECIPE_DISH_IDS.indexOf(a.id);
+      const idxB = ACTIVE_RECIPE_DISH_IDS.indexOf(b.id);
+      return idxA - idxB;
+    });
+}
+
+export const FEATURED_RECIPE_IDS = [
+  'com-tam-suon-bi-cha',
+  'com-ga-xoi-mo',
 ];
 
 /**

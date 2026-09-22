@@ -778,6 +778,14 @@ async function startServer() {
       image: "/images/dishes/banh_beo.webp",
       imageAlt: "Cách Làm Bánh Bèo Chén Tôm Chấy Tóp Mỡ Chuẩn Vị Huế",
     },
+    "/cach-nau-com-ga-xoi-mo": {
+      path: "/cach-nau-com-ga-xoi-mo",
+      title: "Cách Làm Cơm Gà Xối Mỡ Thơm Ngon Đậm Đà Chuẩn Quán | Hôm Nay Ăn Gì",
+      description: "Hướng dẫn chi tiết cách làm Cơm Gà Xối Mỡ da giòn rụm màu cánh gián, hạt cơm vàng óng dẻo thơm: Bí quyết sơ chế ướp gà ngũ vị hương, nấu cơm nghệ béo thơm và kỹ thuật xối mỡ giòn tan chuẩn tiệm.",
+      keywords: "cách làm cơm gà xối mỡ thơm ngon đậm đà chuẩn quán, cách làm cơm gà xối mỡ, cơm gà xối mỡ da giòn, cơm gà xối mỡ, món ngon mỗi ngày",
+      image: "/images/com_ga_xoi_mo.jpg",
+      imageAlt: "Cách Làm Cơm Gà Xối Mỡ Thơm Ngon Đậm Đà Chuẩn Quán",
+    },
     "/lich-an-theo-tuan": {
       path: "/lich-an-theo-tuan",
       title: "Lịch Ăn Theo Tuần - Thực Đơn 7 Ngày Chuẩn Vị & Tiết Kiệm | Hôm Nay Ăn Gì",

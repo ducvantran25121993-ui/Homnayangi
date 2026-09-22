@@ -64,6 +64,8 @@ import {
   findDishByRecipeSlug,
   formatRecipeSeoTitle,
   getRecipeArticleTitle,
+  getActiveRecipeDishes,
+  ACTIVE_RECIPE_DISH_IDS,
 } from '../data/recipes';
 import { getFamilyMealDishRecipe, FamilyDishRecipe } from '../data/familyDishRecipes';
 
@@ -351,7 +353,11 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
         if (match) return match;
       }
     }
-    return INITIAL_DISHES.find((d) => d.id === 'pho-bo-tai-lan') || INITIAL_DISHES[0];
+    return (
+      INITIAL_DISHES.find((d) => d.id === 'com-tam-suon-bi-cha') ||
+      INITIAL_DISHES.find((d) => ACTIVE_RECIPE_DISH_IDS.includes(d.id)) ||
+      INITIAL_DISHES[0]
+    );
   });
   const [viewingRecipeArticle, setViewingRecipeArticle] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
@@ -710,9 +716,25 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
     return '/images/mam_com_gia_dinh.jpg';
   };
 
+  // Base dishes available for recipe selection (strictly 2 curated active dishes)
+  const baseRecipeDishes = useMemo(() => {
+    return getActiveRecipeDishes(INITIAL_DISHES);
+  }, []);
+
+  // Only display categories that exist in baseRecipeDishes
+  const availableRecipeCategories = useMemo(() => {
+    return RECIPE_CATEGORIES.filter((cat) => {
+      if (cat.id === 'all') return true;
+      if (cat.id === 'com_xoi') {
+        return baseRecipeDishes.some((d) => d.category === 'com_xoi' || d.category === 'com');
+      }
+      return baseRecipeDishes.some((d) => d.category === cat.id);
+    });
+  }, [baseRecipeDishes]);
+
   // Filtered dishes for recipe selection
   const recipeFilteredDishes = useMemo(() => {
-    let list = INITIAL_DISHES;
+    let list = baseRecipeDishes;
     if (selectedRecipeCategory !== 'all') {
       if (selectedRecipeCategory === 'com_xoi') {
         list = list.filter((d) => d.category === 'com_xoi' || d.category === 'com');
@@ -746,7 +768,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
         d.searchKeyword.toLowerCase().includes(q) ||
         d.popularTags.some((t) => t.toLowerCase().includes(q))
     );
-  }, [recipeSearchQuery, selectedRecipeCategory]);
+  }, [baseRecipeDishes, recipeSearchQuery, selectedRecipeCategory]);
 
   // Current active recipe
   const currentRecipe = useMemo(() => {
@@ -1867,7 +1889,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                       className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs sm:text-sm transition-all cursor-pointer shadow-sm"
                     >
                       <ArrowLeft className="w-4 h-4" />
-                      <span>Quay lại kho {INITIAL_DISHES.length}+ món ngon</span>
+                      <span>Quay lại danh sách công thức ({baseRecipeDishes.length} món)</span>
                     </button>
 
                     <span className="text-xs text-stone-500">
@@ -1882,8 +1904,10 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                       <span>Gợi Ý Các Món Ngon Khác Có Thể Bạn Thích</span>
                     </h2>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                      {INITIAL_DISHES
-                        .filter((d) => d.id !== selectedRecipeDish.id)
+                      {(baseRecipeDishes.filter((d) => d.id !== selectedRecipeDish.id).length > 0
+                        ? baseRecipeDishes.filter((d) => d.id !== selectedRecipeDish.id)
+                        : INITIAL_DISHES.filter((d) => d.id !== selectedRecipeDish.id)
+                      )
                         .slice(0, 4)
                         .map((relDish) => (
                           <div
@@ -1951,40 +1975,42 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                 </div>
               </div>
 
-              {/* Category Filter Pills */}
-              <div className="space-y-3">
-                <div className="flex items-center justify-between gap-2">
-                  <div className="text-xs font-bold text-stone-600 flex items-center gap-1.5">
-                    <Filter className="w-3.5 h-3.5 text-orange-500" />
-                    <span>Lọc theo danh mục:</span>
+              {/* Category Filter Pills (nếu có nhiều hơn 1 danh mục) */}
+              {availableRecipeCategories.length > 1 && (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="text-xs font-bold text-stone-600 flex items-center gap-1.5">
+                      <Filter className="w-3.5 h-3.5 text-orange-500" />
+                      <span>Lọc theo danh mục:</span>
+                    </div>
+                    <span className="text-xs text-stone-400 font-medium">
+                      {recipeFilteredDishes.length} bài công thức
+                    </span>
                   </div>
-                  <span className="text-xs text-stone-400 font-medium">
-                    {recipeFilteredDishes.length} món ngon
-                  </span>
-                </div>
 
-                <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-thin">
-                  {RECIPE_CATEGORIES.map((cat) => {
-                    const isActive = selectedRecipeCategory === cat.id;
-                    return (
-                      <button
-                        key={cat.id}
-                        onClick={() => {
-                          setSelectedRecipeCategory(cat.id);
-                          setRecipeDisplayLimit(24);
-                        }}
-                        className={`shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
-                          isActive
-                            ? 'bg-orange-600 text-white border-orange-600 shadow-xs'
-                            : 'bg-stone-50 text-stone-700 border-stone-200 hover:bg-white hover:border-stone-300'
-                        }`}
-                      >
-                        {cat.label}
-                      </button>
-                    );
-                  })}
+                  <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-thin">
+                    {availableRecipeCategories.map((cat) => {
+                      const isActive = selectedRecipeCategory === cat.id;
+                      return (
+                        <button
+                          key={cat.id}
+                          onClick={() => {
+                            setSelectedRecipeCategory(cat.id);
+                            setRecipeDisplayLimit(24);
+                          }}
+                          className={`shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+                            isActive
+                              ? 'bg-orange-600 text-white border-orange-600 shadow-xs'
+                              : 'bg-stone-50 text-stone-700 border-stone-200 hover:bg-white hover:border-stone-300'
+                          }`}
+                        >
+                          {cat.label}
+                        </button>
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Grid: Mỗi món là 1 khung ảnh đại diện, tiêu đề riêng. Khi click vào thì hiện ra bài */}
               <div className="pt-2">

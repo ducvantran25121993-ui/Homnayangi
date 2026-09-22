@@ -280,6 +280,17 @@
     </image:image>
   </url>
 
+  <url>
+    <loc>https://www.angigio.com/cach-nau-com-ga-xoi-mo</loc>
+    <lastmod>2026-09-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.angigio.com/images/com_ga_xoi_mo.jpg</image:loc>
+      <image:title>Cách Làm Cơm Gà Xối Mỡ Thơm Ngon Đậm Đà Chuẩn Quán</image:title>
+    </image:image>
+  </url>
+
   <!-- 7. Trang Giới Thiệu & Sứ Mệnh Ẩm Thực -->
   <url>
     <loc>https://www.angigio.com/gioi-thieu</loc>
