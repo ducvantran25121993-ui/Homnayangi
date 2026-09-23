@@ -868,7 +868,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
       sub: 'region',
       regionId: selectedRegionId,
       path: currentRegion.path,
-      label: currentRegion.title,
+      label: currentRegion.name,
     } : sectionTab === 'daily' ? {
       sub: 'daily',
       path: DISCOVER_SUB_CONFIG.daily.path,
@@ -1667,17 +1667,17 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
           {viewingRecipeArticle ? (
             <div id="recipe-article-container" className="space-y-6">
               {/* Back navigation & breadcrumb bar */}
-              <div className="bg-white rounded-2xl border border-stone-200 p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
+              <div className="bg-white rounded-2xl border border-stone-200 p-3.5 sm:p-4.5 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 sm:gap-4 shadow-xs">
                 <button
                   type="button"
                   onClick={handleBackToRecipeList}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-stone-50 hover:bg-orange-50 text-stone-800 hover:text-orange-700 border border-stone-200 hover:border-orange-300 font-extrabold text-xs sm:text-sm transition-all cursor-pointer shadow-2xs group"
+                  className="shrink-0 inline-flex items-center gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 rounded-xl bg-stone-50 hover:bg-orange-50 text-stone-800 hover:text-orange-700 border border-stone-200 hover:border-orange-300 font-extrabold text-xs sm:text-sm transition-all cursor-pointer shadow-2xs group self-start md:self-auto"
                 >
-                  <ArrowLeft className="w-4 h-4 text-orange-600 group-hover:-translate-x-1 transition-transform" />
-                  <span>{recipeOrigin ? `Quay lại ${recipeOrigin.label}` : 'Quay lại danh sách món ngon'}</span>
+                  <ArrowLeft className="w-4 h-4 text-orange-600 group-hover:-translate-x-1 transition-transform shrink-0" />
+                  <span className="whitespace-nowrap">{recipeOrigin ? `Quay lại ${recipeOrigin.label}` : 'Quay lại danh sách món ngon'}</span>
                 </button>
 
-                <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-stone-500 font-medium overflow-hidden">
+                <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs text-stone-500 font-medium leading-relaxed">
                   <a
                     href={recipeOrigin ? recipeOrigin.path : '/cach-nau-mon-ngon'}
                     onClick={(e) => {
@@ -1691,7 +1691,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                   <ChevronRight className="w-3.5 h-3.5 text-stone-300 shrink-0" />
                   <span className="shrink-0 text-stone-600">{getCategoryDisplayName(selectedRecipeDish.category)}</span>
                   <ChevronRight className="w-3.5 h-3.5 text-stone-300 shrink-0" />
-                  <span className="font-extrabold text-orange-700 truncate">{getRecipeArticleTitle(selectedRecipeDish, currentRecipe)}</span>
+                  <span className="font-extrabold text-orange-700">{getRecipeArticleTitle(selectedRecipeDish, currentRecipe)}</span>
                 </nav>
               </div>
 
