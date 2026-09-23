@@ -22,7 +22,13 @@ export const DishCatalog: React.FC<DishCatalogProps> = ({
   selectedDish,
   onNavigate,
 }) => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('q') || params.get('search') || '';
+    }
+    return '';
+  });
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedMeal, setSelectedMeal] = useState<string>('all');
 

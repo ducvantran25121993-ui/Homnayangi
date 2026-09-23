@@ -1,9 +1,9 @@
 import { Dish, DishRecipe, RegionId } from '../types';
 import { getRegionById, isRegionPath } from '../data/regionalCuisine';
-import { getRecipePath, getRecipeArticleTitle, formatRecipeSeoTitle } from '../data/recipes';
+import { getRecipePath, getRecipeArticleTitle, formatRecipeSeoTitle, findDishByRecipeSlug } from '../data/recipes';
 import { INITIAL_DISHES } from '../data/dishes';
 
-export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'snacks' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms';
+export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'snacks' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms' | 'notfound';
 
 export type DiscoverSubSection = 'region' | 'daily' | 'recipe';
 
@@ -164,6 +164,16 @@ export const TAB_CONFIG: Record<TabType, TabMeta> = {
     ogImage: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&auto=format&fit=crop&q=80',
     ogImageAlt: 'Điều Khoản Sử Dụng - Hôm Nay Ăn Gì',
   },
+  notfound: {
+    path: '/404',
+    title: '404 - Không Tìm Thấy Trang | Hôm Nay Ăn Gì',
+    description: 'Trang bạn đang tìm kiếm không tồn tại hoặc đã được chuyển sang địa chỉ mới. Khám phá ngay các món ngon hấp dẫn hoặc quay vòng quay chọn món!',
+    label: 'Không Tìm Thấy Trang',
+    shortLabel: '404',
+    keywords: '404 not found, không tìm thấy trang, hôm nay ăn gì',
+    ogImage: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&auto=format&fit=crop&q=80',
+    ogImageAlt: '404 - Không Tìm Thấy Trang',
+  },
 };
 
 /**
@@ -199,6 +209,7 @@ export function getTabFromUrl(): TabType {
 
   const pathname = window.location.pathname.replace(/\/$/, '') || '/';
   
+  if (pathname === '/404') return 'notfound';
   if (pathname === '/vong-quay') return 'wheel';
   if (pathname === '/lich-an-theo-tuan' || pathname === '/mon-ngon/lich-an-theo-tuan' || pathname === '/len-lich-an' || pathname === '/lich-an' || pathname === '/thuc-don-tuan' || pathname === '/meal-planner') return 'planner';
   if (pathname === '/ai-goi-y-mon-an') return 'ai';
@@ -207,20 +218,28 @@ export function getTabFromUrl(): TabType {
   if (
     pathname === '/am-thuc-vung-mien' ||
     isRegionPath(pathname) ||
-    pathname.startsWith('/am-thuc-mien-') ||
-    pathname.startsWith('/am-thuc-vung-mien/') ||
     pathname === '/thuc-don-moi-ngay' ||
     pathname.startsWith('/thuc-don-moi-ngay/') ||
     pathname === '/cach-nau-mon-ngon' ||
-    pathname.startsWith('/cach-nau-') ||
-    pathname.startsWith('/cach-lam-') ||
-    pathname.startsWith('/cach-nau-mon-ngon/') ||
     pathname === '/kham-pha-am-thuc' ||
     pathname.startsWith('/kham-pha-am-thuc/') ||
     pathname === '/kham-pha' ||
     pathname === '/cam-nang' ||
     pathname === '/cam-nang-am-thuc'
   ) return 'discover';
+
+  // Check Recipe Detail Routes (e.g. /cach-nau-pho-bo-tai-lan, /cach-nau-mon-ngon/com-tam-suon-bi-cha)
+  if (
+    pathname.startsWith('/cach-nau-') ||
+    pathname.startsWith('/cach-lam-') ||
+    pathname.startsWith('/cach-nau-mon-ngon/')
+  ) {
+    const slug = pathname.replace('/cach-nau-mon-ngon/', '').replace(/^\//, '');
+    const match = findDishByRecipeSlug(slug, INITIAL_DISHES);
+    if (match) return 'discover';
+    return 'notfound';
+  }
+
   if (pathname === '/gioi-thieu' || pathname === '/about') return 'about';
   if (pathname === '/lien-he' || pathname === '/contact') return 'contact';
   if (pathname === '/chinh-sach-bao-mat' || pathname === '/privacy' || pathname === '/bao-mat') return 'privacy';
@@ -254,7 +273,8 @@ export function getTabFromUrl(): TabType {
     return 'tarot';
   }
 
-  return 'tarot';
+  // Any unknown path returns notfound
+  return 'notfound';
 }
 
 /**
@@ -317,6 +337,18 @@ function applyMetaToDOM(meta: TabMeta): void {
     document.head.appendChild(canonical);
   }
   canonical.setAttribute('href', fullUrl);
+
+  // 6. Robots meta tag: noindex on 404, full index on valid content
+  if (meta.path === '/404') {
+    setOrCreateMeta('meta[name="robots"]', 'name', 'robots', 'noindex, follow');
+  } else {
+    setOrCreateMeta(
+      'meta[name="robots"]',
+      'name',
+      'robots',
+      'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+    );
+  }
 }
 
 /**

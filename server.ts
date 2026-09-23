@@ -874,9 +874,17 @@ async function startServer() {
       image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&auto=format&fit=crop&q=80",
       imageAlt: "Điều Khoản Sử Dụng - Hôm Nay Ăn Gì",
     },
+    "/404": {
+      path: "/404",
+      title: "404 - Không Tìm Thấy Trang | Hôm Nay Ăn Gì",
+      description: "Trang bạn đang tìm kiếm không tồn tại hoặc đã được dọn sang địa chỉ mới. Khám phá ngay các món ngon hấp dẫn hoặc quay vòng quay chọn món!",
+      keywords: "404 not found, không tìm thấy trang, hôm nay ăn gì",
+      image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&auto=format&fit=crop&q=80",
+      imageAlt: "404 - Không Tìm Thấy Trang",
+    },
   };
 
-  function injectSeoMeta(html: string, requestedPath: string): string {
+  function injectSeoMeta(html: string, requestedPath: string): { html: string; isNotFound: boolean } {
     const cleanPath = requestedPath.replace(/\/$/, "") || "/";
     const isRecipeRoute =
       cleanPath.startsWith("/cach-nau-") ||
@@ -907,8 +915,14 @@ async function startServer() {
       };
     }
 
+    let isNotFound = false;
     if (!meta) {
-      meta = SEO_ROUTES_CONFIG["/"];
+      if (cleanPath === "/" || cleanPath === "") {
+        meta = SEO_ROUTES_CONFIG["/"];
+      } else {
+        isNotFound = true;
+        meta = SEO_ROUTES_CONFIG["/404"];
+      }
     }
     const fullUrl = `https://www.angigio.com${meta.path === "/" ? "/" : meta.path}`;
 
@@ -928,6 +942,13 @@ async function startServer() {
       .replace(/<meta\s+name="twitter:url"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:url" content="${fullUrl}" />`)
       .replace(/<meta\s+name="twitter:image"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:image" content="${meta.image}" />`);
 
+    if (isNotFound) {
+      updatedHtml = updatedHtml.replace(
+        /<meta\s+name="robots"\s+content=".*?"\s*\/?>/i,
+        `<meta name="robots" content="noindex, follow" />`
+      );
+    }
+
     if (isRecipeRoute) {
       updatedHtml = updatedHtml.replace(
         /<meta\s+property="og:type"\s+content=".*?"\s*\/?>/i,
@@ -935,7 +956,7 @@ async function startServer() {
       );
     }
 
-    return updatedHtml;
+    return { html: updatedHtml, isNotFound };
   }
 
   const httpServer = http.createServer(app);
@@ -961,8 +982,8 @@ async function startServer() {
         try {
           const rawHtml = fs.readFileSync(path.join(process.cwd(), "index.html"), "utf-8");
           const transformedHtml = await vite.transformIndexHtml(req.originalUrl, rawHtml);
-          const seoHtml = injectSeoMeta(transformedHtml, req.path);
-          return res.status(200).set({ "Content-Type": "text/html; charset=utf-8" }).end(seoHtml);
+          const { html: seoHtml, isNotFound } = injectSeoMeta(transformedHtml, req.path);
+          return res.status(isNotFound ? 404 : 200).set({ "Content-Type": "text/html; charset=utf-8" }).end(seoHtml);
         } catch (e) {
           return next(e);
         }
@@ -983,8 +1004,8 @@ async function startServer() {
       const indexPath = path.join(distPath, "index.html");
       if (fs.existsSync(indexPath)) {
         const rawHtml = fs.readFileSync(indexPath, "utf-8");
-        const seoHtml = injectSeoMeta(rawHtml, req.path);
-        res.status(200).set({ "Content-Type": "text/html; charset=utf-8" }).send(seoHtml);
+        const { html: seoHtml, isNotFound } = injectSeoMeta(rawHtml, req.path);
+        res.status(isNotFound ? 404 : 200).set({ "Content-Type": "text/html; charset=utf-8" }).send(seoHtml);
       } else {
         res.status(404).send("Application dist index.html not found");
       }

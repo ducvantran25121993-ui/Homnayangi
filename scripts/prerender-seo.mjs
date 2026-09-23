@@ -400,7 +400,24 @@ function generateStaticHtmlPages() {
     }
   }
 
-  console.log(`Prerendered SEO HTML for ${generatedCount} routes successfully!`);
+  // Generate dedicated 404.html for static hosts (Vercel, Netlify, GitHub Pages, Cloudflare Pages)
+  const notFoundMeta = {
+    path: "/404",
+    title: "404 - Không Tìm Thấy Trang | Hôm Nay Ăn Gì",
+    description: "Trang bạn đang tìm kiếm không tồn tại hoặc đã được dọn sang địa chỉ mới. Khám phá ngay các món ngon hấp dẫn hoặc quay vòng quay chọn món!",
+    keywords: "404 not found, không tìm thấy trang, hôm nay ăn gì",
+    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&auto=format&fit=crop&q=80",
+    imageAlt: "404 - Không Tìm Thấy Trang",
+  };
+  let notFoundHtml = injectMeta(baseHtml, notFoundMeta);
+  notFoundHtml = notFoundHtml.replace(
+    /<meta\s+name="robots"\s+content=".*?"\s*\/?>/i,
+    '<meta name="robots" content="noindex, follow" />'
+  );
+  fs.writeFileSync(path.join(distDir, '404.html'), notFoundHtml, 'utf-8');
+  generatedCount++;
+
+  console.log(`Prerendered SEO HTML for ${generatedCount} routes (including 404.html) successfully!`);
 }
 
 generateStaticHtmlPages();
