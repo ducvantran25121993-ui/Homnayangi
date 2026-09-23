@@ -85,6 +85,7 @@ export interface AISuggestion {
   tags: string[];
   calories: string;
   pairWith: string;
+  image?: string;
 }
 
 export interface ContactMessage {

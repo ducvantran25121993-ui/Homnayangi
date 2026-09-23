@@ -46,12 +46,70 @@ function getClientFallbackDishes(mealTime: string, budget: string, mood: string,
     tags: d.popularTags.slice(0, 3),
     calories: d.calories || '~520 kcal',
     pairWith: d.bestPairedWith || 'Trà đá hoặc nước mía tươi mát',
+    image: d.image,
   }));
 
   return {
     suggestions,
     advice: `Tại khu vực ${location}, bạn có thể dễ dàng tìm thấy các quán ngon này trên ShopeeFood, GrabFood hoặc đặt ship quanh đây!`,
   };
+}
+
+function normalizeDishText(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]/g, '');
+}
+
+export function resolveDishImage(item: { name: string; searchKeyword?: string; category?: string; image?: string }): string {
+  if (item.image && item.image.trim() !== '') return item.image;
+
+  const itemNameNorm = normalizeDishText(item.name);
+  const keywordNorm = item.searchKeyword ? normalizeDishText(item.searchKeyword) : '';
+
+  // 1. Exact match
+  const exact = INITIAL_DISHES.find(
+    (d) => normalizeDishText(d.vietnameseName || '') === itemNameNorm || normalizeDishText(d.name || '') === itemNameNorm
+  );
+  if (exact?.image) return exact.image;
+
+  // 2. Keyword match
+  if (keywordNorm) {
+    const kwMatch = INITIAL_DISHES.find(
+      (d) =>
+        normalizeDishText(d.vietnameseName || '') === keywordNorm ||
+        normalizeDishText(d.name || '') === keywordNorm ||
+        normalizeDishText(d.searchKeyword || '') === keywordNorm
+    );
+    if (kwMatch?.image) return kwMatch.image;
+  }
+
+  // 3. Partial substring match
+  const partial = INITIAL_DISHES.find((d) => {
+    const dName = normalizeDishText(d.vietnameseName || d.name || '');
+    return dName.length > 4 && (itemNameNorm.includes(dName) || dName.includes(itemNameNorm));
+  });
+  if (partial?.image) return partial.image;
+
+  if (keywordNorm) {
+    const kwPartial = INITIAL_DISHES.find((d) => {
+      const dName = normalizeDishText(d.vietnameseName || d.name || '');
+      return dName.length > 4 && (keywordNorm.includes(dName) || dName.includes(keywordNorm));
+    });
+    if (kwPartial?.image) return kwPartial.image;
+  }
+
+  // 4. Category-based fallback
+  const cat = (item.category || '').toLowerCase();
+  if (cat.includes('cơm') || cat.includes('com')) return '/images/com_tam_suon_bi_cha.jpg';
+  if (cat.includes('bún') || cat.includes('phở') || cat.includes('mi')) return '/images/bun_bo_hue.jpg';
+  if (cat.includes('cuốn')) return '/images/nem_nuong_nha_trang.jpg';
+  if (cat.includes('chay')) return '/images/goi_cuon_chay.jpg';
+  if (cat.includes('lẩu') || cat.includes('nóng')) return '/images/buffet.jpg';
+
+  return '/images/mam_com_gia_dinh.jpg';
 }
 
 interface AIAssistantProps {
@@ -355,33 +413,53 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
             Top Món Ngon AI Đề Xuất Dành Riêng Cho Bạn
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {suggestions.map((item, index) => (
+          {suggestions.map((item, index) => {
+            const dishImage = resolveDishImage(item);
+            return (
             <div
               key={index}
-              className="bg-white rounded-3xl border border-stone-200/80 shadow-xs hover:shadow-md transition-shadow overflow-hidden flex flex-col justify-between"
+              className="bg-white rounded-3xl border border-stone-200/80 shadow-xs hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group"
             >
-              <div className="p-5 sm:p-6">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-purple-100 text-purple-800">
+              {/* Dish Illustration Image */}
+              <div className="relative w-full h-44 sm:h-48 overflow-hidden bg-stone-100">
+                <img
+                  src={dishImage}
+                  alt={`${item.name} - Gợi ý món ngon chuẩn vị`}
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = '/images/mam_com_gia_dinh.jpg';
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 pointer-events-none" />
+
+                {/* Floating Badges */}
+                <div className="absolute top-3 left-3">
+                  <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-white/95 text-purple-900 shadow-xs backdrop-blur-xs border border-purple-200/50">
                     Lựa chọn #{index + 1} • {item.category}
                   </span>
-                  <span className="text-xs font-semibold text-stone-500">
+                </div>
+                <div className="absolute top-3 right-3">
+                  <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-black/60 text-white shadow-xs backdrop-blur-xs">
                     {item.calories}
                   </span>
                 </div>
+              </div>
 
-                <h3 className="text-lg font-extrabold text-stone-900 mb-1">
+              <div className="p-5 sm:p-6 flex-1 flex flex-col">
+                <h3 className="text-lg font-extrabold text-stone-900 mb-1 group-hover:text-orange-600 transition-colors">
                   {item.name}
                 </h3>
                 <p className="text-xs font-medium text-orange-600 mb-3 italic">
                   "{item.tagline}"
                 </p>
 
-                <p className="text-xs text-stone-600 leading-relaxed mb-4">
+                <p className="text-xs text-stone-600 leading-relaxed mb-4 flex-1">
                   {item.reason}
                 </p>
 
-                <div className="space-y-1.5 text-xs text-stone-600 bg-stone-50 p-3 rounded-xl mb-4">
+                <div className="space-y-1.5 text-xs text-stone-600 bg-stone-50 p-3 rounded-xl mb-4 border border-stone-100">
                   <div className="flex items-center justify-between">
                     <span className="text-stone-500">Khoảng giá:</span>
                     <span className="font-bold text-stone-900">{item.estimatedPrice}</span>
@@ -429,7 +507,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
                           estimatedPrice: 50000,
                           calories: item.calories || '500 kcal',
                           description: item.reason || item.tagline,
-                          image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop&q=60',
+                          image: dishImage,
                           popularTags: item.tags || ['AI Gợi ý'],
                           searchKeyword: item.searchKeyword || item.name,
                           bestPairedWith: item.pairWith,
@@ -493,7 +571,8 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
                 </div>
               </div>
             </div>
-          ))}
+            );
+          })}
           </div>
         </div>
       )}
