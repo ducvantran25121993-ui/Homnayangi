@@ -208,7 +208,7 @@ export const NUONG_CHIEN_DISHES: Dish[] = [
     estimatedPrice: 210000,
     calories: '780 - 980 kcal',
     description: 'Tảng thịt bò tươi mềm ướp sốt đậm đà nướng xèo xèo trên chảo gang, chấm đẫm chén sốt phô mai béo ngậy hoặc trứng muối dẻo quánh thơm nức mũi.',
-    image: 'https://images.unsplash.com/photo-1558030006-450675393462?w=800&auto=format&fit=crop&q=80',
+    image: '/images/bo_nuong_tang_trung_muoi.jpg',
     popularTags: ['Bò nướng tảng', 'Sốt trứng muối', 'Chảo gang', 'Tụ tập cuối tuần'],
     searchKeyword: 'Bò nướng tảng trứng muối',
   },
