@@ -1210,6 +1210,132 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
       'Nước mắm cốt nhĩ chanh ớt tươi kèm tiêu bắc xay chấm viên mọc nấm và sườn non.',
   },
 
+  'bun-ca-cay-hai-phong': {
+    dishId: 'bun-ca-cay-hai-phong',
+    dishName: 'Bún Cá Cay Hải Phòng',
+    seoTitle: 'Cách Nấu Bún Cá Cay Hải Phòng Nước Dùng Chua Cay Đậm Đà Chuẩn Vị Đất Cảng',
+    prepTime: '45 phút',
+    cookTime: '1 giờ',
+    difficulty: 'Trung bình',
+    servings: '4 - 5 người',
+    ingredients: [
+      {
+        category: 'Cá rô phi chiên giòn, Chả cá & Dạ dày cá sần sật',
+        items: [
+          '1.2kg cá rô phi tươi sống (hoặc cá thu, cá trắm): lọc riêng thịt phi lê, giữ lại đầu và khung xương cá để ninh nước ngọt',
+          '300g chả cá Hải Phòng (hoặc chả cá thu / chả cá thác lác) chiên vàng, thái lát mỏng',
+          '200g lòng / dạ dày cá basa (hoặc bao tử cá thu) làm sạch bóp muối giấm, xào giòn sần sật (nét đặc trưng độc nhất của bún cá đất Cảng)',
+          '1 gói bột chiên giòn (hoặc bột bắp) để áo lớp mỏng quanh miếng cá',
+          '1 thìa canh gừng băm, 1 thìa canh tỏi băm, 1 thìa cà phê bột nghệ (tạo màu vàng óng và khử tanh tuyệt đối), tiêu xay, nước mắm cốt ngon, dầu ăn',
+        ],
+      },
+      {
+        category: 'Xương ninh & Nước dùng chua cay đậm đà',
+        items: [
+          '500g xương ống heo chần sạch ninh cùng đầu và xương cá',
+          '4 quả cà chua chín đỏ mọng bổ múi cau',
+          '2 quả me chua tươi (hoặc 3 thìa canh giấm bỗng nếp) tạo vị chua thanh dịu mát',
+          '1 củ hành tây nướng, 3 củ hành tím nướng thơm cháy xém',
+          '2 thìa canh dầu màu điều (tạo màu nước dùng vàng cam sóng sánh)',
+          'Gia vị: Nước mắm cốt nhĩ cá cơm, muối hạt, đường phèn, hạt nêm',
+          '800g bún tươi sợi vừa',
+        ],
+      },
+      {
+        category: 'Rau thơm & Linh hồn ớt cay đất Cảng',
+        items: [
+          '3 cây dọc mùng (bạc hà) tước vỏ bóp muối vắt kiệt (hoặc rau cần nước chần giòn)',
+          'Hành hoa, thì là rửa sạch thái nhỏ (thì là là linh hồn của bún cá khử sạch mùi tanh)',
+          'Chí chương Hải Phòng (tương ớt cay lên men gia truyền đất Cảng) hoặc ớt chưng dầu cay xè',
+          'Rau sống ăn kèm: hoa chuối thái mỏng, rau muống chẻ, giá đỗ tươi, chanh cốm, quất tươi',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế cá, ướp nghệ gia vị và chiên giòn rụm bên ngoài',
+        time: '25 phút',
+        heat: 'Lửa vừa đến lớn',
+        goal: 'Miếng cá vàng ươm giòn rụm vỏ ngoài, bên trong thịt trắng mềm mọng nước không tanh',
+        actionPoints: [
+          'Phi lê cá rô phi rửa sạch với nước muối gừng loãng, thấm thật khô bằng khăn giấy, thái miếng con chì hoặc lát vát dày cỡ 1.5cm vừa ăn.',
+          'Ướp thịt cá với 1 thìa gừng băm, 1 thìa tỏi băm, 1 thìa cà phê bột nghệ, 1 thìa nước mắm ngon và chút tiêu xay trong 20 phút cho ngấm sâu gia vị.',
+          'Lăn từng miếng cá qua một lớp bột chiên giòn thật mỏng để cá giữ phom và giòn tan khi chiên.',
+          'Đun sôi dầu ngập chảo, thả từng miếng cá vào chiên vàng ruộm hai mặt rồi vớt ra giá có lót giấy thấm dầu.',
+        ],
+        description:
+          'Thái cá miếng vừa ăn, ướp gừng tỏi, bột nghệ và nước mắm. Áo một lớp bột chiên giòn mỏng rồi chiên ngập dầu cho vàng giòn rụm.',
+        tip: 'Ướp bột nghệ giúp cá có màu vàng ươm bắt mắt và khử sạch hoàn toàn mùi tanh của cá đồng.',
+      },
+      {
+        step: 2,
+        title: 'Ninh nước dùng kép từ xương heo và đầu xương cá ngọt lịm',
+        time: '45 phút',
+        heat: 'Lửa nhỏ liu riu',
+        goal: 'Nước dùng trong ngọt sâu từ tủy xương và cá, không gợn mùi tanh',
+        actionPoints: [
+          'Xương ống heo chần qua nước sôi 3 phút, rửa sạch rồi cho vào nồi cùng 2.5 lít nước, thả hành tây và hành tím nướng vào ninh lửa nhỏ.',
+          'Phần đầu và xương cá rửa sạch với muối rượu, chiên sơ trên chảo cho săn khô hoặc nướng xém để khử hết mùi tanh.',
+          'Cho đầu và xương cá vào túi vải lọc (hoặc cho thẳng vào nồi ninh rồi lọc bỏ bã xương sau), đun liu riu cùng nồi xương heo trong 45 phút.',
+          'Hớt sạch bọt liên tục để nước dùng giữ được độ thanh trong.',
+        ],
+        description:
+          'Ninh xương heo cùng đầu và xương cá đã chiên thơm trên lửa nhỏ liu riu, thêm hành nướng và hớt bọt thường xuyên để nước dùng ngọt sâu thanh mát.',
+        tip: 'Chiên hoặc nướng sơ đầu xương cá trước khi ninh là bí quyết bắt buộc để nước dùng bún cá ngọt lịm mà không bị tanh cặn.',
+      },
+      {
+        step: 3,
+        title: 'Xào cà chua, dạ dày cá sần sật và hoàn thiện nước dùng chua thanh',
+        time: '15 phút',
+        heat: 'Lửa vừa',
+        goal: 'Nước dùng vàng cam sóng sánh, vị chua thanh ngọt dịu, dạ dày cá giòn sần sật',
+        actionPoints: [
+          'Dạ dày cá bóp kỹ muối hạt và nước cốt chanh/giấm, xả sạch nhớt. Phi thơm tỏi xào săn dạ dày cá với chút hạt nêm, tiêu xay đến khi chín giòn sần sật rồi múc ra đĩa riêng.',
+          'Dùng chảo phi thơm hành khô với 2 thìa canh dầu màu điều, cho 1/2 lượng cà chua bổ múi cau vào xào nhuyễn tạo màu vàng cam sóng sánh rồi trút vào nồi nước dùng.',
+          'Me chua luộc chín trong nồi nước dùng, dầm nát lọc lấy nước cốt chua thanh đổ lại vào nồi.',
+          'Thả nốt 1/2 lượng cà chua còn lại vào nồi giữ nguyên múi. Nêm nước mắm cốt nhĩ ngon, đường phèn, muối hạt cho vị chua thanh ngọt đậm đà vừa miệng.',
+        ],
+        description:
+          'Xào chín giòn dạ dày cá để riêng. Phi thơm dầu điều xào cà chua trút vào nồi nước sườn cá cùng nước cốt me. Nêm nếm nước mắm đường phèn vừa vị chua thanh sóng sánh.',
+      },
+      {
+        step: 4,
+        title: 'Sơ chế dọc mùng xanh giòn không ngứa và rau cần',
+        time: '10 phút',
+        heat: 'Nhiệt độ phòng & Nồi nước sôi',
+        goal: 'Dọc mùng xanh mướt giòn sần sật, sạch 100% nhựa ngứa',
+        actionPoints: [
+          'Dọc mùng tước sạch vỏ xơ, thái vát chéo, bóp thật kỹ với 2 thìa muối hạt cho xẹp mềm tiết hết nước ngứa.',
+          'Rửa xả nhiều lần dưới vòi nước lạnh rồi dùng tay vắt thật kiệt nước.',
+          'Khi chuẩn bị ăn, chần nhanh dọc mùng (hoặc rau cần cắt khúc) qua nồi nước dùng sôi trong 1 phút rồi vớt ra ngay để giữ độ xanh giòn.',
+        ],
+        description:
+          'Tước vỏ dọc mùng, bóp kỹ muối hạt, xả sạch vắt kiệt nước rồi chần nhanh qua nồi nước dùng sôi giữ độ xanh giòn.',
+      },
+      {
+        step: 5,
+        title: 'Trình bày tô bún cá cay Hải Phòng nghi ngút khói, rực rỡ sắc màu',
+        time: '5 phút',
+        heat: 'Nồi nước dùng sôi sùng sục',
+        goal: 'Tô bún rực rỡ vàng đỏ xanh mát mắt, cá giòn rụm, vị cay nồng xé lưỡi đậm chất đất Cảng',
+        actionPoints: [
+          'Chần bún tươi qua nước sôi, xốc ráo nước rồi chia đều vào từng tô lớn.',
+          'Xếp lên mặt bún: những miếng cá rô phi chiên vàng ruộm, lát chả cá Hải Phòng thơm nức, dạ dày cá giòn sần sật, dọc mùng xanh giòn và múi cà chua đỏ mọng.',
+          'Rắc hành hoa và thì là thái nhỏ phủ đều lên trên.',
+          'Múc nước dùng chua cay óng ả đang sôi sùng sục chan ngập tô bún.',
+          'Thêm một thìa chí chương Hải Phòng (tương ớt cay lên men gia truyền), vắt thêm quất tươi và thưởng thức kèm đĩa hoa chuối thái mỏng thanh mát.',
+        ],
+        description:
+          'Chần bún cho vào tô, xếp cá chiên giòn, chả cá, dạ dày cá, dọc mùng, rắc hành thì là rồi chan nước dùng chua ngọt cay nồng. Thêm chí chương Hải Phòng cay xè và thưởng thức.',
+      },
+    ],
+    chefSecret:
+      'Linh hồn của bún cá cay Hải Phòng nằm ở 3 điểm cốt tử: Thứ nhất, nước dùng phải là nước ninh kép từ xương heo và đầu/xương cá đã rán thơm để nước ngọt sâu không tanh. Thứ hai, miếng cá chiên giòn rụm vỏ ngoài nhưng thớ thịt mềm ngọt mọng nước, kết hợp dạ dày cá giòn sần sật độc nhất vô nhị. Thứ ba, không thể thiếu thì là dậy mùi và muỗng chí chương (tương ớt gia truyền đất Cảng) đỏ rực cay nồng nàn.',
+    recommendedSauce:
+      'Chí chương Hải Phòng (tương ớt cổ truyền đất Cảng lên men chua cay đằm vị) và nước mắm cốt nhĩ tỏi ớt chanh.',
+  },
+
   'com-tam-suon-bi-cha': {
     dishId: 'com-tam-suon-bi-cha',
     dishName: 'Cơm Tấm Sườn Bì Chả Đặc Biệt Sài Gòn',
