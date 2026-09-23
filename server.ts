@@ -692,11 +692,11 @@ async function startServer() {
     },
     "/cach-nau-pho-bo-tai-lan": {
       path: "/cach-nau-pho-bo-tai-lan",
-      title: "Cách Nấu Phở Bò Tái Lăn Hà Nội Thơm Ngon Chuẩn Vị | Hôm Nay Ăn Gì",
-      description: "Hướng dẫn chi tiết cách nấu Phở Bò Tái Lăn Hà Nội chuẩn vị: Bí quyết xào thịt bò tái lăn lửa lớn thơm mùi tỏi gừng, nước dùng xương bò hầm trong ngọt thanh và bánh phở mềm mướt.",
-      keywords: "cách nấu phở bò tái lăn hà nội thơm ngon chuẩn vị, cách nấu phở bò tái lăn, công thức phở bò tái lăn, phở hà nội, cách làm phở bò, món ngon mỗi ngày",
+      title: "Cách Nấu Phở Bò Tái Lăn Hà Nội Thơm Nức, Đậm Đà Chuẩn Vị Phố Cổ | Hôm Nay Ăn Gì",
+      description: "Bí quyết nấu Phở Bò Tái Lăn Hà Nội chuẩn vị Phố Cổ: Nước dùng hầm xương trong veo thơm mùi quế hồi, thịt bò thăn xào tái lăn chảo gang lửa lớn mềm ngọt và bánh phở mướt mềm.",
+      keywords: "cách nấu phở bò tái lăn hà nội, cách nấu phở bò tái lăn, phở bò tái lăn hà nội chuẩn vị, công thức phở bò, phở hà nội, ẩm thực miền bắc",
       image: "/images/dishes/pho_bo_tai_lan.webp",
-      imageAlt: "Cách Nấu Phở Bò Tái Lăn Hà Nội Thơm Ngon Chuẩn Vị",
+      imageAlt: "Cách Nấu Phở Bò Tái Lăn Hà Nội Thơm Nức Đậm Đà Chuẩn Vị",
     },
     "/cach-nau-com-tam-suon-bi-cha": {
       path: "/cach-nau-com-tam-suon-bi-cha",
@@ -785,6 +785,14 @@ async function startServer() {
       keywords: "cách làm cơm gà xối mỡ thơm ngon đậm đà chuẩn quán, cách làm cơm gà xối mỡ, cơm gà xối mỡ da giòn, cơm gà xối mỡ, món ngon mỗi ngày",
       image: "/images/com_ga_xoi_mo.jpg",
       imageAlt: "Cách Làm Cơm Gà Xối Mỡ Thơm Ngon Đậm Đà Chuẩn Quán",
+    },
+    "/cach-nau-xoi-xeo-ha-noi": {
+      path: "/cach-nau-xoi-xeo-ha-noi",
+      title: "Cách Nấu Xôi Xéo Hà Nội Dẻo Thơm Óng Ả Chuẩn Vị Truyền Thống Phố Cổ | Hôm Nay Ăn Gì",
+      description: "Bí quyết nấu Xôi Xéo Hà Nội dẻo thơm óng ả chuẩn vị phố cổ: Kỹ thuật đồ xôi 2 lửa nếp cái hoa vàng bóng mượt, giã nén đậu xanh thái xéo mỏng như lụa, mỡ gà vàng ươm và hành phi giòn tan.",
+      keywords: "cách nấu xôi xéo hà nội dẻo thơm óng ả chuẩn vị truyền thống, cách nấu xôi xéo hà nội, bí quyết đồ xôi xéo, xôi xéo phố cổ, mỡ gà hành phi xôi xéo",
+      image: "/images/xoi_xeo_ha_noi.jpg",
+      imageAlt: "Cách Nấu Xôi Xéo Hà Nội Dẻo Thơm Óng Ả Chuẩn Vị Truyền Thống",
     },
     "/lich-an-theo-tuan": {
       path: "/lich-an-theo-tuan",

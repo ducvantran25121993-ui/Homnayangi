@@ -2975,6 +2975,140 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
     recommendedSauce:
       'Nước mắm chua ngọt tỏi ớt hoặc xì dầu (nước tương) tỏi ớt, ăn kèm dưa leo, cà chua và xà lách tươi.',
   },
+  'xoi-xeo-ha-noi': {
+    dishId: 'xoi-xeo-ha-noi',
+    dishName: 'Xôi Xéo Hà Nội Ruốc Hành Phi',
+    seoTitle: 'Cách Nấu Xôi Xéo Hà Nội Dẻo Thơm Óng Ả Chuẩn Vị Truyền Thống Phố Cổ',
+    prepTime: '6 - 8 giờ (ngâm gạo & đậu)',
+    cookTime: '45 - 50 phút (đồ 2 lửa)',
+    difficulty: 'Trung bình',
+    servings: '4 - 5 người',
+    ingredients: [
+      {
+        category: 'Nguyên liệu nếp xôi (Hạt dẻo vàng óng)',
+        items: [
+          '500g gạo nếp cái hoa vàng hạt mẩy tròn đều',
+          '1 củ nghệ tươi già giã lấy nước cốt (hoặc 1 thìa cà phê tinh bột nghệ nguyên chất)',
+          '1 thìa cà phê muối hạt',
+          '3 - 4 thìa canh mỡ gà ta thắng nguyên chất',
+        ],
+      },
+      {
+        category: 'Nguyên liệu đậu xanh (Mịn mượt tơi xốp)',
+        items: [
+          '300g đậu xanh tiêu cà vỏ (loại hạt nhỏ thơm bùi)',
+          '1/2 thìa cà phê muối tinh',
+          '1 thìa canh mỡ gà nóng (trộn khi giã)',
+        ],
+      },
+      {
+        category: 'Hành phi & mỡ gà gia truyền',
+        items: [
+          '200g mỡ gà ta lá (thắng lấy nước mỡ gà vàng sóng sánh)',
+          '250g hành tím khô Bắc (hành Kinh Môn hoặc hành ta thái mỏng)',
+          'Dầu ăn hoặc mỡ lợn để phi ngập hành',
+        ],
+      },
+      {
+        category: 'Thức ăn kèm truyền thống (Tùy chọn)',
+        items: [
+          'Ruốc thịt heo (chà bông) sao tơi sợi nhỏ',
+          'Chả quế nướng thơm giòn hoặc giò lụa thái lát',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Ngâm gạo nếp tạo màu vàng nghệ tự nhiên & ngâm đậu xanh',
+        time: '6 - 8 giờ (ngâm qua đêm)',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Hạt gạo no nước, ngấm đều màu vàng óng ả từ nghệ tự nhiên, hạt đậu xanh mềm tơi',
+        actionPoints: [
+          'Nghệ tươi già cạo vỏ, giã nát rồi hòa cùng 1 bát nước ấm, lọc qua rây lấy nước cốt nghệ trong vắt (không để lại bã lợn cợn).',
+          'Gạo nếp cái hoa vàng vo nhẹ tay 2 lần cho sạch bụi cám, tuyệt đối không chà xát mạnh làm vỡ hạt gạo.',
+          'Ngâm gạo nếp cùng nước cốt nghệ, hòa thêm 1 thìa cà phê muối hạt trong 6 - 8 tiếng (hoặc qua đêm). Muối giúp hạt xôi sau khi đồ đậm đà và lâu thiu.',
+          'Đậu xanh tiêu đãi sạch, nhặt bỏ hạt sâu lép rồi ngâm nước ấm 3 - 4 tiếng với 1/2 thìa cà phê muối tinh.',
+          'Sau khi ngâm đủ thời gian, đổ nếp và đậu ra rổ riêng, xả nhẹ nước lạnh rồi để ráo nước hoàn toàn trong 15 - 20 phút.',
+        ],
+        description:
+          'Gạo nếp cái hoa vàng vo nhẹ, ngâm cùng nước cốt nghệ tươi pha loãng và 1 thìa muối hạt khoảng 6 - 8 tiếng cho gạo ngậm đủ nước và nhuộm màu vàng rơm tự nhiên. Đậu xanh đãi sạch ngâm nước ấm 3 - 4 tiếng cho mềm.',
+        tip: 'Chỉ dùng một lượng nước cốt nghệ vừa đủ để hạt nếp có màu vàng ươm dịu mắt như hoa cúc, tránh cho quá nhiều nghệ sẽ khiến xôi bị nồng hắc mùi nghệ tươi.',
+      },
+      {
+        step: 2,
+        title: 'Hấp đậu xanh, giã nhuyễn & nắm đậu xanh thành quả (Bí quyết cốt lõi)',
+        time: '25 phút',
+        heat: 'Lửa vừa (hơi nước bốc đều)',
+        goal: 'Đậu xanh chín bở tơi, giã nhuyễn mịn như nhung và nắm chặt thành quả chắc nịch',
+        actionPoints: [
+          'Trộn đều đậu xanh đã ráo nước với một chút xíu muối tinh.',
+          'Cho đậu vào xửng hấp, dùng ngón tay dùi 4 - 5 lỗ thông hơi để hơi nước bốc lên đều khắp xửng. Hấp khoảng 20 - 25 phút đến khi miết thử hạt đậu thấy tan nát mịn không còn sượng.',
+          'Trút ngay đậu ra cối giã hoặc âu lớn khi còn đang nóng bốc khói nghi ngút. Dùng chày giã thật nhuyễn hoặc dùng muôi miết mạnh tay liên tục đến khi đậu mịn mượt không còn hạt lợn cợn.',
+          'Rưới 1 thìa canh mỡ gà nóng vào trộn đều cho đậu ngậy và tăng độ kết dính.',
+          'Khi đậu còn nóng ấm, dùng hai lòng bàn tay nắm và nén thật chặt tay thành 2 - 3 khối tròn/bầu dục chắc nịch (cỡ quả bưởi nhỏ hoặc quả bóng tennis). Nắm càng chặt thì khi thái xéo lát đậu càng mỏng dính, không bị vỡ vụn.',
+        ],
+        description:
+          'Đậu xanh hấp chín bở, trút ra khi còn đang bốc khói nóng hổi rồi giã thật nhuyễn mịn cùng chút mỡ gà. Nhanh tay dùng lòng bàn tay nén chặt thành những khối tròn chắc nịch.',
+        tip: 'Phải giã và nắm đậu ngay khi đậu còn đang nóng bốc khói. Nếu để đậu nguội, đậu sẽ bị khô tơi và hoàn toàn không thể nén thành quả được.',
+      },
+      {
+        step: 3,
+        title: 'Thắng mỡ gà vàng ươm & phi hành khô giòn tan thơm nức',
+        time: '20 phút',
+        heat: 'Lửa nhỏ liu riu (thắng mỡ) & Lửa vừa (phi hành)',
+        goal: 'Nước mỡ gà vàng óng thơm ngậy, hành phi màu vàng cánh gián giòn rụm không cháy đắng',
+        actionPoints: [
+          'Mỡ gà ta rửa sạch với chút muối và gừng, thái hạt lựu hoặc miếng nhỏ. Cho vào chảo gang cùng 2 thìa canh nước lọc, đun lửa vừa cho nước cạn và mỡ bắt đầu tiết ra.',
+          'Hạ lửa nhỏ liu riu đun đến khi tóp mỡ gà teo vàng ruộm thì vớt tóp ra, chắt lấy phần mỡ gà lỏng vàng ươm thơm nức mũi.',
+          'Hành tím khô bóc vỏ, dùng dao sắc thái lát đều tay theo chiều dọc củ hành (độ dày đồng đều khoảng 1.5mm). Rải hành ra rổ phơi gió hoặc hong quạt 30 phút cho se nhẹ mặt.',
+          'Đun sôi chảo dầu ăn/mỡ gà trên lửa vừa, thả hành vào phi. Đảo nhẹ tay đều đặn theo một chiều.',
+          'Khi thấy hành chuyển sang màu vàng rơm nhạt (khoảng 80% độ vàng) và cánh hành hơi co lại thì lập tức tắt bếp và dùng muôi thủng vớt ngay ra rây lót giấy thấm dầu.',
+          'Sức nóng của dầu còn đọng lại sẽ giúp hành tiếp tục chuyển sang màu vàng cánh gián hoàn hảo, giòn tan rôm rốp và để cả tuần vẫn giòn thơm.',
+        ],
+        description:
+          'Mỡ gà rửa sạch đem thắng lửa nhỏ lấy nước mỡ gà vàng óng. Hành tím thái lát mỏng phơi se mặt rồi phi trên lửa vừa đến khi chớm ngả vàng rơm thì vớt ra ngay vào rây thấm dầu để hành tự vàng giòn cánh gián.',
+        tip: 'Không đợi hành vàng sẫm trong chảo mới vớt ra vì dầu nóng sẽ làm hành bị cháy khét và đắng ngắt. Vớt lúc hành vừa chớm vàng rơm nhạt là chuẩn nhất.',
+      },
+      {
+        step: 4,
+        title: 'Kỹ thuật đồ xôi 2 lửa - Bí quyết hạt nếp dẻo quánh óng ả',
+        time: '35 - 40 phút (2 lần đồ)',
+        heat: 'Lửa to nước sôi sùng sục',
+        goal: 'Từng hạt nếp căng mẩy bóng bẩy, dẻo mềm không dính bết, để từ sáng đến tối vẫn mềm thơm',
+        actionPoints: [
+          'Đồ lửa 1 (25 - 30 phút): Đun sôi nước trong nồi đồ xôi. Trút gạo nếp đã ráo nước vào xửng, dùng đũa xăm nhiều lỗ thông hơi từ đáy lên. Đậy nắp kín, đồ khoảng 25 - 30 phút trên lửa lớn đến khi hạt nếp chín tới khoảng 80%, hạt gạo nở trong đều.',
+          'Dỡ xôi ra mẹt hoặc mâm sạch, dùng đũa xới tơi đều và quạt cho xôi bay bớt hơi nước. Rưới 2 thìa canh mỡ gà vàng óng vào xôi, dùng đũa đảo đều để mỡ gà bao bọc lấy từng hạt nếp căng mọng.',
+          'Để xôi nguội tự nhiên khoảng 20 - 30 phút.',
+          'Đồ lửa 2 (10 - 15 phút): Trước khi ăn, cho xôi trở lại xửng hấp thêm 10 - 15 phút. Lúc này hạt nếp hút trọn mỡ gà, trở nên dẻo quánh, bóng mượt như ngọc và dậy mùi thơm nức mũi.',
+        ],
+        description:
+          'Gạo nếp đồ lửa 1 khoảng 25 phút cho chín tới. Dỡ xôi ra mâm, quạt cho bay bớt hơi rồi rưới mỡ gà vào trộn đều. Trước khi ăn cho xôi vào đồ lửa 2 thêm 15 phút giúp xôi dẻo quánh, hạt nếp óng ả và để cả ngày không bị lại gạo.',
+        tip: 'Quy trình "Đồ xôi 2 lửa" là bí kíp gia truyền của các gánh xôi phố cổ Hà Nội. Hạt nếp được thẩm thấu mỡ gà giữa 2 lần đồ sẽ mềm dẻo tuyệt đối mà hạt xôi vẫn tơi rời từng hạt, không hề bị nát hay lại gạo.',
+      },
+      {
+        step: 5,
+        title: 'Thao tác thái xéo đậu xanh & hoàn thiện gói xôi ấm lòng',
+        time: '3 phút',
+        heat: 'Xôi và mỡ gà đang nóng hổi',
+        goal: 'Đĩa/gói xôi xéo chuẩn mực: nếp vàng ươm, đậu xanh mỏng mịn phủ kín, mỡ gà óng ánh và hành phi ngập tràn',
+        actionPoints: [
+          'Xới một muôi xôi xéo nóng hổi ra đĩa hoặc đặt lên lá chuối/lá sen tươi.',
+          'Tay trái cầm chặt quả đậu xanh, tay phải dùng con dao bài sắc bén đặt nghiêng góc dao, thoăn thoắt thái từng lát đậu mỏng tang rơi xéo phủ đều kín mặt xôi.',
+          'Dùng thìa múc một muôi mỡ gà nóng rưới đều lên trên lớp đậu xanh (mỡ gà nóng lập tức làm đậu xanh mềm ngậy và thơm phức).',
+          'Rắc một nhúm hành phi giòn rụm màu vàng cánh gián lên trên cùng.',
+          'Thêm chút ruốc thịt heo xé sợi và vài lát chả quế nướng thơm nếu thích.',
+        ],
+        description:
+          'Xới xôi nóng ra lá hoặc đĩa, cầm quả đậu xanh dùng dao bén thái xéo từng lát mỏng mịn phủ kín xôi. Rưới muôi mỡ gà vàng óng lên trên, rắc hành phi giòn tan và thêm ruốc thịt chả quế thưởng thức ngay.',
+        tip: 'Động tác dùng dao thái xéo quả đậu xanh tạo nên những lát đậu mịn tơi như lụa tan chảy ngay khi chạm vào đầu lưỡi - đó chính là nguồn gốc cái tên "Xôi Xéo" trứ danh đất Hà Thành.',
+      },
+    ],
+    chefSecret:
+      '3 bí quyết vàng tạo nên linh hồn Xôi Xéo Hà Nội: 1. Đồ xôi 2 lửa (trộn mỡ gà ở giữa 2 lần đồ giúp xôi để cả ngày vẫn dẻo mềm không cứng lại gạo); 2. Giã và nén đậu xanh khi còn bốc khói nóng rồi dùng dao bén thái xéo thật mỏng; 3. Dùng mỡ gà ta thắng nguyên chất thay cho dầu ăn để rưới lên xôi tạo vị béo ngậy đặc trưng không thể thay thế.',
+    recommendedSauce:
+      'Mỡ gà ta nguyên chất rưới đẫm, ăn kèm ruốc thịt heo tự làm, chả quế nướng giòn thơm hoặc giò lụa truyền thống.',
+  },
 };
 
 /**
