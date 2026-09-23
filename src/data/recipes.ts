@@ -1336,6 +1336,324 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
       'Chí chương Hải Phòng (tương ớt cổ truyền đất Cảng lên men chua cay đằm vị) và nước mắm cốt nhĩ tỏi ớt chanh.',
   },
 
+  'banh-da-cua-be': {
+    dishId: 'banh-da-cua-be',
+    dishName: 'Bánh Đa Cua Bể Hải Phòng Chả Lá Lốt',
+    seoTitle: 'Cách Nấu Bánh Đa Cua Hải Phòng Nước Dùng Đậm Đà Chuẩn Vị Đất Cảng',
+    prepTime: '45 phút',
+    cookTime: '1 giờ',
+    difficulty: 'Trung bình',
+    servings: '4 - 5 người',
+    ingredients: [
+      {
+        category: 'Cua tươi, Tảng riêu béo ngậy & Bánh đa đỏ Dư Hàng Kênh',
+        items: [
+          '700g cua đồng tươi sống (hoặc kết hợp 1 con cua bể chắc thịt): giã nhuyễn lọc lấy 2.5 lít nước cốt cua, khều riêng gạch cua',
+          '200g thịt cua bể (hoặc tôm sú tươi bóc nõn) xào săn thơm ngọt',
+          '500g bánh đa đỏ Hải Phòng khô (loại sợi bản dày dẻo dai đặc sản làng Dư Hàng Kênh)',
+          'Gạch cua tươi chưng dầu màu điều vàng óng thơm phức',
+        ],
+      },
+      {
+        category: 'Xương ninh & Nước dùng riêu cua ngọt thanh sóng sánh',
+        items: [
+          '500g sườn non hoặc xương ống heo chần sạch hầm lấy nước cốt ngọt sâu',
+          '4 quả cà chua chín đỏ mọng bổ múi cau',
+          '2 quả me chua tươi (hoặc 3 thìa canh giấm bỗng nếp) tạo vị chua thanh dịu mát',
+          '2 thìa canh dầu màu điều (tạo màu nước dùng vàng cam óng ả)',
+          'Hành khô Hải Phòng thái mỏng phi vàng giòn ruộm thơm nức mũi',
+          'Gia vị: Nước mắm cốt nhĩ cá cơm ngon, muối hạt, đường phèn, hạt nêm, tiêu xay',
+        ],
+      },
+      {
+        category: 'Topping Chả lá lốt nướng xém, Chả cá & Rau ăn kèm',
+        items: [
+          'Chả lá lốt: 250g thịt nạc vai xay nhuyễn, mộc nhĩ nấm hương băm nhỏ, hành tím, tiêu xay cuộn lá lốt tươi chiên xém cạnh thơm lừng',
+          '200g chả cá Hải Phòng (hoặc chả mọc viên) chiên vàng thái lát mỏng',
+          '1 mớ rau muống xanh non nhặt bớt lá chần giòn (hoặc rau rút theo mùa)',
+          'Hành hoa, mùi tàu (ngò gai) rửa sạch thái nhỏ',
+          'Chí chương Hải Phòng (tương ớt cay lên men gia truyền đất Cảng) hoặc ớt chưng dầu, quất tươi, chanh cốm',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế cua, giã lọc lấy nước cốt và khều gạch cua',
+        time: '20 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Nước cốt cua sánh mịn, thơm tự nhiên, gạch cua tươi sạch',
+        actionPoints: [
+          'Cua đồng ngâm rửa sạch bùn đất, bóc yếm và tách mai cua. Dùng que tăm khều riêng gạch cua vào chén nhỏ.',
+          'Phần mai và thân cua cho vào cối cùng 1 thìa cà phê muối hạt giã nhuyễn (hoặc xay mịn). Muối hạt giúp thịt cua kết tảng dày dặn hơn khi nấu.',
+          'Châm 2.5 lít nước sạch vào cua giã, khuấy đều rồi lọc qua rây 2 - 3 lần để lấy sạch nước cốt ngọt lịm, bỏ bã xác cua.',
+        ],
+        description:
+          'Tách mai cua khều gạch để riêng. Thân cua giã nhuyễn cùng chút muối hạt, hòa nước lọc qua rây 2 - 3 lần lấy nước cốt cua trong ngọt.',
+        tip: 'Cho chút muối hạt khi giã cua giúp thịt cua nổi lên đóng thành tảng to chắc nịch và béo ngậy hơn.',
+      },
+      {
+        step: 2,
+        title: 'Ninh nước dùng sườn và nấu tảng riêu cua béo ngậy',
+        time: '40 phút',
+        heat: 'Lửa vừa rồi hạ nhỏ liu riu',
+        goal: 'Tảng riêu cua nổi dày dặn nguyên khối, nước dùng ngọt sâu từ tủy xương',
+        actionPoints: [
+          'Sườn non chặt khúc vừa ăn, chần nước sôi 3 phút rồi rửa sạch, ninh cùng 1 lít nước trên lửa nhỏ liu riu cho mềm róc thịt.',
+          'Đặt nồi nước lọc cua lên bếp, đun lửa vừa và dùng đũa khuấy nhẹ theo một chiều đáy nồi để thịt cua không bị khê bén đáy.',
+          'Khi nước bắt đầu nóng và mảng thịt cua kết tảng nổi dần lên mặt, hạ lửa nhỏ liu riu không khuấy nữa để riêu cua đóng thành từng tảng dày vững chắc.',
+          'Dùng muôi lỗ nhẹ nhàng vớt các tảng riêu cua ra đĩa riêng để không bị vỡ nát khi nấu.',
+          'Trút phần nước ninh sườn non vào nồi nước riêu cua để tạo vị ngọt sâu thanh mát.',
+        ],
+        description:
+          'Ninh sườn non lấy nước ngọt. Nấu nồi nước cua trên lửa vừa, khuấy nhẹ đáy đến khi thịt cua đóng tảng nổi lên thì vớt ra đĩa riêng rồi trút nước sườn vào hòa chung.',
+      },
+      {
+        step: 3,
+        title: 'Cuộn chả lá lốt chiên xém, chưng gạch cua và hoàn thiện nước dùng',
+        time: '20 phút',
+        heat: 'Lửa vừa',
+        goal: 'Chả lá lốt thơm lừng xém cạnh, gạch cua vàng óng, nước dùng chua thanh đậm đà',
+        actionPoints: [
+          'Trộn thịt nạc vai xay với mộc nhĩ nấm hương băm, hành tím băm, 1 thìa nước mắm ngon và tiêu xay. Đặt lá lốt mặt gân lên trên, cho nhân vào cuộn tròn chặt tay rồi chiên lửa vừa cho xém cạnh thơm nức.',
+          'Phi thơm hành khô với 2 thìa dầu màu điều, trút gạch cua tươi vào chưng lửa nhỏ cho gạch chín vàng óng thơm phức, rưới 1/2 lên đĩa tảng riêu cua, 1/2 trút vào nồi nước dùng.',
+          'Xào 1/2 lượng cà chua trút vào nồi nước dùng cùng nước cốt me dầm nát. Thả nốt phần cà chua múi cau còn lại vào.',
+          'Nêm nước mắm cốt nhĩ hảo hạng, đường phèn, muối hạt cho vị nước dùng có độ chua dịu, ngọt sâu từ thịt cua và xương ninh.',
+        ],
+        description:
+          'Cuộn chả lá lốt chiên xém cạnh thơm lừng. Chưng gạch cua với dầu điều thơm phức rồi rưới lên tảng riêu. Xào cà chua trút vào nồi nước dùng cùng nước cốt me và nêm nếm vừa vị.',
+        tip: 'Rưới gạch cua chưng dầu điều lên đĩa tảng riêu giúp riêu cua bóng bẩy, vàng ươm và thơm ngậy đặc sắc.',
+      },
+      {
+        step: 4,
+        title: 'Chần rau muống giòn xanh và chần bánh đa đỏ dẻo dai',
+        time: '10 phút',
+        heat: 'Nồi nước sôi sùng sục',
+        goal: 'Rau muống xanh mướt giòn sần sật, sợi bánh đa đỏ dẻo dai không nát',
+        actionPoints: [
+          'Rau muống non nhặt khúc, chần nhanh qua nồi nước sôi có chút muối trong 40 giây rồi vớt ra ngâm ngay vào âu nước đá lạnh để giữ màu xanh ngọc và độ giòn sần sật.',
+          'Bánh đa đỏ Hải Phòng khô ngâm nước lạnh 5 phút cho mềm sợi, vớt ra ráo nước.',
+          'Khi chuẩn bị ăn, cho bánh đa đỏ vào vợt chần qua nồi nước sôi trong 30 - 45 giây cho sợi bánh chín dẻo dai rồi xốc ráo nước, chia đều vào từng tô lớn.',
+        ],
+        description:
+          'Chần rau muống ngâm nước đá giữ độ giòn xanh. Bánh đa đỏ ngâm mềm rồi chần qua nước sôi 30 - 45 giây cho sợi dẻo dai.',
+      },
+      {
+        step: 5,
+        title: 'Trình bày tô bánh đa cua Hải Phòng đầy ắp, quyến rũ sắc hương',
+        time: '5 phút',
+        heat: 'Nồi nước dùng sôi sùng sục',
+        goal: 'Tô bánh đa rực rỡ sắc màu, sợi đỏ dẻo, riêu béo ngậy, chả thơm nức, ngập tràn hành phi',
+        actionPoints: [
+          'Xếp lên mặt tô bánh đa đỏ: tảng riêu cua vàng óng, 3 - 4 miếng chả lá lốt xém cạnh, chả cá Hải Phòng thái lát, sườn non mềm róc thịt, thịt cua bể xào, rau muống xanh giòn và múi cà chua đỏ cam.',
+          'Rắc hành hoa, mùi tàu thái nhỏ và rắc ngập tràn hành khô phi vàng giòn ruộm lên trên.',
+          'Múc nước dùng riêu cua sôi sùng sục chan ngập tô bánh đa.',
+          'Thưởng thức ngay khi còn bốc khói cùng đĩa rau sống, vắt quất tươi và thêm một thìa chí chương Hải Phòng cay nồng xé lưỡi.',
+        ],
+        description:
+          'Xếp bánh đa ra tô, bày riêu cua, chả lá lốt, chả cá, sườn non, thịt cua, rau muống, rắc hành phi giòn và chan ngập nước dùng sôi sùng sục. Thêm chí chương cay xè và thưởng thức.',
+      },
+    ],
+    chefSecret:
+      'Bí quyết cốt tử của bánh đa cua Hải Phòng nằm ở sợi bánh đa đỏ dẻo dai không bị chua nát, tảng riêu cua đồng nguyên khối béo ngậy được chưng cùng gạch cua phi thơm óng ả, và hương thơm quyến rũ không thể lẫn vào đâu được của chả lá lốt xém cạnh. Nước dùng có vị chua thanh thoát từ me/giấm bỗng, ngọt đậm đà từ cua và xương hầm, khi ăn cùng thìa chí chương đỏ au sẽ bùng nổ trọn vẹn phong vị đất Cảng.',
+    recommendedSauce:
+      'Chí chương Hải Phòng (tương ớt cay lên men gia truyền Hải Phòng) hoặc ớt chưng dầu xào cay.',
+  },
+
+  'banh-mi-que-hai-phong': {
+    dishId: 'banh-mi-que-hai-phong',
+    dishName: 'Bánh Mì Que Hải Phòng Pate Cay Cay',
+    seoTitle: 'Cách Làm Bánh Mì Que Hải Phòng Patê Béo Ngậy Giòn Rụm Chuẩn Vị Đất Cảng',
+    prepTime: '30 phút',
+    cookTime: '20 phút',
+    difficulty: 'Dễ',
+    servings: '4 - 5 người (12 - 15 chiếc)',
+    ingredients: [
+      {
+        category: 'Vỏ bánh mì que & Patê Cột Đèn béo ngậy',
+        items: [
+          '12 - 15 chiếc bánh mì que Hải Phòng (loại bánh mì thon nhỏ dài chừng 2 ngón tay, vỏ mỏng xốp)',
+          '300g gan heo tươi (ngâm sữa tươi không đường 30 phút để khử sạch độc tố và mùi tanh)',
+          '300g thịt nạc vai heo có chút mỡ xay nhuyễn',
+          '200g mỡ phần lợn (thái hạt lựu nhỏ để trộn nhân và lót đáy khuôn hấp patê)',
+          '1/2 ổ bánh mì xé nhỏ ngâm sữa tươi (bí quyết gia truyền giúp patê mềm mượt dẻo quánh)',
+          '1 củ hành tây băm nhỏ, 4 củ hành tím, 1 củ tỏi băm nhuyễn, 50g bơ lạt (hoặc mỡ lợn)',
+          'Gia vị: 1 thìa canh tiêu bắc đập dập cay nồng, 1 thìa canh nước mắm cốt nhĩ ngon, hạt nêm, chút ngũ vị hương',
+        ],
+      },
+      {
+        category: 'Chí chương Hải Phòng (Tương ớt cay lên men gia truyền)',
+        items: [
+          '1 bát nhỏ chí chương Hải Phòng (ớt tươi xay nhuyễn ủ lên men chua cay đằm vị)',
+          'Chút mỡ patê vàng óng chảy ra khi hấp để quét lòng bánh',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Làm Patê Cột Đèn Hải Phòng béo ngậy, thơm nức mũi',
+        time: '35 phút',
+        heat: 'Lửa nhỏ hấp cách thủy',
+        goal: 'Khối patê mềm mướt như nhung, màu nâu hồng quyến rũ, ngậy béo hương bơ tiêu',
+        actionPoints: [
+          'Gan heo ngâm sữa tươi 30 phút, rửa sạch thái lát mỏng. Phi thơm hành tỏi với bơ lạt, trút gan heo, thịt vai xay và bánh mì ngâm sữa vào xào chín tới cùng nước mắm, tiêu đập dập.',
+          'Cho hỗn hợp vừa xào vào cối xay nhuyễn mịn.',
+          'Xếp một lớp mỡ khổ thái mỏng lót dưới đáy khuôn, trút hỗn hợp patê lên trên, rắc hạt tiêu đập dập rồi đậy kín giấy bạc.',
+          'Hấp cách thủy lửa nhỏ trong 2 - 3 tiếng (hoặc hầm nồi áp suất 1 tiếng) cho mỡ tan chảy quyện đều vào từng thớ thịt gan, tạo độ béo ngậy tan chảy trên đầu lưỡi.',
+        ],
+        description:
+          'Xào gan heo ngâm sữa với thịt xay, bơ và bánh mì ngâm sữa rồi xay nhuyễn. Lót mỡ phần đáy khuôn, trút patê vào hấp cách thủy cho chín mềm béo ngậy.',
+        tip: 'Lót mỡ phần dưới đáy khuôn khi hấp giúp patê có lớp mỡ trong veo béo ngậy đặc trưng của patê Cột Đèn Hải Phòng.',
+      },
+      {
+        step: 2,
+        title: 'Rạch bánh mì và phết nhân patê béo ngậy',
+        time: '5 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Nhân patê trải đều dọc thân bánh mì que, không bị rách vỏ',
+        actionPoints: [
+          'Dùng dao sắc rạch một đường dọc theo thân chiếc bánh mì que.',
+          'Dùng thìa phết một lớp patê Cột Đèn dày dặn ngập tràn ruột bánh.',
+          'Rưới thêm chút nước mỡ patê vàng óng béo ngậy dọc theo khe bánh để khi nướng bánh thơm nức mũi.',
+        ],
+        description:
+          'Rạch dọc thân bánh mì que, phết lớp patê Cột Đèn mềm mướt đầy đặn kèm chút mỡ patê béo ngậy.',
+      },
+      {
+        step: 3,
+        title: 'Nướng bánh mì que vàng giòn rụm',
+        time: '5 phút',
+        heat: '180°C - 200°C',
+        goal: 'Vỏ bánh mì vàng ruộm giòn tan vỡ vụn trong miệng, patê bên trong nóng hổi tan chảy',
+        actionPoints: [
+          'Làm nóng lò nướng hoặc nồi chiên không dầu ở 180°C trước 5 phút.',
+          'Xếp các que bánh mì vào nướng trong 3 - 5 phút đến khi vỏ bánh ngả vàng rộm, sờ vào thấy giòn cứng phát ra tiếng lách tách.',
+        ],
+        description:
+          'Nướng bánh mì que trong nồi chiên không dầu hoặc lò nướng 3 - 5 phút ở 180°C đến khi vỏ ngoài vàng giòn rụm.',
+      },
+      {
+        step: 4,
+        title: 'Thưởng thức bánh mì que nóng hổi cùng chí chương cay xè',
+        time: '2 phút',
+        heat: 'Thưởng thức ngay',
+        goal: 'Vỏ giòn rụm, patê béo ngậy quyện vị cay nồng xé lưỡi bùng nổ vị giác',
+        actionPoints: [
+          'Bơm trực tiếp chí chương đỏ au vào ruột bánh hoặc rót chí chương ra đĩa để chấm.',
+          'Cắn một miếng giòn tan rụm, cảm nhận vị béo ngậy đậm đà của patê Cột Đèn hòa quyện hoàn hảo với vị cay nồng đặc trưng của chí chương đất Cảng.',
+        ],
+        description:
+          'Chấm ngập bánh mì que giòn tan vào bát chí chương đỏ rực cay nồng nàn và thưởng thức ngay khi còn nóng hổi.',
+      },
+    ],
+    chefSecret:
+      'Bánh mì que Hải Phòng là món ăn vặt khô nướng giòn kinh điển, hoàn toàn không có nước dùng. Bí quyết nằm ở lớp vỏ bánh mì nướng giòn tan phát ra tiếng rôm rốp, nhân patê Cột Đèn béo ngậy tự làm với mỡ phần tan chảy, và không thể thiếu bát chí chương (tương ớt gia truyền Hải Phòng) cay nồng xé lưỡi.',
+    recommendedSauce:
+      'Chí chương Hải Phòng (tương ớt cay lên men gia truyền Hải Phòng) cay xè đặc trưng.',
+  },
+
+  'pho-cuon-thit-bo': {
+    dishId: 'pho-cuon-thit-bo',
+    dishName: 'Phở Cuốn Thịt Bò Rau Thơm Ngũ Xã',
+    seoTitle: 'Cách Làm Phở Cuốn Hà Nội Thịt Bò Tươi Ngon Nước Chấm Chua Ngọt Chuẩn Vị',
+    prepTime: '25 phút',
+    cookTime: '15 phút',
+    difficulty: 'Dễ',
+    servings: '3 - 4 người (15 - 20 cuốn)',
+    ingredients: [
+      {
+        category: 'Bánh phở tráng bản to & Rau sống thanh mát',
+        items: [
+          '500g bánh phở cuốn tráng bản vuông (loại bánh tươi mềm mướt, dẻo dai, không bị rách)',
+          '1 cây xà lách tươi giòn rửa sạch vẩy thật ráo nước',
+          'Rau thơm phố cổ: rau mùi ta (ngò rí), rau húng láng (húng quế), kinh giới, ngổ hương',
+        ],
+      },
+      {
+        category: 'Thịt bò xào lăn thơm nức tỏi',
+        items: [
+          '400g thịt thăn bò hoặc thịt bắp bò tươi ngon, thái lát mỏng bản to',
+          '1 củ hành tây bổ múi cau mỏng xào cùng thịt bò',
+          '1 củ tỏi ta băm nhỏ (chia nửa ướp bò, nửa phi thơm)',
+          '1 thìa canh dầu hào ngon, 1 thìa canh nước tương, 1 thìa cà phê tiêu xay, dầu ăn',
+        ],
+      },
+      {
+        category: 'Nước chấm chua ngọt tỏi ớt chuẩn vị Ngũ Xã',
+        items: [
+          'Nước mắm cốt nhĩ truyền thống: 3 thìa canh',
+          'Đường cát: 2.5 thìa canh, giấm gạo nếp: 2 thìa canh, nước cốt chanh tươi: 1 thìa canh, nước lọc ấm: 6 thìa canh',
+          'Tỏi ta băm nhuyễn, ớt hiểm đỏ băm nhỏ (để tỏi ớt nổi bồng bềnh)',
+          'Đu đủ xanh và cà rốt tỉa hoa thái lát mỏng ngâm chua ngọt giòn sần sật',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Ướp và xào thịt bò thăn chín tới mềm mọng nước',
+        time: '15 phút',
+        heat: 'Lửa cực lớn',
+        goal: 'Thịt bò chín tới mềm mọng ngọt đậm đà, thơm lừng mùi tỏi phi, không ra nước',
+        actionPoints: [
+          'Thịt bò thái lát mỏng ngang thớ, ướp với 1/2 lượng tỏi băm, 1 thìa dầu hào, 1 thìa dầu ăn và chút tiêu trong 15 phút.',
+          'Đặt chảo lên bếp mở lửa cực lớn, phi thơm lượng tỏi còn lại với 2 thìa dầu ăn.',
+          'Trút thịt bò và hành tây vào đảo nhanh tay liên tục trên lửa lớn trong 2 - 3 phút đến khi thịt vừa chín tới tái mềm thì tắt bếp ngay, trút ra đĩa cho nguội bớt.',
+        ],
+        description:
+          'Thái thịt bò mỏng ướp tỏi dầu hào. Xào lửa cực lớn cùng hành tây trong 2 phút cho bò chín mềm mọng ngọt rồi trút ra đĩa.',
+        tip: 'Xào lửa thật lớn và đảo nhanh tay là bí quyết vàng để thịt bò mềm ngọt mọng nước mà không bị dai hay ra nước ướt bánh phở khi cuốn.',
+      },
+      {
+        step: 2,
+        title: 'Pha bát nước mắm chua ngọt tỏi ớt chuẩn phố Ngũ Xã',
+        time: '10 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Bát nước chấm chua ngọt thanh tao hài hòa, tỏi ớt nổi bồng bềnh đẹp mắt',
+        actionPoints: [
+          'Đu đủ và cà rốt thái lát mỏng bóp chút muối rồi ngâm giấm đường 15 phút cho giòn sần sật.',
+          'Hòa tan 6 thìa nước ấm với 2.5 thìa đường, 3 thìa nước mắm cốt ngon, 2 thìa giấm và 1 thìa nước cốt chanh.',
+          'Khuấy tan hoàn toàn rồi thả tỏi ớt băm nhuyễn vào (tỏi ớt sẽ nổi bồng bềnh trên mặt bát nước chấm), thả thêm đu đủ cà rốt ngâm chua ngọt.',
+        ],
+        description:
+          'Pha nước mắm cốt với đường, giấm chanh và nước ấm cho vị chua ngọt dịu mát. Thả tỏi ớt băm nổi bồng bềnh cùng đu đủ cà rốt giòn sần sật.',
+      },
+      {
+        step: 3,
+        title: 'Cuộn phở cuốn tròn đều, mềm mướt chắc tay',
+        time: '10 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Cuốn phở trắng muốt căng tròn bóng bẩy, nhân thịt và rau cuộn chặt tay không rách',
+        actionPoints: [
+          'Trải từng lá bánh phở cuốn vuông vắn lên mặt phẳng đĩa hoặc thớt sạch.',
+          'Xếp lá xà lách tươi xanh, vài cọng rau mùi ta, rau húng láng lên trên.',
+          'Gắp một lượng thịt bò xào hành tây vừa vặn đặt ngay ngắn vào giữa phần rau.',
+          'Nhẹ nhàng cuộn tròn đều tay thật chắc chắn nhưng khéo léo để lá bánh phở ôm trọn lấy nhân mà không bị rách vỡ.',
+        ],
+        description:
+          'Trải lá bánh phở vuông, xếp xà lách, rau thơm và thịt bò xào lên rồi cuộn tròn chắc tay thành từng cuốn thon dài đẹp mắt.',
+      },
+      {
+        step: 4,
+        title: 'Trình bày và thưởng thức phở cuốn Hà Nội tươi mát',
+        time: '2 phút',
+        heat: 'Thưởng thức ngay',
+        goal: 'Đĩa phở cuốn trắng ngần mát mắt, chấm ngập bát mắm chua ngọt thanh vị',
+        actionPoints: [
+          'Xếp các cuốn phở ngay ngắn ra đĩa tròn, có thể cắt đôi vát chéo.',
+          'Chấm ngập cuốn phở vào bát nước chấm chua ngọt thơm nức tỏi ớt, ăn kèm miếng đu đủ giòn sần sật để cảm nhận trọn vẹn sự thanh tao nức tiếng của phố ẩm thực Ngũ Xã.',
+        ],
+        description:
+          'Bày phở cuốn ra đĩa, chấm cùng nước mắm chua ngọt tỏi ớt và đu đủ giòn sần sật. Thưởng thức hương vị tươi mát, thanh tao đậm chất Hà Thành.',
+      },
+    ],
+    chefSecret:
+      'Phở cuốn Hà Nội (làng Ngũ Xã) là món cuốn tươi nguội thanh mát, hoàn toàn không có nước dùng chan như phở nước. Bánh phở phải mềm dai không nhão, thịt bò xào lửa lớn ngọt mềm mọng nước, và đặc biệt bát nước mắm chấm phải pha chua ngọt thanh tao, tỏi ớt băm nổi bồng bềnh đẹp mắt.',
+    recommendedSauce:
+      'Nước mắm chua ngọt tỏi ớt pha thanh vị cùng đu đủ, cà rốt giòn chua ngọt.',
+  },
+
   'com-tam-suon-bi-cha': {
     dishId: 'com-tam-suon-bi-cha',
     dishName: 'Cơm Tấm Sườn Bì Chả Đặc Biệt Sài Gòn',
@@ -2432,7 +2750,24 @@ export function getRecipeArticleTitle(dish: Dish, recipe?: DishRecipe): string {
     return `Cách Làm ${cleanName} Thanh Đạm, Đậm Đà Chuẩn Cơm Chay`;
   }
 
-  // 1. Phở, Bún, Miến, Mì, Hủ tiếu, Bánh canh
+  // 1. Món bánh mì, gỏi cuốn, phở cuốn, nem (Ưu tiên kiểm tra trước bún/phở/mì để tránh dính chữ 'mì' trong 'bánh mì' hay 'phở' trong 'phở cuốn')
+  if (lowerName.includes('bánh mì que')) {
+    return `Cách Làm ${cleanName} Patê Béo Ngậy Giòn Rụm Chuẩn Vị Đất Cảng`;
+  }
+  if (lowerName.includes('bánh mì')) {
+    return `Cách Làm ${cleanName} Giòn Rụm, Đậm Đà Chuẩn Vị Đường Phố`;
+  }
+  if (
+    cat === 'banhmi_cuon' ||
+    lowerName.includes('phở cuốn') ||
+    lowerName.includes('gỏi cuốn') ||
+    lowerName.includes('bò bía') ||
+    lowerName.includes('nem cuốn')
+  ) {
+    return `Cách Làm ${cleanName} Tươi Ngon, Nước Chấm Chua Ngọt Chuẩn Vị`;
+  }
+
+  // 2. Phở, Bún, Miến, Mì, Hủ tiếu, Bánh canh
   if (lowerName.includes('bún chả') && !lowerName.includes('chả giò') && !lowerName.includes('chả cá')) {
     return `Cách Làm ${cleanName} Thịt Nướng Than Hoa, Nước Chấm Đậm Đà Chuẩn Vị`;
   }
@@ -2444,6 +2779,9 @@ export function getRecipeArticleTitle(dish: Dish, recipe?: DishRecipe): string {
   }
   if (lowerName.includes('bún thịt nướng') || lowerName.includes('bún nem nướng')) {
     return `Cách Làm ${cleanName} Đậm Đà, Nước Mắm Chua Ngọt Chuẩn Vị Nam Bộ`;
+  }
+  if (lowerName.includes('phở xào') || lowerName.includes('mì xào') || lowerName.includes('hủ tiếu xào')) {
+    return `Cách Làm ${cleanName} Thơm Lừng, Đậm Đà Chuẩn Bếp Trưởng`;
   }
   if (
     lowerName.includes('trộn') ||
@@ -2457,9 +2795,9 @@ export function getRecipeArticleTitle(dish: Dish, recipe?: DishRecipe): string {
     cat === 'bun_pho_mi' ||
     cat === 'bun_pho' ||
     lowerName.includes('bún') ||
-    lowerName.includes('phở') ||
+    (lowerName.includes('phở') && !lowerName.includes('cuốn')) ||
     lowerName.includes('miến') ||
-    lowerName.includes('mì') ||
+    (lowerName.includes('mì') && !lowerName.includes('bánh mì')) ||
     lowerName.includes('hủ tiếu') ||
     lowerName.includes('bánh canh')
   ) {
@@ -2517,7 +2855,6 @@ export function getRecipeArticleTitle(dish: Dish, recipe?: DishRecipe): string {
     return `Cách Làm ${cleanName} Giòn Rụm, Đậm Đà Chuẩn Vị Đường Phố`;
   }
   if (
-    cat === 'banhmi_cuon' ||
     lowerName.includes('cuốn') ||
     lowerName.includes('gỏi cuốn') ||
     lowerName.includes('nem cuốn')
@@ -2569,27 +2906,30 @@ export function getDishRecipe(dish: Dish): DishRecipe {
   }
 
   // Derive cooking method & ingredients intelligently based on categories and tags
+  const isRollOrBanhMi =
+    dish.category === 'banhmi_cuon' ||
+    dish.name.toLowerCase().includes('bánh mì') ||
+    dish.name.toLowerCase().includes('cuốn') ||
+    dish.name.toLowerCase().includes('gỏi cuốn') ||
+    dish.name.toLowerCase().includes('bò bía') ||
+    dish.name.toLowerCase().includes('nem');
+
   const isSoupOrNoodle =
-    dish.category === 'bun_pho_mi' ||
-    dish.category === 'bun_pho' ||
-    dish.category === 'lau_chao' ||
-    dish.name.toLowerCase().includes('bún') ||
-    dish.name.toLowerCase().includes('phở') ||
-    dish.name.toLowerCase().includes('hủ tiếu') ||
-    dish.name.toLowerCase().includes('mì') ||
-    dish.name.toLowerCase().includes('canh');
+    !isRollOrBanhMi &&
+    (dish.category === 'bun_pho_mi' ||
+      dish.category === 'bun_pho' ||
+      dish.category === 'lau_chao' ||
+      dish.name.toLowerCase().includes('bún') ||
+      (dish.name.toLowerCase().includes('phở') && !dish.name.toLowerCase().includes('cuốn')) ||
+      dish.name.toLowerCase().includes('hủ tiếu') ||
+      (dish.name.toLowerCase().includes('mì') && !dish.name.toLowerCase().includes('bánh mì')) ||
+      dish.name.toLowerCase().includes('canh'));
 
   const isRiceOrStickyRice =
     dish.category === 'com_xoi' ||
     dish.category === 'com' ||
     dish.name.toLowerCase().includes('cơm') ||
     dish.name.toLowerCase().includes('xôi');
-
-  const isRollOrBanhMi =
-    dish.category === 'banhmi_cuon' ||
-    dish.name.toLowerCase().includes('bánh mì') ||
-    dish.name.toLowerCase().includes('cuốn') ||
-    dish.name.toLowerCase().includes('nem');
 
   const isGrillOrFried =
     dish.category === 'nuong_chien' ||
