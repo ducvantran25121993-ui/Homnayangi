@@ -126,13 +126,13 @@ export const TAB_CONFIG: Record<TabType, TabMeta> = {
   },
   about: {
     path: '/gioi-thieu',
-    title: 'Hôm Nay Ăn Gì - Câu Chuyện Về Người Bạn Đồng Hành Bữa Ăn Ngon',
-    description: 'Không còn đau đầu nghĩ "Hôm nay ăn gì?". Khám phá câu chuyện của tụi mình – người bạn thân giúp bạn chọn món ngon mỗi bữa cực nhanh, dễ dàng và tràn đầy niềm vui!',
+    title: 'Giới Thiệu Hôm Nay Ăn Gì - Nền Tảng Gợi Ý Ẩm Thực Thông Minh',
+    description: 'Khám phá Hôm Nay Ăn Gì (Angigio.com) - Nền tảng gợi ý món ngon thông minh qua Tarot, vòng quay và đầu bếp AI. Chấm dứt nỗi lo ăn gì mỗi ngày chỉ trong 3 giây!',
     label: 'Giới Thiệu',
     shortLabel: 'Giới Thiệu',
-    keywords: 'giới thiệu hôm nay ăn gì, câu chuyện hôm nay ăn gì, về chúng tôi, sứ mệnh ẩm thực việt nam, bạn đồng hành bữa ăn',
+    keywords: 'giới thiệu hôm nay ăn gì, về chúng tôi angigio, nền tảng gợi ý món ăn, bách khoa ẩm thực việt nam, hôm nay ăn gì, trưa nay ăn gì, tối nay ăn gì',
     ogImage: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&auto=format&fit=crop&q=80',
-    ogImageAlt: 'Giới Thiệu Hôm Nay Ăn Gì - Nền Tảng Gợi Ý Ẩm Thực Hàng Đầu',
+    ogImageAlt: 'Giới Thiệu Hôm Nay Ăn Gì - Nền Tảng Gợi Ý Ẩm Thực Thông Minh',
   },
   contact: {
     path: '/lien-he',
