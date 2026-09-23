@@ -109,6 +109,129 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
     recommendedSauce: 'Ăn kèm giấm tỏi ớt ngâm chua cay, quẩy giòn rụm và chanh tươi.',
   },
 
+  'pho-bo-sot-vang': {
+    dishId: 'pho-bo-sot-vang',
+    dishName: 'Phở Bò Sốt Vang Gia Truyền',
+    seoTitle: 'Cách Nấu Phở Bò Sốt Vang Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình',
+    prepTime: '30 phút',
+    cookTime: '2.5 - 3 giờ (ninh xương bò & hầm sốt vang)',
+    difficulty: 'Trung bình',
+    servings: '4 - 6 người',
+    ingredients: [
+      {
+        category: 'Thịt bò & Xương ninh nước dùng',
+        items: [
+          '800g nạm bò, dẻ sườn hoặc bắp hoa bò có chút gân dẻo (thái quân cờ 2.5 - 3cm)',
+          '1.2kg xương ống bò (hoặc xương bay) ninh nước dùng ngọt thanh sâu',
+          '1kg bánh phở tươi sợi mỏng mềm',
+        ],
+      },
+      {
+        category: 'Gia vị ướp sốt vang & Hương liệu thảo mộc',
+        items: [
+          '120ml - 150ml rượu vang đỏ (vang Đà Lạt hoặc Bordeaux)',
+          '3 - 4 quả cà chua chín đỏ mọng (băm nhuyễn) + 1 thìa canh tomato paste (tương cà đậm đặc)',
+          '2 hoa hồi, 1 thanh quế, 1 quả thảo quả (nướng thơm đập dập)',
+          '1/2 thìa cà phê bột ngũ vị hương (không cho quá nhiều)',
+          '2 thìa canh dầu màu điều (tạo màu đỏ cam sóng sánh tự nhiên)',
+          '1 củ gừng già, 2 củ tỏi khô, 3 củ hành khô tím băm nhuyễn',
+          'Gia vị: Nước mắm cốt nhĩ truyền thống, muối hạt, tiêu sọ xay, đường phèn, hạt nêm',
+        ],
+      },
+      {
+        category: 'Rau thơm & Đồ ăn kèm',
+        items: [
+          'Hành hoa (phần lá thái nhỏ, gốc hành trắng chẻ sợi ngâm nước đá)',
+          'Rau mùi ta (ngò rí), mùi tàu (ngò gai) rửa sạch thái nhỏ',
+          'Giấm ngâm tỏi ớt, tương ớt sa tế chưng cay nồng, chanh tươi, quẩy giòn',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Ninh nước dùng xương bò ngọt thanh tự nhiên',
+        time: '2 - 3 giờ',
+        heat: 'Lửa liu riu sau khi sôi',
+        goal: 'Nước dùng trong vắt, ngọt sâu từ tủy xương bò, thơm dịu hành gừng nướng',
+        actionPoints: [
+          'Chần 1.2kg xương ống bò qua nước sôi có gừng đập dập và 1 thìa muối hạt khoảng 5 phút để khử sạch mùi gây và bọt cặn.',
+          'Vớt xương ra rửa thật sạch dưới vòi nước lạnh rồi cho vào nồi lớn cùng 3.5 - 4 lít nước sạch.',
+          'Thêm 1 củ gừng già và 2 củ hành tím đã nướng thơm đập dập vào nồi hầm.',
+          'Đun sôi bùng rồi hạ ngay lửa nhỏ nhất ninh liu riu, hé nắp vung và vớt bọt liên tục để nước dùng luôn trong veo thanh khiết.',
+        ],
+        description:
+          'Xương ống bò chần qua nước sôi cùng gừng và muối để khử sạch bọt bẩn. Rửa lại thật sạch rồi cho vào nồi hầm cùng 4 lít nước, gừng và hành tím nướng thơm. Ninh lửa liu riu, hớt bọt liên tục để nước dùng trong ngọt làm cốt nền cho phở.',
+        tip: 'Mở hé nắp vung và ninh lửa liu riu, không đậy kín để nước dùng trong veo, không bị đục ngầu.',
+      },
+      {
+        step: 2,
+        title: 'Sơ chế và ướp thịt bò sốt vang',
+        time: '30 - 45 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Thịt bò ngấm sâu hương rượu vang, gia vị và thảo mộc, thớ thịt đỏ hồng thơm phức',
+        actionPoints: [
+          'Dẻ sườn hoặc bắp gân bò chần sơ qua nước sôi gừng khử mùi, rửa sạch, cắt miếng vuông quân cờ khoảng 2.5 - 3cm.',
+          'Ướp thịt với: 1/2 lượng rượu vang đỏ (khoảng 70ml), 1/2 thìa cà phê bột ngũ vị hương, 1 thìa canh tỏi băm, 1 thìa canh gừng băm, 1.5 thìa canh nước mắm cốt nhĩ, 1 thìa cà phê tiêu sọ xay, 1 thìa cà phê hạt nêm và 1 thìa canh dầu màu điều.',
+          'Trộn bóp đều tay cho thịt ngấm đều gia vị, bọc kín âu để nghỉ trong 30 - 45 phút.',
+        ],
+        description:
+          'Thịt dẻ sườn/gân bắp bò sơ chế sạch, thái miếng vuông quân cờ vừa ăn. Ướp thịt cùng một nửa phần rượu vang đỏ, tỏi gừng băm, ngũ vị hương, nước mắm, tiêu sọ và dầu màu điều trong 30 - 45 phút cho ngấm đậm.',
+        tip: 'Chọn thịt dẻ sườn hoặc bắp bò có dải gân trong xen kẽ. Khi hầm lâu, gân mềm dẻo như thạch béo bùi, thịt ngậm nước không bị khô xác.',
+      },
+      {
+        step: 3,
+        title: 'Xào sốt cà chua và xào săn thịt bò',
+        time: '10 - 12 phút',
+        heat: 'Lửa lớn',
+        goal: 'Thịt bò săn chắc, áo đều lớp sốt cà chua màu điều đỏ cam óng ả thơm lừng',
+        actionPoints: [
+          'Bắc nồi gang hoặc chảo sâu lòng lên bếp, cho 2 thìa canh dầu màu điều vào phi thơm hành tím và tỏi băm.',
+          'Trút cà chua băm nhuyễn và 1 thìa tương cà (tomato paste) vào xào chín mềm, dầm nhuyễn tạo thành hỗn hợp sốt đỏ sánh mịn tự nhiên.',
+          'Trút toàn bộ thịt bò đã ướp vào xào đảo nhanh tay trên lửa lớn trong 5 - 7 phút cho các mặt thịt se lại, ngấm đẫm sốt cà chua thơm nức mũi.',
+        ],
+        description:
+          'Phi thơm hành tỏi với dầu màu điều, cho cà chua băm và tương cà vào xào chín nhuyễn thành sốt đỏ óng. Trút thịt bò vào đảo lửa lớn cho thịt săn lại và quyện đều lớp sốt đậm đà.',
+      },
+      {
+        step: 4,
+        title: 'Hầm thịt bò sốt vang mềm nhừ & hòa quyện nước dùng',
+        time: '50 - 60 phút',
+        heat: 'Lửa nhỏ liu riu',
+        goal: 'Thịt bò chín mềm nhừ tan trên đầu lưỡi, gân dẻo trong, nước sốt vang đỏ sánh thơm ngát mùi thảo mộc',
+        actionPoints: [
+          'Nướng thơm 2 hoa hồi, 1 thanh quế và 1 thảo quả, cho vào túi lọc gia vị rồi thả vào nồi thịt bò.',
+          'Chắt khoảng 1.8 - 2 lít nước ninh xương bò trong ngọt từ Bước 1 chế ngập nồi thịt bò.',
+          'Đun sôi bùng, hớt sạch bọt rồi hạ lửa liu riu, đậy vung hầm khoảng 50 - 60 phút đến khi thịt bò mềm nhừ, gân bò dẻo trong.',
+          'Trước khi tắt bếp 10 phút, rưới 70ml rượu vang đỏ còn lại vào nồi, nêm thêm 1 thìa canh nước mắm cốt nhĩ và 1 thìa đường phèn cho vị ngọt hậu hài hòa.',
+        ],
+        description:
+          'Cho túi hoa hồi, quế, thảo quả nướng vào nồi thịt bò. Chế nước ninh xương bò vào ngập thịt, đun sôi rồi hạ lửa hầm liu riu 50 - 60 phút đến khi thịt mềm nhừ. Thêm phần rượu vang còn lại vào 10 phút cuối và nêm lại nước mắm, đường phèn cho tròn vị.',
+        tip: 'Chia rượu vang làm 2 đợt: Đợt đầu ướp giúp thịt mềm và khử mùi; đợt hai cho vào cuối giai đoạn hầm giúp bát phở giữ trọn vẹn hương nồng nàn quyến rũ của vang đỏ.',
+      },
+      {
+        step: 5,
+        title: 'Trần bánh phở và thưởng thức tô phở bò sốt vang bốc khói',
+        time: '5 phút',
+        heat: 'Nồi nước phở sôi sùng sục',
+        goal: 'Tô phở nóng hổi nghi ngút khói, màu hổ phách sóng sánh, thịt bò mềm dẻo, nước dùng thanh ngọt đậm đà',
+        actionPoints: [
+          'Chần bánh phở tươi qua nồi nước sôi trong 15 - 20 giây, xóc thật ráo nước rồi chia vào các tô sứ.',
+          'Gắp từng miếng thịt bò sốt vang và gân dẻo xếp lên giữa mặt tô phở.',
+          'Rải đều hành hoa, rau mùi ta, mùi tàu thái nhỏ và vài cọng đầu hành trắng chẻ sợi xung quanh.',
+          'Múc nước sốt vang nóng hổi đang sôi lục bục trên bếp chan đều ngập bánh phở, nước dùng màu nâu đỏ hổ phách sánh mịn óng ả.',
+          'Thưởng thức ngay khi còn bốc khói cùng giấm tỏi ớt, sa tế chưng cay nồng, chanh tươi và đĩa quẩy giòn rụm.',
+        ],
+        description:
+          'Chần bánh phở tươi qua nước sôi, cho vào tô. Xếp thịt bò sốt vang lên trên, rắc hành hoa, mùi tàu và đầu hành chẻ. Chan nước dùng sốt vang nóng hổi ngập bánh phở. Ăn kèm giấm tỏi, ớt sa tế và quẩy nóng.',
+      },
+    ],
+    chefSecret:
+      'Bí quyết phở bò sốt vang chuẩn vị gia đình là sự hòa quyện giữa nước dùng xương bò ninh ngọt thanh và thịt dẻ sườn bò hầm rượu vang đỏ. Tuyệt đối không dùng bột sắn hay bột năng làm sánh đặc như món bò kho bánh mì; nước phở phải giữ được độ thanh mướt, sóng sánh tự nhiên từ cà chua chín và tủy bò.',
+    recommendedSauce:
+      'Ăn kèm giấm tỏi ớt truyền thống Hà Nội, tương ớt xào (sa tế chưng cay), vài cọng đầu hành chẻ và đĩa quẩy giòn tan.',
+  },
+
   'com-tam-suon-bi-cha': {
     dishId: 'com-tam-suon-bi-cha',
     dishName: 'Cơm Tấm Sườn Bì Chả Đặc Biệt Sài Gòn',
