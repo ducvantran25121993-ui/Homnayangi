@@ -180,8 +180,8 @@ export const NUONG_CHIEN_DISHES: Dish[] = [
     estimatedPrice: 120000,
     calories: '550 - 680 kcal',
     description: 'Từng miếng cá lăng ướp riềng nghệ nướng vàng thơm đảo xèo xèo cùng thì là xanh mướt và đầu hành hoa, ăn cùng bún tươi, lạc rang bùi và mắm tôm sủi bọt.',
-    image: '/images/bun_ca.jpg',
-    popularTags: ['Ch.', 'Chả cá Lã Vọng', 'Cá lăng nướng', 'Hà Nội'],
+    image: '/images/cha_ca_la_vong.jpg',
+    popularTags: ['Chả cá Lã Vọng', 'Cá lăng nướng', 'Hà Nội', 'Món nướng than'],
     searchKeyword: 'Chả cá Lã Vọng',
   },
   {

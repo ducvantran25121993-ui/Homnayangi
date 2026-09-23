@@ -1654,6 +1654,261 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
       'Nước mắm chua ngọt tỏi ớt pha thanh vị cùng đu đủ, cà rốt giòn chua ngọt.',
   },
 
+  'cha-ca-la-vong-ha-noi': {
+    dishId: 'cha-ca-la-vong-ha-noi',
+    dishName: 'Chả Cá Lã Vọng Thì Là Hành Hoa Chảo Gang',
+    seoTitle: 'Cách Làm Chả Cá Lã Vọng Hà Nội Nướng Than Hoa, Xèo Xèo Chảo Mỡ Chuẩn Vị Phố Cổ',
+    prepTime: '40 phút',
+    cookTime: '20 phút',
+    difficulty: 'Trung bình',
+    servings: '4 - 5 người',
+    ingredients: [
+      {
+        category: 'Cá lăng tươi & Gia vị ướp riềng mẻ nghệ gia truyền',
+        items: [
+          '1kg cá lăng tươi sống (hoặc cá quả, cá nheo chắc thịt): lọc lấy phi lê thịt nạc dày, thái miếng con chì dày cỡ 1.5 - 2cm',
+          '4 thìa canh nước cốt riềng già (riềng củ già giã nhuyễn vắt lấy nước cốt đặc dậy mùi thơm cay ấm)',
+          '3 thìa canh mẻ ngấu chua thanh tao (lọc qua rây mịn khử sạch bã)',
+          '2 thìa canh mắm tôm ngon hảo hạng (chọn mắm tôm mịn màu hoa cà)',
+          '2 thìa canh nước cốt nghệ tươi giã nhuyễn (hoặc 1 thìa cà phê bột nghệ tạo sắc vàng hoàng gia)',
+          '1 thìa canh đường phèn giã mịn, 1 thìa cà phê tiêu sọ trắng xay, 2 thìa canh mỡ lợn (hoặc dầu ăn) để ướp ngấm',
+        ],
+      },
+      {
+        category: 'Rau thơm, Mỡ lợn & Ăn kèm trên chảo xèo xèo',
+        items: [
+          '300g thì là tươi non (cắt khúc dài khoảng 4 - 5cm)',
+          '300g hành hoa tươi (phần cọng trắng chẻ dọc, phần lá xanh cắt khúc dài bằng thì là)',
+          '100g mỡ phần lợn tươi (thắng lấy mỡ nước và tóp mỡ giòn để đảo cá xèo xèo trên chảo gang)',
+          '800g bún rối sợi nhỏ trắng muốt mượt mà',
+          '150g lạc rang (đậu phộng) vàng giòn rụm, xát sạch vỏ giã dập',
+          'Bánh đa nướng mè giòn tan bẻ miếng vừa ăn',
+        ],
+      },
+      {
+        category: 'Pha mắm tôm đánh sủi bọt chuẩn Tràng An',
+        items: [
+          '4 thìa canh mắm tôm ngon nguyên chất',
+          '1 thìa canh rượu trắng (khử tanh và giúp mắm tôm bông xốp mịn màng)',
+          '1.5 thìa canh đường cát, 1 quả chanh tươi vắt lấy nước cốt',
+          'Ớt hiểm đỏ thái lát, 1 - 2 giọt tinh dầu cà cuống (nếu có, linh hồn ẩm thực Hà Thành xưa)',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế phi lê cá lăng và ướp riềng mẻ nghệ đậm đà',
+        time: '20 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Từng miếng cá lăng thấm đẫm riềng mẻ, màu vàng óng ả, thịt se chắc không nát',
+        actionPoints: [
+          'Phi lê cá lăng rửa sạch với nước muối loãng pha chút rượu gừng khử sạch nhớt, thấm thật khô bằng khăn giấy, thái miếng dày 1.5 - 2cm vừa miệng.',
+          'Trong bát lớn, trộn đều nước cốt riềng già, mẻ ngấu lọc mịn, mắm tôm ngon, nước cốt nghệ, đường phèn, tiêu trắng xay và 2 thìa mỡ lợn.',
+          'Thoa đều hỗn hợp gia vị lên từng miếng cá, dùng tay massage nhẹ rồi ướp trong 30 - 45 phút cho ngấm sâu vào từng thớ thịt cá.',
+        ],
+        description:
+          'Thái cá lăng miếng vừa ăn, ướp nước cốt riềng, mẻ ngấu, mắm tôm, nghệ tươi và mỡ lợn trong 30 phút cho ngấm sâu gia vị.',
+        tip: 'Vắt lấy nước cốt riềng thay vì để cả bã giúp khi nướng cá không bị cháy khét bề mặt mà vẫn thơm nức mùi riềng ấm.',
+      },
+      {
+        step: 2,
+        title: 'Kẹp vỉ nướng than hoa cho cá vàng ươm xém cạnh',
+        time: '15 phút',
+        heat: 'Than hoa đỏ rực không khói',
+        goal: 'Hai mặt cá nướng vàng ruộm xém cạnh thơm lừng mùi than khói, bên trong thịt chín tới mọng nước',
+        actionPoints: [
+          'Xếp từng miếng cá lăng ngay ngắn vào vỉ nướng sắt có quét một lớp mỡ lợn mỏng chống dính.',
+          'Quạt than hoa cho hồng rực, đặt vỉ cá lên nướng cách mặt than 15cm. Lật trở đều tay liên tục.',
+          'Thỉnh thoảng dùng chổi quét thêm chút nước mỡ ướp lên mặt cá để miếng cá không bị khô.',
+          'Nướng khoảng 10 - 12 phút đến khi hai mặt cá săn vàng óng, xém cạnh bốc khói ngào ngạt thì gỡ cá ra đĩa.',
+        ],
+        description:
+          'Kẹp cá vào vỉ nướng trên than hoa đỏ rực, lật trở đều tay và phết mỡ liên tục đến khi cá chín xém vàng ươm thơm nức mũi.',
+      },
+      {
+        step: 3,
+        title: 'Đánh mắm tôm sủi bọt bông xốp thanh tao',
+        time: '5 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Bát mắm tôm sủi bọt trắng bông như tuyết, vị chua ngọt hài hòa dậy mùi thơm dịu',
+        actionPoints: [
+          'Cho 4 thìa mắm tôm, 1.5 thìa đường, 1 thìa rượu trắng vào bát, vắt nước cốt 1 quả chanh tươi.',
+          'Dùng đũa đánh thật nhanh và mạnh tay theo một chiều cho đến khi mắm tôm sủi bọt bông xốp ngập miệng bát.',
+          'Thả vài lát ớt hiểm đỏ tươi và nhỏ 1 - 2 giọt tinh dầu cà cuống vào cho dậy mùi thơm quý phái đặc trưng phố cổ.',
+        ],
+        description:
+          'Đánh mắm tôm cùng đường, rượu trắng và nước cốt chanh đến khi nổi bọt bông xốp mịn. Thêm ớt tươi và tinh dầu cà cuống.',
+        tip: 'Thêm thìa nhỏ rượu trắng là bí quyết cổ truyền giúp mắm tôm nhanh sủi bọt bông tuyết và khử sạch hoàn toàn vị gắt tanh.',
+      },
+      {
+        step: 4,
+        title: 'Đảo cá xèo xèo cùng hành hoa và thì là trên chảo gang',
+        time: '5 phút',
+        heat: 'Lửa vừa trên bếp tại bàn',
+        goal: 'Chảo cá sôi xèo xèo thơm nức mũi, hành thì là chín tái bóng bẩy ngấm mỡ cá',
+        actionPoints: [
+          'Đặt chảo gang nhỏ lên bếp cồn hoặc bếp từ mini giữa bàn ăn, múc 2 - 3 thìa mỡ lợn (hoặc mỡ thắng tóp giòn) đun sôi xèo xèo.',
+          'Gắp từng miếng cá lăng nướng vàng vào chảo, phủ ngập tràn thì là và hành hoa chẻ lên trên.',
+          'Dùng đũa đảo nhẹ tay trong 1 - 2 phút cho hành và thì là chín tái, ngấm mỡ cá bóng mượt thơm ngào ngạt.',
+        ],
+        description:
+          'Cho mỡ lợn vào chảo gang đun sôi, thả cá nướng cùng ngập tràn hành hoa và thì là vào đảo xèo xèo 1 - 2 phút cho chín tái thơm lừng.',
+      },
+      {
+        step: 5,
+        title: 'Thưởng thức chả cá Lã Vọng chuẩn phong vị người Tràng An',
+        time: '2 phút',
+        heat: 'Thưởng thức nóng hổi tại bàn',
+        goal: 'Bát bún hài hòa màu sắc, cá béo ngậy ngọt mềm, lạc giòn bùi, mắm tôm bốc khói ngất ngây',
+        actionPoints: [
+          'Gắp một chút bún rối trắng muốt vào bát riêng.',
+          'Gắp miếng cá lăng vàng ươm béo ngậy, gắp hành hoa và thì là nóng hổi bóng mỡ từ chảo đặt lên trên sợi bún.',
+          'Rắc một nhúm lạc rang vàng giã dập và bẻ chút bánh đa nướng giòn rụm.',
+          'Rưới một thìa mắm tôm đánh sủi bọt thơm nức, thêm 1 thìa mỡ sôi nóng hổi từ chảo rưới lên cho bốc khói.',
+          'Trộn nhẹ và thưởng thức ngay khi còn nóng bỏng môi để cảm nhận sự giao thoa tinh tế bậc nhất của ẩm thực Hà Thành.',
+        ],
+        description:
+          'Cho bún vào bát, xếp cá nướng, hành thì là từ chảo gang, rắc lạc rang, bánh đa nướng rồi rưới mắm tôm sủi bọt và thìa mỡ sôi nóng hổi. Thưởng thức ngay tại bàn.',
+      },
+    ],
+    chefSecret:
+      'Chả cá Lã Vọng là món nướng than hoa kết hợp xào chảo mỡ xèo xèo tại bàn, tuyệt đối không phải món nấu canh hay bún nước dùng chan. Tinh hoa gia truyền số 14 phố Chả Cá xưa nằm ở 4 điểm: Chọn cá lăng thịt chắc ngọt béo không bở; Ướp bằng nước cốt riềng già đậm đặc và mẻ ngấu chua thanh; Nướng vỉ trên than hoa cho xém cạnh thơm nức khói; và ăn kèm ngập tràn thì là, hành hoa cùng bát mắm tôm đánh sủi bọt bông tuyết.',
+    recommendedSauce:
+      'Mắm tôm đánh sủi bọt bông xốp với rượu trắng, nước cốt chanh, ớt tươi và tinh dầu cà cuống (hoặc nước mắm chanh tỏi ớt cho người không quen ăn mắm tôm).',
+  },
+
+  'banh-cuon-nong-thit-bam': {
+    dishId: 'banh-cuon-nong-thit-bam',
+    dishName: 'Bánh Cuốn Nóng Thịt Băm Mộc Nhĩ Cà Cuống',
+    seoTitle: 'Cách Làm Bánh Cuốn Nóng Vỏ Mỏng Mướt, Nước Chấm Ấm Nóng Chuẩn Vị Hà Nội',
+    prepTime: '30 phút (ngâm bột)',
+    cookTime: '25 phút',
+    difficulty: 'Trung bình',
+    servings: '4 người (đĩa đầy đặn)',
+    ingredients: [
+      {
+        category: 'Bột bánh cuốn mỏng mướt (pha chảo hoặc nồi hơi)',
+        items: [
+          '200g bột gạo tẻ ngon (chọn loại bột mới, hạt mịn không có mùi chua)',
+          '70g bột năng (tạo độ dai dẻo mướt trong suốt cho vỏ bánh)',
+          '30g bột bắp (hoặc bột nếp, giúp bánh giữ độ mềm mượt khi nguội)',
+          '800ml nước lọc nguội (ngâm bột 2 - 3 tiếng, chắt bỏ bớt nước trong và bù lại lượng nước tương đương để bánh trong veo không mùi bột cũ)',
+          '1 thìa cà phê muối tinh, 1 thìa canh dầu ăn',
+        ],
+      },
+      {
+        category: 'Nhân thịt băm mộc nhĩ nấm hương thơm lừng',
+        items: [
+          '300g thịt nạc vai (nạc dăm) heo có chút mỡ xay nhỏ',
+          '30g mộc nhĩ khô ngâm nở, rửa sạch thái sợi nhỏ băm vụn',
+          '20g nấm hương khô ngâm nở thái nhỏ thơm ngát',
+          '4 củ hành khô băm nhỏ, 1 thìa canh nước mắm cốt nhĩ ngon, 1 thìa cà phê tiêu bắc xay, hạt nêm, dầu ăn',
+        ],
+      },
+      {
+        category: 'Hành phi vàng giòn & Topping ăn kèm',
+        items: [
+          '200g hành tím ta (bào mỏng đều, phơi se mặt rồi phi vàng giòn ruộm; giữ lại phần dầu phi hành)',
+          '250g chả quế Hà Nội nướng vàng thơm (thái lát vát mỏng) hoặc chả lụa',
+          'Rau thơm ăn kèm: rau mùi ta (ngò rí), rau húng bạc hà tươi non',
+        ],
+      },
+      {
+        category: 'Nước chấm bánh cuốn ấm nóng gia truyền',
+        items: [
+          'Nước mắm cốt nhĩ ngon: 4 thìa canh',
+          'Đường cát: 3 thìa canh, giấm gạo nếp (hoặc nước cốt quất tươi): 2 thìa canh',
+          'Nước hầm xương heo ấm nóng (hoặc nước lọc ấm): 180ml',
+          'Tỏi băm, ớt tươi thái lát, 1 - 2 giọt tinh dầu cà cuống (bí quyết gia truyền thơm quý phái phố cổ)',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Pha bột bánh cuốn và ủ bột mỏng mướt',
+        time: '30 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Bột tan hoàn toàn, trong veo mịn màng, không còn mùi bột chua',
+        actionPoints: [
+          'Hòa tan 200g bột gạo, 70g bột năng, 30g bột bắp với 800ml nước lọc và 1 thìa cà phê muối.',
+          'Để bột lắng trong 2 tiếng, khéo léo chắt phần nước trong trên mặt đổ đi, rồi chế thêm lượng nước lọc mới đúng bằng lượng nước vừa chắt ra (thay nước giúp bánh trong veo, mềm dai không mùi chua).',
+          'Trước khi tráng, khuấy đều bột và cho vào 1 thìa canh dầu ăn để bánh bóng mượt róc chảo.',
+        ],
+        description:
+          'Hòa bột gạo, bột năng, bột bắp với nước và muối. Để bột lắng, chắt bớt nước trong thay nước mới rồi thêm chút dầu ăn để bánh mỏng mướt.',
+        tip: 'Kỹ thuật chắt thay nước trong là bí quyết vàng của làng bánh cuốn Thanh Trì giúp lá bánh tráng ra trong veo, mềm mướt không còn mùi bột cũ.',
+      },
+      {
+        step: 2,
+        title: 'Xào nhân thịt băm mộc nhĩ nấm hương đậm đà',
+        time: '10 phút',
+        heat: 'Lửa vừa',
+        goal: 'Thịt chín săn thơm nức mùi hành tiêu nấm hương, nhân ẩm ngọt không bị khô xác',
+        actionPoints: [
+          'Phi thơm 2 thìa hành khô băm nhỏ với dầu ăn trên chảo nóng.',
+          'Trút thịt nạc vai xay vào xào săn trên lửa lớn, dầm tơi thịt không để vón cục.',
+          'Cho mộc nhĩ và nấm hương băm nhỏ vào đảo đều trong 3 - 4 phút cho chín thơm ngậy.',
+          'Nêm 1 thìa nước mắm cốt nhĩ ngon, hạt nêm và rắc thật nhiều tiêu xay cho dậy mùi thơm lừng rồi tắt bếp trút ra đĩa riêng.',
+        ],
+        description:
+          'Phi thơm hành khô, xào thịt nạc xay cùng mộc nhĩ, nấm hương. Nêm nước mắm cốt nhĩ, tiêu xay thơm lừng và giữ cho nhân ẩm béo.',
+      },
+      {
+        step: 3,
+        title: 'Tráng bánh cuốn mỏng tang bằng chảo chống dính',
+        time: '15 phút',
+        heat: 'Lửa nhỏ vừa',
+        goal: 'Lá bánh mỏng trong suốt, mềm dai không rách, cuộn nhân chắc tay',
+        actionPoints: [
+          'Đặt chảo chống dính lên bếp ở lửa nhỏ vừa, dùng cọ quét một lớp dầu phi hành mỏng tang khắp mặt chảo.',
+          'Khuấy đều âu bột, múc một muôi nhỏ bột đổ vào lòng chảo, nghiêng đều tay để bột tráng một lớp mỏng dính khắp đáy chảo.',
+          'Đậy vung kín trong 25 - 30 giây đến khi thấy lá bánh chuyển màu trong suốt và phồng rộp nhẹ là bánh đã chín.',
+          'Úp nhanh chảo lên một chiếc đĩa to (hoặc mâm) đã quét sẵn dầu phi hành.',
+          'Rải một thìa nhân thịt mộc nhĩ vào giữa rồi nhẹ nhàng cuộn tròn lá bánh lại thật khéo léo.',
+        ],
+        description:
+          'Quét lớp dầu mỏng lên chảo chống dính, đổ muôi bột mỏng nghiêng đều, đậy vung 25 giây cho bánh chín trong suốt. Úp ra đĩa, trải nhân thịt rồi cuộn tròn.',
+        tip: 'Chảo chỉ cần quét lớp dầu thật mỏng (lau bớt nếu thừa dầu) để bột bám đều mặt chảo không bị trượt co rúm lại.',
+      },
+      {
+        step: 4,
+        title: 'Pha bát nước chấm bánh cuốn ấm nóng chuẩn vị Hà Nội',
+        time: '5 phút',
+        heat: 'Ấm nóng 50°C - 60°C',
+        goal: 'Bát nước chấm màu hổ phách ấm nóng, vị chua ngọt thanh tao dịu nhẹ',
+        actionPoints: [
+          'Hòa tan 180ml nước hầm xương ấm (hoặc nước lọc ấm) với 3 thìa đường cát, 4 thìa nước mắm cốt nhĩ ngon và 2 thìa giấm gạo nếp.',
+          'Khuấy đều cho tan đường, nếm thấy vị chua ngọt thanh dịu nhẹ nhàng, không mặn gắt.',
+          'Thả thêm vài lát ớt tươi, tỏi băm và nhỏ 1 giọt tinh dầu cà cuống dậy hương thơm nức.',
+          'Thả các lát chả quế thái mỏng ngâm trực tiếp vào bát nước mắm ấm nóng để miếng chả quế ngấm vị béo ngọt ấm nồng.',
+        ],
+        description:
+          'Pha nước hầm xương ấm với nước mắm cốt nhĩ, đường, giấm nếp cho vị chua ngọt thanh dịu. Thả ớt tươi, tinh dầu cà cuống và ngâm ngập chả quế vào bát nước chấm nóng.',
+      },
+      {
+        step: 5,
+        title: 'Bày đĩa bánh cuốn nóng hổi, rắc hành phi và thưởng thức',
+        time: '3 phút',
+        heat: 'Thưởng thức nóng hổi ngay',
+        goal: 'Đĩa bánh cuốn trắng mướt bóng bẩy, hành phi giòn tan, nước chấm bốc khói nghi ngút',
+        actionPoints: [
+          'Xếp từng cuộn bánh cuốn nóng hổi ngay ngắn lên đĩa.',
+          'Dùng chổi quét một lớp dầu phi hành bóng bẩy lên mặt bánh, rắc thật nhiều hành tím phi vàng giòn ruộm thơm nức mũi.',
+          'Bày kèm đĩa rau mùi ta, rau húng bạc hà tươi non xanh mát.',
+          'Gắp miếng bánh cuốn nóng mềm mướt chấm ngập vào bát nước chấm ấm nóng có miếng chả quế thơm nức, cảm nhận trọn vẹn vị mềm mượt, béo bùi và giòn rụm tan chảy trong miệng.',
+        ],
+        description:
+          'Quét dầu hành phi lên bánh cuốn, rắc ngập tràn hành phi giòn ruộm. Ăn kèm chả quế ngâm nước chấm ấm nóng và rau mùi ta, húng bạc hà.',
+      },
+    ],
+    chefSecret:
+      'Bánh cuốn nóng Hà Nội tinh tế ở 3 điểm vàng: Vỏ bánh mỏng tang trong suốt nhờ kỹ thuật chắt thay nước bột và pha bột năng đúng tỷ lệ; Nhân xào đủ vị ngọt béo từ nấm hương, mộc nhĩ và mỡ lợn phi hành; Đặc biệt bát nước mắm chấm bắt buộc phải pha bằng nước ấm nóng vị chua ngọt thanh dịu, ngâm chả quế vàng thơm và rắc đẫm hành ta tự phi giòn ruộm thơm lừng.',
+    recommendedSauce:
+      'Nước mắm pha ấm nóng chua ngọt thanh tao thả ớt tươi, ngâm ngập lát chả quế nướng và 1 giọt tinh dầu cà cuống.',
+  },
+
   'com-tam-suon-bi-cha': {
     dishId: 'com-tam-suon-bi-cha',
     dishName: 'Cơm Tấm Sườn Bì Chả Đặc Biệt Sài Gòn',
@@ -2757,6 +3012,9 @@ export function getRecipeArticleTitle(dish: Dish, recipe?: DishRecipe): string {
   if (lowerName.includes('bánh mì')) {
     return `Cách Làm ${cleanName} Giòn Rụm, Đậm Đà Chuẩn Vị Đường Phố`;
   }
+  if (lowerName.includes('bánh cuốn')) {
+    return `Cách Làm ${cleanName} Vỏ Mỏng Mướt, Nước Chấm Ấm Nóng Chuẩn Vị Hà Nội`;
+  }
   if (
     cat === 'banhmi_cuon' ||
     lowerName.includes('phở cuốn') ||
@@ -2771,8 +3029,14 @@ export function getRecipeArticleTitle(dish: Dish, recipe?: DishRecipe): string {
   if (lowerName.includes('bún chả') && !lowerName.includes('chả giò') && !lowerName.includes('chả cá')) {
     return `Cách Làm ${cleanName} Thịt Nướng Than Hoa, Nước Chấm Đậm Đà Chuẩn Vị`;
   }
-  if (lowerName.includes('chả cá') || lowerName.includes('bún chả cá')) {
+  if (lowerName.includes('chả cá lã vọng')) {
+    return `Cách Làm ${cleanName} Nướng Than Hoa, Xèo Xèo Chảo Mỡ Chuẩn Vị Phố Cổ`;
+  }
+  if (lowerName.includes('bún chả cá')) {
     return `Cách Nấu ${cleanName} Thơm Ngon Đậm Đà Chuẩn Vị`;
+  }
+  if (lowerName.includes('chả cá')) {
+    return `Cách Làm ${cleanName} Dai Giòn Thơm Ngon Chuẩn Vị`;
   }
   if (lowerName.includes('bún đậu')) {
     return `Cách Làm ${cleanName} Thơm Ngon, Đầy Đủ Topping Chuẩn Vị Hà Thành`;
