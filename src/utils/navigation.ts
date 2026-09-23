@@ -1,5 +1,5 @@
 import { Dish, DishRecipe, RegionId } from '../types';
-import { getRegionById } from '../data/regionalCuisine';
+import { getRegionById, isRegionPath } from '../data/regionalCuisine';
 import { getRecipePath, getRecipeArticleTitle, formatRecipeSeoTitle } from '../data/recipes';
 import { INITIAL_DISHES } from '../data/dishes';
 
@@ -172,8 +172,22 @@ export const TAB_CONFIG: Record<TabType, TabMeta> = {
 export function getDiscoverSubSectionFromUrl(): DiscoverSubSection {
   if (typeof window === 'undefined') return 'region';
   const pathname = window.location.pathname.replace(/\/$/, '') || '/';
-  if (pathname === '/thuc-don-moi-ngay' || pathname === '/kham-pha-am-thuc/thuc-don-moi-ngay') return 'daily';
-  if (pathname === '/cach-nau-mon-ngon' || pathname === '/kham-pha-am-thuc/cach-nau-mon-ngon') return 'recipe';
+  if (
+    pathname === '/cach-nau-mon-ngon' ||
+    pathname === '/kham-pha-am-thuc/cach-nau-mon-ngon' ||
+    pathname.startsWith('/cach-nau-') ||
+    pathname.startsWith('/cach-lam-') ||
+    pathname.startsWith('/cach-nau-mon-ngon/')
+  ) {
+    return 'recipe';
+  }
+  if (
+    pathname === '/thuc-don-moi-ngay' ||
+    pathname.startsWith('/thuc-don-moi-ngay/') ||
+    pathname === '/kham-pha-am-thuc/thuc-don-moi-ngay'
+  ) {
+    return 'daily';
+  }
   return 'region';
 }
 
@@ -192,8 +206,15 @@ export function getTabFromUrl(): TabType {
   if (pathname === '/tra-sua-an-vat' || pathname === '/tra-sua' || pathname === '/an-vat' || pathname === '/do-uong-an-vat') return 'snacks';
   if (
     pathname === '/am-thuc-vung-mien' ||
+    isRegionPath(pathname) ||
+    pathname.startsWith('/am-thuc-mien-') ||
+    pathname.startsWith('/am-thuc-vung-mien/') ||
     pathname === '/thuc-don-moi-ngay' ||
+    pathname.startsWith('/thuc-don-moi-ngay/') ||
     pathname === '/cach-nau-mon-ngon' ||
+    pathname.startsWith('/cach-nau-') ||
+    pathname.startsWith('/cach-lam-') ||
+    pathname.startsWith('/cach-nau-mon-ngon/') ||
     pathname === '/kham-pha-am-thuc' ||
     pathname.startsWith('/kham-pha-am-thuc/') ||
     pathname === '/kham-pha' ||
@@ -213,7 +234,19 @@ export function getTabFromUrl(): TabType {
     if (tabParam === 'ai-goi-y-mon-an' || tabParam === 'ai' || tabParam === 'tro-ly-ai' || tabParam === 'goi-y-mon') return 'ai';
     if (tabParam === 'mon-ngon' || tabParam === 'catalog') return 'catalog';
     if (tabParam === 'do-uong-an-vat' || tabParam === 'tra-sua-an-vat' || tabParam === 'snacks' || tabParam === 'do-uong' || tabParam === 'tra-sua' || tabParam === 'an-vat') return 'snacks';
-    if (tabParam === 'am-thuc-vung-mien' || tabParam === 'thuc-don-moi-ngay' || tabParam === 'cach-nau-mon-ngon' || tabParam === 'kham-pha-am-thuc' || tabParam === 'kham-pha' || tabParam === 'discover' || tabParam === 'cam-nang') return 'discover';
+    if (
+      tabParam === 'am-thuc-vung-mien' ||
+      tabParam === 'thuc-don-moi-ngay' ||
+      tabParam === 'cach-nau-mon-ngon' ||
+      tabParam === 'kham-pha-am-thuc' ||
+      tabParam === 'kham-pha' ||
+      tabParam === 'discover' ||
+      tabParam === 'cam-nang' ||
+      tabParam === 'mien-bac' ||
+      tabParam === 'mien-trung' ||
+      tabParam === 'mien-nam' ||
+      tabParam === 'mien-tay'
+    ) return 'discover';
     if (tabParam === 'gioi-thieu' || tabParam === 'about') return 'about';
     if (tabParam === 'lien-he' || tabParam === 'contact') return 'contact';
     if (tabParam === 'chinh-sach-bao-mat' || tabParam === 'privacy' || tabParam === 'bao-mat') return 'privacy';

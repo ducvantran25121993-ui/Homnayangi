@@ -231,11 +231,15 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
       if (regionId) {
         setSelectedRegionId(regionId);
         setSectionTab('region');
+        setViewingRecipeArticle(false);
         updateRegionSEO(regionId);
         return;
       }
       const currentSub = getDiscoverSubSectionFromUrl();
       setSectionTab(currentSub);
+      if (currentSub !== 'recipe') {
+        setViewingRecipeArticle(false);
+      }
       updateDiscoverSubSEO(currentSub);
       if (onSubSectionChange) {
         onSubSectionChange(currentSub);
@@ -384,12 +388,26 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [copiedFamilyDishRecipe, setCopiedFamilyDishRecipe] = useState<string | null>(null);
 
+  // Track where the user entered the recipe from (e.g. regional cuisine page, daily menu, or recipe catalog)
+  interface RecipeOriginInfo {
+    sub: DiscoverSubSection;
+    regionId?: RegionId;
+    path: string;
+    label: string;
+  }
+  const [recipeOrigin, setRecipeOrigin] = useState<RecipeOriginInfo | null>(() => {
+    if (typeof window !== 'undefined' && window.history.state?.origin) {
+      return window.history.state.origin;
+    }
+    return null;
+  });
+
   // Sync URL deep-linking for recipes (supports international clean URL /:slug, /cach-nau-mon-ngon/:slug, and legacy #recipe-...)
   useEffect(() => {
     const syncRecipeFromLocation = () => {
-      if (sectionTab !== 'recipe') return;
+      if (typeof window === 'undefined') return;
 
-      const pathname = window.location.pathname;
+      const pathname = window.location.pathname.replace(/\/$/, '') || '/';
       const isRecipePath =
         (pathname.startsWith('/cach-nau-') ||
           pathname.startsWith('/cach-lam-') ||
@@ -402,9 +420,10 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
         if (match) {
           setSelectedRecipeDish(match);
           setViewingRecipeArticle(true);
+          setSectionTab('recipe');
           // Canonicalize legacy /cach-nau-mon-ngon/:slug into international clean URL /:slug
           if (pathname.startsWith('/cach-nau-mon-ngon/')) {
-            window.history.replaceState({ section: 'recipe', dishId: match.id }, '', getRecipePath(match));
+            window.history.replaceState({ tab: 'discover', sub: 'recipe', dishId: match.id, origin: recipeOrigin }, '', getRecipePath(match));
           }
           updateRecipeArticleSEO(match, getDishRecipe(match));
           return;
@@ -414,14 +433,18 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
         if (match) {
           setSelectedRecipeDish(match);
           setViewingRecipeArticle(true);
+          setSectionTab('recipe');
           // Canonicalize legacy hash into international clean SEO path
-          window.history.replaceState({ section: 'recipe', dishId: match.id }, '', getRecipePath(match));
+          window.history.replaceState({ tab: 'discover', sub: 'recipe', dishId: match.id, origin: recipeOrigin }, '', getRecipePath(match));
           updateRecipeArticleSEO(match, getDishRecipe(match));
           return;
         }
-      } else if (pathname === '/cach-nau-mon-ngon') {
+      } else {
+        // Not a recipe URL: dismiss recipe article view and let sub-tab handle its own view
         setViewingRecipeArticle(false);
-        updateDiscoverSubSEO('recipe');
+        if (pathname === '/cach-nau-mon-ngon') {
+          updateDiscoverSubSEO('recipe');
+        }
       }
     };
 
@@ -432,14 +455,21 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
       window.removeEventListener('popstate', syncRecipeFromLocation);
       window.removeEventListener('hashchange', syncRecipeFromLocation);
     };
-  }, [sectionTab]);
+  }, [recipeOrigin]);
 
   // Click on a dish card to open the article with SEO clean URL
   const handleSelectDishRecipe = (dish: Dish) => {
+    const origin: RecipeOriginInfo = {
+      sub: 'recipe',
+      path: DISCOVER_SUB_CONFIG.recipe.path,
+      label: 'Cách Nấu Món Ngon',
+    };
+    setRecipeOrigin(origin);
     setSelectedRecipeDish(dish);
     setViewingRecipeArticle(true);
     const targetPath = getRecipePath(dish);
-    window.history.pushState({ section: 'recipe', dishId: dish.id }, '', targetPath);
+    window.history.pushState({ tab: 'discover', sub: 'recipe', dishId: dish.id, origin }, '', targetPath);
+    window.dispatchEvent(new Event('locationchange'));
     updateRecipeArticleSEO(dish, getDishRecipe(dish));
     const el = document.getElementById('recipe-article-container');
     if (el) {
@@ -449,10 +479,49 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
     }
   };
 
-  // Back to gallery list with SEO clean URL
+  // Back to previous section or gallery list with SEO clean URL
   const handleBackToRecipeList = () => {
+    if (recipeOrigin && recipeOrigin.sub === 'region') {
+      setViewingRecipeArticle(false);
+      setSectionTab('region');
+      if (recipeOrigin.regionId) {
+        setSelectedRegionId(recipeOrigin.regionId);
+      }
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.history.pushState(
+          { tab: 'discover', sub: 'region', region: recipeOrigin.regionId },
+          '',
+          recipeOrigin.path
+        );
+        window.dispatchEvent(new Event('locationchange'));
+        updateRegionSEO(recipeOrigin.regionId || 'bac');
+      }
+      return;
+    }
+
+    if (recipeOrigin && recipeOrigin.sub === 'daily') {
+      setViewingRecipeArticle(false);
+      setSectionTab('daily');
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.history.pushState(
+          { tab: 'discover', sub: 'daily' },
+          '',
+          recipeOrigin.path
+        );
+        window.dispatchEvent(new Event('locationchange'));
+        updateDiscoverSubSEO('daily');
+      }
+      return;
+    }
+
     setViewingRecipeArticle(false);
-    window.history.pushState({ section: 'recipe' }, '', DISCOVER_SUB_CONFIG.recipe.path);
+    setSectionTab('recipe');
+    window.history.pushState({ tab: 'discover', sub: 'recipe' }, '', DISCOVER_SUB_CONFIG.recipe.path);
+    window.dispatchEvent(new Event('locationchange'));
     updateDiscoverSubSEO('recipe');
     const el = document.getElementById('recipe-discovery-section');
     if (el) {
@@ -794,12 +863,33 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
   }, [selectedDayId]);
 
   // Helper to jump to a recipe from another section
-  const handleViewDishRecipe = (dish: Dish) => {
+  const handleViewDishRecipe = (dish: Dish, customOrigin?: RecipeOriginInfo) => {
+    const origin: RecipeOriginInfo = customOrigin || (sectionTab === 'region' ? {
+      sub: 'region',
+      regionId: selectedRegionId,
+      path: currentRegion.path,
+      label: currentRegion.title,
+    } : sectionTab === 'daily' ? {
+      sub: 'daily',
+      path: DISCOVER_SUB_CONFIG.daily.path,
+      label: 'Thực Đơn Mỗi Ngày',
+    } : {
+      sub: 'recipe',
+      path: DISCOVER_SUB_CONFIG.recipe.path,
+      label: 'Cách Nấu Món Ngon',
+    });
+
+    setRecipeOrigin(origin);
     setSelectedRecipeDish(dish);
     setViewingRecipeArticle(true);
-    handleSwitchSection('recipe');
+    setSectionTab('recipe');
     const targetPath = getRecipePath(dish);
-    window.history.pushState({ section: 'recipe', dishId: dish.id }, '', targetPath);
+    window.history.pushState(
+      { tab: 'discover', sub: 'recipe', dishId: dish.id, origin },
+      '',
+      targetPath
+    );
+    window.dispatchEvent(new Event('locationchange'));
     updateRecipeArticleSEO(dish, getDishRecipe(dish));
     window.scrollTo({ top: 350, behavior: 'smooth' });
   };
@@ -1584,19 +1674,19 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                   className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-stone-50 hover:bg-orange-50 text-stone-800 hover:text-orange-700 border border-stone-200 hover:border-orange-300 font-extrabold text-xs sm:text-sm transition-all cursor-pointer shadow-2xs group"
                 >
                   <ArrowLeft className="w-4 h-4 text-orange-600 group-hover:-translate-x-1 transition-transform" />
-                  <span>Quay lại danh sách món ngon</span>
+                  <span>{recipeOrigin ? `Quay lại ${recipeOrigin.label}` : 'Quay lại danh sách món ngon'}</span>
                 </button>
 
                 <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-stone-500 font-medium overflow-hidden">
                   <a
-                    href="/cach-nau-mon-ngon"
+                    href={recipeOrigin ? recipeOrigin.path : '/cach-nau-mon-ngon'}
                     onClick={(e) => {
                       e.preventDefault();
                       handleBackToRecipeList();
                     }}
                     className="shrink-0 hover:text-orange-600 transition-colors underline-offset-2 hover:underline"
                   >
-                    Cách Nấu Món Ngon
+                    {recipeOrigin ? recipeOrigin.label : 'Cách Nấu Món Ngon'}
                   </a>
                   <ChevronRight className="w-3.5 h-3.5 text-stone-300 shrink-0" />
                   <span className="shrink-0 text-stone-600">{getCategoryDisplayName(selectedRecipeDish.category)}</span>
@@ -1889,7 +1979,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                       className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs sm:text-sm transition-all cursor-pointer shadow-sm"
                     >
                       <ArrowLeft className="w-4 h-4" />
-                      <span>Quay lại danh sách công thức ({baseRecipeDishes.length} món)</span>
+                      <span>{recipeOrigin ? `Quay lại ${recipeOrigin.label}` : `Quay lại danh sách công thức (${baseRecipeDishes.length} món)`}</span>
                     </button>
 
                     <span className="text-xs text-stone-500">
