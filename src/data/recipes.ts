@@ -1084,6 +1084,132 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
       'Nước mắm cốt nguyên chất vắt chanh ớt tươi chấm sườn non và viên mọc nấm hương giòn thơm.',
   },
 
+  'bun-moc-ha-noi': {
+    dishId: 'bun-moc-ha-noi',
+    dishName: 'Bún Mọc Sườn Nấm Hương Nước Dùng Thanh Ngọt',
+    seoTitle: 'Cách Nấu Bún Mọc Hà Nội Nước Dùng Trong Veo Chuẩn Vị Gia Đình',
+    prepTime: '30 phút',
+    cookTime: '50 phút',
+    difficulty: 'Dễ',
+    servings: '4 - 5 người',
+    ingredients: [
+      {
+        category: 'Viên mọc nấm hương & Chả quế thơm lừng',
+        items: [
+          '350g giò sống (mọc heo tươi dẻo mịn, để thật lạnh)',
+          '150g thịt nạc vai xay nhuyễn có chút mỡ để mọc mềm mọng không bị khô bã',
+          '8 - 10 tai nấm hương khô ngâm nở (thái nhỏ một nửa để trộn mọc, giữ lại vài tai nguyên thả nước dùng)',
+          '3 tai mộc nhĩ ngâm nở băm nhỏ tạo độ giòn sần sật',
+          '200g chả quế Hà Nội (hoặc chả lụa) thái lát mỏng',
+          '1 thìa cà phê tiêu sọ trắng xay thơm nồng, 1 thìa cà phê nước mắm cốt ngon, hành tím băm nhuyễn phi thơm',
+        ],
+      },
+      {
+        category: 'Sườn non, Xương ninh & Măng giòn sần sật',
+        items: [
+          '600g sườn non heo tươi ngon chặt khúc vừa ăn (khoảng 3cm)',
+          '500g xương ống hoặc xương bay heo ninh lấy nước cốt ngọt tủy sâu lắng',
+          '250g măng củ tươi tước sợi hoặc măng khô ngâm nở luộc kỹ (tùy chọn theo kiểu bún mọc phố cổ Hàng Trống/Cầu Gỗ)',
+          '1 củ hành tây bổ đôi nướng thơm, 3 củ hành tím nướng cháy xém',
+          'Gia vị: Nước mắm cốt nhĩ cá cơm ngon, muối hạt, đường phèn, hạt nêm',
+          '800g bún tươi sợi nhỏ mượt mà',
+        ],
+      },
+      {
+        category: 'Rau thơm & Gia vị ăn kèm chuẩn vị phố cổ',
+        items: [
+          'Hành hoa (phần đầu hành chẻ sợi, lá thái nhỏ), rau mùi ta (ngò rí) thái nhỏ',
+          'Hành củ phi vàng giòn ruộm thơm nức mũi',
+          'Chanh tươi, ớt hiểm thái lát mỏng, tiêu sọ trắng xay, giấm tỏi ớt hoặc ớt chưng dầu',
+          'Quẩy giòn giòn ăn kèm (tùy thích)',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Chần sạch xương sườn và ninh nước dùng trong veo',
+        time: '45 phút',
+        heat: 'Lửa nhỏ liu riu',
+        goal: 'Nước dùng trong vắt tựa hổ phách, vị ngọt thanh sâu lắng từ xương tủy và sườn non',
+        actionPoints: [
+          'Chặt sườn non miếng vừa ăn; chần sườn và xương ống qua nồi nước sôi có vài lát gừng đập dập và 1 thìa muối hạt trong 3 phút để khử sạch tạp chất và bọt bẩn.',
+          'Vớt xương và sườn ra rửa lại thật sạch dưới vòi nước lạnh.',
+          'Cho sườn non và xương vào nồi với 2.5 - 3 lít nước lọc, thả hành tây và hành tím đã nướng cháy xém cạo sạch vỏ vào.',
+          'Đun sôi bùng rồi lập tức hạ lửa liu riu, hé vung và hớt sạch bọt nổi liên tục trong suốt quá trình ninh.',
+          'Nêm 1 thìa canh muối hạt, 1 thìa canh đường phèn để tạo hậu vị ngọt thanh dịu mát.',
+        ],
+        description:
+          'Chần sạch sườn non và xương heo, rửa sạch rồi ninh cùng nước lọc, hành tây và hành tím nướng trên lửa nhỏ liu riu. Hớt bọt thường xuyên và mở hé vung để nước dùng trong vắt ngọt tủy.',
+        tip: 'Tuyệt đối không đậy kín vung và không để nước sôi sùng sục để nước dùng bún mọc luôn đạt độ trong veo không một gợn đục.',
+      },
+      {
+        step: 2,
+        title: 'Xào măng giòn ngọt và thả vào nồi nước dùng',
+        time: '15 phút',
+        heat: 'Lửa vừa',
+        goal: 'Măng giòn sần sật ngấm đậm gia vị, khử sạch mùi nồng',
+        actionPoints: [
+          'Măng tươi tước sợi nhỏ, luộc với nước sôi pha chút muối 2 lần mở vung để khử sạch độc tố và vị đắng chát, vớt ra xả nước lạnh rồi vắt ráo.',
+          'Phi thơm 1 thìa hành tím băm với chút dầu ăn, trút măng vào xào săn cùng 1 thìa hạt nêm và chút nước mắm.',
+          'Trút măng xào thơm và vài tai nấm hương nguyên vào nồi nước ninh xương sườn, đun liu riu cho vị ngọt của sườn và vị giòn thanh của măng hòa quyện.',
+        ],
+        description:
+          'Măng tước sợi luộc kỹ, xào săn thơm với hành mắm rồi trút vào nồi nước ninh sườn cùng vài tai nấm hương.',
+      },
+      {
+        step: 3,
+        title: 'Quết giò sống làm viên mọc nấm hương mộc nhĩ giòn dai tự nhiên',
+        time: '15 phút',
+        heat: 'Nhiệt độ phòng (giữ thịt lạnh)',
+        goal: 'Khối mọc dẻo quánh, viên mọc dai giòn sần sật thơm nức nấm hương tiêu sọ',
+        actionPoints: [
+          'Mẹo vàng: Giò sống mua về bọc kín để ngăn mát tủ lạnh cho thật lạnh trước khi quết, mọc sẽ có độ giòn dai xuất sắc mà không cần dùng hàn the hay bột nở.',
+          'Cho giò sống lạnh, thịt nạc vai xay, nấm hương thái hạt lựu, mộc nhĩ băm nhỏ, 1 thìa cà phê tiêu sọ trắng xay thơm, 1 thìa nước mắm cốt nhĩ và hành tím phi thơm vào âu.',
+          'Dùng muôi gỗ miết quết thật mạnh tay và đều theo một chiều trong 5 phút đến khi khối mọc dẻo quánh, dính quyện vào nhau.',
+          'Thoa chút dầu ăn lên lòng bàn tay hoặc dùng thìa nhúng nước, nặn mọc thành từng viên tròn đều đặn cỡ quả bóng bàn.',
+        ],
+        description:
+          'Trộn giò sống ướp lạnh với nạc vai xay, nấm hương, mộc nhĩ, tiêu sọ, nước mắm và hành phi. Quết dẻo quánh theo một chiều rồi nặn thành từng viên tròn vừa ăn.',
+        tip: 'Quết giò sống khi còn lạnh và quết dồn lực theo một chiều là bí quyết gia truyền giúp viên mọc giòn nẩy sần sật.',
+      },
+      {
+        step: 4,
+        title: 'Thả viên mọc nấu chín và nêm nếm nước dùng',
+        time: '10 phút',
+        heat: 'Lửa vừa',
+        goal: 'Viên mọc chín nổi tròn căng bóng, nước dùng dậy thơm mùi nấm hương thanh nhã',
+        actionPoints: [
+          'Khi sườn đã chín mềm róc xương, tăng lửa cho nồi nước dùng sôi lăn tăn rồi nhẹ nhàng thả từng viên mọc vào.',
+          'Đun khoảng 5 - 7 phút. Khi viên mọc chín tới sẽ nổi phồng căng tròn lên mặt nước.',
+          'Nêm thêm 2 thìa canh nước mắm cốt nhĩ hảo hạng cho dậy mùi thơm nức đặc trưng, rắc chút tiêu trắng xay vào nồi rồi hạ lửa nhỏ nhất giữ nóng.',
+        ],
+        description:
+          'Thả từng viên mọc vào nồi nước sôi lăn tăn đến khi mọc nổi tròn căng bóng. Nêm nước mắm cốt cho vừa miệng đậm đà thanh tao.',
+      },
+      {
+        step: 5,
+        title: 'Trình bày bát bún mọc Hà Nội thanh tao, nghi ngút khói',
+        time: '5 phút',
+        heat: 'Nồi nước dùng sôi lăn tăn',
+        goal: 'Bát bún tinh tế, màu sắc hài hòa, viên mọc tròn xinh bóng bẩy, nước trong veo thơm phức',
+        actionPoints: [
+          'Chần bún tươi qua nước sôi cho nóng tơi sợi, xốc ráo nước rồi chia đều vào từng tô lớn.',
+          'Gắp 3 - 4 viên mọc nấm hương giòn sần sật, miếng sườn non mềm róc thịt, gắp măng giòn và xếp vài lát chả quế vàng thơm lên mặt bún.',
+          'Rắc đầu hành hoa chẻ sợi, hành hoa thái nhỏ, rau mùi ta và rắc một nhúm hành phi vàng giòn ruộm cùng tiêu sọ cay ấm lên trên.',
+          'Múc nước dùng trong veo đang sôi lăn tăn chan ngập bát bún, chan đều lên các lát chả và hành hoa.',
+          'Thưởng thức ngay khi còn nóng hổi cùng chanh tươi, vài lát ớt hiểm, ớt chưng cay nồng và quẩy giòn.',
+        ],
+        description:
+          'Chần bún nóng xếp vào tô, xếp sườn, mọc nấm hương, chả quế, măng giòn. Rắc hành hoa, rau mùi, hành phi và tiêu sọ rồi chan nước dùng trong veo bốc khói nghi ngút.',
+      },
+    ],
+    chefSecret:
+      'Bún Mọc Hà Nội đích thực là biểu tượng của sự thanh nhã: Nước dùng phải trong vắt ngọt lịm từ xương sườn ninh khéo, hoàn toàn không dùng phẩm màu hay chất tạo chua (không nhầm lẫn với bún sườn dọc mùng). Viên mọc có nấm hương mộc nhĩ tạo độ giòn sần sật và mùi thơm quý phái khó quên, hòa quyện tuyệt vời với lát chả quế thơm lừng và hành phi vàng ruộm.',
+    recommendedSauce:
+      'Nước mắm cốt nhĩ chanh ớt tươi kèm tiêu bắc xay chấm viên mọc nấm và sườn non.',
+  },
+
   'com-tam-suon-bi-cha': {
     dishId: 'com-tam-suon-bi-cha',
     dishName: 'Cơm Tấm Sườn Bì Chả Đặc Biệt Sài Gòn',

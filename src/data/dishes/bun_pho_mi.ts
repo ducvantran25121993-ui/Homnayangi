@@ -531,7 +531,7 @@ export const BUN_PHO_MI_DISHES: Dish[] = [
     estimatedPrice: 50000,
     calories: '480 - 580 kcal',
     description: 'Viên mọc giòn sần sật thơm nức nấm hương và mộc nhĩ, sườn non ninh nhừ trong nước dùng thanh trong ngọt tủy.',
-    image: '/images/bun_moc.jpg',
+    image: '/images/bun_moc_ha_noi.jpg',
     popularTags: ['Bún Mọc', 'Viên mọc nấm', 'Nước dùng trong', 'Bữa sáng thanh đạm'],
     searchKeyword: 'Bún mọc',
   },
