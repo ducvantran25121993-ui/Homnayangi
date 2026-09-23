@@ -95,7 +95,7 @@ export const MON_NHAU_DISHES: Dish[] = [
     estimatedPrice: 90000,
     calories: '450 - 580 kcal',
     description: 'Lòng bò làm sạch giòn sần sật xào cùng dưa cải chua lên men vừa độ, cà chua mọng nước và tỏi phi thơm nức, vừa nhắm vừa húp cạn ly bia mát lạnh.',
-    image: '/images/long_bo_xao_dua.jpg',
+    image: '/images/long_bo_xao_dua.jpg?v=2',
     popularTags: ['Lòng giòn sần sật', 'Dưa chua giải ngấy', 'Quán nhậu bình dân'],
     searchKeyword: 'Lòng bò xào dưa chua',
   },
