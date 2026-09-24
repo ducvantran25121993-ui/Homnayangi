@@ -142,7 +142,7 @@ export const WHEEL_PRESETS: WheelPreset[] = [
   {
     id: 'sieu_to_khong_lo',
     name: 'Đại Tiệc Siêu To',
-    badge: '21 Món Ngon',
+    badge: '20 Món Ngon',
     group: 'themes',
     iconName: 'Flame',
     items: [
@@ -158,7 +158,6 @@ export const WHEEL_PRESETS: WheelPreset[] = [
       'Mì trộn xá xíu trứng lòng đào',
       'Bánh mì thịt nướng',
       'Hủ tiếu Nam Vang',
-      'Cơm chiên kim chi',
       'Xôi gà xé mỡ hành',
       'Mì xào bò rau cải',
       'Bánh ướt lòng gà',
