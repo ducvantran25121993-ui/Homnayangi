@@ -393,16 +393,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-xoi-khuc-la-khuc</loc>
-    <lastmod>2026-09-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://www.angigio.com/images/banh_khuc.jpg</image:loc>
-      <image:title>Cách Nấu Bánh Khúc Xôi Khúc Dẻo Thơm Óng Ả Chuẩn Vị Truyền Thống</image:title>
-    </image:image>
-  </url>
-  <url>
     <loc>https://www.angigio.com/cach-nau-xoi-pate-lap-xuong</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
@@ -2350,6 +2340,36 @@
     <image:image>
       <image:loc>https://www.angigio.com/images/nem_nuong_nha_trang.jpg</image:loc>
       <image:title>Cách Làm Nem Nướng Nha Trang Cuốn Bánh Tráng &amp; Nước Sốt Tương Gan Chuẩn Vị</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.angigio.com/com-rang-dua-bo</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.angigio.com/images/com_rang_dua_bo.jpg?v=2</image:loc>
+      <image:title>Cách Làm Cơm Rang Dưa Bò Hạt Cơm Săn Giòn, Thơm Ngon Chuẩn Vị</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.angigio.com/cach-lam-com-rang-dua-bo</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.angigio.com/images/com_rang_dua_bo.jpg?v=2</image:loc>
+      <image:title>Cách Làm Cơm Rang Dưa Bò Hạt Cơm Săn Giòn, Thơm Ngon Chuẩn Vị</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.angigio.com/cong-thuc/com-rang-dua-bo</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.angigio.com/images/com_rang_dua_bo.jpg?v=2</image:loc>
+      <image:title>Cách Làm Cơm Rang Dưa Bò Hạt Cơm Săn Giòn, Thơm Ngon Chuẩn Vị</image:title>
     </image:image>
   </url>
 </urlset>

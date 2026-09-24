@@ -3109,6 +3109,133 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
     recommendedSauce:
       'Mỡ gà ta nguyên chất rưới đẫm, ăn kèm ruốc thịt heo tự làm, chả quế nướng giòn thơm hoặc giò lụa truyền thống.',
   },
+
+  'com-rang-dua-bo': {
+    dishId: 'com-rang-dua-bo',
+    dishName: 'Cơm Rang Dưa Bò Hà Nội',
+    seoTitle: 'Cách Làm Cơm Rang Dưa Bò Hạt Cơm Săn Giòn, Thơm Ngon Chuẩn Vị',
+    prepTime: '20 phút',
+    cookTime: '15 - 20 phút',
+    difficulty: 'Trung bình',
+    servings: '2 - 3 người',
+    ingredients: [
+      {
+        category: 'Cơm nguội & Lòng đỏ trứng vàng óng',
+        items: [
+          '3 - 4 bát con cơm nguội (nấu hơi ráo nước, để ngăn mát tủ lạnh ít nhất 4 tiếng hoặc qua đêm để hạt cơm se mặt)',
+          '2 quả trứng gà ta tươi (1 lòng đỏ bóp đều trực tiếp với cơm nguội để tạo màu vàng ruộm, 1 quả đánh tan rang cùng cơm)',
+          '1/2 thìa cà phê hạt nêm (trộn đều cùng cơm và lòng đỏ trứng cho đượm vị)',
+        ],
+      },
+      {
+        category: 'Thịt bò tươi & Dưa cải muối chua giòn',
+        items: [
+          '250g - 300g thịt thăn bò tươi hoặc bắp bò hoa (thái lát thật mỏng ngang thớ)',
+          '200g - 250g dưa cải muối chua (chọn phần cọng/cuống dày giòn sần sật, xả nhẹ nước rồi vắt thật kiệt nước)',
+          '1 thìa canh dầu hào thượng hạng (tạo độ bóng và vị ngọt đượm đậm đà cho thịt bò)',
+          '1 thìa cà phê nước tương (xì dầu thượng hạng)',
+          '1 thìa canh dầu ăn (bí quyết vàng bao bọc thớ thịt, khóa ẩm giúp bò mềm ngọt không bị dai)',
+          '1/2 thìa cà phê đường kính hoặc đường thốt nốt (cân bằng vị chua gắt của dưa muối)',
+          '1/2 thìa cà phê hạt tiêu sọ xay thơm nồng',
+        ],
+      },
+      {
+        category: 'Hương liệu & Gia vị rang cơm bí truyền',
+        items: [
+          '1 củ tỏi ta & 4 củ hành tím khô (băm nhỏ, chia đôi để xào dưa bò và rang cơm)',
+          '3 nhánh hành hoa tươi (rửa sạch cắt nhỏ) & vài cọng ngò rí',
+          '2 - 3 thìa canh mỡ heo sạch (dùng mỡ heo hạt cơm sẽ bóng bẩy, thơm nức mũi chuẩn vị quán xá phố cổ)',
+          '1 thìa canh nước mắm cá cơm truyền thống hảo hạng (rưới quanh viền thành chảo nóng già dậy mùi)',
+          'Bí quyết quán xá: 2 thìa canh cơm chiên phồng giòn rụm hoặc cốm chiên giòn (trộn cùng cơm săn ở phút cuối)',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế thịt bò và ướp mềm mọng với dầu ăn',
+        time: '15 phút',
+        heat: 'Nhiệt độ phòng (Ướp ngấm gia vị)',
+        goal: 'Thịt bò thái mỏng ngang thớ, ngấm sâu gia vị, khóa trọn nước ngọt tự nhiên bên trong',
+        actionPoints: [
+          'Thịt bò dùng khăn giấy sạch thấm khô bề mặt, đặt lên thớt dùng dao thật sắc thái lát thật mỏng ngang thớ thịt. Dùng sống dao dần nhẹ lên các miếng thịt để thớ thịt nở mềm tơi.',
+          'Cho thịt bò vào tô ướp cùng: 1 thìa cà phê tỏi băm nhỏ, 1 thìa canh dầu hào, 1 thìa cà phê nước tương, 1/2 thìa cà phê hạt nêm, 1/2 thìa cà phê tiêu xay và đặc biệt là 1 thìa canh dầu ăn.',
+          'Dùng tay bóp và trộn đều nhẹ nhàng trong 1 - 2 phút rồi để thịt nghỉ 15 phút. Lớp màng dầu ăn bao bọc quanh từng sợi cơ sẽ khóa chặt độ ẩm, giúp thịt bò khi xào trên lửa lớn giữ nguyên độ mềm mọng, không bao giờ bị dai hay khô xác.',
+        ],
+        description:
+          'Thịt bò thái mỏng ngang thớ, dần nhẹ cho mềm. Ướp thịt với tỏi băm, dầu hào, nước tương, hạt nêm, tiêu xay và 1 thìa canh dầu ăn trong 15 phút để giữ thịt luôn mềm ngọt mọng nước.',
+        tip: 'Tuyệt đối không ướp nước mắm trực tiếp vào thịt bò tươi sống vì muối trong nước mắm sẽ rút cạn nước ngọt của thịt, khiến thịt bò bị dai cứng và xỉn màu thâm đen khi xào.',
+      },
+      {
+        step: 2,
+        title: 'Sơ chế dưa cải chua & kỹ thuật bóp cơm vàng óng ánh',
+        time: '10 phút',
+        heat: 'Nhiệt độ thường',
+        goal: 'Dưa chua giòn rụm bớt mặn gắt; từng hạt cơm tơi rời và được áo một lớp lòng đỏ trứng vàng ươm mượt mà',
+        actionPoints: [
+          'Dưa cải chua rửa sơ qua 1 - 2 lần nước lọc để giảm bớt độ mặn và độ chua gắt của nước muối dưa. Dùng tay vắt thật kiệt ráo nước rồi thái miếng vừa ăn khoảng 2cm (ưu tiên phần cọng giòn).',
+          'Lấy 3 - 4 bát cơm nguội từ ngăn mát tủ lạnh ra, dùng tay đeo găng bóp nhẹ nhàng cho từng hạt cơm tơi rời rạc hoàn toàn, không để vón cục dính vào nhau.',
+          'Tách lấy 1 lòng đỏ trứng gà ta cho vào âu cơm cùng 1/2 thìa cà phê hạt nêm. Dùng tay trộn và bóp đều để lớp lòng đỏ trứng gà bao bọc phủ kín một lớp màng vàng ruộm mỏng quanh từng hạt cơm.',
+        ],
+        description:
+          'Dưa cải chua rửa sơ, vắt kiệt ráo nước rồi thái khúc vừa ăn. Cơm nguội lấy trong tủ lạnh ra bóp tơi hạt, trộn đều với 1 lòng đỏ trứng gà và chút hạt nêm để hạt cơm vàng óng và đậm đà.',
+        tip: 'Cơm nấu hơi khô một chút và để tủ lạnh qua đêm là yếu tố then chốt. Hơi lạnh giúp hạt cơm se mặt, cứng cáp. Khi bóp lòng đỏ trứng gà vào, trứng bám chặt ngoài vỏ giúp cơm khi rang vừa vàng ruộm tự nhiên vừa không bị dính chảo.',
+      },
+      {
+        step: 3,
+        title: 'Xào thịt bò với dưa chua lửa lớn (Xào riêng, tuyệt đối không xào chung với cơm)',
+        time: '5 phút',
+        heat: 'Lửa cực đại (High heat)',
+        goal: 'Thịt bò chín tới mềm mọng ngập sốt đậm đà, dưa chua xào săn giòn sần sật quyện vị chua ngọt thanh tao',
+        actionPoints: [
+          'Bắc chảo lên bếp mở mức lửa lớn nhất cho chảo thật nóng già. Cho 1 thìa canh dầu ăn vào tráng đều chảo rồi phi thơm 1/2 lượng tỏi hành băm.',
+          'Trút toàn bộ thịt bò đã ướp vào chảo, đảo thật nhanh tay liên tục ở lửa lớn trong khoảng 1 đến 1.5 phút cho thịt bò vừa chín tái (vừa hết màu đỏ) thì trút ngay ra đĩa riêng.',
+          'Vẫn dùng chảo đó, thêm 1 thìa cà phê dầu ăn phi thơm phần tỏi hành băm còn lại. Cho dưa chua đã vắt ráo vào xào nhanh trên lửa lớn trong 2 phút cho cọng dưa săn giòn lại.',
+          'Nêm vào dưa 1/2 thìa cà phê đường và 1 thìa cà phê dầu hào để làm dịu độ chua gắt. Đổ đĩa thịt bò tái cùng toàn bộ nước xào thịt tiết ra trở lại chảo dưa, đảo nhanh tay trong 30 giây cho ngấm đều gia vị rồi tắt bếp, múc ra đĩa giữ ấm.',
+        ],
+        description:
+          'Phi thơm hành tỏi trên lửa lớn, xào nhanh thịt bò trong 1 phút cho vừa chín tái rồi trút ra đĩa riêng. Phi tỏi xào săn dưa chua với chút đường và dầu hào, sau đó trút thịt bò vào đảo đều 30 giây rồi tắt bếp múc ra đĩa.',
+        tip: 'Nguyên tắc bất di bất dịch: Phải xào dưa bò riêng và giữ lửa lớn nhất! Nếu xào chung với cơm ngay từ đầu, nước từ dưa chua và thịt bò sẽ ngấm vào làm cơm bị ướt nhão, không thể nào rang giòn được, đồng thời thịt bò sẽ bị ninh lâu dai ngoách.',
+      },
+      {
+        step: 4,
+        title: 'Kỹ thuật rang cơm hạt săn nổ lách tách & Bí quyết giòn rụm quán xá',
+        time: '12 - 15 phút',
+        heat: 'Lửa vừa lớn đến lớn',
+        goal: 'Từng hạt cơm săn bóng, khô ráo vàng óng, bên ngoài giòn tan rôm rốp, bên trong dẻo thơm ngậy mỡ heo',
+        actionPoints: [
+          'Dùng chảo gang sâu lòng hoặc chảo chống dính dày đáy, đun thật nóng chảo rồi cho 2 - 3 thìa canh mỡ heo sạch vào láng đều khắp mặt chảo cho nóng già.',
+          'Đổ toàn bộ cơm nguội đã trộn lòng đỏ trứng vào chảo, dàn đều cơm ra mặt chảo rồi dùng muôi miết nhẹ hạt cơm xuống đáy chảo, đảo đều tay liên tục ở lửa vừa lớn.',
+          'Đập quả trứng thứ hai vào một góc chảo, dùng đũa đánh tan nhanh rồi đảo đều quyện vào mẻ cơm. Các sợi trứng trắng vàng li ti sẽ bám ôm lấy từng hạt cơm tạo màu sắc cực kỳ bắt mắt.',
+          'Đảo và miết cơm liên tục từ 10 - 12 phút để toàn bộ hơi ẩm thoát hết. Hạt cơm bắt đầu săn chắc lại, khô ráo và phát ra tiếng nổ lách tách giòn tan vui tai trên mặt chảo.',
+          'Bí quyết vàng quán xá: Trút 2 thìa canh cơm chiên giòn nở phồng (hoặc cốm chiên giòn rụm) vào chảo cơm rang, đảo đều tay thêm 2 phút để tạo kết cấu "hạt mềm dẻo quyện hạt giòn rụm" cực kỳ đã miệng.',
+        ],
+        description:
+          'Làm nóng chảo với mỡ heo, cho cơm đã trộn lòng đỏ vào miết và đảo đều ở lửa vừa lớn. Đập thêm 1 quả trứng vào đảo đều cho trứng bám quanh hạt cơm. Rang đều tay 10 - 15 phút cho hạt cơm săn khô và nổ lách tách. Trộn thêm 2 thìa cơm chiên giòn cho tăng độ rôm rốp.',
+        tip: 'Dùng mỡ heo sạch để rang cơm sẽ giúp hạt cơm bóng bẩy, thơm ngậy béo bùi đặc trưng của ẩm thực Hà Nội xưa mà không loại dầu ăn công nghiệp nào có thể thay thế được.',
+      },
+      {
+        step: 5,
+        title: 'Rưới nước mắm dậy mùi thành chảo & Thưởng thức trọn vẹn đĩa cơm nóng hổi',
+        time: '3 phút',
+        heat: 'Chảo thật nóng',
+        goal: 'Mùi nước mắm bốc hơi thơm nức mũi thấm trọn hạt cơm, đĩa cơm vàng ruộm phối cùng dưa bò nóng hổi',
+        actionPoints: [
+          'Khi cơm đã đạt độ săn giòn hoàn hảo, nghiêng nhẹ chảo rồi rưới 1 thìa canh nước mắm ngon quanh mép thành chảo đang nóng già (nhiệt độ kim loại cực cao sẽ khiến nước mắm bốc hơi ngay lập tức, hương thơm ngào ngạt phủ trùm lấy mẻ cơm mà hạt cơm hoàn toàn không bị ướt).',
+          'Đảo thật nhanh tay trong 30 giây cho cơm hấp thụ trọn vẹn hương thơm nức mũi của nước mắm, sau đó rắc toàn bộ hành lá cắt nhỏ và chút tiêu xay thơm nồng vào đảo đều 20 giây rồi tắt bếp.',
+          'Múc cơm rang vàng ruộm, săn giòn ra đĩa lớn. Gắp phần thịt bò xào dưa chua nóng hổi kèm nước sốt sền sệt rưới lên chóp cơm (hoặc đặt gọn gàng một bên đĩa cơm), điểm xuyết vài nhánh ngò rí và vài lát ớt tươi.',
+          'Dọn kèm một chén nước tương (xì dầu) tỏi ớt xắt cay nồng và một bát canh nước dùng thanh ngọt nóng hổi để thưởng thức trọn vẹn.',
+        ],
+        description:
+          'Rưới nước mắm quanh viền thành chảo nóng để dậy mùi thơm nức, đảo nhanh với hành hoa và tiêu xay rồi tắt bếp. Múc cơm vàng óng ra đĩa, xếp thịt bò xào dưa chua lên trên, rắc tiêu ngò rí. Ăn kèm xì dầu tỏi ớt và bát nước dùng nóng hổi.',
+        tip: 'Kỹ thuật rưới nước mắm lên thành chảo (chứ không rưới trực tiếp lên cơm) là bí quyết nhà nghề của các đầu bếp: Hơi nóng làm bốc hơi phần nước của mắm chỉ giữ lại tinh dầu thơm nức, giúp mẻ cơm rang ngát hương mà vẫn giữ nguyên độ săn giòn tuyệt đối.',
+      },
+    ],
+    chefSecret:
+      '4 nguyên tắc vàng tạo nên đĩa Cơm Rang Dưa Bò Hà Nội giòn tơi chuẩn vị quán xá: 1. Cơm nguội nấu khô ráo, để tủ lạnh qua đêm và bóp đều với 1 lòng đỏ trứng gà tạo màu vàng óng tự nhiên; 2. Luôn xào thịt bò dưa chua riêng trên lửa lớn nhất trong 1 - 2 phút, tuyệt đối không xào chung với cơm rang từ đầu; 3. Dùng mỡ heo sạch rang trên chảo nóng già và đảo miết liên tục đến khi cơm khô săn nổ lách tách; 4. Trộn thêm một nắm nhỏ cơm chiên giòn phồng rụm ở những phút cuối để tạo kết cấu giòn tan đưa miệng không thể cưỡng lại.',
+    recommendedSauce:
+      'Nước tương (xì dầu) dầm ớt xiêm cay nồng và vài lát tỏi mỏng, ăn kèm một bát nước dùng bò thanh ngọt rắc chút hành hoa bốc khói.',
+  },
 };
 
 /**
@@ -3716,6 +3843,7 @@ export function getDishRecipe(dish: Dish): DishRecipe {
 export const ACTIVE_RECIPE_DISH_IDS: string[] = [
   'com-tam-suon-bi-cha',
   'com-ga-xoi-mo',
+  'com-rang-dua-bo',
 ];
 
 export function getActiveRecipeDishes(allDishes: Dish[]): Dish[] {
@@ -3732,6 +3860,7 @@ export function getActiveRecipeDishes(allDishes: Dish[]): Dish[] {
 export const FEATURED_RECIPE_IDS = [
   'com-tam-suon-bi-cha',
   'com-ga-xoi-mo',
+  'com-rang-dua-bo',
 ];
 
 /**
@@ -3761,6 +3890,10 @@ export const RECIPE_SLUG_ALIASES: Record<string, string> = {
   'nem-nuong-nha-trang': 'nem-nuong-nha-trang-cuon',
   'cach-nau-nem-nuong-nha-trang': 'nem-nuong-nha-trang-cuon',
   'cach-lam-nem-nuong-nha-trang': 'nem-nuong-nha-trang-cuon',
+  'com-rang-dua-bo': 'com-rang-dua-bo',
+  'cach-nau-com-rang-dua-bo': 'com-rang-dua-bo',
+  'cach-lam-com-rang-dua-bo': 'com-rang-dua-bo',
+  'cong-thuc/com-rang-dua-bo': 'com-rang-dua-bo',
 };
 
 /**
