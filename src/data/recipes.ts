@@ -3236,6 +3236,119 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
     recommendedSauce:
       'Nước tương (xì dầu) dầm ớt xiêm cay nồng và vài lát tỏi mỏng, ăn kèm một bát nước dùng bò thanh ngọt rắc chút hành hoa bốc khói.',
   },
+  'chao-suon-sun-quay': {
+    dishId: 'chao-suon-sun-quay',
+    dishName: 'Cháo Sườn Sụn Quẩy Giòn Ruốc Thịt Hà Nội',
+    seoTitle: 'Cách Nấu Cháo Sườn Sụn Hà Nội Sánh Mịn Chuẩn Vị Phố Cổ, Quẩy Giòn Rụm',
+    prepTime: '20 - 30 phút (ngâm gạo & sơ chế sườn sụn)',
+    cookTime: '45 - 60 phút (ninh sườn mềm & quấy cháo sánh mịn)',
+    difficulty: 'Dễ',
+    servings: '4 - 5 người ăn',
+    ingredients: [
+      {
+        category: 'Gạo & sườn non hầm cháo',
+        items: [
+          '200g gạo tẻ ngon (chọn gạo tám thơm dẻo)',
+          '50g gạo nếp cái hoa vàng (tạo độ dẻo quánh, thơm nức và sánh mịn)',
+          '500g sườn sụn heo tươi non (chọn phần sụn đầu giòn trắng, nhiều thịt nạc)',
+          '300g xương ống hoặc sườn non (hầm lấy nước dùng ngọt đậm đà tự nhiên)',
+          '1 củ gừng tươi đập dập',
+          '3 củ hành tím khô nướng thơm',
+        ],
+      },
+      {
+        category: 'Gia vị nêm nếm nước cháo',
+        items: [
+          '2 thìa canh nước mắm cốt truyền thống nguyên chất',
+          '1 thìa cà phê muối hạt tinh',
+          '1 thìa cà phê hạt nêm ngon',
+          '1 thìa cà phê tiêu sọ đen hoặc trắng xay mịn (tiêu Bắc thơm nồng)',
+          '1/2 thìa cà phê đường phèn (làm dịu ngọt thanh)',
+        ],
+      },
+      {
+        category: 'Topping ăn kèm chuẩn vị Hà Nội',
+        items: [
+          '100g ruốc thịt heo (chà bông heo) sao vàng thơm ngọt dịu',
+          '5 - 7 chiếc quẩy giòn vàng rụm cắt khúc nhỏ',
+          'Hành hoa, rau mùi (ngò rí) rửa sạch thái nhỏ',
+          'Bột ớt khô hoặc tương ớt cay nồng truyền thống',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế & khử mùi sườn sụn, ninh lấy nước dùng ngọt thanh',
+        time: '15 phút',
+        heat: 'Lửa vừa rồi hạ liu riu',
+        goal: 'Sườn sụn sạch tinh, không mùi tanh hôi, nước hầm ngọt trong veo',
+        actionPoints: [
+          'Sườn sụn và xương ống rửa với nước muối loãng, chặt miếng sườn sụn nhỏ vừa ăn (khoảng 2 - 3cm).',
+          'Đun sôi nồi nước có vài lát gừng đập dập và 1 thìa muối hạt, cho sườn sụn và xương vào chần nhanh trong 3 phút để sủi sạch hết bọt bẩn và máu đọng thừa.',
+          'Vớt sườn và xương ra, rửa xả thật sạch dưới vòi nước lạnh từng miếng.',
+          'Cho xương ống và sườn sụn vào nồi cùng 2 lít nước lọc và 3 củ hành tím nướng. Đun sôi bùng, hớt sạch bọt rồi hạ lửa liu riu ninh khoảng 35 - 40 phút cho sườn sụn chín mềm nhưng vẫn giữ độ giòn sần sật đặc trưng. Vớt xương ống bỏ đi, giữ lại sườn sụn và phần nước hầm ngọt thanh.',
+        ],
+        description:
+          'Chần sườn sụn và xương qua nước sôi gừng muối để khử sạch tạp chất. Rửa sạch lại rồi ninh cùng nước lọc và hành tím nướng trong 40 phút cho sườn mềm giòn và nước ngọt thanh.',
+        tip: 'Chặt sườn sụn thành miếng nhỏ vừa ăn trước khi ninh giúp sụn nhanh mềm và khi múc vào bát cháo ăn rất vừa miệng, không bị cứng hay quá to.',
+      },
+      {
+        step: 2,
+        title: 'Bí quyết ngâm gạo & xay gạo nấu cháo sánh mịn như nhung',
+        time: '15 phút (xay bột gạo)',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Hạt gạo được ngâm mềm và xay vỡ nhỏ hạt mịn, không bị vón cục khi nấu',
+        actionPoints: [
+          'Trộn đều gạo tẻ và gạo nếp, vo nhẹ tay 2 lần cho sạch bụi cám, ngâm nước ấm trong 2 - 3 tiếng cho hạt gạo ngậm no nước nở mềm.',
+          'Đổ gạo ra rổ để thật ráo nước.',
+          'Cách nấu cháo sườn chuẩn Hà Nội: Cho gạo đã ráo vào cối máy xay sinh tố cùng 300ml nước dùng nguội, xay nhuyễn mịn (hoặc dùng bột gạo tẻ xay sẵn pha với nước ninh xương). Lọc hoặc dùng trực tiếp hỗn hợp gạo lỏng sánh mịn này để nấu.',
+        ],
+        description:
+          'Gạo tẻ trộn gạo nếp vo sạch, ngâm 2 - 3 tiếng cho nở mềm rồi đem xay nhuyễn mịn với chút nước hầm xương. Bột gạo xay nhuyễn chính là linh hồn giúp cháo sánh mịn mượt mà như kem.',
+        tip: 'Tỷ lệ vàng 4 phần gạo tẻ : 1 phần gạo nếp giúp cháo có độ quánh dẻo thơm ngát mà không hề bị đặc quánh hay tách nước khi để lâu.',
+      },
+      {
+        step: 3,
+        title: 'Quấy cháo sườn sánh mượt & nêm nếm gia vị đậm đà',
+        time: '20 - 25 phút',
+        heat: 'Lửa nhỏ liu riu',
+        goal: 'Nồi cháo chín đều trong suốt, sánh mịn óng ả, sườn sụn quyện đều thơm lừng',
+        actionPoints: [
+          'Đun sôi nồi nước hầm sườn sụn trên bếp ở mức lửa vừa.',
+          'Hạ lửa nhỏ, một tay từ từ rót phần bột gạo đã xay vào nồi, một tay dùng phới hoặc đũa lớn khuấy đều liên tục theo một chiều duy nhất để cháo không bị vón cục hay bén khét dưới đáy nồi.',
+          'Cho phần sườn sụn non đã ninh mềm vào nồi cháo cùng nấu chung.',
+          'Đun liu riu, khuấy nhẹ tay đều đặn trong 20 phút đến khi cháo chín trong, hạt bột chín nở căng mượt, sánh mịn như lụa.',
+          'Nêm vào nồi: 2 thìa canh nước mắm cốt nhĩ thơm nức, 1 thìa cà phê hạt nêm, 1/2 thìa cà phê đường phèn và muối cho vừa khẩu vị đậm đà thanh tao của người Hà Nội.',
+        ],
+        description:
+          'Từ từ rót bột gạo vào nồi nước hầm sườn đang sôi lăn tăn, khuấy đều tay theo một chiều để cháo sánh mịn không vón cục. Thả sườn sụn vào đun nhỏ lửa 20 phút cho cháo sánh mượt rồi nêm nước mắm ngon và gia vị.',
+        tip: 'Luôn khuấy cháo theo MỘT CHIỀU DUY NHẤT và miết nhẹ sát đáy nồi. Điều này ngăn chặn tinh bột bị vỡ cấu trúc gây chảy nước (vữa cháo) và chống cháy đáy nồi cực kỳ hiệu quả.',
+      },
+      {
+        step: 4,
+        title: 'Múc cháo ra bát, hoàn thiện topping quẩy giòn & ruốc thịt',
+        time: '5 phút',
+        heat: 'Cháo luôn giữ nóng trên bếp',
+        goal: 'Bát cháo sườn bốc khói nghi ngút, sụn giòn sần sật, ruốc thịt bông tơi, quẩy giòn rụm tan trong miệng',
+        actionPoints: [
+          'Quẩy giòn cắt khúc ngắn khoảng 1.5 - 2cm vừa ăn.',
+          'Múc cháo sườn sụn nóng hổi, sánh mịn ra từng bát sâu lòng.',
+          'Gắp vài miếng sườn sụn non giòn sần sật lên trên.',
+          'Rắc một lớp ruốc thịt heo xao bông vàng tơi xốp, xếp quẩy giòn xung quanh thành bát.',
+          'Rắc thêm thật nhiều tiêu sọ xay thơm nồng, chút hành hoa thái nhỏ và bột ớt khô cay tê đầu lưỡi.',
+          'Thưởng thức ngay khi còn bốc khói ngùn ngụt, trộn nhẹ quẩy với cháo nóng để cảm nhận vị giòn rụm béo bùi.',
+        ],
+        description:
+          'Múc cháo sườn sánh mịn nóng hổi ra bát, xếp sườn sụn, rắc ruốc thịt heo sao thơm, thả quẩy giòn cắt khúc, rắc tiêu xay và ớt bột. Thưởng thức ngay khi còn nóng hổi chuẩn vị Hà Nội.',
+        tip: 'Nên cho quẩy vào sau cùng ngay trước khi ăn để quẩy giữ trọn độ giòn rụm, khi chấm đẫm vào thìa cháo sánh mịn sẽ tạo nên sự bùng nổ hương vị khó quên.',
+      },
+    ],
+    chefSecret:
+      '3 bí quyết gia truyền nấu Cháo Sườn Sụn Hà Nội chuẩn vị: 1. Ninh sườn sụn riêng với xương ống để lấy nước dùng ngọt tủy trong veo, sườn sụn mềm giòn sần sật không bị nát; 2. Pha tỷ lệ 4 tẻ : 1 nếp, ngâm mềm rồi xay nhuyễn với nước dùng để cháo sánh mịn màng như nhung lụa; 3. Khuấy cháo liên tục theo một chiều trên lửa nhỏ liu riu để cháo không bao giờ bị bén khét hay vữa nước. Ăn kèm quẩy giòn rụm và thật nhiều hạt tiêu sọ Bắc cay nồng nàn.',
+    recommendedSauce:
+      'Cháo sườn sụn ăn kèm quẩy giòn, ruốc thịt heo đậm đà, tiêu xay thơm nức mũi và chút ớt bột khô cay ấm bụng.',
+  },
 };
 
 /**
