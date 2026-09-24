@@ -3349,6 +3349,122 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
     recommendedSauce:
       'Cháo sườn sụn ăn kèm quẩy giòn, ruốc thịt heo đậm đà, tiêu xay thơm nức mũi và chút ớt bột khô cay ấm bụng.',
   },
+  'lau-rieu-cua-bap-bo': {
+    dishId: 'lau-rieu-cua-bap-bo',
+    dishName: 'Lẩu Riêu Cua Bắp Bò Sườn Sụn Hà Nội',
+    seoTitle: 'Cách Nấu Lẩu Riêu Cua Bắp Bò Chua Cay Đậm Đà Chuẩn Vị Gia Đình',
+    prepTime: '35 - 45 phút (lọc cua đồng, sơ chế bắp bò & sườn sụn)',
+    cookTime: '45 - 50 phút (ninh sườn sụn & nấu nước lẩu riêu cua)',
+    difficulty: 'Trung bình',
+    servings: '4 - 6 người ăn',
+    ingredients: [
+      {
+        category: 'Cua đồng & Nước dùng lẩu ngọt thanh',
+        items: [
+          '600g - 700g cua đồng tươi sống (chọn cua cái yếm dày, gạch vàng óng, nhiều thịt)',
+          '500g sườn sụn heo non tươi giòn (chọn phần sụn đầu giòn trắng, nhiều thịt nạc)',
+          '300g xương ống heo (hầm lấy nước dùng ngọt sâu tự nhiên)',
+          '4 quả cà chua chín mọng (bổ múi cau đỏ au)',
+          '150ml - 200ml giấm bỗng nếp lên men tự nhiên (linh hồn tạo vị chua thanh dịu êm, thơm ngát hương nếp)',
+          '1 thìa canh mắm tôm ngon nguyên chất (bí quyết kích mùi riêu cua dậy vị đậm đà chuẩn vị Bắc)',
+          '2 thìa canh dầu màu điều (hoặc mỡ heo chưng gạch cua lên màu vàng óng ánh)',
+          '4 - 5 củ hành tím khô đập dập băm nhỏ + 1 củ gừng tươi',
+        ],
+      },
+      {
+        category: 'Bắp bò, Đậu mơ & Đồ nhúng lẩu tươi ngon',
+        items: [
+          '500g bắp bò hoa hoặc bắp lõi rùa tươi non (thái lát mỏng tang ngang thớ)',
+          '4 bìa đậu phụ làng Mơ mềm béo (cắt vuông nhỏ, rán vàng giòn rụm các mặt)',
+          '200g giò sống / mọc thịt nấm hương mộc nhĩ (tùy thích viên tròn thả lẩu)',
+          '1kg bún tươi sợi nhỏ sạch mềm (hoặc mì tôm, bánh đa đỏ)',
+        ],
+      },
+      {
+        category: 'Rau nhúng lẩu & Gia vị nêm nếm',
+        items: [
+          'Hoa chuối bào sợi mỏng ngâm nước chanh trắng tinh, rau muống chẻ ngọn',
+          'Rau thơm ăn kèm: Tía tô, kinh giới, rau xà lách, ngò gai, hành hoa chẻ sợi',
+          'Gia vị: Nước mắm cốt truyền thống, muối hạt tinh, hạt nêm, 1 viên đường phèn nhỏ, tiêu sọ xay',
+          'Ớt hiểm tươi thái lát và ớt sa tế chưng cay nồng',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế cua đồng, giã lọc lấy nước cốt & khều gạch cua vàng óng',
+        time: '15 - 20 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Nước cốt cua lọc sạch bã trong veo, gạch cua khều nguyên vẹn thơm béo',
+        actionPoints: [
+          'Cua đồng ngâm rửa nhiều lần và xóc mạnh với muối hạt cho sạch hết bùn đất, sau đó tách bỏ yếm và mai cua.',
+          'Dùng tăm hoặc thìa nhỏ khéo léo khều sạch phần gạch cua vàng óng trong mai vào một chén riêng.',
+          'Thân cua cho vào cối cùng 1 thìa cà phê muối hạt giã thật nhuyễn (hoặc cho vào máy xay sinh tố xay mịn). Muối hạt là bí quyết quan trọng kích thích protein cua kết dính chặt chẽ thành từng tảng dày khi nấu.',
+          'Hòa phần thịt cua xay với 1.5 - 2 lít nước lọc mát, dùng tay bóp kỹ rồi rót qua rây lọc dày 2 - 3 lần để lấy trọn nước cốt cua đậm đà, loại bỏ hoàn toàn phần bã xác cua cứng.',
+        ],
+        description:
+          'Rửa sạch cua đồng, tách mai khều riêng gạch cua. Giã nhuyễn thân cua với 1 thìa cà phê muối hạt, hòa tan với 2 lít nước lọc rồi bóp kỹ và lọc qua rây 2 - 3 lần lấy nước cốt cua trong veo, bỏ sạch bã.',
+        tip: 'Nhất định phải thêm chút muối hạt khi giã cua. Muối giúp các phân tử đạm cua liên kết chặt chẽ với nhau, khi đun nóng sẽ kết tụ thành từng mảng riêu to dày béo ngậy mà không hề bị nát vụn hay tan biến trong nước.',
+      },
+      {
+        step: 2,
+        title: 'Ninh sườn sụn non ngọt giòn, thái bắp bò hoa & rán đậu mơ',
+        time: '25 - 30 phút',
+        heat: 'Lửa vừa rồi hạ nhỏ liu riu',
+        goal: 'Sườn sụn mềm giòn sần sật, bắp bò hoa thái mỏng mềm mọng nước, đậu phụ vàng ruộm',
+        actionPoints: [
+          'Sườn sụn chặt miếng nhỏ cỡ 2 - 3cm, chần qua nồi nước sôi có vài lát gừng đập dập và chút muối trong 3 phút để khử sạch tạp chất và mùi tanh, sau đó rửa xả lại thật sạch dưới vòi nước lạnh.',
+          'Cho sườn sụn và xương ống vào nồi với 1 lít nước, đun sôi rồi hạ lửa liu riu ninh 25 - 30 phút cho sụn non chín mềm vừa tới nhưng vẫn giữ độ giòn sần sật đặc trưng. Giữ ấm cả sườn và nước hầm thanh ngọt.',
+          'Bắp bò hoa rửa sạch, thấm khô ráo, để vào ngăn đá tủ lạnh 15 phút cho thớ thịt hơi se cứng lại rồi dùng dao bén thái lát thật mỏng ngang thớ. Ướp nhẹ với 1 thìa cà phê gừng thái chỉ, 1/2 thìa dầu ăn, chút tiêu xay để thịt mềm ngọt không bị dai khô khi nhúng.',
+          'Đậu phụ làng Mơ cắt miếng vuông vừa ăn, thả vào chảo mỡ nóng già rán vàng giòn rụm các mặt, vớt ra đĩa có lót giấy thấm dầu.',
+          'Hoa chuối bào sợi mỏng và rau muống chẻ ngâm ngay vào thau nước đá lạnh vắt nửa quả chanh để rau luôn trắng tinh và giữ độ giòn sần sật.',
+        ],
+        description:
+          'Chần sườn sụn rồi ninh mềm giòn cùng xương hầm. Bắp bò hoa thái mỏng tang ướp chút gừng và dầu ăn. Đậu phụ rán vàng giòn rụm. Rau sống ngâm nước đá chanh giữ độ tươi giòn.',
+        tip: 'Cho bắp bò vào ngăn đá 15 phút trước khi thái giúp miếng thịt định hình chắc chắn, dễ thái lát mỏng như tờ giấy. Khi nhúng nước lẩu sôi, thịt bò chín tái trong 15 giây, mềm mọng và nở hoa giòn sần sật.',
+      },
+      {
+        step: 3,
+        title: 'Nấu nước lẩu riêu cua đóng tảng béo ngậy & chưng gạch cua óng ả',
+        time: '15 - 20 phút',
+        heat: 'Lửa vừa đến khi riêu nổi thì hạ nhỏ liu riu',
+        goal: 'Tảng riêu cua nổi dày bồng bềnh vàng ruộm, nước lẩu chua thanh giấm bỗng nồng ấm',
+        actionPoints: [
+          'Đổ nồi nước lọc cua lên bếp, nêm thêm 1 thìa cà phê hạt nêm và 1/2 thìa cà phê muối. Đun ở lửa vừa, dùng muôi khuấy nhẹ dưới đáy nồi theo một chiều để thịt cua không bị lắng bén khét đáy.',
+          'Khi thấy nước bắt đầu bốc khói ấm và mảng thịt cua kết tụ nổi dần lên mặt nước, NGỪNG KHUẤY NGAY LẬP TỨC và hạ nhỏ lửa liu riu. Nước sôi lăn tăn sẽ đẩy từng mảng riêu cua kết tụ dày cộm, nổi bồng bềnh trên mặt nồi.',
+          'Dùng muôi thủng khéo léo vớt toàn bộ mảng riêu cua ra đĩa sâu lòng riêng (bí quyết giữ riêu cua nguyên vẹn, không bị nát vụn khi khách nhúng đồ ăn liên tục).',
+          'Trút phần nước ninh sườn sụn trong veo vào nồi nước lẩu cua.',
+          'Bắc chảo nhỏ lên bếp, phi thơm hành tím băm với 2 thìa dầu màu điều, trút gạch cua đã khều vào chưng nhanh tay 1 - 2 phút cho thơm nức dậy mùi béo ngậy. Múc một nửa rưới đều lên mặt đĩa riêu cua đã vớt ra để tạo lớp màng gạch vàng óng ả bắt mắt.',
+          'Phần chảo còn lại cho cà chua múi cau vào xào chín tới (vẫn giữ nguyên miếng, không làm nát nhừ), trút toàn bộ cà chua và dầu gạch cua vào nồi nước lẩu.',
+          'Nêm vào nồi: 150ml - 200ml giấm bỗng nếp (gia giảm vừa độ chua thanh dịu), 1 thìa canh mắm tôm ngon đã khuấy tan với chút nước ấm gạn bỏ cặn, 2 thìa canh nước mắm cốt nhĩ và 1 viên nhỏ đường phèn. Nồi nước lẩu sôi lăn tăn, tỏa hương thơm ngát nức lòng.',
+        ],
+        description:
+          'Đun nước cua trên lửa vừa đến khi thịt cua kết thành tảng dày nổi bồng bềnh, vớt riêu ra đĩa riêng. Chưng gạch cua với hành khô và dầu điều, xào cà chua rồi trút vào nồi cùng nước hầm sườn. Nêm giấm bỗng nếp, mắm tôm ngon và nước mắm cốt cho vị chua thanh đậm đà.',
+        tip: 'Tuyệt đối không đậy nắp vung và không để nước lẩu sôi bùng dữ dội khi riêu cua đang nổi, vì nhiệt quá lớn sẽ làm nát vụn tảng riêu. Vớt riêu ra đĩa riêng trước là bí quyết nhà nghề giúp tảng riêu cua luôn nguyên khối đẹp mắt.',
+      },
+      {
+        step: 4,
+        title: 'Bày biện nồi lẩu & Thưởng thức lẩu riêu cua bắp bò chua cay',
+        time: '5 - 10 phút',
+        heat: 'Bếp lẩu sôi lăn tăn trên bàn ăn',
+        goal: 'Nồi lẩu thơm lừng nghi ngút khói, bắp bò chín tái giòn sần sật, nước dùng chua cay kích thích vị giác',
+        actionPoints: [
+          'Đặt bếp lẩu ra giữa bàn ăn. Đổ nước lẩu cà chua giấm bỗng vào nồi, thả sườn sụn non ninh mềm, đậu phụ rán vàng, một phần riêu cua và rắc thêm đầu hành chẻ, mùi tàu, tía tô thái sợi.',
+          'Bày xung quanh bàn: Đĩa bắp bò hoa đỏ tươi thái mỏng, đĩa riêu cua chưng gạch óng ả, giò sống mọc thịt, rổ rau muống chẻ, hoa chuối, tía tô, kinh giới và đĩa bún tươi.',
+          'Khi nồi lẩu sôi sùng sục, nhúng từng lát bắp bò hoa trong 15 - 20 giây cho chín tái hồng giòn sần sật, thả viên mọc thịt và rau sống nhúng chín tới.',
+          'Lấy bún tươi vào bát, múc một miếng riêu cua béo bùi, gắp lát bắp bò giòn sần sật, sườn sụn non và đậu phụ ngấm nước lẩu, rưới nước dùng nóng hổi chua cay thanh dịu từ giấm bỗng và thưởng thức ngay.',
+        ],
+        description:
+          'Bày nồi lẩu sôi lăn tăn với sườn sụn, đậu rán, riêu cua và hành tía tô. Nhúng bắp bò hoa tái giòn, rau muống chẻ và hoa chuối. Ăn kèm bún tươi, chấm nước mắm ớt cay nồng đậm đà.',
+        tip: 'Nên thả đậu phụ rán vào nồi lẩu từ sớm để từng miếng đậu ngậm no nước dùng chua thanh béo ngậy của riêu cua. Khi cắn vào, nước lẩu nóng hổi tuôn tràn trong miệng cực kỳ thỏa mãn.',
+      },
+    ],
+    chefSecret:
+      '4 bí quyết vàng tạo nên nồi Lẩu Riêu Cua Bắp Bò chua thanh đậm đà chuẩn vị Hà Nội: 1. Thêm muối hạt khi giã lọc cua và chỉ khuấy lúc nước ấm; khi bắt đầu sôi phải hạ lửa nhỏ liu riu để riêu cua kết tụ thành từng mảng to xốp mềm béo ngậy; 2. Vớt tảng riêu cua ra đĩa riêng rồi rưới gạch cua phi hành thơm óng ả lên trên để riêu không bị nát vụn khi nhúng; 3. Dùng giấm bỗng nếp lên men tự nhiên tạo vị chua thanh dịu dàng thơm mùi men nếp, kết hợp 1 thìa mắm tôm ngon khử tanh và dậy vị sâu sắc (tuyệt đối không dùng giấm hóa học hay nước cốt chanh); 4. Bắp bò hoa thái thật mỏng ngang thớ và chỉ nhúng tái trong 15 - 20 giây để thịt giữ nguyên độ giòn ngọt mọng nước sần sật.',
+    recommendedSauce:
+      'Chén nước mắm cốt nhĩ nguyên chất dầm ớt hiểm cay xé lưỡi vắt chút quất thơm, kèm một đĩa muối tiêu chanh ớt và sa tế tôm tự chưng cay nồng.',
+  },
 };
 
 /**
@@ -3557,8 +3673,13 @@ export function getDishRecipe(dish: Dish): DishRecipe {
     dish.name.toLowerCase().includes('bò bía') ||
     dish.name.toLowerCase().includes('nem');
 
+  const isHotpot =
+    !isRollOrBanhMi &&
+    (dish.name.toLowerCase().includes('lẩu') || (dish.category === 'lau_chao' && dish.id.startsWith('lau')));
+
   const isSoupOrNoodle =
     !isRollOrBanhMi &&
+    !isHotpot &&
     (dish.category === 'bun_pho_mi' ||
       dish.category === 'bun_pho' ||
       dish.category === 'lau_chao' ||
@@ -3580,6 +3701,111 @@ export function getDishRecipe(dish: Dish): DishRecipe {
     dish.name.toLowerCase().includes('nướng') ||
     dish.name.toLowerCase().includes('chiên') ||
     dish.name.toLowerCase().includes('xào');
+
+  // Hotpot fallback template
+  if (isHotpot) {
+    return {
+      dishId: dish.id,
+      dishName: dish.name,
+      seoTitle: getRecipeArticleTitle(dish),
+      prepTime: '30 phút (sơ chế thịt & nhặt rau nấm)',
+      cookTime: '45 - 60 phút (ninh nước dùng lẩu)',
+      difficulty: 'Trung bình',
+      servings: '4 - 6 người ăn',
+      ingredients: [
+        {
+          category: 'Đồ nhúng lẩu chính',
+          items: [
+            `Phần thịt / hải sản tươi ngon đặc trưng của ${dish.vietnameseName}`,
+            'Xương ống heo hoặc xương gà hầm lấy nước dùng ngọt thanh tự nhiên',
+            'Đậu phụ tươi, nấm các loại (nấm kim châm, nấm đùi gà, nấm rơm)',
+          ],
+        },
+        {
+          category: 'Gia vị & Hương liệu nước lẩu',
+          items: [
+            'Hành tím nướng, gừng tươi đập dập, sả cây, cà chua chín đỏ',
+            'Gia vị chua cay đặc trưng (giấm bỗng, me hoặc sa tế chua cay)',
+            'Nước mắm cốt truyền thống, muối hạt, đường phèn, tiêu sọ',
+          ],
+        },
+        {
+          category: 'Rau nhúng & Đồ ăn kèm',
+          items: [
+            'Rau muống, cải cúc, cải ngọt, hoa chuối hoặc các loại rau đồng nội',
+            'Bún tươi sợi nhỏ hoặc mì gói, bánh đa ăn kèm',
+            'Nước mắm ớt cay, muối tiêu chanh hoặc sa tế tôm chấm lẩu',
+          ],
+        },
+      ],
+      steps: [
+        {
+          step: 1,
+          title: 'Ninh nước dùng xương ngọt thanh tự nhiên',
+          time: '45 phút',
+          heat: 'Lửa liu riu sau khi sôi',
+          goal: 'Nước hầm xương trong veo, ngọt đậm đà từ tủy xương, không lẫn mùi tanh',
+          actionPoints: [
+            'Chặt xương ống thành khúc, chần qua nước sôi gừng muối trong 3 phút rồi rửa xả lại thật sạch.',
+            'Cho xương vào nồi cùng 2.5 - 3 lít nước lọc, đun sôi bùng rồi hớt sạch bọt.',
+            'Hạ lửa nhỏ liu riu ninh trong 45 phút cùng hành tím nướng để nước dùng có vị ngọt thanh sâu lắng.',
+          ],
+          description:
+            'Chần xương qua nước sôi gừng muối để khử sạch bọt bẩn. Rửa lại nước lạnh rồi cho vào nồi ninh liu riu cùng hành nướng cho nước dùng ngọt thanh.',
+          tip: 'Không đậy kín vung và hớt bọt thường xuyên để nước dùng luôn trong suốt.',
+        },
+        {
+          step: 2,
+          title: 'Sơ chế thịt, hải sản và rau nấm nhúng lẩu',
+          time: '20 phút',
+          heat: 'Nhiệt độ phòng',
+          goal: 'Đồ nhúng tươi ngon, sạch sẽ, thái lát mỏng đẹp mắt sẵn sàng lên bàn',
+          actionPoints: [
+            `Thịt và hải sản cho ${dish.vietnameseName} rửa sạch, thái lát mỏng vừa ăn để nhúng nhanh chín mềm.`,
+            'Rau nhúng và các loại nấm nhặt rửa sạch, ngâm nước muối loãng 10 phút rồi vớt ra vẩy ráo nước.',
+            'Bày biện các loại thịt, hải sản, đậu phụ và rau nấm ra từng đĩa riêng đẹp mắt.',
+          ],
+          description:
+            `Thịt và hải sản rửa sạch thái mỏng vừa ăn. Rau nấm ngâm rửa sạch ráo nước. Xếp gọn gàng ra từng đĩa riêng để chuẩn bị nhúng lẩu.`,
+          tip: 'Thịt bò hoặc thịt nạc nhúng lẩu thái thật mỏng ngang thớ để khi nhúng vào nước sôi chín tái mềm mọng, không bị dai.',
+        },
+        {
+          step: 3,
+          title: 'Nấu nước lẩu chuẩn vị đậm đà thơm lừng',
+          time: '15 phút',
+          heat: 'Lửa vừa',
+          goal: 'Nước lẩu dậy mùi thơm nức, màu sắc óng ả, vị chua cay mặn ngọt hài hòa',
+          actionPoints: [
+            'Phi thơm hành tỏi và ớt với chút dầu màu điều, xào cà chua chín tới cho lên màu đẹp.',
+            'Trút phần nước hầm xương vào nồi lẩu, đun sôi lăn tăn.',
+            'Nêm nếm gia vị chua cay, nước mắm ngon, hạt nêm và chút đường phèn cho tròn vị đậm đà.',
+          ],
+          description:
+            'Phi thơm hành tỏi xào cà chua lấy màu óng ả. Đổ nước dùng xương vào đun sôi rồi nêm nếm gia vị chua cay, nước mắm ngon vừa khẩu vị gia đình.',
+          tip: 'Đường phèn giúp làm dịu vị chua và tạo hậu vị ngọt thanh tao cho nồi nước lẩu.',
+        },
+        {
+          step: 4,
+          title: 'Bày bàn tiệc lẩu & Thưởng thức quây quần nóng hổi',
+          time: '5 phút',
+          heat: 'Bếp lẩu sôi nhẹ trên bàn ăn',
+          goal: 'Nồi lẩu sôi sùng sục nghi ngút khói, đồ nhúng tươi giòn ngọt tự nhiên',
+          actionPoints: [
+            'Đặt nồi nước lẩu lên bếp từ/bếp cồn giữa bàn ăn, thả đậu phụ và nấm vào trước.',
+            'Khi nước sôi, gắp từng miếng thịt, hải sản và rau xanh nhúng vừa chín tới.',
+            'Gắp đồ ăn kèm bún tươi, chan nước lẩu chua cay nóng hổi và chấm đẫm nước chấm gia vị đậm đà.',
+          ],
+          description:
+            'Đặt bếp lẩu giữa bàn ăn. Nước lẩu sôi thì nhúng thịt, hải sản và rau nấm ăn kèm bún tươi. Thưởng thức nóng hổi cùng gia đình!',
+          tip: 'Nhúng đồ ăn đến đâu ăn đến đó để thịt giữ được độ ngọt mọng và rau giữ nguyên độ giòn tươi xanh.',
+        },
+      ],
+      chefSecret:
+        'Bí quyết nồi lẩu ngon bất bại: Ninh xương lấy nước ngọt tự nhiên thay vì dùng bột ngọt, phi hành tỏi xào cà chua lấy màu đỏ óng ả, và luôn giữ nước lẩu sôi nhẹ trên bàn để đồ nhúng chín tới hoàn hảo.',
+      recommendedSauce:
+        'Nước mắm mặn ớt xiêm cay xé lưỡi hoặc đĩa muối tiêu chanh ớt và sa tế tôm tự chưng.',
+    };
+  }
 
   // Generic customized template tailored to the dish
   if (isSoupOrNoodle) {
@@ -4007,6 +4233,17 @@ export const RECIPE_SLUG_ALIASES: Record<string, string> = {
   'cach-nau-com-rang-dua-bo': 'com-rang-dua-bo',
   'cach-lam-com-rang-dua-bo': 'com-rang-dua-bo',
   'cong-thuc/com-rang-dua-bo': 'com-rang-dua-bo',
+  'chao-suon-sun': 'chao-suon-sun-quay',
+  'chao-suon-sun-bo-duong': 'chao-suon-sun-quay',
+  'cach-nau-chao-suon-sun': 'chao-suon-sun-quay',
+  'cach-nau-chao-suon-sun-bo-duong': 'chao-suon-sun-quay',
+  'lau-rieu-cua': 'lau-rieu-cua-bap-bo',
+  'cach-nau-lau-rieu-cua': 'lau-rieu-cua-bap-bo',
+  'lau-rieu-cua-bap-bo': 'lau-rieu-cua-bap-bo',
+  'cach-nau-lau-rieu-cua-bap-bo': 'lau-rieu-cua-bap-bo',
+  'cach-nau-lau-rieu-cua-bap-bo-chua-cay': 'lau-rieu-cua-bap-bo',
+  'lau-rieu-cua-bap-bo-suon-sun': 'lau-rieu-cua-bap-bo',
+  'cach-nau-lau-rieu-cua-bap-bo-suon-sun': 'lau-rieu-cua-bap-bo',
 };
 
 /**
