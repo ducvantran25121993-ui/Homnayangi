@@ -215,7 +215,7 @@ export const WHEEL_PRESETS: WheelPreset[] = [
       'Cháo sườn quẩy giòn nóng hổi',
       'Bánh cuốn nóng thịt băm',
       'Bánh giò nóng thịt mộc nhĩ',
-      'Cơm nắm muối vừng ruốc',
+      'Bánh mì xúc xích pate trứng',
       'Mì xào trứng xúc xích hành hoa',
     ],
   },

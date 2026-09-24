@@ -393,16 +393,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-xoi-vo-che-duong</loc>
-    <lastmod>2026-09-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1536304929831-ee1ca9d44906?w=800&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
-      <image:title>Cách Nấu Xôi Vò Chè Hoa Cau Dẻo Thơm Óng Ả Chuẩn Vị Truyền Thống</image:title>
-    </image:image>
-  </url>
-  <url>
     <loc>https://www.angigio.com/cach-nau-banh-beo</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
@@ -430,16 +420,6 @@
     <image:image>
       <image:loc>https://www.angigio.com/images/com_chay_kho_quet.jpg</image:loc>
       <image:title>Cách Nấu Cơm Cháy Kho Quẹt Đậm Đà, Mềm Mọng Chuẩn Vị Mẹ Nấu</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://www.angigio.com/cach-nau-com-nam-muoi-vung</loc>
-    <lastmod>2026-09-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://www.angigio.com/images/com_nam.jpg</image:loc>
-      <image:title>Cách Làm Cơm Nắm Muối Vừng Thơm Ngon Đậm Đà Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
@@ -2320,6 +2300,106 @@
     <image:image>
       <image:loc>https://www.angigio.com/images/com_rang_dua_bo.jpg?v=2</image:loc>
       <image:title>Cách Làm Cơm Rang Dưa Bò Hạt Cơm Săn Giòn, Thơm Ngon Chuẩn Vị</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.angigio.com/chao-suon-sun</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.angigio.com/images/chao_suon_sun.jpg</image:loc>
+      <image:title>Cách Nấu Cháo Sườn Sụn Hà Nội Sánh Mịn Chuẩn Vị Phố Cổ, Quẩy Giòn Rụm</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.angigio.com/chao-suon-sun-bo-duong</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.angigio.com/images/chao_suon_sun.jpg</image:loc>
+      <image:title>Cách Nấu Cháo Sườn Sụn Hà Nội Sánh Mịn Chuẩn Vị Phố Cổ, Quẩy Giòn Rụm</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.angigio.com/cach-nau-chao-suon-sun</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.angigio.com/images/chao_suon_sun.jpg</image:loc>
+      <image:title>Cách Nấu Cháo Sườn Sụn Hà Nội Sánh Mịn Chuẩn Vị Phố Cổ, Quẩy Giòn Rụm</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.angigio.com/cach-nau-chao-suon-sun-bo-duong</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.angigio.com/images/chao_suon_sun.jpg</image:loc>
+      <image:title>Cách Nấu Cháo Sườn Sụn Hà Nội Sánh Mịn Chuẩn Vị Phố Cổ, Quẩy Giòn Rụm</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.angigio.com/lau-rieu-cua</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.angigio.com/images/lau_rieu_cua_bap_bo.jpg?v=2</image:loc>
+      <image:title>Cách Nấu Lẩu Riêu Cua Bắp Bò Chua Cay Đậm Đà Chuẩn Vị Gia Đình</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.angigio.com/cach-nau-lau-rieu-cua</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.angigio.com/images/lau_rieu_cua_bap_bo.jpg?v=2</image:loc>
+      <image:title>Cách Nấu Lẩu Riêu Cua Bắp Bò Chua Cay Đậm Đà Chuẩn Vị Gia Đình</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.angigio.com/lau-rieu-cua-bap-bo</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.angigio.com/images/lau_rieu_cua_bap_bo.jpg?v=2</image:loc>
+      <image:title>Cách Nấu Lẩu Riêu Cua Bắp Bò Chua Cay Đậm Đà Chuẩn Vị Gia Đình</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.angigio.com/cach-nau-lau-rieu-cua-bap-bo-chua-cay</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.angigio.com/images/lau_rieu_cua_bap_bo.jpg?v=2</image:loc>
+      <image:title>Cách Nấu Lẩu Riêu Cua Bắp Bò Chua Cay Đậm Đà Chuẩn Vị Gia Đình</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.angigio.com/lau-rieu-cua-bap-bo-suon-sun</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.angigio.com/images/lau_rieu_cua_bap_bo.jpg?v=2</image:loc>
+      <image:title>Cách Nấu Lẩu Riêu Cua Bắp Bò Chua Cay Đậm Đà Chuẩn Vị Gia Đình</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.angigio.com/cach-nau-lau-rieu-cua-bap-bo-suon-sun</loc>
+    <lastmod>2026-09-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://www.angigio.com/images/lau_rieu_cua_bap_bo.jpg?v=2</image:loc>
+      <image:title>Cách Nấu Lẩu Riêu Cua Bắp Bò Chua Cay Đậm Đà Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
 </urlset>
