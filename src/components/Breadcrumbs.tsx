@@ -8,6 +8,8 @@ import {
   getDiscoverSubSectionFromUrl,
 } from '../utils/navigation';
 import { getRegionFromUrl, getRegionById, isRegionPath } from '../data/regionalCuisine';
+import { findDishByRecipeSlug, getDishRecipe, getRecipeArticleTitle, getRecipePath } from '../data/recipes';
+import { INITIAL_DISHES } from '../data/dishes';
 
 interface BreadcrumbsProps {
   activeTab: TabType;
@@ -54,6 +56,18 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   const activeRegionId = isSpecificRegion ? getRegionFromUrl() : null;
   const activeRegion = activeRegionId ? getRegionById(activeRegionId) : null;
 
+  // Check if currently on a specific recipe article page (e.g. /cach-nau-pho-bo-tai-lan)
+  const currentPathname = typeof window !== 'undefined' ? window.location.pathname : '';
+  const isRecipeArticle =
+    effectiveDiscoverSub === 'recipe' &&
+    (currentPathname.startsWith('/cach-nau-') ||
+      currentPathname.startsWith('/cach-lam-') ||
+      currentPathname.startsWith('/cach-nau-mon-ngon/')) &&
+    currentPathname !== '/cach-nau-mon-ngon';
+
+  const recipeDish = isRecipeArticle ? findDishByRecipeSlug(currentPathname, INITIAL_DISHES) : null;
+  const recipeArticleTitle = recipeDish ? getRecipeArticleTitle(recipeDish, getDishRecipe(recipeDish)) : null;
+
   const currentLabel =
     isDiscover && discoverSubMeta ? discoverSubMeta.label : currentTabMeta?.label;
   const currentPath =
@@ -69,6 +83,12 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
     if (e.ctrlKey || e.metaKey || e.button === 1) return;
     e.preventDefault();
     onNavigate('discover', 'region');
+  };
+
+  const handleRecipeHubClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (e.ctrlKey || e.metaKey || e.button === 1) return;
+    e.preventDefault();
+    onNavigate('discover', 'recipe');
   };
 
   return (
@@ -131,6 +151,44 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
                 {activeRegion.name}
               </span>
               <link itemProp="item" href={`https://www.angigio.com${activeRegion.path}`} />
+              <meta itemProp="position" content="3" />
+            </li>
+          </>
+        ) : isRecipeArticle && recipeDish && recipeArticleTitle ? (
+          <>
+            <li
+              className="flex items-center gap-1.5"
+              itemProp="itemListElement"
+              itemScope
+              itemType="https://schema.org/ListItem"
+            >
+              <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+              <a
+                href="/cach-nau-mon-ngon"
+                onClick={handleRecipeHubClick}
+                itemProp="item"
+                className="hover:text-orange-600 transition-colors"
+              >
+                <span itemProp="name">Cách Nấu Món Ngon</span>
+              </a>
+              <meta itemProp="position" content="2" />
+            </li>
+
+            <li
+              className="flex items-center gap-1.5"
+              itemProp="itemListElement"
+              itemScope
+              itemType="https://schema.org/ListItem"
+            >
+              <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+              <span
+                className="text-stone-800 font-semibold truncate max-w-xs sm:max-w-md"
+                aria-current="page"
+                itemProp="name"
+              >
+                {recipeArticleTitle}
+              </span>
+              <link itemProp="item" href={`https://www.angigio.com${getRecipePath(recipeDish)}`} />
               <meta itemProp="position" content="3" />
             </li>
           </>

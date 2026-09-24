@@ -192,9 +192,9 @@ export const BANHMI_CUON_DISHES: Dish[] = [
     priceRange: '30.000đ - 50.000đ',
     estimatedPrice: 35000,
     calories: '380 - 480 kcal',
-    description: 'Lá bánh mỏng tang trong suốt cuộn nhân thịt nạc băm và mộc nhĩ nấm hương thơm lừng, rắc ngập hành phi giòn tan chấm nước mắm ấm ngâm chả quế.',
-    image: '/images/banh_cuon.jpg?v=2',
-    popularTags: ['Bánh tráng hơi', 'Chả quế', 'Hành phi giòn', 'Hà Nội'],
+    description: 'Lớp bánh tráng hơi mỏng tang trong suốt cuộn nhân thịt nạc băm và mộc nhĩ nấm hương, rắc hành phi thơm nức chấm nước mắm chả quế.',
+    image: '/images/banh_cuon.jpg',
+    popularTags: ['Bánh tráng hơi', 'Chả quế béo', 'Hành phi giòn'],
     searchKeyword: 'Bánh cuốn nóng thịt băm',
   },
   {

@@ -1,116 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Send, ShoppingBag, ExternalLink, RefreshCw, AlertCircle, ChefHat, Check, Heart, MapPin, RotateCcw } from 'lucide-react';
+import { Sparkles, Send, ShoppingBag, ExternalLink, RefreshCw, AlertCircle, ChefHat, Check, Heart, MapPin } from 'lucide-react';
 import { AISuggestion, AffiliateConfig, UserLocation, Dish } from '../types';
 import { trackAndOpenAffiliateLink } from '../utils/affiliate';
 import { formatLocationDisplay } from '../utils/location';
 import { DeliveryLocationBadge } from './DeliveryLocationBadge';
-import { INITIAL_DISHES } from '../data/dishes';
-
-// Helper to generate smart fallback suggestions from curated dishes when network drops or server is offline
-function getClientFallbackDishes(mealTime: string, budget: string, mood: string, location: string): { suggestions: AISuggestion[]; advice: string } {
-  const mealMap: Record<string, 'sang' | 'trua' | 'toi' | 'an_vat' | 'an_dem'> = {
-    'Sáng': 'sang',
-    'Trưa': 'trua',
-    'Xế Chiều': 'an_vat',
-    'Tối': 'toi',
-    'Ăn Đêm': 'an_dem',
-  };
-  const targetMeal = mealMap[mealTime] || 'trua';
-
-  let pool = INITIAL_DISHES.filter((d) => d.mealTime && d.mealTime.includes(targetMeal));
-  if (pool.length < 3) {
-    pool = INITIAL_DISHES.filter((d) => d.category !== 'do_uong' && d.category !== 'an_vat');
-  }
-
-  // Filter based on mood if possible
-  let filtered = pool;
-  if (mood.includes('thanh đạm') || mood.includes('healthy')) {
-    const healthy = pool.filter((d) => d.popularTags.some((t) => t.toLowerCase().includes('thanh') || t.toLowerCase().includes('rau') || t.toLowerCase().includes('healthy')) || d.category === 'salad_monnhe' || d.category === 'healthy');
-    if (healthy.length >= 2) filtered = healthy;
-  } else if (mood.includes('cay') || mood.includes('đậm đà')) {
-    const spicy = pool.filter((d) => d.popularTags.some((t) => t.toLowerCase().includes('đậm đà') || t.toLowerCase().includes('cay') || t.toLowerCase().includes('nóng')) || d.category === 'bun_pho_mi' || d.category === 'nuong_chien');
-    if (spicy.length >= 2) filtered = spicy;
-  } else if (mood.includes('chắc bụng')) {
-    const hearty = pool.filter((d) => d.category === 'com_xoi' || d.category === 'com' || d.popularTags.some((t) => t.toLowerCase().includes('chắc bụng') || t.toLowerCase().includes('no lâu')));
-    if (hearty.length >= 2) filtered = hearty;
-  }
-
-  const selected = filtered.slice(0, 3);
-  const suggestions: AISuggestion[] = selected.map((d) => ({
-    name: d.vietnameseName || d.name,
-    tagline: d.description.slice(0, 85) + '...',
-    category: d.category === 'com_xoi' || d.category === 'com' ? 'Cơm' : d.category.includes('bun') ? 'Bún / Mì / Phở' : 'Món Ngon Đặc Sản',
-    estimatedPrice: d.priceRange || '40.000đ - 65.000đ',
-    reason: `Món ăn hoàn hảo cho bữa ${mealTime}, hương vị chuẩn vị thơm ngon và dễ dàng gọi ship tại ${location}.`,
-    searchKeyword: d.searchKeyword || d.vietnameseName || d.name,
-    tags: d.popularTags.slice(0, 3),
-    calories: d.calories || '~520 kcal',
-    pairWith: d.bestPairedWith || 'Trà đá hoặc nước mía tươi mát',
-    image: d.image,
-  }));
-
-  return {
-    suggestions,
-    advice: `Tại khu vực ${location}, bạn có thể dễ dàng tìm thấy các quán ngon này trên ShopeeFood, GrabFood hoặc đặt ship quanh đây!`,
-  };
-}
-
-function normalizeDishText(s: string): string {
-  return s
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]/g, '');
-}
-
-export function resolveDishImage(item: { name: string; searchKeyword?: string; category?: string; image?: string }): string {
-  if (item.image && item.image.trim() !== '') return item.image;
-
-  const itemNameNorm = normalizeDishText(item.name);
-  const keywordNorm = item.searchKeyword ? normalizeDishText(item.searchKeyword) : '';
-
-  // 1. Exact match
-  const exact = INITIAL_DISHES.find(
-    (d) => normalizeDishText(d.vietnameseName || '') === itemNameNorm || normalizeDishText(d.name || '') === itemNameNorm
-  );
-  if (exact?.image) return exact.image;
-
-  // 2. Keyword match
-  if (keywordNorm) {
-    const kwMatch = INITIAL_DISHES.find(
-      (d) =>
-        normalizeDishText(d.vietnameseName || '') === keywordNorm ||
-        normalizeDishText(d.name || '') === keywordNorm ||
-        normalizeDishText(d.searchKeyword || '') === keywordNorm
-    );
-    if (kwMatch?.image) return kwMatch.image;
-  }
-
-  // 3. Partial substring match
-  const partial = INITIAL_DISHES.find((d) => {
-    const dName = normalizeDishText(d.vietnameseName || d.name || '');
-    return dName.length > 4 && (itemNameNorm.includes(dName) || dName.includes(itemNameNorm));
-  });
-  if (partial?.image) return partial.image;
-
-  if (keywordNorm) {
-    const kwPartial = INITIAL_DISHES.find((d) => {
-      const dName = normalizeDishText(d.vietnameseName || d.name || '');
-      return dName.length > 4 && (keywordNorm.includes(dName) || dName.includes(keywordNorm));
-    });
-    if (kwPartial?.image) return kwPartial.image;
-  }
-
-  // 4. Category-based fallback
-  const cat = (item.category || '').toLowerCase();
-  if (cat.includes('cơm') || cat.includes('com')) return '/images/com_tam_suon_bi_cha.jpg';
-  if (cat.includes('bún') || cat.includes('phở') || cat.includes('mi')) return '/images/bun_bo_hue.jpg';
-  if (cat.includes('cuốn')) return '/images/nem_nuong_nha_trang.jpg';
-  if (cat.includes('chay')) return '/images/goi_cuon_chay.jpg';
-  if (cat.includes('lẩu') || cat.includes('nóng')) return '/images/buffet.jpg';
-
-  return '/images/mam_com_gia_dinh.jpg';
-}
 
 interface AIAssistantProps {
   affiliateConfig: AffiliateConfig;
@@ -152,9 +45,6 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
     setErrorMsg(null);
 
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 6500);
-
       const res = await fetch('/api/ai/suggest', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -167,24 +57,18 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
           partySize,
           cravings,
         }),
-        signal: controller.signal,
       });
-      clearTimeout(timeoutId);
 
       const data = await res.json();
-      if (data.success && Array.isArray(data.suggestions) && data.suggestions.length > 0) {
+      if (data.success && Array.isArray(data.suggestions)) {
         setSuggestions(data.suggestions);
         setAiAdvice(data.advice || '');
       } else {
-        throw new Error(data.error || 'Không thể tạo gợi ý');
+        setErrorMsg(data.error || 'Không thể tạo gợi ý, vui lòng thử lại.');
       }
     } catch (err: any) {
-      console.warn('AI suggestion using curated fallback:', err);
-      // Fallback seamlessly to local curated dishes
-      const fallback = getClientFallbackDishes(mealTime, budget, mood, location);
-      setSuggestions(fallback.suggestions);
-      setAiAdvice(fallback.advice);
-      setErrorMsg('Đang hiển thị thực đơn gợi ý chuẩn vị cho bữa ' + mealTime + '.');
+      console.error(err);
+      setErrorMsg('Lỗi kết nối máy chủ gợi ý món ăn.');
     } finally {
       setLoading(false);
     }
@@ -371,22 +255,11 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
         </div>
       </div>
 
-      {/* Status / Fallback Notice banner */}
+      {/* Error state */}
       {errorMsg && (
-        <div className="p-3.5 sm:p-4 rounded-2xl bg-amber-50/90 border border-amber-200 text-amber-900 text-xs sm:text-sm flex items-center justify-between gap-3 mb-6">
-          <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-amber-600 shrink-0" />
-            <span>{errorMsg}</span>
-          </div>
-          <button
-            type="button"
-            onClick={() => handleGenerate()}
-            disabled={loading}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white hover:bg-amber-100 text-amber-800 border border-amber-300 font-bold text-xs shrink-0 cursor-pointer shadow-2xs transition-colors"
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span>Làm mới</span>
-          </button>
+        <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center gap-2 mb-6">
+          <AlertCircle className="w-5 h-5 flex-shrink-0" />
+          <span>{errorMsg}</span>
         </div>
       )}
 
@@ -413,53 +286,33 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
             Top Món Ngon AI Đề Xuất Dành Riêng Cho Bạn
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {suggestions.map((item, index) => {
-            const dishImage = resolveDishImage(item);
-            return (
+          {suggestions.map((item, index) => (
             <div
               key={index}
-              className="bg-white rounded-3xl border border-stone-200/80 shadow-xs hover:shadow-md transition-all overflow-hidden flex flex-col justify-between group"
+              className="bg-white rounded-3xl border border-stone-200/80 shadow-xs hover:shadow-md transition-shadow overflow-hidden flex flex-col justify-between"
             >
-              {/* Dish Illustration Image */}
-              <div className="relative w-full h-44 sm:h-48 overflow-hidden bg-stone-100">
-                <img
-                  src={dishImage}
-                  alt={`${item.name} - Gợi ý món ngon chuẩn vị`}
-                  loading="lazy"
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = '/images/mam_com_gia_dinh.jpg';
-                  }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 pointer-events-none" />
-
-                {/* Floating Badges */}
-                <div className="absolute top-3 left-3">
-                  <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-white/95 text-purple-900 shadow-xs backdrop-blur-xs border border-purple-200/50">
+              <div className="p-5 sm:p-6">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-purple-100 text-purple-800">
                     Lựa chọn #{index + 1} • {item.category}
                   </span>
-                </div>
-                <div className="absolute top-3 right-3">
-                  <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-black/60 text-white shadow-xs backdrop-blur-xs">
+                  <span className="text-xs font-semibold text-stone-500">
                     {item.calories}
                   </span>
                 </div>
-              </div>
 
-              <div className="p-5 sm:p-6 flex-1 flex flex-col">
-                <h3 className="text-lg font-extrabold text-stone-900 mb-1 group-hover:text-orange-600 transition-colors">
+                <h3 className="text-lg font-extrabold text-stone-900 mb-1">
                   {item.name}
                 </h3>
                 <p className="text-xs font-medium text-orange-600 mb-3 italic">
                   "{item.tagline}"
                 </p>
 
-                <p className="text-xs text-stone-600 leading-relaxed mb-4 flex-1">
+                <p className="text-xs text-stone-600 leading-relaxed mb-4">
                   {item.reason}
                 </p>
 
-                <div className="space-y-1.5 text-xs text-stone-600 bg-stone-50 p-3 rounded-xl mb-4 border border-stone-100">
+                <div className="space-y-1.5 text-xs text-stone-600 bg-stone-50 p-3 rounded-xl mb-4">
                   <div className="flex items-center justify-between">
                     <span className="text-stone-500">Khoảng giá:</span>
                     <span className="font-bold text-stone-900">{item.estimatedPrice}</span>
@@ -507,7 +360,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
                           estimatedPrice: 50000,
                           calories: item.calories || '500 kcal',
                           description: item.reason || item.tagline,
-                          image: dishImage,
+                          image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop&q=60',
                           popularTags: item.tags || ['AI Gợi ý'],
                           searchKeyword: item.searchKeyword || item.name,
                           bestPairedWith: item.pairWith,
@@ -571,8 +424,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
                 </div>
               </div>
             </div>
-            );
-          })}
+          ))}
           </div>
         </div>
       )}

@@ -11,7 +11,6 @@ import { AboutPage } from './components/AboutPage';
 import { ContactPage } from './components/ContactPage';
 import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { TermsOfServicePage } from './components/TermsOfServicePage';
-import { NotFoundPage } from './components/NotFoundPage';
 import { AdminInboxModal } from './components/AdminInboxModal';
 import { AffiliateModal } from './components/AffiliateModal';
 import { DishDetailModal } from './components/DishDetailModal';
@@ -414,17 +413,8 @@ export default function App() {
           />
         )}
 
-        {activeTab === 'notfound' && (
-          <NotFoundPage
-            onNavigate={handleNavigateTab}
-            onSelectDish={(dish) => setSelectedDish(dish)}
-          />
-        )}
-
-        {/* Editorial SEO Content & FAQ Accordion (only for main content pages) */}
-        {activeTab !== 'notfound' && (
-          <SeoContentFaq activeTab={activeTab} onNavigate={handleNavigateTab} />
-        )}
+        {/* Editorial SEO Content & FAQ Accordion */}
+        <SeoContentFaq activeTab={activeTab} onNavigate={handleNavigateTab} />
       </main>
 
       {/* Dish Detail Modal (Displays with integrated location and food apps) */}

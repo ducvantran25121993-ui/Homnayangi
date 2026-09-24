@@ -282,7 +282,7 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = ({ onNavigate, onSelect
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80" />
                   <span className="absolute bottom-2 left-2 text-[11px] font-bold text-amber-300 bg-slate-950/80 px-2 py-0.5 rounded-md backdrop-blur-sm">
-                    {dish.price}
+                    {dish.priceRange}
                   </span>
                 </div>
                 <div className="p-3 flex-1 flex flex-col justify-between">

@@ -3119,8 +3119,9 @@ export function getRecipeArticleTitle(dish: Dish, recipe?: DishRecipe): string {
   if (recipe?.seoTitle) {
     return recipe.seoTitle;
   }
-  if (CURATED_RECIPES[dish.id]?.seoTitle) {
-    return CURATED_RECIPES[dish.id].seoTitle!;
+  const curated = CURATED_RECIPES[dish.id] || (RECIPE_SLUG_ALIASES[dish.id] ? CURATED_RECIPES[RECIPE_SLUG_ALIASES[dish.id]] : undefined) || (Object.keys(RECIPE_SLUG_ALIASES).find((k) => RECIPE_SLUG_ALIASES[k] === dish.id) ? CURATED_RECIPES[Object.keys(RECIPE_SLUG_ALIASES).find((k) => RECIPE_SLUG_ALIASES[k] === dish.id)!] : undefined);
+  if (curated?.seoTitle) {
+    return curated.seoTitle;
   }
 
   const rawName = dish.vietnameseName || dish.name || '';
@@ -3301,6 +3302,10 @@ export function getRecipeArticleTitle(dish: Dish, recipe?: DishRecipe): string {
 export function getDishRecipe(dish: Dish): DishRecipe {
   if (CURATED_RECIPES[dish.id]) {
     return CURATED_RECIPES[dish.id];
+  }
+  const aliasId = RECIPE_SLUG_ALIASES[dish.id] || Object.keys(RECIPE_SLUG_ALIASES).find((k) => RECIPE_SLUG_ALIASES[k] === dish.id);
+  if (aliasId && CURATED_RECIPES[aliasId]) {
+    return CURATED_RECIPES[aliasId];
   }
 
   // Derive cooking method & ingredients intelligently based on categories and tags
@@ -3748,6 +3753,16 @@ export function getRecipePath(dish: Dish): string {
   return `/${getRecipeSlug(dish)}`;
 }
 
+export const RECIPE_SLUG_ALIASES: Record<string, string> = {
+  'bun-bo-hue': 'bun-bo-hue-dac-biet',
+  'cach-nau-bun-bo-hue': 'bun-bo-hue-dac-biet',
+  'thit-kho-tau': 'com-thit-kho-tau',
+  'cach-nau-thit-kho-tau': 'com-thit-kho-tau',
+  'nem-nuong-nha-trang': 'nem-nuong-nha-trang-cuon',
+  'cach-nau-nem-nuong-nha-trang': 'nem-nuong-nha-trang-cuon',
+  'cach-lam-nem-nuong-nha-trang': 'nem-nuong-nha-trang-cuon',
+};
+
 /**
  * Find a dish from dishes list by recipe slug or hash
  */
@@ -3760,14 +3775,21 @@ export function findDishByRecipeSlug(slugOrHash: string, dishes: Dish[]): Dish |
     .replace(/\/$/, '')
     .replace(/^cach-nau-mon-ngon\//, '');
 
+  const resolvedClean = RECIPE_SLUG_ALIASES[clean] || clean;
+
   return dishes.find((d) => {
     const slug = getRecipeSlug(d);
     return (
       d.id === clean ||
+      d.id === resolvedClean ||
       slug === clean ||
+      slug === resolvedClean ||
       clean === `cach-nau-${d.id}` ||
       clean === `cach-lam-${d.id}` ||
-      clean.replace(/^(cach-nau-|cach-lam-)/, '') === d.id.replace(/^(cach-nau-|cach-lam-)/, '')
+      resolvedClean === `cach-nau-${d.id}` ||
+      resolvedClean === `cach-lam-${d.id}` ||
+      clean.replace(/^(cach-nau-|cach-lam-)/, '') === d.id.replace(/^(cach-nau-|cach-lam-)/, '') ||
+      resolvedClean.replace(/^(cach-nau-|cach-lam-)/, '') === d.id.replace(/^(cach-nau-|cach-lam-)/, '')
     );
   });
 }

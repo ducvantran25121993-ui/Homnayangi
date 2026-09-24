@@ -1,9 +1,9 @@
 import { Dish, DishRecipe, RegionId } from '../types';
-import { getRegionById, isRegionPath } from '../data/regionalCuisine';
-import { getRecipePath, getRecipeArticleTitle, formatRecipeSeoTitle, findDishByRecipeSlug } from '../data/recipes';
+import { getRegionById } from '../data/regionalCuisine';
+import { getRecipePath, getRecipeArticleTitle, formatRecipeSeoTitle } from '../data/recipes';
 import { INITIAL_DISHES } from '../data/dishes';
 
-export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'snacks' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms' | 'notfound';
+export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'snacks' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms';
 
 export type DiscoverSubSection = 'region' | 'daily' | 'recipe';
 
@@ -126,13 +126,13 @@ export const TAB_CONFIG: Record<TabType, TabMeta> = {
   },
   about: {
     path: '/gioi-thieu',
-    title: 'Giới Thiệu Hôm Nay Ăn Gì - Nền Tảng Gợi Ý Ẩm Thực Thông Minh',
-    description: 'Khám phá Hôm Nay Ăn Gì (Angigio.com) - Nền tảng gợi ý món ngon thông minh qua Tarot, vòng quay và đầu bếp AI. Chấm dứt nỗi lo ăn gì mỗi ngày chỉ trong 3 giây!',
+    title: 'Hôm Nay Ăn Gì - Câu Chuyện Về Người Bạn Đồng Hành Bữa Ăn Ngon',
+    description: 'Không còn đau đầu nghĩ "Hôm nay ăn gì?". Khám phá câu chuyện của tụi mình – người bạn thân giúp bạn chọn món ngon mỗi bữa cực nhanh, dễ dàng và tràn đầy niềm vui!',
     label: 'Giới Thiệu',
     shortLabel: 'Giới Thiệu',
-    keywords: 'giới thiệu hôm nay ăn gì, về chúng tôi angigio, nền tảng gợi ý món ăn, bách khoa ẩm thực việt nam, hôm nay ăn gì, trưa nay ăn gì, tối nay ăn gì',
+    keywords: 'giới thiệu hôm nay ăn gì, câu chuyện hôm nay ăn gì, về chúng tôi, sứ mệnh ẩm thực việt nam, bạn đồng hành bữa ăn',
     ogImage: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&auto=format&fit=crop&q=80',
-    ogImageAlt: 'Giới Thiệu Hôm Nay Ăn Gì - Nền Tảng Gợi Ý Ẩm Thực Thông Minh',
+    ogImageAlt: 'Giới Thiệu Hôm Nay Ăn Gì - Nền Tảng Gợi Ý Ẩm Thực Hàng Đầu',
   },
   contact: {
     path: '/lien-he',
@@ -164,16 +164,6 @@ export const TAB_CONFIG: Record<TabType, TabMeta> = {
     ogImage: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&auto=format&fit=crop&q=80',
     ogImageAlt: 'Điều Khoản Sử Dụng - Hôm Nay Ăn Gì',
   },
-  notfound: {
-    path: '/404',
-    title: '404 - Không Tìm Thấy Trang | Hôm Nay Ăn Gì',
-    description: 'Trang bạn đang tìm kiếm không tồn tại hoặc đã được chuyển sang địa chỉ mới. Khám phá ngay các món ngon hấp dẫn hoặc quay vòng quay chọn món!',
-    label: 'Không Tìm Thấy Trang',
-    shortLabel: '404',
-    keywords: '404 not found, không tìm thấy trang, hôm nay ăn gì',
-    ogImage: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&auto=format&fit=crop&q=80',
-    ogImageAlt: '404 - Không Tìm Thấy Trang',
-  },
 };
 
 /**
@@ -182,6 +172,7 @@ export const TAB_CONFIG: Record<TabType, TabMeta> = {
 export function getDiscoverSubSectionFromUrl(): DiscoverSubSection {
   if (typeof window === 'undefined') return 'region';
   const pathname = window.location.pathname.replace(/\/$/, '') || '/';
+  if (pathname === '/thuc-don-moi-ngay' || pathname === '/kham-pha-am-thuc/thuc-don-moi-ngay') return 'daily';
   if (
     pathname === '/cach-nau-mon-ngon' ||
     pathname === '/kham-pha-am-thuc/cach-nau-mon-ngon' ||
@@ -190,13 +181,6 @@ export function getDiscoverSubSectionFromUrl(): DiscoverSubSection {
     pathname.startsWith('/cach-nau-mon-ngon/')
   ) {
     return 'recipe';
-  }
-  if (
-    pathname === '/thuc-don-moi-ngay' ||
-    pathname.startsWith('/thuc-don-moi-ngay/') ||
-    pathname === '/kham-pha-am-thuc/thuc-don-moi-ngay'
-  ) {
-    return 'daily';
   }
   return 'region';
 }
@@ -209,7 +193,6 @@ export function getTabFromUrl(): TabType {
 
   const pathname = window.location.pathname.replace(/\/$/, '') || '/';
   
-  if (pathname === '/404') return 'notfound';
   if (pathname === '/vong-quay') return 'wheel';
   if (pathname === '/lich-an-theo-tuan' || pathname === '/mon-ngon/lich-an-theo-tuan' || pathname === '/len-lich-an' || pathname === '/lich-an' || pathname === '/thuc-don-tuan' || pathname === '/meal-planner') return 'planner';
   if (pathname === '/ai-goi-y-mon-an') return 'ai';
@@ -217,29 +200,17 @@ export function getTabFromUrl(): TabType {
   if (pathname === '/tra-sua-an-vat' || pathname === '/tra-sua' || pathname === '/an-vat' || pathname === '/do-uong-an-vat') return 'snacks';
   if (
     pathname === '/am-thuc-vung-mien' ||
-    isRegionPath(pathname) ||
     pathname === '/thuc-don-moi-ngay' ||
-    pathname.startsWith('/thuc-don-moi-ngay/') ||
     pathname === '/cach-nau-mon-ngon' ||
     pathname === '/kham-pha-am-thuc' ||
     pathname.startsWith('/kham-pha-am-thuc/') ||
     pathname === '/kham-pha' ||
     pathname === '/cam-nang' ||
-    pathname === '/cam-nang-am-thuc'
-  ) return 'discover';
-
-  // Check Recipe Detail Routes (e.g. /cach-nau-pho-bo-tai-lan, /cach-nau-mon-ngon/com-tam-suon-bi-cha)
-  if (
+    pathname === '/cam-nang-am-thuc' ||
+    pathname.startsWith('/am-thuc-') ||
     pathname.startsWith('/cach-nau-') ||
-    pathname.startsWith('/cach-lam-') ||
-    pathname.startsWith('/cach-nau-mon-ngon/')
-  ) {
-    const slug = pathname.replace('/cach-nau-mon-ngon/', '').replace(/^\//, '');
-    const match = findDishByRecipeSlug(slug, INITIAL_DISHES);
-    if (match) return 'discover';
-    return 'notfound';
-  }
-
+    pathname.startsWith('/cach-lam-')
+  ) return 'discover';
   if (pathname === '/gioi-thieu' || pathname === '/about') return 'about';
   if (pathname === '/lien-he' || pathname === '/contact') return 'contact';
   if (pathname === '/chinh-sach-bao-mat' || pathname === '/privacy' || pathname === '/bao-mat') return 'privacy';
@@ -253,19 +224,7 @@ export function getTabFromUrl(): TabType {
     if (tabParam === 'ai-goi-y-mon-an' || tabParam === 'ai' || tabParam === 'tro-ly-ai' || tabParam === 'goi-y-mon') return 'ai';
     if (tabParam === 'mon-ngon' || tabParam === 'catalog') return 'catalog';
     if (tabParam === 'do-uong-an-vat' || tabParam === 'tra-sua-an-vat' || tabParam === 'snacks' || tabParam === 'do-uong' || tabParam === 'tra-sua' || tabParam === 'an-vat') return 'snacks';
-    if (
-      tabParam === 'am-thuc-vung-mien' ||
-      tabParam === 'thuc-don-moi-ngay' ||
-      tabParam === 'cach-nau-mon-ngon' ||
-      tabParam === 'kham-pha-am-thuc' ||
-      tabParam === 'kham-pha' ||
-      tabParam === 'discover' ||
-      tabParam === 'cam-nang' ||
-      tabParam === 'mien-bac' ||
-      tabParam === 'mien-trung' ||
-      tabParam === 'mien-nam' ||
-      tabParam === 'mien-tay'
-    ) return 'discover';
+    if (tabParam === 'am-thuc-vung-mien' || tabParam === 'thuc-don-moi-ngay' || tabParam === 'cach-nau-mon-ngon' || tabParam === 'kham-pha-am-thuc' || tabParam === 'kham-pha' || tabParam === 'discover' || tabParam === 'cam-nang') return 'discover';
     if (tabParam === 'gioi-thieu' || tabParam === 'about') return 'about';
     if (tabParam === 'lien-he' || tabParam === 'contact') return 'contact';
     if (tabParam === 'chinh-sach-bao-mat' || tabParam === 'privacy' || tabParam === 'bao-mat') return 'privacy';
@@ -273,8 +232,7 @@ export function getTabFromUrl(): TabType {
     return 'tarot';
   }
 
-  // Any unknown path returns notfound
-  return 'notfound';
+  return 'tarot';
 }
 
 /**
@@ -337,18 +295,6 @@ function applyMetaToDOM(meta: TabMeta): void {
     document.head.appendChild(canonical);
   }
   canonical.setAttribute('href', fullUrl);
-
-  // 6. Robots meta tag: noindex on 404, full index on valid content
-  if (meta.path === '/404') {
-    setOrCreateMeta('meta[name="robots"]', 'name', 'robots', 'noindex, follow');
-  } else {
-    setOrCreateMeta(
-      'meta[name="robots"]',
-      'name',
-      'robots',
-      'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
-    );
-  }
 }
 
 /**
