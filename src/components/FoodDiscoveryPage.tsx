@@ -193,6 +193,13 @@ function parseCaloriesToNumber(calStr: string | undefined): number {
   return 420;
 }
 
+interface RecipeNavigationSource {
+  path: string;
+  sectionTab: DiscoverSubSection;
+  regionId?: RegionId;
+  label: string;
+}
+
 interface FoodDiscoveryPageProps {
   onSelectDish: (dish: Dish) => void;
   onNavigate: (tab: TabType, sub?: DiscoverSubSection) => void;
@@ -215,6 +222,22 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
     () => currentSubSection || getDiscoverSubSectionFromUrl()
   );
 
+  // Source where the user navigated from (e.g. Ẩm thực miền Bắc, Vùng Miền, Thực đơn mỗi ngày...)
+  const [recipeReturnSource, setRecipeReturnSource] = useState<RecipeNavigationSource | null>(() => {
+    if (typeof window !== 'undefined') {
+      const state = window.history.state;
+      if (state?.returnPath) {
+        return {
+          path: state.returnPath,
+          sectionTab: state.returnSection || 'region',
+          regionId: state.returnRegion,
+          label: state.returnLabel || 'Danh sách món',
+        };
+      }
+    }
+    return null;
+  });
+
   // Sync internal sub-tab state if prop changes from outside
   useEffect(() => {
     if (currentSubSection && currentSubSection !== sectionTab) {
@@ -229,11 +252,39 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
       if (regionId) {
         setSelectedRegionId(regionId);
         setSectionTab('region');
+        setViewingRecipeArticle(false);
+        setRecipeReturnSource(null);
         updateRegionSEO(regionId);
+        return;
+      }
+      const pathname = window.location.pathname.replace(/\/$/, '') || '/';
+      if (pathname === '/am-thuc-vung-mien') {
+        setSectionTab('region');
+        setViewingRecipeArticle(false);
+        setRecipeReturnSource(null);
+        updateDiscoverSubSEO('region');
+        return;
+      }
+      if (pathname === '/thuc-don-moi-ngay') {
+        setSectionTab('daily');
+        setViewingRecipeArticle(false);
+        setRecipeReturnSource(null);
+        updateDiscoverSubSEO('daily');
+        return;
+      }
+      if (pathname === '/cach-nau-mon-ngon') {
+        setSectionTab('recipe');
+        setViewingRecipeArticle(false);
+        setRecipeReturnSource(null);
+        updateDiscoverSubSEO('recipe');
         return;
       }
       const currentSub = getDiscoverSubSectionFromUrl();
       setSectionTab(currentSub);
+      if (currentSub !== 'recipe') {
+        setViewingRecipeArticle(false);
+        setRecipeReturnSource(null);
+      }
       updateDiscoverSubSEO(currentSub);
       if (onSubSectionChange) {
         onSubSectionChange(currentSub);
@@ -241,7 +292,11 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
     };
 
     window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    window.addEventListener('locationchange', handlePopState);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('locationchange', handlePopState);
+    };
   }, [onSubSectionChange]);
 
   // Initial sync for regional route or hub route
@@ -268,6 +323,8 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
       e.preventDefault();
     }
     setSectionTab(sub);
+    setViewingRecipeArticle(false);
+    setRecipeReturnSource(null);
     const targetPath = DISCOVER_SUB_CONFIG[sub].path;
     if (window.location.pathname !== targetPath) {
       window.history.pushState({ tab: 'discover', sub }, '', targetPath);
@@ -434,8 +491,31 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
   const handleSelectDishRecipe = (dish: Dish) => {
     setSelectedRecipeDish(dish);
     setViewingRecipeArticle(true);
+
+    // If not already from an external section (e.g. region or daily), track default recipe source
+    const effectiveSource: RecipeNavigationSource = recipeReturnSource || {
+      path: DISCOVER_SUB_CONFIG.recipe.path,
+      sectionTab: 'recipe',
+      label: 'Cách Nấu Món Ngon',
+    };
+    if (!recipeReturnSource) {
+      setRecipeReturnSource(effectiveSource);
+    }
+
     const targetPath = getRecipePath(dish);
-    window.history.pushState({ section: 'recipe', dishId: dish.id }, '', targetPath);
+    window.history.pushState(
+      {
+        tab: 'discover',
+        section: 'recipe',
+        dishId: dish.id,
+        returnPath: effectiveSource.path,
+        returnSection: effectiveSource.sectionTab,
+        returnRegion: effectiveSource.regionId,
+        returnLabel: effectiveSource.label,
+      },
+      '',
+      targetPath
+    );
     window.dispatchEvent(new Event('locationchange'));
     updateRecipeArticleSEO(dish, getDishRecipe(dish));
     const el = document.getElementById('recipe-article-container');
@@ -446,10 +526,51 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
     }
   };
 
-  // Back to gallery list with SEO clean URL
+  // Back to previous list / origin section with clean SEO URL
   const handleBackToRecipeList = () => {
     setViewingRecipeArticle(false);
-    window.history.pushState({ section: 'recipe' }, '', DISCOVER_SUB_CONFIG.recipe.path);
+
+    if (recipeReturnSource && recipeReturnSource.sectionTab !== 'recipe') {
+      const { path: returnPath, sectionTab: returnTab, regionId: returnRegion } = recipeReturnSource;
+      setSectionTab(returnTab);
+      if (returnRegion) {
+        setSelectedRegionId(returnRegion);
+        updateRegionSEO(returnRegion);
+      } else {
+        updateDiscoverSubSEO(returnTab);
+      }
+
+      window.history.pushState(
+        { tab: 'discover', sub: returnTab, region: returnRegion },
+        '',
+        returnPath
+      );
+      window.dispatchEvent(new Event('locationchange'));
+      setRecipeReturnSource(null);
+
+      setTimeout(() => {
+        if (returnTab === 'region') {
+          const el = document.getElementById('regional-cuisine-section');
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            return;
+          }
+        } else if (returnTab === 'daily') {
+          const el = document.getElementById('daily-menu-section');
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            return;
+          }
+        }
+        window.scrollTo({ top: 350, behavior: 'smooth' });
+      }, 50);
+      return;
+    }
+
+    // Default fallback: Back to /cach-nau-mon-ngon
+    setSectionTab('recipe');
+    setRecipeReturnSource(null);
+    window.history.pushState({ tab: 'discover', sub: 'recipe' }, '', DISCOVER_SUB_CONFIG.recipe.path);
     window.dispatchEvent(new Event('locationchange'));
     updateDiscoverSubSEO('recipe');
     const el = document.getElementById('recipe-discovery-section');
@@ -459,6 +580,21 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
       window.scrollTo({ top: 350, behavior: 'smooth' });
     }
   };
+
+  const backButtonLabel = useMemo(() => {
+    if (!recipeReturnSource) return 'Quay lại danh sách món ngon';
+    if (recipeReturnSource.regionId) {
+      const reg = getRegionById(recipeReturnSource.regionId);
+      return `Quay lại ${reg ? reg.name : 'ẩm thực vùng miền'}`;
+    }
+    if (recipeReturnSource.sectionTab === 'region') {
+      return 'Quay lại ẩm thực vùng miền';
+    }
+    if (recipeReturnSource.sectionTab === 'daily') {
+      return 'Quay lại thực đơn mỗi ngày';
+    }
+    return 'Quay lại danh sách món ngon';
+  }, [recipeReturnSource]);
 
   // Helper to copy a dish's recipe
   const handleCopyFamilyRecipe = (dishName: string, recipe: FamilyDishRecipe) => {
@@ -775,13 +911,44 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
     return DAILY_DAY_MENUS.find((m) => m.id === selectedDayId) || DAILY_DAY_MENUS[0];
   }, [selectedDayId]);
 
-  // Helper to jump to a recipe from another section
+  // Helper to jump to a recipe from another section (e.g. Ẩm thực vùng miền, Miền Bắc, Thực đơn mỗi ngày,...)
   const handleViewDishRecipe = (dish: Dish) => {
+    const currentPath = window.location.pathname;
+    let label = 'Ẩm Thực Vùng Miền';
+    if (sectionTab === 'region') {
+      const reg = getRegionById(selectedRegionId);
+      label = reg ? reg.name : 'Ẩm Thực Vùng Miền';
+    } else if (sectionTab === 'daily') {
+      label = 'Thực Đơn Mỗi Ngày';
+    }
+
+    const source: RecipeNavigationSource = {
+      path: currentPath,
+      sectionTab,
+      regionId: selectedRegionId,
+      label,
+    };
+    setRecipeReturnSource(source);
+
     setSelectedRecipeDish(dish);
     setViewingRecipeArticle(true);
-    handleSwitchSection('recipe');
+    setSectionTab('recipe');
+
     const targetPath = getRecipePath(dish);
-    window.history.pushState({ section: 'recipe', dishId: dish.id }, '', targetPath);
+    window.history.pushState(
+      {
+        tab: 'discover',
+        section: 'recipe',
+        dishId: dish.id,
+        returnPath: currentPath,
+        returnSection: sectionTab,
+        returnRegion: selectedRegionId,
+        returnLabel: label,
+      },
+      '',
+      targetPath
+    );
+    window.dispatchEvent(new Event('locationchange'));
     updateRecipeArticleSEO(dish, getDishRecipe(dish));
     window.scrollTo({ top: 350, behavior: 'smooth' });
   };
@@ -929,7 +1096,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
       {/* 2. SECTION 1: ẨM THỰC VÙNG MIỀN */}
       {/* ========================================================================= */}
       {sectionTab === 'region' && (
-        <div className="space-y-8 animate-fade-in">
+        <div id="regional-cuisine-section" className="space-y-8 animate-fade-in">
           {/* Region Tabs (4 Regional SEO Links) */}
           <nav aria-label="Danh mục 4 vùng miền ẩm thực" className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
             {REGIONAL_CUISINES.map((region) => {
@@ -1099,7 +1266,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
       {/* 3. SECTION 2: THỰC ĐƠN MỖI NGÀY */}
       {/* ========================================================================= */}
       {sectionTab === 'daily' && (
-        <div className="space-y-8 animate-fade-in">
+        <div id="daily-menu-section" className="space-y-8 animate-fade-in">
           {/* 7 Days Weekly Menus */}
           <div className="space-y-6">
             {/* Day Pills */}
@@ -1566,19 +1733,25 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                   className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-stone-50 hover:bg-orange-50 text-stone-800 hover:text-orange-700 border border-stone-200 hover:border-orange-300 font-extrabold text-xs sm:text-sm transition-all cursor-pointer shadow-2xs group"
                 >
                   <ArrowLeft className="w-4 h-4 text-orange-600 group-hover:-translate-x-1 transition-transform" />
-                  <span>Quay lại danh sách món ngon</span>
+                  <span>{backButtonLabel}</span>
                 </button>
 
                 <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs text-stone-500 font-medium overflow-hidden">
                   <a
-                    href="/cach-nau-mon-ngon"
+                    href={recipeReturnSource?.path || "/cach-nau-mon-ngon"}
                     onClick={(e) => {
                       e.preventDefault();
                       handleBackToRecipeList();
                     }}
                     className="shrink-0 hover:text-orange-600 transition-colors underline-offset-2 hover:underline"
                   >
-                    Cách Nấu Món Ngon
+                    {recipeReturnSource && recipeReturnSource.regionId
+                      ? (getRegionById(recipeReturnSource.regionId)?.name || 'Ẩm Thực Vùng Miền')
+                      : (recipeReturnSource?.sectionTab === 'daily'
+                          ? 'Thực Đơn Mỗi Ngày'
+                          : recipeReturnSource?.sectionTab === 'region'
+                          ? 'Ẩm Thực Vùng Miền'
+                          : 'Cách Nấu Món Ngon')}
                   </a>
                   <ChevronRight className="w-3.5 h-3.5 text-stone-300 shrink-0" />
                   <span className="shrink-0 text-stone-600">{getCategoryDisplayName(selectedRecipeDish.category)}</span>
@@ -1871,7 +2044,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                       className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs sm:text-sm transition-all cursor-pointer shadow-sm"
                     >
                       <ArrowLeft className="w-4 h-4" />
-                      <span>Quay lại kho {INITIAL_DISHES.length}+ món ngon</span>
+                      <span>{backButtonLabel}</span>
                     </button>
 
                     <span className="text-xs text-stone-500">

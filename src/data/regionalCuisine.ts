@@ -1,5 +1,7 @@
 import { RegionalCuisine, RegionId } from '../types';
 
+export type { RegionId, RegionalCuisine };
+
 export const REGIONAL_CUISINES: RegionalCuisine[] = [
   {
     id: 'bac',

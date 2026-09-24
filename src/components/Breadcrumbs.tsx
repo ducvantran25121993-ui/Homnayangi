@@ -7,7 +7,7 @@ import {
   DiscoverSubSection,
   getDiscoverSubSectionFromUrl,
 } from '../utils/navigation';
-import { getRegionFromUrl, getRegionById, isRegionPath } from '../data/regionalCuisine';
+import { getRegionFromUrl, getRegionById, isRegionPath, RegionId } from '../data/regionalCuisine';
 import { findDishByRecipeSlug, getDishRecipe, getRecipeArticleTitle, getRecipePath } from '../data/recipes';
 import { INITIAL_DISHES } from '../data/dishes';
 
@@ -67,6 +67,10 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
 
   const recipeDish = isRecipeArticle ? findDishByRecipeSlug(currentPathname, INITIAL_DISHES) : null;
   const recipeArticleTitle = recipeDish ? getRecipeArticleTitle(recipeDish, getDishRecipe(recipeDish)) : null;
+
+  // Check if article was navigated to from a specific region
+  const stateReturnRegionId = typeof window !== 'undefined' ? (window.history.state?.returnRegion as RegionId | undefined) : undefined;
+  const returnRegion = stateReturnRegionId ? getRegionById(stateReturnRegionId) : null;
 
   const currentLabel =
     isDiscover && discoverSubMeta ? discoverSubMeta.label : currentTabMeta?.label;
@@ -155,43 +159,110 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
             </li>
           </>
         ) : isRecipeArticle && recipeDish && recipeArticleTitle ? (
-          <>
-            <li
-              className="flex items-center gap-1.5"
-              itemProp="itemListElement"
-              itemScope
-              itemType="https://schema.org/ListItem"
-            >
-              <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-              <a
-                href="/cach-nau-mon-ngon"
-                onClick={handleRecipeHubClick}
-                itemProp="item"
-                className="hover:text-orange-600 transition-colors"
+          returnRegion ? (
+            <>
+              <li
+                className="flex items-center gap-1.5"
+                itemProp="itemListElement"
+                itemScope
+                itemType="https://schema.org/ListItem"
               >
-                <span itemProp="name">Cách Nấu Món Ngon</span>
-              </a>
-              <meta itemProp="position" content="2" />
-            </li>
+                <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+                <a
+                  href="/am-thuc-vung-mien"
+                  onClick={handleRegionHubClick}
+                  itemProp="item"
+                  className="hover:text-orange-600 transition-colors"
+                >
+                  <span itemProp="name">Ẩm Thực Vùng Miền</span>
+                </a>
+                <meta itemProp="position" content="2" />
+              </li>
 
-            <li
-              className="flex items-center gap-1.5"
-              itemProp="itemListElement"
-              itemScope
-              itemType="https://schema.org/ListItem"
-            >
-              <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
-              <span
-                className="text-stone-800 font-semibold truncate max-w-xs sm:max-w-md"
-                aria-current="page"
-                itemProp="name"
+              <li
+                className="flex items-center gap-1.5"
+                itemProp="itemListElement"
+                itemScope
+                itemType="https://schema.org/ListItem"
               >
-                {recipeArticleTitle}
-              </span>
-              <link itemProp="item" href={`https://www.angigio.com${getRecipePath(recipeDish)}`} />
-              <meta itemProp="position" content="3" />
-            </li>
-          </>
+                <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+                <a
+                  href={returnRegion.path}
+                  onClick={(e) => {
+                    if (e.ctrlKey || e.metaKey || e.button === 1) return;
+                    e.preventDefault();
+                    window.history.pushState(
+                      { tab: 'discover', sub: 'region', region: returnRegion.id },
+                      '',
+                      returnRegion.path
+                    );
+                    window.dispatchEvent(new Event('locationchange'));
+                  }}
+                  itemProp="item"
+                  className="hover:text-orange-600 transition-colors"
+                >
+                  <span itemProp="name">{returnRegion.name}</span>
+                </a>
+                <meta itemProp="position" content="3" />
+              </li>
+
+              <li
+                className="flex items-center gap-1.5"
+                itemProp="itemListElement"
+                itemScope
+                itemType="https://schema.org/ListItem"
+              >
+                <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+                <span
+                  className="text-stone-800 font-semibold truncate max-w-xs sm:max-w-md"
+                  aria-current="page"
+                  itemProp="name"
+                >
+                  {recipeArticleTitle}
+                </span>
+                <link itemProp="item" href={`https://www.angigio.com${getRecipePath(recipeDish)}`} />
+                <meta itemProp="position" content="4" />
+              </li>
+            </>
+          ) : (
+            <>
+              <li
+                className="flex items-center gap-1.5"
+                itemProp="itemListElement"
+                itemScope
+                itemType="https://schema.org/ListItem"
+              >
+                <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+                <a
+                  href="/cach-nau-mon-ngon"
+                  onClick={handleRecipeHubClick}
+                  itemProp="item"
+                  className="hover:text-orange-600 transition-colors"
+                >
+                  <span itemProp="name">Cách Nấu Món Ngon</span>
+                </a>
+                <meta itemProp="position" content="2" />
+              </li>
+
+              <li
+                className="flex items-center gap-1.5"
+                itemProp="itemListElement"
+                itemScope
+                itemType="https://schema.org/ListItem"
+              >
+                <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+                <span
+                  className="text-stone-800 font-semibold truncate max-w-xs sm:max-w-md"
+                  aria-current="page"
+                  itemProp="name"
+                >
+                  {recipeArticleTitle}
+                </span>
+                <link itemProp="item" href={`https://www.angigio.com${getRecipePath(recipeDish)}`} />
+                <meta itemProp="position" content="3" />
+              </li>
+            </>
+          )
         ) : (
           <li
             className="flex items-center gap-1.5"
