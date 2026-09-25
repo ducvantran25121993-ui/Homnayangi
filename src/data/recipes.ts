@@ -3585,6 +3585,560 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
     recommendedSauce:
       'Ớt chưng sa tế cay nồng, quất tươi Hà Nội (hoặc chanh tươi), vài lát ớt hiểm và chén nước mắm nhĩ ngon rắc tiêu sọ xay mịn.',
   },
+  'nom-bo-kho-ha-noi': {
+    dishId: 'nom-bo-kho-ha-noi',
+    dishName: 'Nộm Bò Khô Đu Đủ Bờ Hồ Phố Cổ',
+    seoTitle: 'Cách Làm Nộm Bò Khô Đu Đủ Chua Ngọt Giòn Tan, Giải Ngấy Cực Tốt',
+    prepTime: '20 - 25 phút (nạo đu đủ, ngâm nước đá giòn tanh tách)',
+    cookTime: '15 phút (pha nước giấm đường ớt tỏi & trộn nộm)',
+    difficulty: 'Dễ',
+    servings: '3 - 4 người ăn',
+    ingredients: [
+      {
+        category: 'Đu đủ xanh & Cà rốt giòn mát sảng khoái',
+        items: [
+          '600g - 700g đu đủ xanh bánh tẻ (chọn quả tươi cứng cáp, vỏ xanh ruột trắng ngà hoặc hơi hanh vàng, cầm nặng tay)',
+          '1 củ cà rốt tươi (khoảng 150g, nạo sợi xen kẽ tạo màu sắc bắt mắt)',
+          'Bí quyết tạo độ giòn tanh tách: 1 chậu nước đá lạnh buốt pha cùng 1 thìa canh muối hạt và 2 thìa canh giấm gạo (ngâm sợi đu đủ 15 phút)',
+        ],
+      },
+      {
+        category: 'Topping Bò khô & Lạc rang chuẩn vị phố cổ',
+        items: [
+          '150g - 200g thịt bò khô xé sợi hoặc bò khô miếng cắt kéo (chọn loại bò khô sợi dài nâu đỏ, thơm mùi quế hồi và cay ngọt đậm đà)',
+          '50g - 80g gan sấy hoặc lá lách bò sấy bùi ngậy (bí quyết kinh điển trứ danh của nộm Bờ Hồ phố Hàm Long)',
+          '80g lạc (đậu phộng) rang vàng giòn rụm, xát sạch vỏ lụa và giã dập làm đôi làm ba (không giã nát)',
+          'Rau thơm gia vị: 1 mớ rau kinh giới (linh hồn hương vị nộm Hà Nội), 1 mớ rau húng Láng (húng lủi), một ít rau răm tươi',
+        ],
+      },
+      {
+        category: 'Nước giấm tỏi ớt chua ngọt chuẩn "Tỷ lệ vàng" Hà Nội',
+        items: [
+          '4 thìa canh giấm gạo nếp thanh dịu (người Hà Nội chuộng vị chua thanh dịu của giấm gạo truyền thống hơn là chỉ dùng chanh)',
+          '4 thìa canh đường cát trắng (hoặc đường phèn giã mịn)',
+          '3 thìa canh nước mắm cốt nhĩ truyền thống thơm ngon',
+          '3 thìa canh nước lọc ấm nguội',
+          '1 thìa canh nước cốt quất tươi (hoặc chanh) tạo hương thơm thanh mát bốc lên',
+          '1 củ tỏi ta bóc vỏ băm thật nhuyễn mịn, 2 quả ớt hiểm đỏ băm nhỏ (để nổi bồng bềnh trên mặt nước sốt)',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Nạo sợi đu đủ, cà rốt & Kỹ thuật ngâm nước đá giòn tanh tách',
+        time: '15 phút',
+        heat: 'Nước đá lạnh',
+        goal: 'Sợi đu đủ và cà rốt trắng tinh, giòn rụm tanh tách, sạch triệt để nhựa đắng và khô ráo hoàn toàn',
+        actionPoints: [
+          'Khía nhẹ vài đường dọc vỏ đu đủ xanh dưới vòi nước chảy để mủ nhựa trắng chảy bớt ra, gọt sạch vỏ rồi rửa lại thật sạch.',
+          'Bổ đôi quả đu đủ theo chiều dọc, dùng thìa cạo sạch hoàn toàn hạt và lớp màng trắng trong ruột. Cà rốt nạo sạch vỏ.',
+          'Dùng bàn nạo đa năng nạo đu đủ và cà rốt thành các sợi dài mỏng đều tăm tắp.',
+          'Chuẩn bị ngay một thau nước đá lạnh buốt, hòa tan 1 thìa canh muối hạt và 2 thìa canh giấm gạo. Thả toàn bộ đu đủ và cà rốt vào ngâm trong 10 - 15 phút. Nước đá lạnh kết hợp giấm giúp sợi đu đủ lập tức săn cứng lại, trắng nõn và triệt tiêu sạch vị chát đắng.',
+          'Vớt đu đủ cà rốt ra rổ thưa, dùng tay hoặc khăn vải xô sạch bóp vắt nhẹ từng nắm để ráo kiệt nước thừa (vắt vừa tay, tránh vò nát sợi). Rải đều ra rổ cho ráo hoàn toàn trước khi bày đĩa.',
+        ],
+        description:
+          'Gọt vỏ đu đủ và cà rốt, nạo sợi dài mỏng đều tay. Ngâm vào thau nước đá lạnh pha muối và giấm gạo trong 15 phút để sợi giòn tanh tách và trắng nõn. Vớt ra vắt thật ráo nước.',
+        tip: 'Khâu vắt ráo nước là chìa khóa then chốt: Đu đủ phải thật kiệt nước thì khi chan nước giấm sốt vào mới ngấm đều, không bị loãng vị và đĩa nộm để cả buổi vẫn giữ trọn độ giòn sần sật, không ra nước ỉu.',
+      },
+      {
+        step: 2,
+        title: 'Chuẩn bị topping bò khô, gan sấy, lạc rang và rau thơm',
+        time: '10 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Topping đầy đặn thơm lừng, bò khô xé tơi vừa ăn, lạc rang giòn bùi, rau thơm ráo nước thái khúc thơm ngát',
+        actionPoints: [
+          'Thịt bò khô miếng dùng kéo sắc cắt thành sợi dài mỏng cỡ đầu đũa, hoặc dùng tay xé tơi vừa ăn. Nếu có gan bò sấy/lá lách bò sấy, cắt miếng vuông mỏng vừa miệng.',
+          'Lạc rang chín vàng giòn rụm trên chảo lửa nhỏ cùng chút muối hạt, ủ giấy báo 10 phút cho giòn tan rồi xát sạch vỏ lụa. Cho vào cối giã dập nhẹ làm 2 - 3 mảnh.',
+          'Rau kinh giới, húng Láng, rau răm nhặt bỏ cuống già và lá úa, rửa sạch nhẹ tay dưới vòi nước rồi ngâm nước muối loãng 5 phút. Vớt ra rổ vẩy thật ráo nước, dùng dao thái khúc dài khoảng 1.5 - 2cm.',
+        ],
+        description:
+          'Xé sợi thịt bò khô và cắt miếng gan sấy. Lạc rang vàng giòn xát vỏ rồi giã dập nhẹ. Rau kinh giới, húng Láng và rau răm rửa sạch, vẩy thật ráo nước rồi thái khúc vừa ăn.',
+        tip: 'Rau kinh giới chính là "linh hồn" định danh món nộm bò khô đất kinh kỳ. Vị the cay ấm của kinh giới phối hợp hoàn hảo với vị cay ngọt của bò khô và vị bùi béo của lạc rang, giúp giải ngấy tuyệt hảo.',
+      },
+      {
+        step: 3,
+        title: 'Pha nước giấm tỏi ớt chua ngọt tỷ lệ vàng "hồn cốt nộm Hà Nội"',
+        time: '5 - 10 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Nước sốt chua thanh dịu ngọt, mặn mà đậm đà, tỏi ớt băm nhuyễn nổi bồng bềnh rực rỡ trên mặt nước mắm giấm',
+        actionPoints: [
+          'Cho vào bát tô: 4 thìa canh đường cát trắng, 4 thìa canh giấm gạo nếp ngon, 3 thìa canh nước mắm cốt nhĩ và 3 thìa canh nước lọc ấm.',
+          'Dùng thìa khuấy đều tay cho các hạt đường tan hoàn toàn thành hỗn hợp trong sánh vàng óng ánh.',
+          'Vắt thêm 1 thìa canh nước cốt quất tươi (hoặc chanh), lọc bỏ hạt để tạo hương thơm ngát tự nhiên đặc trưng.',
+          'Nếm thử: Vị chua thanh dịu mở đầu, ngọt hậu đậm đà vừa vặn, mặn dịu êm đằm thắm (không chua gắt, không ngọt khé).',
+          'Cuối cùng, trút toàn bộ tỏi ta băm nhuyễn mịn và ớt hiểm băm nhỏ vào bát. Nhờ đường và giấm đã tan đều tạo tỷ trọng lý tưởng, tỏi và ớt sẽ lập tức nổi bồng bềnh rực rỡ trên bề mặt cực kỳ bắt mắt.',
+        ],
+        description:
+          'Hòa tan đường, giấm gạo nếp, nước mắm ngon và nước lọc theo tỷ lệ vàng. Thêm chút nước cốt quất lấy hương thơm thanh mát. Cuối cùng cho tỏi ớt băm nhuyễn vào để nổi bồng bềnh trên mặt nước sốt.',
+        tip: 'Quy tắc tỏi ớt nổi bồng bềnh: Luôn hòa tan hoàn toàn đường trong giấm và nước trước khi nêm mắm, và tuyệt đối chỉ cho tỏi ớt băm nhuyễn vào SAU CÙNG khi nước sốt đã sẵn sàng.',
+      },
+      {
+        step: 4,
+        title: 'Bày đĩa phố cổ & Kỹ thuật chan sốt giữ độ giòn tan',
+        time: '5 phút',
+        heat: 'Thưởng thức tươi mát',
+        goal: 'Đĩa nộm vun cao đẹp mắt, màu sắc rực rỡ hài hòa, khi ăn sợi đu đủ giòn sần sật thấm đẫm vị chua cay mặn ngọt',
+        actionPoints: [
+          'Bốc một nắm đu đủ và cà rốt nạo ráo nước vun thành ngọn xốp tơi giữa đĩa sâu lòng.',
+          'Rải đều một lớp rau thơm (kinh giới, húng Láng, rau răm) phủ lên trên lớp đu đủ.',
+          'Xếp thịt bò khô xé sợi và gan sấy bao quanh ngọn nộm. Rắc đẫm lạc rang vàng giòn giã dập lên đỉnh chóp.',
+          'Khi chuẩn bị ăn, dùng muôi múc 4 - 5 thìa nước giấm tỏi ớt chua ngọt rưới đều từ trên chóp xuống khắp đĩa nộm.',
+          'Dùng đũa trộn đều nhẹ tay từ dưới lên để từng sợi đu đủ, bò khô và rau thơm ngậm đều nước sốt rồi gắp thưởng thức ngay.',
+          'Có thể rắc thêm chút tiêu sọ xay hoặc vắt thêm quất tươi tùy khẩu vị.',
+        ],
+        description:
+          'Xếp đu đủ và cà rốt vun ngọn ra đĩa, phủ rau thơm, bò khô, gan sấy và rắc lạc rang giòn lên trên. Khi ăn rưới đẫm nước giấm tỏi ớt chua ngọt, trộn đều nhẹ tay và thưởng thức ngay độ giòn sần sật tươi mát.',
+        tip: 'Quy tắc vàng giữ trọn độ giòn: Chỉ rưới nước giấm sốt và trộn đều nộm ngay trước khi ăn 1 - 2 phút. Nếu trộn quá sớm, muối đường sẽ rút nước làm sợi đu đủ bị mềm ỉu và mất đi cảm giác giòn tanh tách.',
+      },
+    ],
+    chefSecret:
+      '3 bí quyết vàng làm nộm bò khô đu đủ ngon bất bại chuẩn Bờ Hồ: 1. Ngâm sợi đu đủ và cà rốt trong thau nước đá lạnh buốt pha muối hạt và giấm gạo trong 15 phút, sau đó vắt thật kiệt nước để sợi nộm giòn rụm tanh tách và sạch mủ đắng; 2. Nước giấm tỏi ớt pha bằng giấm gạo nếp truyền thống kết hợp chút nước quất tươi tạo vị chua thanh dịu êm, tỏi ớt băm nhuyễn nổi bồng bềnh; 3. Không thể thiếu rau kinh giới tươi the mát phối cùng lạc rang bùi và bò khô cay ngọt; luôn chan sốt và trộn ngay trước khi ăn để giữ trọn độ giòn tan giải ngấy cực đỉnh.',
+    recommendedSauce:
+      'Bát nước giấm tỏi ớt chua ngọt chuẩn vị Hà Nội, kèm một đĩa bánh bột lọc, nem cuốn tôm thịt hoặc nem chua rán giòn rụm.',
+  },
+  'nem-chua-ran-ha-noi': {
+    dishId: 'nem-chua-ran-ha-noi',
+    dishName: 'Nem Chua Rán Phố Cổ Hà Nội',
+    seoTitle: 'Cách Làm Nem Chua Rán Phố Cổ Vàng Ruộm, Giòn Rụm Bất Bại Tại Nhà',
+    prepTime: '30 - 40 phút (quết thịt dẻo, thái bì heo, cuộn định hình & ủ lạnh 2 tiếng)',
+    cookTime: '15 - 20 phút (lăn bột chiên xù & rán ngập dầu giòn rụm)',
+    difficulty: 'Trung bình',
+    servings: '4 - 5 người ăn (khoảng 20 - 25 cây nem)',
+    ingredients: [
+      {
+        category: 'Thịt heo tươi dẻo & Bì heo giòn dai sần sật',
+        items: [
+          '400g thịt nạc mông heo (hoặc nạc thăn dẻo) tươi mới mổ, dính tay (tuyệt đối không dùng thịt ôi hoặc rửa nước nhiều làm bở nát thịt)',
+          '200g giò sống (mọc heo tươi dẻo mịn, giúp nem quánh dẻo kết dính hoàn hảo)',
+          '200g - 250g bì heo (da heo) làm sạch: Luộc chín tới với gừng sả, lạng sạch tinh mỡ thừa, để thật khô ráo rồi thái sợi chỉ mảnh li ti',
+        ],
+      },
+      {
+        category: 'Gia vị ướp quết thịt dậy mùi cay nồng phố cổ',
+        items: [
+          '2 thìa canh nước mắm cốt nhĩ cá cơm thơm lừng',
+          '2 thìa canh đường cát trắng (hoặc đường phèn giã mịn giúp nem lên màu vàng óng và ngọt dịu hậu vị)',
+          '1.5 thìa cà phê tiêu sọ giã dập hoặc tiêu đen xay (linh hồn cay nồng thơm nức mũi của nem rán Hà Nội)',
+          '1 củ tỏi ta bóc vỏ băm thật nhuyễn mịn, 1 - 2 quả ớt hiểm băm nhỏ',
+          '2 thìa canh bột năng (hoặc bột bắp tạo độ quánh dẻo và giữ nước ngọt thịt)',
+          '1 thìa cà phê hạt nêm hoặc bột ngọt (tùy chọn)',
+        ],
+      },
+      {
+        category: 'Lớp áo bột chiên xù vàng rụm & Đồ ăn kèm phố cổ',
+        items: [
+          '150g - 200g bột chiên xù trắng (panko) hạt xốp giòn rụm',
+          '50g bột chiên giòn (hoặc bột mì pha chút nước loãng hoặc 1 quả trứng gà đánh tan làm chất kết dính áo bột)',
+          '500ml - 700ml dầu ăn sạch để chiên ngập dầu',
+          'Cuộn màng bọc thực phẩm (hoặc giấy bóng kiếng gói nem)',
+          'Đồ chấm & ăn kèm: Tương ớt xào tỏi kiểu Bắc / tương ớt cay nồng, dưa leo (dưa chuột) thái lát mát lành, củ đậu hoặc xoài xanh',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế bì heo thái chỉ mảnh & Kỹ thuật xay quết thịt dẻo lạnh',
+        time: '15 phút',
+        heat: 'Nước đá lạnh & Ngăn đá tủ lạnh',
+        goal: 'Bì heo trắng giòn ráo kiệt nước thái chỉ tăm tắp, khối thịt quết lạnh dẻo dính tay không bị tách nước hay bở',
+        actionPoints: [
+          'Bì heo cạo sạch lông, chà xát với muối hạt và chanh khử sạch mùi. Luộc chín tới trong 10 - 12 phút cùng gừng đập dập và chút muối hạt. Vớt ngay ra âu nước đá lạnh ngâm 10 phút cho bì giòn sần sật và trắng trong.',
+          'Dùng dao sắc lạng bỏ sạch hoàn toàn lớp mỡ thừa còn sót lại ở mặt trong miếng bì (bì phải thật sạch mỡ thì nem rán mới giòn dẻo, không bị chảy ngấy). Dùng khăn sạch thấm khô kiệt nước rồi thái thành từng sợi chỉ mảnh thật mỏng và đều tay.',
+          'Thịt nạc mông heo thái mỏng, bọc kín cho vào ngăn đá 30 - 45 phút cho thịt dăm đá (mép thịt hơi cứng nhưng bẻ cong được).',
+          'Cho thịt lạnh vào cối xay nhuyễn cùng giò sống, nước mắm ngon, đường, tiêu sọ giã dập, tỏi ớt băm nhuyễn và bột năng. Quết hoặc xay nhanh tay một chiều cho thịt kết dính dẻo quánh.',
+          'Trút toàn bộ bì heo thái chỉ vào khối thịt quết, dùng tay nhồi bóp đều cho sợi bì phân bố đều khắp khối nem.',
+        ],
+        description:
+          'Luộc chín bì heo, cạo sạch tinh mỡ và thái sợi chỉ mảnh li ti. Thịt nạc mông để dăm đá đem xay nhuyễn cùng giò sống, gia vị mắm tiêu tỏi và bột năng cho dẻo quánh rồi trộn đều với bì heo.',
+        tip: 'Bí quyết quyết định độ dẻo dai: Thịt phải luôn được giữ LẠNH trong suốt quá trình xay quết. Nếu thịt bị nóng do ma sát cối xay, protein sẽ chín tái và tách nước, khiến nem sau khi chiên bị bở nát và khô xác.',
+      },
+      {
+        step: 2,
+        title: 'Định hình cây nem & Kỹ thuật ủ lạnh đông kết collagen tự nhiên',
+        time: '15 phút gói + 2 tiếng ủ lạnh',
+        heat: 'Ngăn mát / Ngăn đá tủ lạnh',
+        goal: 'Từng cây nem cuộn tròn đều đặn chắc nịch, khối nem đông se cứng cáp không bị biến dạng hay bung rách',
+        actionPoints: [
+          'Trải từng tấm màng bọc thực phẩm (khoảng 15x20cm) lên mặt phẳng sạch.',
+          'Múc khoảng 35g - 40g hỗn hợp nem đặt vào giữa, nắn thành thanh tròn dài khoảng 7 - 8cm, đường kính khoảng 1.8 - 2cm.',
+          'Gấp mép màng bọc lại và cuộn nhiều vòng ôm sát thân nem thật chặt tay. Nắm hai đầu màng bọc xoắn tròn lại như gói kẹo để ép khối thịt nén chặt, không có bọt khí bên trong.',
+          'Xếp toàn bộ các cây nem vào hộp kín, cho vào ngăn mát tủ lạnh ủ ít nhất 2 - 3 tiếng (hoặc để ngăn đá 35 - 45 phút) cho nem đông cứng định hình.',
+        ],
+        description:
+          'Trải màng bọc thực phẩm, nắn nhân thành từng thanh tròn dài khoảng 7 - 8cm rồi cuộn chặt tay, xoắn hai đầu như chiếc kẹo. Cho nem vào tủ lạnh ủ 2 tiếng để collagen đông kết chắc nịch.',
+        tip: 'Tuyệt đối không bỏ qua khâu ủ lạnh: Bì heo chứa lượng collagen dồi dào, khi gặp lạnh sẽ đông keo tự nhiên giúp thanh nem rắn chắc lại. Nhờ đó khi bóc màng bọc và lăn bột, nem giữ nguyên dáng tròn đẹp, không dính tay và không bị vỡ khi rán.',
+      },
+      {
+        step: 3,
+        title: 'Bóc vỏ & Kỹ thuật lăn áo bột chiên xù 2 lớp bám siêu chắc',
+        time: '10 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Toàn bộ thân nem được bọc kín lớp bột xù bông xốp, hạt bột bám chắc nịch không bị rơi rụng',
+        actionPoints: [
+          'Lấy nem từ tủ lạnh ra, dùng kéo cắt đầu màng bọc và bóc tách từng thanh nem đã định hình săn chắc ra đĩa.',
+          'Pha bột chiên giòn với chút nước lọc thành hỗn hợp sền sệt mỏng (hoặc đánh tan 1 lòng đỏ trứng gà). Đổ bột chiên xù ra khay rộng.',
+          'Lăn từng cây nem qua một lớp bột ướt mỏng, sau đó đặt vào khay bột xù, dùng tay lắc nhẹ và ấn khẽ các đầu ngón tay cho hạt bột xù bám kín đều khắp bề mặt nem.',
+          'Để nem siêu giòn xù kiểu phố cổ: Nhúng nhẹ thanh nem qua bột ướt lần 2 và lăn tiếp một lớp bột chiên xù thứ hai.',
+          'Nhấc thanh nem lên vỗ nhẹ để rơi bớt các mảnh bột xù thừa không bám chặt.',
+        ],
+        description:
+          'Bóc màng bọc thực phẩm khỏi các thanh nem đã đông cứng. Lăn nem qua lớp bột ướt mỏng rồi áo đẫm bột chiên xù panko cho phủ kín đều bề mặt.',
+        tip: 'Lăn bột xù 2 lớp tạo nên lớp "áo giáp" vàng giòn rụm bên ngoài, vừa giữ cho nhân thịt bên trong mọng nước ngọt ngào không bị khô, vừa giúp nem giữ được độ giòn xốp suốt 30 - 45 phút sau khi rán.',
+      },
+      {
+        step: 4,
+        title: 'Kỹ thuật rán ngập dầu vàng ruộm & Ráo dầu giòn tan bất bại',
+        time: '10 - 15 phút',
+        heat: 'Lửa vừa (160°C - 170°C)',
+        goal: 'Vỏ ngoài vàng ruộm óng ả, lớp bột xù bung giòn rôm rốp, bên trong chín tới dẻo quánh thơm nức tiêu tỏi',
+        actionPoints: [
+          'Bắc chảo sâu lòng lên bếp, đổ lượng dầu ăn ngập ít nhất 2/3 đến lút thân cây nem.',
+          'Bật lửa đun dầu nóng đạt khoảng 160°C - 170°C. Thử đầu đũa gỗ cắm vào đáy chảo thấy bọt khí sủi tăm lăn tăn mạnh là dầu đã đạt nhiệt độ chuẩn.',
+          'Hạ lửa vừa, nhẹ nhàng thả từng thanh nem vào chảo. Không thả quá nhiều thanh nem cùng lúc để tránh làm tụt nhiệt dầu đột ngột.',
+          'Trong 1 phút đầu, giữ nguyên không đảo để lớp bột xù ngoài se cứng bám chặt. Khi vỏ nem bắt đầu cứng và hơi ngả vàng, dùng đũa lăn nhẹ đều các mặt cho nem chín vàng đều.',
+          'Chiên khoảng 4 - 6 phút đến khi vỏ ngoài chuyển màu vàng ruộm cánh gián đẹp mắt, tỏa hương thơm nồng nàn quyến rũ.',
+          'Vớt nem ra ngay, đặt dựng đứng trên rack gác chảo hoặc khay có lót giấy thấm dầu để nem ráo dầu triệt để.',
+        ],
+        description:
+          'Đun nóng dầu ngập chảo ở nhiệt độ vừa (160°C - 170°C). Thả từng thanh nem vào chiên ngập dầu từ 4 - 6 phút cho đến khi vỏ vàng ươm bung xù giòn rụm. Vớt ra để ráo dầu và thưởng thức nóng hổi.',
+        tip: 'Nhiệt độ dầu là chìa khóa vàng: Nếu dầu chưa đủ nóng nem sẽ ngấm dầu gây ngấy; nếu dầu quá sôi vỏ xù bên ngoài sẽ cháy đen trước khi nhân thịt bên trong kịp chín dẻo. Chiên ngập dầu ở lửa vừa giúp nem giòn xốp bung đều mà không bị nổ.',
+      },
+    ],
+    chefSecret:
+      '3 bí quyết vàng làm nem chua rán phố cổ Hà Nội bất bại tại nhà: 1. Nem chua rán thực chất là "nem ngọt" tươi chưa qua lên men (tuyệt đối KHÔNG DÙNG nem chua đóng gói đem rán vì nem sẽ bị chua gắt, chảy nhão và khét đắng); 2. Thịt xay phải giữ thật lạnh và quết dẻo cùng giò sống, bì heo cạo sạch tinh mỡ thái chỉ mảnh li ti, bắt buộc cuộn chặt tay và ủ lạnh tủ lạnh ít nhất 2 tiếng để collagen tự nhiên đông kết định hình thanh nem; 3. Lăn 2 lớp bột chiên xù và rán ngập dầu ở nhiệt độ 160°C - 170°C, vớt ra để ráo dầu rồi thưởng thức ngay lúc còn nóng bỏng tay, chấm đẫm tương ớt cay nồng ăn kèm dưa leo thanh mát để tận hưởng trọn vẹn lớp vỏ giòn rôm rốp tan biến trong miệng cùng nhân thịt dẻo quánh chuẩn vị ngõ Tạm Thương Hàng Bông.',
+    recommendedSauce:
+      'Tương ớt xào tỏi kiểu phố cổ hoặc tương ớt Mường Khương cay nồng, ăn kèm dưa chuột thái mỏng giòn ngọt, củ đậu mát lịm và trà đá hoặc trà chanh vỉa hè chuẩn điệu Hà Nội.',
+  },
+  'doi-sun-nuong-than-hoa': {
+    dishId: 'doi-sun-nuong-than-hoa',
+    dishName: 'Dồi Sụn Nướng Than Hoa Thơm Lừng Phố Cổ',
+    seoTitle: 'Cách Làm Dồi Sụn Nướng Da Giòn Thịt Mềm, Thơm Lừng Khói Than',
+    prepTime: '40 - 50 phút (sơ chế lòng non, băm sụn, trộn nhân & nhồi dồi)',
+    cookTime: '20 - 25 phút (luộc xăm thoát khí 10 phút + nướng than hoa vàng giòn 15 phút)',
+    difficulty: 'Trung bình',
+    servings: '4 - 5 người ăn (khoảng 6 - 8 khúc dồi sụn mập mạp)',
+    ingredients: [
+      {
+        category: 'Vỏ dồi lòng non & Sụn heo, thịt nạc vai',
+        items: [
+          '500g lòng non heo tươi (chọn đoạn lòng trắng hồng, thành dày, ống tròn nhỏ căng đều, không có màu vàng hay mùi lạ)',
+          '300g sụn non heo (sụn sườn non mềm hoặc sụn họng heo, băm nhỏ hạt lựu li ti tạo độ giòn sần sật "rôm rốp")',
+          '300g thịt nạc vai heo xay có giắt mỡ (hoặc thêm 80g mỡ phần thái hạt lựu nhỏ giúp nhân dồi mềm ẩm, béo ngậy không bị khô xác)',
+          '60g - 80g đậu xanh cà vỏ (ngâm mềm, hấp/luộc chín tới nguyên hạt) hoặc lạc rang bùi giã dập (tạo kết cấu nhân dẻo bùi béo ngậy)',
+        ],
+      },
+      {
+        category: 'Rau thơm nhân dồi & Gia vị tẩm ướp phố cổ',
+        items: [
+          'Rau thơm thảo mộc: 1 mớ rau răm tươi, 1 mớ hành lá, 1 mớ húng quế (húng chó) nhặt sạch, vẩy ráo nước thái nhỏ li ti (linh hồn hương vị dồi nướng)',
+          'Hành khô 3 củ và tỏi ta 1 củ bóc vỏ băm nhuyễn mịn, 1 nhánh sả băm nhỏ',
+          'Gia vị ướp nhân: 2 thìa canh nước mắm cốt ngon, 1.5 thìa canh dầu hào, 1 thìa canh đường cát, 1 thìa canh tiêu sọ giã giập/tiêu đen xay (nồng nàn cay ấm), 1/2 thìa cà phê bột ngũ vị hương (hoặc 1 thìa cà phê rượu mai quế lộ)',
+          '2 thìa canh dầu màu điều (tạo màu nhân đỏ au đẹp mắt và giữ độ mềm ẩm)',
+        ],
+      },
+      {
+        category: 'Sốt phết da giòn màu cánh gián & Đồ ăn kèm',
+        items: [
+          'Hỗn hợp quét vỏ khi nướng: 1 thìa canh mật ong nguyên chất + 1 thìa canh dầu màu điều + 1/2 thìa cà phê dầu hào khuấy tan đều',
+          'Dụng cụ: Phễu nhồi (hoặc đầu chai nhựa cắt ngắn), dây chỉ thực phẩm buộc dồi, tăm nhọn xăm khí',
+          'Đồ chấm & rau ăn kèm: Tương ớt xào cay nồng hoặc sốt me chua cay, rau răm tươi, húng quế, dưa leo (dưa chuột) thái lát giòn mát',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế lòng non sạch khử mùi & Băm sụn trộn nhân thơm lừng',
+        time: '20 phút',
+        heat: 'Nhiệt độ phòng mát',
+        goal: 'Lòng non sạch thơm không rách, nhân dồi dẻo quyện sụn giòn sần sật và dậy mùi thảo mộc',
+        actionPoints: [
+          'Lòng non bóp nhẹ với muối hạt và nước cốt chanh (hoặc giấm gạo) cả mặt trong lẫn mặt ngoài để khử sạch nhớt và mùi hôi. Xả sạch nhiều lần dưới vòi nước chảy, vuốt nhẹ tay cho ráo kiệt nước (tránh vuốt miết quá mạnh làm dão mỏng da lòng).',
+          'Sụn non heo rửa sạch, dùng dao sắc băm nhỏ dạng hạt lựu li ti (không dùng máy xay nát vụn vì sẽ mất độ giòn sần sật sảng khoái khi nhai).',
+          'Rau răm, hành lá, húng quế rửa sạch, vẩy thật ráo nước rồi dùng dao thái nhỏ mịn.',
+          'Cho vào âu lớn: Thịt nạc vai xay, sụn băm nhỏ, đậu xanh chín, rau thơm thái nhỏ, hành tỏi sả băm nhuyễn.',
+          'Nêm 2 thìa canh nước mắm, 1.5 thìa canh dầu hào, 1 thìa canh đường, 1 thìa canh tiêu sọ, bột ngũ vị hương và 2 thìa canh dầu màu điều. Dùng găng tay nhồi bóp đều trong 5 phút cho gia vị ngấm sâu và khối nhân kết dính dẻo quánh.',
+        ],
+        description:
+          'Làm sạch lòng non nhẹ tay với muối chanh. Băm nhỏ sụn non hạt lựu, trộn đều cùng thịt xay, đậu xanh chín, rau răm húng quế thái nhỏ và gia vị mắm tiêu dầu hào cho hòa quyện dẻo thơm.',
+        tip: 'Bí quyết giòn sần sật: Sụn heo nhất định phải băm tay hạt lựu nhỏ li ti thay vì xay máy. Đậu xanh hoặc lạc rang giúp nhân dồi có độ xốp bùi, giữ nước ngọt bên trong thịt mà không bị khô cứng.',
+      },
+      {
+        step: 2,
+        title: 'Kỹ thuật nhồi dồi lỏng tay & Buộc chỉ định hình từng khúc',
+        time: '15 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Khúc dồi tròn đều mềm mại, lòng không bị căng cứng hay nhồi quá chặt',
+        actionPoints: [
+          'Buộc chặt một đầu đoạn lòng non bằng chỉ thực phẩm.',
+          'Lồng đầu lòng còn lại vào miệng phễu (hoặc đầu chai nhựa cắt ngắn). Dùng thìa múc từng phần nhân ấn nhẹ nhàng vào lòng.',
+          'Dùng tay vuốt nhẹ nhân xuôi dần xuống dưới đáy. Nhồi vừa tay, chỉ làm căng khoảng 75% - 80% thể tích lòng (nhấn tay vào thấy mềm lỏng, có độ phập phồng).',
+          'Dùng chỉ thực phẩm buộc chia dồi thành từng khúc dài khoảng 10 - 12cm đều đặn. Buộc thắt nút chặt hai đầu.',
+        ],
+        description:
+          'Lồng lòng non vào miệng phễu, nhồi nhân từ từ và vuốt nhẹ tay. Chỉ nhồi căng 75% - 80% thể tích để dồi mềm lỏng. Dùng chỉ thực phẩm buộc chia khúc 10 - 12cm.',
+        tip: 'Quy tắc sống còn chống nổ dồi: Tuyệt đối KHÔNG nhồi quá căng chặt! Khi tiếp xúc nhiệt độ cao, thịt và đậu xanh sẽ nở phồng, mỡ nóng sinh áp suất hơi; nếu nhồi quá căng lòng non sẽ lập tức bục toạc nát bét.',
+      },
+      {
+        step: 3,
+        title: 'Luộc sơ lửa nhỏ liu riu & Kỹ thuật xăm lỗ thoát khí chống bục',
+        time: '10 - 12 phút',
+        heat: 'Lửa nhỏ liu riu (không đun sôi bùng)',
+        goal: 'Khúc dồi chín se định hình căng mọng, vỏ lòng săn giòn nguyên vẹn không bị bục rách',
+        actionPoints: [
+          'Đặt nồi nước lên bếp (thả thêm 1 nhánh gừng đập dập). Đặt các khúc dồi vào từ lúc nước còn nguội hoặc ấm nhẹ.',
+          'Bật lửa vừa đun cho nước nóng dần lên. Khi nước bắt đầu lăn tăn sủi tăm và dồi căng mọng lên, dùng tăm nhọn xăm 4 - 5 lỗ đều quanh từng khúc dồi.',
+          'Khí và nước mỡ thừa bên trong sẽ xì nhẹ qua các lỗ xăm giúp cân bằng áp suất ruột non hoàn hảo.',
+          'Hạ lửa nhỏ liu riu, luộc trong 8 - 10 phút cho nhân bên trong chín tới se lại.',
+          'Vớt dồi ra đĩa, để nguội và ráo nước hoàn toàn trước khi đem nướng.',
+        ],
+        description:
+          'Thả dồi vào nồi nước từ lúc nguội, đun lửa vừa. Khi dồi căng mọng dùng tăm nhọn xăm vài lỗ thoát khí để chống nổ bục. Luộc lửa liu riu 10 phút cho chín se rồi vớt ra để ráo.',
+        tip: 'Xăm dồi đúng thời điểm: Chỉ xăm khi thấy dồi căng mọng trong nước nóng (không xăm lúc dồi còn sống nguội vì nhân sẽ phì ra lỗ xăm). Luộc chín se 80% trước khi nướng giúp dồi không bao giờ bị sống bên trong hay cháy khét bên ngoài.',
+      },
+      {
+        step: 4,
+        title: 'Kỹ thuật nướng than hoa xì xèo & Phết sốt da giòn màu cánh gián',
+        time: '12 - 15 phút',
+        heat: 'Than hoa đỏ hồng (hoặc nồi chiên không dầu 180°C)',
+        goal: 'Vỏ dồi căng bóng vàng ươm màu cánh gián giòn sần sật, mỡ chảy xèo xèo đượm khói thơm nức, bên trong thịt mềm mọng sụn giòn rau ráu',
+        actionPoints: [
+          'Chuẩn bị bếp than hoa đỏ rực không còn ngọn lửa trần bốc khói đen. Đặt vỉ nướng lên và xếp các khúc dồi sụn lên vỉ.',
+          'Nướng trên than hoa lửa vừa, trở mặt liên tục 2 - 3 phút một lần để nhiệt phân bố đều khắp thân dồi.',
+          'Khi vỏ dồi bắt đầu se vàng và mỡ tiết ra xì xèo, dùng chổi silicon phết đều hỗn hợp sốt mật ong dầu điều lên khắp bề mặt dồi.',
+          'Tiếp tục nướng và phết sốt thêm 1 - 2 lần cho đến khi lớp da chuyển màu nâu đỏ cánh gián óng ả, se giòn rụm và tỏa mùi thơm khói than ngào ngạt.',
+          'Gắp dồi ra thớt, dùng dao sắc thái vát xéo thành từng khoanh dày khoảng 1.5 - 2cm. Bày ra đĩa cùng rau răm, húng quế và dưa leo mát lạnh.',
+        ],
+        description:
+          'Nướng dồi trên than hoa đỏ hồng, trở mặt đều tay. Khi vỏ se vàng phết hỗn hợp mật ong dầu điều cho da lên màu cánh gián giòn bóng. Nướng chín thơm nức mùi khói rồi thái khoanh xéo vừa ăn.',
+        tip: 'Nếu nướng bằng nồi chiên không dầu: Nướng lần 1 ở 170°C trong 10 phút, phết sốt mật ong dầu điều rồi nướng tiếp lần 2 ở 190°C trong 5 - 7 phút cho da giòn nổ màu cánh gián bóng bẩy.',
+      },
+    ],
+    chefSecret:
+      '3 bí quyết vàng làm dồi sụn nướng da giòn thịt mềm bất bại tại nhà: 1. Làm sạch lòng non nhẹ tay với chanh muối, sụn non băm nhỏ hạt lựu li ti (không xay máy) để giữ trọn độ giòn sần sật "rôm rốp", phối cùng thịt xay có giắt mỡ và đậu xanh hấp bùi xốp; 2. Kỹ thuật nhồi dồi chỉ nhồi căng khoảng 75% - 80% thể tích lòng và vuốt lỏng tay, tuyệt đối không nhồi căng cứng vì khi chín nhân sẽ nở làm bục rách vỏ; 3. Luộc sơ lửa nhỏ liu riu và bắt buộc dùng tăm nhọn xăm thoát khí chống nổ bục trước khi nướng; nướng than hoa lật đều tay và phết sốt mật ong dầu điều để lớp da căng giòn màu cánh gián, mỡ chảy xèo xèo đượm mùi khói thơm nức mũi chấm tương ớt ăn kèm rau răm ấm bụng.',
+    recommendedSauce:
+      'Tương ớt cay nồng pha chút nước cốt quất tươi hoặc sốt chấm me chua ngọt sệt quánh, muối tiêu chanh ớt, ăn kèm đĩa rau răm tươi, húng quế và dưa chuột thái lát giòn mát giải ngấy.',
+  },
+  'de-tai-chanh-tuong-ban': {
+    dishId: 'de-tai-chanh-tuong-ban',
+    dishName: 'Dê Tái Chanh Ninh Bình Chấm Tương Bần Gừng',
+    seoTitle: 'Cách Làm Dê Tái Chanh Đậm Đà Cay Nồng, Bén Mồi Chuẩn Quán',
+    prepTime: '25 - 30 phút (sơ chế khử mùi thịt dê, thái mỏng & chuẩn bị rau quả chát)',
+    cookTime: '10 - 15 phút (hấp sả chín tái hồng đào & bóp trộn tái chanh vừng rang)',
+    difficulty: 'Dễ',
+    servings: '3 - 4 người ăn (món nhậu bén mồi số 1)',
+    ingredients: [
+      {
+        category: 'Thịt dê núi tươi ngon & Thảo mộc khử mùi hôi',
+        items: [
+          '500g thịt dê núi tươi có cả lớp da mỏng (chọn phần thịt đùi dê hoặc thăn sườn đỏ hồng, da mỏng giòn sần sật)',
+          'Hỗn hợp khử mùi hôi đặc trưng của dê: 1 củ gừng già giã nát, 1 chén rượu trắng (hoặc rượu gừng), 4 cây sả đập dập',
+          'Nước hấp thảo mộc: 5 cây sả cắt khúc đập dập, 5 lá chanh tươi vò nát, 1 củ gừng thái lát mỏng',
+        ],
+      },
+      {
+        category: 'Gia vị bóp tái chanh & Vừng rang béo bùi',
+        items: [
+          'Nước cốt chanh tươi: 3 - 4 quả chanh tươi vắt lấy nước cốt (lọc bỏ sạch hạt)',
+          'Gia vị trộn: 1 thìa canh nước mắm ngon, 1.5 thìa cà phê đường cát, 1 thìa cà phê bột ngọt, 1 thìa cà phê tiêu sọ giã giập',
+          '4 cây sả bánh tẻ bào mỏng li ti, 2 quả ớt sừng đỏ cắt lát xéo, 1 củ gừng non gọt vỏ thái chỉ mảnh như tơ',
+          '8 - 10 lá chanh bánh tẻ rửa sạch, cuộn tròn thái sợi chỉ mảnh',
+          '50g vừng (mè) trắng rang vàng thơm nức',
+        ],
+      },
+      {
+        category: 'Nước chấm tương Bần gừng & Rau cuốn ăn kèm',
+        items: [
+          'Bát tương Bần chuẩn vị Ninh Bình: 4 thìa canh tương Bần Hưng Yên hảo hạng + 1 củ gừng non giã thật nhuyễn + 1.5 thìa canh đường cát + 1 thìa cà phê nước cốt chanh + 1 quả ớt hiểm băm nhỏ khuấy tan sủi bọt',
+          'Rau củ cuốn ăn kèm: 1 quả chuối xanh gọt vỏ thái lát mỏng ngâm nước muối chanh (chát nhẹ), 1 quả khế chua, vài quả sung muối, lá mơ lông, ngò gai (mùi tàu), đinh lăng',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Khử sạch mùi hôi thịt dê & Kỹ thuật hấp sả gừng chín tái hồng đào',
+        time: '15 phút',
+        heat: 'Lửa lớn cách thủy',
+        goal: 'Thịt dê thơm dịu mùi sả gừng, chín tái hồng đào mọng nước ngọt ngào, da giòn sần sật',
+        actionPoints: [
+          'Dùng củ gừng già giã nát hòa cùng 1 chén rượu trắng, chà xát kỹ khắp miếng thịt dê và mặt da trong 5 phút để triệt tiêu hoàn toàn mùi gây đặc trưng. Xả lại nhẹ tay bằng nước sạch, dùng khăn sạch thấm khô kiệt nước.',
+          'Đặt nồi xửng hấp lên bếp: Rải một lớp dày sả đập dập, gừng thái lát và lá chanh vò nát xuống đáy xửng.',
+          'Đặt miếng thịt dê lên trên lớp thảo mộc. Đậy kín vung, bật lửa lớn hấp cách thủy trong khoảng 8 - 10 phút.',
+          'Dùng que tăm xiên thử vào phần dày nhất của miếng thịt: Nếu thấy nước ứa ra có màu hơi phớt hồng nhẹ là đạt độ chín tái hồng đào lý tưởng. Tắt bếp, gắp ngay thịt ra đĩa để nguội bớt.',
+        ],
+        description:
+          'Chà xát thịt dê với rượu trắng và gừng giã để khử sạch mùi hôi. Đặt lên xửng lót sả gừng lá chanh hấp cách thủy 8 - 10 phút cho chín tái hồng đào mọng nước.',
+        tip: 'Quy tắc chín tái: Tuyệt đối không hấp thịt dê quá kỹ vì thịt sẽ bị co rút khô xác, mất đi độ ngọt mềm tự nhiên và da dê sẽ bị dai nhách khó nhai.',
+      },
+      {
+        step: 2,
+        title: 'Kỹ thuật thái thịt dê mỏng dính ngang thớ giữ da giòn',
+        time: '10 phút',
+        heat: 'Nhiệt độ phòng mát',
+        goal: 'Từng lát thịt dê thái mỏng tang đều đặn, phần da giòn dính liền thịt nạc không bị nát',
+        actionPoints: [
+          'Thịt dê sau khi hấp để nguội bớt (có thể cho vào ngăn mát tủ lạnh 10 phút để thớ thịt săn chắc lại dễ thái).',
+          'Đặt miếng thịt lên thớt, dùng dao bản mỏng sắc bén thái thịt thành từng lát mỏng dính ngang thớ.',
+          'Mỗi lát thịt cần có cả phần nạc hồng đào mềm mại và viền da mỏng giòn sần sật.',
+          'Cho toàn bộ thịt thái mỏng vào âu lớn sạch ráo nước.',
+        ],
+        description:
+          'Để thịt nguội bớt rồi dùng dao sắc thái mỏng tang ngang thớ. Từng lát thịt mềm mọng nước với viền da mỏng giòn sần sật.',
+        tip: 'Luôn thái ngang thớ thịt: Thái dọc thớ sẽ khiến thịt dê bị dai. Lát thịt càng mỏng thì khi bóp chanh thịt càng ngấm đều và giữ được độ mềm mọng tan trong miệng.',
+      },
+      {
+        step: 3,
+        title: 'Bóp tái chanh tỷ lệ vàng & Trộn sả ớt vừng rang thơm nức',
+        time: '5 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Thịt dê ngấm vị chua thanh dịu nhẹ, sả ớt lá chanh bám đều, vừng rang bùi béo dậy mùi thơm nức nở',
+        actionPoints: [
+          'Rưới từ từ 3 - 4 thìa canh nước cốt chanh tươi vào âu thịt dê. Dùng tay (đeo găng) bóp trộn nhẹ nhàng đều tay trong 2 phút cho thịt ngấm chanh chuyển sang màu trắng ngà tái mềm.',
+          'Chắt bớt phần nước cốt chanh thừa tiết ra dưới đáy âu để món ăn khô ráo, không bị sũng nước.',
+          'Nêm 1 thìa canh nước mắm ngon, 1.5 thìa cà phê đường cát, 1 thìa cà phê tiêu sọ giã giập và 1 thìa cà phê bột ngọt. Bóp trộn nhẹ tay cho tan đều gia vị.',
+          'Tiếp tục trút sả bào mỏng, ớt sừng cắt lát, gừng thái chỉ và lá chanh thái sợi vào đảo đều.',
+          'Cuối cùng, rắc 2/3 lượng vừng rang vàng vào trộn đều, để lại một ít rắc lên mặt đĩa trang trí.',
+        ],
+        description:
+          'Rưới nước cốt chanh bóp nhẹ tay cho thịt tái ngà, chắt bớt nước thừa. Nêm mắm đường tiêu rồi trộn đều sả bào, ớt lát, lá chanh thái chỉ và vừng rang vàng thơm phức.',
+        tip: 'Chắt bớt nước chua sau khi bóp chanh giúp thịt dê thấm đậm đà gia vị mắm đường tiêu, không bị chua gắt hay ỉu nhão.',
+      },
+      {
+        step: 4,
+        title: 'Pha bát tương Bần gừng bốc khói & Bày đĩa nhậu chuẩn quán',
+        time: '5 phút',
+        heat: 'Thưởng thức tươi mát',
+        goal: 'Bát tương Bần nâu sánh ngọt bùi nổi bọt gừng ớt, đĩa dê tái chanh vun cao rực rỡ sắc màu mồi nhậu đỉnh cao',
+        actionPoints: [
+          'Pha nước chấm: Cho 4 thìa canh tương Bần Hưng Yên vào bát, thêm 1.5 thìa canh đường cát, 1 thìa cà phê nước cốt chanh và gừng non giã nhuyễn. Dùng thìa đánh mạnh tay cho đường tan và tương sủi bọt mịn, rắc thêm vài lát ớt hiểm cay nồng.',
+          'Bày đĩa: Gắp dê tái chanh vun ngọn giữa đĩa lớn, rắc nốt phần vừng rang vàng và chút lá chanh thái chỉ lên đỉnh chóp.',
+          'Xếp xung quanh đĩa: Chuối xanh thái lát mỏng, khế chua cắt mỏng, quả sung muối, lá mơ lông và ngò gai tươi.',
+          'Khi ăn: Lấy một lá mơ lông, đặt lát chuối chát, khế chua, gắp miếng dê tái chanh cuộn tròn lại, chấm ngập bát tương Bần gừng cay bùi và thưởng thức.',
+        ],
+        description:
+          'Đánh tan tương Bần cùng gừng giã nhuyễn, đường, chanh và ớt cho sủi bọt thơm lừng. Bày dê tái chanh ra đĩa rắc đẫm vừng rang, dọn kèm chuối chát, khế chua, lá mơ và tương Bần.',
+        tip: 'Linh hồn tương Bần: Tương Bần nhất định phải dùng gừng già giã thật nhuyễn (không băm) để tinh dầu gừng hòa quyện vào hạt đỗ tương lên men, tạo vị bùi ngọt ấm nồng át hoàn toàn tính hàn của thịt dê.',
+      },
+    ],
+    chefSecret:
+      '3 bí quyết vàng làm dê tái chanh da giòn thịt mềm ngọt không hôi chuẩn vị Ninh Bình: 1. Tuyệt đối không rửa thịt dê bằng nước lạnh nhiều lần; dùng rượu trắng và gừng giã nát chà xát kỹ khắp miếng thịt và da để triệt tiêu hoàn toàn mùi hôi gây; 2. Hấp cách thủy trên xửng lót đẫm sả đập dập và lá chanh chỉ từ 8 - 10 phút, khi chọc tăm nước thịt còn ửng hồng thì tắt bếp vớt ra ngay (nếu nấu quá chín thịt dê sẽ co rút khô xác, da bị dai nhách); 3. Thịt phải thái thật mỏng ngang thớ và bóp nhẹ tay cùng nước cốt chanh, sả bào và lá chanh thái chỉ mảnh; bắt buộc chấm cùng tương Bần giã gừng ớt sủi bọt, cuộn chuối chát khế chua để tạo nên sự bùng nổ hương vị chua cay chát bùi bén mồi bậc nhất.',
+    recommendedSauce:
+      'Bát tương Bần pha gừng non giã nhuyễn ớt cay sủi bọt, ăn kèm đĩa chuối xanh thái mỏng, khế chua, sung muối, lá mơ lông và một chén rượu nếp kim sơn nồng nàn.',
+  },
+  'ga-nuong-com-lam': {
+    dishId: 'ga-nuong-com-lam',
+    dishName: 'Gà Nướng Cơm Lam Ống Nứa Tây Bắc',
+    seoTitle: 'Cách Làm Gà Nướng Cơm Lam Thơm Ngon Đậm Đà Chuẩn Quán',
+    prepTime: '35 - 45 phút (ngâm nếp nương, dồn ống nứa & ướp gà mắc khén)',
+    cookTime: '40 - 50 phút (nướng gà than hoa vàng ruộm & nướng cơm lam thơm nức)',
+    difficulty: 'Trung bình',
+    servings: '4 - 6 người ăn (mẹt gà nướng cơm lam nguyên con)',
+    ingredients: [
+      {
+        category: 'Gà thả đồi săn chắc & Gia vị ướp mắc khén hạt dổi',
+        items: [
+          '1 con gà ta / gà đồi chạy bộ khoảng 1.2kg - 1.5kg (chọn gà thịt săn chắc, ức nở, da vàng mỏng, ít mỡ)',
+          'Linh hồn gia vị núi rừng Tây Bắc: 2 thìa cà phê hạt mắc khén rang thơm giã dập, 2 - 3 hạt dổi rừng nướng than giã mịn',
+          'Sốt ướp gà thơm lừng: 2 thìa canh dầu màu điều, 1 thìa canh mật ong rừng nguyên chất, 2 thìa canh nước mắm ngon, 1 thìa canh dầu hào, 1 thìa cà phê tiêu sọ xay, 3 củ hành tím + 1 củ tỏi + 3 cây sả băm nhuyễn mịn, 1 nắm lá é hoặc lá mắc mật vò dập',
+        ],
+      },
+      {
+        category: 'Gạo nếp nương & Ống nứa nướng cơm lam',
+        items: [
+          '500g gạo nếp nương Tây Bắc (hoặc nếp cái hoa vàng hạt tròn mẩy, ngâm nước suối/nước sạch 4 - 6 tiếng)',
+          '4 - 6 ống tre / nứa tươi bánh tẻ (vỏ xanh mỏng còn tươi ẩm, đốt dài 25 - 30cm, đường kính 2 - 3cm)',
+          'Lá chuối rừng tươi rửa sạch hơ qua lửa cho dai mềm để làm nút bịt miệng ống nứa',
+          'Nước dão dừa hoặc nước lọc suối thanh ngọt, chút muối hạt',
+        ],
+      },
+      {
+        category: 'Muối hạt mắc khén hạt dổi & Rau rừng ăn kèm',
+        items: [
+          'Chấm chuẩn vị đại ngàn: 2 thìa canh muối hạt rang khô giã dập + 1 thìa cà phê hạt mắc khén + 1/2 hạt dổi nướng giã mịn + ớt hiểm nướng giã nhuyễn + vắt nước cốt quất tươi / chanh',
+          'Rau rừng ăn kèm: Dưa chuột thái lát giòn mát, rau răm tươi, đọt xoài non, lá lốt non, ngò gai',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế gà mổ phanh kẹp vỉ & Kỹ thuật ướp mắc khén hạt dổi',
+        time: '20 phút',
+        heat: 'Nhiệt độ phòng mát',
+        goal: 'Gà ngấm sâu gia vị thảo mộc rừng, da bóng bẩy dầu điều, thịt dậy mùi thơm cay tê của mắc khén',
+        actionPoints: [
+          'Gà làm sạch, dùng muối hạt và gừng đập dập chà xát khử sạch mùi hôi, xả sạch và để thật ráo nước.',
+          'Dùng dao sắc mổ dọc bụng gà theo đường xương ức, dùng tay ấn mạnh xương sống để phanh phẳng con gà (dáng gà nướng bẹp kiểu Tây Bắc/Tây Nguyên). Dùng mũi dao khía nhẹ vài đường phía trong thớ thịt đùi và lườn.',
+          'Hạt mắc khén rang thơm trên chảo lửa nhỏ rồi giã dập; hạt dổi nướng trên than hồng cho nổ phồng thơm ngát rồi giã nhuyễn mịn.',
+          'Trộn đều hỗn hợp sốt ướp: Mắc khén, hạt dổi, hành tỏi sả băm, mắm ngon, dầu hào, tiêu, dầu màu điều và lá é vò dập (để lại mật ong quét sau).',
+          'Xoa đều sốt ướp khắp mặt trong và mặt ngoài con gà, massage kỹ trong 5 phút. Để gà nghỉ 30 - 45 phút cho ngấm sâu gia vị.',
+        ],
+        description:
+          'Mổ phanh gà, khía nhẹ thớ thịt. Rang mắc khén và nướng hạt dổi giã nhỏ, trộn cùng hành sả mắm dầu điều ướp đều quanh gà trong 30 - 45 phút.',
+        tip: 'Rang mắc khén và nướng hạt dổi: Mắc khén và hạt dổi chỉ bung tỏa trọn vẹn hương tinh dầu the cay quyến rũ khi được làm nóng trên lửa than trước khi giã.',
+      },
+      {
+        step: 2,
+        title: 'Đong nếp vào ống nứa tươi & Kỹ thuật nút lá chuối giữ hơi',
+        time: '15 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Nếp đong vừa vặn trong ống nứa, nút lá chuối kín khít giữ trọn tinh dầu nứa non',
+        actionPoints: [
+          'Gạo nếp nương sau khi ngâm 4 - 6 tiếng, vo sạch nhẹ tay rồi để ráo nước. Trộn đều nếp với 1 thìa cà phê muối hạt nhỏ.',
+          'Ống nứa rửa sạch bên ngoài, để ráo.',
+          'Dồn gạo nếp từ từ vào từng ống nứa, vừa cho gạo vừa gõ nhẹ đáy ống xuống mặt thớt để hạt nếp dàn đều chặt vừa phải.',
+          'Đong gạo nếp chiếm khoảng 80% - 85% chiều dài ống nứa (tuyệt đối không nén quá chặt hay đong đầy miệng).',
+          'Rót nước sạch (hoặc nước suối pha chút nước cốt dừa) xăm xắp mặt gạo nếp.',
+          'Lấy lá chuối cuộn chặt lại, nút chặt miệng ống nứa để giữ kín hơi nước khi nướng.',
+        ],
+        description:
+          'Trộn gạo nếp ngâm với chút muối. Cho vào ống nứa đầy 80% - 85%, châm nước xăm xắp mặt gạo rồi dùng lá chuối cuộn nút chặt miệng ống.',
+        tip: 'Không nén gạo quá chặt: Gạo nếp khi chín sẽ nở to gấp rưỡi; nếu nén quá chặt cơm lam sẽ bị sống sượng ở giữa, ống nứa dễ bị nứt vỡ khi nướng.',
+      },
+      {
+        step: 3,
+        title: 'Nướng gà than hoa vàng ruộm & Nướng cơm lam xoay tròn ống nứa',
+        time: '35 - 40 phút',
+        heat: 'Than hoa đỏ hồng (lửa vừa)',
+        goal: 'Da gà giòn rụm màu nâu cánh gián óng ả, thịt ngọt mọng nước đượm khói than, ống nứa cháy xém đều cơm dẻo quánh',
+        actionPoints: [
+          'Kẹp gà vào thanh tre chẻ đôi (hoặc vỉ nướng hoa). Đặt lên bếp than hoa đỏ rực không khói đen.',
+          'Nướng gà ở khoảng cách 25 - 30cm trên mặt than, lật trở vỉ đều tay 5 phút một lần để gà chín đều từ từ không bị khét da.',
+          'Đồng thời, xếp các ống cơm lam xung quanh mép bếp than, liên tục xoay tròn ống nứa cho nhiệt truyền đều quanh thân ống.',
+          'Khi gà nướng được khoảng 30 phút chín tới 85%, hòa mật ong rừng với chút dầu màu điều, dùng chổi quét đều 1 - 2 lớp lên da gà. Nướng thêm 5 - 7 phút cho da vàng ruộm, óng ả xì xèo mỡ thơm nức.',
+          'Khi ống nứa cháy xém đều lớp vỏ ngoài, hơi nước thơm mùi nứa non bốc lên ngào ngạt ở đầu nút lá chuối là cơm lam đã chín dẻo hoàn hảo.',
+        ],
+        description:
+          'Nướng gà kẹp tre và ống nứa trên than hoa đỏ hồng. Lật trở đều tay cho gà chín mọng và cơm lam dẻo thơm. Quét mật ong dầu điều lên da gà ở 5 phút cuối cho vàng óng.',
+        tip: 'Thời điểm quét mật ong: Chỉ quét mật ong khi gà đã gần chín hoàn toàn. Nếu quét mật ong từ đầu, đường fructose trong mật ong sẽ cháy đen trước khi thịt gà kịp chín.',
+      },
+      {
+        step: 4,
+        title: 'Chẻ vỏ nứa lộ áo lụa trắng & Chặt gà bày mẹt tre chuẩn quán',
+        time: '10 phút',
+        heat: 'Thưởng thức khi còn nóng hổi',
+        goal: 'Thanh cơm lam bọc màng lụa trắng dẻo thơm nguyên vẹn, mẹt gà nướng chặt miếng óng ả chấm muối hạt dổi',
+        actionPoints: [
+          'Lấy ống cơm lam ra, dùng dao sắc gọt chẻ bỏ lớp vỏ cật nứa cháy đen bên ngoài, chỉ để lại lớp màng lụa mỏng màu trắng ngà ôm sát thân cơm.',
+          'Dùng dao cắt thanh cơm lam thành từng khúc dài 5 - 7cm vừa tay cầm.',
+          'Gà nướng để nguội bớt 3 phút cho thịt nghỉ giữ trọn nước ngọt, sau đó dùng dao sắc chặt thành từng miếng vừa ăn (hoặc để nguyên con xé tay kiểu ăn bốc dân dã).',
+          'Bày gà nướng vàng ruộm và các khúc cơm lam lên mẹt tre lót lá chuối tươi.',
+          'Pha bát muối hạt dổi mắc khén: Cho muối hạt rang, mắc khén, hạt dổi nướng và ớt hiểm giã nhuyễn vào đĩa, vắt nước cốt quất tươi đánh đều.',
+          'Cầm khúc cơm lam dẻo thơm chấm muối hạt dổi, ăn kèm miếng thịt gà đồi ngọt lịm da giòn rụm và rau rừng thơm ngát.',
+        ],
+        description:
+          'Chẻ bỏ vỏ cật nứa cháy ngoài, giữ lại lớp lụa trắng bọc cơm dẻo. Chặt gà bày lên mẹt tre lót lá chuối cùng cơm lam, chấm muối hạt rang mắc khén hạt dổi.',
+        tip: 'Lớp màng lụa nứa non: Lớp màng trắng mỏng bọc quanh cơm lam chính là tinh túy giữ cho cơm không bị dính tay, vừa thơm ngát hương rừng vừa dẻo ngọt đậm đà.',
+      },
+    ],
+    chefSecret:
+      '3 bí quyết vàng làm gà nướng cơm lam Tây Bắc thơm ngon đậm đà chuẩn quán: 1. Gà chọn gà thả đồi thịt săn chắc, mổ phanh kẹp thanh tre nướng trên than hoa đỏ hồng lật đều tay; mắc khén và hạt dổi phải rang hoặc nướng chín trên than trước khi giã thì mới tỏa trọn hương thơm the cay nồng nàn; phết mật ong dầu điều ở công đoạn cuối để da gà vàng ruộm bóng bẩy mà không bị cháy khét; 2. Ống nứa phải chọn ống tươi bánh tẻ; khi dồn gạo chỉ cho nếp đầy khoảng 80% - 85% ống nứa để chừa không gian cho hạt nếp nở dẻo, nút chặt bằng lá chuối rừng nướng xoay tròn trên than đến khi nứa cháy xém đều và tỏa mùi thơm ngào ngạt; 3. Chẻ bỏ lớp cật nứa cháy ngoài giữ lại lớp màng lụa mỏng trắng ngà bọc quanh thanh cơm lam dẻo thơm, ăn kèm miếng gà nướng ngọt thịt chấm đẫm chén muối hạt rang mắc khén hạt dổi cay the đỉnh cao ẩm thực đại ngàn.',
+    recommendedSauce:
+      'Chén muối hạt rang giã mắc khén hạt dổi ớt rừng nướng cay tê đầu lưỡi hoặc muối ớt xanh lá é Tây Nguyên, ăn cùng thanh cơm lam dẻo quánh thơm nức mùi tre nứa non.',
+  },
 };
 
 /**
@@ -3791,7 +4345,7 @@ export function getDishRecipe(dish: Dish): DishRecipe {
     dish.name.toLowerCase().includes('cuốn') ||
     dish.name.toLowerCase().includes('gỏi cuốn') ||
     dish.name.toLowerCase().includes('bò bía') ||
-    dish.name.toLowerCase().includes('nem');
+    (dish.name.toLowerCase().includes('nem') && !dish.name.toLowerCase().includes('nem chua rán'));
 
   const isHotpot =
     !isRollOrBanhMi &&
@@ -4371,6 +4925,49 @@ export const RECIPE_SLUG_ALIASES: Record<string, string> = {
   'cach-nau-mien-luon-gion-nuoc-dung': 'mien-luon-gion-xao-lan',
   'cach-nau-mien-luon-gion-nuoc-dung-thanh-ngot': 'mien-luon-gion-xao-lan',
   'cach-nau-mien-luon-gion-xao-lan': 'mien-luon-gion-xao-lan',
+  'nom-bo-kho': 'nom-bo-kho-ha-noi',
+  'nom-bo-kho-ha-noi': 'nom-bo-kho-ha-noi',
+  'cach-nau-nom-bo-kho': 'nom-bo-kho-ha-noi',
+  'cach-nau-nom-bo-kho-ha-noi': 'nom-bo-kho-ha-noi',
+  'cach-lam-nom-bo-kho': 'nom-bo-kho-ha-noi',
+  'cach-lam-nom-bo-kho-ha-noi': 'nom-bo-kho-ha-noi',
+  'cach-lam-nom-bo-kho-du-du': 'nom-bo-kho-ha-noi',
+  'cach-lam-nom-bo-kho-du-du-chua-ngot': 'nom-bo-kho-ha-noi',
+  'cach-lam-nom-bo-kho-du-du-chua-ngot-gion-tan': 'nom-bo-kho-ha-noi',
+  'nem-chua-ran': 'nem-chua-ran-ha-noi',
+  'nem-chua-ran-ha-noi': 'nem-chua-ran-ha-noi',
+  'cach-nau-nem-chua-ran': 'nem-chua-ran-ha-noi',
+  'cach-nau-nem-chua-ran-ha-noi': 'nem-chua-ran-ha-noi',
+  'cach-lam-nem-chua-ran': 'nem-chua-ran-ha-noi',
+  'cach-lam-nem-chua-ran-ha-noi': 'nem-chua-ran-ha-noi',
+  'cach-lam-nem-chua-ran-pho-co': 'nem-chua-ran-ha-noi',
+  'cach-lam-nem-chua-ran-pho-co-vang-ruom': 'nem-chua-ran-ha-noi',
+  'cach-lam-nem-chua-ran-pho-co-vang-ruom-gion-rum': 'nem-chua-ran-ha-noi',
+  'cach-lam-nem-chua-ran-pho-co-vang-ruom-gion-rum-bat-bai-tai-nha': 'nem-chua-ran-ha-noi',
+  'doi-sun-nuong': 'doi-sun-nuong-than-hoa',
+  'doi-sun-nuong-than-hoa': 'doi-sun-nuong-than-hoa',
+  'cach-nau-doi-sun-nuong': 'doi-sun-nuong-than-hoa',
+  'cach-nau-doi-sun-nuong-than-hoa': 'doi-sun-nuong-than-hoa',
+  'cach-lam-doi-sun-nuong': 'doi-sun-nuong-than-hoa',
+  'cach-lam-doi-sun-nuong-than-hoa': 'doi-sun-nuong-than-hoa',
+  'cach-lam-doi-sun-nuong-da-gion': 'doi-sun-nuong-than-hoa',
+  'cach-lam-doi-sun-nuong-da-gion-thit-mem': 'doi-sun-nuong-than-hoa',
+  'cach-lam-doi-sun-nuong-da-gion-thit-mem-thom-lung-khoi-than': 'doi-sun-nuong-than-hoa',
+  'de-tai-chanh': 'de-tai-chanh-tuong-ban',
+  'de-tai-chanh-tuong-ban': 'de-tai-chanh-tuong-ban',
+  'cach-nau-de-tai-chanh': 'de-tai-chanh-tuong-ban',
+  'cach-nau-de-tai-chanh-tuong-ban': 'de-tai-chanh-tuong-ban',
+  'cach-lam-de-tai-chanh': 'de-tai-chanh-tuong-ban',
+  'cach-lam-de-tai-chanh-tuong-ban': 'de-tai-chanh-tuong-ban',
+  'cach-lam-de-tai-chanh-dam-da': 'de-tai-chanh-tuong-ban',
+  'cach-lam-de-tai-chanh-dam-da-cay-nong': 'de-tai-chanh-tuong-ban',
+  'cach-lam-de-tai-chanh-dam-da-cay-nong-ben-moi-chuan-quan': 'de-tai-chanh-tuong-ban',
+  'ga-nuong-com-lam': 'ga-nuong-com-lam',
+  'cach-nau-ga-nuong-com-lam': 'ga-nuong-com-lam',
+  'cach-lam-ga-nuong-com-lam': 'ga-nuong-com-lam',
+  'cach-lam-ga-nuong-com-lam-thom-ngon': 'ga-nuong-com-lam',
+  'cach-lam-ga-nuong-com-lam-thom-ngon-dam-da': 'ga-nuong-com-lam',
+  'cach-lam-ga-nuong-com-lam-thom-ngon-dam-da-chuan-quan': 'ga-nuong-com-lam',
 };
 
 /**
