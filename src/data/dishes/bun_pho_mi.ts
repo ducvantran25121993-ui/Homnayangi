@@ -362,7 +362,7 @@ export const BUN_PHO_MI_DISHES: Dish[] = [
     estimatedPrice: 55000,
     calories: '550 - 680 kcal',
     description: 'Sợi mì Koreno dai giòn trong thố đất bốc khói cay xé lưỡi, ngập tôm sú, mực, xúc xích, bò Mỹ và nấm kim châm.',
-    image: 'https://images.unsplash.com/photo-1623341214825-9f4f963727da?w=800&auto=format&fit=crop&q=80',
+    image: '/images/mi_cay_han_quoc.jpg?v=2',
     popularTags: ['Mì cay cấp độ', 'Thố đất sôi', 'Thử thách cay'],
     searchKeyword: 'Mì cay Hàn Quốc',
   },
