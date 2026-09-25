@@ -2118,6 +2118,114 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
     recommendedSauce: 'Ăn kèm sa tế cay xé lưỡi, chanh tươi và ớt xanh Cố Đô dầm nước mắm mặn.',
   },
 
+  'mi-quang-tom-thit': {
+    dishId: 'mi-quang-tom-thit',
+    dishName: 'Mì Quảng Tôm Thịt Bánh Tráng Mè',
+    seoTitle: 'Cách Nấu Mì Quảng Tôm Thịt Đậm Đà Chuẩn Vị Xứ Quảng Tại Nhà',
+    prepTime: '30 phút',
+    cookTime: '45 phút',
+    difficulty: 'Trung bình',
+    servings: '4 - 5 người',
+    ingredients: [
+      {
+        category: 'Phần nhưn tôm thịt & nước nhưn',
+        items: [
+          '500g xương heo (xương đuôi hoặc xương ống) ninh lấy nước dùng ngọt',
+          '300g tôm tươi (tôm đất hoặc tôm thẻ cắt bớt râu gai, giữ vỏ cho giòn ngọt)',
+          '300g thịt ba chỉ heo thái miếng mỏng vừa ăn',
+          '10 quả trứng cút luộc bóc vỏ (hoặc trứng gà)',
+          '50g củ nén (hành tăm) giã dập - linh hồn mùi thơm xứ Quảng',
+          '2 thìa canh dầu đậu phộng (dầu phụng nguyên chất xứ Quảng)',
+          '1 thìa canh dầu màu điều hoặc bột nghệ vàng',
+          'Gia vị: Nước mắm nhĩ, muối hạt, đường phèn, tiêu đen xay, ớt bột',
+        ],
+      },
+      {
+        category: 'Sợi mì & Đồ ăn kèm chuẩn vị Quảng',
+        items: [
+          '1kg sợi mì Quảng tươi (sợi trắng hoặc sợi vàng tráng bột nghệ)',
+          'Bánh tráng nướng mè giòn rụm (bánh đa nướng)',
+          '100g đậu phộng rang giòn giã dập',
+          'Rau sống Mì Quảng: Bắp chuối thái mỏng, cải mầm non, xà lách, rau húng lũi, ngò rí, giá đỗ',
+          'Chanh tươi, ớt sừng xanh cay the đặc trưng miền Trung',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế & Ướp tôm thịt đậm đà với củ nén',
+        time: '20 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Tôm và thịt ba chỉ ngấm sâu gia vị mắm tiêu củ nén, săn chắc và dậy màu óng ả',
+        actionPoints: [
+          'Thịt ba chỉ rửa sạch với nước muối loãng, thái miếng mỏng vừa ăn. Tôm cắt bỏ râu và ngạnh nhọn ở đầu, rửa sạch để ráo.',
+          'Củ nén bóc vỏ, dùng cối giã dập thô (không xay nhuyễn để khi phi không bị khét đắng).',
+          'Ướp tôm và thịt vào 2 tô riêng: Mỗi tô cho 1/2 củ nén giã dập, 1 thìa canh nước mắm ngon, 1 thìa cà phê đường phèn, 1 thìa hạt nêm, 1/2 thìa cà phê tiêu xay và 1 thìa dầu màu điều/bột nghệ.',
+          'Trộn đều và ướp trong 20 phút cho thấm sâu gia vị.',
+        ],
+        description:
+          'Sơ chế tôm thịt sạch sẽ. Giã dập củ nén (hành tăm) ướp cùng tôm và thịt ba chỉ với nước mắm, tiêu, dầu màu điều và đường phèn trong 20 phút.',
+        tip: 'Củ nén giã dập và dầu phụng chính là cặp đôi gia vị tạo nên mùi thơm nồng nàn bất hủ của Mì Quảng.',
+      },
+      {
+        step: 2,
+        title: 'Ninh nước dùng xương lấy vị ngọt nền',
+        time: '35 - 40 phút',
+        heat: 'Lửa liu riu',
+        goal: 'Nước xương trong ngọt thanh khiết làm nền cho nồi nước nhưn đậm đà',
+        actionPoints: [
+          'Chần xương heo qua nước sôi 3 phút khử bọt bẩn, rửa sạch lại với nước lạnh.',
+          'Cho xương vào nồi cùng 1.5 lít nước và 1 củ hành tím đập dập, đun sôi rồi hạ lửa liu riu ninh 35 - 40 phút.',
+          'Hớt sạch bọt nổi để nước dùng ngọt trong tự nhiên, không nêm quá đậm vì phần nước nhưn tôm thịt sẽ đậm đà.',
+        ],
+        description:
+          'Chần sạch xương heo rồi ninh cùng 1.5 lít nước trong 40 phút lấy nước ngọt tự nhiên làm nền nấu nước nhưn.',
+      },
+      {
+        step: 3,
+        title: 'Xào săn nhưn tôm thịt & Nấu nồi nước nhưn sóng sánh',
+        time: '15 - 20 phút',
+        heat: 'Lửa lớn rồi hạ nhỏ liu riu',
+        goal: 'Tôm thịt kho keo săn đượm vị mặn ngọt óng ánh, nước nhưn cô đặc sóng sánh thơm nức củ nén',
+        actionPoints: [
+          'Đặt nồi lên bếp, đun nóng 2 thìa canh dầu đậu phộng (dầu phụng) cho bốc khói nhẹ để khử mùi dầu sống, sau đó hạ lửa cho phần củ nén còn lại vào phi vàng thơm ngào ngạt.',
+          'Trút thịt ba chỉ vào xào săn trên lửa lớn trong 4 - 5 phút cho tươm mỡ và xém cạnh.',
+          'Tiếp tục trút tôm vào xào chung 3 phút cho vỏ tôm chuyển màu đỏ au bóng bẩy.',
+          'Đổ phần nước ninh xương heo vào nồi tôm thịt, lượng nước chỉ ngập sâm sấp bề mặt nhân.',
+          'Thả trứng cút luộc vào, đun sôi bùng rồi hạ lửa nhỏ ninh liu riu 10 - 15 phút cho nước nhưn sắc lại, sánh sệt, váng dầu màu điều vàng cam óng ả nổi lên trên.',
+          'Nêm lại với 1 thìa nước mắm ngon và 1 thìa đường phèn sao cho vị nước nhưn đậm đà hơn nước lèo bún phở thông thường.',
+        ],
+        description:
+          'Khử dầu phụng với củ nén phi thơm lừng. Xào săn thịt ba chỉ và tôm, trút nước hầm xương ngập xâm xấp mặt nhân cùng trứng cút, đun liu riu cho nước nhưn sánh kẹo đậm đà.',
+        tip: 'Nước nhưn Mì Quảng chuẩn phải đậm đà, hơi sánh và có màu vàng cam óng ánh của nghệ/dầu điều, không bao giờ nấu loãng toẹt như nước lèo bún bò.',
+      },
+      {
+        step: 4,
+        title: 'Trình bày tô Mì Quảng chuẩn vị & Thưởng thức',
+        time: '5 phút',
+        heat: 'Nước nhưn sôi nhẹ trên bếp',
+        goal: 'Tô Mì Quảng đầy ắp sắc màu, nước nhưn chỉ chan xâm xấp 1/3 tô, rắc đậu phộng và bẻ bánh tráng mè giòn rụm',
+        actionPoints: [
+          'Rải một lớp rau sống (bắp chuối bào, cải mầm non, xà lách, rau húng) dưới đáy tô lớn.',
+          'Gắp một phần sợi mì Quảng tươi chần sơ cho tơi rải lên trên lớp rau sống.',
+          'Múc thịt ba chỉ, tôm rim đỏ au và trứng cút xếp gọn gàng trên mặt sợi mì.',
+          'Dùng muôi múc 1 - 2 muôi nước nhưn đậm đà rưới đều lên trên thịt và mì (lưu ý nước nhưn chỉ ngập xâm xấp khoảng 1/3 tô, không chan ngập đầy nước như bún phở).',
+          'Rắc đều đậu phộng rang giã dập, hành ngò thái nhỏ lên trên.',
+          'Bẻ vài miếng bánh tráng nướng mè giòn rụm cắm bên cạnh tô hoặc bẻ vụn thả lên trên.',
+          'Dọn kèm đĩa ớt sừng xanh miền Trung giòn cay và chanh tươi, khi ăn trộn đều tất cả để sợi mì ngấm trọn vị đậm đà thơm bùi.',
+        ],
+        description:
+          'Xếp rau sống dưới đáy tô, cho sợi mì Quảng lên trên. Xếp tôm, thịt, trứng cút rồi chan 1-2 muôi nước nhưn xâm xấp mặt mì. Rắc đậu phộng rang giã dập và bẻ bánh tráng mè giòn rụm thưởng thức.',
+        tip: 'Ăn Mì Quảng là phải chan nước nhưn xâm xấp để khi trộn, bánh tráng giòn tan hòa quyện với vị bùi của đậu phộng và cay the của ớt xanh.',
+      },
+    ],
+    chefSecret:
+      '3 bí quyết vàng bất biến của Mì Quảng chuẩn gốc Quảng Nam: 1. Củ nén (hành tăm) và dầu đậu phộng (dầu phụng) là linh hồn mùi vị bắt buộc phải có, thiếu củ nén phi dầu phụng thì không thành Mì Quảng; 2. Nước nhưn phải đậm đà sắc nét, nấu sâm sấp để ngấm đẫm vào từng sợi mì và chỉ chan 1 - 2 muôi (khoảng 1/3 bát), tuyệt đối không chan ngập nước như bún phở; 3. Bánh tráng mè nướng giòn rụm bẻ vụn cùng đậu phộng rang giã dập tạo độ bùi béo giòn tan, cắn thêm trái ớt xanh cay nồng đưa vị.',
+    recommendedSauce:
+      'Nước mắm nhĩ dầm ớt xiêm xanh cay nồng và vài tép tỏi Lý Sơn đập dập nguyên tép.',
+  },
+
   'thit-kho-tau': {
     dishId: 'thit-kho-tau',
     dishName: 'Thịt Kho Tàu Nước Dừa Trứng Cút',
@@ -2974,6 +3082,116 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
       'Hấp hoặc luộc sơ gà cho vừa chín tới rồi để da thật khô ráo là bí quyết bất bại giúp khi xối mỡ lớp da nổ giòn tan màu cánh gián mà phần thịt đùi bên trong vẫn giữ nguyên độ ẩm ngọt mọng nước.',
     recommendedSauce:
       'Nước mắm chua ngọt tỏi ớt hoặc xì dầu (nước tương) tỏi ớt, ăn kèm dưa leo, cà chua và xà lách tươi.',
+  },
+
+  'com-ga-hoi-an': {
+    dishId: 'com-ga-hoi-an',
+    dishName: 'Cơm Gà Hội An Chuẩn Vị Phố Cổ',
+    seoTitle: 'Cách Làm Cơm Gà Hội An Hạt Cơm Vàng Óng, Gỏi Gà Xé Đậm Đà Chuẩn Vị Phố Cổ',
+    prepTime: '35 phút',
+    cookTime: '45 phút',
+    difficulty: 'Trung bình',
+    servings: '4 - 5 người',
+    ingredients: [
+      {
+        category: 'Thịt gà ta & Nấu cơm vàng óng',
+        items: [
+          '1 con gà ta thả vườn (khoảng 1.2kg - 1.4kg) da vàng ươm, thịt săn chắc ngọt lịm',
+          '350g gạo tẻ thơm (có thể trộn thêm 50g gạo nếp cái hoa vàng cho cơm dẻo hạt)',
+          '1 miếng mỡ gà tươi (lấy từ mỡ bụng gà khi mổ) để thắng mỡ xào gạo',
+          '1 củ nghệ tươi giã vắt lấy nước cốt (hoặc 1 thìa cà phê bột nghệ vàng)',
+          '1 củ gừng đập dập, 3 củ hành tím đập dập, 1 củ tỏi băm nhuyễn',
+          'Gia vị: Nước mắm cốt ngon, muối hạt, tiêu sọ trắng xay, hạt nêm, đường phèn',
+        ],
+      },
+      {
+        category: 'Gỏi gà xé bóp thấu & Sốt mạ (sốt lòng gà)',
+        items: [
+          'Bộ lòng mề gà làm sạch cắt hạt lựu vừa ăn',
+          '1 củ hành tây trắng thái khoanh mỏng ngâm đá lạnh khử hăng giòn ngọt',
+          '1 bó rau răm tươi thái nhỏ (rau thơm đặc trưng của cơm gà Hội An)',
+          '2 quả chanh tươi vắt lấy nước cốt, ớt sừng thái sợi chỉ',
+          'Đu đủ xanh và cà rốt bào sợi ngâm giấm đường giòn sần sật',
+          'Tương ớt xào Hội An (ớt rim dẻo cay ngọt đặc sản phố Hội)',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Luộc gà ta da vàng óng & Lấy nước dùng ngọt',
+        time: '25 - 30 phút',
+        heat: 'Lửa vừa rồi hạ nhỏ',
+        goal: 'Gà chín tới mềm ngọt mọng nước, da vàng căng bóng tự nhiên, nước luộc gà ngọt thanh béo ngậy',
+        actionPoints: [
+          'Gà ta làm sạch, xát muối hạt và gừng khử mùi hôi, rửa sạch để ráo.',
+          'Thoa đều nước cốt nghệ tươi lên khắp da gà để khi luộc da gà lên màu vàng óng ánh đẹp mắt.',
+          'Đặt gà vào nồi lớn, đổ nước ngập 2/3 thân gà, thêm 1 củ gừng đập dập, 3 củ hành tím và 1 thìa cà phê muối hạt.',
+          'Đun sôi bùng rồi hạ lửa nhỏ đun liu riu trong 15 phút, sau đó tắt bếp đậy vung ủ gà thêm 10 phút cho thịt gà chín thấu từ bên trong mà không bị rách da.',
+          'Vớt gà ra thả ngay vào thau nước đá lạnh 5 phút để da gà săn giòn sần sật, sau đó vớt ra để ráo.',
+        ],
+        description:
+          'Thoa nước cốt nghệ lên da gà rồi luộc cùng gừng và hành tím trên lửa liu riu 15 phút, ủ thêm 10 phút. Vớt gà ngâm nước đá lạnh cho da giòn săn.',
+        tip: 'Ủ gà trong nồi nước nóng sau khi tắt bếp giúp thịt gà giữ trọn độ ẩm mọng nước ngọt lịm mà không bị khô bã.',
+      },
+      {
+        step: 2,
+        title: 'Xào gạo với mỡ gà & Nấu hạt cơm vàng ươm tơi xốp',
+        time: '30 phút',
+        heat: 'Nồi cơm điện hoặc nấu lửa nhỏ',
+        goal: 'Hạt cơm bóng bẩy ngấm mỡ gà, vàng ươm mùi nghệ, dẻo thơm tơi xốp từng hạt',
+        actionPoints: [
+          'Gạo vo sạch, để ráo nước hoàn toàn.',
+          'Cho mỡ gà vào chảo đun nóng cho chảy mỡ vàng thơm, vớt tóp mỡ ra.',
+          'Cho tỏi băm vào phi thơm trên chảo mỡ gà, trút toàn bộ gạo đã ráo vào đảo đều tay trên lửa vừa trong 5 phút.',
+          'Khi hạt gạo khô ráo, săn chắc và chuyển sang màu trong đục óng ánh mỡ gà thì tắt bếp.',
+          'Đổ gạo vào nồi cơm điện, đong phần nước luộc gà phía trên (chứa lớp váng mỡ gà vàng) vào xâm xấp mặt gạo theo tỷ lệ nước như nấu cơm bình thường.',
+          'Bật nút nấu cơm cho đến khi cơm chín thơm nức, dùng đũa xới tơi hạt cơm vàng óng.',
+        ],
+        description:
+          'Thắng mỡ gà phi thơm tỏi băm rồi xào săn hạt gạo trong veo. Đem gạo nấu bằng chính nước luộc gà vàng béo cho hạt cơm tơi xốp, thơm lừng.',
+        tip: 'Rang xào gạo với mỡ gà trước khi nấu là bí quyết tối thượng của các quán cơm gà Bà Buội, cơm gà Nga Hội An giúp hạt cơm không bị nhão nát mà căng mọng, săn dẻo bóng bẩy.',
+      },
+      {
+        step: 3,
+        title: 'Nấu sốt mạ lòng gà đậm đà & Bóp gỏi gà xé phay rau răm',
+        time: '15 phút',
+        heat: 'Lửa vừa rồi hạ liu riu',
+        goal: 'Gỏi gà chua ngọt giòn the rau răm, chén sốt mạ lòng gà sánh nâu óng ả thơm lừng chan cơm',
+        actionPoints: [
+          'Nấu sốt mạ: Phi thơm hành tỏi băm với 1 thìa dầu màu điều, cho lòng mề gà cắt nhỏ vào xào săn. Nêm 1 thìa nước mắm ngon, 1 thìa đường, tiêu xay và 1/2 thìa ngũ vị hương. Trút 1 bát con nước luộc gà vào ninh liu riu 10 phút cho lòng chín mềm, nước sốt sánh mịn đậm đà.',
+          'Lọc lấy phần thịt đùi và ức gà xé miếng dài vừa ăn (giữ lại một phần xương ninh canh).',
+          'Hành tây thái mỏng ngâm nước đá có pha chút giấm 10 phút cho giòn ngọt hết hăng, vớt ra vắt ráo.',
+          'Cho thịt gà xé, hành tây và rau răm thái nhỏ vào âu lớn.',
+          'Rưới nước trộn gỏi gồm: 1 thìa nước cốt chanh, 1 thìa cà phê đường, 1/2 thìa cà phê muối tiêu sọ và chút ớt sừng sợi.',
+          'Dùng tay đeo găng bóp nhẹ đều tay cho thịt gà ngấm đều vị chua thanh dịu ngọt, thơm nồng mùi rau răm.',
+        ],
+        description:
+          'Xào lòng mề gà với hành tỏi, ngũ vị hương và nước luộc gà ninh sánh sệt làm sốt mạ. Thịt gà luộc xé miếng bóp thấu cùng hành tây giòn ngọt, rau răm, muối tiêu chanh tươi.',
+      },
+      {
+        step: 4,
+        title: 'Bày đĩa cơm gà Phố Hội & Thưởng thức trọn vị',
+        time: '5 phút',
+        heat: 'Thưởng thức khi cơm còn nóng hổi',
+        goal: 'Đĩa cơm gà Hội An đẹp mắt: hạt cơm vàng ruộm, gỏi gà xé phủ rau răm xanh mát, đồ chua đu đủ và tương ớt Hội An',
+        actionPoints: [
+          'Xới cơm gà vàng óng ra bát con nén nhẹ rồi úp ngược ra giữa đĩa tròn tạo thành khối tròn đầy đặn.',
+          'Xếp gỏi gà xé bóp rau răm hành tây lên một bên đĩa.',
+          'Gắp đồ chua đu đủ cà rốt bào sợi giòn chua ngọt xếp bên cạnh.',
+          'Múc một muỗng tương ớt rim Hội An dẻo đỏ au cay ngọt đặc trưng đặt bên góc đĩa.',
+          'Múc chén sốt mạ lòng gà sánh thơm để bên cạnh để thực khách tự rưới đều lên mặt cơm khi ăn.',
+          'Kèm theo một chén nước luộc gà nóng rắc hành ngò thái nhỏ làm nước súp tráng miệng.',
+        ],
+        description:
+          'Úp bát cơm vàng óng ra đĩa, bày gỏi gà xé rau răm, đu đủ ngâm chua ngọt, muỗng tương ớt xào Hội An và chén sốt mạ lòng gà thơm lừng.',
+        tip: 'Cơm gà Hội An không thể thiếu tương ớt xào dẻo ngọt đặc sản Phố Hội và chén sốt mạ sánh kẹo đậm đà tạo nên hương vị trứ danh mê hoặc lòng người.',
+      },
+    ],
+    chefSecret:
+      '3 bí quyết gia truyền tạo nên đĩa cơm gà Hội An nức tiếng: 1. Gạo nấu cơm nhất định phải được xào săn cùng mỡ gà tươi thắng nóng và tỏi phi trước khi nấu bằng nước luộc gà béo ngậy để từng hạt cơm căng bóng vàng óng, tơi xốp mà không bị nát; 2. Thịt gà sau khi luộc phải ngâm nước đá cho da giòn sần sật, xé tay bóp thấu với hành tây ngâm đá giòn ngọt và rau răm dậy mùi đặc trưng; 3. Nước sốt mạ ninh từ lòng mề gà sóng sánh đậm đà kết hợp với tương ớt rim Hội An cay ngọt dẻo quánh chính là nét quyến rũ độc nhất vô nhị của ẩm thực xứ Quảng.',
+    recommendedSauce:
+      'Chén sốt mạ lòng gà sánh sệt nóng hổi, tương ớt rim Hội An dẻo kẹo cay ngọt và chén nước mắm gừng ớt tỏi chua ngọt thanh vị.',
   },
   'xoi-xeo-ha-noi': {
     dishId: 'xoi-xeo-ha-noi',
@@ -4220,6 +4438,9 @@ export function getRecipeArticleTitle(dish: Dish, recipe?: DishRecipe): string {
   ) {
     return `Cách Làm ${cleanName} Sốt Chua Ngọt Đậm Đà Chuẩn Vị`;
   }
+  if (lowerName.includes('mì quảng')) {
+    return `Cách Nấu ${cleanName} Đậm Đà Chuẩn Vị Xứ Quảng Tại Nhà`;
+  }
   if (
     cat === 'bun_pho_mi' ||
     cat === 'bun_pho' ||
@@ -4266,6 +4487,9 @@ export function getRecipeArticleTitle(dish: Dish, recipe?: DishRecipe): string {
   }
 
   // 7. Cơm tấm, Cơm niêu, Cơm gà, Xôi
+  if (lowerName.includes('cơm gà hội an')) {
+    return `Cách Làm ${cleanName} Hạt Cơm Vàng Óng, Gỏi Gà Xé Đậm Đà Chuẩn Vị Phố Cổ`;
+  }
   if (lowerName.includes('xôi')) {
     return `Cách Nấu ${cleanName} Dẻo Thơm Óng Ả Chuẩn Vị Truyền Thống`;
   }
@@ -4857,6 +5081,9 @@ export const ACTIVE_RECIPE_DISH_IDS: string[] = [
   'com-tam-suon-bi-cha',
   'com-ga-xoi-mo',
   'com-rang-dua-bo',
+  'bun-bo-hue-dac-biet',
+  'mi-quang-tom-thit',
+  'com-ga-hoi-an',
 ];
 
 export function getActiveRecipeDishes(allDishes: Dish[]): Dish[] {
@@ -4897,7 +5124,16 @@ export function getRecipePath(dish: Dish): string {
 
 export const RECIPE_SLUG_ALIASES: Record<string, string> = {
   'bun-bo-hue': 'bun-bo-hue-dac-biet',
+  'bun-bo-hue-dac-biet': 'bun-bo-hue',
   'cach-nau-bun-bo-hue': 'bun-bo-hue-dac-biet',
+  'cach-nau-bun-bo-hue-dac-biet': 'bun-bo-hue-dac-biet',
+  'mi-quang': 'mi-quang-tom-thit',
+  'mi-quang-tom-thit': 'mi-quang-tom-thit',
+  'cach-nau-mi-quang': 'mi-quang-tom-thit',
+  'cach-nau-mi-quang-tom-thit': 'mi-quang-tom-thit',
+  'com-ga-hoi-an': 'com-ga-hoi-an',
+  'cach-nau-com-ga-hoi-an': 'com-ga-hoi-an',
+  'cach-lam-com-ga-hoi-an': 'com-ga-hoi-an',
   'thit-kho-tau': 'com-thit-kho-tau',
   'cach-nau-thit-kho-tau': 'com-thit-kho-tau',
   'nem-nuong-nha-trang': 'nem-nuong-nha-trang-cuon',
