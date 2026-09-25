@@ -54,6 +54,7 @@ import {
   DEFAULT_TRAY_IMAGE,
   getTrayIngredients,
 } from '../data/dailyMenus';
+import { getCurrentDayId } from '../utils/mealPlanner';
 import {
   getDishRecipe,
   getRecipeSlug,
@@ -385,6 +386,9 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
     setSectionTab(sub);
     setViewingRecipeArticle(false);
     setRecipeReturnSource(null);
+    if (sub === 'daily') {
+      setSelectedDayId(getCurrentDayId());
+    }
     const targetPath = DISCOVER_SUB_CONFIG[sub].path;
     if (window.location.pathname !== targetPath) {
       window.history.pushState({ tab: 'discover', sub }, '', targetPath);
@@ -418,9 +422,14 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
     updateRegionSEO(regionId);
   };
 
-  // Sub-state for Daily Menus
-  const [selectedDayId, setSelectedDayId] = useState<string>('t2');
-  const [mealSlotTab, setMealSlotTab] = useState<'lunch' | 'dinner'>('dinner');
+  // Sub-state for Daily Menus - Tự động nhận diện thứ trong ngày hôm nay & bữa trưa/tối
+  const todayDayId = useMemo(() => getCurrentDayId(), []);
+  const [selectedDayId, setSelectedDayId] = useState<string>(() => getCurrentDayId());
+  const [mealSlotTab, setMealSlotTab] = useState<'lunch' | 'dinner'>(() => {
+    if (typeof window === 'undefined') return 'lunch';
+    const hour = new Date().getHours();
+    return hour >= 14 ? 'dinner' : 'lunch';
+  });
   const [checkedIngredients, setCheckedIngredients] = useState<Record<string, boolean>>({});
   const [copiedIngredientsToast, setCopiedIngredientsToast] = useState(false);
 
@@ -1330,26 +1339,44 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
           <div className="space-y-6">
             {/* Day Pills */}
             <div className="grid grid-cols-4 sm:grid-cols-7 gap-2">
-                {DAILY_DAY_MENUS.map((day) => (
-                  <button
-                    key={day.id}
-                    onClick={() => setSelectedDayId(day.id)}
-                    className={`p-3 rounded-2xl text-center border transition-all cursor-pointer ${
-                      selectedDayId === day.id
-                        ? 'bg-orange-600 text-white border-orange-600 shadow-sm scale-[1.02]'
-                        : 'bg-white text-stone-700 border-stone-200 hover:border-orange-300 hover:bg-orange-50/40'
-                    }`}
-                  >
-                    <div className="font-extrabold text-sm sm:text-base">{day.dayName}</div>
-                    <div
-                      className={`text-[10px] truncate ${
-                        selectedDayId === day.id ? 'text-orange-100' : 'text-stone-500'
+                {DAILY_DAY_MENUS.map((day) => {
+                  const isToday = day.id === todayDayId;
+                  const isSelected = selectedDayId === day.id;
+                  return (
+                    <button
+                      key={day.id}
+                      type="button"
+                      onClick={() => setSelectedDayId(day.id)}
+                      className={`relative p-3 rounded-2xl text-center border transition-all cursor-pointer ${
+                        isSelected
+                          ? 'bg-orange-600 text-white border-orange-600 shadow-sm scale-[1.02]'
+                          : isToday
+                          ? 'bg-orange-50/80 text-orange-950 border-orange-300 font-bold hover:bg-orange-100/70'
+                          : 'bg-white text-stone-700 border-stone-200 hover:border-orange-300 hover:bg-orange-50/40'
                       }`}
                     >
-                      {day.estimatedTotalCalories}
-                    </div>
-                  </button>
-                ))}
+                      {isToday && (
+                        <span
+                          className={`absolute -top-2 right-2 text-[9px] font-black px-1.5 py-0.5 rounded-full shadow-xs uppercase tracking-wider ${
+                            isSelected
+                              ? 'bg-amber-300 text-orange-950'
+                              : 'bg-orange-600 text-white'
+                          }`}
+                        >
+                          Hôm nay
+                        </span>
+                      )}
+                      <div className="font-extrabold text-sm sm:text-base">{day.dayName}</div>
+                      <div
+                        className={`text-[10px] truncate ${
+                          isSelected ? 'text-orange-100' : isToday ? 'text-orange-700 font-semibold' : 'text-stone-500'
+                        }`}
+                      >
+                        {day.estimatedTotalCalories}
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
 
               {/* Day Menu Detail */}
@@ -1358,6 +1385,11 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                   <div>
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-orange-100 text-orange-800 text-xs font-bold mb-2">
                       <span>{currentDayMenu.dayName}</span>
+                      {currentDayMenu.id === todayDayId && (
+                        <span className="px-1.5 py-0.5 rounded bg-orange-600 text-white text-[10px] font-black uppercase tracking-wider">
+                          Hôm nay
+                        </span>
+                      )}
                       <span>•</span>
                       <span>{currentDayMenu.estimatedTotalCalories}</span>
                     </div>

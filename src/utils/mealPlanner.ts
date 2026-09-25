@@ -63,8 +63,27 @@ export const MEAL_PRESETS: MealPreset[] = [
 ];
 
 export function getCurrentDayId(): 't2' | 't3' | 't4' | 't5' | 't6' | 't7' | 'cn' {
-  if (typeof window === 'undefined') return 't2';
-  const day = new Date().getDay();
+  const date = new Date();
+  let day: number;
+  try {
+    const vnWeekday = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Ho_Chi_Minh',
+      weekday: 'short',
+    }).format(date);
+    const dayMap: Record<string, number> = {
+      Sun: 0,
+      Mon: 1,
+      Tue: 2,
+      Wed: 3,
+      Thu: 4,
+      Fri: 5,
+      Sat: 6,
+    };
+    day = dayMap[vnWeekday] ?? date.getDay();
+  } catch {
+    day = date.getDay();
+  }
+
   if (day === 0) return 'cn';
   if (day === 1) return 't2';
   if (day === 2) return 't3';
