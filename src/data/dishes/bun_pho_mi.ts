@@ -518,7 +518,7 @@ export const BUN_PHO_MI_DISHES: Dish[] = [
     estimatedPrice: 40000,
     calories: '450 - 540 kcal',
     description: 'Cá lóc đồng luộc gỡ thịt ướp củ nén cay thơm, sợi bột gạo nhồi tay thơm mùi nắng gió miền Trung nắng rát.',
-    image: '/images/banh_canh_ca_loc.jpg',
+    image: '/images/banh_canh_ca_loc.jpg?v=2',
     popularTags: ['Cá lóc đồng', 'Củ nén cay', 'Quảng Trị'],
     searchKeyword: 'Bánh canh cá lóc',
   },
