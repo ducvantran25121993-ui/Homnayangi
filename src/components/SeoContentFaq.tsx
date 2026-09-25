@@ -2892,7 +2892,7 @@ export const SeoContentFaq: React.FC<{
                   </h4>
                 </div>
                 <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
-                  Trọng tâm của bữa trưa và bữa tối gia đình: Cơm tấm sườn bì chả, cơm gà Hội An, cơm niêu cá kho tộ, xôi xéo gà xé, xôi khúc bùi béo dẻo thơm.
+                  Trọng tâm của bữa trưa và bữa tối gia đình: Cơm tấm sườn bì chả, cơm gà Hội An, cơm niêu cá kho tộ, xôi xéo gà xé, xôi pate lạp xưởng trứng cút béo ngậy.
                 </p>
               </div>
 

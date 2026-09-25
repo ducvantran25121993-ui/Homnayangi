@@ -233,7 +233,15 @@ export function isMealFoodDish(d?: Dish | null): boolean {
     'chè',
     'hoa cau',
     'khoai lang lắc',
+    'bánh khúc',
+    'xôi khúc',
+    'khúc',
+    'khuc',
   ];
+
+  if (d.id && (d.id.includes('khuc') || d.id.includes('banh-khuc') || d.id.includes('xoi-khuc'))) {
+    return false;
+  }
 
   if (
     excludedKeywords.some(
@@ -411,16 +419,29 @@ export function getAllStoredPlans(): Record<string, WeeklyMealPlan> {
   try {
     const raw = localStorage.getItem(MULTI_WEEK_STORAGE_KEY);
     if (raw) {
-      return JSON.parse(raw);
+      const parsed: Record<string, WeeklyMealPlan> = JSON.parse(raw);
+      let anyModified = false;
+      for (const key of Object.keys(parsed)) {
+        const { plan, modified } = sanitizePlanFoodOnly(parsed[key]);
+        if (modified) {
+          parsed[key] = plan;
+          anyModified = true;
+        }
+      }
+      if (anyModified) {
+        localStorage.setItem(MULTI_WEEK_STORAGE_KEY, JSON.stringify(parsed));
+      }
+      return parsed;
     }
     // Fallback: migrate legacy single-plan storage
     const legacyRaw = localStorage.getItem(LEGACY_STORAGE_KEY);
     if (legacyRaw) {
       const parsedLegacy = JSON.parse(legacyRaw);
       const currentWeek = getWeekInfo(0);
+      const { plan } = sanitizePlanFoodOnly(parsedLegacy);
       const initialMap: Record<string, WeeklyMealPlan> = {
         [currentWeek.weekKey]: {
-          ...parsedLegacy,
+          ...plan,
           weekKey: currentWeek.weekKey,
           weekLabel: currentWeek.label,
         },
@@ -450,7 +471,7 @@ export function saveStoredPlan(plan: WeeklyMealPlan): void {
 
 /**
  * Sanitizes an existing meal plan to ensure NO drinks/beverages exist in any slot.
- * Automatically replaces any beverage with a suitable food dish from that slot.
+ * Automatically replaces any beverage or invalid/banned dish with a suitable food dish from that slot.
  */
 export function sanitizePlanFoodOnly(plan: WeeklyMealPlan): {
   plan: WeeklyMealPlan;
@@ -465,15 +486,53 @@ export function sanitizePlanFoodOnly(plan: WeeklyMealPlan): {
     const day = { ...newDays[dayId] };
     const slots: MealSlot[] = ['breakfast', 'lunch', 'dinner'];
     for (const slot of slots) {
-      let dish = day[slot];
-      if (!dish || !isMealFoodDish(dish)) {
-        // Exclude currently used dish IDs to avoid in-week duplicates
-        const replacement = getRandomDishForSlot(
-          slot,
-          plan.presetKey || 'balanced',
-          currentDishIds,
-          []
-        );
+      const dish = day[slot];
+      const freshDish = dish?.id ? INITIAL_DISHES.find((d) => d.id === dish.id) : null;
+      const dishName = (dish?.name || '').toLowerCase();
+      const dishDesc = (dish?.description || '').toLowerCase();
+      const dishId = (dish?.id || '').toLowerCase();
+
+      const isBannedOrInvalid =
+        !dish ||
+        !freshDish ||
+        !isMealFoodDish(freshDish) ||
+        dishName.includes('khúc') ||
+        dishName.includes('khuc') ||
+        dishDesc.includes('lá khúc') ||
+        dishDesc.includes('thịt mỡ trong veo') ||
+        dishId.includes('khuc') ||
+        dishId.includes('banh-khuc') ||
+        dishId.includes('xoi-khuc');
+
+      if (isBannedOrInvalid) {
+        let replacement: Dish | null = null;
+        // If Friday dinner specifically was Bánh Khúc, pick a premium Friday dinner option
+        if (dayId === 't6' && slot === 'dinner') {
+          const preferredFridayDinners = [
+            'bun-cha-ha-noi',
+            'com-nieu-ca-kho-to',
+            'bo-luc-lac-khoai-tay',
+            'lau-ga-la-e',
+            'pho-bo-tai-lan',
+            'com-tam-suon-bi-cha',
+          ];
+          const candidateId = preferredFridayDinners.find(
+            (id) => !currentDishIds.includes(id) && INITIAL_DISHES.some((d) => d.id === id)
+          );
+          if (candidateId) {
+            replacement = INITIAL_DISHES.find((d) => d.id === candidateId) || null;
+          }
+        }
+
+        if (!replacement) {
+          replacement = getRandomDishForSlot(
+            slot,
+            plan.presetKey || 'balanced',
+            currentDishIds,
+            []
+          );
+        }
+
         if (replacement) {
           day[slot] = replacement;
           currentDishIds.push(replacement.id);
@@ -481,9 +540,16 @@ export function sanitizePlanFoodOnly(plan: WeeklyMealPlan): {
         }
       } else {
         // Ensure image and metadata stay in sync with latest INITIAL_DISHES catalogue
-        const freshDish = INITIAL_DISHES.find((d) => d.id === dish.id);
-        if (freshDish && (dish.image !== freshDish.image || dish.vietnameseName !== freshDish.vietnameseName)) {
-          day[slot] = { ...dish, image: freshDish.image, vietnameseName: freshDish.vietnameseName };
+        if (
+          freshDish &&
+          (dish.image !== freshDish.image ||
+            dish.vietnameseName !== freshDish.vietnameseName ||
+            dish.name !== freshDish.name ||
+            dish.description !== freshDish.description ||
+            dish.calories !== freshDish.calories ||
+            dish.estimatedPrice !== freshDish.estimatedPrice)
+        ) {
+          day[slot] = { ...freshDish };
           modified = true;
         }
       }
