@@ -123,7 +123,7 @@ export const LAU_CHAO_DISHES: Dish[] = [
     estimatedPrice: 220000,
     calories: '720 - 920 kcal',
     description: 'Thịt đùi ếch đồng xào săn da vàng giòn đượm tỏi ớt sa tế, thả vào nồi nước dùng măng cay chua thanh kích thích vị giác, ăn kèm váng đậu và bún tươi.',
-    image: '/images/lau_ech_mang_cay.jpg',
+    image: '/images/lau_ech_mang_cay.jpg?v=2',
     popularTags: ['Lẩu ếch măng cay', 'Đùi ếch vàng', 'Măng chua giòn', 'Tụ tập cuối tuần'],
     searchKeyword: 'Lẩu ếch măng cay',
   },

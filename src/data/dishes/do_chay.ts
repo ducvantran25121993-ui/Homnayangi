@@ -151,7 +151,7 @@ export const DO_CHAY_DISHES: Dish[] = [
     estimatedPrice: 150000,
     calories: '550 - 700 kcal',
     description: 'Nồi lẩu sôi sùng sục nghi ngút khói với hơn 6 loại nấm quý: nấm đông cô, nấm linh chi, nấm đùi gà, bào ngư hòa quyện nước hầm táo đỏ hạt sen.',
-    image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?w=800&auto=format&fit=crop&q=80',
+    image: '/images/lau_nam_chay.jpg?v=2',
     popularTags: ['Nấm quý bổ dưỡng', 'Nồi lẩu ấm cúng', 'Hạt sen táo đỏ'],
     searchKeyword: 'Lẩu nấm chay',
   },

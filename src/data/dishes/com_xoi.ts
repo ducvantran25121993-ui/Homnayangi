@@ -84,7 +84,7 @@ export const COM_XOI_DISHES: Dish[] = [
     estimatedPrice: 50000,
     calories: '620 - 720 kcal',
     description: 'Màu sắc bắt mắt từ lạp xưởng mai quế lộ, tôm khô, đậu Hà Lan, cà rốt và hạt cơm vàng óng ánh trứng.',
-    image: '/images/com_chien_duong_chau.jpg',
+    image: '/images/com_chien_duong_chau.jpg?v=2',
     popularTags: ['Món Hoa', 'Thập cẩm', 'Quen thuộc'],
     searchKeyword: 'Cơm chiên dương châu',
     bestPairedWith: 'Xì dầu tỏi ớt xắt, dưa leo & súp trứng',

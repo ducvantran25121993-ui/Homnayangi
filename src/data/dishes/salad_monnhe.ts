@@ -25,7 +25,7 @@ export const SALAD_MONNHE_DISHES: Dish[] = [
     estimatedPrice: 55000,
     calories: '350 - 430 kcal',
     description: 'Thịt cá ngừ đại dương tươi mềm quyện hạt ngô ngọt giòn sần sật, dưa leo tươi mát và sốt mayonnaise chua dịu thanh nhẹ.',
-    image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=800&auto=format&fit=crop&q=80',
+    image: '/images/salad_ca_ngu_ngo_ngot.jpg?v=2',
     popularTags: ['Cá ngừ thơm', 'Ngô ngọt giòn', 'Dễ ăn'],
     searchKeyword: 'Salad cá ngừ ngô ngọt',
   },
