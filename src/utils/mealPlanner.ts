@@ -502,7 +502,9 @@ export function sanitizePlanFoodOnly(plan: WeeklyMealPlan): {
         dishDesc.includes('thịt mỡ trong veo') ||
         dishId.includes('khuc') ||
         dishId.includes('banh-khuc') ||
-        dishId.includes('xoi-khuc');
+        dishId.includes('xoi-khuc') ||
+        dishId.includes('tu-xuyen') ||
+        dishName.includes('tứ xuyên');
 
       if (isBannedOrInvalid) {
         let replacement: Dish | null = null;

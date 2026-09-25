@@ -190,6 +190,69 @@ function parseCaloriesToNumber(calStr: string | undefined): number {
   return 420;
 }
 
+/**
+ * Normalizes and formats recipe ingredients specifically for Schema.org JSON-LD.
+ * Prevents Google Search Console "Invalid string length in field 'recipeIngredient'" error:
+ * - Excludes non-food equipment/utensils (e.g. "Dụng cụ:", "Thiết bị:")
+ * - Strips leading label prefixes (e.g. "Gia vị trộn: ")
+ * - Splits compound ingredients joined by "+" or ";" into separate atomic ingredients
+ * - Removes excessive parenthetical descriptions
+ * - Strictly caps item length under 75 characters
+ */
+function formatRecipeIngredientsForSchema(
+  ingredients?: Array<{ category: string; items: string[] }>
+): string[] {
+  if (!ingredients || !Array.isArray(ingredients)) return [];
+  const result: string[] = [];
+
+  for (const cat of ingredients) {
+    if (!cat.items || !Array.isArray(cat.items)) continue;
+    for (const rawItem of cat.items) {
+      if (!rawItem || typeof rawItem !== 'string') continue;
+      const lower = rawItem.toLowerCase().trim();
+
+      // Exclude non-food tools, utensils, or instruction-like equipment notes
+      if (
+        lower.startsWith('dụng cụ') ||
+        lower.startsWith('thiết bị') ||
+        lower.startsWith('chậu nước đá') ||
+        lower.startsWith('bí quyết')
+      ) {
+        continue;
+      }
+
+      // Remove leading label prefixes (e.g. "Gia vị ướp nhân: ", "Bát tương Bần: ", etc.)
+      let cleaned = rawItem.replace(/^[A-ZÀ-Ỹa-zà-ỹ0-9\s/&,–-]{2,40}:\s*/, '');
+
+      // Split multiple ingredients joined by '+' or ';'
+      const parts = cleaned.includes(' + ')
+        ? cleaned.split(/\s+\+\s+/)
+        : cleaned.includes('; ')
+        ? cleaned.split(/;\s+/)
+        : [cleaned];
+
+      for (let part of parts) {
+        let trimmed = part.trim();
+        // Remove long parenthetical remarks if string is long (> 50 chars)
+        if (trimmed.length > 50 && trimmed.includes('(')) {
+          trimmed = trimmed.replace(/\s*\([^)]*\)/g, '').trim();
+        }
+        // Normalize any internal whitespace
+        trimmed = trimmed.replace(/\s+/g, ' ');
+        // Strict cap at 75 chars to guarantee compliance with Google Search Console
+        if (trimmed.length > 75) {
+          trimmed = trimmed.slice(0, 72).trim() + '...';
+        }
+        if (trimmed.length > 0 && !result.includes(trimmed)) {
+          result.push(trimmed);
+        }
+      }
+    }
+  }
+
+  return result;
+}
+
 interface RecipeNavigationSource {
   path: string;
   sectionTab: DiscoverSubSection;
@@ -2450,7 +2513,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                         "bestRating": "5",
                         "worstRating": "1"
                       },
-                      "recipeIngredient": currentRecipe.ingredients.flatMap((cat) => cat.items),
+                      "recipeIngredient": formatRecipeIngredientsForSchema(currentRecipe.ingredients),
                       "recipeInstructions": currentRecipe.steps.map((st) => ({
                         "@type": "HowToStep",
                         "position": st.step,
