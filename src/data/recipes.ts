@@ -3465,6 +3465,126 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
     recommendedSauce:
       'Chén nước mắm cốt nhĩ nguyên chất dầm ớt hiểm cay xé lưỡi vắt chút quất thơm, kèm một đĩa muối tiêu chanh ớt và sa tế tôm tự chưng cay nồng.',
   },
+  'mien-luon-gion-xao-lan': {
+    dishId: 'mien-luon-gion-xao-lan',
+    dishName: 'Miến Lươn Giòn Nước Dùng Hà Nội',
+    seoTitle: 'Cách Nấu Miến Lươn Giòn Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình',
+    prepTime: '30 - 40 phút (tuốt nhớt lươn, lọc xương & ướp)',
+    cookTime: '45 - 50 phút (ninh nước dùng xương lươn & chiên lươn 2 lửa giòn rụm)',
+    difficulty: 'Trung bình',
+    servings: '4 - 5 người ăn',
+    ingredients: [
+      {
+        category: 'Lươn đồng & Kỹ thuật tẩm bột chiên giòn tan',
+        items: [
+          '700g - 800g lươn đồng tươi sống (chọn lươn hoa loại vừa, lưng đen bụng vàng óng, thịt chắc ngọt thơm)',
+          'Khử nhớt & khử tanh: 2 nắm muối hạt to, nước cốt 2 quả chanh tươi (hoặc giấm bỗng nếp), khăn sạch lau khô',
+          'Gia vị ướp lươn: 1 thìa cà phê bột nghệ vàng nguyên chất (lấy màu vàng ươm), 1 thìa cà phê tiêu sọ xay mịn, 1/2 thìa cà phê hạt nêm, 1 thìa canh nước cốt gừng tỏi chắt lọc',
+          'Lớp áo bột chiên giòn 2 lửa: 100g bột chiên giòn mịn pha cùng 30g bột bắp (hoặc bột năng) tạo độ giòn xốp lâu rụm',
+          'Dầu ăn ngập chảo để chiên sâu (deep-fry)',
+        ],
+      },
+      {
+        category: 'Nước dùng thanh ngọt sâu từ xương lươn & xương heo',
+        items: [
+          'Toàn bộ đầu và xương sống của lươn sau khi lọc thịt (linh hồn tạo vị ngọt thanh sâu, thơm ngát đặc trưng)',
+          '400g xương ống heo hoặc xương bay (chần sạch ninh cùng giúp nước lèo đậm đà tròn vị)',
+          '4 củ hành tím khô nướng thơm bóc vỏ đập dập',
+          '1 củ gừng tươi nướng thơm cạo sạch đập dập',
+          '2 nhánh đầu hành trắng hoặc 1 củ hành tây nhỏ',
+          'Gia vị nồi nước lèo: Nước mắm cốt truyền thống nguyên chất, muối hạt tinh, 1 viên nhỏ đường phèn (giúp vị ngọt dịu êm, không dùng đường cát gắt vị)',
+        ],
+      },
+      {
+        category: 'Miến dong & Rau gia vị ăn kèm chuẩn vị',
+        items: [
+          '350g miến dong ta (chọn miến dong sợi xám tro hoặc trắng ngà tự nhiên, dai ngon không bị bở nát)',
+          '200g giá đỗ tươi sạch, thân mập giòn ngọt',
+          '1 nắm lớn rau răm tươi non (linh hồn không thể thiếu của miến lươn, cay ấm cân bằng tính hàn của lươn)',
+          '1 nắm hành hoa (hành lá) và rau ngò gai (mùi tàu) thái nhỏ, đầu hành hoa chẻ sợi',
+          '3 - 4 củ hành khô thái mỏng phi vàng giòn rụm',
+          'Đồ ăn kèm: Ớt chưng sa tế cay nồng, quất tươi (hoặc chanh), ớt hiểm tươi thái lát và tiêu sọ xay thơm nức',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế lươn sạch bong nhớt, lọc phi lê và xương lươn không tanh',
+        time: '15 - 20 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Lươn sạch bong nhớt hoàn toàn, thịt lươn khô ráo đỏ tươi, giữ trọn vẹn xương và đầu để nấu nước dùng',
+        actionPoints: [
+          'Cho lươn vào nồi sâu lòng, rắc 2 nắm muối hạt to và vắt 2 quả chanh (hoặc đổ chút giấm bỗng), đậy chặt vung 3 - 5 phút cho lươn quẫy tự nhả sạch nhớt.',
+          'Dùng khăn vải khô hoặc lá tre vuốt mạnh dọc thân từ đầu đến đuôi để tuốt sạch toàn bộ lớp màng nhớt trắng.',
+          'Rửa nhanh lươn qua nước muối loãng, dùng khăn sạch thấm khô ráo hoàn toàn (tuyệt đối không ngâm nước lã sau khi mổ để thịt lươn không bị tanh).',
+          'Cắt rời phần đầu lươn (giữ lại đầu), rạch bụng lấy sạch ruột.',
+          'Dùng dao mỏng bén lạng nhẹ hai bên dọc xương sống để tách lấy 2 dải thịt phi lê lươn dài, giữ lại toàn bộ dải xương sống và đầu lươn để ninh nước dùng.',
+          'Cắt thịt phi lê lươn thành từng miếng dài cỡ ngón tay (khoảng 4 - 5cm), bản dày khoảng 0.8 - 1cm.',
+        ],
+        description:
+          'Tuốt sạch nhớt lươn bằng muối hạt và nước cốt chanh. Thấm khô bằng khăn sạch, mổ bỏ ruột và lạng tách lấy thịt phi lê cùng xương lươn. Cắt thịt lươn thành miếng vừa ăn.',
+        tip: 'Bí quyết nhà nghề là sau khi mổ bỏ ruột chỉ dùng khăn sạch thấm khô máu bầm, tuyệt đối KHÔNG rửa lại bằng nước lã. Nước lã tiếp xúc với thớ thịt lươn sau khi cắt mổ sẽ làm mất vị ngọt tự nhiên và khiến lươn bị tanh nồng.',
+      },
+      {
+        step: 2,
+        title: 'Hầm nồi nước dùng xương lươn ngọt thanh trong vắt',
+        time: '45 - 60 phút',
+        heat: 'Lửa lớn đun sôi rồi hạ liu riu',
+        goal: 'Nước dùng trong veo màu vàng hổ phách nhạt, ngọt đậm sâu tự nhiên từ tủy lươn và xương heo, dậy mùi gừng hành nướng ấm nồng',
+        actionPoints: [
+          'Xương ống heo rửa sạch, chần qua nước sôi 3 phút rồi rửa lại thật sạch dưới vòi nước lạnh.',
+          'Toàn bộ đầu và xương lươn cho vào chảo nhỏ xào săn cùng 1 thìa dầu ăn, chút gừng băm và hành tím phi thơm lừng cho dậy mùi béo ngậy.',
+          'Cho xương heo và xương lươn vào nồi cùng 2.5 - 3 lít nước lọc. Thả hành tím nướng, gừng nướng đập dập và 1 thìa cà phê muối hạt.',
+          'Bật lửa lớn đun sôi bùng, dùng muôi hớt sạch toàn bộ bọt nổi để nước lèo trong vắt. Sau đó hạ lửa liu riu ninh trong 45 - 60 phút.',
+          'Vớt bỏ bã xương lươn và xương heo, lọc nước dùng qua rây dày để thu được nồi nước lèo trong veo không dính vụn xương.',
+          'Nêm nếm: 2 thìa canh nước mắm cốt nhĩ ngon, 1 viên đường phèn nhỏ (cỡ ngón tay cái) để vị ngọt mềm dịu, 1 thìa hạt nêm. Giữ nồi nước lèo luôn sôi nhẹ lăn tăn trên bếp.',
+        ],
+        description:
+          'Xào thơm xương và đầu lươn với gừng hành, cho vào nồi ninh cùng xương ống heo đã chần sạch. Thêm hành gừng nướng, đun sôi hớt bọt rồi ninh liu riu 1 tiếng. Lọc lấy nước dùng trong veo, nêm mắm cốt và đường phèn thanh ngọt.',
+        tip: 'Xương lươn chứa hàm lượng canxi và vị ngọt umami cực kỳ đậm đà. Việc xào thơm xương lươn với gừng hành trước khi ninh giúp triệt tiêu hoàn toàn mùi tanh, đồng thời chiết xuất tối đa vị ngọt thanh khiết đặc trưng.',
+      },
+      {
+        step: 3,
+        title: 'Tẩm ướp và chiên lươn 2 lửa giòn tan rụm vàng óng',
+        time: '20 - 25 phút',
+        heat: 'Lửa vừa (160°C lần 1) & Lửa lớn (180°C - 190°C lần 2)',
+        goal: 'Lươn chiên giòn tan rụm màu vàng nâu óng ánh, thơm nức mùi nghệ tiêu, để lâu vẫn giòn xốp không bị dai ỉu hay ngấm dầu',
+        actionPoints: [
+          'Cho thịt lươn vào tô ướp cùng: 1 thìa cà phê bột nghệ vàng, 1 thìa cà phê tiêu sọ xay mịn, 1/2 thìa cà phê hạt nêm, 1 thìa canh nước cốt gừng tỏi chắt lọc. Trộn đều ướp trong 15 phút cho ngấm gia vị.',
+          'Trộn đều 100g bột chiên giòn với 30g bột bắp. Cho từng mẻ lươn vào âu bột xóc đều tay để bột áo một lớp mỏng tang quanh từng miếng lươn. Sau đó cho lươn qua rây lắc nhẹ để rơi hết bột thừa (tránh làm cháy và đục dầu chiên).',
+          'Chiên lần 1 (định hình & chín thịt): Đun nóng ngập dầu ở nhiệt độ 160°C (thả đầu đũa vào thấy sủi tăm mạnh), thả từng miếng lươn vào chảo (không thả dính chùm). Chiên lửa vừa khoảng 5 - 7 phút đến khi lươn săn cứng lại, ngả màu vàng nhạt thì vớt ra rổ thưa để ráo dầu trong 5 - 10 phút.',
+          'Chiên lần 2 (ép dầu & tạo độ giòn xốp rụm): Tăng nhiệt độ dầu lên 180°C - 190°C (dầu nóng già). Thả lươn đã ráo vào chiên nhanh trong 2 - 3 phút. Lớp vỏ lươn lập tức phồng giòn rôm rốp, chuyển màu vàng nâu cánh gián óng ả. Vớt ra ngay đặt lên khay có lót giấy thấm dầu.',
+        ],
+        description:
+          'Ướp lươn với nghệ, tiêu và nước cốt gừng tỏi. Áo một lớp bột chiên giòn mỏng pha bột bắp rồi rây sạch bột thừa. Chiên 2 lần lửa: lần 1 lửa vừa cho chín se, nghỉ 10 phút, lần 2 chiên lửa lớn giúp lươn giòn tan rụm, vàng ươm và không bị ngấm dầu.',
+        tip: 'Bí quyết vàng để lươn chiên giòn rụm hàng giờ không ỉu chính là kỹ thuật chiên 2 lửa kết hợp bột bắp. Lần 1 làm chín kiệt nước bên trong; nghỉ 10 phút để hơi ẩm thoát ra; lần 2 chiên nhiệt cao giúp bốc hơi hoàn toàn hơi nước bề mặt và đẩy hết dầu thừa ra ngoài.',
+      },
+      {
+        step: 4,
+        title: 'Trần miến dong dẻo dai & Hoàn thiện tô miến lươn nước thanh ngọt',
+        time: '5 - 10 phút',
+        heat: 'Nước lèo sôi sùng sục',
+        goal: 'Tô miến lươn nghi ngút khói, miến dong dai mướt trong veo, lươn giòn rụm nằm trên mặt, nước lèo ngọt thơm nức mũi',
+        actionPoints: [
+          'Miến dong ngâm nước ấm 10 - 15 phút cho sợi miến mềm mại, vớt ra cắt khúc vừa ăn cỡ 15 - 20cm, để ráo.',
+          'Nhúng giá đỗ tươi qua nồi nước sôi trong 10 giây rồi rải đều dưới đáy từng bát tô lớn.',
+          'Cho miến dong vào muôi lưới/vợt trần, nhúng trực tiếp vào nồi nước dùng lươn đang sôi khoảng 30 - 45 giây cho sợi miến chín tới, ngậm trọn vị ngọt đậm đà của nước lèo rồi trút vào bát tô trên lớp giá đỗ.',
+          'Xếp hành hoa, rau răm thái nhỏ và đầu hành chẻ sợi lên trên miến. Rắc một nhúm hành phi vàng giòn rụm thơm nức mũi.',
+          'Gắp một phần lươn giòn rụm đặt gọn gàng ở một góc trên mặt tô (tránh để lươn ngập chìm dưới nước ngay từ đầu để giữ tối đa độ giòn tan).',
+          'Múc nước dùng đang sôi sùng sục chan nhẹ nhàng men theo thành tô ngập xâm xấp mặt miến. Rắc thêm chút tiêu sọ xay mịn lên trên.',
+          'Thưởng thức ngay lập tức khi còn nóng hổi! Vắt thêm chút nước cốt quất tươi hoặc chanh, kèm ớt tươi hoặc ớt sa tế chưng cay tê đầu lưỡi.',
+        ],
+        description:
+          'Trần giá đỗ lót đáy bát, trần miến dong trực tiếp bằng nước dùng lươn cho ngậm vị ngọt rồi cho vào tô. Xếp rau răm, hành hoa, hành phi và lươn chiên giòn lên trên. Chan nước lèo sôi sùng sục, rắc tiêu thơm và thưởng thức ngay.',
+        tip: 'Miến dong nhất định phải trần trực tiếp bằng nước dùng lươn thay vì trần nước sôi thường. Sợi miến dong hút nước cực tốt, khi nở trong nước dùng sẽ hút no vị ngọt tủy xương đậm đà từ sâu bên trong từng sợi miến!',
+      },
+    ],
+    chefSecret:
+      '4 bí quyết vàng nấu Miến Lươn Giòn nước dùng thanh ngọt chuẩn vị: 1. Tuốt sạch nhớt lươn bằng muối hạt và nước cốt chanh, lau khô bằng khăn sạch và tuyệt đối không rửa lại bằng nước lã sau khi mổ; 2. Đừng bỏ đầu và xương lươn: Sao thơm xương lươn với gừng hành nướng rồi ninh lấy nước dùng là linh hồn tạo vị ngọt sâu thanh khiết đặc trưng; 3. Kỹ thuật chiên lươn 2 lửa: Lần 1 chiên lửa vừa cho chín se kiệt nước, nghỉ 10 phút, lần 2 chiên lửa lớn giòn rụm vàng ruộm, giúp miếng lươn giòn tan dù chan nước dùng vẫn giữ trọn độ giòn rôm rốp; 4. Rau răm và quất tươi là cặp đôi hoàn hảo cân bằng tính hàn của lươn, mang lại hương vị thơm ấm nồng nàn chuẩn vị Hà Nội.',
+    recommendedSauce:
+      'Ớt chưng sa tế cay nồng, quất tươi Hà Nội (hoặc chanh tươi), vài lát ớt hiểm và chén nước mắm nhĩ ngon rắc tiêu sọ xay mịn.',
+  },
 };
 
 /**
@@ -4244,6 +4364,13 @@ export const RECIPE_SLUG_ALIASES: Record<string, string> = {
   'cach-nau-lau-rieu-cua-bap-bo-chua-cay': 'lau-rieu-cua-bap-bo',
   'lau-rieu-cua-bap-bo-suon-sun': 'lau-rieu-cua-bap-bo',
   'cach-nau-lau-rieu-cua-bap-bo-suon-sun': 'lau-rieu-cua-bap-bo',
+  'mien-luon': 'mien-luon-gion-xao-lan',
+  'mien-luon-gion': 'mien-luon-gion-xao-lan',
+  'cach-nau-mien-luon': 'mien-luon-gion-xao-lan',
+  'cach-nau-mien-luon-gion': 'mien-luon-gion-xao-lan',
+  'cach-nau-mien-luon-gion-nuoc-dung': 'mien-luon-gion-xao-lan',
+  'cach-nau-mien-luon-gion-nuoc-dung-thanh-ngot': 'mien-luon-gion-xao-lan',
+  'cach-nau-mien-luon-gion-xao-lan': 'mien-luon-gion-xao-lan',
 };
 
 /**
