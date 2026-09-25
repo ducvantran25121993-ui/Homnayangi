@@ -280,7 +280,7 @@ export const WHEEL_PRESETS: WheelPreset[] = [
   {
     id: 'do_chay_theme',
     name: 'Đồ Chay Thanh Tịnh',
-    badge: '16 Món Thanh Khiết',
+    badge: '15 Món Thanh Khiết',
     group: 'themes',
     iconName: 'Leaf',
     items: [
@@ -292,7 +292,6 @@ export const WHEEL_PRESETS: WheelPreset[] = [
       'Bún chả giò chay rau sống',
       'Cơm chiên nấm hạt sen',
       'Cơm niêu nấm rơm kho quẹt chay',
-      'Đậu hũ sốt cà nấm hương',
       'Canh chua nấm đậu bắp',
       'Bánh xèo nấm chay giòn rụm',
       'Lẩu nấm chay thập cẩm',

@@ -504,7 +504,9 @@ export function sanitizePlanFoodOnly(plan: WeeklyMealPlan): {
         dishId.includes('banh-khuc') ||
         dishId.includes('xoi-khuc') ||
         dishId.includes('tu-xuyen') ||
-        dishName.includes('tứ xuyên');
+        dishName.includes('tứ xuyên') ||
+        dishId.includes('sot-ca-nam') ||
+        dishName.includes('lướt ván');
 
       if (isBannedOrInvalid) {
         let replacement: Dish | null = null;
