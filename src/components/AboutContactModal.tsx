@@ -183,7 +183,7 @@ export const AboutContactModal: React.FC<AboutContactModalProps> = ({
             ) : (
               <div className="space-y-4">
                 {/* Contact channels card */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                   <div className="p-3 rounded-xl bg-stone-50 border border-stone-200/80 flex flex-col items-center text-center">
                     <Mail className="w-4 h-4 text-orange-600 mb-1" />
                     <span className="text-[11px] font-bold text-stone-800">Email</span>
@@ -197,7 +197,7 @@ export const AboutContactModal: React.FC<AboutContactModalProps> = ({
 
                   <div className="p-3 rounded-xl bg-stone-50 border border-stone-200/80 flex flex-col items-center text-center">
                     <Phone className="w-4 h-4 text-emerald-600 mb-1" />
-                    <span className="text-[11px] font-bold text-stone-800">Hotline / Zalo</span>
+                    <span className="text-[11px] font-bold text-stone-800">Hotline</span>
                     <a
                       href="tel:0385522474"
                       className="text-[11px] text-stone-500 hover:text-emerald-600 font-medium"
@@ -206,10 +206,25 @@ export const AboutContactModal: React.FC<AboutContactModalProps> = ({
                     </a>
                   </div>
 
+                  <div className="p-3 rounded-xl bg-sky-50/70 border border-sky-200/80 flex flex-col items-center text-center">
+                    <div className="w-4 h-4 rounded-full bg-[#0068FF] text-white flex items-center justify-center text-[8px] font-black mb-1">
+                      Z
+                    </div>
+                    <span className="text-[11px] font-bold text-stone-800">Zalo Chat</span>
+                    <a
+                      href="https://zalo.me/0385522474"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[11px] text-[#0068FF] hover:underline font-semibold"
+                    >
+                      038 5522 474
+                    </a>
+                  </div>
+
                   <div className="p-3 rounded-xl bg-stone-50 border border-stone-200/80 flex flex-col items-center text-center">
                     <MapPin className="w-4 h-4 text-blue-600 mb-1" />
                     <span className="text-[11px] font-bold text-stone-800">Phạm vi</span>
-                    <span className="text-[11px] text-stone-500">Toàn quốc (63 tỉnh thành)</span>
+                    <span className="text-[11px] text-stone-500">Toàn quốc (63 tỉnh)</span>
                   </div>
                 </div>
 

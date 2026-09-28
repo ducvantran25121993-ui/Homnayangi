@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Mail,
   Phone,
+  PhoneCall,
   MapPin,
   Clock,
   Send,
@@ -98,22 +99,62 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onNavigate }) => {
                 </div>
               </div>
 
-              <div className="flex items-start gap-3 p-3 rounded-2xl bg-emerald-50/60 border border-emerald-100/80">
-                <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0">
-                  <Phone className="w-4 h-4" />
+              {/* Hotline Tư Vấn */}
+              <div className="flex items-start gap-3 p-3 rounded-2xl bg-emerald-50/70 border border-emerald-100/90 hover:border-emerald-300 transition-all">
+                <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <PhoneCall className="w-4 h-4" />
                 </div>
-                <div>
-                  <span className="text-[11px] font-bold text-stone-500 uppercase tracking-wider block">
-                    Hotline & Zalo Hỗ Trợ
-                  </span>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-1">
+                    <span className="text-[11px] font-bold text-emerald-800 uppercase tracking-wider">
+                      Hotline Hỗ Trợ
+                    </span>
+                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100/80 px-2 py-0.5 rounded-full">
+                      8h00 - 18h00
+                    </span>
+                  </div>
                   <a
                     href="tel:0385522474"
-                    className="font-bold text-stone-900 hover:text-emerald-600 transition-colors"
+                    className="font-extrabold text-stone-900 hover:text-emerald-600 transition-colors text-sm sm:text-base inline-flex items-center gap-2 mt-0.5"
                   >
-                    038 5522 474
+                    <span>038 5522 474</span>
+                    <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-md hover:bg-emerald-200 transition-colors">
+                      Gọi ngay
+                    </span>
                   </a>
                   <p className="text-[11px] text-stone-500 mt-0.5">
-                    Hỗ trợ nhanh trong giờ hành chính (8h00 - 18h00)
+                    Hỗ trợ nhanh qua cuộc gọi trong giờ hành chính các ngày trong tuần
+                  </p>
+                </div>
+              </div>
+
+              {/* Zalo Hỗ Trợ Trực Tuyến */}
+              <div className="flex items-start gap-3 p-3 rounded-2xl bg-sky-50/70 border border-sky-100/90 hover:border-sky-300 transition-all">
+                <div className="w-9 h-9 rounded-xl bg-[#0068FF] text-white flex items-center justify-center shrink-0 shadow-xs font-black text-xs tracking-tighter">
+                  <span>Zalo</span>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-1">
+                    <span className="text-[11px] font-bold text-sky-800 uppercase tracking-wider">
+                      Zalo Hỗ Trợ & Hợp Tác
+                    </span>
+                    <span className="text-[10px] font-bold text-sky-700 bg-sky-100/80 px-2 py-0.5 rounded-full">
+                      Online 24/7
+                    </span>
+                  </div>
+                  <a
+                    href="https://zalo.me/0385522474"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-extrabold text-stone-900 hover:text-[#0068FF] transition-colors text-sm sm:text-base inline-flex items-center gap-2 mt-0.5"
+                  >
+                    <span>038 5522 474</span>
+                    <span className="text-[10px] font-bold text-white bg-[#0068FF] hover:bg-blue-600 px-2 py-0.5 rounded-md transition-colors inline-flex items-center gap-0.5 shadow-xs">
+                      Chat Zalo ↗
+                    </span>
+                  </a>
+                  <p className="text-[11px] text-stone-500 mt-0.5">
+                    Nhắn tin trao đổi, gửi ảnh thực đơn & đối tác nhà hàng nhanh chóng
                   </p>
                 </div>
               </div>
