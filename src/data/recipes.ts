@@ -1553,6 +1553,115 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
       'Chí chương Hải Phòng (tương ớt cay lên men gia truyền Hải Phòng) cay xè đặc trưng.',
   },
 
+  'banh-mi-cha-ca-nong': {
+    dishId: 'banh-mi-cha-ca-nong',
+    dishName: 'Bánh Mì Chả Cá Nóng Thì Là Nha Trang',
+    seoTitle: 'Cách Làm Bánh Mì Chả Cá Giòn Rụm, Đậm Đà Chuẩn Vị Đường Phố',
+    prepTime: '20 phút',
+    cookTime: '15 phút',
+    difficulty: 'Dễ',
+    servings: '4 - 5 ổ bánh mì',
+    ingredients: [
+      {
+        category: 'Vỏ bánh mì & Chả cá nóng giòn',
+        items: [
+          '4 - 5 ổ bánh mì Việt Nam vỏ mỏng, ruột xốp (nướng lại giòn rụm trước khi kẹp)',
+          '400g chả cá biển tươi (chả cá thu, cá nhồng, cá mối hoặc cá basa đã quết dai dẻo)',
+          '1 nắm rau thì là và hành lá rửa sạch thái nhỏ (tăng độ thơm và khử sạch mùi tanh của cá)',
+          'Gia vị ướp chả cá: 1 thìa canh nước mắm nhĩ, 1 thìa cà phê tiêu sọ đập dập cay thơm, 1/2 thìa cà phê đường, 1 củ tỏi và 2 củ hành tím băm nhuyễn, 1 thìa canh dầu màu điều',
+          'Dầu ăn để chiên ngập dầu',
+        ],
+      },
+      {
+        category: 'Nước sốt tỏi ớt kẹo sền sệt (Linh hồn bánh mì chả cá)',
+        items: [
+          '2 thìa canh nước mắm cốt truyền thống thơm ngon',
+          '2 thìa canh đường vàng (hoặc đường thốt nốt giúp sốt sánh keo)',
+          '1.5 thìa canh nước cốt tắc (quất) hoặc nước cốt chanh thanh dịu',
+          '1 thìa canh tương ớt rim kiểu miền Trung (hoặc tương ớt Cholimex)',
+          '1 củ tỏi cô đơn băm nhuyễn, 2 quả ớt hiểm và ớt sừng đỏ băm nhỏ, 1 thìa canh nước lọc',
+        ],
+      },
+      {
+        category: 'Rau thơm & Đồ chua ăn kèm chuẩn vị',
+        items: [
+          '1 mớ rau răm tươi non - loại rau thơm "linh hồn" không thể thiếu của bánh mì chả cá, tạo vị cay nồng ấm át sạch mùi tanh',
+          '1 củ cà rốt và củ cải trắng bào sợi ngâm giấm đường chua ngọt giòn rụm',
+          '1 quả dưa leo rửa sạch, xắt thanh dài mỏng',
+          'Ớt sừng xắt lát mỏng hoặc chút tiêu đen xay rắc lên mặt',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Quết chả cá dai giòn và chiên phồng nóng hổi tại chỗ',
+        time: '10 phút',
+        heat: 'Lửa vừa chiên ngập dầu',
+        goal: 'Sợi chả cá nở phồng căng bóng, vàng ruộm hai mặt, bên trong dai giòn sần sật bốc khói nghi ngút',
+        actionPoints: [
+          'Cho chả cá xay nhuyễn vào âu, thêm thì là, hành lá, tỏi hành băm, tiêu sọ đập dập, nước mắm và chút dầu màu điều.',
+          'Dùng muỗng quết mạnh tay liên tục theo một chiều trong 5 - 7 phút (hoặc đập chả vào thành âu) để tạo độ dai giòn tự nhiên mà không cần phụ gia.',
+          'Đun sôi chảo dầu ngập mặt ở lửa vừa. Dùng khuôn ép sợi chả cá (hoặc dùng dao khéo gạt từng sợi dài, miếng dẹt) thả thẳng vào chảo dầu đang sôi.',
+          'Chiên trong 3 - 5 phút đến khi sợi chả cá nổi phồng lên mặt dầu, ngả màu vàng ruộm hấp dẫn thì vớt ra rổ inox có lót giấy thấm dầu.',
+        ],
+        description:
+          'Trộn chả cá với thì là, hành tỏi băm, tiêu sọ và nước mắm rồi quết mạnh tay cho dai dẻo. Ép sợi hoặc nặn dẹt thả vào chảo dầu sôi chiên phồng vàng ruộm hai mặt, vớt ra để ráo dầu.',
+        tip: 'Chiên chả cá đến đâu kẹp bánh mì đến đó; ăn ngay khi sợi chả cá vừa vớt ra khỏi chảo dầu còn bỏng tay là chuẩn vị đường phố ngon nhất.',
+      },
+      {
+        step: 2,
+        title: 'Nấu nước sốt tỏi ớt mắm tắc sánh kẹo đậm đà',
+        time: '5 phút',
+        heat: 'Lửa nhỏ liu riu',
+        goal: 'Nước sốt sánh đỏ óng ánh, vị chua cay mặn ngọt bùng nổ, bám đều vào ruột bánh mì',
+        actionPoints: [
+          'Cho vào nồi nhỏ gồm 2 thìa canh nước mắm, 2 thìa canh đường vàng và 1 thìa canh nước lọc.',
+          'Bật lửa nhỏ liu riu, khuấy đều cho đường tan hết và hỗn hợp sôi lăn tăn, hơi sánh kẹo lại như mật ong thì tắt bếp.',
+          'Chờ sốt nguội bớt, cho nước cốt tắc, tương ớt rim, tỏi băm và ớt băm nhuyễn vào khuấy đều.',
+        ],
+        description:
+          'Đun sôi nhẹ nước mắm, đường và chút nước cho tan kẹo lại. Để nguội bớt rồi hòa nước cốt tắc, tương ớt rim, tỏi ớt băm nhuyễn để có phần sốt mắm kẹo chua cay sánh óng ả.',
+        tip: 'Cho nước cốt tắc sau khi tắt bếp để nước sốt giữ được hương thơm thanh tươi của tinh dầu tắc mà không bị đắng.',
+      },
+      {
+        step: 3,
+        title: 'Làm nóng giòn vỏ bánh mì và sơ chế rau dưa',
+        time: '5 phút',
+        heat: '160°C - 180°C',
+        goal: 'Vỏ bánh mì giòn tan phát ra tiếng rôm rốp, rau răm ráo sạch nước',
+        actionPoints: [
+          'Rau răm rửa sạch ngắt lấy ngọn non, vẩy thật ráo nước hoàn toàn (tránh để nước đọng làm ỉu vỏ bánh).',
+          'Dưa leo xắt que dài; đồ chua củ cải cà rốt vắt nhẹ cho ráo nước ngâm.',
+          'Cho ổ bánh mì vào nồi chiên không dầu hoặc lò nướng ở 160°C trong 2 - 3 phút (hoặc áp chảo trên chảo không dính) cho vỏ ngoài giòn rụm.',
+        ],
+        description:
+          'Vẩy ráo nước hoàn toàn cho rau răm và đồ chua. Nướng lại bánh mì trong 2 - 3 phút để vỏ ngoài giòn rụm rôm rốp.',
+      },
+      {
+        step: 4,
+        title: 'Rạch bánh mì, kẹp đầy ắp nhân chả cá và rưới nước sốt',
+        time: '3 phút',
+        heat: 'Thưởng thức ngay',
+        goal: 'Ổ bánh mì đầy đặn, cắn ngập miệng cảm nhận thớ chả cá nóng hổi, vị rau răm thơm nồng và sốt mắm kẹo tê cay',
+        actionPoints: [
+          'Dùng dao khía dọc một bên thân ổ bánh mì.',
+          'Lót dưa leo xắt lát mỏng và một ít đồ chua giòn giòn dọc theo lòng bánh.',
+          'Gắp thật nhiều sợi chả cá chiên nóng hổi vừa ra lò nhét đầy ắp vào ruột bánh.',
+          'Phủ một lớp rau răm non tươi xanh lên trên thớ chả cá.',
+          'Rưới đều 2 - 3 thìa nước sốt tỏi ớt mắm tắc sánh kẹo từ đầu đến đuôi bánh, rắc thêm chút tiêu sọ xay cay nồng.',
+          'Cắn ngay một miếng giòn rụm khi bánh và chả cá còn đang nóng hổi bốc khói!',
+        ],
+        description:
+          'Xẻ dọc bánh mì, lót dưa leo và đồ chua, nhồi ngập chả cá chiên nóng hổi, thêm nhiều rau răm rồi rưới nước sốt mắm tắc tỏi ớt sánh kẹo và tiêu xay. Cắn ngập miệng thưởng thức vị giòn tan đậm đà!',
+      },
+    ],
+    chefSecret:
+      'Linh hồn của ổ Bánh Mì Chả Cá đường phố nằm ở 2 yếu tố bất di bất dịch: Thứ nhất là Rau Răm tươi non kết hợp cùng chả cá chiên nóng tại chỗ tạo nên vị the cay ấm nồng át sạch hoàn toàn mùi tanh của cá biển; Thứ hai là Nước sốt tỏi ớt mắm tắc nấu sánh kẹo đượm vị chua cay mặn ngọt thấm sâu vào ruột bánh mì mà không làm vỏ bánh bị ỉu.',
+    recommendedSauce:
+      'Nước sốt mắm tắc tỏi ớt kẹo chua ngọt cùng tương ớt rim sa tế miền Trung cay nồng xé lưỡi.',
+  },
+
   'pho-cuon-thit-bo': {
     dishId: 'pho-cuon-thit-bo',
     dishName: 'Phở Cuốn Thịt Bò Rau Thơm Ngũ Xã',
@@ -2016,6 +2125,110 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
     recommendedSauce: 'Nước mắm kẹo chua ngọt, đồ chua củ cải cà rốt và mỡ hành tóp mỡ béo giòn.',
   },
 
+  'banh-canh-ca-loc': {
+    dishId: 'banh-canh-ca-loc',
+    dishName: 'Bánh Canh Cá Lóc Quảng Trị Bột Gạo',
+    seoTitle: 'Cách Nấu Bánh Canh Cá Lóc Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình',
+    prepTime: '25 phút',
+    cookTime: '35 phút',
+    difficulty: 'Trung bình',
+    servings: '4 - 5 người',
+    ingredients: [
+      {
+        category: 'Cá lóc & Sợi bánh canh',
+        items: [
+          '1 con cá lóc đồng tươi sống (khoảng 800g - 1kg, thon dài, thịt chắc ngọt)',
+          '500g sợi bánh canh bột gạo (hoặc bột gạo pha bột lọc dai mềm)',
+          '100g củ nén (hành tăm tươi) - linh hồn khử tanh và tạo hương thơm nức tiếng miền Trung',
+        ],
+      },
+      {
+        category: 'Gia vị ướp cá & Nấu nước lèo',
+        items: [
+          '1 củ nghệ tươi giã vắt lấy nước cốt (hoặc 1 thìa bột nghệ) giúp miếng cá vàng ươm',
+          '1 thìa canh dầu màu điều phi thơm màu cánh gián đẹp mắt',
+          '2 thìa canh nước mắm cốt nhĩ truyền thống',
+          '1 thìa cà phê tiêu sọ đen giã dập, 1 thìa cà phê hạt nêm, 1 thìa canh đường phèn',
+          'Ớt bột miền Trung hoặc ớt tươi giã nhuyễn cay nồng ấm',
+        ],
+      },
+      {
+        category: 'Rau thơm & Rau ăn kèm',
+        items: [
+          'Hành lá, rau ngò gai (mùi tàu) rửa sạch thái nhỏ',
+          'Đĩa rau đắng tươi giòn (hoặc rau ngổ/ngò om, giá đỗ sống)',
+          'Chanh tươi, ớt hiểm xắt lát, nước mắm mặn nguyên chất chấm cá',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế cá lóc sạch nhớt và luộc chín tới',
+        time: '10 phút',
+        heat: 'Lửa vừa đun sôi',
+        goal: 'Cá lóc sạch hoàn toàn nhớt tanh, thịt cá luộc chín tới ngọt mềm không bị nát',
+        actionPoints: [
+          'Dùng muối hạt và nước cốt chanh chà xát kỹ khắp mình cá và màng đen trong bụng để sạch hết nhớt tanh, rửa lại nước lạnh rồi để ráo.',
+          'Đun sôi 2 lít nước với 1 thìa cà phê muối và 4 - 5 củ nén đập dập.',
+          'Thả cá lóc vào luộc chín tới trong 8 - 10 phút, vớt ra đĩa để nguội bớt, giữ lại toàn bộ nồi nước luộc làm nước dùng ngọt thanh.',
+        ],
+        description:
+          'Dùng muối hạt và chanh chà sạch nhớt tanh của cá lóc, rửa sạch để ráo. Đun sôi 2 lít nước với củ nén đập dập, thả cá vào luộc chín tới trong 8 - 10 phút rồi vớt ra, giữ lại nước luộc.',
+        tip: 'Luộc cá vừa chín tới, không luộc quá lâu kẻo thớ thịt cá bị bở và khó gỡ phi lê.',
+      },
+      {
+        step: 2,
+        title: 'Gỡ phi lê thịt cá và giã xương ninh nước lèo',
+        time: '15 phút',
+        heat: 'Lửa liu riu',
+        goal: 'Thịt cá gỡ thành từng miếng dày không dính xương dăm, nước lèo ngọt lịm từ tủy xương cá',
+        actionPoints: [
+          'Khéo léo dùng tay hoặc đũa gỡ phần thịt cá thành từng miếng phi lê dày vừa ăn (khoảng 2 ngón tay), nhặt thật kỹ xương dăm.',
+          'Cho phần đầu cá và toàn bộ khung xương vào cối giã sơ hoặc bọc túi lọc, trút lại vào nồi nước luộc cá ban nãy.',
+          'Ninh liu riu trong 20 phút cho xương cá tiết hết vị ngọt tự nhiên, sau đó vớt bỏ bã xương, lọc lại nước dùng cho thật trong veo.',
+        ],
+        description:
+          'Khéo léo gỡ thịt cá thành từng miếng phi lê dày, nhặt sạch xương dăm. Cho đầu và toàn bộ xương cá vào giã sơ rồi trút lại vào nồi nước luộc ninh liu riu 20 phút lấy nước ngọt, lọc bỏ bã.',
+        tip: 'Giã xương cá rồi lọc lấy nước cốt là bí quyết truyền thống giúp nước dùng ngọt lịm tự nhiên mà không cần ninh xương ống heo.',
+      },
+      {
+        step: 3,
+        title: 'Ướp thịt cá và xào săn đượm vị củ nén vàng thơm',
+        time: '10 phút',
+        heat: 'Lửa vừa',
+        goal: 'Từng miếng cá lóc ngấm sâu vị tiêu mắm, thơm nức mùi củ nén, vàng óng màu nghệ không bị vỡ nát',
+        actionPoints: [
+          'Ướp thịt cá với 2 thìa canh nước mắm nhĩ, 1 thìa hạt nêm, tiêu sọ đập dập, ớt bột và 1 thìa nước cốt nghệ tươi trong 15 phút.',
+          'Đập dập phần củ nén còn lại. Đun nóng 1 thìa canh dầu màu điều trên chảo, cho củ nén vào phi vàng giòn dậy mùi thơm lừng.',
+          'Trút thịt cá đã ướp vào đảo thật nhẹ tay trên lửa vừa trong 3 - 5 phút cho thớ cá săn chắc, đượm sốt rồi tắt bếp.',
+        ],
+        description:
+          'Ướp thịt cá với nước mắm ngon, hạt nêm, tiêu sọ, ớt bột và nước cốt nghệ tươi trong 15 phút. Phi thơm củ nén đập dập với dầu màu điều, trút cá vào xào săn nhẹ tay trong 3 - 5 phút.',
+        tip: 'Xào cá nhẹ tay với củ nén phi thơm để cá săn chắc, ngấm sốt đậm đà mà các miếng phi lê vẫn nguyên vẹn.',
+      },
+      {
+        step: 4,
+        title: 'Nêm nước dùng thanh ngọt và hoàn thiện tô bánh canh',
+        time: '5 phút',
+        heat: 'Nước sôi sùng sục',
+        goal: 'Tô bánh canh bốc khói nghi ngút, sợi bánh mềm dẻo, nước dùng ngọt thanh đậm đà hương cá đồng',
+        actionPoints: [
+          'Đun sôi bùng nồi nước dùng từ xương cá, nêm 1.5 thìa canh nước mắm cốt nhĩ, muối hạt và chút đường phèn cho vừa miệng.',
+          'Trụng sợi bánh canh qua nước sôi rồi chia đều ra các tô (hoặc thả trực tiếp sợi bánh canh vào nồi nước dùng nấu 3 phút theo cách miền Trung).',
+          'Gắp từng miếng thịt cá lóc xào vàng ươm xếp lên mặt tô, rắc nhiều hành lá, ngò gai thái nhỏ và tiêu xay thơm nồng.',
+          'Chan ngập nước dùng cá lóc sôi sùng sục lên tô, thưởng thức ngay khi còn nóng hổi cùng đĩa rau đắng và chén mắm ớt hiểm.',
+        ],
+        description:
+          'Đun sôi lại nước dùng, nêm nước mắm cốt, muối hạt và đường phèn cho ngọt thanh. Trụng bánh canh xếp ra tô, gắp thịt cá lóc xào vàng ươm lên trên, rắc hành ngò tiêu xay rồi chan nước dùng sôi sùng sục.',
+      },
+    ],
+    chefSecret:
+      'Bí quyết quyết định nồi bánh canh cá lóc chuẩn vị nằm ở 2 yếu tố: Củ Nén (hành tăm) phi thơm khử sạch mùi tanh của cá đồng và tỏa hương cay ấm đặc trưng; cùng nước lèo hầm từ chính đầu và xương cá lóc giã nhuyễn cho hậu vị ngọt lịm tự nhiên mà không cần ninh xương ống heo.',
+    recommendedSauce:
+      'Thưởng thức ngay khi còn nóng hổi bốc khói, chấm từng miếng thịt cá lóc vàng ươm vào chén nước mắm nhĩ mặn dầm ớt hiểm xanh cay xé lưỡi, ăn kèm rau đắng giòn mát giải nhiệt.',
+  },
+
   'bun-bo-hue': {
     dishId: 'bun-bo-hue',
     dishName: 'Bún Bò Huế Chả Cua Thịt Nạm',
@@ -2388,10 +2601,349 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
         description:
           'Phi thơm tỏi với dầu điều, cho thịt xay và gan băm vào xào chín săn. Đổ tương hột và cháo nếp xay nhuyễn vào khuấy đều tay lửa nhỏ cho sốt sánh mịn, béo ngậy màu cam đất quyến rũ.',
       },
+      {
+        step: 4,
+        title: 'Cuốn bánh tráng với ram giòn, xoài non và thưởng thức cùng sốt tương gan',
+        time: '5 phút',
+        heat: 'Thưởng thức ngay',
+        goal: 'Mỗi cuốn nem tròn căng, cắn ngập miệng cảm nhận thớ nem dai ngọt, ram giòn rụm, xoài chua thanh và sốt béo bùi',
+        actionPoints: [
+          'Trải bánh tráng mỏng lên đĩa phẳng, đặt xà lách, rau thơm các loại, dưa leo và xoài xanh bào sợi.',
+          'Đặt một thanh ram chiên giòn rụm và một xiên nem nướng thơm nức lên giữa.',
+          'Cuộn tròn chặt tay bánh tráng lại.',
+          'Chấm ngập cuốn nem vào chén sốt tương gan nếp ấm nóng rắc đậu phộng thơm bùi và thưởng thức trọn vẹn đặc sản phố biển Nha Trang!',
+        ],
+        description:
+          'Trải bánh tráng, xếp rau sống, xoài xanh bào sợi, dưa leo, ram giòn rụm và xiên nem nướng lên trên rồi cuộn tròn chặt tay. Chấm đẫm cuốn nem vào bát sốt tương gan béo bùi ấm nóng rắc đậu phộng rang giã dập cay tê.',
+      },
     ],
     chefSecret:
-      'Bí quyết nước chấm nem nướng Nha Trang thơm bùi gây nghiện nằm ở cháo nếp xay nhuyễn kết hợp gan heo ngâm sữa tươi và tương hột, tạo độ sánh dẻo tự nhiên không cần bột năng.',
-    recommendedSauce: 'Nước chấm tương gan ấm nóng rắc đậu phộng rang giã dập và ớt sa tế.',
+      'Bí quyết nước chấm nem nướng Nha Trang thơm bùi gây nghiện nằm ở cháo nếp xay nhuyễn kết hợp gan heo ngâm sữa tươi và tương hột, tạo độ sánh dẻo tự nhiên không cần bột năng; ăn kèm ram giòn chiên phồng và xoài xanh chua thanh cân bằng vị giác hoàn hảo.',
+    recommendedSauce: 'Nước chấm tương gan nếp ấm nóng rắc đậu phộng rang giã dập và tương ớt rim sa tế.',
+  },
+
+  'nem-lui-nuong-cuon': {
+    dishId: 'nem-lui-nuong-cuon',
+    dishName: 'Nem Lụi Huế Nướng Than Cuốn Bánh Tráng',
+    seoTitle: 'Cách Làm Nem Lụi Huế Nướng Than Thơm Nức & Nước Lèo Gan Đậu Béo Bùi Chuẩn Vị Cố Đô',
+    prepTime: '30 phút',
+    cookTime: '25 phút',
+    difficulty: 'Trung bình',
+    servings: '4 - 5 người',
+    ingredients: [
+      {
+        category: 'Thịt nem quấn sả thơm nức',
+        items: [
+          '500g giò sống (mọc heo) dẻo quánh loại tươi ngon',
+          '300g thịt nạc vai heo xay nhuyễn (có dắt chút mỡ giúp nem mềm mọng không khô)',
+          '100g mỡ phần heo luộc sơ thái hạt lựu nhỏ, trộn 1 thìa đường phơi gió cho trong giòn',
+          '15 - 20 cây sả non tươi (rửa sạch, cạo bớt vỏ già, đập dập nhẹ gốc để tiết tinh dầu thơm)',
+          'Gia vị ướp nem: 2 thìa canh nước mắm nhĩ cốt, 1 thìa cà phê tiêu sọ đen giã dập, 1 thìa đường, 1 củ tỏi và 3 củ hành tím băm phi thơm, 1 thìa canh dầu màu điều',
+        ],
+      },
+      {
+        category: 'Nồi Nước Lèo Huế béo bùi trứ danh (Linh hồn món nem lụi)',
+        items: [
+          '100g gan heo tươi ngâm sữa tươi không đường 20 phút khử tanh, rửa sạch băm nhuyễn mịn',
+          '100g thịt nạc heo xay nhuyễn',
+          '2 thìa canh tương đậu nành (tương hột xay nhuyễn hoặc tương bần Huế)',
+          '80g đậu phộng rang vàng xát vỏ, giã nhuyễn béo ngậy',
+          '30g mè (vừng) trắng rang thơm',
+          '1 bát con nước dùng xương heo (hoặc nước lọc)',
+          'Gia vị: 1.5 thìa canh đường cát, 1 thìa canh nước mắm ngon, 1 thìa dầu màu điều, 1 thìa cà phê bột năng hòa chút nước tạo độ sánh sánh',
+        ],
+      },
+      {
+        category: 'Bánh tráng & Rau sống ăn kèm chuẩn vị Cố Đô',
+        items: [
+          'Bánh tráng phơi sương mỏng mềm dai nhúng nước nhẹ',
+          'Rau thơm Huế: Rau xà lách, rau thơm, húng lủi, tía tô, ngò gai, rau diếp cá, giá đỗ',
+          'Quả chuối chát thái mỏng ngâm nước chanh khử thâm, khế chua (hoặc xoài xanh) thái lát mỏng, dưa leo chẻ que',
+          'Ớt hiểm băm và tỏi tươi ăn kèm',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Quết thịt nem dẻo dai và quấn đều quanh cây sả non',
+        time: '15 phút',
+        heat: 'Nhiệt độ phòng mát',
+        goal: 'Hỗn hợp thịt kết dính dẻo quánh bọc chặt quanh cây sả, không bị nứt rời khi nướng',
+        actionPoints: [
+          'Cho giò sống, thịt nạc xay và mỡ hạt lựu vào âu lớn.',
+          'Thêm hành tỏi băm phi thơm, tiêu sọ giã dập, nước mắm ngon, đường và dầu màu điều.',
+          'Dùng muỗng miết quết thật mạnh tay liên tục theo một chiều trong 8 - 10 phút cho khối thịt quyện đặc dẻo quánh.',
+          'Thoa chút dầu ăn lên găng tay, múc một lượng thịt vừa đủ nắm tròn dài, bọc kín đều quanh phần đầu cây sả non (độ dài thịt bọc khoảng 8 - 10cm).',
+        ],
+        description:
+          'Trộn giò sống, thịt nạc xay và mỡ hạt lựu với hành tỏi phi, tiêu sọ giã dập, nước mắm ngon và dầu màu điều. Quết mạnh tay theo một chiều cho dẻo quánh rồi nắn bọc kín quanh từng cây sả non.',
+        tip: 'Đập dập nhẹ gốc sả trước khi bọc thịt để tinh dầu sả tươi ngấm sâu vào từng thớ thịt trong quá trình nướng, tạo mùi thơm ngào ngạt quyến rũ.',
+      },
+      {
+        step: 2,
+        title: 'Nấu nồi Nước Lèo gan heo đậu phộng béo bùi sánh dẻo',
+        time: '15 phút',
+        heat: 'Lửa nhỏ liu riu khuấy đều',
+        goal: 'Nước lèo màu vàng cam đất óng ả, sánh dẻo mịn màng, vị béo ngậy bùi bùi đượm mùi tương và gan heo',
+        actionPoints: [
+          'Đun nóng 1 thìa canh dầu màu điều, phi thơm hành tím và tỏi băm nhuyễn.',
+          'Cho thịt xay và gan heo băm nhuyễn vào xào chín săn trên lửa vừa.',
+          'Trút tương đậu nành xay nhuyễn và 1 bát con nước dùng vào đun sôi lăn tăn.',
+          'Hạ lửa nhỏ, trút đậu phộng rang giã nhuyễn và mè rang vào khuấy đều tay.',
+          'Nêm đường, nước mắm cho vừa khẩu vị ngọt bùi mặn nhẹ. Từ từ rót nước bột năng vào khuấy liên tục cho nước lèo sánh dẻo keo lại như sốt thì tắt bếp.',
+        ],
+        description:
+          'Phi thơm hành tỏi với dầu điều, xào săn thịt xay và gan heo nhuyễn. Cho tương hột xay và nước dùng vào đun sôi, hạ lửa trút đậu phộng giã nhuyễn, mè rang vào nêm đường mắm. Châm chút nước bột năng khuấy đều tay cho sốt sánh dẻo béo bùi.',
+        tip: 'Gan heo ngâm sữa tươi 20 phút trước khi băm sẽ giúp gan mềm mịn béo ngậy mà không còn chút mùi tanh nồng nào.',
+      },
+      {
+        step: 3,
+        title: 'Nướng nem lụi vàng ruộm trên than hoa đỏ hồng',
+        time: '12 - 15 phút',
+        heat: 'Than hoa đỏ vừa / Nồi chiên không dầu 180°C',
+        goal: 'Cây nem lụi chín vàng ươm xém cạnh bóng bẩy mỡ tươm, bốc khói thơm nức mũi mùi sả nướng',
+        actionPoints: [
+          'Xếp các cây nem lụi lên vỉ nướng trên bếp than hoa đỏ rực không có ngọn lửa.',
+          'Thường xuyên xoay trở que nem cho chín đều các mặt.',
+          'Khi nem gần chín, phết nhẹ một lớp dầu màu điều pha chút mật ong lên thân nem để nem bóng mượt, lên màu cánh gián bắt mắt.',
+          'Nướng khoảng 10 - 12 phút đến khi nem xém cạnh tươm mỡ thơm lừng thì nhấc ra đĩa.',
+        ],
+        description:
+          'Xếp nem lụi lên vỉ nướng than hoa, trở mặt liên tục cho nem chín vàng đều. Quét nhẹ chút dầu màu điều lên mặt cho bóng bẩy xém cạnh tươm mỡ thơm lừng mùi sả rồi gắp ra đĩa.',
+        tip: 'Nếu dùng nồi chiên không dầu: Nướng ở 180°C trong 10 phút, lật mặt quét dầu điều nướng thêm 4 - 5 phút cho xém vàng.',
+      },
+      {
+        step: 4,
+        title: 'Cuốn bánh tráng với rau thơm chuối khế và chấm đẫm nước lèo',
+        time: '5 phút',
+        heat: 'Thưởng thức nóng',
+        goal: 'Cuốn nem đầy đặn, cắn ngập miệng cảm nhận thớ nem ngọt giòn, rau thanh mát quyện nước lèo béo bùi ngất ngây',
+        actionPoints: [
+          'Đặt bánh tráng mỏng lên đĩa, xếp xà lách, rau thơm Huế, dưa leo, lát chuối chát và khế chua.',
+          'Đặt cây nem lụi lên giữa, dùng tay nắm chặt bánh tráng rồi rút cây sả ra.',
+          'Cuộn tròn chặt tay, múc nước lèo ra chén rắc thêm đậu phộng đập dập và ớt băm cay cay.',
+          'Chấm ngập cuốn nem vào chén nước lèo ấm nóng và thưởng thức trọn vẹn phong vị cung đình Huế!',
+        ],
+        description:
+          'Trải bánh tráng, xếp rau sống, dưa leo, chuối chát, khế chua và đặt cây nem lụi lên, kẹp chặt rút cây sả ra rồi cuốn tròn lại. Chấm đẫm cuốn nem vào chén nước lèo gan đậu phộng ấm nóng bùi béo ngập tràn hương vị.',
+      },
+    ],
+    chefSecret:
+      'Tuyệt đối không ăn nem lụi Huế với nước mắm chua ngọt thông thường! Bí quyết sống còn của nem lụi Cố Đô nằm ở: 1. Thịt nem bọc quanh cây sả non tươi để tinh dầu sả thấm đượm vào thịt khi nướng than hoa; 2. Chén NƯỚC LÈO trứ danh nấu từ gan heo ngâm sữa băm nhuyễn, tương đậu nành và đậu phộng rang giã bùi béo sánh dẻo mịn màng, tạo nên sự hòa quyện đỉnh cao khó quên.',
+    recommendedSauce:
+      'Bát Nước Lèo gan heo đậu phộng mè rang sánh dẻo ấm nóng đặc trưng của xứ Huế, rắc thêm chút ớt băm cay tê đầu lưỡi.',
+  },
+
+  'ram-bap-cuon-rau': {
+    dishId: 'ram-bap-cuon-rau',
+    dishName: 'Ram Bắp Quảng Ngãi Giòn Rụm Cuốn Rau Sống',
+    seoTitle: 'Cách Làm Ram Bắp Quảng Ngãi Giòn Rụm, Thơm Ngọt Chuẩn Vị Xứ Quảng',
+    prepTime: '25 phút',
+    cookTime: '20 phút',
+    difficulty: 'Dễ',
+    servings: '4 - 5 người',
+    ingredients: [
+      {
+        category: 'Nhân bắp nếp non ngọt dẻo',
+        items: [
+          '3 - 4 bắp nếp non (chọn bắp nếp vừa hái, hạt còn non đượm sữa ngọt lịm)',
+          '100g thịt nạc vai heo xay nhuyễn (hoặc làm chay thuần bắp đều ngon)',
+          '1 nắm củ nén (hành tăm) hoặc hành tím giã nhuyễn (linh hồn hương vị xứ Quảng)',
+          'Hành lá thái nhỏ, 1 thìa cà phê tiêu đen giã dập thơm nồng',
+          'Gia vị: 1 thìa cà phê hạt nêm, 1/2 thìa cà phê muối, 1 thìa cà phê đường, 1/2 thìa nước mắm ngon',
+        ],
+      },
+      {
+        category: 'Bánh tráng gói ram & Dầu chiên',
+        items: [
+          '1 xấp bánh tráng dong Quảng Ngãi mỏng dai (hoặc bánh tráng gói ram giòn rụm chuyên dụng)',
+          'Dầu ăn để chiên ngập dầu',
+          'Vài giọt nước cốt chanh vắt vào chảo dầu giúp ram vàng ruộm và giòn rụm lâu hơn',
+        ],
+      },
+      {
+        category: 'Rau sống & Nước mắm tỏi ớt chua ngọt miền Trung',
+        items: [
+          'Rau sống tươi sạch: Xà lách, rau diếp cá, húng quế, kinh giới, rau thơm, dưa leo xắt thanh',
+          'Bánh tráng mỏng nhúng nước để cuốn cùng ram bắp',
+          'Pha nước mắm: 2 thìa canh nước mắm cá cơm nhĩ, 2 thìa canh đường vàng, 2 thìa canh nước ấm, 1 thìa canh nước cốt chanh, tỏi Lý Sơn và ớt xiêm xanh/đỏ giã nhuyễn',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Nạo bắp nếp non và quết nhân dẻo ngọt với củ nén, tiêu thơm',
+        time: '15 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Nhân bắp dẻo quyện tự nhiên nhờ sữa bắp nếp non, thơm nồng mùi củ nén và tiêu',
+        actionPoints: [
+          'Bắp nếp bóc vỏ, nhặt sạch râu bắp. Dùng dao bào mỏng từng lớp hạt bắp từ ngoài vào sát lõi.',
+          'Cho bắp đã bào vào cối đá dùng chày giã dập sơ 2 - 3 phút để hạt bắp tiết ra chất sữa nhựa dẻo dính tự nhiên (không giã nát nhừ).',
+          'Trút bắp ra âu, thêm thịt nạc xay, củ nén giã dập, hành lá, tiêu đen đập dập, hạt nêm, muối và đường.',
+          'Dùng tay trộn đều và miết nhẹ cho hỗn hợp quyện dẻo kết dính thành khối nhân đồng nhất.',
+        ],
+        description:
+          'Bào mỏng hạt bắp nếp non rồi giã dập sơ trong cối cho tiết sữa dẻo quánh. Trộn đều bắp với thịt xay, củ nén đập dập, tiêu đen, hành lá và gia vị cho nhân hòa quyện dẻo dính.',
+        tip: 'Chọn bắp nếp non bấm tay vào còn ứa sữa trắng; giã sơ để lấy chất kết dính tự nhiên giúp cuốn ram không cần cho bột hay lòng trắng trứng.',
+      },
+      {
+        step: 2,
+        title: 'Gói cuốn ram bắp thon dài, chặt tay',
+        time: '10 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Từng cuốn ram bắp đều tăm tắp, cuốn chặt tay không rách vỏ, mép bánh dính chặt',
+        actionPoints: [
+          'Cắt bánh tráng gói ram thành miếng hình vuông hoặc tam giác vừa cuốn (khoảng 10x10cm).',
+          'Nếu bánh tráng hơi khô, dùng khăn ẩm thoa nhẹ lên bề mặt bánh cho dẻo dai dễ cuốn.',
+          'Múc 1 thìa nhân bắp dàn đều thành thanh ngang ở mép bánh tráng.',
+          'Gấp hai mép hai bên lại rồi cuộn tròn chặt tay về phía trước, miết nhẹ mép bánh cho dính chặt.',
+        ],
+        description:
+          'Trải bánh tráng gói ram, thoa nhẹ nước cho mềm nếu cần. Múc lượng nhân bắp vừa phải dàn đều, gấp mép hai bên cuộn chặt tay thành từng cuốn ram thon dài cỡ ngón tay cái.',
+      },
+      {
+        step: 3,
+        title: 'Chiên ram bắp vàng ruộm giòn tan',
+        time: '12 - 15 phút',
+        heat: 'Lửa vừa chiên ngập dầu',
+        goal: 'Cuốn ram vàng ruộm óng ả, cắn vào giòn tan rôm rốp, nhân bắp bên trong chín dẻo ngọt lịm',
+        actionPoints: [
+          'Đun nóng chảo dầu ngập mặt cuốn ram ở lửa vừa. Nhỏ vài giọt nước cốt chanh vào dầu để ram chiên giòn lâu không bị ngấy dầu.',
+          'Thử đầu đũa thấy sủi tăm lăn tăn thì thả từng cuốn ram vào chảo chiên.',
+          'Chiên đều các mặt trong 5 - 7 phút với lửa vừa. Khi thấy vỏ ram phồng nhẹ, ngả màu vàng ươm giòn rụm thì vớt ra rổ inox cho ráo dầu.',
+        ],
+        description:
+          'Đun sôi dầu ăn ở lửa vừa, thả từng cuốn ram vào chiên ngập dầu. Đảo nhẹ tay đến khi vỏ ram phồng giòn vàng ruộm hai mặt, nhân bắp chín thơm lừng thì vớt ra để ráo dầu.',
+        tip: 'Chiên trên lửa vừa, không chiên lửa quá to kẻo vỏ bánh bị cháy mà nhân bắp bên trong chưa kịp chín dẻo.',
+      },
+      {
+        step: 4,
+        title: 'Pha nước mắm tỏi ớt chua ngọt & Thưởng thức ram bắp cuốn rau sống',
+        time: '5 phút',
+        heat: 'Thưởng thức nóng giòn',
+        goal: 'Cuốn ram bắp cùng rau sống xanh giòn chấm ngập chén nước mắm đậm đà bùng nổ hương vị',
+        actionPoints: [
+          'Pha nước mắm: Hòa tan nước mắm cốt, đường vàng, nước ấm và nước cốt chanh; cho tỏi băm và ớt giã nhuyễn vào nổi bồng bềnh trên mặt.',
+          'Nhúng ướt nhẹ bánh tráng mỏng, đặt xà lách, rau diếp cá, húng quế và lát dưa leo giòn mát.',
+          'Đặt cuốn ram bắp nóng hổi vào giữa, cuộn tròn lại.',
+          'Chấm ngập vào chén nước mắm tỏi ớt cay cay chua ngọt, cắn ngập miệng cảm nhận tiếng rôm rốp giòn tan và vị ngọt dẻo ngào ngạt của bắp non xứ Quảng!',
+        ],
+        description:
+          'Pha nước mắm tỏi ớt chua ngọt thơm nồng vị tỏi ớt giã nhuyễn. Trải bánh tráng mỏng cuốn cùng rau sống, diếp cá, dưa leo và cuốn ram bắp giòn rụm, chấm ngập chén nước mắm thưởng thức khi còn nóng giòn.',
+      },
+    ],
+    chefSecret:
+      'Hương vị làm nên thương hiệu của Ram Bắp Quảng Ngãi nằm ở hạt bắp nếp non vừa độ ngậm sữa được giã dập sơ tạo độ dẻo ngọt tự nhiên quyện cùng củ nén giã nhuyễn và tiêu đen cay thơm nồng ấm; khi chiên ngập dầu vỏ ram giòn rôm rốp mà nhân bắp vẫn giữ trọn vị ngọt bùi mọng sữa.',
+    recommendedSauce:
+      'Chén nước mắm cá cơm chua ngọt cay nồng pha cùng tỏi Lý Sơn băm nhuyễn và ớt xiêm xanh/đỏ giã dập nổi bồng bềnh đẹp mắt.',
+  },
+
+  'banh-dap-mam-nem': {
+    dishId: 'banh-dap-mam-nem',
+    dishName: 'Bánh Đập Mắm Nêm Miền Trung Giòn Rụm',
+    seoTitle: 'Cách Làm Bánh Đập Mắm Nêm Miền Trung Giòn Dẻo & Bí Quyết Pha Mắm Nêm Thơm Lừng',
+    prepTime: '20 phút',
+    cookTime: '15 phút',
+    difficulty: 'Dễ',
+    servings: '3 - 4 người',
+    ingredients: [
+      {
+        category: 'Phần Bánh Đập (Giòn & Dẻo)',
+        items: [
+          '5 - 6 cái bánh tráng gạo mè nướng giòn rụm (loại bánh tráng nướng than mè đen hoặc mè trắng phồng xốp)',
+          '500g bánh ướt (bánh cuốn nóng tráng mỏng dẻo mềm từ bột gạo nguyên chất)',
+          'Dầu ăn hoặc mỡ heo',
+        ],
+      },
+      {
+        category: 'Mỡ hành óng ả & Tép xào mặn ngọt',
+        items: [
+          '1 mớ hành lá tươi thái nhỏ',
+          '3 thìa canh mỡ heo nóng (hoặc dầu ăn) để làm mỡ hành xanh mướt',
+          '100g tép khô (hoặc tôm đồng tươi) xào chín săn với chút hành tỏi phi và gia vị mặn ngọt',
+          '2 thìa canh hành tím phi vàng giòn rụm',
+        ],
+      },
+      {
+        category: 'Chén Mắm Nêm cá cơm linh hồn xứ Quảng',
+        items: [
+          '1/2 chén mắm nêm cá cơm nguyên chất (loại mắm cái cá cơm thơm nồng đặc sản miền Trung)',
+          '1/3 quả dứa (thơm) chín gọt sạch băm nhuyễn',
+          '1 nắm củ nén (hành tăm) hoặc hành tím đập dập phi thơm với dầu ăn',
+          '1 củ tỏi băm nhuyễn, 3 - 4 trái ớt xiêm xanh/đỏ giã dập cay nồng',
+          '1.5 thìa canh đường phèn (hoặc đường cát vàng), 1 thìa canh nước cốt chanh',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Nướng bánh tráng gạo mè giòn tan và chuẩn bị bánh ướt dẻo mềm',
+        time: '5 phút',
+        heat: 'Than hoa hoặc nồi chiên không dầu 180°C',
+        goal: 'Bánh tráng nướng phồng xốp giòn rụm, bánh ướt dẻo mướt còn ấm nóng',
+        actionPoints: [
+          'Nướng bánh tráng mè trên than hoa đỏ hoặc lò nướng/nồi chiên không dầu ở 180°C trong 2 - 3 phút cho bánh phồng đều vàng giòn.',
+          'Bánh ướt giữ ấm, tách từng lớp bánh mỏng mềm mướt sẵn sàng.',
+        ],
+        description:
+          'Nướng bánh tráng gạo mè cho phồng xốp giòn rụm hai mặt. Chuẩn bị sẵn bánh ướt tráng mỏng mềm mướt còn hơi ấm.',
+      },
+      {
+        step: 2,
+        title: 'Thắng mỡ hành óng ả và xào tép mặn ngọt giòn thơm',
+        time: '5 phút',
+        heat: 'Lửa vừa',
+        goal: 'Mỡ hành xanh mướt không cháy, tép xào săn đượm vị mặn ngọt đậm đà',
+        actionPoints: [
+          'Thái nhỏ hành lá cho vào bát sứ cùng 1/3 thìa cà phê muối và chút đường.',
+          'Đun sôi 3 thìa canh mỡ heo trên chảo rồi trút thẳng vào bát hành để có bát mỡ hành xanh bóng mướt.',
+          'Cho chút dầu phi thơm hành tỏi băm, trút tép khô vào đảo đều trên lửa vừa, nêm chút nước mắm và đường cho tép săn giòn mặn ngọt thì trút ra đĩa.',
+        ],
+        description:
+          'Dội mỡ heo sôi vào bát hành lá làm mỡ hành xanh mướt óng ả. Xào săn tép khô với chút hành phi, nước mắm và đường cho mặn ngọt đậm đà.',
+      },
+      {
+        step: 3,
+        title: 'Nấu và pha chén Mắm Nêm cá cơm thơm lừng xứ Quảng',
+        time: '8 phút',
+        heat: 'Lửa nhỏ',
+        goal: 'Mắm nêm thơm nức mũi mùi củ nén và dứa xào, vị mặn mòi ngọt sâu, tỏi ớt cay xé lưỡi kích thích vị giác',
+        actionPoints: [
+          'Đun nóng 1 thìa canh dầu ăn, cho củ nén đập dập vào phi vàng thơm lừng.',
+          'Cho dứa băm nhuyễn vào xào chín mềm trong 2 phút để dứa tiết nước cốt ngọt thanh.',
+          'Trút mắm nêm cá cơm và 2 thìa canh nước ấm vào đun sôi lăn tăn trên lửa nhỏ rồi tắt bếp.',
+          'Chờ mắm nguội bớt, nêm đường phèn và nước cốt chanh khuấy tan đều.',
+          'Thêm thật nhiều tỏi băm và ớt xiêm xanh đập dập thả nổi lên trên chén mắm nêm.',
+        ],
+        description:
+          'Phi thơm củ nén với dầu ăn, xào chín dứa băm nhuyễn rồi trút mắm nêm và chút nước vào đun sôi nhẹ. Nêm đường phèn, chanh khuấy tan, thêm tỏi ớt xiêm xanh băm nhuyễn cay nồng.',
+        tip: 'Xào dứa và củ nén trước khi cho mắm nêm là bí quyết giúp khử mùi nồng gắt của mắm cái, tạo độ sánh sệt thơm lừng và vị ngọt sâu tự nhiên.',
+      },
+      {
+        step: 4,
+        title: 'Ghép bánh, "đập" dính giòn rụm và thưởng thức cùng mắm nêm',
+        time: '2 phút',
+        heat: 'Thưởng thức ngay',
+        goal: 'Bánh tráng nướng vỡ vụn dính chặt vào bánh ướt mềm mướt quết mỡ hành, chấm ngập mắm nêm giòn tan đã miệng',
+        actionPoints: [
+          'Đặt 1 cái bánh tráng nướng giòn lên đĩa lớn.',
+          'Trải 1 - 2 lá bánh ướt mềm mướt phủ kín lên mặt bánh tráng.',
+          'Quết đẫm mỡ hành xanh mướt khắp mặt bánh ướt, rắc thêm tép xào mặn ngọt và hành phi giòn tan.',
+          'Đặt thêm 1 lớp bánh tráng nướng lên trên (hoặc gập đôi bánh lại).',
+          'Dùng lòng bàn tay "ĐẬP" nhẹ một phát dứt khoát lên mặt bánh để lớp bánh tráng nướng giòn rụm vỡ vụn dính chặt vào bánh ướt mềm mọng.',
+          'Dùng tay bẻ từng miếng bánh đập chấm ngập vào chén mắm nêm thơm lừng, thưởng thức ngay sự hòa quyện giòn tan và dẻo mướt!',
+        ],
+        description:
+          'Đặt bánh ướt lên bánh tráng nướng, quết đẫm mỡ hành, rắc tép xào và hành phi lên mặt rồi gập đôi lại. Dùng tay "đập" nhẹ dứt khoát cho bánh tráng vỡ giòn dính chặt vào bánh ướt. Bẻ từng miếng chấm ngập mắm nêm cay nồng thưởng thức.',
+      },
+    ],
+    chefSecret:
+      'Tên gọi "Bánh Đập" chính là động tác đập tay dứt khoát làm vỡ vụn lớp bánh tráng giòn tan để nó dính chặt vào lớp bánh ướt dẻo mềm quết mỡ hành béo ngậy; và linh hồn BẮT BUỘC của món ăn này là MẮM NÊM CÁ CƠM xào thơm cùng củ nén và dứa băm nhuyễn chứ tuyệt đối không thể thay thế bằng nước mắm chua ngọt!',
+    recommendedSauce:
+      'Chén mắm nêm cá cơm miền Trung xào dứa chín và củ nén phi thơm, ngập tràn tỏi ớt xiêm xanh cay xé đầu lưỡi.',
   },
 
   'canh-chua-ca-loc': {
@@ -5149,6 +5701,53 @@ export function getRecipePath(dish: Dish): string {
 }
 
 export const RECIPE_SLUG_ALIASES: Record<string, string> = {
+  'cach-nau-banh-canh-ca-loc': 'banh-canh-ca-loc',
+  'banh-mi-cha-ca': 'banh-mi-cha-ca-nong',
+  'banh-mi-cha-ca-nong': 'banh-mi-cha-ca-nong',
+  'cach-nau-banh-mi-cha-ca': 'banh-mi-cha-ca-nong',
+  'cach-nau-banh-mi-cha-ca-nong': 'banh-mi-cha-ca-nong',
+  'cach-lam-banh-mi-cha-ca': 'banh-mi-cha-ca-nong',
+  'cach-lam-banh-mi-cha-ca-nong': 'banh-mi-cha-ca-nong',
+
+  'nem-lui-nuong-cuon': 'nem-lui-nuong-cuon',
+  'cach-nau-nem-lui-nuong-cuon': 'nem-lui-nuong-cuon',
+  'cach-lam-nem-lui-nuong-cuon': 'nem-lui-nuong-cuon',
+  'nem-lui-hue': 'nem-lui-nuong-cuon',
+  'cach-nau-nem-lui-hue': 'nem-lui-nuong-cuon',
+  'cach-lam-nem-lui-hue': 'nem-lui-nuong-cuon',
+
+  'nem-nuong-nha-trang-cuon': 'nem-nuong-nha-trang',
+  'nem-nuong-nha-trang': 'nem-nuong-nha-trang',
+  'cach-nau-nem-nuong-nha-trang-cuon': 'nem-nuong-nha-trang',
+  'cach-lam-nem-nuong-nha-trang-cuon': 'nem-nuong-nha-trang',
+  'cach-nau-nem-nuong-nha-trang': 'nem-nuong-nha-trang',
+  'cach-lam-nem-nuong-nha-trang': 'nem-nuong-nha-trang',
+
+  'ram-bap-cuon-rau': 'ram-bap-cuon-rau',
+  'cach-nau-ram-bap-cuon-rau': 'ram-bap-cuon-rau',
+  'cach-lam-ram-bap-cuon-rau': 'ram-bap-cuon-rau',
+  'ram-bap-quang-ngai': 'ram-bap-cuon-rau',
+  'cach-nau-ram-bap-quang-ngai': 'ram-bap-cuon-rau',
+  'cach-lam-ram-bap-quang-ngai': 'ram-bap-cuon-rau',
+
+  'banh-dap-mam-nem': 'banh-dap-mam-nem',
+  'cach-nau-banh-dap-mam-nem': 'banh-dap-mam-nem',
+  'cach-lam-banh-dap-mam-nem': 'banh-dap-mam-nem',
+  'banh-dap': 'banh-dap-mam-nem',
+  'cach-nau-banh-dap': 'banh-dap-mam-nem',
+  'cach-lam-banh-dap': 'banh-dap-mam-nem',
+
+  'banh-beo': 'banh-beo',
+  'cach-nau-banh-beo': 'banh-beo',
+  'cach-lam-banh-beo': 'banh-beo',
+
+  'be-thui': 'be-thui',
+  'cach-nau-be-thui': 'be-thui',
+  'cach-lam-be-thui': 'be-thui',
+  'be-thui-cau-mong': 'be-thui',
+  'cach-nau-be-thui-cau-mong': 'be-thui',
+  'cach-lam-be-thui-cau-mong': 'be-thui',
+
   'bun-bo-hue': 'bun-bo-hue-dac-biet',
   'bun-bo-hue-dac-biet': 'bun-bo-hue',
   'cach-nau-bun-bo-hue': 'bun-bo-hue-dac-biet',
@@ -5162,9 +5761,6 @@ export const RECIPE_SLUG_ALIASES: Record<string, string> = {
   'cach-lam-com-ga-hoi-an': 'com-ga-hoi-an',
   'thit-kho-tau': 'com-thit-kho-tau',
   'cach-nau-thit-kho-tau': 'com-thit-kho-tau',
-  'nem-nuong-nha-trang': 'nem-nuong-nha-trang-cuon',
-  'cach-nau-nem-nuong-nha-trang': 'nem-nuong-nha-trang-cuon',
-  'cach-lam-nem-nuong-nha-trang': 'nem-nuong-nha-trang-cuon',
   'com-rang-dua-bo': 'com-rang-dua-bo',
   'cach-nau-com-rang-dua-bo': 'com-rang-dua-bo',
   'cach-lam-com-rang-dua-bo': 'com-rang-dua-bo',
