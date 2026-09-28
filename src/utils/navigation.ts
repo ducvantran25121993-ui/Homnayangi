@@ -3,7 +3,7 @@ import { getRegionById } from '../data/regionalCuisine';
 import { getRecipePath, getRecipeArticleTitle, formatRecipeSeoTitle } from '../data/recipes';
 import { INITIAL_DISHES } from '../data/dishes';
 
-export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'snacks' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms';
+export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'snacks' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms' | 'blog';
 
 export type DiscoverSubSection = 'region' | 'daily' | 'recipe';
 
@@ -164,6 +164,16 @@ export const TAB_CONFIG: Record<TabType, TabMeta> = {
     ogImage: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&auto=format&fit=crop&q=80',
     ogImageAlt: 'Điều Khoản Sử Dụng - Hôm Nay Ăn Gì',
   },
+  blog: {
+    path: '/blog',
+    title: 'Blog Ẩm Thực - Cẩm Nang Món Ngon & Bí Quyết Nấu Nướng | Hôm Nay Ăn Gì',
+    description: 'Chuyên trang chia sẻ kiến thức ẩm thực, cẩm nang nấu ăn, mẹo vặt nhà bếp, dinh dưỡng lành mạnh và câu chuyện văn hóa ẩm thực truyền thống Việt Nam.',
+    label: 'Blog Ẩm Thực',
+    shortLabel: 'Blog',
+    keywords: 'blog ẩm thực, cẩm nang nấu ăn, mẹo nấu ăn ngon, văn hóa ẩm thực việt nam, kiến thức dinh dưỡng, công thức món ngon, hôm nay ăn gì',
+    ogImage: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1200&auto=format&fit=crop&q=80',
+    ogImageAlt: 'Blog Ẩm Thực - Cẩm Nang Món Ngon & Bí Quyết Nấu Nướng',
+  },
 };
 
 /**
@@ -215,6 +225,7 @@ export function getTabFromUrl(): TabType {
   if (pathname === '/lien-he' || pathname === '/contact') return 'contact';
   if (pathname === '/chinh-sach-bao-mat' || pathname === '/privacy' || pathname === '/bao-mat') return 'privacy';
   if (pathname === '/dieu-khoan-su-dung' || pathname === '/terms' || pathname === '/dieu-khoan') return 'terms';
+  if (pathname === '/blog' || pathname.startsWith('/blog/')) return 'blog';
   if (pathname === '/') {
     // Check fallback query param ?tab=
     const params = new URLSearchParams(window.location.search);
@@ -229,6 +240,7 @@ export function getTabFromUrl(): TabType {
     if (tabParam === 'lien-he' || tabParam === 'contact') return 'contact';
     if (tabParam === 'chinh-sach-bao-mat' || tabParam === 'privacy' || tabParam === 'bao-mat') return 'privacy';
     if (tabParam === 'dieu-khoan-su-dung' || tabParam === 'terms' || tabParam === 'dieu-khoan') return 'terms';
+    if (tabParam === 'blog') return 'blog';
     return 'tarot';
   }
 

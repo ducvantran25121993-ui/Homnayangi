@@ -11,6 +11,7 @@ import { AboutPage } from './components/AboutPage';
 import { ContactPage } from './components/ContactPage';
 import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { TermsOfServicePage } from './components/TermsOfServicePage';
+import { BlogPage } from './components/BlogPage';
 import { AdminInboxModal } from './components/AdminInboxModal';
 import { AffiliateModal } from './components/AffiliateModal';
 import { DishDetailModal } from './components/DishDetailModal';
@@ -410,6 +411,13 @@ export default function App() {
         {activeTab === 'terms' && (
           <TermsOfServicePage
             onNavigate={handleNavigateTab}
+          />
+        )}
+
+        {activeTab === 'blog' && (
+          <BlogPage
+            onNavigate={handleNavigateTab}
+            onSelectDish={(dish) => setSelectedDish(dish)}
           />
         )}
 

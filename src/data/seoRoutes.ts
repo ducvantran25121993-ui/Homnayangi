@@ -1,6 +1,7 @@
 import { INITIAL_DISHES } from './dishes';
 import { REGIONAL_CUISINES } from './regionalCuisine';
 import { getDishRecipe, getRecipeSlug, getRecipeArticleTitle, formatRecipeSeoTitle, RECIPE_SLUG_ALIASES } from './recipes';
+import { INITIAL_BLOG_POSTS } from './blogPosts';
 
 export interface RouteSeoMeta {
   path: string;
@@ -159,6 +160,17 @@ export const BASE_SEO_ROUTES: Record<string, RouteSeoMeta> = {
     changefreq: 'monthly',
     lastmod: '2026-09-24',
   },
+  '/blog': {
+    path: '/blog',
+    title: 'Blog Ẩm Thực - Cẩm Nang Món Ngon & Bí Quyết Nấu Nướng | Hôm Nay Ăn Gì',
+    description: 'Chuyên trang chia sẻ kiến thức ẩm thực, cẩm nang nấu ăn, mẹo vặt nhà bếp, dinh dưỡng lành mạnh và câu chuyện văn hóa ẩm thực truyền thống Việt Nam.',
+    keywords: 'blog ẩm thực, cẩm nang nấu ăn, mẹo nấu ăn ngon, văn hóa ẩm thực việt nam, kiến thức dinh dưỡng, công thức món ngon, hôm nay ăn gì',
+    image: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1200&auto=format&fit=crop&q=80',
+    imageAlt: 'Blog Ẩm Thực - Cẩm Nang Món Ngon & Bí Quyết Nấu Nướng',
+    priority: 0.9,
+    changefreq: 'daily',
+    lastmod: '2026-09-28',
+  },
 };
 
 /**
@@ -237,6 +249,23 @@ export function getAllSeoRoutes(): Record<string, RouteSeoMeta> {
         }
       }
     }
+  }
+
+  // 4. All Blog Posts
+  for (const post of INITIAL_BLOG_POSTS) {
+    const postPath = `/blog/${post.slug}`;
+    routes[postPath] = {
+      path: postPath,
+      title: `${post.title} | Blog Ẩm Thực Hôm Nay Ăn Gì`,
+      description: post.excerpt,
+      keywords: `${post.tags.join(', ')}, ${post.title.toLowerCase()}, blog ẩm thực, mẹo nấu ăn ngon, hôm nay ăn gì`,
+      image: post.coverImage,
+      imageAlt: post.title,
+      priority: 0.8,
+      changefreq: 'weekly',
+      lastmod: '2026-09-28',
+      isArticle: true,
+    };
   }
 
   return routes;

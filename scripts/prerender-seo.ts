@@ -96,7 +96,12 @@ function generateStaticHtmlPages() {
       }
       const customizedHtml = injectMeta(baseHtml, meta);
       fs.writeFileSync(path.join(subDir, 'index.html'), customizedHtml, 'utf-8');
-      fs.writeFileSync(path.join(distDir, `${cleanSub}.html`), customizedHtml, 'utf-8');
+      const htmlFlatPath = path.join(distDir, `${cleanSub}.html`);
+      const htmlFlatDir = path.dirname(htmlFlatPath);
+      if (!fs.existsSync(htmlFlatDir)) {
+        fs.mkdirSync(htmlFlatDir, { recursive: true });
+      }
+      fs.writeFileSync(htmlFlatPath, customizedHtml, 'utf-8');
       count++;
     }
   }
