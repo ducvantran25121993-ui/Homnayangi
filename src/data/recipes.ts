@@ -4935,6 +4935,629 @@ export const CURATED_RECIPES: Record<string, DishRecipe> = {
     recommendedSauce:
       'Chén muối hạt rang giã mắc khén hạt dổi ớt rừng nướng cay tê đầu lưỡi hoặc muối ớt xanh lá é Tây Nguyên, ăn cùng thanh cơm lam dẻo quánh thơm nức mùi tre nứa non.',
   },
+
+  'lau-ga-la-e': {
+    dishId: 'lau-ga-la-e',
+    dishName: 'Lẩu Gà Lá É Đà Lạt Thơm Nồng Cay Ấm',
+    seoTitle: 'Cách Nấu Lẩu Gà Lá É Thơm Nồng Cay Ấm Chuẩn Vị Phú Yên & Đà Lạt',
+    prepTime: '25 phút',
+    cookTime: '35 phút',
+    difficulty: 'Dễ',
+    servings: '4 - 5 người',
+    ingredients: [
+      {
+        category: 'Thịt gà ta thả vườn & Lá é tươi',
+        items: [
+          '1 con gà ta thả vườn (1.3 - 1.5kg), thịt săn chắc, da vàng óng, làm sạch chặt miếng vừa ăn',
+          '300g lá é trắng tươi non (thảo mộc họ húng thơm the nồng mùi tinh dầu chanh sả đặc trưng xứ lạnh)',
+          '300g măng le tươi (hoặc măng chua thái miếng vừa ăn, luộc xả nước cho bớt chua)',
+          '200g nấm bào ngư xám (hoặc nấm rơm tươi) ngâm nước muối loãng xé miếng vừa ăn',
+        ],
+      },
+      {
+        category: 'Gia vị giã nhuyễn & Nước dùng ngọt thanh',
+        items: [
+          '15 - 20 trái ớt xiêm xanh (ớt hiểm rừng) giã nhuyễn cùng 2 thìa cà phê muối hột, 4 củ hành tím và 4 nhánh sả đập dập (linh hồn cay ấm nồng nàn)',
+          '1 quả dừa xiêm tươi lấy nước (nấu nước lẩu ngọt thanh dịu mát tự nhiên)',
+          'Gia vị nêm: 2 thìa canh nước mắm nhĩ cốt, 1 thìa canh đường phèn, 1 thìa cà phê hạt nêm, tiêu sọ xay',
+        ],
+      },
+      {
+        category: 'Bún tươi & Muối chấm thịt gà',
+        items: [
+          '1kg bún tươi sợi nhỏ',
+          'Đĩa muối chấm: Muối hột giã nhuyễn với ớt xiêm xanh và vài đọt lá é tươi, vắt nước cốt chanh',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế gà ta và ướp thịt với ớt xiêm xanh, muối hột, sả',
+        time: '15 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Thịt gà sạch mùi tanh, ngấm sâu vị cay ấm nồng nàn của ớt xiêm và sả',
+        actionPoints: [
+          'Gà ta xát muối hạt và gừng đập dập rửa sạch, để thật ráo nước rồi chặt miếng vừa ăn.',
+          'Cho ớt xiêm xanh, sả cắt lát, hành tím và 2 thìa cà phê muối hột vào cối đá giã thật nhuyễn.',
+          'Ướp 2/3 phần hỗn hợp ớt sả giã nhuyễn vào thịt gà cùng 1 thìa nước mắm ngon và chút tiêu xay trong 20 phút.',
+        ],
+        description:
+          'Chặt gà miếng vừa ăn. Giã nhuyễn ớt xiêm xanh, sả, hành tím với muối hột. Ướp 2/3 hỗn hợp này vào thịt gà cùng nước mắm ngon và tiêu trong 20 phút cho thấm đượm vị cay thơm.',
+        tip: 'Ớt xiêm xanh giã cùng muối hột là bí quyết truyền thống của người Phú Yên giúp thịt gà dậy mùi thơm the nồng ấm mà không bị cay gắt.',
+      },
+      {
+        step: 2,
+        title: 'Xào săn thịt gà và nấu nước lẩu dừa tươi ngọt thanh',
+        time: '15 phút',
+        heat: 'Lửa lớn rồi hạ vừa',
+        goal: 'Thịt gà săn chắc bóng bẩy, nước dùng dừa tươi ngọt thanh ngập tràn hương sả ớt',
+        actionPoints: [
+          'Đun nóng 1 thìa canh dầu ăn trong nồi lẩu, cho 1/3 hỗn hợp sả ớt còn lại vào phi thơm lừng.',
+          'Trút thịt gà đã ướp vào đảo thật nhanh tay trên lửa lớn trong 5 phút cho thớ thịt săn chắc lại.',
+          'Đổ nước của 1 quả dừa xiêm tươi cùng 1.5 lít nước lọc vào nồi gà, đun sôi bùng rồi hạ lửa vừa, vớt sạch bọt cho nước trong veo.',
+        ],
+        description:
+          'Phi thơm phần sả ớt còn lại, trút thịt gà vào xào săn trên lửa lớn. Đổ nước dừa tươi và nước lọc vào đun sôi, hạ lửa vừa hớt bọt cho nước dùng trong và ngọt thanh.',
+      },
+      {
+        step: 3,
+        title: 'Thả măng le, nấm ngọt và nêm nếm nước lẩu thanh dịu',
+        time: '10 phút',
+        heat: 'Lửa vừa sôi lăn tăn',
+        goal: 'Măng và nấm chín giòn ngọt, nước lẩu đậm đà hài hòa vị mặn ngọt cay ấm',
+        actionPoints: [
+          'Cho măng le luộc chín và nấm bào ngư vào nồi lẩu nấu trong 5 phút cho tiết vị ngọt giòn.',
+          'Nêm 2 thìa canh nước mắm nhĩ ngon, đường phèn và chút hạt nêm sao cho nước lẩu có hậu vị ngọt thanh dịu mát, cay the êm dịu.',
+          'Đun sôi liu riu trên bếp lẩu tại bàn ăn, sẵn sàng nhúng lá é.',
+        ],
+        description:
+          'Cho măng le và nấm bào ngư vào nồi nấu chín tới. Nêm nước mắm cốt nhĩ, đường phèn cho tròn vị ngọt thanh cay ấm. Đặt nồi lẩu sôi lăn tăn trên bếp tại bàn.',
+      },
+      {
+        step: 4,
+        title: 'Nhúng lá é bốc khói nghi ngút và thưởng thức',
+        time: '3 phút',
+        heat: 'Nồi lẩu sôi sùng sục',
+        goal: 'Lá é chín tái thơm the dịu mát, thịt gà ngọt mềm dai giòn, bún nóng ngập nước dùng cay ấm',
+        actionPoints: [
+          'Lá é nhặt lấy ngọn non và lá tươi, rửa sạch để ráo.',
+          'Khi nồi lẩu sôi sùng sục, nhúng từng nắm lá é vào nước lẩu khoảng 10 - 15 giây cho lá vừa chín tái là vớt ra chén ăn ngay.',
+          'Múc thịt gà dai ngọt, măng le, nấm và nước lẩu chan vào tô bún tươi.',
+          'Chấm miếng thịt gà ta vào chén muối ớt xiêm xanh lá é vắt chanh chua cay mặn mòi, xì xụp từng thìa nước lẩu ấm sực giữa tiết trời se lạnh!',
+        ],
+        description:
+          'Nhặt lá é tươi để ráo. Khi nước lẩu sôi bùng, nhúng từng nhúm lá é chín tái ăn ngay cùng bún tươi, thịt gà và măng nấm. Chấm thịt gà vào đĩa muối ớt xiêm xanh lá é vắt chanh để cảm nhận trọn vẹn phong vị Đà Lạt.',
+        tip: 'Lá é chỉ nhúng chín tái rồi ăn liền; không để lá é trong nồi lẩu quá lâu kẻo lá bị nát nhũn, chuyển màu thâm đen và mất đi hương thơm tinh dầu the mát quý giá.',
+      },
+    ],
+    chefSecret:
+      'Lẩu gà lá é KHÔNG nấu chua cay như lẩu Thái; vị ngon tinh túy của món ăn nằm ở nước dùng ngọt thanh khiết từ xương gà thả đồi và nước dừa tươi, quyện cùng vị cay nồng ấm từ ớt xiêm xanh giã nhuyễn với muối hột; lá é chỉ nhúng tái ăn liền giúp giải cảm, ấm bụng và tạo nên hương vị gây thương nhớ.',
+    recommendedSauce:
+      'Đĩa muối hột giã nhuyễn cùng ớt xiêm xanh và lá é non, vắt thêm nước cốt chanh tươi chua cay mặn mòi chấm đẫm thịt gà dai ngọt.',
+  },
+
+  'banh-mi-xiu-mai-da-lat': {
+    dishId: 'banh-mi-xiu-mai-da-lat',
+    dishName: 'Bánh Mì Xíu Mại Chén Đà Lạt Nóng Hổi',
+    seoTitle: 'Cách Làm Bánh Mì Xíu Mại Chén Đà Lạt Nóng Hổi Chuẩn Vị Phố Sương Mù',
+    prepTime: '25 phút',
+    cookTime: '35 phút',
+    difficulty: 'Dễ',
+    servings: '4 - 5 phần',
+    ingredients: [
+      {
+        category: 'Viên xíu mại mềm mọng & Da heo giòn sần sật',
+        items: [
+          '400g thịt nạc vai heo xay nhuyễn (dắt 20% mỡ giúp viên thịt béo mềm ngọt, không khô xác)',
+          '100g giò sống (mọc heo) dẻo quánh giúp viên xíu mại kết dính dai giòn tự nhiên',
+          '1/2 củ sắn (củ đậu) băm nhỏ, vắt ráo bớt nước (bí quyết tạo độ giòn ngọt mọng nước bên trong viên thịt)',
+          '1/2 ổ bánh mì khô xé vụn ngâm chút sữa tươi vắt ráo (giúp viên xíu mại xốp mềm không bị chai cứng)',
+          '150g da heo làm sạch, luộc chín cắt miếng vuông vừa ăn',
+          '4 cây chả lụa hoặc chả quế que nhỏ',
+          'Gia vị ướp thịt: 1 thìa canh nước mắm ngon, 1 thìa cà phê tiêu đen xay, 1 thìa hạt nêm, hành tím và tỏi băm nhuyễn, 1 thìa dầu màu điều',
+        ],
+      },
+      {
+        category: 'Nước xúp cà chua xương hầm thanh ngọt',
+        items: [
+          '500g xương ống hoặc sườn heo ninh lấy 1.5 lít nước dùng trong veo',
+          '2 quả cà chua chín đỏ băm nhuyễn',
+          '1 thìa canh dầu màu điều phi thơm lấy màu đỏ cam óng ả',
+          'Hành lá thái nhỏ, ngò rí, mỡ hành óng ả, ớt sa tế cay nồng',
+          'Gia vị: 1.5 thìa canh nước mắm ngon, 1 thìa canh đường phèn, hạt nêm, muối hạt',
+        ],
+      },
+      {
+        category: 'Bánh mì ăn kèm giòn rụm',
+        items: ['4 - 5 ổ bánh mì vỏ giòn ruột xốp nướng nóng hổi'],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Trộn và vo viên xíu mại xốp mềm mọng nước',
+        time: '15 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Viên thịt xíu mại tròn căng đều đặn, kết dính dẻo mịn, điểm xuyết củ sắn giòn ngọt',
+        actionPoints: [
+          'Cho thịt xay, giò sống, củ sắn đã vắt ráo và vụn bánh mì vào âu lớn.',
+          'Thêm hành tỏi băm, nước mắm, tiêu xay, hạt nêm và 1 thìa dầu màu điều.',
+          'Dùng tay nhồi trộn và quết nhẹ liên tục trong 5 phút cho hỗn hợp dẻo quyện kết dính.',
+          'Thoa chút dầu ăn lên lòng bàn tay, vo thịt thành từng viên tròn cỡ quả trứng gà nhỏ (khoảng 8 - 10 viên).',
+        ],
+        description:
+          'Trộn thịt xay, giò sống, củ sắn vắt ráo và vụn bánh mì với gia vị, tiêu, tỏi hành và dầu điều. Quết đều tay cho dẻo dính rồi vo thành từng viên tròn cỡ quả trứng gà nhỏ.',
+        tip: 'Vắt ráo nước ở củ sắn trước khi trộn để viên xíu mại không bị nhão, giữ được độ giòn ngọt mọng nước khi hấp chín.',
+      },
+      {
+        step: 2,
+        title: 'Hấp chín viên xíu mại giữ trọn vị ngọt thịt',
+        time: '15 phút',
+        heat: 'Lửa vừa hơi nước mạnh',
+        goal: 'Viên xíu mại chín căng mọng, tiết ra nước thịt ngọt ngào không bị vỡ nát',
+        actionPoints: [
+          'Xếp các viên xíu mại vào đĩa sâu lòng, đặt vào xửng hấp cách thủy trên lửa vừa trong 12 - 15 phút.',
+          'Khi thịt chín săn chắc, lấy đĩa xíu mại ra. Giữ lại toàn bộ phần nước thịt tiết ra trong đĩa để đổ vào nồi nước xúp.',
+        ],
+        description:
+          'Xếp xíu mại vào đĩa sâu lòng hấp cách thủy 12 - 15 phút cho chín tới. Giữ lại nước thịt tiết ra từ đĩa để nấu nước xúp cho ngọt đậm đà.',
+      },
+      {
+        step: 3,
+        title: 'Nấu nồi nước xúp cà chua xương hầm thanh ngọt',
+        time: '15 phút',
+        heat: 'Lửa vừa',
+        goal: 'Nước xúp màu đỏ cam óng ả sóng sánh, vị ngọt thanh từ xương và cà chua, da heo giòn sần sật',
+        actionPoints: [
+          'Đun nóng 1 thìa dầu màu điều, phi thơm hành tím băm rồi cho cà chua băm nhuyễn vào xào chín mềm tạo màu đỏ cam đẹp mắt.',
+          'Trút nước hầm xương và toàn bộ nước hấp xíu mại vào nồi cà chua đun sôi bùng.',
+          'Thả các viên xíu mại đã hấp chín và da heo luộc vào nồi, hạ lửa nhỏ nấu liu riu trong 10 phút cho ngấm vị.',
+          'Nêm nước mắm cốt, đường phèn và muối hạt cho vừa miệng, có vị ngọt thanh thanh dịu nhẹ.',
+        ],
+        description:
+          'Xào chín cà chua với dầu điều tạo màu đỏ cam óng ả. Đổ nước hầm xương và nước hấp thịt vào đun sôi, thả xíu mại và da heo vào đun liu riu 10 phút. Nêm nước mắm, đường phèn cho ngọt thanh.',
+      },
+      {
+        step: 4,
+        title: 'Múc xíu mại ra chén nóng, rưới mỡ hành và chấm bánh mì giòn tan',
+        time: '5 phút',
+        heat: 'Nóng hổi bốc khói',
+        goal: 'Chén xíu mại nóng hổi bốc khói ngùn ngụt, viên thịt mềm ngọt ngập nước xúp óng ả mỡ hành và ớt sa tế',
+        actionPoints: [
+          'Làm nóng chén sứ nhỏ. Múc vào mỗi chén 2 viên xíu mại, vài miếng da heo giòn sần sật và 1 cây chả que.',
+          'Chan ngập nước xúp cà chua đang sôi sùng sục vào chén.',
+          'Rắc nhiều hành lá, ngò rí thái nhỏ, rưới 1 thìa mỡ hành óng ả và một thìa ớt sa tế cay nồng lên trên cùng chút tiêu xay.',
+          'Nướng nóng bánh mì cho giòn rụm; bẻ từng miếng bánh mì chấm đẫm vào chén xúp xíu mại nóng bỏng tay thưởng thức ngay!',
+        ],
+        description:
+          'Múc 2 viên xíu mại, da heo và chả que vào chén nhỏ, chan ngập nước xúp nóng hổi. Rắc hành ngò, mỡ hành, tiêu và ớt sa tế cay xè. Bẻ bánh mì giòn tan chấm đẫm vào chén xúp ấm sực giữa trời sương mù Đà Lạt.',
+      },
+    ],
+    chefSecret:
+      'Bánh mì xíu mại Đà Lạt chuẩn vị phải thưởng thức trong từng chén nhỏ nghi ngút khói: 1. Viên thịt béo mềm mọng nước nhờ củ sắn giòn ngọt và vụn bánh mì; 2. Nước xúp ninh từ xương heo và cà chua xào dầu điều thanh ngọt; 3. Không thể thiếu miếng da heo dai giòn sần sật, mỡ hành thơm nức và ớt sa tế cay xé lưỡi, bẻ miếng bánh mì nóng giòn chấm ngập chén xúp làm tan biến cái lạnh cao nguyên.',
+    recommendedSauce:
+      'Nước xúp xíu mại đậm đà thơm ngát mỡ hành và ớt sa tế cay nồng, ăn kèm chả que và da heo giòn sần sật.',
+  },
+
+  'banh-trang-nuong-da-lat': {
+    dishId: 'banh-trang-nuong-da-lat',
+    dishName: 'Bánh Tráng Nướng Đà Lạt Trứng Cút Mỡ Hành',
+    seoTitle: 'Cách Làm Bánh Tráng Nướng Đà Lạt Giòn Rụm Chuẩn Vị Pizza Việt Nam',
+    prepTime: '10 phút',
+    cookTime: '15 phút',
+    difficulty: 'Dễ',
+    servings: '4 - 5 cái',
+    ingredients: [
+      {
+        category: 'Vỏ bánh tráng nướng',
+        items: [
+          '4 - 5 cái bánh tráng mè hoặc bánh tráng gạo tròn chuyên nướng (loại dày vừa phải, không dễ rách)',
+        ],
+      },
+      {
+        category: 'Topping chuẩn vị xe đẩy Đà Lạt',
+        items: [
+          '8 - 10 quả trứng cút tươi (hoặc 2 quả trứng gà)',
+          '3 thìa canh bơ thực vật vàng óng béo ngậy',
+          '1 chén mỡ hành lá xanh mướt óng ả (hành lá thái nhỏ dội dầu nóng)',
+          '50g tép khô đỏ (ruốc sấy cay mặn ngọt)',
+          '2 cây xúc xích (hoặc lạp xưởng) thái lát mỏng',
+          '50g chà bông heo (ruốc thịt) tơi xốp hoặc thịt băm xào chín',
+          '4 miếng phô mai con bò cười (hoặc phô mai Mozzarella kéo sợi béo ngậy)',
+        ],
+      },
+      {
+        category: 'Nước sốt rưới bánh',
+        items: [
+          'Sốt mayonnaise béo ngậy',
+          'Tương ớt cay nồng đậm đà',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Làm nóng vỉ than hoa hoặc chảo chống dính',
+        time: '3 phút',
+        heat: 'Lửa than hoa đỏ hồng / Lửa nhỏ chảo chống dính',
+        goal: 'Nhiệt độ đều, không quá nóng kẻo làm cháy bánh tráng',
+        actionPoints: [
+          'Nếu nướng than: Quạt than hoa đỏ rực không để bốc khói hay ngọn lửa.',
+          'Nếu làm tại nhà: Đặt chảo chống dính đáy dày lên bếp ở lửa nhỏ vừa cho nóng chảo.',
+          'Đặt 1 chiếc bánh tráng lên vỉ than (hoặc lòng chảo khô).',
+        ],
+        description:
+          'Làm nóng vỉ than hoa hoặc chảo chống dính trên lửa nhỏ vừa. Đặt chiếc bánh tráng phẳng lên mặt vỉ hoặc chảo khô.',
+      },
+      {
+        step: 2,
+        title: 'Quết bơ, mỡ hành và tán đều trứng cút',
+        time: '3 phút',
+        heat: 'Lửa nhỏ vừa xoay tròn bánh',
+        goal: 'Trứng chín đều quyện bơ mỡ hành phủ kín mặt bánh, bánh tráng bắt đầu phồng giòn',
+        actionPoints: [
+          'Quết 1 thìa cà phê bơ vàng và 1 thìa mỡ hành lên mặt bánh tráng.',
+          'Đập 2 quả trứng cút tươi trực tiếp lên mặt bánh.',
+          'Dùng muỗng hoặc cọ quét nhanh tay tán đều trứng, bơ và mỡ hành khắp bề mặt bánh tráng.',
+          'Liên tục dùng tay xoay tròn chiếc bánh tráng trên vỉ/chảo để nhiệt tỏa đều, mép bánh không bị cháy.',
+        ],
+        description:
+          'Quết bơ và mỡ hành, đập 2 quả trứng cút rồi dùng muỗng tán đều khắp mặt bánh. Xoay tròn bánh tráng liên tục trên lửa nhỏ cho trứng bắt đầu chín se mặt và quyện thơm nức mùi bơ hành.',
+        tip: 'Tán mỏng trứng thật nhanh tay khi bánh vừa nóng ấm để trứng chín đều mịn màng mà không làm ỉu bánh tráng.',
+      },
+      {
+        step: 3,
+        title: 'Rải đều các loại topping phong phú lên mặt bánh',
+        time: '3 phút',
+        heat: 'Lửa nhỏ',
+        goal: 'Topping nóng giòn, phô mai tan chảy béo ngậy, bánh tráng giòn rụm từ viền vào tâm',
+        actionPoints: [
+          'Khi trứng vừa chín tới, rải đều tép khô đỏ, xúc xích thái lát mỏng, chà bông heo và tán nhỏ miếng phô mai lên trên.',
+          'Tiếp tục xoay đều bánh tráng trên lửa nhỏ cho phô mai tan chảy, vỏ bánh tráng phía dưới vàng ruộm giòn tan.',
+        ],
+        description:
+          'Rải đều tép khô đỏ, xúc xích, chà bông và phô mai lên mặt bánh. Xoay đều bánh thêm 2 - 3 phút cho phô mai tan chảy quyện vào topping, đáy bánh vàng ruộm giòn tan rôm rốp.',
+      },
+      {
+        step: 4,
+        title: 'Rưới sốt mayonnaise, tương ớt và gấp đôi thưởng thức giòn tan',
+        time: '1 phút',
+        heat: 'Thưởng thức nóng giòn',
+        goal: 'Chiếc bánh tráng nướng vàng ruộm thơm nức, cắn vào giòn tan rôm rốp, béo ngậy cay cay ngọt mặn bùng nổ',
+        actionPoints: [
+          'Rưới sốt mayonnaise và tương ớt thành đường zíc zắc đan xen lên toàn bộ mặt bánh.',
+          'Dùng kẹp khéo léo gập đôi chiếc bánh tráng lại (hoặc để nguyên chiếc cắt miếng tam giác kiểu pizza).',
+          'Cho vào giấy gói cầm tay và cắn ngay một miếng khi bánh còn nóng bỏng tay, cảm nhận tiếng vỡ giòn tan rôm rốp!',
+        ],
+        description:
+          'Rưới mayonnaise và tương ớt lên mặt, gấp đôi bánh lại hoặc để nguyên chiếc. Cầm tay cắn ngay khi còn nóng giòn cảm nhận trọn vẹn vị béo bùi, giòn rụm đậm đà của Pizza Việt Nam.',
+      },
+    ],
+    chefSecret:
+      'Tuyệt chiêu nướng bánh tráng Đà Lạt giòn rụm không cháy nằm ở động tác: 1. Nướng ở lửa nhỏ vừa và xoay tròn bánh tráng liên tục trên mặt vỉ than hoặc lòng chảo để nhiệt tỏa đều từ tâm ra mép; 2. Đập trứng cút và tán mỏng nhanh tay khi bánh vừa ấm nóng; 3. Sự kết hợp giữa bơ thơm, phô mai dẻo béo ngậy, tép khô cay ngọt và tương ớt mayonnaise tạo nên món "Pizza đường phố" gây nghiện.',
+    recommendedSauce:
+      'Sốt mayonnaise béo ngậy đan xen tương ớt cay nồng đậm đà rưới zíc zắc lên bề mặt bánh nóng giòn.',
+  },
+
+  'bun-bo-hue-chay': {
+    dishId: 'bun-bo-hue-chay',
+    dishName: 'Bún Bò Huế Chay Nấm Đậu Hũ Thơm Nồng',
+    seoTitle: 'Cách Nấu Bún Bò Huế Chay Thanh Đạm, Đậm Đà Chuẩn Vị Cơm Chay',
+    prepTime: '25 phút',
+    cookTime: '40 phút',
+    difficulty: 'Dễ',
+    servings: '4 - 5 người',
+    ingredients: [
+      {
+        category: 'Nước dùng rau củ quả ngọt thanh (Không dùng xương)',
+        items: [
+          '1 bắp ngô ngọt, 1 củ cải trắng, 1 củ sắn (củ đậu), 1 củ cà rốt, 1 quả lê (hoặc quả táo/mía lau ngọt lịm)',
+          '6 nhánh sả cây đập dập bó tròn (linh hồn tạo hương thơm nồng nàn của bún bò xứ Huế)',
+          '1 mẩu gừng nướng thơm đập dập, 1 củ hành boa-rô (tỏi tây) cắt khúc',
+        ],
+      },
+      {
+        category: 'Nhân bún bò chay đậm đà',
+        items: [
+          '2 miếng đậu hũ trắng cắt vuông chiên vàng giòn',
+          '150g nấm đùi gà (hoặc nấm rơm, nấm đông cô tươi) thái lát vừa ăn',
+          '50g bò lát chay ngâm nở mềm, vắt ráo nước, ướp tiêu hạt nêm chay rồi xào săn',
+          '100g chả lụa chay cắt lát tròn',
+          '50g tàu hũ ky (váng đậu) chiên phồng giòn rụm',
+        ],
+      },
+      {
+        category: 'Sa tế sả ớt & Gia vị nước lèo',
+        items: [
+          '2 thìa canh dầu màu điều óng ả',
+          '3 thìa canh sả băm nhuyễn, 1 thìa ớt bột Huế và ớt băm cay nồng',
+          '2 thìa canh chao trắng tán nhuyễn (bí quyết gia truyền tạo vị bùi béo và hậu vị đượm đà thay thế mắm ruốc chay)',
+          'Gia vị: 1.5 thìa canh đường phèn, 2 thìa cà phê hạt nêm nấm chay, muối hạt',
+        ],
+      },
+      {
+        category: 'Sợi bún & Rau ghém ăn kèm',
+        items: [
+          '1kg sợi bún bò Huế to dẻo dai',
+          'Bắp chuối bào, rau muống chẻ sợi, giá đỗ tươi, rau húng quế, ngò gai, chanh tươi',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Ninh nước dùng rau củ quả ngọt thanh tự nhiên cùng sả cây đập dập',
+        time: '30 phút',
+        heat: 'Lửa vừa liu riu',
+        goal: 'Nước dùng trong veo, ngọt lịm tự nhiên từ củ quả tươi, dậy mùi sả thơm ngát',
+        actionPoints: [
+          'Ngô ngọt, củ sắn, củ cải, cà rốt và lê gọt vỏ rửa sạch cắt khúc lớn.',
+          'Cho tất cả củ quả vào nồi cùng 2.5 lít nước, thêm sả cây đập dập, gừng nướng và chút muối hạt.',
+          'Đun sôi bùng rồi hạ lửa nhỏ ninh liu riu trong 30 phút cho củ quả tiết trọn vị ngọt tự nhiên, sau đó vớt bỏ xác củ quả.',
+        ],
+        description:
+          'Cắt khúc bắp ngọt, củ sắn, củ cải, cà rốt và lê cho vào nồi ninh cùng sả cây đập dập, gừng nướng trong 30 phút lấy nước dùng ngọt thanh tự nhiên, vớt bỏ xác.',
+        tip: 'Ninh củ quả trên lửa liu riu và hớt bọt để nước dùng trong vắt, có vị ngọt hậu sâu lắng mà không cần mì chính hay bột ngọt.',
+      },
+      {
+        step: 2,
+        title: 'Xào sa tế sả ớt dầu điều và chao trắng dậy mùi thơm nức',
+        time: '5 phút',
+        heat: 'Lửa nhỏ',
+        goal: 'Sa tế sả ớt màu đỏ cam óng ả, thơm nồng quyện vị béo ngậy của chao trắng',
+        actionPoints: [
+          'Đun nóng dầu màu điều trên chảo, cho sả băm và boa-rô vào phi vàng thơm lừng.',
+          'Thêm ớt bột Huế và ớt băm vào đảo đều tạo màu đỏ đẹp mắt.',
+          'Cho 2 thìa chao trắng tán nhuyễn vào đảo đều trên lửa nhỏ trong 1 phút cho tan quyện.',
+        ],
+        description:
+          'Phi thơm sả băm, boa-rô với dầu điều, thêm ớt bột Huế và 2 thìa chao trắng tán nhuyễn đảo đều tay tạo hỗn hợp sa tế màu đỏ cam béo bùi thơm nức.',
+        tip: 'Chao trắng tán nhuyễn xào cùng sa tế là tuyệt kỹ giúp nước lèo bún bò chay có độ béo ngậy và vị thơm mằn mặn đặc trưng y hệt mắm ruốc Cố Đô.',
+      },
+      {
+        step: 3,
+        title: 'Xào nấm, bò lát chay và nêm nếm nồi nước lèo đậm đà',
+        time: '10 phút',
+        heat: 'Lửa vừa',
+        goal: 'Nấm và bò lát chay ngấm vị đậm đà, nước lèo óng ả dậy mùi sả thơm nức',
+        actionPoints: [
+          'Trút bò lát chay và nấm vào chảo sa tế xào săn trong 3 phút với 1 thìa hạt nêm nấm chay.',
+          'Trút toàn bộ phần nhân xào và đậu hũ chiên vào nồi nước dùng củ quả đang sôi lăn tăn.',
+          'Nêm đường phèn, muối hạt và hạt nêm chay cho vị nước lèo thanh đạm, đậm đà vừa vặn.',
+        ],
+        description:
+          'Xào săn bò lát chay và nấm cùng sa tế, rồi trút vào nồi nước dùng củ quả cùng đậu hũ chiên. Nêm đường phèn, muối và hạt nêm nấm cho nước lèo đậm đà vừa miệng.',
+      },
+      {
+        step: 4,
+        title: 'Trụng sợi bún to, xếp nhân chả nấm và chan nước lèo nóng hổi',
+        time: '5 phút',
+        heat: 'Nước dùng sôi sùng sục',
+        goal: 'Tô bún bò chay bốc khói ngùn ngụt, màu sắc đỏ cam rực rỡ, vị thanh ngọt đậm đà đánh thức mọi giác quan',
+        actionPoints: [
+          'Chần sợi bún to qua nước sôi cho nóng dẻo rồi xếp vào tô.',
+          'Gắp đậu hũ chiên, nấm, bò lát chay, lát chả lụa chay và miếng tàu hũ ky giòn rụm xếp lên mặt tô.',
+          'Rắc hành boa-rô, ngò gai thái nhỏ và chan ngập nước lèo sa tế đang sôi sùng sục.',
+          'Vắt chút chanh tươi, ăn kèm đĩa rau bắp chuối bào, rau muống chẻ giòn mát thưởng thức nóng hổi!',
+        ],
+        description:
+          'Trụng bún xếp vào tô, bày đậu hũ, nấm, bò lát chay, chả lụa chay và tàu hũ ky giòn rụm lên trên. Rắc ngò gai boa-rô rồi chan ngập nước lèo sôi sùng sục. Thưởng thức nóng cùng bắp chuối bào và chanh ớt.',
+      },
+    ],
+    chefSecret:
+      'Nấu bún bò Huế chay đậm đà không hề khó: 1. Nước dùng nấu từ bắp ngọt, củ sắn, lê và sả cây đập dập tạo vị ngọt thanh khiết tự nhiên; 2. Chao trắng tán nhuyễn xào cùng sa tế sả ớt dầu điều tạo nên vị béo ngậy, thơm nồng mằn mặn thay thế trọn vẹn cho mắm ruốc Huế truyền thống.',
+    recommendedSauce:
+      'Chén sa tế sả ớt rim dầu điều cay tê lưỡi cùng chanh tươi vắt vào tô bún bốc khói ngùn ngụt.',
+  },
+
+  'muc-mot-nang-nuong-sa-te': {
+    dishId: 'muc-mot-nang-nuong-sa-te',
+    dishName: 'Mực Một Nắng Nướng Than Hoa Sa Tế Cay Xè',
+    seoTitle: 'Cách Làm Mực Nướng Sa Tế Giòn Sần Sật, Thơm Lừng Khói Than Chuẩn Quán',
+    prepTime: '20 phút',
+    cookTime: '15 phút',
+    difficulty: 'Dễ',
+    servings: '3 - 4 người',
+    ingredients: [
+      {
+        category: 'Mực tươi ngon mình dày',
+        items: [
+          '1kg mực một nắng (hoặc mực lá, mực ống tươi con lớn, thân dày cộm, thịt trắng phau)',
+          '1 củ gừng tươi đập dập và 2 thìa canh rượu trắng rửa khử tanh mực',
+        ],
+      },
+      {
+        category: 'Sốt ướp sa tế nướng chuẩn quán nhậu',
+        items: [
+          '2 thìa canh sa tế tôm cay nồng (có lẫn ớt rim và sả băm)',
+          '1 thìa canh dầu hào ngon',
+          '1 thìa canh mật ong nguyên chất (giúp mực lên màu cánh gián óng ả và giữ thớ thịt mọng ngọt)',
+          '1 thìa canh nước mắm cốt nhĩ',
+          '1 thìa cà phê tiêu sọ đen giã dập, 1 thìa cà phê hạt nêm',
+          '1 củ tỏi và 2 củ hành tím băm nhuyễn, 1 thìa canh dầu màu điều',
+        ],
+      },
+      {
+        category: 'Rau ăn kèm & Đồ chấm',
+        items: [
+          'Rau răm tươi cay ấm, dưa leo giòn mát',
+          'Chén muối ớt xanh Nha Trang chua cay sánh mịn (hoặc muối tiêu chanh ớt hiểm)',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế mực sạch sẽ và khía vảy rồng đều tay',
+        time: '10 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Mực sạch tinh tươm, ráo nước hoàn toàn, vết khía đẹp mắt nở hoa khi nướng',
+        actionPoints: [
+          'Mực rửa qua nước pha rượu trắng và gừng đập dập để khử sạch mùi tanh.',
+          'Dùng khăn sạch hoặc khăn giấy bếp thấm thật khô ráo toàn bộ thân mực.',
+          'Dùng dao sắc khía các đường chéo đan hình carô (vảy rồng) trên bề mặt thân mực.',
+        ],
+        description:
+          'Rửa mực với rượu gừng khử tanh, thấm thật khô ráo. Dùng dao sắc khía hình carô vảy rồng đều tay trên thân mực để mực ngấm sốt và nở bung đẹp mắt khi nướng.',
+        tip: 'Phải thấm thật khô ráo thân mực trước khi ướp sốt để mực bám gia vị và khi nướng không bị chảy nước làm mềm nhão thớ thịt.',
+      },
+      {
+        step: 2,
+        title: 'Pha sốt sa tế dầu hào mật ong và tẩm ướp mực',
+        time: '15 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Sốt sa tế sánh đỏ óng ánh bám đều đặn khắp các thớ mực',
+        actionPoints: [
+          'Cho vào bát gồm sa tế tôm, dầu hào, mật ong, nước mắm, tiêu sọ, hạt nêm, tỏi hành băm và dầu màu điều khuấy đều thành hỗn hợp sốt sánh mịn.',
+          'Thoa đều sốt ướp lên khắp thân mực và các rãnh khía vảy rồng.',
+          'Để mực thấm gia vị trong 15 - 20 phút trước khi nướng.',
+        ],
+        description:
+          'Khuấy đều sa tế, dầu hào, mật ong, nước mắm, tiêu, tỏi hành băm và dầu điều. Thoa đều sốt lên thân mực và các rãnh khía, ướp trong 15 - 20 phút.',
+        tip: 'Mật ong trong sốt ướp giúp thịt mực giữ trọn độ mọng nước tự nhiên, không bị teo khô xác khi nướng trên nhiệt độ cao.',
+      },
+      {
+        step: 3,
+        title: 'Nướng mực trên than hoa đỏ rực vàng ruộm xém cạnh',
+        time: '8 - 10 phút',
+        heat: 'Than hoa đỏ rực / Nồi chiên không dầu 190°C',
+        goal: 'Mực cong tròn nở bung vảy rồng, màu vàng ruộm xém cạnh tươm mỡ, bốc khói thơm nức mũi mùi sa tế',
+        actionPoints: [
+          'Kẹp mực vào vỉ nướng, đặt lên bếp than hoa đỏ rực không có khói đen.',
+          'Nướng trên lửa lớn, trở mặt liên tục 1 - 2 phút một lần để mực chín đều.',
+          'Trong quá trình nướng, dùng cọ quét thêm lớp sốt sa tế còn lại lên bề mặt mực cho mực bóng bẩy đậm đà.',
+          'Nướng khoảng 6 - 8 phút đến khi thân mực phồng căng, thịt chuyển màu trắng đục và viền ngoài xém vàng cánh gián là chín tới hoàn hảo.',
+        ],
+        description:
+          'Kẹp mực lên vỉ than hoa đỏ rực, trở mặt liên tục và quét thêm sốt sa tế trong lúc nướng. Nướng 6 - 8 phút cho mực phồng căng, nở bung vảy rồng xém vàng thơm nức mùi khói.',
+        tip: 'Mực chín rất nhanh; nướng lửa lớn và trở mặt đều tay trong 6 - 8 phút, tuyệt đối không nướng quá lâu kẻo mực bị dai và mất độ ngọt tự nhiên.',
+      },
+      {
+        step: 4,
+        title: 'Cắt miếng vừa ăn và thưởng thức cùng muối ớt xanh',
+        time: '3 phút',
+        heat: 'Thưởng thức nóng',
+        goal: 'Miếng mực nướng giòn sần sật mọng nước, vị cay xé lưỡi quyện ngọt thơm béo ngậy',
+        actionPoints: [
+          'Dùng kéo hoặc dao sắc cắt thân mực thành từng miếng dài vừa ăn theo đường khía vảy rồng.',
+          'Bày mực ra đĩa, trang trí rau răm tươi và dưa leo thái lát xung quanh.',
+          'Chấm từng miếng mực nướng nóng hổi vào chén muối ớt xanh Nha Trang chua cay sánh mịn, cảm nhận độ giòn sần sật ngọt lịm mọng nước!',
+        ],
+        description:
+          'Cắt mực thành từng miếng vừa ăn bày lên đĩa cùng rau răm, dưa leo. Chấm miếng mực nướng nóng hổi vào chén muối ớt xanh chua cay sánh mịn, cắn ngập miệng cảm nhận thớ mực giòn sần sật ngọt lịm.',
+      },
+    ],
+    chefSecret:
+      '3 bí quyết vàng cho món mực nướng sa tế chuẩn quán nhậu: 1. Thấm thật khô ráo mực và khía vảy rồng giúp sốt ngấm sâu và miếng mực nở bung bắt mắt; 2. Cho mật ong vào sốt ướp giúp thịt mực giữ nước ngọt mềm và lên màu cánh gián hấp dẫn; 3. Nướng nhanh tay trên than đỏ rực trong 6 - 8 phút để thớ mực đạt độ giòn sần sật hoàn hảo, không bị khô dai.',
+    recommendedSauce:
+      'Chén muối ớt xanh Nha Trang chua cay thơm ngậy lá chanh hoặc muối tiêu chanh ớt hiểm chấm đẫm thớ mực giòn sần sật.',
+  },
+
+  'heo-quay-banh-hoi': {
+    dishId: 'heo-quay-banh-hoi',
+    dishName: 'Heo Quay Da Giòn Bánh Hỏi Mỡ Hành',
+    seoTitle: 'Cách Làm Heo Quay Bánh Hỏi Da Nổ Giòn Rụm, Đậm Đà Chuẩn Vị Gia Đình',
+    prepTime: '30 phút',
+    cookTime: '45 phút',
+    difficulty: 'Trung bình',
+    servings: '4 - 5 người',
+    ingredients: [
+      {
+        category: 'Thịt heo quay nổ bì giòn rụm',
+        items: [
+          '1kg thịt ba rọi (ba chỉ) heo tươi, thớ thịt nạc mỡ đan xen đều đặn, lớp bì mỏng phẳng',
+          'Gia vị ướp thịt nạc: 1 thìa cà phê ngũ vị hương, 1 thìa canh nước mắm nhĩ ngon, 1 thìa cà phê bột tỏi, 1 thìa cà phê bột hành, 1 thìa cà phê tiêu trắng xay, 1/2 thìa đường, 1/2 thìa dầu hào',
+          'Hỗn hợp quét da nổ giòn tan: 1 thìa canh giấm trắng + 1 thìa cà phê muối tinh',
+        ],
+      },
+      {
+        category: 'Bánh hỏi & Mỡ hành hẹ thơm nức',
+        items: [
+          '500g bánh hỏi tươi sợi nhỏ mịn màng dẻo dai (hoặc bánh hỏi khô hấp mềm)',
+          '1 nắm hành lá và lá hẹ tươi thái nhỏ',
+          '4 thìa canh mỡ heo nóng (hoặc dầu ăn) + vài thìa tóp mỡ rán vàng giòn rụm',
+        ],
+      },
+      {
+        category: 'Rau sống & Nước mắm tỏi ớt chua ngọt',
+        items: [
+          'Rau sống tươi: Xà lách, rau diếp cá, húng quế, kinh giới, tía tô, dưa leo xắt thanh',
+          'Đồ chua củ cải cà rốt ngâm giấm đường, củ kiệu chua ngọt',
+          'Nước mắm kẹo: 3 thìa canh nước mắm nhĩ cốt, 3 thìa canh đường vàng, 3 thìa canh nước ấm, 1.5 thìa canh nước cốt chanh, tỏi ớt băm nhuyễn nổi bồng bềnh',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế thịt ba chỉ, luộc sơ da và xăm lỗ chân lông đều tay',
+        time: '15 phút',
+        heat: 'Lửa vừa chần da',
+        goal: 'Mặt da sạch sẽ, xăm đều chi chít để khi nướng da nổ phồng rộp giòn tan',
+        actionPoints: [
+          'Cạo sạch lông tơ ở bì heo, xát muối chanh rửa sạch.',
+          'Cho miếng thịt vào nồi nước sôi úp phần da xuống đáy, luộc sơ phần da trong 3 - 5 phút cho da vừa chín tới rồi vớt ra ngâm nước lạnh.',
+          'Dùng dĩa hoặc kim xăm nhọn xăm đều chi chít khắp bề mặt da (xăm nông đều tay, tránh đâm sâu vào lớp mỡ).',
+          'Dùng khăn giấy bếp lau thật khô ráo toàn bộ nước và mỡ ứa ra trên mặt da.',
+        ],
+        description:
+          'Chần chín phần da heo 3 - 5 phút, vớt ra ngâm nước lạnh. Dùng kim hoặc dĩa xăm đều chi chít lên da rồi lấy khăn giấy thấm thật khô ráo mồ hôi nước trên mặt da.',
+        tip: 'Chỉ xăm lớp bì ngoài, không đâm thủng lớp mỡ kẻo mỡ trào lên làm ỉu bì khi nướng.',
+      },
+      {
+        step: 2,
+        title: 'Tẩm ướp gia vị thịt và quét giấm muối lên da sấy khô',
+        time: '15 phút',
+        heat: 'Nhiệt độ phòng / Quạt gió',
+        goal: 'Thịt ngấm đều gia vị ngũ vị hương thơm nức, mặt da khô cong se lại',
+        actionPoints: [
+          'Khía vài đường nông trên phần thịt nạc để ngấm gia vị.',
+          'Xoa đều hỗn hợp ngũ vị hương, nước mắm, bột tỏi hành, tiêu, dầu hào lên các mặt thịt nạc (tuyệt đối không để dính vào da).',
+          'Quét một lớp mỏng giấm trắng trộn muối tinh lên khắp bề mặt da.',
+          'Để miếng thịt trước quạt gió hoặc trong ngăn mát tủ lạnh 30 phút cho mặt da thật khô ráo.',
+        ],
+        description:
+          'Xoa đều gia vị ngũ vị hương, mắm tiêu tỏi lên phần thịt nạc (không dính vào da). Quét một lớp giấm muối mỏng lên da rồi để trước quạt cho mặt da thật khô se lại.',
+      },
+      {
+        step: 3,
+        title: 'Nướng thịt ba chỉ nổ bì da giòn rụm rôm rốp',
+        time: '35 - 40 phút',
+        heat: 'Nồi chiên không dầu 180°C - 200°C / Lò nướng',
+        goal: 'Bì heo nổ phồng rộp lấm tấm vàng ruộm giòn tan, thịt nạc bên trong mềm mọng nước không bị khô',
+        actionPoints: [
+          'Bọc giấy bạc xung quanh các mặt thịt nạc, chỉ để lộ phần da lên trên.',
+          'Nướng lần 1 ở 180°C trong 25 phút cho thịt chín đều và da săn lại.',
+          'Lấy ra gạt bỏ lớp muối khô trên da nếu có, tăng nhiệt độ lên 200°C nướng tiếp trong 12 - 15 phút.',
+          'Quan sát thấy lớp da nổ lách tách phồng rộp đều khắp mặt, màu vàng ruộm giòn tan thì lấy ra để nguội 5 phút.',
+        ],
+        description:
+          'Bọc giấy bạc quanh thịt nạc để hở da, nướng 180°C trong 25 phút. Tăng nhiệt lên 200°C nướng tiếp 12 - 15 phút đến khi bì nổ lách tách phồng rộp vàng ruộm giòn tan.',
+        tip: 'Sau khi nướng xong, để thịt nghỉ 5 phút trên thớt rồi dùng dao sắc lật ngửa phần da xuống thớt chặt dứt khoát thành từng miếng vừa ăn để da không bị vỡ vụn.',
+      },
+      {
+        step: 4,
+        title: 'Thoa mỡ hành hẹ lên bánh hỏi, chặt thịt heo quay và thưởng thức',
+        time: '5 phút',
+        heat: 'Thưởng thức tươi ngon',
+        goal: 'Miếng heo quay da giòn rụm quyện bánh hỏi dẻo mềm mướt mỡ hành, chấm ngập nước mắm tỏi ớt kẹo',
+        actionPoints: [
+          'Hành lá và lá hẹ thái nhỏ cho vào bát sứ, dội mỡ heo sôi vào làm mỡ hành óng ả, trộn thêm tóp mỡ giòn.',
+          'Gỡ từng miếng bánh hỏi tươi dẻo mịn xếp ra đĩa, dùng cọ phết đẫm mỡ hành hẹ óng ả lên mặt.',
+          'Chặt thịt heo quay da giòn xếp đều bên cạnh đĩa bánh hỏi.',
+          'Bày đĩa rau sống, dưa leo, đồ chua và bát nước mắm tỏi ớt chua ngọt kẹo sánh.',
+          'Gắp miếng bánh hỏi mềm mướt kẹp cùng miếng thịt heo quay da nổ giòn tan, chấm ngập vào chén nước mắm đậm đà bùng nổ vị giác!',
+        ],
+        description:
+          'Dội mỡ heo nóng vào hành lá và lá hẹ làm mỡ hành thơm nức. Thoa đẫm mỡ hành lên bánh hỏi dẻo mềm, chặt thịt heo quay da giòn xếp ra đĩa cùng rau sống đồ chua. Chấm ngập vào chén nước mắm tỏi ớt kẹo thưởng thức.',
+      },
+    ],
+    chefSecret:
+      'Tuyệt chiêu làm heo quay da nổ giòn rụm: 1. Chần sơ phần da, xăm đều chi chít nhưng xăm nông không đâm vào lớp mỡ; 2. Lau thật khô ráo mồ hôi nước trên da và quét lớp giấm muối mỏng sấy khô cong trước khi nướng; 3. Nướng 2 mức nhiệt (180°C chín thịt rồi nâng 200°C nổ bì) giúp da phồng rộp rôm rốp để lâu không bị ỉu mà thịt nạc mỡ vẫn ngọt mềm mọng nước.',
+    recommendedSauce:
+      'Bát nước mắm tỏi ớt chua ngọt pha kẹo sền sệt, điểm xuyết đồ chua củ cải cà rốt và củ kiệu giòn ngọt.',
+  },
 };
 
 /**
@@ -5740,6 +6363,33 @@ export const RECIPE_SLUG_ALIASES: Record<string, string> = {
   'banh-beo': 'banh-beo',
   'cach-nau-banh-beo': 'banh-beo',
   'cach-lam-banh-beo': 'banh-beo',
+
+  'lau-ga-la-e': 'lau-ga-la-e',
+  'cach-nau-lau-ga-la-e': 'lau-ga-la-e',
+  'cach-lam-lau-ga-la-e': 'lau-ga-la-e',
+
+  'banh-mi-xiu-mai-da-lat': 'banh-mi-xiu-mai-da-lat',
+  'cach-nau-banh-mi-xiu-mai-da-lat': 'banh-mi-xiu-mai-da-lat',
+  'cach-lam-banh-mi-xiu-mai-da-lat': 'banh-mi-xiu-mai-da-lat',
+
+  'banh-trang-nuong-da-lat': 'banh-trang-nuong-da-lat',
+  'cach-nau-banh-trang-nuong-da-lat': 'banh-trang-nuong-da-lat',
+  'cach-lam-banh-trang-nuong-da-lat': 'banh-trang-nuong-da-lat',
+
+  'bun-bo-hue-chay': 'bun-bo-hue-chay',
+  'cach-nau-bun-bo-hue-chay': 'bun-bo-hue-chay',
+  'cach-lam-bun-bo-hue-chay': 'bun-bo-hue-chay',
+
+  'muc-mot-nang-nuong-sa-te': 'muc-mot-nang-nuong-sa-te',
+  'cach-nau-muc-mot-nang-nuong-sa-te': 'muc-mot-nang-nuong-sa-te',
+  'cach-lam-muc-mot-nang-nuong-sa-te': 'muc-mot-nang-nuong-sa-te',
+  'muc-nuong-sa-te': 'muc-mot-nang-nuong-sa-te',
+  'cach-nau-muc-nuong-sa-te': 'muc-mot-nang-nuong-sa-te',
+  'cach-lam-muc-nuong-sa-te': 'muc-mot-nang-nuong-sa-te',
+
+  'heo-quay-banh-hoi': 'heo-quay-banh-hoi',
+  'cach-nau-heo-quay-banh-hoi': 'heo-quay-banh-hoi',
+  'cach-lam-heo-quay-banh-hoi': 'heo-quay-banh-hoi',
 
   'be-thui': 'be-thui',
   'cach-nau-be-thui': 'be-thui',
