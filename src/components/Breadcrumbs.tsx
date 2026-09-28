@@ -10,6 +10,7 @@ import {
 import { getRegionFromUrl, getRegionById, isRegionPath, RegionId } from '../data/regionalCuisine';
 import { findDishByRecipeSlug, getDishRecipe, getRecipeArticleTitle, getRecipePath } from '../data/recipes';
 import { INITIAL_DISHES } from '../data/dishes';
+import { getBlogPostBySlug } from '../data/blogPosts';
 
 interface BreadcrumbsProps {
   activeTab: TabType;
@@ -71,6 +72,13 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   // Check if article was navigated to from a specific region
   const stateReturnRegionId = typeof window !== 'undefined' ? (window.history.state?.returnRegion as RegionId | undefined) : undefined;
   const returnRegion = stateReturnRegionId ? getRegionById(stateReturnRegionId) : null;
+
+  // Check if currently on a specific blog post
+  const isBlog = activeTab === 'blog';
+  const activeBlogPost =
+    isBlog && currentPathname !== '/blog' && currentPathname !== ''
+      ? getBlogPostBySlug(currentPathname)
+      : null;
 
   const currentLabel =
     isDiscover && discoverSubMeta ? discoverSubMeta.label : currentTabMeta?.label;
@@ -263,6 +271,51 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
               </li>
             </>
           )
+        ) : isBlog && activeBlogPost ? (
+          <>
+            <li
+              className="flex items-center gap-1.5"
+              itemProp="itemListElement"
+              itemScope
+              itemType="https://schema.org/ListItem"
+            >
+              <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+              <a
+                href="/blog"
+                onClick={(e) => {
+                  if (e.ctrlKey || e.metaKey || e.button === 1) return;
+                  e.preventDefault();
+                  onNavigate('blog');
+                  window.history.pushState({ tab: 'blog' }, '', '/blog');
+                  window.dispatchEvent(new Event('locationchange'));
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                itemProp="item"
+                className="hover:text-orange-600 transition-colors"
+              >
+                <span itemProp="name">Blog Ẩm Thực</span>
+              </a>
+              <meta itemProp="position" content="2" />
+            </li>
+
+            <li
+              className="flex items-center gap-1.5"
+              itemProp="itemListElement"
+              itemScope
+              itemType="https://schema.org/ListItem"
+            >
+              <ChevronRight className="w-3.5 h-3.5 text-stone-400" />
+              <span
+                className="text-stone-800 font-semibold truncate max-w-xs sm:max-w-md"
+                aria-current="page"
+                itemProp="name"
+              >
+                {activeBlogPost.title}
+              </span>
+              <link itemProp="item" href={`https://www.angigio.com/${activeBlogPost.slug}`} />
+              <meta itemProp="position" content="3" />
+            </li>
+          </>
         ) : (
           <li
             className="flex items-center gap-1.5"

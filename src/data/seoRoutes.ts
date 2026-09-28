@@ -1,7 +1,7 @@
 import { INITIAL_DISHES } from './dishes';
 import { REGIONAL_CUISINES } from './regionalCuisine';
 import { getDishRecipe, getRecipeSlug, getRecipeArticleTitle, formatRecipeSeoTitle, RECIPE_SLUG_ALIASES } from './recipes';
-import { INITIAL_BLOG_POSTS } from './blogPosts';
+import { INITIAL_BLOG_POSTS, BLOG_SLUG_ALIASES } from './blogPosts';
 
 export interface RouteSeoMeta {
   path: string;
@@ -251,10 +251,10 @@ export function getAllSeoRoutes(): Record<string, RouteSeoMeta> {
     }
   }
 
-  // 4. All Blog Posts
+  // 4. All Blog Posts (Direct root-level concise URLs without /blog/ prefix)
   for (const post of INITIAL_BLOG_POSTS) {
-    const postPath = `/blog/${post.slug}`;
-    routes[postPath] = {
+    const postPath = `/${post.slug}`;
+    const postMeta: RouteSeoMeta = {
       path: postPath,
       title: `${post.title} | Blog Ẩm Thực Hôm Nay Ăn Gì`,
       description: post.excerpt,
@@ -266,6 +266,27 @@ export function getAllSeoRoutes(): Record<string, RouteSeoMeta> {
       lastmod: '2026-09-28',
       isArticle: true,
     };
+    routes[postPath] = postMeta;
+    // Also support /blog/:slug as alias
+    routes[`/blog/${post.slug}`] = {
+      ...postMeta,
+      path: `/blog/${post.slug}`,
+    };
+  }
+
+  // 5. Blog slug aliases
+  for (const [aliasSlug, canonicalSlug] of Object.entries(BLOG_SLUG_ALIASES)) {
+    const canonicalPath = `/${canonicalSlug}`;
+    if (routes[canonicalPath]) {
+      routes[`/${aliasSlug}`] = {
+        ...routes[canonicalPath],
+        path: `/${aliasSlug}`,
+      };
+      routes[`/blog/${aliasSlug}`] = {
+        ...routes[canonicalPath],
+        path: `/blog/${aliasSlug}`,
+      };
+    }
   }
 
   return routes;

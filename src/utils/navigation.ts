@@ -2,6 +2,7 @@ import { Dish, DishRecipe, RegionId } from '../types';
 import { getRegionById } from '../data/regionalCuisine';
 import { getRecipePath, getRecipeArticleTitle, formatRecipeSeoTitle } from '../data/recipes';
 import { INITIAL_DISHES } from '../data/dishes';
+import { isBlogPostSlug } from '../data/blogPosts';
 
 export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'snacks' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms' | 'blog';
 
@@ -225,7 +226,7 @@ export function getTabFromUrl(): TabType {
   if (pathname === '/lien-he' || pathname === '/contact') return 'contact';
   if (pathname === '/chinh-sach-bao-mat' || pathname === '/privacy' || pathname === '/bao-mat') return 'privacy';
   if (pathname === '/dieu-khoan-su-dung' || pathname === '/terms' || pathname === '/dieu-khoan') return 'terms';
-  if (pathname === '/blog' || pathname.startsWith('/blog/')) return 'blog';
+  if (pathname === '/blog' || pathname.startsWith('/blog/') || isBlogPostSlug(pathname)) return 'blog';
   if (pathname === '/') {
     // Check fallback query param ?tab=
     const params = new URLSearchParams(window.location.search);
