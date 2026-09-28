@@ -74,7 +74,7 @@ export const Footer: React.FC<{
                 Hôm Nay Ăn Gì? • Smart Food Decider
               </div>
               <p className="text-xs text-stone-500">
-                Gợi ý ẩm thực 3 miền, vòng quay may mắn & liên kết đặt món nhanh
+                Gợi ý ẩm thực 3 miền & liên kết đặt món nhanh
               </p>
             </div>
           </div>
