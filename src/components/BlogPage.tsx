@@ -332,7 +332,7 @@ ${newContent}
     <div className="min-h-screen bg-stone-50/60 pb-16">
       {/* 1. ARTICLE DETAIL VIEW */}
       {activePost ? (
-        <article className="max-w-4xl mx-auto px-4 sm:px-6 pt-6 sm:pt-8 animate-fade-in">
+        <article className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 animate-fade-in">
           {/* Breadcrumb & Back button */}
           <div className="flex items-center justify-between gap-3 mb-6">
             <button
@@ -363,7 +363,7 @@ ${newContent}
           </div>
 
           {/* Article Header Card */}
-          <div className="bg-white rounded-3xl p-6 sm:p-10 border border-stone-200/80 shadow-xs mb-8">
+          <div className="bg-white rounded-3xl p-6 sm:p-10 lg:p-12 border border-stone-200/80 shadow-xs mb-8">
             <div className="flex flex-wrap items-center gap-2.5 mb-4">
               <span className="px-3 py-1 bg-orange-100 text-orange-800 text-xs font-black uppercase tracking-wider rounded-lg">
                 {activePost.category}
@@ -379,11 +379,11 @@ ${newContent}
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl font-black text-stone-900 leading-tight mb-4">
+            <h1 className="text-2xl sm:text-4xl lg:text-[40px] font-black text-stone-900 leading-tight mb-4 tracking-tight">
               {activePost.title}
             </h1>
 
-            <p className="text-sm sm:text-base text-stone-600 leading-relaxed font-medium mb-6">
+            <p className="text-sm sm:text-base lg:text-lg text-stone-600 leading-relaxed font-medium mb-6 max-w-5xl">
               {activePost.excerpt}
             </p>
 
@@ -404,7 +404,7 @@ ${newContent}
           </div>
 
           {/* Cover Image */}
-          <div className="rounded-3xl overflow-hidden shadow-md border border-stone-200 mb-8 max-h-[460px]">
+          <div className="rounded-3xl overflow-hidden shadow-md border border-stone-200 mb-8 max-h-[520px] aspect-16/9 sm:aspect-21/9 bg-stone-100">
             <img
               src={activePost.coverImage}
               alt={activePost.title}
@@ -413,7 +413,7 @@ ${newContent}
           </div>
 
           {/* Main Article Content */}
-          <div className="bg-white rounded-3xl p-6 sm:p-10 border border-stone-200/80 shadow-xs mb-8 prose prose-stone max-w-none">
+          <div className="bg-white rounded-3xl p-6 sm:p-10 lg:p-12 border border-stone-200/80 shadow-xs mb-8 prose prose-stone max-w-none">
             {renderFormattedContent(activePost.content)}
 
             {/* Tags footer */}
@@ -450,7 +450,7 @@ ${newContent}
                 Bấm vào món để xem ngay công thức nấu chuẩn vị và thông tin dinh dưỡng chi tiết:
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {relatedDishes.map((dish) => (
                   <div
                     key={dish.id}
@@ -494,7 +494,7 @@ ${newContent}
               <BookOpen className="w-5 h-5 text-orange-600" />
               Bài Viết Cùng Chuyên Mục
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {allPosts
                 .filter((p) => p.id !== activePost.id)
                 .slice(0, 4)

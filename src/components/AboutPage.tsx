@@ -21,7 +21,7 @@ interface AboutPageProps {
 
 export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
   return (
-    <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 text-stone-800">
+    <article className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 text-stone-800">
       {/* Hero Banner */}
       <header className="text-center max-w-5xl xl:max-w-6xl mx-auto mb-10 sm:mb-14">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100/70 text-orange-700 text-xs font-bold uppercase tracking-wider mb-4 border border-orange-200/60">
@@ -34,7 +34,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ onNavigate }) => {
             Nền Tảng Gợi Ý Ẩm Thực Hàng Đầu
           </span>
         </h1>
-        <p className="max-w-2xl mx-auto text-sm sm:text-base text-stone-600 leading-relaxed">
+        <p className="max-w-3xl mx-auto text-sm sm:text-base text-stone-600 leading-relaxed">
           Chúng tôi ra đời để giải quyết dứt điểm câu hỏi nan giải mỗi ngày: <strong className="text-stone-900 font-bold">&quot;Hôm nay ăn gì?&quot;</strong>, mang đến nguồn cảm hứng vị giác bất tận cùng trải nghiệm đặt món nhanh gọn, tiện lợi nhất.
         </p>
       </header>
