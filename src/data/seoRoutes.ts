@@ -171,6 +171,17 @@ export const BASE_SEO_ROUTES: Record<string, RouteSeoMeta> = {
     changefreq: 'daily',
     lastmod: '2026-09-28',
   },
+  '/quan-ngon': {
+    path: '/quan-ngon',
+    title: 'Top Quán Ngon Gần Bạn - Địa Chỉ Ẩm Thực & Nhà Hàng Chuẩn Vị 3 Miền | Hôm Nay Ăn Gì',
+    description: 'Khám phá top quán ngon nổi tiếng, quán ăn lâu đời và địa chỉ ẩm thực uy tín gần bạn nhất. Kết nối đặt món qua ShopeeFood, GrabFood, BeFood và chỉ đường Google Maps.',
+    keywords: 'quán ngon, quán ăn ngon, top quán ngon gần đây, địa chỉ ẩm thực, quán ngon hà nội, quán ngon sài gòn, quán ngon đà nẵng, quán ngon việt nam, đặt món shopeefood, grabfood, befood',
+    image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&auto=format&fit=crop&q=80',
+    imageAlt: 'Top Quán Ngon Gần Bạn - Địa Chỉ Ẩm Thực Chuẩn Vị 3 Miền',
+    priority: 0.95,
+    changefreq: 'daily',
+    lastmod: '2026-09-29',
+  },
 };
 
 /**

@@ -1,5 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { UtensilsCrossed, Sparkles, Disc, Compass, Share2, MapPin, CalendarDays, ChevronDown, Check, Camera, Coffee } from 'lucide-react';
+import {
+  UtensilsCrossed,
+  Sparkles,
+  Disc,
+  Compass,
+  Share2,
+  MapPin,
+  CalendarDays,
+  ChevronDown,
+  Check,
+  Camera,
+  Coffee,
+  Store,
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { UserLocation } from '../types';
 import { TAB_CONFIG, TabType } from '../utils/navigation';
@@ -23,13 +36,16 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenLocationModal,
 }) => {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isWheelDropdownOpen, setIsWheelDropdownOpen] = useState(false);
+  const [isFoodDropdownOpen, setIsFoodDropdownOpen] = useState(false);
   const [logoSrc, setLogoSrc] = useState<string>('/logo.png?v=6');
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [logoToast, setLogoToast] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const wheelDropdownRef = useRef<HTMLDivElement>(null);
+  const foodDropdownRef = useRef<HTMLDivElement>(null);
+  const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const foodTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -69,61 +85,71 @@ export const Navbar: React.FC<NavbarProps> = ({
     if (e.ctrlKey || e.metaKey || e.button === 1) return;
     e.preventDefault();
     setActiveTab(tab);
-    setIsDropdownOpen(false);
+    setIsWheelDropdownOpen(false);
+    setIsFoodDropdownOpen(false);
   };
 
   // Close dropdown on click outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsDropdownOpen(false);
+      if (wheelDropdownRef.current && !wheelDropdownRef.current.contains(event.target as Node)) {
+        setIsWheelDropdownOpen(false);
+      }
+      if (foodDropdownRef.current && !foodDropdownRef.current.contains(event.target as Node)) {
+        setIsFoodDropdownOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
-      if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
+      if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
+      if (foodTimeoutRef.current) clearTimeout(foodTimeoutRef.current);
     };
   }, []);
 
-  const handleMouseEnter = () => {
-    if (dropdownTimeoutRef.current) clearTimeout(dropdownTimeoutRef.current);
-    setIsDropdownOpen(true);
+  const handleWheelMouseEnter = () => {
+    if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
+    setIsWheelDropdownOpen(true);
   };
 
-  const handleMouseLeave = () => {
-    dropdownTimeoutRef.current = setTimeout(() => {
-      setIsDropdownOpen(false);
+  const handleWheelMouseLeave = () => {
+    wheelTimeoutRef.current = setTimeout(() => {
+      setIsWheelDropdownOpen(false);
     }, 180);
   };
 
+  const handleFoodMouseEnter = () => {
+    if (foodTimeoutRef.current) clearTimeout(foodTimeoutRef.current);
+    setIsFoodDropdownOpen(true);
+  };
+
+  const handleFoodMouseLeave = () => {
+    foodTimeoutRef.current = setTimeout(() => {
+      setIsFoodDropdownOpen(false);
+    }, 180);
+  };
+
+  const isWheelGroupActive = activeTab === 'wheel' || activeTab === 'ai';
   const isFoodGroupActive = activeTab === 'catalog' || activeTab === 'snacks' || activeTab === 'planner';
 
-  const mainNavItems: Array<{
-    id: TabType;
+  const wheelSubItems: Array<{
+    id: 'wheel' | 'ai';
     label: string;
-    shortLabel: string;
+    description: string;
     path: string;
     icon: React.ReactNode;
   }> = [
     {
-      id: 'tarot',
-      label: 'Tarot Ẩm Thực',
-      shortLabel: 'Tarot',
-      path: TAB_CONFIG.tarot.path,
-      icon: <Compass className="w-4 h-4" />,
-    },
-    {
       id: 'wheel',
-      label: 'Vòng Quay',
-      shortLabel: 'Vòng Quay',
+      label: 'Vòng Quay Ăn Gì',
+      description: 'Quay chọn món ngẫu nhiên trong 3 giây',
       path: TAB_CONFIG.wheel.path,
       icon: <Disc className="w-4 h-4" />,
     },
     {
       id: 'ai',
       label: 'Trợ Lý AI',
-      shortLabel: 'Trợ Lý AI',
+      description: 'Gợi ý món ăn thông minh theo tâm trạng & thời tiết',
       path: TAB_CONFIG.ai.path,
       icon: <Sparkles className="w-4 h-4" />,
     },
@@ -178,16 +204,16 @@ export const Navbar: React.FC<NavbarProps> = ({
       icon: <Disc className="w-3.5 h-3.5" />,
     },
     {
-      id: 'ai',
-      shortLabel: 'Trợ Lý AI',
-      path: TAB_CONFIG.ai.path,
-      icon: <Sparkles className="w-3.5 h-3.5" />,
-    },
-    {
       id: 'catalog',
       shortLabel: 'Món Ngon',
       path: TAB_CONFIG.catalog.path,
       icon: <UtensilsCrossed className="w-3.5 h-3.5" />,
+    },
+    {
+      id: 'restaurants',
+      shortLabel: 'Quán Ngon',
+      path: TAB_CONFIG.restaurants.path,
+      icon: <Store className="w-3.5 h-3.5" />,
     },
     {
       id: 'discover',
@@ -265,42 +291,128 @@ export const Navbar: React.FC<NavbarProps> = ({
             aria-label="Menu điều hướng chính" 
             className="hidden md:flex items-center bg-stone-100/80 p-1.5 rounded-full border border-stone-200/60 shadow-xs"
           >
-            {mainNavItems.map((item) => {
-              const isActive = activeTab === item.id;
-              return (
-                <a
-                  key={item.id}
-                  href={item.path}
-                  onClick={(e) => handleNavClick(item.id, e)}
-                  className={`relative flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-colors select-none cursor-pointer ${
-                    isActive ? 'text-stone-900 font-semibold' : 'text-stone-500 hover:text-stone-900'
-                  }`}
-                >
-                  {/* Fluid active animated pill sliding underneath */}
-                  {isActive && (
-                    <motion.div
-                      layoutId="navbar-active-pill"
-                      className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50"
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    />
-                  )}
+            {/* 1. Tarot Ẩm Thực */}
+            <a
+              href={TAB_CONFIG.tarot.path}
+              onClick={(e) => handleNavClick('tarot', e)}
+              className={`relative flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium transition-colors select-none cursor-pointer ${
+                activeTab === 'tarot' ? 'text-stone-900 font-semibold' : 'text-stone-500 hover:text-stone-900'
+              }`}
+            >
+              {activeTab === 'tarot' && (
+                <motion.div
+                  layoutId="navbar-active-pill"
+                  className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50"
+                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                />
+              )}
+              <span className={`relative z-10 transition-colors ${
+                activeTab === 'tarot' ? 'text-orange-600' : 'text-stone-400 group-hover:text-stone-600'
+              }`}>
+                <Compass className="w-4 h-4" />
+              </span>
+              <span className="relative z-10 tracking-tight">Tarot Ẩm Thực</span>
+            </a>
 
-                  <span className={`relative z-10 transition-colors ${
-                    isActive ? 'text-orange-600' : 'text-stone-400 group-hover:text-stone-600'
-                  }`}>
-                    {item.icon}
-                  </span>
-                  <span className="relative z-10 tracking-tight">{item.label}</span>
-                </a>
-              );
-            })}
-
-            {/* 4. Món Ngon with Dropdown Submenu for Lịch Ăn Tuần */}
+            {/* 2. Vòng Quay (with Trợ Lý AI Dropdown) */}
             <div 
-              ref={dropdownRef}
+              ref={wheelDropdownRef}
               className="relative"
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
+              onMouseEnter={handleWheelMouseEnter}
+              onMouseLeave={handleWheelMouseLeave}
+            >
+              <a
+                href={TAB_CONFIG.wheel.path}
+                onClick={(e) => handleNavClick(activeTab === 'ai' ? 'ai' : 'wheel', e)}
+                className={`relative flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full text-sm font-medium transition-colors select-none cursor-pointer ${
+                  isWheelGroupActive ? 'text-stone-900 font-semibold' : 'text-stone-500 hover:text-stone-900'
+                }`}
+              >
+                {isWheelGroupActive && (
+                  <motion.div
+                    layoutId="navbar-active-pill"
+                    className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+
+                <span className={`relative z-10 transition-colors ${
+                  isWheelGroupActive ? 'text-orange-600' : 'text-stone-400'
+                }`}>
+                  {activeTab === 'ai' ? <Sparkles className="w-4 h-4" /> : <Disc className="w-4 h-4" />}
+                </span>
+
+                <span className="relative z-10 tracking-tight">
+                  {activeTab === 'ai' ? 'Trợ Lý AI' : 'Vòng Quay'}
+                </span>
+
+                <ChevronDown className={`relative z-10 w-3.5 h-3.5 text-stone-400 transition-transform duration-200 ${
+                  isWheelDropdownOpen ? 'rotate-180 text-orange-600' : ''
+                }`} />
+              </a>
+
+              {/* Desktop Submenu Dropdown for Vòng Quay & Trợ Lý AI */}
+              <AnimatePresence>
+                {isWheelDropdownOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 8, scale: 0.96 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 6, scale: 0.96 }}
+                    transition={{ duration: 0.15 }}
+                    className="absolute left-0 top-full mt-2 w-72 bg-white rounded-2xl shadow-xl border border-stone-200/80 p-2 z-50 overflow-hidden"
+                  >
+                    <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-stone-400">
+                      Chọn món thông minh
+                    </div>
+                    <div className="space-y-1">
+                      {wheelSubItems.map((sub) => {
+                        const isSubActive = activeTab === sub.id;
+                        return (
+                          <a
+                            key={sub.id}
+                            href={sub.path}
+                            onClick={(e) => handleNavClick(sub.id, e)}
+                            className={`flex items-start gap-3 p-2.5 rounded-xl transition-all cursor-pointer group ${
+                              isSubActive
+                                ? 'bg-orange-50/80 text-orange-900 border border-orange-200/70'
+                                : 'hover:bg-stone-50 text-stone-700'
+                            }`}
+                          >
+                            <div className={`p-2 rounded-lg shrink-0 transition-colors ${
+                              isSubActive
+                                ? 'bg-orange-600 text-white'
+                                : 'bg-stone-100 text-stone-500 group-hover:bg-orange-100 group-hover:text-orange-600'
+                            }`}>
+                              {sub.icon}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <span className={`text-xs font-bold block ${
+                                isSubActive ? 'text-orange-950' : 'text-stone-900 group-hover:text-orange-600'
+                              }`}>
+                                {sub.label}
+                              </span>
+                              <p className="text-[11px] text-stone-500 leading-tight mt-0.5">
+                                {sub.description}
+                              </p>
+                            </div>
+                            {isSubActive && (
+                              <Check className="w-4 h-4 text-orange-600 shrink-0 self-center" />
+                            )}
+                          </a>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* 3. Món Ngon with Dropdown Submenu for Lịch Ăn Tuần & Đồ Uống */}
+            <div 
+              ref={foodDropdownRef}
+              className="relative"
+              onMouseEnter={handleFoodMouseEnter}
+              onMouseLeave={handleFoodMouseLeave}
             >
               <a
                 href={TAB_CONFIG.catalog.path}
@@ -332,13 +444,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </span>
 
                 <ChevronDown className={`relative z-10 w-3.5 h-3.5 text-stone-400 transition-transform duration-200 ${
-                  isDropdownOpen ? 'rotate-180 text-orange-600' : ''
+                  isFoodDropdownOpen ? 'rotate-180 text-orange-600' : ''
                 }`} />
               </a>
 
-              {/* Desktop Submenu Dropdown Card for Món Ngon & Lịch Ăn Tuần */}
+              {/* Desktop Submenu Dropdown Card for Món Ngon */}
               <AnimatePresence>
-                {isDropdownOpen && (
+                {isFoodDropdownOpen && (
                   <motion.div
                     initial={{ opacity: 0, y: 8, scale: 0.96 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -392,7 +504,30 @@ export const Navbar: React.FC<NavbarProps> = ({
               </AnimatePresence>
             </div>
 
-            {/* 5. Khám Phá */}
+            {/* 4. Quán Ngon (Mới thêm) */}
+            <a
+              href={TAB_CONFIG.restaurants.path}
+              onClick={(e) => handleNavClick('restaurants', e)}
+              className={`relative flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full text-sm font-medium transition-colors select-none cursor-pointer ${
+                activeTab === 'restaurants' ? 'text-stone-900 font-semibold' : 'text-stone-500 hover:text-stone-900'
+              }`}
+            >
+              {activeTab === 'restaurants' && (
+                <motion.div
+                  layoutId="navbar-active-pill"
+                  className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50"
+                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                />
+              )}
+              <span className={`relative z-10 transition-colors ${
+                activeTab === 'restaurants' ? 'text-orange-600' : 'text-stone-400 group-hover:text-stone-600'
+              }`}>
+                <Store className="w-4 h-4" />
+              </span>
+              <span className="relative z-10 tracking-tight">Quán Ngon</span>
+            </a>
+
+            {/* 5. Khám Phá / Ẩm Thực */}
             <a
               href={TAB_CONFIG.discover.path}
               onClick={(e) => handleNavClick('discover', e)}
@@ -450,7 +585,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* Mobile Modern Pill Slider (5 direct items: Tarot | Vòng Quay | Trợ Lý AI | Món Ngon | Khám Phá) */}
+        {/* Mobile Modern Pill Slider (5 direct items: Tarot | Vòng Quay | Món Ngon | Quán Ngon | Ẩm Thực) */}
         <nav 
           aria-label="Menu điều hướng di động" 
           className="md:hidden flex items-center justify-between p-1 my-1.5 rounded-full bg-stone-100/90 border border-stone-200/60"
@@ -458,6 +593,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           {mobileNavItems.map((item) => {
             const isActive = item.id === 'catalog' 
               ? (activeTab === 'catalog' || activeTab === 'snacks' || activeTab === 'planner') 
+              : item.id === 'wheel'
+              ? (activeTab === 'wheel' || activeTab === 'ai')
               : (activeTab === item.id);
             return (
               <a
@@ -512,3 +649,4 @@ export const Navbar: React.FC<NavbarProps> = ({
     </header>
   );
 };
+

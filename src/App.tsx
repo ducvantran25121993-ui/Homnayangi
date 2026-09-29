@@ -12,6 +12,7 @@ import { ContactPage } from './components/ContactPage';
 import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { TermsOfServicePage } from './components/TermsOfServicePage';
 import { BlogPage } from './components/BlogPage';
+import { RestaurantsPage } from './components/RestaurantsPage';
 import { AdminInboxModal } from './components/AdminInboxModal';
 import { AffiliateModal } from './components/AffiliateModal';
 import { DishDetailModal } from './components/DishDetailModal';
@@ -19,6 +20,7 @@ import { LocationModal } from './components/LocationModal';
 import { OrderToast } from './components/OrderToast';
 import { Footer } from './components/Footer';
 import { Dish, AffiliateConfig, ClickRecord, UserLocation } from './types';
+import { INITIAL_DISHES } from './data/dishes';
 import { DEFAULT_AFFILIATE_CONFIG } from './utils/affiliate';
 import {
   getStoredUserLocation,
@@ -327,6 +329,7 @@ export default function App() {
             onDishSelect={(dish) => setSelectedDish(dish)}
             userLocation={userLocation}
             onOpenLocationModal={openLocationPicker}
+            onNavigate={handleNavigateTab}
           />
         )}
 
@@ -347,6 +350,7 @@ export default function App() {
             onOpenLocationModal={openLocationPicker}
             onSelectDish={(dish) => setSelectedDish(dish)}
             selectedDish={selectedDish}
+            onNavigate={handleNavigateTab}
           />
         )}
 
@@ -418,6 +422,18 @@ export default function App() {
           <BlogPage
             onNavigate={handleNavigateTab}
             onSelectDish={(dish) => setSelectedDish(dish)}
+          />
+        )}
+
+        {activeTab === 'restaurants' && (
+          <RestaurantsPage
+            userLocation={userLocation}
+            onOpenLocationModal={openLocationPicker}
+            onSelectDish={(dishId) => {
+              const found = INITIAL_DISHES.find(d => d.id === dishId);
+              if (found) setSelectedDish(found);
+            }}
+            onNavigateContact={() => handleNavigateTab('contact')}
           />
         )}
 

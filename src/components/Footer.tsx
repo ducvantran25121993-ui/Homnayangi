@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, Info, Mail, Lock, ShieldCheck, FileText, BookOpen } from 'lucide-react';
+import { Heart, Info, Mail, Lock, ShieldCheck, FileText, BookOpen, Store } from 'lucide-react';
 import { TabType } from '../utils/navigation';
 
 export const Footer: React.FC<{
@@ -79,8 +79,26 @@ export const Footer: React.FC<{
             </div>
           </div>
 
-          {/* Các liên kết chân trang: Blog Ẩm Thực, Giới Thiệu, Liên Hệ, Chính Sách Bảo Mật, Điều Khoản Sử Dụng */}
+          {/* Các liên kết chân trang: Quán Ngon, Blog Ẩm Thực, Giới Thiệu, Liên Hệ, Chính Sách Bảo Mật, Điều Khoản Sử Dụng */}
           <nav aria-label="Liên kết chân trang" className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-xs font-semibold text-stone-600">
+            <a
+              href="/quan-ngon"
+              onClick={(e) => {
+                if (e.ctrlKey || e.metaKey || e.button === 1) return;
+                if (onNavigate) {
+                  e.preventDefault();
+                  onNavigate('restaurants');
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
+              className="inline-flex items-center gap-1.5 hover:text-orange-600 transition-colors py-1 px-2 rounded-lg hover:bg-stone-50 font-bold"
+            >
+              <Store className="w-3.5 h-3.5 text-orange-600" />
+              <span>Quán Ngon</span>
+            </a>
+
+            <span className="text-stone-300">•</span>
+
             <a
               href="/blog"
               onClick={handleBlogClick}

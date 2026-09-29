@@ -221,9 +221,13 @@ export interface DailyMealOption {
 export interface SponsoredPartner {
   id: string;
   restaurantName: string;
-  verifiedBadge?: string; // e.g. "Đối tác chính thức", "Quán ngon đề xuất"
+  verifiedBadge?: string; // e.g. "Đối tác chính thức", "Quán ngon đề xuất", "Quán lâu đời", "Michelin Guide"
   dishIds: string[]; // List of dish IDs this restaurant sponsors (e.g. ['com-tam', 'com-tam-suon-bi-cha'])
   logo?: string;
+  coverImage?: string;
+  category?: string;
+  priceRange?: string;
+  openingHours?: string;
   rating: number; // e.g. 4.9
   reviewCount?: number; // e.g. 1280
   address: string; // e.g. "128 Nguyễn Đình Chiểu, P. Đa Kao, Quận 1, TP.HCM"
@@ -233,7 +237,10 @@ export interface SponsoredPartner {
   phone?: string;
   shopeeFoodUrl?: string;
   grabFoodUrl?: string;
+  beFoodUrl?: string;
   directBookingUrl?: string; // e.g. Fanpage, Zalo or Hotline
   googleMapsUrl?: string;
   isActive: boolean;
+  highlightDishes?: string[];
+  description?: string;
 }

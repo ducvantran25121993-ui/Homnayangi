@@ -6,6 +6,7 @@ import {
   Plus, 
   Trash2, 
   Sparkles, 
+  Disc,
   ShoppingBag, 
   ExternalLink, 
   Flame, 
@@ -41,6 +42,7 @@ interface LuckyWheelProps {
   onDishSelect: (dish: Dish) => void;
   userLocation: UserLocation;
   onOpenLocationModal: (dishName?: string) => void;
+  onNavigate?: (tab: 'wheel' | 'ai') => void;
 }
 
 // Sophisticated vibrant palette tailored for culinary wheel
@@ -75,6 +77,7 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
   onDishSelect,
   userLocation,
   onOpenLocationModal,
+  onNavigate,
 }) => {
   // Default to saved items or first category preset (Cơm & Xôi)
   const [items, setItems] = useState<string[]>(() => {
@@ -567,6 +570,27 @@ export const LuckyWheel: React.FC<LuckyWheelProps> = ({
 
   return (
     <div className="py-6 sm:py-8">
+      {/* Group Navigation Switcher: Vòng Quay & Trợ Lý AI */}
+      {onNavigate && (
+        <div className="flex justify-center mb-6 px-4">
+          <div className="inline-flex p-1 rounded-full bg-stone-100 border border-stone-200/80 shadow-2xs">
+            <button
+              className="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-orange-600 shadow-xs flex items-center gap-2 cursor-default"
+            >
+              <Disc className="w-4 h-4 text-orange-600" />
+              <span>Vòng Quay Ăn Gì</span>
+            </button>
+            <button
+              onClick={() => onNavigate('ai')}
+              className="px-4 py-2 rounded-full text-xs sm:text-sm font-medium text-stone-600 hover:text-stone-900 hover:bg-white/60 transition-all flex items-center gap-2 cursor-pointer"
+            >
+              <Sparkles className="w-4 h-4 text-purple-600" />
+              <span>Trợ Lý AI Gợi Ý Món</span>
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Hero Title */}
       <div className="text-center max-w-5xl xl:max-w-6xl mx-auto mb-8 px-4">
         <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-orange-100 text-orange-800 text-xs font-bold mb-3">

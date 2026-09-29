@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Send, ShoppingBag, ExternalLink, RefreshCw, AlertCircle, ChefHat, Check, Heart, MapPin } from 'lucide-react';
+import { Sparkles, Send, ShoppingBag, ExternalLink, RefreshCw, AlertCircle, ChefHat, Check, Heart, MapPin, Disc } from 'lucide-react';
 import { AISuggestion, AffiliateConfig, UserLocation, Dish } from '../types';
 import { trackAndOpenAffiliateLink } from '../utils/affiliate';
 import { formatLocationDisplay } from '../utils/location';
@@ -11,6 +11,7 @@ interface AIAssistantProps {
   onOpenLocationModal: (dishName?: string) => void;
   onSelectDish?: (dish: Dish) => void;
   selectedDish?: Dish | null;
+  onNavigate?: (tab: 'wheel' | 'ai') => void;
 }
 
 export const AIAssistant: React.FC<AIAssistantProps> = ({
@@ -19,6 +20,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
   onOpenLocationModal,
   onSelectDish,
   selectedDish,
+  onNavigate,
 }) => {
   const [mealTime, setMealTime] = useState('Trưa');
   const [budget, setBudget] = useState('35k - 60k (Văn phòng)');
@@ -76,6 +78,27 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({
 
   return (
     <div className="py-6 sm:py-8 max-w-6xl mx-auto px-4">
+      {/* Group Navigation Switcher: Vòng Quay & Trợ Lý AI */}
+      {onNavigate && (
+        <div className="flex justify-center mb-6 px-4">
+          <div className="inline-flex p-1 rounded-full bg-stone-100 border border-stone-200/80 shadow-2xs">
+            <button
+              onClick={() => onNavigate('wheel')}
+              className="px-4 py-2 rounded-full text-xs sm:text-sm font-medium text-stone-600 hover:text-stone-900 hover:bg-white/60 transition-all flex items-center gap-2 cursor-pointer"
+            >
+              <Disc className="w-4 h-4 text-orange-500" />
+              <span>Vòng Quay Ăn Gì</span>
+            </button>
+            <button
+              className="px-4 py-2 rounded-full text-xs sm:text-sm font-bold bg-white text-purple-600 shadow-xs flex items-center gap-2 cursor-default"
+            >
+              <Sparkles className="w-4 h-4 text-purple-600" />
+              <span>Trợ Lý AI Gợi Ý Món</span>
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="text-center max-w-5xl xl:max-w-6xl mx-auto mb-8">
         <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-extrabold text-stone-900 tracking-tight mb-2 md:whitespace-nowrap">

@@ -143,6 +143,16 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.angigio.com/quan-ngon</loc>
+    <lastmod>2026-09-29</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Top Quán Ngon Gần Bạn - Địa Chỉ Ẩm Thực Chuẩn Vị 3 Miền</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.angigio.com/am-thuc-mien-bac</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>

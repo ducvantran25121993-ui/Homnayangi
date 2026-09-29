@@ -4,7 +4,7 @@ import { getRecipePath, getRecipeArticleTitle, formatRecipeSeoTitle } from '../d
 import { INITIAL_DISHES } from '../data/dishes';
 import { isBlogPostSlug } from '../data/blogPosts';
 
-export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'snacks' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms' | 'blog';
+export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'snacks' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms' | 'blog' | 'restaurants';
 
 export type DiscoverSubSection = 'region' | 'daily' | 'recipe';
 
@@ -175,6 +175,16 @@ export const TAB_CONFIG: Record<TabType, TabMeta> = {
     ogImage: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1200&auto=format&fit=crop&q=80',
     ogImageAlt: 'Blog Ẩm Thực - Cẩm Nang Món Ngon & Bí Quyết Nấu Nướng',
   },
+  restaurants: {
+    path: '/quan-ngon',
+    title: 'Top Quán Ngon Gần Bạn - Địa Chỉ Ẩm Thực & Nhà Hàng Chuẩn Vị 3 Miền | Hôm Nay Ăn Gì',
+    description: 'Khám phá top quán ngon nổi tiếng, quán ăn lâu đời và địa chỉ ẩm thực uy tín gần bạn nhất. Kết nối đặt món qua ShopeeFood, GrabFood, BeFood và chỉ đường Google Maps.',
+    label: 'Quán Ngon',
+    shortLabel: 'Quán Ngon',
+    keywords: 'quán ngon, quán ăn ngon, top quán ngon gần đây, địa chỉ ẩm thực, quán ngon hà nội, quán ngon sài gòn, quán ngon đà nẵng, quán ngon việt nam, đặt món shopeefood, grabfood, befood',
+    ogImage: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&auto=format&fit=crop&q=80',
+    ogImageAlt: 'Top Quán Ngon Gần Bạn - Địa Chỉ Ẩm Thực Chuẩn Vị 3 Miền',
+  },
 };
 
 /**
@@ -227,6 +237,7 @@ export function getTabFromUrl(): TabType {
   if (pathname === '/chinh-sach-bao-mat' || pathname === '/privacy' || pathname === '/bao-mat') return 'privacy';
   if (pathname === '/dieu-khoan-su-dung' || pathname === '/terms' || pathname === '/dieu-khoan') return 'terms';
   if (pathname === '/blog' || pathname.startsWith('/blog/') || isBlogPostSlug(pathname)) return 'blog';
+  if (pathname === '/quan-ngon' || pathname === '/quan-ngon-gan-ban' || pathname === '/dia-diem-an-uong' || pathname === '/nha-hang-quan-an') return 'restaurants';
   if (pathname === '/') {
     // Check fallback query param ?tab=
     const params = new URLSearchParams(window.location.search);
@@ -234,6 +245,7 @@ export function getTabFromUrl(): TabType {
     if (tabParam === 'vong-quay' || tabParam === 'wheel') return 'wheel';
     if (tabParam === 'lich-an-theo-tuan' || tabParam === 'mon-ngon/lich-an-theo-tuan' || tabParam === 'len-lich-an' || tabParam === 'planner' || tabParam === 'lich-an' || tabParam === 'thuc-don-tuan') return 'planner';
     if (tabParam === 'ai-goi-y-mon-an' || tabParam === 'ai' || tabParam === 'tro-ly-ai' || tabParam === 'goi-y-mon') return 'ai';
+    if (tabParam === 'quan-ngon' || tabParam === 'restaurants' || tabParam === 'dia-diem') return 'restaurants';
     if (tabParam === 'mon-ngon' || tabParam === 'catalog') return 'catalog';
     if (tabParam === 'do-uong-an-vat' || tabParam === 'tra-sua-an-vat' || tabParam === 'snacks' || tabParam === 'do-uong' || tabParam === 'tra-sua' || tabParam === 'an-vat') return 'snacks';
     if (tabParam === 'am-thuc-vung-mien' || tabParam === 'thuc-don-moi-ngay' || tabParam === 'cach-nau-mon-ngon' || tabParam === 'kham-pha-am-thuc' || tabParam === 'kham-pha' || tabParam === 'discover' || tabParam === 'cam-nang') return 'discover';
