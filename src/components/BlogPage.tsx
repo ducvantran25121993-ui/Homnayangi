@@ -18,8 +18,6 @@ import {
   Eye,
   Edit3,
   Trash2,
-  Upload,
-  Image as ImageIcon,
 } from 'lucide-react';
 import {
   BlogPost,
@@ -37,17 +35,6 @@ interface BlogPageProps {
 }
 
 const LOCAL_STORAGE_CUSTOM_POSTS = 'angigio_custom_blog_posts';
-
-const COVER_IMAGE_PRESETS = [
-  { label: 'Cơm gia đình', url: 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=1200&auto=format&fit=crop&q=80' },
-  { label: 'Phở & Bún', url: 'https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?w=1200&auto=format&fit=crop&q=80' },
-  { label: 'Rau củ quả', url: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=1200&auto=format&fit=crop&q=80' },
-  { label: 'Eat Clean', url: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1200&auto=format&fit=crop&q=80' },
-  { label: 'Gia vị bếp', url: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=1200&auto=format&fit=crop&q=80' },
-  { label: 'Món nướng & xào', url: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=1200&auto=format&fit=crop&q=80' },
-  { label: 'Hải sản tươi', url: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=1200&auto=format&fit=crop&q=80' },
-  { label: 'Đồ uống trà sữa', url: 'https://images.unsplash.com/photo-1556881286-fc6915169721?w=1200&auto=format&fit=crop&q=80' },
-];
 
 export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('Tất Cả');
@@ -168,49 +155,6 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
     window.history.pushState({ tab: 'blog' }, '', '/blog');
     window.dispatchEvent(new Event('locationchange'));
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  // Handle image upload from user device with auto resizing and compression
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (file.size > 10 * 1024 * 1024) {
-      alert('Kích thước ảnh quá lớn! Vui lòng chọn ảnh dưới 10MB.');
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const img = new Image();
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        let width = img.width;
-        let height = img.height;
-        const maxDim = 1200;
-        if (width > maxDim || height > maxDim) {
-          if (width > height) {
-            height = Math.round((height * maxDim) / width);
-            width = maxDim;
-          } else {
-            width = Math.round((width * maxDim) / height);
-            height = maxDim;
-          }
-        }
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-          ctx.drawImage(img, 0, 0, width, height);
-          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.82);
-          setNewCoverImage(compressedDataUrl);
-        } else {
-          setNewCoverImage(event.target?.result as string);
-        }
-      };
-      img.src = event.target?.result as string;
-    };
-    reader.readAsDataURL(file);
   };
 
   // Copy share link
@@ -655,15 +599,15 @@ ${newContent}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
           {/* Hero Banner Header */}
           <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-orange-600 via-amber-600 to-orange-700 text-white p-6 sm:p-12 mb-8 shadow-lg">
-            <div className="relative z-10 max-w-2xl">
+            <div className="relative z-10 max-w-3xl lg:max-w-4xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-bold uppercase tracking-wider mb-4 border border-white/20">
                 <BookOpen className="w-3.5 h-3.5 text-amber-200" />
                 <span>Cẩm Nang Ẩm Thực & Bếp Việt</span>
               </div>
-              <h1 className="text-2xl sm:text-4xl md:text-5xl font-black leading-tight mb-4 tracking-tight">
+              <h1 className="text-xl sm:text-3xl md:text-4xl lg:text-[42px] font-black leading-tight mb-4 tracking-tight sm:whitespace-nowrap">
                 Blog Ẩm Thực Hôm Nay Ăn Gì
               </h1>
-              <p className="text-sm sm:text-base text-orange-50 leading-relaxed font-medium mb-6">
+              <p className="text-sm sm:text-base text-orange-50 leading-relaxed font-medium mb-6 max-w-2xl">
                 Kho tàng mẹo vặt nhà bếp, kinh nghiệm đi chợ, cẩm nang nấu ăn chuẩn vị và những câu chuyện văn hóa mâm cơm ba miền Việt Nam.
               </p>
 
@@ -1072,87 +1016,17 @@ ${newContent}
                   </div>
                 </div>
 
-                <div className="bg-stone-50/90 p-3.5 sm:p-4 rounded-2xl border border-stone-200/90">
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <label className="text-xs font-bold text-stone-800 uppercase tracking-wider flex items-center gap-1.5">
-                      <ImageIcon className="w-4 h-4 text-orange-600" />
-                      <span>Ảnh Bìa Bài Viết</span>
-                    </label>
-
-                    {/* File upload button */}
-                    <label className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold rounded-xl cursor-pointer shadow-xs transition-colors hover:scale-[1.02] active:scale-95">
-                      <Upload className="w-3.5 h-3.5" />
-                      <span>Tải ảnh từ máy</span>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={handleImageUpload}
-                        className="hidden"
-                      />
-                    </label>
-                  </div>
-
-                  {/* Input link field */}
+                <div>
+                  <label className="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1.5">
+                    Link ảnh bìa (Cover Image URL)
+                  </label>
                   <input
-                    type="text"
+                    type="url"
                     value={newCoverImage}
                     onChange={(e) => setNewCoverImage(e.target.value)}
-                    placeholder="Dán link ảnh (https://...) hoặc bấm 'Tải ảnh từ máy' ở trên"
-                    className="w-full px-3.5 py-2 text-xs sm:text-sm bg-white border border-stone-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 mb-2.5"
+                    placeholder="https://images.unsplash.com/..."
+                    className="w-full px-3.5 py-2.5 text-sm bg-stone-50 border border-stone-200 rounded-xl focus:outline-hidden focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500"
                   />
-
-                  {/* Quick Preset Buttons */}
-                  <div className="mb-3">
-                    <span className="text-[11px] text-stone-500 font-semibold block mb-1.5">
-                      Hoặc chọn nhanh ảnh mẫu có sẵn:
-                    </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {COVER_IMAGE_PRESETS.map((preset) => (
-                        <button
-                          key={preset.label}
-                          type="button"
-                          onClick={() => setNewCoverImage(preset.url)}
-                          className={`text-[11px] px-2.5 py-1 rounded-lg border transition-colors cursor-pointer ${
-                            newCoverImage === preset.url
-                              ? 'bg-orange-50 border-orange-400 text-orange-700 font-bold shadow-2xs'
-                              : 'bg-white border-stone-200 text-stone-600 hover:bg-stone-100'
-                          }`}
-                        >
-                          {preset.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Live preview */}
-                  {newCoverImage && (
-                    <div className="flex items-center gap-3 p-2 bg-white rounded-xl border border-stone-200 shadow-2xs">
-                      <img
-                        src={newCoverImage}
-                        alt="Ảnh bìa xem trước"
-                        className="w-16 h-12 rounded-lg object-cover bg-stone-100 shrink-0 border border-stone-100"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).src =
-                            'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1200&auto=format&fit=crop&q=80';
-                        }}
-                      />
-                      <div className="min-w-0 flex-1">
-                        <span className="text-[11px] font-bold text-stone-800 block">
-                          Ảnh bìa hiện tại
-                        </span>
-                        <span className="text-[10px] text-stone-400 truncate block">
-                          {newCoverImage.startsWith('data:') ? 'Ảnh tải từ thiết bị của bạn' : newCoverImage}
-                        </span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => setNewCoverImage('')}
-                        className="text-xs text-red-500 hover:text-red-700 px-2 py-1 hover:bg-red-50 rounded-lg cursor-pointer transition-colors"
-                      >
-                        Gỡ ảnh
-                      </button>
-                    </div>
-                  )}
                 </div>
 
                 <div>
