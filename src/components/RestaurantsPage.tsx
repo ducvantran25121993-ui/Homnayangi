@@ -19,6 +19,9 @@ import {
   Store,
   ChevronRight,
   PlusCircle,
+  Crown,
+  Coffee,
+  Beer,
 } from 'lucide-react';
 import { SAMPLE_SPONSORED_PARTNERS } from '../data/sponsoredPartners';
 import { SponsoredPartner, UserLocation } from '../types';
@@ -30,12 +33,18 @@ interface RestaurantsPageProps {
   onNavigateContact?: () => void;
 }
 
-const CATEGORIES = [
-  'Tất Cả',
-  'Quán Ăn',
-  'Đồ Uống & Ăn Vặt',
-  'Quán Nhậu',
-] as const;
+interface CategoryTab {
+  id: string;
+  name: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
+
+const CATEGORY_TABS: CategoryTab[] = [
+  { id: 'Quán Ăn', name: 'Quán Ăn', icon: UtensilsCrossed },
+  { id: 'Nhà Hàng', name: 'Nhà Hàng', icon: Crown },
+  { id: 'Đồ Uống & Ăn Vặt', name: 'Đồ Uống & Ăn Vặt', icon: Coffee },
+  { id: 'Quán Nhậu', name: 'Quán Nhậu', icon: Beer },
+];
 
 const CITIES = [
   'Tất Cả Thành Phố',
@@ -51,18 +60,36 @@ export const RestaurantsPage: React.FC<RestaurantsPageProps> = ({
   onNavigateContact,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('Tất Cả');
+  const [selectedCategory, setSelectedCategory] = useState<string>('Quán Ăn');
   const [selectedCity, setSelectedCity] = useState<string>('Tất Cả Thành Phố');
   const [onlyPromo, setOnlyPromo] = useState(false);
   const [onlyHighRating, setOnlyHighRating] = useState(false);
+
+  // Count restaurants in each category
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = {
+      'Quán Ăn': 0,
+      'Nhà Hàng': 0,
+      'Đồ Uống & Ăn Vặt': 0,
+      'Quán Nhậu': 0,
+    };
+    SAMPLE_SPONSORED_PARTNERS.forEach((p) => {
+      if (p.isActive && p.category && counts[p.category] !== undefined) {
+        if (selectedCity === 'Tất Cả Thành Phố' || p.city === selectedCity || p.city === 'Toàn quốc') {
+          counts[p.category] += 1;
+        }
+      }
+    });
+    return counts;
+  }, [selectedCity]);
 
   // Filter restaurants
   const filteredRestaurants = useMemo(() => {
     return SAMPLE_SPONSORED_PARTNERS.filter((partner) => {
       if (!partner.isActive) return false;
 
-      // Category filter
-      if (selectedCategory !== 'Tất Cả' && partner.category !== selectedCategory) {
+      // Category filter (strictly match selected category)
+      if (partner.category !== selectedCategory) {
         return false;
       }
 
@@ -157,24 +184,39 @@ export const RestaurantsPage: React.FC<RestaurantsPageProps> = ({
             </div>
           </div>
 
-          {/* Category Chips */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-            {CATEGORIES.map((cat) => {
-              const isSelected = selectedCategory === cat;
-              return (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
-                    isSelected
-                      ? 'bg-orange-600 text-white shadow-xs'
-                      : 'bg-stone-100 hover:bg-stone-200/80 text-stone-600'
-                  }`}
-                >
-                  {cat}
-                </button>
-              );
-            })}
+          {/* Category Tabs - Centered & Beautiful Segmented Control */}
+          <div className="flex justify-center pt-1 pb-1">
+            <div className="inline-flex p-1.5 sm:p-2 bg-stone-100 rounded-2xl sm:rounded-full border border-stone-200/90 shadow-2xs max-w-full overflow-x-auto scrollbar-none gap-1 sm:gap-2">
+              {CATEGORY_TABS.map((cat) => {
+                const isSelected = selectedCategory === cat.id;
+                const Icon = cat.icon;
+                const count = categoryCounts[cat.id] ?? 0;
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => setSelectedCategory(cat.id)}
+                    className={`inline-flex items-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl sm:rounded-full text-xs sm:text-sm font-bold transition-all duration-200 shrink-0 cursor-pointer select-none ${
+                      isSelected
+                        ? 'bg-linear-to-r from-orange-600 to-amber-600 text-white shadow-md shadow-orange-600/25 scale-[1.02]'
+                        : 'text-stone-600 hover:text-stone-900 hover:bg-white/80 active:scale-95'
+                    }`}
+                  >
+                    <Icon className={`w-4 h-4 shrink-0 ${isSelected ? 'text-white' : 'text-stone-500'}`} />
+                    <span>{cat.name}</span>
+                    <span
+                      className={`text-[11px] px-2 py-0.5 rounded-full font-extrabold ${
+                        isSelected
+                          ? 'bg-white/25 text-white'
+                          : 'bg-stone-200 text-stone-600'
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Quick toggle badges */}
