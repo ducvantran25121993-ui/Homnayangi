@@ -81,9 +81,18 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
   const [newContent, setNewContent] = useState('');
   const [previewMode, setPreviewMode] = useState(false);
 
-  // All posts combined (custom + initial)
+  // All posts combined (custom + initial, initial takes precedence by slug)
   const allPosts = useMemo(() => {
-    return [...customPosts, ...INITIAL_BLOG_POSTS];
+    const postMap = new Map<string, BlogPost>();
+    INITIAL_BLOG_POSTS.forEach((p) => {
+      postMap.set(p.slug, p);
+    });
+    customPosts.forEach((p) => {
+      if (!postMap.has(p.slug)) {
+        postMap.set(p.slug, p);
+      }
+    });
+    return Array.from(postMap.values());
   }, [customPosts]);
 
   // Sync browser back/forward and URL change
@@ -110,7 +119,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
     };
   }, [allPosts]);
 
-  // Update document title and canonical meta when activePost changes
+  // Update document title, meta tags, and structured JSON-LD schema when activePost changes
   useEffect(() => {
     if (activePost) {
       document.title = `${activePost.title} | Blog Ẩm Thực Hôm Nay Ăn Gì`;
@@ -118,12 +127,67 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
       if (canonical) {
         canonical.setAttribute('href', `https://www.angigio.com/${activePost.slug}`);
       }
+
+      // Update description & OG tags
+      let metaDesc = document.querySelector('meta[name="description"]');
+      if (!metaDesc) {
+        metaDesc = document.createElement('meta');
+        metaDesc.setAttribute('name', 'description');
+        document.head.appendChild(metaDesc);
+      }
+      metaDesc.setAttribute('content', activePost.excerpt);
+
+      let ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.setAttribute('content', `${activePost.title} | Blog Ẩm Thực Hôm Nay Ăn Gì`);
+      let ogDesc = document.querySelector('meta[property="og:description"]');
+      if (ogDesc) ogDesc.setAttribute('content', activePost.excerpt);
+      let ogImage = document.querySelector('meta[property="og:image"]');
+      if (ogImage) ogImage.setAttribute('content', activePost.coverImage);
+
+      // JSON-LD Schema for Article
+      const scriptId = 'blog-post-jsonld';
+      let script = document.getElementById(scriptId) as HTMLScriptElement | null;
+      if (!script) {
+        script = document.createElement('script');
+        script.id = scriptId;
+        script.type = 'application/ld+json';
+        document.head.appendChild(script);
+      }
+      script.text = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: activePost.title,
+        description: activePost.excerpt,
+        image: activePost.coverImage,
+        datePublished: '2026-09-28T08:00:00+07:00',
+        dateModified: '2026-09-29T00:00:00+07:00',
+        author: {
+          '@type': 'Person',
+          name: activePost.author.name,
+          jobTitle: activePost.author.role,
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'Hôm Nay Ăn Gì',
+          url: 'https://www.angigio.com',
+          logo: {
+            '@type': 'ImageObject',
+            url: 'https://www.angigio.com/logo-food.png',
+          },
+        },
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': `https://www.angigio.com/${activePost.slug}`,
+        },
+      });
     } else {
       document.title = 'Blog Ẩm Thực - Cẩm Nang Món Ngon & Bí Quyết Nấu Nướng | Hôm Nay Ăn Gì';
       const canonical = document.querySelector('link[rel="canonical"]');
       if (canonical) {
         canonical.setAttribute('href', 'https://www.angigio.com/blog');
       }
+      const existingScript = document.getElementById('blog-post-jsonld');
+      if (existingScript) existingScript.remove();
     }
   }, [activePost]);
 
@@ -296,7 +360,55 @@ ${newContent}
   },`;
   };
 
-  // Render markdown-like text nicely
+  // Helper to parse inline markdown: bold and links
+  const parseInlineContent = (text: string) => {
+    // Regex splits by: [link](url) OR **bold**
+    const parts = text.split(/(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*)/g);
+
+    return parts.map((part, index) => {
+      if (!part) return null;
+
+      // Check markdown link: [label](href)
+      const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+      if (linkMatch) {
+        const [, label, href] = linkMatch;
+        const isInternal = href.startsWith('/');
+        return (
+          <a
+            key={`inline-link-${index}`}
+            href={href}
+            onClick={(e) => {
+              if (e.ctrlKey || e.metaKey || e.button === 1) return;
+              if (isInternal) {
+                e.preventDefault();
+                window.history.pushState(null, '', href);
+                window.dispatchEvent(new Event('locationchange'));
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }}
+            className="text-orange-600 hover:text-orange-700 underline font-bold decoration-orange-300 hover:decoration-orange-600 transition-colors cursor-pointer"
+            {...(!isInternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          >
+            {label}
+          </a>
+        );
+      }
+
+      // Check bold: **text**
+      const boldMatch = part.match(/^\*\*([^*]+)\*\*$/);
+      if (boldMatch) {
+        return (
+          <strong key={`inline-bold-${index}`} className="font-extrabold text-stone-900">
+            {boldMatch[1]}
+          </strong>
+        );
+      }
+
+      return <React.Fragment key={`inline-txt-${index}`}>{part}</React.Fragment>;
+    });
+  };
+
+  // Render markdown-like text nicely (Headings, Tables, Blockquotes, Lists, Links, Paragraphs)
   const renderFormattedContent = (content: string) => {
     const lines = content.split('\n');
     const elements: React.ReactNode[] = [];
@@ -305,6 +417,69 @@ ${newContent}
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
 
+      // 1. Markdown Table Check
+      if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
+        const tableLines: string[] = [];
+        while (i < lines.length && lines[i].trim().startsWith('|') && lines[i].trim().endsWith('|')) {
+          tableLines.push(lines[i].trim());
+          i++;
+        }
+        i--; // Step back one line since loop increments
+
+        if (tableLines.length >= 2) {
+          const headerCells = tableLines[0]
+            .split('|')
+            .filter((_, idx, arr) => idx > 0 && idx < arr.length - 1)
+            .map((c) => c.trim());
+
+          // Check if row 1 is separator (e.g. |---|---|)
+          const isSeparator = /^\|(\s*[-:]+\s*\|)+$/.test(tableLines[1]);
+          const bodyStartIdx = isSeparator ? 2 : 1;
+
+          const bodyRows = tableLines.slice(bodyStartIdx).map((rowLine) =>
+            rowLine
+              .split('|')
+              .filter((_, idx, arr) => idx > 0 && idx < arr.length - 1)
+              .map((c) => c.trim())
+          );
+
+          elements.push(
+            <div
+              key={`table-${currentKey++}`}
+              className="overflow-x-auto my-6 rounded-2xl border border-stone-200/90 shadow-2xs bg-white"
+            >
+              <table className="w-full text-left text-xs sm:text-sm border-collapse min-w-[500px]">
+                <thead className="bg-orange-50/80 border-b border-orange-100 text-orange-950 font-black">
+                  <tr>
+                    {headerCells.map((h, hIdx) => (
+                      <th key={hIdx} className="px-4 py-3 font-black text-stone-900">
+                        {parseInlineContent(h)}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-stone-100">
+                  {bodyRows.map((r, rIdx) => (
+                    <tr
+                      key={rIdx}
+                      className={rIdx % 2 === 0 ? 'bg-white' : 'bg-stone-50/60 hover:bg-orange-50/30'}
+                    >
+                      {r.map((c, cIdx) => (
+                        <td key={cIdx} className="px-4 py-3 text-stone-700 leading-relaxed font-medium">
+                          {parseInlineContent(c)}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+          continue;
+        }
+      }
+
+      // 2. Headings
       if (line.startsWith('### ')) {
         elements.push(
           <h3
@@ -330,39 +505,26 @@ ${newContent}
             key={`quote-${currentKey++}`}
             className="my-6 p-4 sm:p-5 bg-amber-50/80 border-l-4 border-amber-500 rounded-r-2xl text-stone-800 italic text-sm sm:text-base leading-relaxed"
           >
-            {line.replace('> ', '').replace(/\*\*(.*?)\*\*/g, '$1')}
+            {parseInlineContent(line.replace('> ', ''))}
           </blockquote>
         );
       } else if (line.startsWith('- ')) {
         const itemText = line.replace('- ', '');
-        // Bold parsing
-        const parts = itemText.split(/\*\*(.*?)\*\*/g);
         elements.push(
-          <li key={`li-${currentKey++}`} className="ml-5 list-disc text-stone-700 my-2 leading-relaxed text-sm sm:text-base">
-            {parts.map((p, pIdx) =>
-              pIdx % 2 === 1 ? (
-                <strong key={pIdx} className="font-bold text-stone-900">
-                  {p}
-                </strong>
-              ) : (
-                p
-              )
-            )}
+          <li
+            key={`li-${currentKey++}`}
+            className="ml-5 list-disc text-stone-700 my-2 leading-relaxed text-sm sm:text-base"
+          >
+            {parseInlineContent(itemText)}
           </li>
         );
       } else if (line.trim().length > 0) {
-        const parts = line.split(/\*\*(.*?)\*\*/g);
         elements.push(
-          <p key={`p-${currentKey++}`} className="text-stone-700 my-3 leading-relaxed text-sm sm:text-base">
-            {parts.map((p, pIdx) =>
-              pIdx % 2 === 1 ? (
-                <strong key={pIdx} className="font-bold text-stone-900">
-                  {p}
-                </strong>
-              ) : (
-                p
-              )
-            )}
+          <p
+            key={`p-${currentKey++}`}
+            className="text-stone-700 my-3 leading-relaxed text-sm sm:text-base"
+          >
+            {parseInlineContent(line)}
           </p>
         );
       }
