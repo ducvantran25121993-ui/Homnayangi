@@ -117,27 +117,9 @@ export const RestaurantsPage: React.FC<RestaurantsPageProps> = ({
           Top Quán Ngon Gần Bạn
         </h1>
         
-        <p className="text-sm sm:text-base text-stone-600 max-w-3xl mx-auto leading-relaxed mb-4">
+        <p className="text-sm sm:text-base text-stone-600 max-w-3xl mx-auto leading-relaxed">
           Tuyển chọn những quán ăn gia truyền, thương hiệu nổi tiếng và địa chỉ ẩm thực được thực khách đánh giá cao nhất. Đặt giao tận nơi qua ShopeeFood, GrabFood, BeFood hoặc chỉ đường Google Maps nhanh chóng.
         </p>
-
-        {/* Quick Location Badge */}
-        {userLocation?.city && (
-          <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-stone-200 shadow-2xs text-xs sm:text-sm text-stone-700">
-            <MapPin className="w-4 h-4 text-orange-500 shrink-0" />
-            <span>
-              Đang tìm quán quanh: <strong>{userLocation.district ? `${userLocation.district}, ` : ''}{userLocation.city}</strong>
-            </span>
-            {onOpenLocationModal && (
-              <button
-                onClick={onOpenLocationModal}
-                className="ml-1.5 underline text-orange-600 hover:text-orange-700 cursor-pointer font-bold"
-              >
-                Đổi vị trí
-              </button>
-            )}
-          </div>
-        )}
       </section>
 
       {/* 2. FILTER & SEARCH CONTROLS */}
