@@ -32,13 +32,9 @@ interface RestaurantsPageProps {
 
 const CATEGORIES = [
   'Tất Cả',
-  'Bún & Phở',
-  'Cơm Tấm & Cơm Nhà',
-  'Bánh Mì & Ăn Nhanh',
-  'Đồ Uống & Trà Sữa',
-  'Lẩu & Nướng',
-  'Ăn Vặt & Hải Sản',
-  'Healthy & Chay',
+  'Quán Ăn',
+  'Đồ Uống & Ăn Vặt',
+  'Quán Nhậu',
 ] as const;
 
 const CITIES = [
