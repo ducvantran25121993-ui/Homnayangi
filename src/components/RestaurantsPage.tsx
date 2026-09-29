@@ -39,7 +39,6 @@ const CATEGORIES = [
   'Lẩu & Nướng',
   'Ăn Vặt & Hải Sản',
   'Healthy & Chay',
-  'Đặc Sản Miền Trung',
 ] as const;
 
 const CITIES = [
@@ -108,45 +107,42 @@ export const RestaurantsPage: React.FC<RestaurantsPageProps> = ({
   return (
     <div className="min-h-screen bg-stone-50/70 pb-20 animate-fade-in">
       {/* 1. HERO SECTION */}
-      <section className="relative overflow-hidden bg-radial from-orange-600 via-amber-600 to-orange-700 text-white py-12 sm:py-16 px-4 sm:px-6 lg:px-8 shadow-md">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
-        <div className="relative max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-orange-100 text-xs sm:text-sm font-bold uppercase tracking-wider mb-4 border border-white/25 shadow-xs">
-            <Store className="w-4 h-4 text-amber-300" />
-            <span>Địa Điểm Ẩm Thực Uy Tín & Chuẩn Vị</span>
-          </div>
-          
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-black tracking-tight text-white mb-4 leading-tight">
-            Top Quán Ngon Gần Bạn & Gia Truyền 3 Miền
-          </h1>
-          
-          <p className="text-sm sm:text-base text-orange-100 max-w-2xl mx-auto leading-relaxed mb-6 font-medium">
-            Tuyển chọn những quán ăn gia truyền, thương hiệu nổi tiếng và địa chỉ ẩm thực được thực khách đánh giá cao nhất. Đặt giao tận nơi qua ShopeeFood, GrabFood, BeFood hoặc chỉ đường Google Maps nhanh chóng.
-          </p>
-
-          {/* Quick Location Badge */}
-          {userLocation?.city && (
-            <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20 text-xs sm:text-sm">
-              <MapPin className="w-4 h-4 text-amber-300 shrink-0" />
-              <span>
-                Đang tìm quán quanh: <strong>{userLocation.district ? `${userLocation.district}, ` : ''}{userLocation.city}</strong>
-              </span>
-              {onOpenLocationModal && (
-                <button
-                  onClick={onOpenLocationModal}
-                  className="ml-2 underline text-amber-200 hover:text-white cursor-pointer font-semibold"
-                >
-                  Đổi vị trí
-                </button>
-              )}
-            </div>
-          )}
+      <section className="text-center max-w-5xl xl:max-w-6xl mx-auto pt-6 sm:pt-8 mb-6 px-4">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100 text-orange-800 text-xs sm:text-sm font-bold uppercase tracking-wider mb-3 border border-orange-200/80 shadow-2xs">
+          <Store className="w-4 h-4 text-orange-600" />
+          <span>Địa Điểm Ẩm Thực Uy Tín & Chuẩn Vị</span>
         </div>
+        
+        <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-[34px] xl:text-[38px] font-extrabold text-stone-900 tracking-tight mb-3">
+          Top Quán Ngon Gần Bạn
+        </h1>
+        
+        <p className="text-sm sm:text-base text-stone-600 max-w-3xl mx-auto leading-relaxed mb-4">
+          Tuyển chọn những quán ăn gia truyền, thương hiệu nổi tiếng và địa chỉ ẩm thực được thực khách đánh giá cao nhất. Đặt giao tận nơi qua ShopeeFood, GrabFood, BeFood hoặc chỉ đường Google Maps nhanh chóng.
+        </p>
+
+        {/* Quick Location Badge */}
+        {userLocation?.city && (
+          <div className="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-stone-200 shadow-2xs text-xs sm:text-sm text-stone-700">
+            <MapPin className="w-4 h-4 text-orange-500 shrink-0" />
+            <span>
+              Đang tìm quán quanh: <strong>{userLocation.district ? `${userLocation.district}, ` : ''}{userLocation.city}</strong>
+            </span>
+            {onOpenLocationModal && (
+              <button
+                onClick={onOpenLocationModal}
+                className="ml-1.5 underline text-orange-600 hover:text-orange-700 cursor-pointer font-bold"
+              >
+                Đổi vị trí
+              </button>
+            )}
+          </div>
+        )}
       </section>
 
       {/* 2. FILTER & SEARCH CONTROLS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6">
-        <div className="bg-white rounded-3xl p-4 sm:p-6 shadow-sm border border-stone-200/80 space-y-4">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+        <div className="bg-white rounded-3xl p-4 sm:p-6 shadow-xs border border-stone-200 space-y-4">
           {/* Search bar + City filter */}
           <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
             <div className="relative sm:col-span-8">

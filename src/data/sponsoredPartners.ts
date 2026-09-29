@@ -139,7 +139,7 @@ export const SAMPLE_SPONSORED_PARTNERS: SponsoredPartner[] = [
     id: 'partner-mi-quang-ba-mua',
     restaurantName: 'Mì Quảng Bà Mua - Đặc Sản Đà Nẵng',
     verifiedBadge: 'Quán Ngon Đề Xuất',
-    category: 'Đặc Sản Miền Trung',
+    category: 'Bún & Phở',
     priceRange: '35.000đ - 55.000đ',
     openingHours: '06:30 - 22:00',
     dishIds: ['mi-quang-ech', 'mi-quang-ga-ta'],
