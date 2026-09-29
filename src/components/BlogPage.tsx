@@ -26,6 +26,7 @@ import {
   getBlogPostBySlug,
 } from '../data/blogPosts';
 import { INITIAL_DISHES } from '../data/dishes';
+import { findDishByRecipeSlug, getRecipePath } from '../data/recipes';
 import { Dish } from '../types';
 import { TabType } from '../utils/navigation';
 
@@ -381,6 +382,22 @@ ${newContent}
               if (e.ctrlKey || e.metaKey || e.button === 1) return;
               if (isInternal) {
                 e.preventDefault();
+                // Check if this link points to a dish recipe (e.g. /suon-nuong-bbq or /cach-nau-suon-nuong-bbq)
+                const matchedDish = findDishByRecipeSlug(href, INITIAL_DISHES);
+                if (matchedDish) {
+                  const targetRecipePath = getRecipePath(matchedDish);
+                  window.history.pushState({ section: 'recipe', dishId: matchedDish.id }, '', targetRecipePath);
+                  window.dispatchEvent(new Event('locationchange'));
+                  if (onSelectDish) {
+                    onSelectDish(matchedDish);
+                  }
+                  if (onNavigate) {
+                    onNavigate('discover');
+                  }
+                  window.scrollTo({ top: 0, behavior: 'instant' });
+                  return;
+                }
+
                 window.history.pushState(null, '', href);
                 window.dispatchEvent(new Event('locationchange'));
                 window.scrollTo({ top: 0, behavior: 'smooth' });

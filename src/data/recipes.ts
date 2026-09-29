@@ -1,6 +1,110 @@
 import { Dish, DishRecipe } from '../types';
 
 export const CURATED_RECIPES: Record<string, DishRecipe> = {
+  'suon-nuong-bbq': {
+    dishId: 'suon-nuong-bbq',
+    dishName: 'Dẻ Sườn Heo Nướng Tảng BBQ Sốt Khói',
+    seoTitle: 'Cách Làm Dẻ Sườn Heo Nướng BBQ Bằng Nồi Chiên Không Dầu Mềm Tan Róc Xương',
+    prepTime: '20 phút (ướp 1 - 2 giờ)',
+    cookTime: '25 - 30 phút',
+    difficulty: 'Dễ',
+    servings: '3 - 4 người',
+    ingredients: [
+      {
+        category: 'Nguyên liệu chính',
+        items: [
+          '800g - 1kg dẻ sườn heo non nguyên tảng tươi ngon',
+          'Giấy bạc nướng thực phẩm',
+        ],
+      },
+      {
+        category: 'Sốt ướp sườn BBQ đậm đà',
+        items: [
+          '4 thìa canh sốt BBQ (loại sốt khói hun gỗ sồi)',
+          '2 thìa canh mật ong nguyên chất',
+          '1 thìa canh dầu hào Maggi',
+          '1 thìa canh tương cà chua (ketchup)',
+          '1 thìa canh nước tương đậm đặc',
+          '1 thìa cà phê bột tỏi (hoặc 1 củ tỏi băm vắt lấy nước)',
+          '1/2 thìa cà phê ớt bột Paprika tạo màu',
+          '1/2 thìa cà phê tiêu đen xay vỡ',
+        ],
+      },
+      {
+        category: 'Rau củ ăn kèm',
+        items: [
+          'Dưa leo, xà lách giòn, cà chua bi',
+          'Khoai tây chiên hoặc bắp ngọt nướng bơ',
+        ],
+      },
+    ],
+    steps: [
+      {
+        step: 1,
+        title: 'Sơ chế và làm sạch sườn',
+        time: '10 phút',
+        heat: 'Nhiệt độ phòng',
+        goal: 'Sườn sạch mùi hôi, róc màng gân để gia vị thấm sâu vào từng thớ thịt',
+        actionPoints: [
+          'Dẻ sườn rửa sạch với nước muối loãng pha chút giấm trắng, dùng khăn giấy đa năng thấm thật khô ráo.',
+          'Dùng mũi dao nhọn luồn vào bóc sạch lớp màng trắng mỏng ở mặt sau của dẻ sườn (lớp màng này khiến sườn bị dai và khó ngấm gia vị).',
+          'Dùng dao khía nhẹ vài đường dọc theo các kẽ xương sườn.',
+        ],
+        description:
+          'Sườn rửa sạch với nước muối loãng, thấm khô ráo. Dùng dao bóc sạch lớp màng gân trắng phía sau sườn để khi nướng sườn róc xương và thấm gia vị tối đa.',
+        tip: 'Bóc sạch lớp màng trắng ở mặt sau là bí quyết then chốt giúp sườn róc xương mềm tan chuẩn phong cách nhà hàng nướng Âu.',
+      },
+      {
+        step: 2,
+        title: 'Pha sốt và ướp sườn tảng ngấm sâu',
+        time: '15 phút (ướp 1 - 2 giờ)',
+        heat: 'Nhiệt độ phòng / Ngăn mát tủ lạnh',
+        goal: 'Sườn thấm đẫm hương vị sốt BBQ, màu sắc nâu đỏ hấp dẫn',
+        actionPoints: [
+          'Trộn đều hỗn hợp: 4 thìa sốt BBQ, 2 thìa mật ong, 1 thìa dầu hào, 1 thìa tương cà, 1 thìa nước tương, 1 thìa bột tỏi, 1/2 thìa tiêu đen và 1/2 thìa bột ớt Paprika trong bát.',
+          'Đeo găng tay, xoa đều 2/3 lượng sốt lên khắp hai mặt tảng sườn, massage nhẹ nhàng trong 3 phút.',
+          'Giữ lại 1/3 lượng sốt để phết ở giai đoạn nướng cuối.',
+          'Bọc kín sườn trong màng bọc thực phẩm, để ngăn mát tủ lạnh ướp từ 1 - 2 giờ (hoặc ướp qua đêm càng ngon).',
+        ],
+        description:
+          'Pha hỗn hợp sốt BBQ cùng mật ong, dầu hào, tương cà và tiêu tỏi. Thoa đều 2/3 lượng sốt lên khắp tảng sườn và ướp ít nhất 1 giờ. Giữ lại 1/3 sốt để quét bóng ở bước cuối.',
+      },
+      {
+        step: 3,
+        title: 'Nướng lần 1 bọc giấy bạc (Làm sườn chín mọng nước)',
+        time: '18 phút',
+        heat: 'Nồi chiên không dầu / Lò nướng 170°C',
+        goal: 'Thịt sườn chín thấu từ trong tủy, mọng nước, không bị khô bề mặt',
+        actionPoints: [
+          'Làm nóng nồi chiên không dầu ở 180°C trước 5 phút.',
+          'Đặt tảng sườn vào giữa tấm giấy bạc, gói kín các mép lại sao cho hơi nước không thoát ra ngoài.',
+          'Cho gói sườn vào nồi chiên không dầu, nướng ở 170°C trong 18 phút.',
+        ],
+        description:
+          'Bọc kín tảng sườn trong giấy bạc rồi nướng ở 170°C trong 18 phút. Giấy bạc giúp giữ trọn vẹn nước ngọt từ xương, giúp thịt chín mềm từ bên trong mà không bị khô cứng.',
+        tip: 'Gói thật kín mép giấy bạc để nước ngọt tự nhiên từ thịt sườn không bị bốc hơi.',
+      },
+      {
+        step: 4,
+        title: 'Nướng lần 2 quét sốt mật ong (Tạo màu cánh gián caramen)',
+        time: '8 phút',
+        heat: 'Nồi chiên không dầu 185°C - 190°C',
+        goal: 'Bề mặt sườn nâu óng ánh caramen, dậy mùi thơm khói BBQ quyến rũ',
+        actionPoints: [
+          'Mở gói giấy bạc, gập gọn giấy bạc sát đáy nồi để lộ toàn bộ mặt thịt sườn lên trên.',
+          'Dùng cọ quét đều lớp sốt BBQ mật ong đã để dành lên khắp bề mặt sườn.',
+          'Tăng nhiệt nồi chiên lên 185°C, nướng trong 5 phút.',
+          'Lật mặt sườn, quét tiếp sốt và nướng thêm 3 phút ở 190°C cho bề mặt xém vàng nâu óng ả.',
+        ],
+        description:
+          'Mở giấy bạc, quét phần sốt BBQ mật ong còn lại lên bề mặt sườn rồi nướng tiếp ở 185°C - 190°C trong 8 phút cho sốt cô lại, ngả màu nâu cánh gián bóng loáng và thơm nức mũi.',
+      },
+    ],
+    chefSecret:
+      'Bóc sạch lớp màng gân trắng phía sau dẻ sườn và bọc kín giấy bạc trong 18 phút đầu là bí quyết 2 giai đoạn giúp sườn chín mọng nước, mềm róc xương chuẩn phong cách tiệc nướng nhà hàng.',
+    recommendedSauce:
+      'Chấm cùng sốt BBQ pha mật ong hoặc muối ớt xanh chua cay, ăn kèm bắp nướng bơ và dưa chuột giòn mát.',
+  },
   'pho-bo-tai-lan': {
     dishId: 'pho-bo-tai-lan',
     dishName: 'Phở Bò Tái Lăn Hà Nội',
@@ -6281,6 +6385,7 @@ export function getDishRecipe(dish: Dish): DishRecipe {
 export const ACTIVE_RECIPE_DISH_IDS: string[] = [
   'com-tam-suon-bi-cha',
   'com-ga-xoi-mo',
+  'suon-nuong-bbq',
   'com-rang-dua-bo',
   'bun-bo-hue-dac-biet',
   'mi-quang-tom-thit',

@@ -168,9 +168,11 @@ export default function App() {
     };
 
     window.addEventListener('popstate', handlePopState);
+    window.addEventListener('locationchange', handlePopState);
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('popstate', handlePopState);
+      window.removeEventListener('locationchange', handlePopState);
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [activeTab]);

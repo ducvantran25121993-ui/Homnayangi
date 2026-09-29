@@ -1,6 +1,6 @@
 import { Dish, DishRecipe, RegionId } from '../types';
 import { getRegionById } from '../data/regionalCuisine';
-import { getRecipePath, getRecipeArticleTitle, formatRecipeSeoTitle } from '../data/recipes';
+import { getRecipePath, getRecipeArticleTitle, formatRecipeSeoTitle, findDishByRecipeSlug } from '../data/recipes';
 import { INITIAL_DISHES } from '../data/dishes';
 import { isBlogPostSlug } from '../data/blogPosts';
 
@@ -199,7 +199,8 @@ export function getDiscoverSubSectionFromUrl(): DiscoverSubSection {
     pathname === '/kham-pha-am-thuc/cach-nau-mon-ngon' ||
     pathname.startsWith('/cach-nau-') ||
     pathname.startsWith('/cach-lam-') ||
-    pathname.startsWith('/cach-nau-mon-ngon/')
+    pathname.startsWith('/cach-nau-mon-ngon/') ||
+    findDishByRecipeSlug(pathname, INITIAL_DISHES) !== undefined
   ) {
     return 'recipe';
   }
@@ -230,7 +231,8 @@ export function getTabFromUrl(): TabType {
     pathname === '/cam-nang-am-thuc' ||
     pathname.startsWith('/am-thuc-') ||
     pathname.startsWith('/cach-nau-') ||
-    pathname.startsWith('/cach-lam-')
+    pathname.startsWith('/cach-lam-') ||
+    findDishByRecipeSlug(pathname, INITIAL_DISHES) !== undefined
   ) return 'discover';
   if (pathname === '/gioi-thieu' || pathname === '/about') return 'about';
   if (pathname === '/lien-he' || pathname === '/contact') return 'contact';

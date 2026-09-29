@@ -462,14 +462,15 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
     if (typeof window !== 'undefined') {
       const pathname = window.location.pathname;
       const isRecipePath =
-        (pathname.startsWith('/cach-nau-') ||
+        ((pathname.startsWith('/cach-nau-') ||
           pathname.startsWith('/cach-lam-') ||
-          pathname.startsWith('/cach-nau-mon-ngon/')) &&
+          pathname.startsWith('/cach-nau-mon-ngon/') ||
+          findDishByRecipeSlug(pathname, INITIAL_DISHES) !== undefined)) &&
         pathname !== '/cach-nau-mon-ngon';
 
       if (isRecipePath) {
         const slug = pathname.replace('/cach-nau-mon-ngon/', '').replace(/^\//, '');
-        const match = findDishByRecipeSlug(slug, INITIAL_DISHES);
+        const match = findDishByRecipeSlug(slug, INITIAL_DISHES) || findDishByRecipeSlug(pathname, INITIAL_DISHES);
         if (match) return match;
       }
       if (window.location.hash.startsWith('#recipe-')) {
@@ -510,14 +511,15 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
 
       const pathname = window.location.pathname;
       const isRecipePath =
-        (pathname.startsWith('/cach-nau-') ||
+        ((pathname.startsWith('/cach-nau-') ||
           pathname.startsWith('/cach-lam-') ||
-          pathname.startsWith('/cach-nau-mon-ngon/')) &&
+          pathname.startsWith('/cach-nau-mon-ngon/') ||
+          findDishByRecipeSlug(pathname, INITIAL_DISHES) !== undefined)) &&
         pathname !== '/cach-nau-mon-ngon';
 
       if (isRecipePath) {
         const slug = pathname.replace('/cach-nau-mon-ngon/', '').replace(/^\//, '');
-        const match = findDishByRecipeSlug(slug, INITIAL_DISHES);
+        const match = findDishByRecipeSlug(slug, INITIAL_DISHES) || findDishByRecipeSlug(pathname, INITIAL_DISHES);
         if (match) {
           setSelectedRecipeDish(match);
           setViewingRecipeArticle(true);
