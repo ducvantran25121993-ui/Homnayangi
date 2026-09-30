@@ -561,24 +561,44 @@ ${newContent}
         }
       }
 
+      // 1.5 Horizontal Rule (--- or ***)
+      if (line.trim() === '---' || line.trim() === '***') {
+        elements.push(
+          <hr key={`hr-${currentKey++}`} className="my-8 border-t border-stone-200" />
+        );
+        continue;
+      }
+
       // 2. Headings
       if (line.startsWith('### ')) {
+        const headingText = line.replace('### ', '');
         elements.push(
           <h3
             key={`h3-${currentKey++}`}
             className="text-xl sm:text-2xl font-black text-stone-900 mt-8 mb-4 flex items-center gap-2 border-b border-orange-100 pb-2.5"
           >
-            <span className="w-2 h-6 bg-orange-500 rounded-full inline-block" />
-            <span>{line.replace('### ', '')}</span>
+            <span className="w-2 h-6 bg-orange-500 rounded-full inline-block shrink-0" />
+            <span>{parseInlineContent(headingText)}</span>
           </h3>
         );
       } else if (line.startsWith('## ')) {
+        const headingText = line.replace('## ', '');
         elements.push(
           <h2
             key={`h2-${currentKey++}`}
             className="text-2xl sm:text-3xl font-black text-stone-900 mt-10 mb-4"
           >
-            {line.replace('## ', '')}
+            {parseInlineContent(headingText)}
+          </h2>
+        );
+      } else if (line.startsWith('# ')) {
+        const headingText = line.replace('# ', '');
+        elements.push(
+          <h2
+            key={`h1-as-h2-${currentKey++}`}
+            className="text-2xl sm:text-3xl font-black text-stone-900 mt-10 mb-4"
+          >
+            {parseInlineContent(headingText)}
           </h2>
         );
       } else if (line.startsWith('> ')) {
@@ -590,8 +610,8 @@ ${newContent}
             {parseInlineContent(line.replace('> ', ''))}
           </blockquote>
         );
-      } else if (line.startsWith('- ')) {
-        const itemText = line.replace('- ', '');
+      } else if (line.startsWith('- ') || line.startsWith('* ')) {
+        const itemText = line.startsWith('- ') ? line.replace('- ', '') : line.replace('* ', '');
         elements.push(
           <li
             key={`li-${currentKey++}`}
