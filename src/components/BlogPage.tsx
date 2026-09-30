@@ -18,6 +18,7 @@ import {
   Eye,
   Edit3,
   Trash2,
+  Home,
 } from 'lucide-react';
 import {
   BlogPost,
@@ -145,7 +146,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
       let ogImage = document.querySelector('meta[property="og:image"]');
       if (ogImage) ogImage.setAttribute('content', activePost.coverImage);
 
-      // JSON-LD Schema for Article
+      // JSON-LD Schema for Article & Breadcrumbs
       const scriptId = 'blog-post-jsonld';
       let script = document.getElementById(scriptId) as HTMLScriptElement | null;
       if (!script) {
@@ -156,30 +157,65 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
       }
       script.text = JSON.stringify({
         '@context': 'https://schema.org',
-        '@type': 'BlogPosting',
-        headline: activePost.title,
-        description: activePost.excerpt,
-        image: activePost.coverImage,
-        datePublished: '2026-09-28T08:00:00+07:00',
-        dateModified: '2026-09-29T00:00:00+07:00',
-        author: {
-          '@type': 'Person',
-          name: activePost.author.name,
-          jobTitle: activePost.author.role,
-        },
-        publisher: {
-          '@type': 'Organization',
-          name: 'Hôm Nay Ăn Gì',
-          url: 'https://www.angigio.com',
-          logo: {
-            '@type': 'ImageObject',
-            url: 'https://www.angigio.com/logo-food.png',
+        '@graph': [
+          {
+            '@type': 'BlogPosting',
+            '@id': `https://www.angigio.com/${activePost.slug}#article`,
+            isPartOf: {
+              '@type': 'WebSite',
+              '@id': 'https://www.angigio.com/#website',
+              name: 'Hôm Nay Ăn Gì',
+              url: 'https://www.angigio.com/',
+            },
+            headline: activePost.title,
+            description: activePost.excerpt,
+            image: [activePost.coverImage],
+            datePublished: '2026-09-28T08:00:00+07:00',
+            dateModified: '2026-09-29T00:00:00+07:00',
+            author: {
+              '@type': 'Person',
+              name: activePost.author.name,
+              jobTitle: activePost.author.role,
+            },
+            publisher: {
+              '@type': 'Organization',
+              name: 'Hôm Nay Ăn Gì',
+              url: 'https://www.angigio.com',
+              logo: {
+                '@type': 'ImageObject',
+                url: 'https://www.angigio.com/logo.png',
+              },
+            },
+            mainEntityOfPage: {
+              '@type': 'WebPage',
+              '@id': `https://www.angigio.com/${activePost.slug}`,
+            },
           },
-        },
-        mainEntityOfPage: {
-          '@type': 'WebPage',
-          '@id': `https://www.angigio.com/${activePost.slug}`,
-        },
+          {
+            '@type': 'BreadcrumbList',
+            '@id': `https://www.angigio.com/${activePost.slug}#breadcrumb`,
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Trang chủ',
+                item: 'https://www.angigio.com/',
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Blog Ẩm Thực',
+                item: 'https://www.angigio.com/blog',
+              },
+              {
+                '@type': 'ListItem',
+                position: 3,
+                name: activePost.title,
+                item: `https://www.angigio.com/${activePost.slug}`,
+              },
+            ],
+          },
+        ],
       });
     } else {
       document.title = 'Blog Ẩm Thực - Cẩm Nang Món Ngon & Bí Quyết Nấu Nướng | Hôm Nay Ăn Gì';
@@ -361,13 +397,42 @@ ${newContent}
   },`;
   };
 
-  // Helper to parse inline markdown: bold and links
+  // Helper to parse inline markdown: images, bold and links
   const parseInlineContent = (text: string) => {
-    // Regex splits by: [link](url) OR **bold**
-    const parts = text.split(/(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*)/g);
+    // Regex splits by: ![img](url) OR [link](url) OR **bold**
+    const parts = text.split(/(!\[[^\]]*\]\([^)]+\)|\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*)/g);
 
     return parts.map((part, index) => {
       if (!part) return null;
+
+      // Check markdown image: ![alt](src)
+      const imgMatch = part.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+      if (imgMatch) {
+        const [, alt, src] = imgMatch;
+        return (
+          <figure
+            key={`inline-img-${index}`}
+            className="my-8 mx-auto w-full max-w-[420px] sm:max-w-[460px] rounded-2xl overflow-hidden border border-stone-200/90 shadow-xs bg-stone-50 block text-center"
+          >
+            <div className="w-full aspect-square overflow-hidden bg-stone-100 flex items-center justify-center">
+              <img
+                src={src}
+                alt={alt || 'Hình ảnh minh họa'}
+                loading="lazy"
+                className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
+            </div>
+            {alt && (
+              <figcaption className="text-center text-xs sm:text-sm text-stone-600 py-2.5 px-4 bg-stone-100/80 italic font-medium border-t border-stone-200/60">
+                {alt}
+              </figcaption>
+            )}
+          </figure>
+        );
+      }
 
       // Check markdown link: [label](href)
       const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
@@ -535,6 +600,34 @@ ${newContent}
             {parseInlineContent(itemText)}
           </li>
         );
+      } else if (/^!\[([^\]]*)\]\(([^)]+)\)$/.test(line.trim())) {
+        const imgMatch = line.trim().match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+        if (imgMatch) {
+          const [, alt, src] = imgMatch;
+          elements.push(
+            <figure
+              key={`img-${currentKey++}`}
+              className="my-8 mx-auto w-full max-w-[420px] sm:max-w-[460px] rounded-2xl overflow-hidden border border-stone-200/90 shadow-xs bg-stone-50 text-center"
+            >
+              <div className="w-full aspect-square overflow-hidden bg-stone-100 flex items-center justify-center">
+                <img
+                  src={src}
+                  alt={alt || 'Hình ảnh món ngon'}
+                  loading="lazy"
+                  className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
+              </div>
+              {alt && (
+                <figcaption className="text-center text-xs sm:text-sm text-stone-600 py-2.5 px-4 bg-stone-100/80 font-medium italic border-t border-stone-200/60">
+                  {alt}
+                </figcaption>
+              )}
+            </figure>
+          );
+        }
       } else if (line.trim().length > 0) {
         elements.push(
           <p
@@ -552,8 +645,22 @@ ${newContent}
 
   // Find related dishes for active post
   const relatedDishes = useMemo(() => {
-    if (!activePost || !activePost.relatedDishIds) return [];
-    return INITIAL_DISHES.filter((d) => activePost.relatedDishIds?.includes(d.id));
+    if (!activePost) return [];
+    if (activePost.relatedDishIds && activePost.relatedDishIds.length > 0) {
+      const matched = INITIAL_DISHES.filter((d) => activePost.relatedDishIds?.includes(d.id));
+      if (matched.length > 0) return matched;
+    }
+    const slug = activePost.slug.toLowerCase();
+    if (slug.includes('thit-heo') || slug.includes('ba-chi') || slug.includes('suon')) {
+      return INITIAL_DISHES.filter((d) => ['com-thit-kho-tau', 'suon-nuong-bbq', 'heo-quay-banh-hoi'].includes(d.id));
+    }
+    if (slug.includes('ga')) {
+      return INITIAL_DISHES.filter((d) => ['pho-ga-ta-la-chanh', 'ga-nuong-com-lam'].includes(d.id));
+    }
+    if (slug.includes('bo')) {
+      return INITIAL_DISHES.filter((d) => ['pho-cuon-thit-bo', 'com-rang-dua-bo'].includes(d.id));
+    }
+    return INITIAL_DISHES.filter((d) => ['com-thit-kho-tau', 'suon-nuong-bbq'].includes(d.id));
   }, [activePost]);
 
   // Featured post for hero section
@@ -566,6 +673,46 @@ ${newContent}
       {/* 1. ARTICLE DETAIL VIEW */}
       {activePost ? (
         <article className="max-w-6xl xl:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 animate-fade-in">
+          {/* Breadcrumb Navigation on top of article */}
+          <nav aria-label="Breadcrumb" className="mb-4 flex items-center flex-wrap gap-1 sm:gap-2 text-xs sm:text-sm text-stone-500 font-medium">
+            <a
+              href="/"
+              onClick={(e) => {
+                if (e.ctrlKey || e.metaKey || e.button === 1) return;
+                e.preventDefault();
+                if (onNavigate) {
+                  onNavigate('tarot');
+                } else {
+                  window.location.href = '/';
+                }
+              }}
+              className="inline-flex items-center gap-1 text-stone-600 hover:text-orange-600 transition-colors py-1 px-1.5 rounded-md hover:bg-stone-100 font-semibold"
+            >
+              <Home className="w-3.5 h-3.5 text-stone-400" />
+              <span>Trang chủ</span>
+            </a>
+
+            <ChevronRight className="w-3 h-3 text-stone-400 shrink-0" />
+
+            <a
+              href="/blog"
+              onClick={(e) => {
+                if (e.ctrlKey || e.metaKey || e.button === 1) return;
+                e.preventDefault();
+                handleBackToList();
+              }}
+              className="text-stone-600 hover:text-orange-600 transition-colors py-1 px-1.5 rounded-md hover:bg-stone-100 font-semibold"
+            >
+              Blog Ẩm Thực
+            </a>
+
+            <ChevronRight className="w-3 h-3 text-stone-400 shrink-0" />
+
+            <span className="text-orange-800 font-bold truncate max-w-[200px] sm:max-w-md" title={activePost.title}>
+              {activePost.title}
+            </span>
+          </nav>
+
           {/* Breadcrumb & Back button */}
           <div className="flex items-center justify-between gap-3 mb-6">
             <button
@@ -714,7 +861,7 @@ ${newContent}
                           {dish.calories}
                         </span>
                       </div>
-                      <h4 className="font-extrabold text-stone-900 text-sm group-hover:text-orange-600 transition-colors line-clamp-1 mb-1">
+                      <h4 className="font-extrabold text-orange-600 text-sm line-clamp-1 mb-1 group-hover:text-orange-700 transition-colors">
                         {dish.vietnameseName || dish.name}
                       </h4>
                       <p className="text-xs text-stone-500 line-clamp-2 leading-relaxed">
@@ -724,7 +871,7 @@ ${newContent}
 
                     <div className="mt-3 pt-2.5 border-t border-stone-100 flex items-center justify-between text-xs">
                       <span className="font-bold text-orange-600">{dish.priceRange}</span>
-                      <span className="inline-flex items-center gap-0.5 font-bold text-stone-600 group-hover:text-orange-600">
+                      <span className="inline-flex items-center gap-0.5 font-bold text-orange-600 group-hover:text-orange-700">
                         Xem công thức <ChevronRight className="w-3.5 h-3.5" />
                       </span>
                     </div>
@@ -775,7 +922,31 @@ ${newContent}
         </article>
       ) : (
         /* 2. BLOG LIST & DISCOVERY VIEW */
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
+          {/* Breadcrumb Navigation for Blog List */}
+          <nav aria-label="Breadcrumb" className="mb-4 flex items-center gap-1.5 text-xs sm:text-sm text-stone-500 font-medium">
+            <a
+              href="/"
+              onClick={(e) => {
+                if (e.ctrlKey || e.metaKey || e.button === 1) return;
+                e.preventDefault();
+                if (onNavigate) {
+                  onNavigate('tarot');
+                } else {
+                  window.location.href = '/';
+                }
+              }}
+              className="inline-flex items-center gap-1 text-stone-600 hover:text-orange-600 transition-colors py-1 px-1.5 rounded-md hover:bg-stone-100 font-semibold"
+            >
+              <Home className="w-3.5 h-3.5 text-stone-400" />
+              <span>Trang chủ</span>
+            </a>
+
+            <ChevronRight className="w-3 h-3 text-stone-400 shrink-0" />
+
+            <span className="text-orange-800 font-bold">Blog Ẩm Thực</span>
+          </nav>
+
           {/* Hero Banner Header */}
           <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-orange-600 via-amber-600 to-orange-700 text-white p-6 sm:p-12 mb-8 shadow-lg">
             <div className="relative z-10 max-w-3xl lg:max-w-4xl">

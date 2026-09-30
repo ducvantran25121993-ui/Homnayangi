@@ -673,10 +673,80 @@ async function startServer() {
       .replace(/<meta\s+name="twitter:url"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:url" content="${fullUrl}" />`)
       .replace(/<meta\s+name="twitter:image"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:image" content="${meta.image}" />`);
 
-    if (isRecipeRoute) {
+    if (isRecipeRoute || meta.isArticle) {
+      const publishedTime = '2026-09-28T08:00:00+07:00';
+      const modifiedTime = '2026-09-30T00:00:00+07:00';
       updatedHtml = updatedHtml.replace(
         /<meta\s+property="og:type"\s+content=".*?"\s*\/?>/i,
-        `<meta property="og:type" content="article" />\n    <meta property="article:published_time" content="2024-01-15T08:00:00+07:00" />\n    <meta property="article:modified_time" content="2026-09-21T00:00:00+07:00" />\n    <meta property="article:author" content="Hôm Nay Ăn Gì" />\n    <meta property="article:section" content="Món ngon" />`
+        `<meta property="og:type" content="article" />\n    <meta property="article:published_time" content="${publishedTime}" />\n    <meta property="article:modified_time" content="${modifiedTime}" />\n    <meta property="article:author" content="Hôm Nay Ăn Gì" />\n    <meta property="article:section" content="Bí quyết ẩm thực" />`
+      );
+
+      const articleSchema = {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "BlogPosting",
+            "@id": `${fullUrl}#article`,
+            "isPartOf": {
+              "@type": "WebSite",
+              "@id": "https://www.angigio.com/#website",
+              "name": "Hôm Nay Ăn Gì",
+              "url": "https://www.angigio.com/"
+            },
+            "headline": meta.title,
+            "description": meta.description,
+            "image": [meta.image?.startsWith("http") ? meta.image : `https://www.angigio.com${meta.image}`],
+            "datePublished": publishedTime,
+            "dateModified": modifiedTime,
+            "author": {
+              "@type": "Person",
+              "name": "Bếp Trưởng Hôm Nay Ăn Gì",
+              "jobTitle": "Chuyên gia ẩm thực"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Hôm Nay Ăn Gì",
+              "url": "https://www.angigio.com/",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.angigio.com/logo.png"
+              }
+            },
+            "mainEntityOfPage": {
+              "@type": "WebPage",
+              "@id": fullUrl
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "@id": `${fullUrl}#breadcrumb`,
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Trang chủ",
+                "item": "https://www.angigio.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Blog Ẩm Thực",
+                "item": "https://www.angigio.com/blog"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": meta.title,
+                "item": fullUrl
+              }
+            ]
+          }
+        ]
+      };
+
+      updatedHtml = updatedHtml.replace(
+        '</head>',
+        `    <script type="application/ld+json">\n${JSON.stringify(articleSchema, null, 2)}\n    </script>\n  </head>`
       );
     }
 
