@@ -130,6 +130,14 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
         canonical.setAttribute('href', `https://www.angigio.com/${activePost.slug}`);
       }
 
+      // Smoothly normalize address bar to canonical URL if opened via an alias
+      if (typeof window !== 'undefined') {
+        const currentPath = window.location.pathname.replace(/\/$/, '') || '';
+        if (currentPath && currentPath !== `/${activePost.slug}` && !currentPath.startsWith('/blog/')) {
+          window.history.replaceState({ tab: 'blog', slug: activePost.slug }, '', `/${activePost.slug}`);
+        }
+      }
+
       // Update description & OG tags
       let metaDesc = document.querySelector('meta[name="description"]');
       if (!metaDesc) {

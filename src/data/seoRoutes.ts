@@ -14,6 +14,8 @@ export interface RouteSeoMeta {
   priority?: number;
   lastmod?: string;
   isArticle?: boolean;
+  canonicalPath?: string;
+  isAlias?: boolean;
 }
 
 export const BASE_SEO_ROUTES: Record<string, RouteSeoMeta> = {
@@ -256,6 +258,8 @@ export function getAllSeoRoutes(): Record<string, RouteSeoMeta> {
           routes[aliasPath] = {
             ...routes[canonicalPath],
             path: aliasPath,
+            canonicalPath: canonicalPath,
+            isAlias: true,
           };
         }
       }
@@ -276,26 +280,33 @@ export function getAllSeoRoutes(): Record<string, RouteSeoMeta> {
       changefreq: 'weekly',
       lastmod: '2026-09-28',
       isArticle: true,
+      canonicalPath: postPath,
     };
     routes[postPath] = postMeta;
-    // Also support /blog/:slug as alias
+    // Also support /blog/:slug as alias pointing to canonical postPath
     routes[`/blog/${post.slug}`] = {
       ...postMeta,
       path: `/blog/${post.slug}`,
+      canonicalPath: postPath,
+      isAlias: true,
     };
   }
 
-  // 5. Blog slug aliases
+  // 5. Blog slug aliases pointing to canonical postPath
   for (const [aliasSlug, canonicalSlug] of Object.entries(BLOG_SLUG_ALIASES)) {
     const canonicalPath = `/${canonicalSlug}`;
     if (routes[canonicalPath]) {
       routes[`/${aliasSlug}`] = {
         ...routes[canonicalPath],
         path: `/${aliasSlug}`,
+        canonicalPath: canonicalPath,
+        isAlias: true,
       };
       routes[`/blog/${aliasSlug}`] = {
         ...routes[canonicalPath],
         path: `/blog/${aliasSlug}`,
+        canonicalPath: canonicalPath,
+        isAlias: true,
       };
     }
   }

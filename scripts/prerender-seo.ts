@@ -14,20 +14,23 @@ function escapeXml(unsafe: string) {
 
 function injectMeta(html: string, meta: RouteSeoMeta) {
   const fullUrl = `https://www.angigio.com${meta.path === "/" ? "/" : meta.path}`;
+  const canonicalUrl = meta.canonicalPath
+    ? `https://www.angigio.com${meta.canonicalPath === "/" ? "/" : meta.canonicalPath}`
+    : fullUrl;
   let updatedHtml = html
     .replace(/<title>.*?<\/title>/i, `<title>${meta.title}</title>`)
     .replace(/<meta\s+name="title"\s+content=".*?"\s*\/?>/i, `<meta name="title" content="${meta.title}" />`)
     .replace(/<meta\s+name="description"\s+content=".*?"\s*\/?>/i, `<meta name="description" content="${meta.description}" />`)
     .replace(/<meta\s+name="keywords"\s+content=".*?"\s*\/?>/i, `<meta name="keywords" content="${meta.keywords}" />`)
-    .replace(/<link\s+rel="canonical"\s+href=".*?"\s*\/?>/i, `<link rel="canonical" href="${fullUrl}" />`)
+    .replace(/<link\s+rel="canonical"\s+href=".*?"\s*\/?>/i, `<link rel="canonical" href="${canonicalUrl}" />`)
     .replace(/<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i, `<meta property="og:title" content="${meta.title}" />`)
     .replace(/<meta\s+property="og:description"\s+content=".*?"\s*\/?>/i, `<meta property="og:description" content="${meta.description}" />`)
-    .replace(/<meta\s+property="og:url"\s+content=".*?"\s*\/?>/i, `<meta property="og:url" content="${fullUrl}" />`)
+    .replace(/<meta\s+property="og:url"\s+content=".*?"\s*\/?>/i, `<meta property="og:url" content="${canonicalUrl}" />`)
     .replace(/<meta\s+property="og:image"\s+content=".*?"\s*\/?>/i, `<meta property="og:image" content="${meta.image}" />`)
     .replace(/<meta\s+property="og:image:alt"\s+content=".*?"\s*\/?>/i, `<meta property="og:image:alt" content="${meta.imageAlt}" />`)
     .replace(/<meta\s+name="twitter:title"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:title" content="${meta.title}" />`)
     .replace(/<meta\s+name="twitter:description"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:description" content="${meta.description}" />`)
-    .replace(/<meta\s+name="twitter:url"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:url" content="${fullUrl}" />`)
+    .replace(/<meta\s+name="twitter:url"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:url" content="${canonicalUrl}" />`)
     .replace(/<meta\s+name="twitter:image"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:image" content="${meta.image}" />`);
 
   if (meta.isArticle) {
@@ -43,7 +46,7 @@ function injectMeta(html: string, meta: RouteSeoMeta) {
       "@graph": [
         {
           "@type": "BlogPosting",
-          "@id": `${fullUrl}#article`,
+          "@id": `${canonicalUrl}#article`,
           "isPartOf": {
             "@type": "WebSite",
             "@id": "https://www.angigio.com/#website",
@@ -71,12 +74,12 @@ function injectMeta(html: string, meta: RouteSeoMeta) {
           },
           "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": fullUrl
+            "@id": canonicalUrl
           }
         },
         {
           "@type": "BreadcrumbList",
-          "@id": `${fullUrl}#breadcrumb`,
+          "@id": `${canonicalUrl}#breadcrumb`,
           "itemListElement": [
             {
               "@type": "ListItem",
@@ -94,7 +97,7 @@ function injectMeta(html: string, meta: RouteSeoMeta) {
               "@type": "ListItem",
               "position": 3,
               "name": meta.title,
-              "item": fullUrl
+              "item": canonicalUrl
             }
           ]
         }
@@ -111,7 +114,9 @@ function injectMeta(html: string, meta: RouteSeoMeta) {
 }
 
 function generateSitemapXml(routes: Record<string, RouteSeoMeta>) {
-  const urlEntries = Object.values(routes).map((meta: RouteSeoMeta) => {
+  const urlEntries = Object.values(routes)
+    .filter((meta: RouteSeoMeta) => !meta.isAlias)
+    .map((meta: RouteSeoMeta) => {
     const loc = `https://www.angigio.com${meta.path === '/' ? '/' : meta.path}`;
     const lastmod = meta.lastmod || '2026-09-24';
     const changefreq = meta.changefreq || 'weekly';

@@ -5,6 +5,7 @@ import fs from "fs";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
 import { getAllSeoRoutes } from "./src/data/seoRoutes";
+import { BLOG_SLUG_ALIASES } from "./src/data/blogPosts";
 
 dotenv.config();
 
@@ -618,6 +619,24 @@ async function startServer() {
     return res.redirect(301, "/cach-nau-mon-ngon");
   });
 
+  // 301 Permanent Redirect for /blog/:slug to clean root URL /:slug (or canonical alias)
+  app.get("/blog/:slug", (req, res) => {
+    const rawSlug = req.params.slug;
+    if (rawSlug) {
+      const cleanSlug = rawSlug.replace(/^\/?blog\//, "").replace(/^\//, "").replace(/\/$/, "");
+      const canonicalSlug = BLOG_SLUG_ALIASES[cleanSlug] || cleanSlug;
+      return res.redirect(301, `/${canonicalSlug}`);
+    }
+    return res.redirect(301, "/blog");
+  });
+
+  // 301 Permanent Redirect for blog slug aliases to canonical post URL
+  for (const [aliasSlug, canonicalSlug] of Object.entries(BLOG_SLUG_ALIASES)) {
+    app.get(`/${aliasSlug}`, (_req, res) => {
+      res.redirect(301, `/${canonicalSlug}`);
+    });
+  }
+
   // Comprehensive dynamic SEO routes config for server-rendered HTML meta tags
   const SEO_ROUTES_CONFIG = getAllSeoRoutes();
 
@@ -656,13 +675,16 @@ async function startServer() {
       meta = SEO_ROUTES_CONFIG["/"];
     }
     const fullUrl = `https://www.angigio.com${meta.path === "/" ? "/" : meta.path}`;
+    const canonicalUrl = meta.canonicalPath
+      ? `https://www.angigio.com${meta.canonicalPath === "/" ? "/" : meta.canonicalPath}`
+      : fullUrl;
 
     let updatedHtml = html
       .replace(/<title>.*?<\/title>/i, `<title>${meta.title}</title>`)
       .replace(/<meta\s+name="title"\s+content=".*?"\s*\/?>/i, `<meta name="title" content="${meta.title}" />`)
       .replace(/<meta\s+name="description"\s+content=".*?"\s*\/?>/i, `<meta name="description" content="${meta.description}" />`)
       .replace(/<meta\s+name="keywords"\s+content=".*?"\s*\/?>/i, `<meta name="keywords" content="${meta.keywords}" />`)
-      .replace(/<link\s+rel="canonical"\s+href=".*?"\s*\/?>/i, `<link rel="canonical" href="${fullUrl}" />`)
+      .replace(/<link\s+rel="canonical"\s+href=".*?"\s*\/?>/i, `<link rel="canonical" href="${canonicalUrl}" />`)
       .replace(/<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i, `<meta property="og:title" content="${meta.title}" />`)
       .replace(/<meta\s+property="og:description"\s+content=".*?"\s*\/?>/i, `<meta property="og:description" content="${meta.description}" />`)
       .replace(/<meta\s+property="og:url"\s+content=".*?"\s*\/?>/i, `<meta property="og:url" content="${fullUrl}" />`)
