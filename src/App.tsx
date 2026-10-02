@@ -14,7 +14,6 @@ import { TermsOfServicePage } from './components/TermsOfServicePage';
 import { BlogPage } from './components/BlogPage';
 import { AdminBlogPage } from './components/AdminBlogPage';
 import { RestaurantsPage } from './components/RestaurantsPage';
-import { AdminInboxModal } from './components/AdminInboxModal';
 import { AffiliateModal } from './components/AffiliateModal';
 import { DishDetailModal } from './components/DishDetailModal';
 import { LocationModal } from './components/LocationModal';
@@ -69,7 +68,6 @@ export default function App() {
   const [userLocation, setUserLocation] = useState<UserLocation>(getStoredUserLocation);
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [locationTargetDish, setLocationTargetDish] = useState<string | undefined>(undefined);
-  const [isAdminInboxOpen, setIsAdminInboxOpen] = useState(false);
   const [gpsToast, setGpsToast] = useState<{ message: string; city: string; district?: string } | null>(null);
 
   // Navigate tab with clean URL & History API
@@ -133,11 +131,13 @@ export default function App() {
     // Check if URL has secret query ?admin=1 or ?admin=inbox
     const params = new URLSearchParams(window.location.search);
     if (params.get('admin') === '1' || params.get('admin') === 'inbox') {
-      setIsAdminInboxOpen(true);
-      // Clean query parameter from address bar without page reload
-      params.delete('admin');
-      const newQuery = params.toString() ? `?${params.toString()}` : '';
-      window.history.replaceState(null, '', window.location.pathname + newQuery);
+      const isInbox = params.get('admin') === 'inbox';
+      handleNavigateTab('admin');
+      if (isInbox) {
+        window.history.replaceState({ tab: 'admin' }, '', '/admin?tab=inbox');
+      } else {
+        window.history.replaceState({ tab: 'admin' }, '', '/admin');
+      }
     }
 
     const handlePopState = () => {
@@ -156,7 +156,7 @@ export default function App() {
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     };
 
-    // Secret shortcut: Press Shift + A to toggle Admin Inbox
+    // Shortcut: Press Shift + A to open Admin (Inbox tab)
     const handleKeyDown = (e: KeyboardEvent) => {
       // Don't trigger if user is typing inside an input or textarea
       if (['INPUT', 'TEXTAREA', 'SELECT'].includes((e.target as HTMLElement)?.tagName)) {
@@ -164,7 +164,9 @@ export default function App() {
       }
       if (e.shiftKey && (e.key === 'A' || e.key === 'a')) {
         e.preventDefault();
-        setIsAdminInboxOpen((prev) => !prev);
+        handleNavigateTab('admin');
+        window.history.pushState({ tab: 'admin' }, '', '/admin?tab=inbox');
+        window.dispatchEvent(new Event('locationchange'));
       }
     };
 
@@ -502,12 +504,6 @@ export default function App() {
         clickStats={clickStats}
       />
 
-      {/* Admin Inbox Modal (Quản lý tin nhắn khách gửi) */}
-      <AdminInboxModal
-        isOpen={isAdminInboxOpen}
-        onClose={() => setIsAdminInboxOpen(false)}
-      />
-
       {/* GPS Auto-Detection Toast Notification */}
       {gpsToast && (
         <div
@@ -550,7 +546,11 @@ export default function App() {
       <Footer
         onOpenAffiliateModal={() => setIsAffiliateModalOpen(true)}
         onNavigate={handleNavigateTab}
-        onOpenAdminInbox={() => setIsAdminInboxOpen(true)}
+        onOpenAdminInbox={() => {
+          handleNavigateTab('admin');
+          window.history.pushState({ tab: 'admin' }, '', '/admin?tab=inbox');
+          window.dispatchEvent(new Event('locationchange'));
+        }}
       />
     </div>
   );

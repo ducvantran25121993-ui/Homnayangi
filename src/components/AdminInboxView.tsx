@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import {
-  X,
   Mail,
   Phone,
   Calendar,
   Search,
-  Filter,
   Trash2,
-  CheckCircle,
+  CheckCircle2,
   Clock,
   Reply,
   Shield,
@@ -19,6 +17,11 @@ import {
   Lock,
   LogOut,
   Save,
+  RefreshCw,
+  Send,
+  User,
+  Inbox,
+  Filter,
 } from 'lucide-react';
 import { ContactMessage } from '../types';
 import {
@@ -30,13 +33,19 @@ import {
   DEFAULT_ADMIN_PIN,
 } from '../utils/contactStorage';
 
-interface AdminInboxModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+interface AdminInboxViewProps {
+  embedded?: boolean;
+  onClose?: () => void;
 }
 
-export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClose }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+const SESSION_AUTH_KEY = 'angigio_admin_inbox_auth';
+
+export const AdminInboxView: React.FC<AdminInboxViewProps> = ({ embedded = false, onClose }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    if (embedded) return true; // Đã xác thực qua mật khẩu trang quản trị tổng 'conlaumoinoi'
+    if (typeof window === 'undefined') return false;
+    return sessionStorage.getItem(SESSION_AUTH_KEY) === 'true';
+  });
   const [pinInput, setPinInput] = useState('');
   const [pinError, setPinError] = useState('');
   const [messages, setMessages] = useState<ContactMessage[]>([]);
@@ -47,8 +56,9 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
   const [isChangingPin, setIsChangingPin] = useState(false);
   const [newPin, setNewPin] = useState('');
   const [pinChangeSuccess, setPinChangeSuccess] = useState('');
+  const [saveNoteSuccess, setSaveNoteSuccess] = useState(false);
 
-  // Reload messages
+  // Reload messages from storage
   const reloadMessages = () => {
     const list = getContactMessages();
     setMessages(list);
@@ -60,10 +70,8 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
   };
 
   useEffect(() => {
-    if (isOpen) {
-      reloadMessages();
-    }
-  }, [isOpen]);
+    reloadMessages();
+  }, []);
 
   useEffect(() => {
     const handleUpdate = () => reloadMessages();
@@ -80,12 +88,23 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
     const correctPin = getAdminPin();
     if (pinInput.trim() === correctPin) {
       setIsAuthenticated(true);
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem(SESSION_AUTH_KEY, 'true');
+      }
       setPinError('');
       setPinInput('');
       reloadMessages();
     } else {
       setPinError('Mã PIN không chính xác. Vui lòng thử lại.');
     }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem(SESSION_AUTH_KEY);
+    }
+    setSelectedMessage(null);
   };
 
   const handleSelectMessage = (msg: ContactMessage) => {
@@ -103,10 +122,12 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
   const handleSaveNotes = () => {
     if (!selectedMessage) return;
     updateMessageStatus(selectedMessage.id, selectedMessage.status, adminNote);
+    setSaveNoteSuccess(true);
+    setTimeout(() => setSaveNoteSuccess(false), 2500);
   };
 
   const handleDelete = (id: string) => {
-    if (window.confirm('Bạn có chắc chắn muốn xóa tin nhắn này không?')) {
+    if (window.confirm('Bạn có chắc chắn muốn xóa vĩnh viễn tin nhắn này không?')) {
       deleteContactMessage(id);
       if (selectedMessage?.id === id) {
         setSelectedMessage(null);
@@ -131,10 +152,10 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
     }
   };
 
-  // Export JSON / CSV
+  // Export CSV with UTF-8 BOM
   const handleExportCsv = () => {
     if (messages.length === 0) return;
-    const headers = ['ID', 'Thời gian', 'Họ tên', 'Email', 'SĐT', 'Chủ đề', 'Trạng thái', 'Nội dung', 'Ghi chú'];
+    const headers = ['ID', 'Thời gian', 'Họ tên', 'Email', 'SĐT', 'Chủ đề', 'Trạng thái', 'Nội dung', 'Ghi chú nội bộ'];
     const rows = messages.map((m) => [
       m.id,
       new Date(m.createdAt).toLocaleString('vi-VN'),
@@ -142,7 +163,7 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
       `"${m.email.replace(/"/g, '""')}"`,
       `"${(m.phone || '').replace(/"/g, '""')}"`,
       `"${m.subject.replace(/"/g, '""')}"`,
-      m.status,
+      m.status === 'unread' ? 'Chưa xử lý' : m.status === 'read' ? 'Đã xem' : 'Đã phản hồi',
       `"${m.message.replace(/"/g, '""')}"`,
       `"${(m.notes || '').replace(/"/g, '""')}"`,
     ]);
@@ -152,7 +173,7 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.setAttribute('href', url);
-    link.setAttribute('download', `danh_sach_khach_lien_he_${new Date().toISOString().split('T')[0]}.csv`);
+    link.setAttribute('download', `danh_sach_hop_thu_homnayangi_${new Date().toISOString().split('T')[0]}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -174,31 +195,63 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
   }, [messages, statusFilter, searchQuery]);
 
   const unreadCount = messages.filter((m) => m.status === 'unread').length;
-
-  if (!isOpen) return null;
+  const readCount = messages.filter((m) => m.status === 'read').length;
+  const repliedCount = messages.filter((m) => m.status === 'replied').length;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-stone-900/70 backdrop-blur-xs">
-      <div className="bg-white rounded-3xl shadow-2xl border border-stone-200 w-full max-w-5xl h-[90vh] max-h-[750px] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-        {/* Modal Header */}
-        <header className="px-5 sm:px-6 py-4 border-b border-stone-100 flex items-center justify-between bg-stone-50/70">
+    <div className={`flex flex-col ${embedded ? 'w-full space-y-6' : 'h-full'}`}>
+      {/* Overview Stats Bar (When inside Admin Page) */}
+      {embedded && (
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs">
+            <div className="text-xs text-stone-500 font-medium">Tổng thư nhận được</div>
+            <div className="text-2xl font-black text-stone-900 mt-1 flex items-center gap-2">
+              <span>{messages.length}</span>
+              <Inbox className="w-5 h-5 text-stone-400" />
+            </div>
+          </div>
+          <div className="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs">
+            <div className="text-xs text-stone-500 font-medium">Thư mới chưa đọc</div>
+            <div className="text-2xl font-black text-red-600 mt-1 flex items-center gap-2">
+              <span>{unreadCount}</span>
+              {unreadCount > 0 && <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping" />}
+            </div>
+          </div>
+          <div className="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs">
+            <div className="text-xs text-stone-500 font-medium">Đang xử lý / Đã đọc</div>
+            <div className="text-2xl font-black text-blue-600 mt-1">{readCount}</div>
+          </div>
+          <div className="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs">
+            <div className="text-xs text-stone-500 font-medium">Đã phản hồi khách</div>
+            <div className="text-2xl font-black text-emerald-600 mt-1 flex items-center gap-2">
+              <span>{repliedCount}</span>
+              <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Main Container */}
+      <div className="bg-white rounded-3xl border border-stone-200 shadow-sm overflow-hidden flex flex-col min-h-[640px] md:h-[720px]">
+        {/* Header Bar */}
+        <header className="px-5 sm:px-6 py-4 border-b border-stone-100 flex flex-wrap items-center justify-between gap-3 bg-stone-50/70">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-orange-600 text-white flex items-center justify-center shadow-xs">
-              <MessageSquare className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-2xl bg-orange-600 text-white flex items-center justify-center shadow-xs shrink-0">
+              <Mail className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-base sm:text-lg font-black text-stone-900">
-                  Hòm Thư Quản Trị (Admin Inbox)
+                  Hộp Thư Liên Hệ (Khách Gửi)
                 </h2>
-                {isAuthenticated && unreadCount > 0 && (
-                  <span className="px-2 py-0.5 rounded-full bg-red-500 text-white text-[11px] font-bold">
+                {unreadCount > 0 && (
+                  <span className="px-2 py-0.5 rounded-full bg-red-600 text-white text-[11px] font-bold animate-pulse">
                     {unreadCount} mới
                   </span>
                 )}
               </div>
               <p className="text-xs text-stone-500">
-                Tiếp nhận & quản lý thông tin khách gửi từ trang Liên Hệ (Angigio.com)
+                Tiếp nhận & xử lý tin nhắn, góp ý món ăn và liên hệ hợp tác từ trang Liên Hệ
               </p>
             </div>
           </div>
@@ -208,62 +261,77 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
               <>
                 <button
                   type="button"
+                  onClick={reloadMessages}
+                  title="Tải lại danh sách thư"
+                  className="p-2 rounded-xl text-stone-600 hover:bg-stone-200/60 hover:text-stone-900 transition-colors cursor-pointer"
+                >
+                  <RefreshCw className="w-4 h-4" />
+                </button>
+
+                <button
+                  type="button"
                   onClick={handleExportCsv}
-                  title="Xuất file Excel/CSV"
-                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-stone-200 text-xs font-semibold text-stone-700 hover:bg-white hover:border-stone-300 transition-colors cursor-pointer"
+                  title="Xuất danh sách thư ra file Excel/CSV"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-stone-200 bg-white text-xs font-semibold text-stone-700 hover:bg-stone-50 hover:border-stone-300 shadow-2xs transition-colors cursor-pointer"
                 >
                   <Download className="w-3.5 h-3.5 text-stone-500" />
-                  <span>Xuất CSV</span>
+                  <span className="hidden sm:inline">Xuất CSV</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setIsChangingPin(!isChangingPin)}
-                  title="Cài đặt mã PIN"
-                  className="p-2 rounded-xl text-stone-500 hover:bg-stone-200/60 hover:text-stone-800 transition-colors cursor-pointer"
+                  title="Cài đặt mã PIN quản trị"
+                  className={`p-2 rounded-xl transition-colors cursor-pointer ${
+                    isChangingPin
+                      ? 'bg-amber-100 text-amber-800'
+                      : 'text-stone-600 hover:bg-stone-200/60 hover:text-stone-900'
+                  }`}
                 >
                   <KeyRound className="w-4 h-4" />
                 </button>
 
                 <button
                   type="button"
-                  onClick={() => setIsAuthenticated(false)}
-                  title="Đăng xuất"
-                  className="p-2 rounded-xl text-stone-500 hover:bg-stone-200/60 hover:text-red-600 transition-colors cursor-pointer"
+                  onClick={handleLogout}
+                  title="Khóa hộp thư (Đăng xuất)"
+                  className="p-2 rounded-xl text-stone-500 hover:bg-red-50 hover:text-red-600 transition-colors cursor-pointer"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
               </>
             )}
 
-            <button
-              type="button"
-              onClick={onClose}
-              className="p-2 rounded-xl text-stone-400 hover:bg-stone-200/60 hover:text-stone-700 transition-colors cursor-pointer"
-            >
-              <X className="w-5 h-5" />
-            </button>
+            {onClose && (
+              <button
+                type="button"
+                onClick={onClose}
+                className="p-2 rounded-xl text-stone-400 hover:bg-stone-200/60 hover:text-stone-700 transition-colors cursor-pointer"
+              >
+                &times;
+              </button>
+            )}
           </div>
         </header>
 
-        {/* Change PIN Banner */}
+        {/* Change PIN Bar */}
         {isAuthenticated && isChangingPin && (
           <div className="p-3 bg-amber-50 border-b border-amber-200/80 px-6 flex items-center justify-between text-xs">
-            <form onSubmit={handleSaveNewPin} className="flex items-center gap-3 w-full max-w-md">
+            <form onSubmit={handleSaveNewPin} className="flex flex-wrap items-center gap-3 w-full max-w-lg">
               <span className="font-bold text-amber-900 shrink-0">Đổi mã PIN mới:</span>
               <input
                 type="password"
                 maxLength={32}
                 value={newPin}
                 onChange={(e) => setNewPin(e.target.value)}
-                placeholder="Nhập mã PIN mới"
-                className="px-3 py-1.5 rounded-lg border border-amber-300 bg-white text-stone-800 focus:outline-none focus:ring-1 focus:ring-orange-500 text-xs w-36"
+                placeholder="Nhập mã PIN mới (tối thiểu 4 số)"
+                className="px-3 py-1.5 rounded-lg border border-amber-300 bg-white text-stone-800 focus:outline-none focus:ring-1 focus:ring-orange-500 text-xs w-48"
               />
               <button
                 type="submit"
                 className="px-3 py-1.5 rounded-lg bg-orange-600 text-white font-bold text-xs hover:bg-orange-700 transition-colors cursor-pointer"
               >
-                Lưu
+                Lưu PIN
               </button>
               <button
                 type="button"
@@ -273,34 +341,39 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
                 Hủy
               </button>
               {pinChangeSuccess && <span className="text-emerald-700 font-bold">{pinChangeSuccess}</span>}
+              {pinError && <span className="text-red-600 font-bold">{pinError}</span>}
             </form>
           </div>
         )}
 
-        {/* Main Content: Either PIN Login OR Two-pane Inbox */}
+        {/* Body Content */}
         {!isAuthenticated ? (
+          /* Authentication Screen */
           <div className="flex-1 flex items-center justify-center p-6 bg-stone-50/40">
-            <div className="w-full max-w-md bg-white rounded-3xl p-8 border border-stone-200 shadow-md text-center">
+            <div className="w-full max-w-md bg-white rounded-3xl p-8 border border-stone-200 shadow-sm text-center">
               <div className="w-14 h-14 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center mx-auto mb-4">
                 <Lock className="w-7 h-7" />
               </div>
               <h3 className="text-lg font-black text-stone-900 mb-1">
-                Xác Thực Quản Trị Viên
+                Mở Khóa Hộp Thư Quản Trị
               </h3>
               <p className="text-xs text-stone-500 mb-6">
-                Vui lòng nhập mã PIN quản trị để truy cập hòm thư khách hàng gửi.
+                Nhập mã PIN quản trị viên để xem toàn bộ danh sách liên hệ và thông tin khách hàng gửi.
               </p>
 
               <form onSubmit={handleLogin} className="space-y-4 text-left">
                 <div>
                   <label className="block text-xs font-bold text-stone-700 mb-1.5">
-                    Mã PIN bảo mật
+                    Mã PIN bảo mật (Mặc định: 1234)
                   </label>
                   <input
                     type="password"
                     autoFocus
                     value={pinInput}
-                    onChange={(e) => setPinInput(e.target.value)}
+                    onChange={(e) => {
+                      setPinInput(e.target.value);
+                      if (pinError) setPinError('');
+                    }}
                     placeholder="••••"
                     className="w-full px-4 py-3 rounded-xl border border-stone-200 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 text-center tracking-widest text-lg font-mono placeholder:tracking-widest"
                   />
@@ -316,15 +389,16 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
                   type="submit"
                   className="w-full py-3 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm shadow-xs transition-colors cursor-pointer"
                 >
-                  Mở Hòm Thư Đến
+                  Mở Khóa Xem Hộp Thư
                 </button>
               </form>
             </div>
           </div>
         ) : (
-          <div className="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-hidden">
-            {/* Left Pane: Search + Message List (5 cols) */}
-            <div className="md:col-span-5 border-r border-stone-100 flex flex-col h-full bg-white">
+          /* 2-Pane Inbox View */
+          <div className="flex-1 grid grid-cols-1 md:grid-cols-12 overflow-hidden min-h-0">
+            {/* Left Column: Message Search & List */}
+            <div className={`md:col-span-5 border-r border-stone-100 flex flex-col h-full bg-white ${selectedMessage ? 'hidden md:flex' : 'flex'}`}>
               {/* Search & Filter Bar */}
               <div className="p-3.5 border-b border-stone-100 space-y-2.5 bg-stone-50/50">
                 <div className="relative">
@@ -339,11 +413,11 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
                 </div>
 
                 {/* Status Chips */}
-                <div className="flex items-center gap-1.5 text-[11px]">
+                <div className="flex items-center gap-1.5 text-[11px] overflow-x-auto pb-0.5">
                   <button
                     type="button"
                     onClick={() => setStatusFilter('all')}
-                    className={`px-2.5 py-1 rounded-lg font-semibold transition-colors cursor-pointer ${
+                    className={`px-2.5 py-1 rounded-lg font-semibold transition-colors cursor-pointer whitespace-nowrap ${
                       statusFilter === 'all'
                         ? 'bg-stone-900 text-white'
                         : 'bg-white text-stone-600 border border-stone-200 hover:bg-stone-50'
@@ -354,7 +428,7 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
                   <button
                     type="button"
                     onClick={() => setStatusFilter('unread')}
-                    className={`px-2.5 py-1 rounded-lg font-semibold transition-colors cursor-pointer ${
+                    className={`px-2.5 py-1 rounded-lg font-semibold transition-colors cursor-pointer whitespace-nowrap ${
                       statusFilter === 'unread'
                         ? 'bg-red-600 text-white'
                         : 'bg-white text-stone-600 border border-stone-200 hover:bg-stone-50'
@@ -365,24 +439,24 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
                   <button
                     type="button"
                     onClick={() => setStatusFilter('read')}
-                    className={`px-2.5 py-1 rounded-lg font-semibold transition-colors cursor-pointer ${
+                    className={`px-2.5 py-1 rounded-lg font-semibold transition-colors cursor-pointer whitespace-nowrap ${
                       statusFilter === 'read'
                         ? 'bg-blue-600 text-white'
                         : 'bg-white text-stone-600 border border-stone-200 hover:bg-stone-50'
                     }`}
                   >
-                    Đang xem
+                    Đang xem ({readCount})
                   </button>
                   <button
                     type="button"
                     onClick={() => setStatusFilter('replied')}
-                    className={`px-2.5 py-1 rounded-lg font-semibold transition-colors cursor-pointer ${
+                    className={`px-2.5 py-1 rounded-lg font-semibold transition-colors cursor-pointer whitespace-nowrap ${
                       statusFilter === 'replied'
                         ? 'bg-emerald-600 text-white'
                         : 'bg-white text-stone-600 border border-stone-200 hover:bg-stone-50'
                     }`}
                   >
-                    Đã trả lời
+                    Đã trả lời ({repliedCount})
                   </button>
                 </div>
               </div>
@@ -392,8 +466,8 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
                 {filteredMessages.length === 0 ? (
                   <div className="p-8 text-center text-xs text-stone-400">
                     {messages.length === 0
-                      ? 'Hòm thư hiện chưa có tin nhắn nào từ người dùng.'
-                      : 'Không tìm thấy tin nhắn nào phù hợp bộ lọc.'}
+                      ? 'Hộp thư hiện chưa có tin nhắn nào từ người dùng.'
+                      : 'Không tìm thấy tin nhắn nào phù hợp với bộ lọc.'}
                   </div>
                 ) : (
                   filteredMessages.map((msg) => {
@@ -413,7 +487,7 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
                           isSelected
                             ? 'bg-orange-50/70 border-l-4 border-orange-600'
                             : msg.status === 'unread'
-                            ? 'bg-amber-50/30 hover:bg-stone-50 font-medium'
+                            ? 'bg-amber-50/40 hover:bg-stone-50 font-medium'
                             : 'hover:bg-stone-50 text-stone-600'
                         }`}
                       >
@@ -446,7 +520,7 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
                                 : 'bg-emerald-100 text-emerald-700'
                             }`}
                           >
-                            {msg.status === 'unread' ? 'Mới' : msg.status === 'read' ? 'Đã đọc' : 'Đã phản hồi'}
+                            {msg.status === 'unread' ? 'Mới' : msg.status === 'read' ? 'Đã xem' : 'Đã phản hồi'}
                           </span>
 
                           <span className="text-[11px] text-stone-400 truncate max-w-[140px]">
@@ -460,21 +534,33 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
               </div>
             </div>
 
-            {/* Right Pane: Message Detail & Action (7 cols) */}
-            <div className="md:col-span-7 flex flex-col h-full bg-stone-50/30 overflow-y-auto">
+            {/* Right Column: Message Detail & Response Actions */}
+            <div className={`md:col-span-7 flex-col h-full bg-stone-50/30 overflow-y-auto ${selectedMessage ? 'flex' : 'hidden md:flex'}`}>
               {selectedMessage ? (
-                <div className="p-5 sm:p-6 space-y-6">
-                  {/* Subject & Actions */}
-                  <div className="bg-white rounded-2xl p-5 border border-stone-200/80 shadow-xs space-y-3">
+                <div className="p-5 sm:p-6 space-y-5">
+                  {/* Mobile Back Button to list */}
+                  <div className="md:hidden pb-2">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedMessage(null)}
+                      className="text-xs text-orange-600 font-bold flex items-center gap-1 cursor-pointer"
+                    >
+                      &larr; Quay lại danh sách thư
+                    </button>
+                  </div>
+
+                  {/* Header & Sender Meta */}
+                  <div className="bg-white rounded-2xl p-5 border border-stone-200/80 shadow-2xs space-y-3">
                     <div className="flex items-start justify-between gap-3">
                       <div>
                         <span className="text-[11px] font-bold uppercase tracking-wider text-orange-600 block mb-1">
                           {selectedMessage.subject}
                         </span>
-                        <h3 className="text-base sm:text-lg font-black text-stone-900">
-                          {selectedMessage.fullName}
+                        <h3 className="text-base sm:text-lg font-black text-stone-900 flex items-center gap-2">
+                          <User className="w-4 h-4 text-stone-400" />
+                          <span>{selectedMessage.fullName}</span>
                         </h3>
-                        <p className="text-xs text-stone-400 mt-0.5 flex items-center gap-1.5">
+                        <p className="text-xs text-stone-400 mt-1 flex items-center gap-1.5">
                           <Calendar className="w-3.5 h-3.5" />
                           <span>
                             Gửi lúc {new Date(selectedMessage.createdAt).toLocaleString('vi-VN')}
@@ -482,14 +568,14 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
                         </p>
                       </div>
 
-                      {/* Status Selector */}
-                      <div className="flex items-center gap-1.5">
+                      {/* Status Selector & Delete */}
+                      <div className="flex items-center gap-2 shrink-0">
                         <select
                           value={selectedMessage.status}
                           onChange={(e) =>
                             handleStatusChange(selectedMessage.id, e.target.value as ContactMessage['status'])
                           }
-                          className="text-xs font-bold px-3 py-1.5 rounded-xl border border-stone-200 bg-white text-stone-800 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                          className="text-xs font-bold px-3 py-1.5 rounded-xl border border-stone-200 bg-white text-stone-800 focus:outline-none focus:ring-1 focus:ring-orange-500 shadow-2xs"
                         >
                           <option value="unread">Chưa xử lý (Mới)</option>
                           <option value="read">Đang xem (Đã đọc)</option>
@@ -507,7 +593,7 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
                       </div>
                     </div>
 
-                    {/* Quick Contacts */}
+                    {/* Quick Contact Links */}
                     <div className="pt-3 border-t border-stone-100 flex flex-wrap items-center gap-3 text-xs">
                       {selectedMessage.email ? (
                         <a
@@ -541,54 +627,62 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
                             rel="noopener noreferrer"
                             className="px-2 py-0.5 rounded-md bg-blue-50 text-blue-600 hover:bg-blue-100 text-[11px] font-bold inline-flex items-center gap-1"
                           >
-                            Mở Zalo
+                            <span>Chat Zalo</span>
+                            <ExternalLink className="w-2.5 h-2.5" />
                           </a>
                         </div>
                       )}
                     </div>
                   </div>
 
-                  {/* Message Body */}
-                  <div className="bg-white rounded-2xl p-5 border border-stone-200/80 shadow-xs space-y-2">
+                  {/* Message Content */}
+                  <div className="bg-white rounded-2xl p-5 border border-stone-200/80 shadow-2xs space-y-2">
                     <h4 className="text-xs font-bold uppercase tracking-wider text-stone-400">
-                      Nội dung tin nhắn
+                      Nội dung thư của khách
                     </h4>
-                    <p className="text-xs sm:text-sm text-stone-800 whitespace-pre-wrap leading-relaxed">
+                    <div className="text-xs sm:text-sm text-stone-800 whitespace-pre-wrap leading-relaxed bg-stone-50/60 p-4 rounded-xl border border-stone-100">
                       {selectedMessage.message}
-                    </p>
+                    </div>
                   </div>
 
-                  {/* Admin Internal Note & Quick Reply */}
-                  <div className="bg-white rounded-2xl p-5 border border-stone-200/80 shadow-xs space-y-3">
+                  {/* Admin Notes & Quick Response */}
+                  <div className="bg-white rounded-2xl p-5 border border-stone-200/80 shadow-2xs space-y-3">
                     <div className="flex items-center justify-between">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-stone-500 flex items-center gap-1.5">
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-stone-600 flex items-center gap-1.5">
                         <MessageSquare className="w-3.5 h-3.5 text-orange-600" />
-                        <span>Ghi chú nội bộ quản trị</span>
+                        <span>Ghi chú nội bộ cho quản trị viên</span>
                       </h4>
-                      <button
-                        type="button"
-                        onClick={handleSaveNotes}
-                        className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-stone-900 hover:bg-stone-800 text-white text-[11px] font-bold transition-colors cursor-pointer"
-                      >
-                        <Save className="w-3 h-3" />
-                        <span>Lưu ghi chú</span>
-                      </button>
+                      <div className="flex items-center gap-2">
+                        {saveNoteSuccess && (
+                          <span className="text-[11px] text-emerald-600 font-bold flex items-center gap-1">
+                            <CheckCircle2 className="w-3 h-3" /> Đã lưu
+                          </span>
+                        )}
+                        <button
+                          type="button"
+                          onClick={handleSaveNotes}
+                          className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-stone-900 hover:bg-stone-800 text-white text-[11px] font-bold transition-colors cursor-pointer"
+                        >
+                          <Save className="w-3 h-3" />
+                          <span>Lưu ghi chú</span>
+                        </button>
+                      </div>
                     </div>
 
                     <textarea
                       rows={2}
                       value={adminNote}
                       onChange={(e) => setAdminNote(e.target.value)}
-                      placeholder="Ví dụ: Đã gọi điện tư vấn lúc 14h, khách đồng ý hợp tác gói banner..."
+                      placeholder="Ghi chú nội bộ: Đã gọi điện lúc 14h, khách cần tư vấn gói quảng cáo / báo giá..."
                       className="w-full p-3 text-xs rounded-xl border border-stone-200 bg-white focus:outline-none focus:border-orange-500 resize-none"
                     />
 
-                    {/* Quick Reply Button to open default mail client */}
+                    {/* Quick Response Mail Button */}
                     <div className="pt-2 flex items-center justify-end">
                       <a
                         href={`mailto:${selectedMessage.email}?subject=Phản hồi từ Hôm Nay Ăn Gì: ${encodeURIComponent(
                           selectedMessage.subject
-                        )}&body=Chào bạn ${encodeURIComponent(selectedMessage.fullName)},%0D%0A%0D%0ACảm ơn bạn đã liên hệ với Hôm Nay Ăn Gì.`}
+                        )}&body=Chào bạn ${encodeURIComponent(selectedMessage.fullName)},%0D%0A%0D%0ACảm ơn bạn đã liên hệ với Hôm Nay Ăn Gì (angigio.com).`}
                         onClick={() => handleStatusChange(selectedMessage.id, 'replied')}
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold shadow-xs transition-colors"
                       >
@@ -600,14 +694,14 @@ export const AdminInboxModal: React.FC<AdminInboxModalProps> = ({ isOpen, onClos
                 </div>
               ) : (
                 <div className="flex-1 flex flex-col items-center justify-center p-8 text-center text-stone-400">
-                  <div className="w-12 h-12 rounded-2xl bg-stone-100 flex items-center justify-center mb-3">
-                    <Mail className="w-6 h-6 text-stone-300" />
+                  <div className="w-14 h-14 rounded-2xl bg-stone-100 flex items-center justify-center mb-3">
+                    <Mail className="w-7 h-7 text-stone-300" />
                   </div>
-                  <h4 className="text-sm font-bold text-stone-600 mb-1">
+                  <h4 className="text-sm font-bold text-stone-700 mb-1">
                     Chưa chọn tin nhắn nào
                   </h4>
-                  <p className="text-xs max-w-xs">
-                    Bấm vào một tin nhắn ở danh sách bên trái để xem nội dung chi tiết và phản hồi khách hàng.
+                  <p className="text-xs max-w-xs text-stone-500 leading-relaxed">
+                    Chọn một tin nhắn ở danh sách bên trái để đọc nội dung chi tiết, gọi điện, nhắn tin Zalo hoặc gửi email phản hồi.
                   </p>
                 </div>
               )}
