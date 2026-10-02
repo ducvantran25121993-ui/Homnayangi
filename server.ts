@@ -26,6 +26,16 @@ if (isProduction && process.env.NODE_ENV !== "production") {
 
 const DEFAULT_PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
+// 301 Permanent Canonical Redirect: www.angigio.com -> angigio.com
+app.use((req, res, next) => {
+  const host = (req.headers.host || "").toLowerCase();
+  if (host.startsWith("www.angigio.com")) {
+    const targetUrl = `https://angigio.com${req.originalUrl || req.url}`;
+    return res.redirect(301, targetUrl);
+  }
+  next();
+});
+
 app.use(express.json({ limit: "25mb" }));
 
 // In-memory click tracking & stats
@@ -540,7 +550,7 @@ function addUrlToSitemap(slug: string) {
     const pubFile = path.join(process.cwd(), "public", "sitemap.xml");
     const distFile = path.join(process.cwd(), "dist", "sitemap.xml");
     const targets = [pubFile, distFile].filter((f) => fs.existsSync(f));
-    const fullUrl = `https://www.angigio.com/${slug.replace(/^\//, '')}`;
+    const fullUrl = `https://angigio.com/${slug.replace(/^\//, '')}`;
     const today = new Date().toISOString().split("T")[0];
     const newXmlEntry = `  <url>\n    <loc>${fullUrl}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n</urlset>`;
 
@@ -744,7 +754,7 @@ async function startServer() {
     if (fs.existsSync(target)) {
       res.type("text/plain").sendFile(target);
     } else {
-      res.type("text/plain").send("User-agent: *\nAllow: /\nSitemap: https://www.angigio.com/sitemap.xml\n");
+      res.type("text/plain").send("User-agent: *\nAllow: /\nSitemap: https://angigio.com/sitemap.xml\n");
     }
   });
 
@@ -840,9 +850,9 @@ async function startServer() {
     if (!meta) {
       meta = SEO_ROUTES_CONFIG["/"];
     }
-    const fullUrl = `https://www.angigio.com${meta.path === "/" ? "/" : meta.path}`;
+    const fullUrl = `https://angigio.com${meta.path === "/" ? "/" : meta.path}`;
     const canonicalUrl = meta.canonicalPath
-      ? `https://www.angigio.com${meta.canonicalPath === "/" ? "/" : meta.canonicalPath}`
+      ? `https://angigio.com${meta.canonicalPath === "/" ? "/" : meta.canonicalPath}`
       : fullUrl;
 
     let updatedHtml = html
@@ -877,13 +887,13 @@ async function startServer() {
             "@id": `${fullUrl}#article`,
             "isPartOf": {
               "@type": "WebSite",
-              "@id": "https://www.angigio.com/#website",
+              "@id": "https://angigio.com/#website",
               "name": "Hôm Nay Ăn Gì",
-              "url": "https://www.angigio.com/"
+              "url": "https://angigio.com/"
             },
             "headline": meta.title,
             "description": meta.description,
-            "image": [meta.image?.startsWith("http") ? meta.image : `https://www.angigio.com${meta.image}`],
+            "image": [meta.image?.startsWith("http") ? meta.image : `https://angigio.com${meta.image}`],
             "datePublished": publishedTime,
             "dateModified": modifiedTime,
             "author": {
@@ -894,10 +904,10 @@ async function startServer() {
             "publisher": {
               "@type": "Organization",
               "name": "Hôm Nay Ăn Gì",
-              "url": "https://www.angigio.com/",
+              "url": "https://angigio.com/",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://www.angigio.com/logo.png"
+                "url": "https://angigio.com/logo.png"
               }
             },
             "mainEntityOfPage": {
@@ -913,13 +923,13 @@ async function startServer() {
                 "@type": "ListItem",
                 "position": 1,
                 "name": "Trang chủ",
-                "item": "https://www.angigio.com/"
+                "item": "https://angigio.com/"
               },
               {
                 "@type": "ListItem",
                 "position": 2,
                 "name": "Blog Ẩm Thực",
-                "item": "https://www.angigio.com/blog"
+                "item": "https://angigio.com/blog"
               },
               {
                 "@type": "ListItem",

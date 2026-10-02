@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
-    <loc>https://www.angigio.com/</loc>
+    <loc>https://angigio.com/</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.00</priority>
@@ -13,7 +13,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/vong-quay</loc>
+    <loc>https://angigio.com/vong-quay</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
@@ -23,7 +23,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/lich-an-theo-tuan</loc>
+    <loc>https://angigio.com/lich-an-theo-tuan</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
@@ -33,7 +33,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/ai-goi-y-mon-an</loc>
+    <loc>https://angigio.com/ai-goi-y-mon-an</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
@@ -43,7 +43,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/mon-ngon</loc>
+    <loc>https://angigio.com/mon-ngon</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -53,7 +53,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/do-uong-an-vat</loc>
+    <loc>https://angigio.com/do-uong-an-vat</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
@@ -63,7 +63,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/am-thuc-vung-mien</loc>
+    <loc>https://angigio.com/am-thuc-vung-mien</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
@@ -73,7 +73,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/thuc-don-moi-ngay</loc>
+    <loc>https://angigio.com/thuc-don-moi-ngay</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
@@ -83,7 +83,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-mon-ngon</loc>
+    <loc>https://angigio.com/cach-nau-mon-ngon</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
@@ -93,7 +93,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/gioi-thieu</loc>
+    <loc>https://angigio.com/gioi-thieu</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
@@ -103,7 +103,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/lien-he</loc>
+    <loc>https://angigio.com/lien-he</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
@@ -113,7 +113,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/chinh-sach-bao-mat</loc>
+    <loc>https://angigio.com/chinh-sach-bao-mat</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.60</priority>
@@ -123,7 +123,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/dieu-khoan-su-dung</loc>
+    <loc>https://angigio.com/dieu-khoan-su-dung</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.60</priority>
@@ -133,7 +133,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/blog</loc>
+    <loc>https://angigio.com/blog</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.90</priority>
@@ -143,7 +143,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/quan-ngon</loc>
+    <loc>https://angigio.com/quan-ngon</loc>
     <lastmod>2026-09-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.95</priority>
@@ -153,7 +153,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/admin</loc>
+    <loc>https://angigio.com/admin</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.10</priority>
@@ -163,7 +163,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/quan-tri</loc>
+    <loc>https://angigio.com/quan-tri</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.10</priority>
@@ -173,7 +173,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/am-thuc-mien-bac</loc>
+    <loc>https://angigio.com/am-thuc-mien-bac</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
@@ -183,7 +183,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/am-thuc-mien-trung</loc>
+    <loc>https://angigio.com/am-thuc-mien-trung</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
@@ -193,7 +193,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/am-thuc-mien-nam</loc>
+    <loc>https://angigio.com/am-thuc-mien-nam</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
@@ -203,7 +203,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/am-thuc-mien-tay</loc>
+    <loc>https://angigio.com/am-thuc-mien-tay</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
@@ -213,107 +213,107 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-tam-suon-bi-cha</loc>
+    <loc>https://angigio.com/cach-nau-com-tam-suon-bi-cha</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/com_tam_suon_bi_cha.jpg</image:loc>
+      <image:loc>https://angigio.com/images/com_tam_suon_bi_cha.jpg</image:loc>
       <image:title>Cách Làm Cơm Tấm Sườn Bì Chả Sài Gòn Nướng Mềm Mọng Chuẩn Vị Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-ga-xoi-mo</loc>
+    <loc>https://angigio.com/cach-nau-com-ga-xoi-mo</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/com_ga_xoi_mo.jpg?v=3</image:loc>
+      <image:loc>https://angigio.com/images/com_ga_xoi_mo.jpg?v=3</image:loc>
       <image:title>Cách Làm Cơm Gà Xối Mỡ Thơm Ngon Đậm Đà Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-rang-dua-bo</loc>
+    <loc>https://angigio.com/cach-nau-com-rang-dua-bo</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/com_rang_dua_bo.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/com_rang_dua_bo.jpg?v=2</image:loc>
       <image:title>Cách Làm Cơm Rang Dưa Bò Hạt Cơm Săn Giòn, Thơm Ngon Chuẩn Vị</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-nieu-singapore</loc>
+    <loc>https://angigio.com/cach-nau-com-nieu-singapore</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/com_nieu_bo_tieu_den.jpg</image:loc>
+      <image:loc>https://angigio.com/images/com_nieu_bo_tieu_den.jpg</image:loc>
       <image:title>Cách Làm Cơm Niêu Bò Sốt Tiêu Đen Thơm Ngon Đậm Đà Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-suon-nuong-mat-ong</loc>
+    <loc>https://angigio.com/cach-nau-com-suon-nuong-mat-ong</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bbq_spareribs.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bbq_spareribs.jpg</image:loc>
       <image:title>Cách Làm Cơm Sườn Nướng Mật Ong Thơm Ngon Đậm Đà Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-chien-duong-chau</loc>
+    <loc>https://angigio.com/cach-nau-com-chien-duong-chau</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/com_chien_duong_chau.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/com_chien_duong_chau.jpg?v=2</image:loc>
       <image:title>Cách Làm Cơm Chiên Dương Châu Hạt Cơm Săn Giòn, Thơm Ngon Chuẩn Vị</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-chien-hai-san</loc>
+    <loc>https://angigio.com/cach-nau-com-chien-hai-san</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/com_chien_hai_san.jpg</image:loc>
+      <image:loc>https://angigio.com/images/com_chien_hai_san.jpg</image:loc>
       <image:title>Cách Làm Cơm Chiên Hải Sản Hạt Cơm Săn Giòn, Thơm Ngon Chuẩn Vị</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-ga-hoi-an</loc>
+    <loc>https://angigio.com/cach-nau-com-ga-hoi-an</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/com_ga_hoi_an.jpg</image:loc>
+      <image:loc>https://angigio.com/images/com_ga_hoi_an.jpg</image:loc>
       <image:title>Cách Làm Cơm Gà Hội An Hạt Cơm Vàng Óng, Gỏi Gà Xé Đậm Đà Chuẩn Vị Phố Cổ</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-ca-kho-to</loc>
+    <loc>https://angigio.com/cach-nau-com-ca-kho-to</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/com_ca_kho_to.jpg</image:loc>
+      <image:loc>https://angigio.com/images/com_ca_kho_to.jpg</image:loc>
       <image:title>Cách Nấu Cơm Cá Kho Tộ Đậm Đà, Mềm Mọng Chuẩn Vị Mẹ Nấu</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-thit-kho-tau</loc>
+    <loc>https://angigio.com/cach-nau-com-thit-kho-tau</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/thit_kho_tau.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/thit_kho_tau.jpg?v=2</image:loc>
       <image:title>Cách Nấu Thịt Kho Tàu Nước Dừa Trứng Cút Mềm Rục, Màu Cánh Gián Óng Ả</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-chien-ca-man</loc>
+    <loc>https://angigio.com/cach-nau-com-chien-ca-man</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -323,437 +323,437 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-ga-quay-xe-phay</loc>
+    <loc>https://angigio.com/cach-nau-com-ga-quay-xe-phay</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/com_ga_quay_sot_mat.jpg</image:loc>
+      <image:loc>https://angigio.com/images/com_ga_quay_sot_mat.jpg</image:loc>
       <image:title>Cách Làm Cơm Gà Quay Sốt Mật Thơm Ngon Đậm Đà Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-suon-cay-thai-lan</loc>
+    <loc>https://angigio.com/cach-nau-com-suon-cay-thai-lan</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/com_suon_cay.jpg</image:loc>
+      <image:loc>https://angigio.com/images/com_suon_cay.jpg</image:loc>
       <image:title>Cách Làm Cơm Sườn Cay Thơm Ngon Đậm Đà Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-canh-kim-chi</loc>
+    <loc>https://angigio.com/cach-nau-com-canh-kim-chi</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/kimchi_jjigae.jpg</image:loc>
+      <image:loc>https://angigio.com/images/kimchi_jjigae.jpg</image:loc>
       <image:title>Cách Nấu Cơm Canh Kim Chi Thanh Mát, Đậm Đà Chuẩn Cơm Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-ga-teriyaki</loc>
+    <loc>https://angigio.com/cach-nau-com-ga-teriyaki</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/teriyaki_chicken.jpg</image:loc>
+      <image:loc>https://angigio.com/images/teriyaki_chicken.jpg</image:loc>
       <image:title>Cách Làm Cơm Gà Teriyaki Thơm Ngon Đậm Đà Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-thit-ba-chi-chay-canh</loc>
+    <loc>https://angigio.com/cach-nau-com-thit-ba-chi-chay-canh</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/ba_chi_rang.jpg</image:loc>
+      <image:loc>https://angigio.com/images/ba_chi_rang.jpg</image:loc>
       <image:title>Cách Làm Cơm Ba Chỉ Cháy Cạnh Thơm Ngon Đậm Đà Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-nui-xao-bo-ap-chao</loc>
+    <loc>https://angigio.com/cach-nau-nui-xao-bo-ap-chao</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/nui_xao_bo.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/nui_xao_bo.jpg?v=2</image:loc>
       <image:title>Cách Làm Nui Xào Bò Thơm Ngon Đậm Đà Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-xoi-ga-xe-mo-hanh</loc>
+    <loc>https://angigio.com/cach-nau-xoi-ga-xe-mo-hanh</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/xoi_ga.jpg</image:loc>
+      <image:loc>https://angigio.com/images/xoi_ga.jpg</image:loc>
       <image:title>Cách Nấu Xôi Gà Xé Dẻo Thơm Óng Ả Chuẩn Vị Truyền Thống</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-xoi-xeo-ha-noi</loc>
+    <loc>https://angigio.com/cach-nau-xoi-xeo-ha-noi</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/xoi_xeo_ha_noi.jpg</image:loc>
+      <image:loc>https://angigio.com/images/xoi_xeo_ha_noi.jpg</image:loc>
       <image:title>Cách Nấu Xôi Xéo Hà Nội Dẻo Thơm Óng Ả Chuẩn Vị Truyền Thống Phố Cổ</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-xoi-pate-lap-xuong</loc>
+    <loc>https://angigio.com/cach-nau-xoi-pate-lap-xuong</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/xoi_pate_lap_xuong.jpg</image:loc>
+      <image:loc>https://angigio.com/images/xoi_pate_lap_xuong.jpg</image:loc>
       <image:title>Cách Nấu Xôi Mặn Thập Cẩm Dẻo Thơm Óng Ả Chuẩn Vị Truyền Thống</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-beo</loc>
+    <loc>https://angigio.com/cach-nau-banh-beo</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_beo.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_beo.jpg</image:loc>
       <image:title>Cách Làm Bánh Bèo Chén Tôm Chấy Tóp Mỡ Xoáy Lòng Chuẩn Vị Huế</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-xoi-chien-gion-nhan-thit</loc>
+    <loc>https://angigio.com/cach-nau-xoi-chien-gion-nhan-thit</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/xoi_chien.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/xoi_chien.jpg?v=2</image:loc>
       <image:title>Cách Nấu Xôi Chiên Dẻo Thơm Óng Ả Chuẩn Vị Truyền Thống</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-chay-kho-quet</loc>
+    <loc>https://angigio.com/cach-nau-com-chay-kho-quet</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/com_chay_kho_quet.jpg</image:loc>
+      <image:loc>https://angigio.com/images/com_chay_kho_quet.jpg</image:loc>
       <image:title>Cách Nấu Cơm Cháy Kho Quẹt Đậm Đà, Mềm Mọng Chuẩn Vị Mẹ Nấu</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-ga-hai-nam</loc>
+    <loc>https://angigio.com/cach-nau-com-ga-hai-nam</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/com_ga_hoi_an.jpg</image:loc>
+      <image:loc>https://angigio.com/images/com_ga_hoi_an.jpg</image:loc>
       <image:title>Cách Làm Cơm Gà Hải Nam Thơm Ngon Đậm Đà Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-bo-xao-can-toi</loc>
+    <loc>https://angigio.com/cach-nau-com-bo-xao-can-toi</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/com_bo_luc_lac.jpg</image:loc>
+      <image:loc>https://angigio.com/images/com_bo_luc_lac.jpg</image:loc>
       <image:title>Cách Làm Cơm Bò Xào Cần Tỏi Thơm Ngon Đậm Đà Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-pho-bo-tai-lan</loc>
+    <loc>https://angigio.com/cach-nau-pho-bo-tai-lan</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/pho_bo_tai_lan.jpg</image:loc>
+      <image:loc>https://angigio.com/images/pho_bo_tai_lan.jpg</image:loc>
       <image:title>Cách Nấu Phở Bò Tái Lăn Hà Nội Thơm Nức, Đậm Đà Chuẩn Vị Phố Cổ</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-pho-bo-sot-vang</loc>
+    <loc>https://angigio.com/cach-nau-pho-bo-sot-vang</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/pho_sot_vang.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/pho_sot_vang.jpg?v=2</image:loc>
       <image:title>Cách Nấu Phở Bò Sốt Vang Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-pho-bo-tai-nam-gau</loc>
+    <loc>https://angigio.com/cach-nau-pho-bo-tai-nam-gau</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/pho_bo.jpg</image:loc>
+      <image:loc>https://angigio.com/images/pho_bo.jpg</image:loc>
       <image:title>Cách Nấu Phở Bò Tái Nạm Gàu Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-pho-ga-ta-la-chanh</loc>
+    <loc>https://angigio.com/cach-nau-pho-ga-ta-la-chanh</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/pho_ga_ta.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/pho_ga_ta.jpg?v=2</image:loc>
       <image:title>Cách Nấu Phở Gà Ta Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bun-bo-hue-dac-biet</loc>
+    <loc>https://angigio.com/cach-nau-bun-bo-hue-dac-biet</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_bo_hue.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bun_bo_hue.jpg</image:loc>
       <image:title>Cách Nấu Bún Bò Huế Chả Cua Đậm Đà Chuẩn Vị Cố Đô Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bun-cha-ha-noi</loc>
+    <loc>https://angigio.com/cach-nau-bun-cha-ha-noi</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_cha_ha_noi.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bun_cha_ha_noi.jpg</image:loc>
       <image:title>Cách Làm Bún Chả Hà Nội Thịt Nướng Than Hoa, Nước Chấm Đậm Đà Chuẩn Vị</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bun-dau-mam-tom</loc>
+    <loc>https://angigio.com/cach-nau-bun-dau-mam-tom</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_dau_mam_tom.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bun_dau_mam_tom.jpg</image:loc>
       <image:title>Cách Làm Bún Đậu Mắm Tôm Thơm Ngon, Đầy Đủ Topping Chuẩn Vị Hà Thành</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bun-rieu-cua-bap-bo</loc>
+    <loc>https://angigio.com/cach-nau-bun-rieu-cua-bap-bo</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_rieu_cua.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bun_rieu_cua.jpg</image:loc>
       <image:title>Cách Nấu Bún Riêu Cua Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bun-thit-nuong-cha-gio</loc>
+    <loc>https://angigio.com/cach-nau-bun-thit-nuong-cha-gio</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_thit_nuong.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bun_thit_nuong.jpg</image:loc>
       <image:title>Cách Làm Bún Thịt Nướng Đậm Đà, Nước Mắm Chua Ngọt Chuẩn Vị Nam Bộ</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bun-oc-nguoi-ha-noi</loc>
+    <loc>https://angigio.com/cach-nau-bun-oc-nguoi-ha-noi</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_oc.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/bun_oc.jpg?v=2</image:loc>
       <image:title>Cách Nấu Bún Ốc Nguội Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bun-mang-vit</loc>
+    <loc>https://angigio.com/cach-nau-bun-mang-vit</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_mang_vit.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bun_mang_vit.jpg</image:loc>
       <image:title>Cách Nấu Bún Măng Vịt Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bun-ca-cay-hai-phong</loc>
+    <loc>https://angigio.com/cach-nau-bun-ca-cay-hai-phong</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_ca_cay_hai_phong.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bun_ca_cay_hai_phong.jpg</image:loc>
       <image:title>Cách Nấu Bún Cá Cay Hải Phòng Nước Dùng Chua Cay Đậm Đà Chuẩn Vị Đất Cảng</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bun-thang-ha-noi</loc>
+    <loc>https://angigio.com/cach-nau-bun-thang-ha-noi</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_thang.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bun_thang.jpg</image:loc>
       <image:title>Cách Nấu Bún Thang Hà Nội Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bun-thai</loc>
+    <loc>https://angigio.com/cach-nau-bun-thai</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_thai.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/bun_thai.jpg?v=2</image:loc>
       <image:title>Cách Nấu Bún Thái Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bun-suon-moc-doc-mung</loc>
+    <loc>https://angigio.com/cach-nau-bun-suon-moc-doc-mung</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_moc.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/bun_moc.jpg?v=2</image:loc>
       <image:title>Cách Nấu Bún Sườn Dọc Mùng Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bun-mam-mien-tay</loc>
+    <loc>https://angigio.com/cach-nau-bun-mam-mien-tay</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_mam.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bun_mam.jpg</image:loc>
       <image:title>Cách Nấu Bún Mắm Miền Tây Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bun-nuoc-leo-soc-trang</loc>
+    <loc>https://angigio.com/cach-nau-bun-nuoc-leo-soc-trang</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_nuoc_leo.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bun_nuoc_leo.jpg</image:loc>
       <image:title>Cách Nấu Bún Nước Lèo Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bun-ca-ngu-phu-yen</loc>
+    <loc>https://angigio.com/cach-nau-bun-ca-ngu-phu-yen</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_ca_ngu.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bun_ca_ngu.jpg</image:loc>
       <image:title>Cách Nấu Bún Cá Ngừ Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-hu-tieu-nam-vang-kho</loc>
+    <loc>https://angigio.com/cach-nau-hu-tieu-nam-vang-kho</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/hu_tieu_nam_vang.jpg</image:loc>
+      <image:loc>https://angigio.com/images/hu_tieu_nam_vang.jpg</image:loc>
       <image:title>Cách Nấu Hủ Tiếu Nam Vang Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-hu-tieu-go-sai-gon</loc>
+    <loc>https://angigio.com/cach-nau-hu-tieu-go-sai-gon</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/hu_tieu_go.jpg</image:loc>
+      <image:loc>https://angigio.com/images/hu_tieu_go.jpg</image:loc>
       <image:title>Cách Nấu Hủ Tiếu Gõ Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-hu-tieu-sa-te-nai</loc>
+    <loc>https://angigio.com/cach-nau-hu-tieu-sa-te-nai</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/hu_tieu_sa_te_nai.jpg</image:loc>
+      <image:loc>https://angigio.com/images/hu_tieu_sa_te_nai.jpg</image:loc>
       <image:title>Cách Nấu Hủ Tiếu Sa Tế Nai Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-hu-tieu-mi-hoanh-thanh</loc>
+    <loc>https://angigio.com/cach-nau-hu-tieu-mi-hoanh-thanh</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/mi_hoanh_thanh.jpg</image:loc>
+      <image:loc>https://angigio.com/images/mi_hoanh_thanh.jpg</image:loc>
       <image:title>Cách Nấu Mì Hoành Thánh Xá Xíu Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-hu-tieu-muc-tuoi</loc>
+    <loc>https://angigio.com/cach-nau-hu-tieu-muc-tuoi</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/squid_noodle.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/squid_noodle.jpg?v=2</image:loc>
       <image:title>Cách Nấu Hủ Tiếu Mực Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-mi-quang-tom-thit</loc>
+    <loc>https://angigio.com/cach-nau-mi-quang-tom-thit</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/mi_quang.jpg</image:loc>
+      <image:loc>https://angigio.com/images/mi_quang.jpg</image:loc>
       <image:title>Cách Nấu Mì Quảng Tôm Thịt Đậm Đà Chuẩn Vị Xứ Quảng Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bo-ne-chao-gang</loc>
+    <loc>https://angigio.com/cach-nau-bo-ne-chao-gang</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bo_ne.jpg?v=1</image:loc>
+      <image:loc>https://angigio.com/images/bo_ne.jpg?v=1</image:loc>
       <image:title>Cách Nấu Bò Né Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-mi-cay-han-quoc</loc>
+    <loc>https://angigio.com/cach-nau-mi-cay-han-quoc</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/mi_cay_han_quoc.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/mi_cay_han_quoc.jpg?v=2</image:loc>
       <image:title>Cách Nấu Mì Cay 7 Cấp Độ Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-mi-tron-top-mo</loc>
+    <loc>https://angigio.com/cach-nau-mi-tron-top-mo</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/mi_tron_top_mo.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/mi_tron_top_mo.jpg?v=2</image:loc>
       <image:title>Cách Làm Mì Trộn Tóp Mỡ Sốt Chua Ngọt Đậm Đà Chuẩn Vị</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-mi-xao-gion</loc>
+    <loc>https://angigio.com/cach-nau-mi-xao-gion</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/mi_xao_gion.jpg</image:loc>
+      <image:loc>https://angigio.com/images/mi_xao_gion.jpg</image:loc>
       <image:title>Cách Làm Mì Xào Giòn Thơm Lừng, Đậm Đà Chuẩn Bếp Trưởng</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-mi-xao-bo-rau-cai</loc>
+    <loc>https://angigio.com/cach-nau-mi-xao-bo-rau-cai</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/mi_xao_bo.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/mi_xao_bo.jpg?v=2</image:loc>
       <image:title>Cách Làm Mì Xào Bò Thơm Lừng, Đậm Đà Chuẩn Bếp Trưởng</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-mi-udon-bo-xao</loc>
+    <loc>https://angigio.com/cach-nau-mi-udon-bo-xao</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -763,7 +763,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-mi-soba-lanh</loc>
+    <loc>https://angigio.com/cach-nau-mi-soba-lanh</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -773,467 +773,467 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-mien-luon-gion-xao-lan</loc>
+    <loc>https://angigio.com/cach-nau-mien-luon-gion-xao-lan</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/mien_luon.jpg</image:loc>
+      <image:loc>https://angigio.com/images/mien_luon.jpg</image:loc>
       <image:title>Cách Nấu Miến Lươn Giòn Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-mien-ga-ta-dui-xe</loc>
+    <loc>https://angigio.com/cach-nau-mien-ga-ta-dui-xe</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/mien_ga.jpg</image:loc>
+      <image:loc>https://angigio.com/images/mien_ga.jpg</image:loc>
       <image:title>Cách Nấu Miến Gà Ta Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-da-cua-be</loc>
+    <loc>https://angigio.com/cach-nau-banh-da-cua-be</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_da_cua.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_da_cua.jpg</image:loc>
       <image:title>Cách Nấu Bánh Đa Cua Hải Phòng Nước Dùng Đậm Đà Chuẩn Vị Đất Cảng</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-canh-cua-gio-heo</loc>
+    <loc>https://angigio.com/cach-nau-banh-canh-cua-gio-heo</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_canh_cua.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_canh_cua.jpg</image:loc>
       <image:title>Cách Nấu Bánh Canh Cua Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-canh-ghe-nguyen-con</loc>
+    <loc>https://angigio.com/cach-nau-banh-canh-ghe-nguyen-con</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_canh_ghe.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_canh_ghe.jpg</image:loc>
       <image:title>Cách Nấu Bánh Canh Ghẹ Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-canh-ca-loc</loc>
+    <loc>https://angigio.com/cach-nau-banh-canh-ca-loc</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_canh_ca_loc.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/banh_canh_ca_loc.jpg?v=2</image:loc>
       <image:title>Cách Nấu Bánh Canh Cá Lóc Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bun-moc-ha-noi</loc>
+    <loc>https://angigio.com/cach-nau-bun-moc-ha-noi</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_moc.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/bun_moc.jpg?v=2</image:loc>
       <image:title>Cách Nấu Bún Mọc Hà Nội Nước Dùng Trong Veo Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-canh-bun-rau-muong</loc>
+    <loc>https://angigio.com/cach-nau-canh-bun-rau-muong</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/canh_bun.jpg</image:loc>
+      <image:loc>https://angigio.com/images/canh_bun.jpg</image:loc>
       <image:title>Cách Nấu Canh Bún Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-mi-hoanh-thanh-xa-xiu</loc>
+    <loc>https://angigio.com/cach-nau-mi-hoanh-thanh-xa-xiu</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/mi_hoanh_thanh.jpg</image:loc>
+      <image:loc>https://angigio.com/images/mi_hoanh_thanh.jpg</image:loc>
       <image:title>Cách Nấu Mì Hoành Thánh Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-mien-xao-cua</loc>
+    <loc>https://angigio.com/cach-nau-mien-xao-cua</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/mien_xao_cua.jpg</image:loc>
+      <image:loc>https://angigio.com/images/mien_xao_cua.jpg</image:loc>
       <image:title>Cách Nấu Miến Xào Cua Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-mi-xao-bo-cai-ngot</loc>
+    <loc>https://angigio.com/cach-nau-mi-xao-bo-cai-ngot</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/mi_xao_gion.jpg</image:loc>
+      <image:loc>https://angigio.com/images/mi_xao_gion.jpg</image:loc>
       <image:title>Cách Làm Mì Xào Bò Thơm Lừng, Đậm Đà Chuẩn Bếp Trưởng</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-mi-tron-top-mo-trung-long-dao</loc>
+    <loc>https://angigio.com/cach-nau-mi-tron-top-mo-trung-long-dao</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/mi_tron_top_mo.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/mi_tron_top_mo.jpg?v=2</image:loc>
       <image:title>Cách Làm Mì Trộn (Mìst T) Sốt Chua Ngọt Đậm Đà Chuẩn Vị</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-nui-gio-heo</loc>
+    <loc>https://angigio.com/cach-nau-nui-gio-heo</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/nui_gio_heo.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/nui_gio_heo.jpg?v=2</image:loc>
       <image:title>Cách Nấu Nui Giò Heo Nước Dùng Thanh Ngọt Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-mi-pate-thap-cam</loc>
+    <loc>https://angigio.com/cach-nau-banh-mi-pate-thap-cam</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_mi_pate.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_mi_pate.jpg</image:loc>
       <image:title>Cách Làm Bánh Mì Pate Thập Cẩm Giòn Rụm, Đậm Đà Chuẩn Vị Đường Phố</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-mi-chao-xiu-mai</loc>
+    <loc>https://angigio.com/cach-nau-banh-mi-chao-xiu-mai</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_mi_chao.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_mi_chao.jpg</image:loc>
       <image:title>Cách Làm Bánh Mì Chảo Giòn Rụm, Đậm Đà Chuẩn Vị Đường Phố</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-mi-thit-nuong</loc>
+    <loc>https://angigio.com/cach-nau-banh-mi-thit-nuong</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_mi_thit_nuong.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_mi_thit_nuong.jpg</image:loc>
       <image:title>Cách Làm Bánh Mì Thịt Nướng Giòn Rụm, Đậm Đà Chuẩn Vị Đường Phố</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-mi-xiu-mai-da-lat</loc>
+    <loc>https://angigio.com/cach-nau-banh-mi-xiu-mai-da-lat</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_mi_xiu_mai.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_mi_xiu_mai.jpg</image:loc>
       <image:title>Cách Làm Bánh Mì Xíu Mại Chén Đà Lạt Nóng Hổi Chuẩn Vị Phố Sương Mù</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-mi-cha-ca-nong</loc>
+    <loc>https://angigio.com/cach-nau-banh-mi-cha-ca-nong</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_mi_cha_ca.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_mi_cha_ca.jpg</image:loc>
       <image:title>Cách Làm Bánh Mì Chả Cá Giòn Rụm, Đậm Đà Chuẩn Vị Đường Phố</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-mi-heo-quay-gion</loc>
+    <loc>https://angigio.com/cach-nau-banh-mi-heo-quay-gion</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_mi_heo_quay.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_mi_heo_quay.jpg</image:loc>
       <image:title>Cách Làm Bánh Mì Heo Quay Giòn Rụm, Đậm Đà Chuẩn Vị Đường Phố</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-mi-doner-kebab</loc>
+    <loc>https://angigio.com/cach-nau-banh-mi-doner-kebab</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_mi_kebab.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_mi_kebab.jpg</image:loc>
       <image:title>Cách Làm Bánh Mì Doner Kebab Giòn Rụm, Đậm Đà Chuẩn Vị Đường Phố</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-mi-que-hai-phong</loc>
+    <loc>https://angigio.com/cach-nau-banh-mi-que-hai-phong</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_mi_que.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_mi_que.jpg</image:loc>
       <image:title>Cách Làm Bánh Mì Que Hải Phòng Patê Béo Ngậy Giòn Rụm Chuẩn Vị Đất Cảng</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-goi-cuon-tom-thit</loc>
+    <loc>https://angigio.com/cach-nau-goi-cuon-tom-thit</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/goi_cuon.jpg</image:loc>
+      <image:loc>https://angigio.com/images/goi_cuon.jpg</image:loc>
       <image:title>Cách Làm Gỏi Cuốn Tôm Thịt Tươi Ngon, Nước Chấm Chua Ngọt Chuẩn Vị</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-nem-lui-nuong-cuon</loc>
+    <loc>https://angigio.com/cach-nau-nem-lui-nuong-cuon</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/nem_lui.jpg</image:loc>
+      <image:loc>https://angigio.com/images/nem_lui.jpg</image:loc>
       <image:title>Cách Làm Nem Lụi Huế Nướng Than Thơm Nức &amp; Nước Lèo Gan Đậu Béo Bùi Chuẩn Vị Cố Đô</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-pho-cuon-thit-bo</loc>
+    <loc>https://angigio.com/cach-nau-pho-cuon-thit-bo</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/pho_cuon_ha_noi.jpg</image:loc>
+      <image:loc>https://angigio.com/images/pho_cuon_ha_noi.jpg</image:loc>
       <image:title>Cách Làm Phở Cuốn Hà Nội Thịt Bò Tươi Ngon Nước Chấm Chua Ngọt Chuẩn Vị</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-nem-nuong-nha-trang-cuon</loc>
+    <loc>https://angigio.com/cach-nau-nem-nuong-nha-trang-cuon</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/nem_nuong_nha_trang.jpg</image:loc>
+      <image:loc>https://angigio.com/images/nem_nuong_nha_trang.jpg</image:loc>
       <image:title>Cách Làm Nem Nướng Nha Trang Cuốn Bánh Tráng &amp; Nước Sốt Tương Gan Chuẩn Vị</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-gio-heo-chien-gion</loc>
+    <loc>https://angigio.com/cach-nau-gio-heo-chien-gion</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/gio_heo_chien_gion.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/gio_heo_chien_gion.jpg?v=2</image:loc>
       <image:title>Cách Làm Giò Heo Chiên Giòn Vàng Giòn Rụm, Thơm Ngon Bất Bại</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-cuon-nong-thit-bam</loc>
+    <loc>https://angigio.com/cach-nau-banh-cuon-nong-thit-bam</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_cuon.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_cuon.jpg</image:loc>
       <image:title>Cách Làm Bánh Cuốn Nóng Vỏ Mỏng Mướt, Nước Chấm Ấm Nóng Chuẩn Vị Hà Nội</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-uot</loc>
+    <loc>https://angigio.com/cach-nau-banh-uot</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_uot.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_uot.jpg</image:loc>
       <image:title>Cách Làm Bánh Ướt Tươi Ngon, Nước Chấm Chua Ngọt Chuẩn Vị</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-xeo-tom-thit-gion</loc>
+    <loc>https://angigio.com/cach-nau-banh-xeo-tom-thit-gion</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_xeo.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/banh_xeo.jpg?v=2</image:loc>
       <image:title>Cách Làm Bánh Xèo Tươi Ngon, Nước Chấm Chua Ngọt Chuẩn Vị</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-khot-tom-vung-tau</loc>
+    <loc>https://angigio.com/cach-nau-banh-khot-tom-vung-tau</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_khot.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_khot.jpg</image:loc>
       <image:title>Cách Làm Bánh Khọt Vũng Tàu Tươi Ngon, Nước Chấm Chua Ngọt Chuẩn Vị</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-ram-bap-cuon-rau</loc>
+    <loc>https://angigio.com/cach-nau-ram-bap-cuon-rau</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/cha_gio.jpg</image:loc>
+      <image:loc>https://angigio.com/images/cha_gio.jpg</image:loc>
       <image:title>Cách Làm Ram Bắp Quảng Ngãi Giòn Rụm, Thơm Ngọt Chuẩn Vị Xứ Quảng</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-dap-mam-nem</loc>
+    <loc>https://angigio.com/cach-nau-banh-dap-mam-nem</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_dap_mam_nem.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_dap_mam_nem.jpg</image:loc>
       <image:title>Cách Làm Bánh Đập Mắm Nêm Miền Trung Giòn Dẻo &amp; Bí Quyết Pha Mắm Nêm Thơm Lừng</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-dimsum-ha-cao-xiu-mai</loc>
+    <loc>https://angigio.com/cach-nau-dimsum-ha-cao-xiu-mai</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/dimsum.jpg</image:loc>
+      <image:loc>https://angigio.com/images/dimsum.jpg</image:loc>
       <image:title>Cách Làm Dimsum Tươi Ngon, Nước Chấm Chua Ngọt Chuẩn Vị</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-my-pate-cha-lua</loc>
+    <loc>https://angigio.com/cach-nau-banh-my-pate-cha-lua</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_mi_pate.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_mi_pate.jpg</image:loc>
       <image:title>Cách Làm Bánh Mỳ Tươi Ngon, Nước Chấm Chua Ngọt Chuẩn Vị</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bo-kho-banh-my-nong-gion</loc>
+    <loc>https://angigio.com/cach-nau-bo-kho-banh-my-nong-gion</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bo_kho_banh_mi.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bo_kho_banh_mi.jpg</image:loc>
       <image:title>Cách Làm Bò Kho Bánh Mỳ Tươi Ngon, Nước Chấm Chua Ngọt Chuẩn Vị</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-ga-nuong-com-lam</loc>
+    <loc>https://angigio.com/cach-nau-ga-nuong-com-lam</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/ga_nuong_com_lam.jpg</image:loc>
+      <image:loc>https://angigio.com/images/ga_nuong_com_lam.jpg</image:loc>
       <image:title>Cách Làm Gà Nướng Cơm Lam Thơm Ngon Đậm Đà Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-suon-nuong-bbq</loc>
+    <loc>https://angigio.com/cach-nau-suon-nuong-bbq</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/de_suon_heo_bbq.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/de_suon_heo_bbq.jpg?v=2</image:loc>
       <image:title>Cách Làm Dẻ Sườn Heo Nướng BBQ Bằng Nồi Chiên Không Dầu Mềm Tan Róc Xương</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-dau-hu-chien-gion</loc>
+    <loc>https://angigio.com/cach-nau-dau-hu-chien-gion</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/dau_hu_chien_gion.jpg?v=3</image:loc>
+      <image:loc>https://angigio.com/images/dau_hu_chien_gion.jpg?v=3</image:loc>
       <image:title>Cách Làm Đậu Hũ Chiên Giòn Vàng Giòn Rụm, Thơm Ngon Bất Bại</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bach-tuoc-nuong-sa-te</loc>
+    <loc>https://angigio.com/cach-nau-bach-tuoc-nuong-sa-te</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bach_tuoc_nuong.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bach_tuoc_nuong.jpg</image:loc>
       <image:title>Cách Làm Bạch Tuộc Nướng Sa Tế Da Giòn Thịt Mềm, Thơm Lừng Khói Than</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-chan-ga-nuong-mat-ong</loc>
+    <loc>https://angigio.com/cach-nau-chan-ga-nuong-mat-ong</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/chan_ga_nuong.jpg</image:loc>
+      <image:loc>https://angigio.com/images/chan_ga_nuong.jpg</image:loc>
       <image:title>Cách Làm Chân Gà Nướng Da Giòn Thịt Mềm, Thơm Lừng Khói Than</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-muc-nuong-muoi-ot</loc>
+    <loc>https://angigio.com/cach-nau-muc-nuong-muoi-ot</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/muc_nuong.jpg</image:loc>
+      <image:loc>https://angigio.com/images/muc_nuong.jpg</image:loc>
       <image:title>Cách Làm Mực Trứng Nướng Da Giòn Thịt Mềm, Thơm Lừng Khói Than</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-ga-ran-gion-cay</loc>
+    <loc>https://angigio.com/cach-nau-ga-ran-gion-cay</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/ga_ran_sot_cay.jpg?v=3</image:loc>
+      <image:loc>https://angigio.com/images/ga_ran_sot_cay.jpg?v=3</image:loc>
       <image:title>Cách Làm Gà Rán Hàn Quốc Vàng Giòn Rụm, Thơm Ngon Bất Bại</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bot-chien-gion-trung-doi</loc>
+    <loc>https://angigio.com/cach-nau-bot-chien-gion-trung-doi</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bot_chien.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bot_chien.jpg</image:loc>
       <image:title>Cách Làm Bột Chiên Trứng Vàng Giòn Rụm, Thơm Ngon Bất Bại</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-doi-sun-nuong-than-hoa</loc>
+    <loc>https://angigio.com/cach-nau-doi-sun-nuong-than-hoa</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/doi_sun_nuong.jpg</image:loc>
+      <image:loc>https://angigio.com/images/doi_sun_nuong.jpg</image:loc>
       <image:title>Cách Làm Dồi Sụn Nướng Da Giòn Thịt Mềm, Thơm Lừng Khói Than</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-chim-cut-quay-la-mac-mat</loc>
+    <loc>https://angigio.com/cach-nau-chim-cut-quay-la-mac-mat</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/chim_cut_quay.jpg?v=3</image:loc>
+      <image:loc>https://angigio.com/images/chim_cut_quay.jpg?v=3</image:loc>
       <image:title>Cách Làm Chim Cút Quay Da Giòn Thịt Mềm, Thơm Lừng Khói Than</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-heo-quay-banh-hoi</loc>
+    <loc>https://angigio.com/cach-nau-heo-quay-banh-hoi</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_hoi_heo_quay.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/banh_hoi_heo_quay.jpg?v=2</image:loc>
       <image:title>Cách Làm Heo Quay Bánh Hỏi Da Nổ Giòn Rụm, Đậm Đà Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bo-bit-tet-sot-tieu</loc>
+    <loc>https://angigio.com/cach-nau-bo-bit-tet-sot-tieu</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1243,77 +1243,77 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-cha-ca-la-vong-ha-noi</loc>
+    <loc>https://angigio.com/cach-nau-cha-ca-la-vong-ha-noi</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_ca.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bun_ca.jpg</image:loc>
       <image:title>Cách Làm Chả Cá Lã Vọng Hà Nội Nướng Than Hoa, Xèo Xèo Chảo Mỡ Chuẩn Vị Phố Cổ</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-hau-nuong-mo-hanh-pho-mai</loc>
+    <loc>https://angigio.com/cach-nau-hau-nuong-mo-hanh-pho-mai</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/hau_nuong.jpg</image:loc>
+      <image:loc>https://angigio.com/images/hau_nuong.jpg</image:loc>
       <image:title>Cách Làm Hàu Nướng Mỡ Hành &amp; Phô Mai Da Giòn Thịt Mềm, Thơm Lừng Khói Than</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bo-nuong-tang-trung-muoi</loc>
+    <loc>https://angigio.com/cach-nau-bo-nuong-tang-trung-muoi</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bo_to_nuong_tang.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/bo_to_nuong_tang.jpg?v=2</image:loc>
       <image:title>Cách Làm Bò Nướng Tảng Trứng Muối Da Giòn Thịt Mềm, Thơm Lừng Khói Than</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-oc-huong-sot-trung-muoi</loc>
+    <loc>https://angigio.com/cach-nau-oc-huong-sot-trung-muoi</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/oc_huong_trung_muoi.jpg</image:loc>
+      <image:loc>https://angigio.com/images/oc_huong_trung_muoi.jpg</image:loc>
       <image:title>Cách Làm Ốc Hương Trứng Muối Đậm Đà Cay Nồng, Bén Mồi Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-ca-loc-nuong-trui</loc>
+    <loc>https://angigio.com/cach-nau-ca-loc-nuong-trui</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/ca_loc_nuong_trui.jpg</image:loc>
+      <image:loc>https://angigio.com/images/ca_loc_nuong_trui.jpg</image:loc>
       <image:title>Cách Làm Cá Lóc Nướng Trui Da Giòn Thịt Mềm, Thơm Lừng Khói Than</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-salad-uc-ga-ap-chao</loc>
+    <loc>https://angigio.com/cach-nau-salad-uc-ga-ap-chao</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/chicken_caesar.jpg</image:loc>
+      <image:loc>https://angigio.com/images/chicken_caesar.jpg</image:loc>
       <image:title>Cách Làm Salad Ức Gà Healthy Chua Ngọt Giòn Tan, Giải Ngấy Cực Tốt</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-salad-ca-ngu-ngo-ngot</loc>
+    <loc>https://angigio.com/cach-nau-salad-ca-ngu-ngo-ngot</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/salad_ca_ngu_ngo_ngot.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/salad_ca_ngu_ngo_ngot.jpg?v=2</image:loc>
       <image:title>Cách Làm Salad Cá Ngừ Chua Ngọt Giòn Tan, Giải Ngấy Cực Tốt</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-poke-bowl-ca-hoi</loc>
+    <loc>https://angigio.com/cach-nau-poke-bowl-ca-hoi</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1323,7 +1323,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-salad-bo-trung-long-dao</loc>
+    <loc>https://angigio.com/cach-nau-salad-bo-trung-long-dao</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1333,197 +1333,197 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-nom-bo-kho-ha-noi</loc>
+    <loc>https://angigio.com/cach-nau-nom-bo-kho-ha-noi</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/nom_bo_kho.jpg</image:loc>
+      <image:loc>https://angigio.com/images/nom_bo_kho.jpg</image:loc>
       <image:title>Cách Làm Nộm Bò Khô Đu Đủ Chua Ngọt Giòn Tan, Giải Ngấy Cực Tốt</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-goi-ngo-sen-tom-thit</loc>
+    <loc>https://angigio.com/cach-nau-goi-ngo-sen-tom-thit</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/goi_ngo_sen.jpg</image:loc>
+      <image:loc>https://angigio.com/images/goi_ngo_sen.jpg</image:loc>
       <image:title>Cách Làm Gỏi Ngó Sen Tôm Thịt Chua Ngọt Giòn Tan, Giải Ngấy Cực Tốt</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-goi-xoai-xanh-ca-sac</loc>
+    <loc>https://angigio.com/cach-nau-goi-xoai-xanh-ca-sac</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/mango_salad.jpg</image:loc>
+      <image:loc>https://angigio.com/images/mango_salad.jpg</image:loc>
       <image:title>Cách Làm Gỏi Xoài Cá Sặc Chua Ngọt Giòn Tan, Giải Ngấy Cực Tốt</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-salad-rau-mam-bo-xao</loc>
+    <loc>https://angigio.com/cach-nau-salad-rau-mam-bo-xao</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/salad_rau_mam_bo.jpg</image:loc>
+      <image:loc>https://angigio.com/images/salad_rau_mam_bo.jpg</image:loc>
       <image:title>Cách Làm Salad Rau Mầm Bò Xào Chua Ngọt Giòn Tan, Giải Ngấy Cực Tốt</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-lau-thai-hai-san</loc>
+    <loc>https://angigio.com/cach-nau-lau-thai-hai-san</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/lau_thai_hai_san.jpg</image:loc>
+      <image:loc>https://angigio.com/images/lau_thai_hai_san.jpg</image:loc>
       <image:title>Cách Nấu Lẩu Thái Chua Cay Chua Cay Đậm Đà Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-lau-rieu-cua-bap-bo</loc>
+    <loc>https://angigio.com/cach-nau-lau-rieu-cua-bap-bo</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/lau_rieu_cua_bap_bo.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/lau_rieu_cua_bap_bo.jpg?v=2</image:loc>
       <image:title>Cách Nấu Lẩu Riêu Cua Bắp Bò Chua Cay Đậm Đà Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-lau-bo-nhung-dam</loc>
+    <loc>https://angigio.com/cach-nau-lau-bo-nhung-dam</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bo_nhung_dam.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bo_nhung_dam.jpg</image:loc>
       <image:title>Cách Nấu Bò Nhúng Dấm Chua Dịu Thơm Ngon Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-lau-ga-la-e</loc>
+    <loc>https://angigio.com/cach-nau-lau-ga-la-e</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/lau_ga_la_e.jpg</image:loc>
+      <image:loc>https://angigio.com/images/lau_ga_la_e.jpg</image:loc>
       <image:title>Cách Nấu Lẩu Gà Lá É Thơm Nồng Cay Ấm Chuẩn Vị Phú Yên &amp; Đà Lạt</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-chao-suon-sun-quay</loc>
+    <loc>https://angigio.com/cach-nau-chao-suon-sun-quay</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/chao_suon_sun.jpg</image:loc>
+      <image:loc>https://angigio.com/images/chao_suon_sun.jpg</image:loc>
       <image:title>Cách Nấu Cháo Sườn Sụn Hà Nội Sánh Mịn Chuẩn Vị Phố Cổ, Quẩy Giòn Rụm</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-chao-ech-singapore</loc>
+    <loc>https://angigio.com/cach-nau-chao-ech-singapore</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/chao_ech.jpg</image:loc>
+      <image:loc>https://angigio.com/images/chao_ech.jpg</image:loc>
       <image:title>Cách Nấu Cháo Ếch Singapore Bổ Dưỡng, Thơm Ngon Cho Cả Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-chao-long-doi-nong</loc>
+    <loc>https://angigio.com/cach-nau-chao-long-doi-nong</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/chao_long.jpg</image:loc>
+      <image:loc>https://angigio.com/images/chao_long.jpg</image:loc>
       <image:title>Cách Nấu Cháo Lòng Tiết Canh Bổ Dưỡng, Thơm Ngon Cho Cả Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-chao-ca-loc-rau-dang</loc>
+    <loc>https://angigio.com/cach-nau-chao-ca-loc-rau-dang</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/chao_ca_loc.jpg</image:loc>
+      <image:loc>https://angigio.com/images/chao_ca_loc.jpg</image:loc>
       <image:title>Cách Nấu Cháo Cá Lóc Bổ Dưỡng, Thơm Ngon Cho Cả Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-lau-ech-mang-cay</loc>
+    <loc>https://angigio.com/cach-nau-lau-ech-mang-cay</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/lau_ech_mang_cay.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/lau_ech_mang_cay.jpg?v=2</image:loc>
       <image:title>Cách Nấu Lẩu Ếch Măng Cay Chua Cay Đậm Đà Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-lau-ga-ot-hiem</loc>
+    <loc>https://angigio.com/cach-nau-lau-ga-ot-hiem</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/lau_ga_ot_hiem.jpg</image:loc>
+      <image:loc>https://angigio.com/images/lau_ga_ot_hiem.jpg</image:loc>
       <image:title>Cách Nấu Lẩu Gà Ớt Hiểm Chua Cay Đậm Đà Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bao-tu-ham-tieu</loc>
+    <loc>https://angigio.com/cach-nau-bao-tu-ham-tieu</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bao_tu_ham_tieu.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bao_tu_ham_tieu.jpg</image:loc>
       <image:title>Cách Nấu Bao Tử Hầm Tiêu Xanh Giòn Sần Sật, Nước Dùng Cay Nồng Ngọt Thanh</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-canh-chua-ca-loc</loc>
+    <loc>https://angigio.com/cach-nau-canh-chua-ca-loc</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/canh_chua_ca_loc.jpg</image:loc>
+      <image:loc>https://angigio.com/images/canh_chua_ca_loc.jpg</image:loc>
       <image:title>Cách Nấu Canh Chua Cá Lóc Nam Bộ Thanh Mát, Đậm Đà Không Tanh</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-lau-mam-mien-tay</loc>
+    <loc>https://angigio.com/cach-nau-lau-mam-mien-tay</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/lau_mam_mien_tay.jpg</image:loc>
+      <image:loc>https://angigio.com/images/lau_mam_mien_tay.jpg</image:loc>
       <image:title>Cách Nấu Lẩu Mắm Miền Tây Chua Cay Đậm Đà Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-lau-ca-keo-la-giang</loc>
+    <loc>https://angigio.com/cach-nau-lau-ca-keo-la-giang</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/lau_ca_keo.jpg</image:loc>
+      <image:loc>https://angigio.com/images/lau_ca_keo.jpg</image:loc>
       <image:title>Cách Nấu Lẩu Cá Kèo Lá Giang Chua Cay Đậm Đà Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-vit-nau-chao-can-tho</loc>
+    <loc>https://angigio.com/cach-nau-vit-nau-chao-can-tho</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/vit_nau_chao.jpg</image:loc>
+      <image:loc>https://angigio.com/images/vit_nau_chao.jpg</image:loc>
       <image:title>Cách Nấu Vịt Nấu Chao Cần Thơ Thơm Ngon Chuẩn Vị Gia Đình</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-pizza-hai-san-pesto</loc>
+    <loc>https://angigio.com/cach-nau-pizza-hai-san-pesto</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1533,7 +1533,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-pizza-pepperoni</loc>
+    <loc>https://angigio.com/cach-nau-pizza-pepperoni</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1543,7 +1543,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-pizza-4-cheese</loc>
+    <loc>https://angigio.com/cach-nau-pizza-4-cheese</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1553,7 +1553,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-pizza-hawaiian</loc>
+    <loc>https://angigio.com/cach-nau-pizza-hawaiian</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1563,7 +1563,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-pizza-ga-nam-bbq</loc>
+    <loc>https://angigio.com/cach-nau-pizza-ga-nam-bbq</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1573,7 +1573,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-mi-y-bolognese</loc>
+    <loc>https://angigio.com/cach-nau-mi-y-bolognese</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1583,7 +1583,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-mi-y-carbonara</loc>
+    <loc>https://angigio.com/cach-nau-mi-y-carbonara</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1593,7 +1593,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-mi-y-aglio-olio</loc>
+    <loc>https://angigio.com/cach-nau-mi-y-aglio-olio</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1603,7 +1603,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-mi-y-cua-sot-kem-ca</loc>
+    <loc>https://angigio.com/cach-nau-mi-y-cua-sot-kem-ca</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1613,7 +1613,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-lasagna-bo-dut-lo</loc>
+    <loc>https://angigio.com/cach-nau-lasagna-bo-dut-lo</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1623,17 +1623,17 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-nui-xao-bo-sot-ca</loc>
+    <loc>https://angigio.com/cach-nau-nui-xao-bo-sot-ca</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/nui_xao_bo.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/nui_xao_bo.jpg?v=2</image:loc>
       <image:title>Cách Làm Nui Xào Bò Giòn Ngon, Xanh Mướt Chuẩn Bếp Trưởng</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-my-y-spaghetti-bo-bam</loc>
+    <loc>https://angigio.com/cach-nau-my-y-spaghetti-bo-bam</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1643,7 +1643,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-hamburger-bo-pho-mai</loc>
+    <loc>https://angigio.com/cach-nau-hamburger-bo-pho-mai</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1653,27 +1653,27 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-chay-suon-non-kho-tieu</loc>
+    <loc>https://angigio.com/cach-nau-com-chay-suon-non-kho-tieu</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/com_chay_suon_non.jpg</image:loc>
+      <image:loc>https://angigio.com/images/com_chay_suon_non.jpg</image:loc>
       <image:title>Cách Làm Cơm Chay Sườn Non Thanh Đạm, Đậm Đà Chuẩn Cơm Chay</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bun-bo-hue-chay</loc>
+    <loc>https://angigio.com/cach-nau-bun-bo-hue-chay</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_bo_hue_chay.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bun_bo_hue_chay.jpg</image:loc>
       <image:title>Cách Nấu Bún Bò Huế Chay Thanh Đạm, Đậm Đà Chuẩn Vị Cơm Chay</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-pho-chay-nam-dui-ga</loc>
+    <loc>https://angigio.com/cach-nau-pho-chay-nam-dui-ga</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1683,137 +1683,137 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bun-rieu-chay</loc>
+    <loc>https://angigio.com/cach-nau-bun-rieu-chay</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_rieu_chay.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bun_rieu_chay.jpg</image:loc>
       <image:title>Cách Làm Bún Riêu Chay Thanh Đạm, Đậm Đà Chuẩn Cơm Chay</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-hu-tieu-chay-rau-cu</loc>
+    <loc>https://angigio.com/cach-nau-hu-tieu-chay-rau-cu</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/hu_tieu_chay.jpg</image:loc>
+      <image:loc>https://angigio.com/images/hu_tieu_chay.jpg</image:loc>
       <image:title>Cách Làm Hủ Tiếu Chay Thanh Đạm, Đậm Đà Chuẩn Cơm Chay</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bun-cha-gio-chay</loc>
+    <loc>https://angigio.com/cach-nau-bun-cha-gio-chay</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bun_cha_gio_chay.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bun_cha_gio_chay.jpg</image:loc>
       <image:title>Cách Làm Bún Chả Giò Chay Thanh Đạm, Đậm Đà Chuẩn Cơm Chay</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-com-nieu-kho-quet-chay</loc>
+    <loc>https://angigio.com/cach-nau-com-nieu-kho-quet-chay</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/com_nieu_kho_quet_chay.jpg</image:loc>
+      <image:loc>https://angigio.com/images/com_nieu_kho_quet_chay.jpg</image:loc>
       <image:title>Cách Làm Cơm Niêu Kho Quẹt Chay Thanh Đạm, Đậm Đà Chuẩn Cơm Chay</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-canh-chua-chay</loc>
+    <loc>https://angigio.com/cach-nau-canh-chua-chay</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/canh_chua_chay.jpg</image:loc>
+      <image:loc>https://angigio.com/images/canh_chua_chay.jpg</image:loc>
       <image:title>Cách Làm Canh Chua Chay Thanh Đạm, Đậm Đà Chuẩn Cơm Chay</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-xeo-chay</loc>
+    <loc>https://angigio.com/cach-nau-banh-xeo-chay</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_xeo_chay.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_xeo_chay.jpg</image:loc>
       <image:title>Cách Làm Bánh Xèo Chay Thanh Đạm, Đậm Đà Chuẩn Cơm Chay</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-lau-nam-chay</loc>
+    <loc>https://angigio.com/cach-nau-lau-nam-chay</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/lau_nam_chay.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/lau_nam_chay.jpg?v=2</image:loc>
       <image:title>Cách Làm Lẩu Nấm Chay Thanh Đạm, Đậm Đà Chuẩn Cơm Chay</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-trang-tron-sa-te</loc>
+    <loc>https://angigio.com/cach-nau-banh-trang-tron-sa-te</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_trang_tron.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_trang_tron.jpg</image:loc>
       <image:title>Cách Làm Bánh Tráng Trộn Sa Tế Sốt Chua Ngọt Đậm Đà Chuẩn Vị</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-trang-nuong-da-lat</loc>
+    <loc>https://angigio.com/cach-nau-banh-trang-nuong-da-lat</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_trang_nuong_da_lat.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_trang_nuong_da_lat.jpg</image:loc>
       <image:title>Cách Làm Bánh Tráng Nướng Đà Lạt Giòn Rụm Chuẩn Vị Pizza Việt Nam</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-che-khuc-bach-thanh-mat</loc>
+    <loc>https://angigio.com/cach-nau-che-khuc-bach-thanh-mat</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/che_khuc_bach.jpg</image:loc>
+      <image:loc>https://angigio.com/images/che_khuc_bach.jpg</image:loc>
       <image:title>Cách Làm Chè Khúc Bạch Hạnh Nhân Đậm Đà Cay Nồng, Bén Mồi Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-che-buoi-an-giang</loc>
+    <loc>https://angigio.com/cach-nau-che-buoi-an-giang</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/che_buoi.jpg</image:loc>
+      <image:loc>https://angigio.com/images/che_buoi.jpg</image:loc>
       <image:title>Cách Làm Chè Bưởi An Giang Đậm Đà Cay Nồng, Bén Mồi Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-tau-hu-tran-chau-duong-den</loc>
+    <loc>https://angigio.com/cach-nau-tau-hu-tran-chau-duong-den</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/tau_hu_tran_chau.jpg</image:loc>
+      <image:loc>https://angigio.com/images/tau_hu_tran_chau.jpg</image:loc>
       <image:title>Cách Làm Tàu Hũ Trân Châu Đường Đen Đậm Đà Cay Nồng, Bén Mồi Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-kem-bo-da-lat</loc>
+    <loc>https://angigio.com/cach-nau-kem-bo-da-lat</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/kem_bo_da_lat.jpg</image:loc>
+      <image:loc>https://angigio.com/images/kem_bo_da_lat.jpg</image:loc>
       <image:title>Cách Làm Kem Bơ Sáp Đà Lạt Đậm Đà Cay Nồng, Bén Mồi Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-khoai-lang-lac-pho-mai</loc>
+    <loc>https://angigio.com/cach-nau-khoai-lang-lac-pho-mai</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1823,77 +1823,77 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bap-xao-bo-tep-mo-hanh</loc>
+    <loc>https://angigio.com/cach-nau-bap-xao-bo-tep-mo-hanh</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bap_xao_bo_tep.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bap_xao_bo_tep.jpg</image:loc>
       <image:title>Cách Làm Bắp Xào Bơ Tép Mỡ Hành Giòn Ngon, Xanh Mướt Chuẩn Bếp Trưởng</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-trung-cut-lon-xao-me</loc>
+    <loc>https://angigio.com/cach-nau-trung-cut-lon-xao-me</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/cut_lon_xao_me.jpg</image:loc>
+      <image:loc>https://angigio.com/images/cut_lon_xao_me.jpg</image:loc>
       <image:title>Cách Làm Cút Lộn Xào Me Giòn Ngon, Xanh Mướt Chuẩn Bếp Trưởng</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-flan-caramen-cafe</loc>
+    <loc>https://angigio.com/cach-nau-banh-flan-caramen-cafe</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_flan_caramen.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_flan_caramen.jpg</image:loc>
       <image:title>Cách Làm Bánh Flan Caramen Cà Phê Thơm Ngon, Đơn Giản Dễ Làm Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bingsu-dau-tay-tuyet</loc>
+    <loc>https://angigio.com/cach-nau-bingsu-dau-tay-tuyet</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bingsu_dau_tay.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bingsu_dau_tay.jpg</image:loc>
       <image:title>Cách Làm Bingsu Dâu Tây Tuyết Đậm Đà Cay Nồng, Bén Mồi Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-ca-vien-chien-nuoc-mam</loc>
+    <loc>https://angigio.com/cach-nau-ca-vien-chien-nuoc-mam</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/ca_vien_chien_nuoc_mam.jpg</image:loc>
+      <image:loc>https://angigio.com/images/ca_vien_chien_nuoc_mam.jpg</image:loc>
       <image:title>Cách Làm Cá Viên Chiên Nước Mắm Vàng Giòn Rụm, Thơm Ngon Bất Bại</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-xoai-non-lac-muoi-tom</loc>
+    <loc>https://angigio.com/cach-nau-xoai-non-lac-muoi-tom</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/xoai_non_lac_muoi_tom.jpg</image:loc>
+      <image:loc>https://angigio.com/images/xoai_non_lac_muoi_tom.jpg</image:loc>
       <image:title>Cách Làm Xoài Non Lắc Muối Tôm Đậm Đà Cay Nồng, Bén Mồi Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-banh-chuoi-nuong-nuoc-cot-dua</loc>
+    <loc>https://angigio.com/cach-nau-banh-chuoi-nuong-nuoc-cot-dua</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/banh_chuoi_nuong.jpg</image:loc>
+      <image:loc>https://angigio.com/images/banh_chuoi_nuong.jpg</image:loc>
       <image:title>Cách Làm Bánh Chuối Nướng Cốt Dừa Thơm Ngon, Đơn Giản Dễ Làm Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-che-thap-cam-ba-mien</loc>
+    <loc>https://angigio.com/cach-nau-che-thap-cam-ba-mien</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1903,27 +1903,27 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-tra-sua-tran-chau-duong-den</loc>
+    <loc>https://angigio.com/cach-nau-tra-sua-tran-chau-duong-den</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/tra_sua_tran_chau_duong_den.jpg</image:loc>
+      <image:loc>https://angigio.com/images/tra_sua_tran_chau_duong_den.jpg</image:loc>
       <image:title>Cách Làm Trà Sữa Trân Châu Đường Đen Thơm Mát Giải Nhiệt, Đơn Giản Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-ca-phe-muoi-hue</loc>
+    <loc>https://angigio.com/cach-nau-ca-phe-muoi-hue</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/ca_phe_muoi.jpg</image:loc>
+      <image:loc>https://angigio.com/images/ca_phe_muoi.jpg</image:loc>
       <image:title>Cách Làm Cà Phê Muối Béo Mặn Kem Sữa Thơm Mát Giải Nhiệt, Đơn Giản Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-ca-phe-sua-da-sai-gon</loc>
+    <loc>https://angigio.com/cach-nau-ca-phe-sua-da-sai-gon</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
@@ -1933,347 +1933,347 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-tra-dao-cam-sa</loc>
+    <loc>https://angigio.com/cach-nau-tra-dao-cam-sa</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/tra_dao_cam_sa.jpg</image:loc>
+      <image:loc>https://angigio.com/images/tra_dao_cam_sa.jpg</image:loc>
       <image:title>Cách Làm Trà Đào Cam Sả Thơm Mát Giải Nhiệt, Đơn Giản Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-tra-sen-vang-kem-cheese</loc>
+    <loc>https://angigio.com/cach-nau-tra-sen-vang-kem-cheese</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/tra_sen_vang.jpg</image:loc>
+      <image:loc>https://angigio.com/images/tra_sen_vang.jpg</image:loc>
       <image:title>Cách Làm Trà Sen Vàng Macchiato Thơm Mát Giải Nhiệt, Đơn Giản Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-tra-mang-cau-xiem</loc>
+    <loc>https://angigio.com/cach-nau-tra-mang-cau-xiem</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/tra_mang_cau_xiem.jpg</image:loc>
+      <image:loc>https://angigio.com/images/tra_mang_cau_xiem.jpg</image:loc>
       <image:title>Cách Làm Trà Mãng Cầu Xiêm Thơm Mát Giải Nhiệt, Đơn Giản Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-sinh-to-bo-dak-lak</loc>
+    <loc>https://angigio.com/cach-nau-sinh-to-bo-dak-lak</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/sinh_to_bo.jpg</image:loc>
+      <image:loc>https://angigio.com/images/sinh_to_bo.jpg</image:loc>
       <image:title>Cách Làm Sinh Tố Bơ Sáp Thơm Mát Giải Nhiệt, Đơn Giản Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-nuoc-mia-sau-rieng</loc>
+    <loc>https://angigio.com/cach-nau-nuoc-mia-sau-rieng</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/nuoc_mia_sau_rieng.jpg</image:loc>
+      <image:loc>https://angigio.com/images/nuoc_mia_sau_rieng.jpg</image:loc>
       <image:title>Cách Làm Nước Mía Sầu Riêng Thơm Mát Giải Nhiệt, Đơn Giản Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-nuoc-dua-xiem-tac</loc>
+    <loc>https://angigio.com/cach-nau-nuoc-dua-xiem-tac</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/nuoc_dua_tac.jpg</image:loc>
+      <image:loc>https://angigio.com/images/nuoc_dua_tac.jpg</image:loc>
       <image:title>Cách Làm Nước Dừa Xiêm Tắc Thơm Mát Giải Nhiệt, Đơn Giản Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-tra-o-long-sua-nuong</loc>
+    <loc>https://angigio.com/cach-nau-tra-o-long-sua-nuong</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/tra_o_long_sua_nuong.jpg</image:loc>
+      <image:loc>https://angigio.com/images/tra_o_long_sua_nuong.jpg</image:loc>
       <image:title>Cách Làm Trà Ô Long Sữa Nướng Da Giòn Thịt Mềm, Thơm Lừng Khói Than</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-rau-ma-dau-xanh-sua-dua</loc>
+    <loc>https://angigio.com/cach-nau-rau-ma-dau-xanh-sua-dua</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/rau_ma_dau_xanh.jpg</image:loc>
+      <image:loc>https://angigio.com/images/rau_ma_dau_xanh.jpg</image:loc>
       <image:title>Cách Làm Rau Má Đậu Xanh Sữa Dừa Thơm Mát Giải Nhiệt, Đơn Giản Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-nuoc-ep-dua-hau-bac-ha</loc>
+    <loc>https://angigio.com/cach-nau-nuoc-ep-dua-hau-bac-ha</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/nuoc_ep_dua_hau.jpg</image:loc>
+      <image:loc>https://angigio.com/images/nuoc_ep_dua_hau.jpg</image:loc>
       <image:title>Cách Làm Nước Ép Dưa Hấu Bạc Hà Thơm Mát Giải Nhiệt, Đơn Giản Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-tra-dau-tam-tuyet</loc>
+    <loc>https://angigio.com/cach-nau-tra-dau-tam-tuyet</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/tra_dau_tam_tuyet.jpg</image:loc>
+      <image:loc>https://angigio.com/images/tra_dau_tam_tuyet.jpg</image:loc>
       <image:title>Cách Làm Trà Dâu Tằm Tuyết Thơm Mát Giải Nhiệt, Đơn Giản Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-tra-chanh-gia-tay</loc>
+    <loc>https://angigio.com/cach-nau-tra-chanh-gia-tay</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/tra_chanh_gia_tay.jpg</image:loc>
+      <image:loc>https://angigio.com/images/tra_chanh_gia_tay.jpg</image:loc>
       <image:title>Cách Làm Trà Chanh Giã Tay Thơm Mát Giải Nhiệt, Đơn Giản Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-cacao-dam-tran-chau</loc>
+    <loc>https://angigio.com/cach-nau-cacao-dam-tran-chau</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/cacao_dam_tran_chau.jpg</image:loc>
+      <image:loc>https://angigio.com/images/cacao_dam_tran_chau.jpg</image:loc>
       <image:title>Cách Làm Cacao Dầm Trân Châu Thơm Mát Giải Nhiệt, Đơn Giản Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-matcha-latte-kem-sua</loc>
+    <loc>https://angigio.com/cach-nau-matcha-latte-kem-sua</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/matcha_latte_kem_sua.jpg</image:loc>
+      <image:loc>https://angigio.com/images/matcha_latte_kem_sua.jpg</image:loc>
       <image:title>Cách Làm Matcha Latte Kem Sữa Thơm Mát Giải Nhiệt, Đơn Giản Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-oc-huong-xao-bo-toi</loc>
+    <loc>https://angigio.com/cach-nau-oc-huong-xao-bo-toi</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/oc_huong_bo_toi.jpg</image:loc>
+      <image:loc>https://angigio.com/images/oc_huong_bo_toi.jpg</image:loc>
       <image:title>Cách Làm Ốc Hương Xào Bơ Tỏi Giòn Ngon, Xanh Mướt Chuẩn Bếp Trưởng</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-chan-ga-sa-tac-rut-xuong</loc>
+    <loc>https://angigio.com/cach-nau-chan-ga-sa-tac-rut-xuong</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/chan_ga_sa_tac.jpg?v=1</image:loc>
+      <image:loc>https://angigio.com/images/chan_ga_sa_tac.jpg?v=1</image:loc>
       <image:title>Cách Làm Chân Gà Sả Tắc Đậm Đà Cay Nồng, Bén Mồi Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-sun-ga-rang-muoi-ot</loc>
+    <loc>https://angigio.com/cach-nau-sun-ga-rang-muoi-ot</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/sun_ga_rang_muoi.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/sun_ga_rang_muoi.jpg?v=2</image:loc>
       <image:title>Cách Làm Sụn Gà Rang Muối Ớt Đậm Đà Cay Nồng, Bén Mồi Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-muc-mot-nang-nuong-sa-te</loc>
+    <loc>https://angigio.com/cach-nau-muc-mot-nang-nuong-sa-te</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/muc_mot_nang_nuong.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/muc_mot_nang_nuong.jpg?v=2</image:loc>
       <image:title>Cách Làm Mực Nướng Sa Tế Giòn Sần Sật, Thơm Lừng Khói Than Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bo-to-nuong-ngoi-bo-toi</loc>
+    <loc>https://angigio.com/cach-nau-bo-to-nuong-ngoi-bo-toi</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bo_to_nuong_ngoi.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bo_to_nuong_ngoi.jpg</image:loc>
       <image:title>Cách Làm Bò Tơ Nướng Ngói Da Giòn Thịt Mềm, Thơm Lừng Khói Than</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-nem-chua-ran-ha-noi</loc>
+    <loc>https://angigio.com/cach-nau-nem-chua-ran-ha-noi</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/cha_gio.jpg</image:loc>
+      <image:loc>https://angigio.com/images/cha_gio.jpg</image:loc>
       <image:title>Cách Làm Nem Chua Rán Phố Cổ Vàng Ruộm, Giòn Rụm Bất Bại Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-long-bo-xao-dua-chua</loc>
+    <loc>https://angigio.com/cach-nau-long-bo-xao-dua-chua</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/long_bo_xao_dua.jpg?v=3</image:loc>
+      <image:loc>https://angigio.com/images/long_bo_xao_dua.jpg?v=3</image:loc>
       <image:title>Cách Làm Lòng Bò Xào Dưa Chua Giòn Ngon, Xanh Mướt Chuẩn Bếp Trưởng</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-de-tai-chanh-tuong-ban</loc>
+    <loc>https://angigio.com/cach-nau-de-tai-chanh-tuong-ban</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/de_tai_chanh.jpg</image:loc>
+      <image:loc>https://angigio.com/images/de_tai_chanh.jpg</image:loc>
       <image:title>Cách Làm Dê Tái Chanh Đậm Đà Cay Nồng, Bén Mồi Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-lau-ech-mang-cay-sa-te</loc>
+    <loc>https://angigio.com/cach-nau-lau-ech-mang-cay-sa-te</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/lau_ech_mang_cay.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/lau_ech_mang_cay.jpg?v=2</image:loc>
       <image:title>Cách Làm Lẩu Ếch Măng Cay Đậm Đà Cay Nồng, Bén Mồi Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-tai-heo-sot-thai-chua-cay</loc>
+    <loc>https://angigio.com/cach-nau-tai-heo-sot-thai-chua-cay</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/tai_heo_sot_thai.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/tai_heo_sot_thai.jpg?v=2</image:loc>
       <image:title>Cách Làm Tai Heo Sốt Thái Đậm Đà Cay Nồng, Bén Mồi Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-bap-bo-ngam-mam-tieu-so</loc>
+    <loc>https://angigio.com/cach-nau-bap-bo-ngam-mam-tieu-so</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/bap_bo_ngam_mam.jpg?v=2</image:loc>
+      <image:loc>https://angigio.com/images/bap_bo_ngam_mam.jpg?v=2</image:loc>
       <image:title>Cách Làm Bắp Bò Ngâm Mắm Đậm Đà Cay Nồng, Bén Mồi Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-long-nuong</loc>
+    <loc>https://angigio.com/cach-nau-long-nuong</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/long_nuong.jpg</image:loc>
+      <image:loc>https://angigio.com/images/long_nuong.jpg</image:loc>
       <image:title>Cách Làm Lòng Nướng Sa Tế Cay Giòn Rụm Than Hoa Thơm Lừng Mồi Nhậu</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-buffet</loc>
+    <loc>https://angigio.com/cach-nau-buffet</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/buffet.jpg</image:loc>
+      <image:loc>https://angigio.com/images/buffet.jpg</image:loc>
       <image:title>Cách Làm Bàn Tiệc Buffet Lẩu Nướng Hải Sản Tại Nhà Thả Ga, Tiết Kiệm</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-be-thui</loc>
+    <loc>https://angigio.com/cach-nau-be-thui</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/be_thui.jpg</image:loc>
+      <image:loc>https://angigio.com/images/be_thui.jpg</image:loc>
       <image:title>Cách Làm Bê Thui Cầu Mống Da Giòn Thịt Mềm &amp; Bí Quyết Pha Mắm Nêm Xứ Quảng</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-nau-pha-lau-bo</loc>
+    <loc>https://angigio.com/cach-nau-pha-lau-bo</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/pha_lau_bo.jpg</image:loc>
+      <image:loc>https://angigio.com/images/pha_lau_bo.jpg</image:loc>
       <image:title>Cách Làm Phá Lấu Bò Sài Gòn Đậm Đà Cay Nồng, Bén Mồi Chuẩn Quán</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/lam-mon-ngon-bang-noi-chien-khong-dau-goi-y-mon-de-lam-tai-nha</loc>
+    <loc>https://angigio.com/lam-mon-ngon-bang-noi-chien-khong-dau-goi-y-mon-de-lam-tai-nha</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/mon-ngon-bang-noi-chien-khong-dau.jpg</image:loc>
+      <image:loc>https://angigio.com/images/mon-ngon-bang-noi-chien-khong-dau.jpg</image:loc>
       <image:title>Làm Món Ngon Bằng Nồi Chiên Không Dầu - Gợi Ý Món Dễ Làm Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/thit-heo-lam-mon-gi-ngon</loc>
+    <loc>https://angigio.com/thit-heo-lam-mon-gi-ngon</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/thit-heo-lam-mon-gi-ngon.jpg</image:loc>
+      <image:loc>https://angigio.com/images/thit-heo-lam-mon-gi-ngon.jpg</image:loc>
       <image:title>Thịt Heo Làm Món Gì Ngon? Gợi Ý Món Ngon Đổi Vị Dễ Làm Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/mon-ngon-tu-thit-ba-chi</loc>
+    <loc>https://angigio.com/mon-ngon-tu-thit-ba-chi</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/thit-ba-chi-lam-mon-gi-ngon.jpg</image:loc>
+      <image:loc>https://angigio.com/images/thit-ba-chi-lam-mon-gi-ngon.jpg</image:loc>
       <image:title>Thịt Ba Chỉ Làm Món Gì Ngon? 10 Món Ngon Từ Thịt Ba Chỉ Đưa Cơm</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/suon-heo-lam-mon-gi-ngon</loc>
+    <loc>https://angigio.com/suon-heo-lam-mon-gi-ngon</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/suon-heo-lam-mon-gi-ngon.jpg</image:loc>
+      <image:loc>https://angigio.com/images/suon-heo-lam-mon-gi-ngon.jpg</image:loc>
       <image:title>Sườn Heo Làm Món Gì Ngon? 12 Món Ngon Từ Sườn Heo Dễ Làm Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/thit-nac-heo-lam-mon-gi-ngon</loc>
+    <loc>https://angigio.com/thit-nac-heo-lam-mon-gi-ngon</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/thit-nac-heo-lam-mon-gi-ngon.jpg</image:loc>
+      <image:loc>https://angigio.com/images/thit-nac-heo-lam-mon-gi-ngon.jpg</image:loc>
       <image:title>Thịt Nạc Heo Làm Món Gì Ngon? 17+ Món Ngon Dễ Làm, Mềm Mọng Không Khô Cực Đưa Cơm</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/mon-ngon-tu-thit-bam</loc>
+    <loc>https://angigio.com/mon-ngon-tu-thit-bam</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/thit-bam-lam-mon-gi-ngon.jpg</image:loc>
+      <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
       <image:title>Thịt Băm Làm Món Gì Ngon? 9 Món Nhanh Gọn, Cực Hao Cơm Cho Cả Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cac-mon-thit-heo-kho</loc>
+    <loc>https://angigio.com/cac-mon-thit-heo-kho</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -2283,7 +2283,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/mon-ngon-tu-chan-gio-heo</loc>
+    <loc>https://angigio.com/mon-ngon-tu-chan-gio-heo</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -2293,7 +2293,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/mon-ngon-tu-tai-heo</loc>
+    <loc>https://angigio.com/mon-ngon-tu-tai-heo</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -2303,7 +2303,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/mon-ngon-tu-thit-cot-let</loc>
+    <loc>https://angigio.com/mon-ngon-tu-thit-cot-let</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -2313,7 +2313,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/thit-heo-quay-va-nuong-gion-bi</loc>
+    <loc>https://angigio.com/thit-heo-quay-va-nuong-gion-bi</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -2323,7 +2323,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cac-mon-canh-thit-heo-thanh-mat</loc>
+    <loc>https://angigio.com/cac-mon-canh-thit-heo-thanh-mat</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -2333,7 +2333,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/thit-heo-xao-gi-ngon</loc>
+    <loc>https://angigio.com/thit-heo-xao-gi-ngon</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -2343,7 +2343,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/cach-luoc-thit-heo-trang-gion-ngon</loc>
+    <loc>https://angigio.com/cach-luoc-thit-heo-trang-gion-ngon</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -2353,7 +2353,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/meo-so-che-va-bao-quan-thit-heo</loc>
+    <loc>https://angigio.com/meo-so-che-va-bao-quan-thit-heo</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -2363,17 +2363,17 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/thit-ga-nau-mon-gi-ngon</loc>
+    <loc>https://angigio.com/thit-ga-nau-mon-gi-ngon</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/ga_kho_gung_sa_ot.jpg</image:loc>
+      <image:loc>https://angigio.com/images/ga_kho_gung_sa_ot.jpg</image:loc>
       <image:title>Thịt Gà Nấu Món Gì Ngon? Gợi Ý Món Ngon Từ Gà Dễ Làm Cho Cả Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/hom-nay-an-gi-voi-thit-bo</loc>
+    <loc>https://angigio.com/hom-nay-an-gi-voi-thit-bo</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -2383,7 +2383,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/hom-nay-an-gi-voi-trung</loc>
+    <loc>https://angigio.com/hom-nay-an-gi-voi-trung</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -2393,7 +2393,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/hom-nay-an-gi-voi-100-nghin</loc>
+    <loc>https://angigio.com/hom-nay-an-gi-voi-100-nghin</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -2403,7 +2403,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/hom-nay-an-gi-cho-4-nguoi</loc>
+    <loc>https://angigio.com/hom-nay-an-gi-cho-4-nguoi</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -2413,17 +2413,17 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/an-gi-cho-do-ngan</loc>
+    <loc>https://angigio.com/an-gi-cho-do-ngan</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
     <image:image>
-      <image:loc>https://www.angigio.com/images/an-gi-cho-do-ngan.jpg</image:loc>
+      <image:loc>https://angigio.com/images/an-gi-cho-do-ngan.jpg</image:loc>
       <image:title>Ăn Gì Cho Đỡ Ngán? Gợi Ý Món Ngon Đổi Vị Dễ Ăn Cho Cả Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/hom-nay-an-gi-khi-ban-ron</loc>
+    <loc>https://angigio.com/hom-nay-an-gi-khi-ban-ron</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
@@ -2431,11 +2431,5 @@
       <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
       <image:title>Hôm Nay Ăn Gì Khi Bận? 10 Món Ngon Dễ Làm Nấu Nhanh Dưới 15 Phút</image:title>
     </image:image>
-  </url>
-  <url>
-    <loc>https://www.angigio.com/test-bai-viet-moi</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
   </url>
 </urlset>

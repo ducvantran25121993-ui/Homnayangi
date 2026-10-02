@@ -267,7 +267,7 @@ const SEO_ROUTES_CONFIG = {
 };
 
 function injectMeta(html, meta) {
-  const fullUrl = `https://www.angigio.com${meta.path === "/" ? "/" : meta.path}`;
+  const fullUrl = `https://angigio.com${meta.path === "/" ? "/" : meta.path}`;
   const isRecipeRoute =
     meta.path.startsWith("/cach-nau-") ||
     meta.path.startsWith("/cach-lam-") ||

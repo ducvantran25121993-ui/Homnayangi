@@ -13,9 +13,9 @@ function escapeXml(unsafe: string) {
 }
 
 function injectMeta(html: string, meta: RouteSeoMeta) {
-  const fullUrl = `https://www.angigio.com${meta.path === "/" ? "/" : meta.path}`;
+  const fullUrl = `https://angigio.com${meta.path === "/" ? "/" : meta.path}`;
   const canonicalUrl = meta.canonicalPath
-    ? `https://www.angigio.com${meta.canonicalPath === "/" ? "/" : meta.canonicalPath}`
+    ? `https://angigio.com${meta.canonicalPath === "/" ? "/" : meta.canonicalPath}`
     : fullUrl;
   let updatedHtml = html
     .replace(/<title>.*?<\/title>/i, `<title>${meta.title}</title>`)
@@ -49,13 +49,13 @@ function injectMeta(html: string, meta: RouteSeoMeta) {
           "@id": `${canonicalUrl}#article`,
           "isPartOf": {
             "@type": "WebSite",
-            "@id": "https://www.angigio.com/#website",
+            "@id": "https://angigio.com/#website",
             "name": "Hôm Nay Ăn Gì",
-            "url": "https://www.angigio.com/"
+            "url": "https://angigio.com/"
           },
           "headline": meta.title,
           "description": meta.description,
-          "image": [meta.image?.startsWith("http") ? meta.image : `https://www.angigio.com${meta.image}`],
+          "image": [meta.image?.startsWith("http") ? meta.image : `https://angigio.com${meta.image}`],
           "datePublished": publishedTime,
           "dateModified": modifiedTime,
           "author": {
@@ -66,10 +66,10 @@ function injectMeta(html: string, meta: RouteSeoMeta) {
           "publisher": {
             "@type": "Organization",
             "name": "Hôm Nay Ăn Gì",
-            "url": "https://www.angigio.com/",
+            "url": "https://angigio.com/",
             "logo": {
               "@type": "ImageObject",
-              "url": "https://www.angigio.com/logo.png"
+              "url": "https://angigio.com/logo.png"
             }
           },
           "mainEntityOfPage": {
@@ -85,13 +85,13 @@ function injectMeta(html: string, meta: RouteSeoMeta) {
               "@type": "ListItem",
               "position": 1,
               "name": "Trang chủ",
-              "item": "https://www.angigio.com/"
+              "item": "https://angigio.com/"
             },
             {
               "@type": "ListItem",
               "position": 2,
               "name": "Blog Ẩm Thực",
-              "item": "https://www.angigio.com/blog"
+              "item": "https://angigio.com/blog"
             },
             {
               "@type": "ListItem",
@@ -117,11 +117,11 @@ function generateSitemapXml(routes: Record<string, RouteSeoMeta>) {
   const urlEntries = Object.values(routes)
     .filter((meta: RouteSeoMeta) => !meta.isAlias)
     .map((meta: RouteSeoMeta) => {
-    const loc = `https://www.angigio.com${meta.path === '/' ? '/' : meta.path}`;
+    const loc = `https://angigio.com${meta.path === '/' ? '/' : meta.path}`;
     const lastmod = meta.lastmod || '2026-09-24';
     const changefreq = meta.changefreq || 'weekly';
     const priority = meta.priority !== undefined ? meta.priority.toFixed(2) : '0.80';
-    const imageLoc = meta.image?.startsWith('http') ? meta.image : `https://www.angigio.com${meta.image}`;
+    const imageLoc = meta.image?.startsWith('http') ? meta.image : `https://angigio.com${meta.image}`;
     const imageTitle = escapeXml(meta.imageAlt || meta.title);
 
     return `  <url>

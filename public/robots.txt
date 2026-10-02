@@ -3,4 +3,4 @@ Allow: /
 Disallow: /api/
 
 # Sitemaps
-Sitemap: https://www.angigio.com/sitemap.xml
+Sitemap: https://angigio.com/sitemap.xml
