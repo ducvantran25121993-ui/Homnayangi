@@ -5,7 +5,7 @@ import fs from "fs";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
 import { getAllSeoRoutes } from "./src/data/seoRoutes";
-import { BLOG_SLUG_ALIASES } from "./src/data/blogPosts";
+import { BLOG_SLUG_ALIASES, INITIAL_BLOG_POSTS } from "./src/data/blogPosts";
 
 dotenv.config();
 
@@ -510,6 +510,155 @@ Yêu cầu trả về đúng định dạng JSON:
   });
 });
 
+// Persistent storage for custom blog posts (WordPress Admin)
+const CUSTOM_POSTS_FILE = path.join(process.cwd(), "public", "custom_blog_posts.json");
+
+function loadCustomBlogPosts(): any[] {
+  try {
+    if (fs.existsSync(CUSTOM_POSTS_FILE)) {
+      const raw = fs.readFileSync(CUSTOM_POSTS_FILE, "utf-8");
+      return JSON.parse(raw);
+    }
+  } catch (err) {
+    console.error("Error loading custom blog posts:", err);
+  }
+  return [];
+}
+
+function saveCustomBlogPosts(posts: any[]) {
+  try {
+    const dir = path.dirname(CUSTOM_POSTS_FILE);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(CUSTOM_POSTS_FILE, JSON.stringify(posts, null, 2), "utf-8");
+  } catch (err) {
+    console.error("Error saving custom blog posts:", err);
+  }
+}
+
+function addUrlToSitemap(slug: string) {
+  try {
+    const pubFile = path.join(process.cwd(), "public", "sitemap.xml");
+    const distFile = path.join(process.cwd(), "dist", "sitemap.xml");
+    const targets = [pubFile, distFile].filter((f) => fs.existsSync(f));
+    const fullUrl = `https://www.angigio.com/${slug.replace(/^\//, '')}`;
+    const today = new Date().toISOString().split("T")[0];
+    const newXmlEntry = `  <url>\n    <loc>${fullUrl}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n</urlset>`;
+
+    for (const target of targets) {
+      let content = fs.readFileSync(target, "utf-8");
+      if (!content.includes(`<loc>${fullUrl}</loc>`)) {
+        content = content.replace("</urlset>", newXmlEntry);
+        fs.writeFileSync(target, content, "utf-8");
+      }
+    }
+  } catch (err) {
+    console.error("Error updating sitemap with new post:", err);
+  }
+}
+
+// API: Get all blog posts (initial + custom)
+app.get("/api/admin/posts", (_req, res) => {
+  const customPosts = loadCustomBlogPosts();
+  const postMap = new Map<string, any>();
+  INITIAL_BLOG_POSTS.forEach((p) => postMap.set(p.slug, p));
+  customPosts.forEach((p) => postMap.set(p.slug, p)); // custom updates/overrides
+  return res.json({
+    success: true,
+    posts: Array.from(postMap.values()),
+    customPosts: customPosts,
+  });
+});
+
+// API: Create or update a blog post
+app.post("/api/admin/posts", (req, res) => {
+  try {
+    const postData = req.body;
+    if (!postData || !postData.title || !postData.slug) {
+      return res.status(400).json({ success: false, message: "Tiêu đề và đường dẫn (slug) là bắt buộc" });
+    }
+
+    const customPosts = loadCustomBlogPosts();
+    const cleanSlug = postData.slug.toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+    const existingIdx = customPosts.findIndex((p) => p.slug === cleanSlug || p.id === postData.id);
+
+    const savedPost = {
+      ...postData,
+      id: postData.id || cleanSlug,
+      slug: cleanSlug,
+      publishDate: postData.publishDate || new Date().toLocaleDateString("vi-VN", { day: '2-digit', month: '2-digit', year: 'numeric' }),
+      updatedAt: new Date().toISOString(),
+    };
+
+    if (existingIdx >= 0) {
+      customPosts[existingIdx] = savedPost;
+    } else {
+      customPosts.unshift(savedPost);
+    }
+
+    saveCustomBlogPosts(customPosts);
+    addUrlToSitemap(cleanSlug);
+
+    return res.json({
+      success: true,
+      message: "Lưu bài viết thành công!",
+      post: savedPost,
+    });
+  } catch (error: any) {
+    console.error("Error saving blog post:", error);
+    return res.status(500).json({ success: false, message: error?.message || "Lỗi lưu bài viết" });
+  }
+});
+
+// API: Delete a custom blog post
+app.delete("/api/admin/posts/:slugOrId", (req, res) => {
+  const { slugOrId } = req.params;
+  const customPosts = loadCustomBlogPosts();
+  const filtered = customPosts.filter((p) => p.slug !== slugOrId && p.id !== slugOrId);
+  saveCustomBlogPosts(filtered);
+  return res.json({
+    success: true,
+    message: "Đã xóa bài viết thành công!",
+  });
+});
+
+// API: Batch import & restore posts (Save Data)
+app.post("/api/admin/posts/import", (req, res) => {
+  try {
+    const { posts, overwrite } = req.body;
+    if (!posts || !Array.isArray(posts)) {
+      return res.status(400).json({ success: false, message: "Dữ liệu bài viết không hợp lệ" });
+    }
+
+    let customPosts = loadCustomBlogPosts();
+    if (overwrite) {
+      customPosts = posts;
+    } else {
+      // Merge by slug or id
+      const existingMap = new Map<string, any>();
+      customPosts.forEach((p) => existingMap.set(p.slug || p.id, p));
+      posts.forEach((p) => {
+        if (p && (p.slug || p.id)) {
+          existingMap.set(p.slug || p.id, p);
+          if (p.slug) addUrlToSitemap(p.slug);
+        }
+      });
+      customPosts = Array.from(existingMap.values());
+    }
+
+    saveCustomBlogPosts(customPosts);
+
+    return res.json({
+      success: true,
+      message: `Đã lưu & đồng bộ thành công ${customPosts.length} bài viết!`,
+      totalPosts: customPosts.length,
+      customPosts,
+    });
+  } catch (error: any) {
+    console.error("Error importing blog posts:", error);
+    return res.status(500).json({ success: false, message: error?.message || "Lỗi khi nhập dữ liệu bài viết" });
+  }
+});
+
 async function startServer() {
   // 301 Permanent Redirects for SEO: clean flat URLs
   app.get([
@@ -642,11 +791,28 @@ async function startServer() {
 
   function injectSeoMeta(html: string, requestedPath: string): string {
     const cleanPath = requestedPath.replace(/\/$/, "") || "/";
+    const slug = cleanPath.replace(/^\//, "").replace(/^\/?blog\//, "");
+
+    // 1. Check custom posts first so any newly published or edited admin posts take immediate effect
+    const customPosts = loadCustomBlogPosts();
+    const customMatch = customPosts.find((p) => p.slug === slug || p.id === slug);
+    let meta = customMatch
+      ? {
+          path: `/${customMatch.slug}`,
+          title: `${customMatch.title} | Blog Ẩm Thực Hôm Nay Ăn Gì`,
+          description: customMatch.excerpt,
+          keywords: Array.isArray(customMatch.tags) ? customMatch.tags.join(', ') : (customMatch.tags || ''),
+          image: customMatch.coverImage || "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1200&auto=format&fit=crop&q=80",
+          imageAlt: customMatch.title,
+          isArticle: true,
+          canonicalPath: `/${customMatch.slug}`,
+        }
+      : SEO_ROUTES_CONFIG[cleanPath];
+
     const isRecipeRoute =
       cleanPath.startsWith("/cach-nau-") ||
       cleanPath.startsWith("/cach-lam-") ||
       cleanPath.startsWith("/cach-nau-mon-ngon/");
-    let meta = SEO_ROUTES_CONFIG[cleanPath];
 
     if (!meta && cleanPath.startsWith("/cach-nau-mon-ngon/")) {
       const slug = cleanPath.replace("/cach-nau-mon-ngon/", "");

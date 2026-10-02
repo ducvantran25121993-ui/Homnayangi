@@ -19,6 +19,7 @@ import {
   Edit3,
   Trash2,
   Home,
+  Database,
 } from 'lucide-react';
 import {
   BlogPost,
@@ -83,19 +84,38 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
   const [newContent, setNewContent] = useState('');
   const [previewMode, setPreviewMode] = useState(false);
 
-  // All posts combined (custom + initial, initial takes precedence by slug)
+  // All posts combined (custom + initial, custom posts take precedence so admin edits update the website)
   const allPosts = useMemo(() => {
     const postMap = new Map<string, BlogPost>();
     INITIAL_BLOG_POSTS.forEach((p) => {
       postMap.set(p.slug, p);
     });
     customPosts.forEach((p) => {
-      if (!postMap.has(p.slug)) {
-        postMap.set(p.slug, p);
-      }
+      postMap.set(p.slug, p);
     });
     return Array.from(postMap.values());
   }, [customPosts]);
+
+  // Load latest posts from server API on mount
+  useEffect(() => {
+    const fetchLatestPosts = async () => {
+      try {
+        const res = await fetch('/api/admin/posts');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.customPosts && Array.isArray(data.customPosts)) {
+            setCustomPosts(data.customPosts);
+            if (typeof window !== 'undefined') {
+              localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(data.customPosts));
+            }
+          }
+        }
+      } catch {
+        // Fallback to local
+      }
+    };
+    fetchLatestPosts();
+  }, []);
 
   // Sync browser back/forward and URL change
   useEffect(() => {
@@ -115,9 +135,23 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
     };
     window.addEventListener('popstate', handleUrlChange);
     window.addEventListener('locationchange', handleUrlChange);
+
+    const handleCustomPostsUpdated = () => {
+      try {
+        const saved = localStorage.getItem(LOCAL_STORAGE_CUSTOM_POSTS);
+        if (saved) {
+          setCustomPosts(JSON.parse(saved));
+        }
+      } catch {
+        // ignore
+      }
+    };
+    window.addEventListener('custom-posts-updated', handleCustomPostsUpdated);
+
     return () => {
       window.removeEventListener('popstate', handleUrlChange);
       window.removeEventListener('locationchange', handleUrlChange);
+      window.removeEventListener('custom-posts-updated', handleCustomPostsUpdated);
     };
   }, [allPosts]);
 
@@ -1112,12 +1146,27 @@ ${newContent}
               {customPosts.length > 0 && (
                 <button
                   onClick={handleClearAllCustomPosts}
-                  className="text-xs font-bold text-stone-500 hover:text-red-600 inline-flex items-center gap-1 cursor-pointer transition-colors"
+                  className="text-xs font-bold text-stone-500 hover:text-stone-700 inline-flex items-center gap-1 cursor-pointer transition-colors"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                   Xóa tất cả ({customPosts.length})
                 </button>
               )}
+
+              <button
+                onClick={() => {
+                  if (onNavigate) {
+                    onNavigate('admin');
+                  } else {
+                    window.location.href = '/admin';
+                  }
+                }}
+                className="text-xs font-bold text-stone-600 hover:text-stone-900 inline-flex items-center gap-1 cursor-pointer transition-colors px-2.5 py-1 rounded-lg bg-stone-100 hover:bg-stone-200"
+                title="Quản trị bài viết & Mục Lưu Data"
+              >
+                <Database className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Mục Lưu Data</span>
+              </button>
 
               <button
                 onClick={() => setIsCreateModalOpen(true)}

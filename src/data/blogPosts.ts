@@ -42,7 +42,9 @@ export const BLOG_SLUG_ALIASES: Record<string, string> = {
   "mon-ngon-voi-trung": "hom-nay-an-gi-voi-trung",
   "thuc-don-100k": "hom-nay-an-gi-voi-100-nghin",
   "thuc-don-4-nguoi": "hom-nay-an-gi-cho-4-nguoi",
-  "mon-an-do-ngan": "hom-nay-an-gi-cho-do-ngan",
+  "mon-an-do-ngan": "an-gi-cho-do-ngan",
+  "hom-nay-an-gi-cho-do-ngan": "an-gi-cho-do-ngan",
+  "an-gi-do-ngan": "an-gi-cho-do-ngan",
   "thit-ba-chi-lam-mon-gi-ngon": "mon-ngon-tu-thit-ba-chi",
   "thit-ba-chi-lam-mon-gi-ngon-10-mon-ngon-tu-thit-ba-chi": "mon-ngon-tu-thit-ba-chi",
   "thit-ba-roi-lam-mon-gi-ngon": "mon-ngon-tu-thit-ba-chi",
@@ -641,30 +643,33 @@ export const INITIAL_BLOG_POSTS: BlogPost[] = [
     "content": "Gia đình 4 thành viên (bố mẹ và hai con) là mô hình phổ biến nhất trong đời sống hiện đại. Sau một ngày dài học tập và làm việc căng thẳng bên ngoài, bữa cơm tối là khoảnh khắc thiêng liêng nhất để cả nhà ngồi quây quần, cùng gắp cho nhau miếng thức ăn ngon và kể nhau nghe những câu chuyện trong ngày. Để mâm cơm 4 người luôn hài hòa dinh dưỡng, không bị nhàm chán mà người nấu cũng không tốn quá nhiều thời gian, một thực đơn chuẩn \"1 món mặn - 1 món canh - 1 món rau xào\" là công thức hoàn hảo nhất!\n\n## 1. Mâm Cơm Sum Vầy: Thịt Ba Chỉ Rim Tôm & Canh Chua Cá Lóc\n\nMột bữa cơm đậm chất Nam Bộ với sự kết hợp kinh điển giữa mặn, ngọt và chua thanh sẽ khiến cả nhà đều tấm tắc khen ngợi:\n- **Món mặn:** Thịt ba chỉ rim tôm đồng óng ả màu cánh gián. Miếng thịt ba rọi béo ngậy quyện cùng vỏ tôm đồng giòn rụm mặn mòi, ăn đến đâu đậm đà đến đấy. Bạn có thể tham khảo thêm nhiều món thịt ngon tại [chuyên đề món ngon từ thịt ba chỉ](/mon-ngon-tu-thit-ba-chi).\n- **Món canh:** Tô canh chua cá lóc nấu cùng dọc mùng, đậu bắp, giá đỗ và dứa thơm ngát. Vị chua thanh của me chín hòa quyện cùng vị ngọt bùi của cá lóc tươi sẽ xua tan mọi mệt nhọc. Hãy xem chi tiết tại [công thức canh chua cá lóc miền Tây](/canh-chua-ca-loc) để nắm trọn bí quyết.\n- **Món xào:** Đậu cove xào tỏi giòn sần sật xanh mướt.\n\n![Mâm cơm gia đình với tô canh chua cá lóc thanh mát](/images/canh_chua_ca_loc.jpg)\n\n## 2. Mâm Cơm Thanh Nhã Đất Bắc: Sườn Xào Chua Ngọt & Canh Cua\n\nDành cho những ngày tiết trời oi ả cần những món ăn kích thích dịch vị:\n- **Món mặn:** Sườn non xào chua ngọt óng ả nước sốt cà chua tỏi ớt, các bạn nhỏ trong nhà sẽ mê tít và ăn hết veo bát cơm.\n- **Món canh:** Canh cua đồng rau đay mồng tơi mướp hương thơm lừng, ăn kèm vài quả cà pháo giòn tan.\n- **Món rau:** Rau bí xào tỏi thơm nức mũi.\n\n## 3. Nguyên Tắc Cân Bằng Dinh Dưỡng Cho Gia Đình 4 Người\n\n- **Đầy đủ 4 nhóm chất:** Chất đạm (thịt, cá, trứng), chất béo tốt, chất xơ & vitamin (rau củ quả) và tinh bột từ cơm trắng.\n- **Đổi món liên tục:** Xen kẽ giữa thịt heo, thịt gà, cá sông, hải sản và trứng trong tuần để khẩu vị luôn tươi mới.\n\nBữa cơm gia đình ấm cúng chính là sợi dây vô hình thắt chặt tình cảm gia đình. Chúc bạn luôn tìm thấy niềm vui và cảm hứng khi vào bếp nấu ăn cho những người thân yêu!\n## 4. Gợi Ý Thực Đơn Cuối Tuần Sum Vầy Thịnh Soạn\n\nVào dịp cuối tuần có nhiều thời gian rảnh rỗi hơn, bạn có thể đầu tư một chút để đãi cả nhà món lẩu riêu cua bắp bò hoặc tiệc nướng BBQ ấm cúng. Nồi lẩu riêu cua đồng thơm phức mùi giấm bỗng chua dịu, riêu cua đóng tảng béo ngậy nhúng cùng từng dải bắp bò hoa giòn sần sật, đậu hũ chiên phồng và mẹt rau sống xanh mướt hoa chuối.\n\nCả nhà cùng quây quần bên nồi lẩu nghi ngút khói, vừa ăn vừa chuyện trò rôm rả, tiếng cười nói giòn tan rộn rã khắp gian phòng khách. Đó chính là những khoảnh khắc hạnh phúc giản dị mà thiêng liêng nhất, tiếp thêm nguồn năng lượng dồi dào cho các thành viên trước khi bước vào tuần làm việc và học tập mới.\n\n## 5. Bữa Cơm Tối - Nơi Gắn Kết Tình Thân Trọn Vẹn\n\nDù cuộc sống ngoài kia có bộn bề và áp lực đến đâu, chỉ cần bước chân về nhà, ngồi quây quần bên mâm cơm nóng hổi cùng những người thân yêu thì mọi mệt mỏi đều tan biến hết. Mâm cơm 4 người không cần cầu kỳ sơn hào hải vị, chỉ cần một món mặn đậm đà, một bát canh thanh mát và đĩa rau xanh giòn ngọt được nấu bằng tất cả tình yêu thương là đã đủ đầy hạnh phúc trọn vẹn rồi. Chúc tổ ấm của bạn luôn tràn ngập niềm vui và tiếng cười rộn rã bên mâm cơm mỗi ngày!\n"
   },
   {
-    "id": "hom-nay-an-gi-cho-do-ngan",
-    "slug": "hom-nay-an-gi-cho-do-ngan",
-    "title": "Hôm Nay Ăn Gì Cho Đỡ Ngán? 8 Món Thanh Mát, Giải Ngấy Đưa Miệng",
-    "excerpt": "Hôm nay ăn gì cho đỡ ngán sau những ngày tiệc tùng dầu mỡ? Điểm danh bún đậu mắm tôm, gỏi cuốn tôm thịt, canh chua cá và các món nộm thanh mát.",
-    "coverImage": "https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&auto=format&fit=crop&q=80",
+    "id": "an-gi-cho-do-ngan",
+    "slug": "an-gi-cho-do-ngan",
+    "title": "Ăn Gì Cho Đỡ Ngán? Gợi Ý Món Ngon Đổi Vị Dễ Ăn Cho Cả Nhà",
+    "excerpt": "Ăn gì cho đỡ ngán khi đã ăn thịt cá nhiều ngày? Gợi ý các món đổi vị thanh nhẹ, dễ ăn cho cả nhà: từ cá hấp gừng, canh chua cá, cá nướng giấy bạc, món cuốn đến bún cá.",
+    "coverImage": "/images/an-gi-cho-do-ngan.jpg",
     "category": "Gợi Ý Thực Đơn",
     "tags": [
+      "Ăn gì cho đỡ ngán",
       "Món đỡ ngán",
-      "Giải ngấy",
-      "Món thanh mát",
-      "Gỏi cuốn"
+      "Món ngon đổi vị",
+      "Món ngon dễ làm",
+      "Bữa cơm gia đình"
     ],
     "author": {
       "name": "Bếp Trưởng Hôm Nay Ăn Gì",
       "role": "Chuyên gia Ẩm thực & Dinh dưỡng",
       "avatar": "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=120&auto=format&fit=crop&q=80"
     },
-    "publishDate": "28/09/2026",
-    "readTime": "4 phút đọc",
-    "featured": false,
+    "publishDate": "02/10/2026",
+    "readTime": "8 phút đọc",
+    "featured": true,
     "relatedDishIds": [
-      "bun-dau-mam-tom"
+      "canh-chua-ca-loc",
+      "bun-dau-mam-tom",
+      "bun-thit-nuong-cha-gio"
     ],
-    "content": "Sau những chuỗi ngày liên hoan, tiệc tùng liên miên hay đơn giản là sau những bữa cơm ngập tràn thịt cá dầu mỡ, vị giác của chúng ta bỗng trở nên mệt mỏi và chán chường. Mở mâm cơm ra chỉ thấy ngán ngẩm, cảm giác thèm một thứ gì đó chua chua, giòn giòn, thanh mát để \"thanh lọc\" cơ thể trỗi dậy mãnh liệt. Đừng lo lắng, hôm nay hãy cùng mình đổi vị bằng những món ăn giải ngấy đỉnh cao, vừa nhẹ bụng vừa kích thích vị giác cực kỳ sảng khoái nhé!\n\n## 1. Mẹt Bún Đậu Mắm Tôm Chả Cốm Giòn Rụm\n\nKhông có món ăn nào \"chữa cháy\" cảm giác ngán cơm hiệu quả bằng một mẹt bún đậu mắm tôm thanh đạm. Từng miếng đậu hũ mơ rán vàng giòn rụm bên ngoài nhưng bên trong mềm béo bùi ngậy như kem, kết hợp cùng bún lá trắng tinh, dưa leo mát rượi và chùm rau kinh giới thơm nồng.\n\n![Mẹt bún đậu mắm tôm chả cốm thơm lừng](/images/bun_dau_mam_tom.jpg)\n\nLinh hồn của món ăn nằm ở bát mắm tôm thơm ngon đánh bông xốp cùng nước cốt chanh, chút rượu trắng và ớt hiểm cay xé. Chấm ngập miếng đậu giòn vào bát mắm tôm sủi bọt, bao nhiêu cảm giác ngấy mỡ trước đây lập tức tan biến. Mời bạn xem thêm [cách làm bún đậu mắm tôm chuẩn vị Hà Nội](/bun-dau-mam-tom) để tự tin làm tại nhà.\n\n## 2. Gỏi Cuốn Tôm Thịt Chấm Tương Bơ Đậu Phộng\n\nNhững chiếc gỏi cuốn trong veo nhìn rõ từng con tôm đỏ au và dải thịt luộc hồng hào cuốn cùng xà lách, rau thơm và hẹ xanh là kiệt tác thanh mát của ẩm thực phương Nam. \n\nChấm ngập cuốn bánh vào bát tương đen nấu cùng bơ đậu phộng béo bùi, rắc thêm chút hành phi giòn tan và ớt xay cay nồng. Cắn vào nghe tiếng rau củ giòn rụm sảng khoái, vừa đủ chất dinh dưỡng mà bụng dạ lại nhẹ nhõm vô cùng.\n\n## 3. Tô Canh Chua Thanh Mát Đánh Thức Vị Giác\n\nMột bát canh chua nấu khế, nấu sấu hoặc nấu dứa với vị chua thanh khiết tự nhiên luôn là cứu tinh số một cho những ngày nhạt miệng. Húp một ngụm nước canh chua dịu mát lành, cổ họng như được tưới mát, vị giác lập tức được đánh thức trở lại. Bạn có thể tham khảo thêm nhiều món canh bổ dưỡng tại [các món canh thanh mát giải nhiệt](/cac-mon-canh-thit-heo-thanh-mat).\n\nHãy lắng nghe cơ thể và dành tặng cho bản thân cùng gia đình những bữa ăn thanh mát, dịu dàng để nạp lại nguồn năng lượng tươi mới mỗi ngày nhé!\n## 4. Nộm Gà Xé Phay Hành Tây Rau Răm Chua Ngọt\n\nMột món ăn giải ngấy kinh điển của người miền Trung chính là đĩa nộm gà xé phay giòn sần sật. Thịt ức gà hoặc đùi gà luộc chín tới, xé sợi dài vừa ăn trộn đều cùng hành tây ngâm đá giòn ngọt không hăng, rau răm thái nhỏ và đậu phộng rang giã dập.\n\nNước mắm trộn nộm pha đậm vị chua của chanh tươi, ngọt của đường và cay nồng của ớt sừng thấm đều vào từng thớ thịt gà săn chắc. Vị chua ngọt thanh mát lan tỏa khắp khoang miệng, cắn miếng thịt gà dai ngọt sần sật át sạch cảm giác ngấy mỡ của những bữa tiệc trước đó, đưa đẩy vị giác khiến ai nấy đều phải gắp không ngừng tay.\n\n## 5. Cân Bằng Dinh Dưỡng Để Cơ Thể Luôn Khỏe Mạnh\n\nSau những bữa ăn thanh mát giúp giải ngấy và nhẹ bụng, vị giác của bạn sẽ được tái tạo hoàn toàn, mang lại cảm giác thèm ăn và sự sảng khoái cho tinh thần. Hãy duy trì thói quen lắng nghe cơ thể và đan xen những bữa ăn nhiều rau xanh, nộm gỏi thanh đạm trong thực đơn hàng tuần để cả nhà luôn khỏe mạnh, tràn đầy năng lượng tươi mới mỗi ngày nhé!\n\nBạn có thể kết hợp thêm các loại nước ép trái cây tươi mát như nước ép cam cà rốt, nước ép táo dứa hay một ly trà tim sen thanh nhiệt sau bữa ăn. Sự kết hợp khéo léo giữa các món ăn nhẹ bụng và thức uống thảo mộc sẽ giúp cơ thể bạn luôn nhẹ nhõm, tinh thần sảng khoái và tràn đầy sức sống mỗi ngày!\n"
+    "content": "Nếu bạn đang tìm **ăn gì cho đỡ ngán**, có thể ưu tiên những món có vị chua thanh, nhiều rau, món nước, món hấp hoặc các món cuốn. Cá cũng là lựa chọn đáng thử nếu đã ăn thịt heo, thịt gà nhiều ngày liên tục.\n\nDưới đây là những gợi ý món ngon giúp đổi vị, dễ làm và phù hợp cho bữa ăn gia đình.\n\n---\n\n## Ăn gì cho đỡ ngán khi đã ăn thịt nhiều ngày?\n\nKhi cảm thấy ngán thịt, không nhất thiết phải bỏ hoàn toàn các món mặn. Bạn có thể chuyển sang những món có cách chế biến nhẹ hơn hoặc đổi sang cá, rau củ và các món nước.\n\nMột số lựa chọn dễ áp dụng:\n* Cá hấp gừng\n* Canh chua cá\n* Cá nướng giấy bạc\n* Đậu hũ sốt cà chua\n* Trứng hấp\n* Rau củ xào nấm\n* Canh rau nấu thịt băm\n* Gỏi rau củ\n* Bún thịt nướng kèm nhiều rau\n* Bánh tráng cuốn cá và rau sống\n\nĐiểm quan trọng là đừng chỉ thay đổi món mà hãy thay đổi cả cách ăn. Ví dụ, nếu đã ăn cơm với món kho nhiều ngày, hôm nay có thể chuyển sang bún, mì, cháo hoặc món cuốn.\n\n---\n\n## 1. Cá hấp gừng – lựa chọn nhẹ nhàng khi ngán thịt\n\nNếu đang tìm một món cá dễ ăn, cá hấp gừng là lựa chọn khá đơn giản.\n\nCá có thể dùng cá diêu hồng, cá lóc, cá chim hoặc loại cá gia đình yêu thích. Sau khi làm sạch, cá được hấp cùng gừng, hành lá và một chút tiêu.\n\nCá hấp giữ được vị ngọt tự nhiên, không cần sử dụng nhiều dầu mỡ.\n\nCó thể ăn cá cùng cơm nóng, rau luộc và nước mắm gừng.\n\nPhù hợp khi: đã ăn nhiều món chiên, xào hoặc thịt kho.\n\n---\n\n## 2. Canh chua cá – món ăn chống ngán quen thuộc\n\nNhắc đến những món ăn cho đỡ ngán, canh chua gần như là lựa chọn rất dễ nghĩ đến.\n\nCá kết hợp với cà chua, thơm, đậu bắp, giá và các loại rau thơm tạo thành một món canh có vị chua thanh, ngọt và thơm.\n\nCó thể dùng:\n* Cá lóc\n* Cá diêu hồng\n* Cá hú\n* Cá basa\n* Cá bông lau\n\nMột tô canh chua cá nóng ăn cùng cơm trắng và rau sống là đủ cho một bữa cơm đơn giản nhưng không nhàm chán.\n\nĐặc biệt, vị chua nhẹ giúp cân bằng những món ăn đậm vị trong những ngày trước đó.\n\n---\n\n## 3. Cá nướng giấy bạc – đổi cách ăn để bớt ngán\n\nNếu cá hấp hoặc cá kho đã quá quen thuộc, hãy thử cá nướng giấy bạc.\n\nCá có thể nướng cùng gừng, sả, hành, nấm, cà chua hoặc ớt chuông.\n\nCho tất cả vào giấy bạc rồi nướng đến khi cá chín.\n\nCách chế biến này giúp cá giữ được độ mềm và vị ngọt tự nhiên.\n\nBạn có thể ăn cá nướng cùng rau sống, bánh tráng hoặc cơm nóng.\n\nĐây cũng là một cách đổi bữa khá hiệu quả khi gia đình đã ăn các món cá kho nhiều ngày.\n\n---\n\n## 4. Cá cuốn bánh tráng – dành cho những ngày ngán cơm\n\nCó những ngày không chỉ ngán thịt mà còn ngán cả cơm. Lúc này, một món cuốn sẽ tạo cảm giác hoàn toàn khác.\n\nCó thể dùng cá hấp hoặc cá nướng rồi chuẩn bị thêm:\n* Bánh tráng\n* Bún\n* Xà lách\n* Dưa leo\n* Cà rốt\n* Rau thơm\n* Xoài xanh\n\nMỗi người tự cuốn một phần theo sở thích rồi chấm nước mắm chua ngọt.\n\nCách ăn này có nhiều rau, nhiều độ giòn và nhiều hương vị nên khá dễ ăn.\n\n---\n\n## 5. Cá sốt cà chua – vị chua ngọt dễ ăn\n\nNếu trong bếp có cá và vài quả cà chua, bạn có thể làm ngay món cá sốt cà chua.\n\nCá chiên sơ cho vàng rồi để riêng.\n\nCà chua xào với hành tỏi cho mềm, thêm một chút nước mắm, đường và tiêu.\n\nCho cá vào sốt vài phút để phần nước sốt thấm vào cá.\n\nVị chua nhẹ của cà chua giúp món ăn bớt cảm giác khô và đậm vị.\n\nMón này ăn với cơm nóng, dưa leo hoặc rau luộc đều hợp.\n\n---\n\n## 6. Đậu hũ sốt cà chua – món thanh nhẹ, dễ làm\n\nKhông phải lúc nào ăn gì cho đỡ ngán cũng phải nghĩ đến thịt hoặc cá.\n\nĐậu hũ là nguyên liệu đơn giản nhưng có thể biến thành món ăn rất dễ chịu cho những ngày muốn ăn nhẹ.\n\nĐậu hũ chiên sơ hoặc áp chảo, sau đó cho vào phần sốt cà chua đã nêm vừa ăn.\n\nCó thể thêm hành lá và một chút tiêu.\n\nMón này phù hợp với những bữa cơm muốn giảm bớt cảm giác nhiều dầu mỡ nhưng vẫn cần một món mặn ăn cùng cơm.\n\n---\n\n## 7. Trứng hấp – mềm, nhẹ và không mất nhiều thời gian\n\nKhi không muốn nấu ăn cầu kỳ, trứng hấp là một lựa chọn đáng thử.\n\nTrứng đánh đều cùng nước hoặc nước dùng, nêm một chút gia vị rồi hấp chín.\n\nCó thể thêm:\n* Thịt băm\n* Nấm\n* Tôm\n* Hành lá\n* Cà rốt\n\nNếu muốn món nhẹ hơn, chỉ cần trứng, hành lá và một ít tiêu.\n\nTrứng hấp mềm, dễ ăn và đặc biệt phù hợp với những ngày cảm giác ăn gì cũng không thấy ngon miệng.\n\n---\n\n## 8. Rau củ xào nấm – đổi vị sau những bữa nhiều thịt\n\nNếu vài ngày liên tục đều có thịt trong bữa cơm, hãy dành một bữa cho rau củ xào nấm.\n\nCó thể kết hợp:\n* Nấm đùi gà\n* Nấm hương\n* Cà rốt\n* Bông cải\n* Đậu que\n* Bắp non\n* Ớt chuông\n\nXào nhanh trên lửa lớn để rau vẫn giữ được độ giòn.\n\nKhông cần nêm quá nhiều gia vị.\n\nMột đĩa rau củ nhiều màu sắc vừa giúp mâm cơm trông hấp dẫn hơn vừa tạo cảm giác khác hẳn những món kho, chiên quen thuộc.\n\n---\n\n## 9. Canh rau nấu thịt băm – đơn giản mà dễ ăn\n\nNếu vẫn muốn có thịt nhưng không muốn ăn món thịt đậm vị, có thể chuyển sang canh rau nấu thịt băm.\n\nMột số loại rau phù hợp:\n* Rau ngót\n* Mồng tơi\n* Cải xanh\n* Bí xanh\n* Bầu\n* Cải thảo\n\nThịt băm chỉ cần xào hoặc nấu chín rồi cho rau vào.\n\nMón canh nóng, có nước và rau thường dễ ăn hơn các món thịt chiên hoặc kho.\n\nĐây cũng là cách tận dụng một lượng nhỏ thịt thay vì phải chuẩn bị một món thịt lớn cho cả gia đình.\n\n---\n\n## 10. Gỏi xoài hoặc gỏi rau củ – chua giòn, rất hợp khi ngán\n\nNhững món có vị chua, giòn thường giúp thay đổi khẩu vị khá nhanh.\n\nBạn có thể làm:\n* Gỏi xoài\n* Gỏi dưa leo\n* Gỏi bắp cải\n* Gỏi cà rốt\n* Gỏi đu đủ\n* Gỏi rau củ\n\nCó thể thêm tôm, thịt gà xé hoặc thịt heo luộc nếu muốn món ăn đầy đặn hơn.\n\nVị chua ngọt kết hợp cùng rau củ giòn giúp bữa ăn bớt cảm giác nặng nề.\n\n---\n\n## 11. Bún cá – đổi từ cơm sang món nước\n\nNếu đã ăn cơm nhiều ngày và muốn đổi hoàn toàn khẩu vị, hãy thử bún cá.\n\nCá có thể chiên hoặc hấp tùy cách làm.\n\nNước dùng có thể nấu theo kiểu thanh nhẹ với cà chua, dứa và rau.\n\nThêm bún, rau sống và một chút ớt là có một bữa ăn hoàn chỉnh.\n\nĐây là một trong những lựa chọn phù hợp khi câu hỏi không chỉ là “ăn gì cho đỡ ngán?” mà còn là “hôm nay không muốn ăn cơm thì ăn gì?”\n\n---\n\n## 12. Bún thịt nướng nhiều rau – vẫn ăn thịt nhưng không bị ngấy\n\nNếu chưa muốn bỏ thịt hoàn toàn, hãy thay đổi cách ăn.\n\nThay vì một đĩa cơm với thịt kho hoặc thịt chiên, có thể chuyển sang bún thịt nướng.\n\nMột phần bún có thể kết hợp cùng:\n* Rau xà lách\n* Dưa leo\n* Đồ chua\n* Rau thơm\n* Đậu phộng\n* Thịt nướng\n\nNhiều rau và nước mắm pha chua ngọt giúp món ăn có cảm giác nhẹ hơn so với một bữa cơm nhiều món chiên hoặc kho.\n\n---\n\n## 13. Cháo gà – lựa chọn cho ngày muốn ăn nhẹ\n\nCó những hôm cơ thể chỉ muốn một món nóng, mềm và dễ ăn.\n\nLúc này có thể nấu cháo gà.\n\nGà luộc xé nhỏ, nấu cùng cháo trắng và thêm hành lá, tiêu.\n\nCó thể ăn cùng gừng thái sợi và một chút nước mắm.\n\nNếu muốn đổi vị, có thể thêm nấm hoặc rau củ.\n\nCháo cũng là lựa chọn phù hợp cho bữa tối khi không muốn ăn quá nhiều.\n\n---\n\n## 14. Miến gà – nhẹ bụng hơn một bữa cơm thông thường\n\nMột tô miến gà nóng với nước dùng trong, thịt gà xé, nấm và rau thơm có thể giúp thay đổi khẩu vị khá rõ.\n\nThay vì ăn gà theo kiểu chiên, kho hoặc xào, bạn chuyển sang món nước.\n\nChỉ cần thay đổi cách chế biến, cùng một nguyên liệu nhưng cảm giác ăn đã khác rất nhiều.\n\n---\n\n## 15. Bánh tráng cuốn thịt luộc – nhiều rau, dễ đổi vị\n\nNếu vẫn muốn ăn thịt nhưng đã ngán những món nhiều dầu mỡ, thịt luộc cuốn bánh tráng là lựa chọn đáng thử.\n\nChuẩn bị thịt luộc thái mỏng cùng:\n* Bánh tráng\n* Bún\n* Dưa leo\n* Rau thơm\n* Xà lách\n* Khế\n* Chuối chát\n* Xoài xanh\n\nChấm cùng nước mắm nêm hoặc nước mắm chua ngọt.\n\nMón cuốn cho phép thay đổi nguyên liệu trong từng cuốn nên bữa ăn không bị đơn điệu.\n\n---\n\n## Ăn gì cho đỡ ngán theo từng trường hợp?\n\nKhông phải ai ngán cũng giống nhau. Xác định mình đang ngán món gì sẽ dễ chọn món hơn.\n\n### Ngán thịt heo thì ăn gì?\nCó thể chuyển sang:\n* Cá hấp\n* Cá nướng\n* Canh chua cá\n* Gà hấp\n* Đậu hũ sốt cà\n* Trứng hấp\n* Rau củ xào nấm\n\nNếu đã ăn thịt heo nhiều ngày, nên thay đổi sang cá hoặc món rau thay vì tiếp tục đổi từ thịt heo sang một món thịt heo khác.\n\n### Ngán thịt gà thì ăn gì?\nCó thể thử:\n* Cá kho\n* Cá hấp\n* Cá nướng\n* Tôm rim\n* Đậu hũ\n* Trứng\n* Canh rau\n* Món cuốn\n\n### Ngán đồ chiên thì ăn gì?\nƯu tiên:\n* Món hấp\n* Món luộc\n* Món canh\n* Món kho ít dầu\n* Gỏi rau củ\n* Món cuốn\n* Cá nướng giấy bạc\n\n### Ngán đồ mặn thì ăn gì?\nHãy chuyển sang các món có vị thanh hơn như:\n* Canh rau\n* Canh chua\n* Cá hấp\n* Trứng hấp\n* Đậu hũ\n* Rau củ luộc\n* Cháo\n\n### Ngán cơm thì ăn gì?\nCó thể thay cơm bằng:\n* Bún\n* Miến\n* Phở\n* Cháo\n* Mì\n* Bánh tráng cuốn\n* Món nước\n\nChỉ cần thay đổi tinh bột và cách ăn, bữa ăn cũng đã có cảm giác mới hơn.\n\n---\n\n## Ăn gì cho đỡ ngán vào buổi tối?\n\nBuổi tối thường không cần một mâm cơm quá nhiều món.\n\nNếu muốn ăn nhẹ và dễ ăn, có thể chọn:\n\n### Nhóm món nước:\n* Bún cá\n* Miến gà\n* Cháo gà\n* Canh chua cá\n\n### Nhóm món cuốn:\n* Cá hấp cuốn bánh tráng\n* Thịt luộc cuốn rau\n* Gỏi cuốn\n\n### Nhóm món nhẹ:\n* Trứng hấp\n* Đậu hũ sốt cà\n* Rau củ xào nấm\n\nMột bữa tối đơn giản nhưng đổi cách ăn sẽ dễ chịu hơn việc cố nấu thật nhiều món.\n\n> **Nếu khó chọn món quá thì hãy thử bốc một lá bài tarot để thử vận may ăn uống của mình đi nào!**"
   },
   {
     "id": "hom-nay-an-gi-khi-ban-ron",
@@ -694,22 +699,42 @@ export const INITIAL_BLOG_POSTS: BlogPost[] = [
   }
 ];
 
+export const LOCAL_STORAGE_CUSTOM_POSTS = 'angigio_custom_blog_posts';
+
+export function getCustomBlogPosts(): BlogPost[] {
+  if (typeof window === 'undefined') return [];
+  try {
+    const raw = localStorage.getItem(LOCAL_STORAGE_CUSTOM_POSTS);
+    if (!raw) return [];
+    return JSON.parse(raw);
+  } catch {
+    return [];
+  }
+}
+
 export function getAllBlogPosts(): BlogPost[] {
-  return INITIAL_BLOG_POSTS;
+  const custom = getCustomBlogPosts();
+  if (!custom || custom.length === 0) return INITIAL_BLOG_POSTS;
+  const map = new Map<string, BlogPost>();
+  INITIAL_BLOG_POSTS.forEach((p) => map.set(p.slug, p));
+  custom.forEach((p) => map.set(p.slug, p));
+  return Array.from(map.values());
 }
 
 export function getBlogPostBySlug(slug: string): BlogPost | undefined {
   if (!slug) return undefined;
   const cleanSlug = slug.replace(/^\/?blog\//, "").replace(/^\//, "").replace(/\/$/, "");
   const canonicalSlug = BLOG_SLUG_ALIASES[cleanSlug] || cleanSlug;
-  return INITIAL_BLOG_POSTS.find((p) => p.slug === canonicalSlug || p.id === canonicalSlug || p.slug === cleanSlug);
+  const all = getAllBlogPosts();
+  return all.find((p) => p.slug === canonicalSlug || p.id === canonicalSlug || p.slug === cleanSlug);
 }
 
 export function isBlogPostSlug(slug: string): boolean {
   if (!slug) return false;
   const clean = slug.replace(/^\/?blog\//, "").replace(/^\//, "").replace(/\/$/, "");
   const canonical = BLOG_SLUG_ALIASES[clean] || clean;
-  return INITIAL_BLOG_POSTS.some((p) => p.slug === canonical || p.id === canonical || p.slug === clean);
+  const all = getAllBlogPosts();
+  return all.some((p) => p.slug === canonical || p.id === canonical || p.slug === clean);
 }
 
 export function getBlogPostUrl(post: BlogPost): string {
@@ -717,5 +742,6 @@ export function getBlogPostUrl(post: BlogPost): string {
 }
 
 export function getFeaturedBlogPosts(): BlogPost[] {
-  return INITIAL_BLOG_POSTS.filter((p) => p.featured);
+  const all = getAllBlogPosts();
+  return all.filter((p) => p.featured);
 }

@@ -4,7 +4,7 @@ import { getRecipePath, getRecipeArticleTitle, formatRecipeSeoTitle, findDishByR
 import { INITIAL_DISHES } from '../data/dishes';
 import { isBlogPostSlug } from '../data/blogPosts';
 
-export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'snacks' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms' | 'blog' | 'restaurants';
+export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'snacks' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms' | 'blog' | 'restaurants' | 'admin';
 
 export type DiscoverSubSection = 'region' | 'daily' | 'recipe';
 
@@ -185,6 +185,14 @@ export const TAB_CONFIG: Record<TabType, TabMeta> = {
     ogImage: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&auto=format&fit=crop&q=80',
     ogImageAlt: 'Top Quán Ngon Gần Bạn - Địa Chỉ Ẩm Thực Chuẩn Vị 3 Miền',
   },
+  admin: {
+    path: '/admin',
+    title: 'Trang Quản Trị Bài Viết & Soạn Thảo WordPress | Hôm Nay Ăn Gì',
+    description: 'Bảng điều khiển quản trị bài viết ẩm thực, soạn thảo trực quan phong cách WordPress & Word.',
+    label: 'Quản Trị',
+    shortLabel: 'Admin',
+    keywords: 'quản trị bài viết, admin ẩm thực, soạn thảo bài viết, hôm nay ăn gì',
+  },
 };
 
 /**
@@ -239,11 +247,13 @@ export function getTabFromUrl(): TabType {
   if (pathname === '/chinh-sach-bao-mat' || pathname === '/privacy' || pathname === '/bao-mat') return 'privacy';
   if (pathname === '/dieu-khoan-su-dung' || pathname === '/terms' || pathname === '/dieu-khoan') return 'terms';
   if (pathname === '/blog' || pathname.startsWith('/blog/') || isBlogPostSlug(pathname)) return 'blog';
+  if (pathname === '/admin' || pathname === '/quan-tri' || pathname.startsWith('/admin/')) return 'admin';
   if (pathname === '/quan-ngon' || pathname === '/quan-ngon-gan-ban' || pathname === '/dia-diem-an-uong' || pathname === '/nha-hang-quan-an') return 'restaurants';
   if (pathname === '/') {
     // Check fallback query param ?tab=
     const params = new URLSearchParams(window.location.search);
     const tabParam = params.get('tab');
+    if (tabParam === 'admin' || tabParam === 'quan-tri') return 'admin';
     if (tabParam === 'vong-quay' || tabParam === 'wheel') return 'wheel';
     if (tabParam === 'lich-an-theo-tuan' || tabParam === 'mon-ngon/lich-an-theo-tuan' || tabParam === 'len-lich-an' || tabParam === 'planner' || tabParam === 'lich-an' || tabParam === 'thuc-don-tuan') return 'planner';
     if (tabParam === 'ai-goi-y-mon-an' || tabParam === 'ai' || tabParam === 'tro-ly-ai' || tabParam === 'goi-y-mon') return 'ai';

@@ -153,6 +153,26 @@
     </image:image>
   </url>
   <url>
+    <loc>https://www.angigio.com/admin</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.10</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Trang Quản Trị Hôm Nay Ăn Gì</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.angigio.com/quan-tri</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.10</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:title>Trang Quản Trị Hôm Nay Ăn Gì</image:title>
+    </image:image>
+  </url>
+  <url>
     <loc>https://www.angigio.com/am-thuc-mien-bac</loc>
     <lastmod>2026-09-24</lastmod>
     <changefreq>weekly</changefreq>
@@ -2393,13 +2413,13 @@
     </image:image>
   </url>
   <url>
-    <loc>https://www.angigio.com/hom-nay-an-gi-cho-do-ngan</loc>
+    <loc>https://www.angigio.com/an-gi-cho-do-ngan</loc>
     <lastmod>2026-09-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.80</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
-      <image:title>Hôm Nay Ăn Gì Cho Đỡ Ngán? 8 Món Thanh Mát, Giải Ngấy Đưa Miệng</image:title>
+      <image:loc>https://www.angigio.com/images/an-gi-cho-do-ngan.jpg</image:loc>
+      <image:title>Ăn Gì Cho Đỡ Ngán? Gợi Ý Món Ngon Đổi Vị Dễ Ăn Cho Cả Nhà</image:title>
     </image:image>
   </url>
   <url>
@@ -2411,5 +2431,11 @@
       <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
       <image:title>Hôm Nay Ăn Gì Khi Bận? 10 Món Ngon Dễ Làm Nấu Nhanh Dưới 15 Phút</image:title>
     </image:image>
+  </url>
+  <url>
+    <loc>https://www.angigio.com/test-bai-viet-moi</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>

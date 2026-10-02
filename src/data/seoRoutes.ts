@@ -184,6 +184,29 @@ export const BASE_SEO_ROUTES: Record<string, RouteSeoMeta> = {
     changefreq: 'daily',
     lastmod: '2026-09-29',
   },
+  '/admin': {
+    path: '/admin',
+    title: 'Trang Quản Trị Bài Viết & Soạn Thảo WordPress | Hôm Nay Ăn Gì',
+    description: 'Bảng điều khiển quản trị bài viết ẩm thực, soạn thảo trực quan phong cách WordPress & Word.',
+    keywords: 'quản trị bài viết, admin ẩm thực, soạn thảo bài viết, hôm nay ăn gì',
+    image: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1200&auto=format&fit=crop&q=80',
+    imageAlt: 'Trang Quản Trị Hôm Nay Ăn Gì',
+    priority: 0.1,
+    changefreq: 'monthly',
+    lastmod: '2026-10-02',
+  },
+  '/quan-tri': {
+    path: '/quan-tri',
+    canonicalPath: '/admin',
+    title: 'Trang Quản Trị Bài Viết & Soạn Thảo WordPress | Hôm Nay Ăn Gì',
+    description: 'Bảng điều khiển quản trị bài viết ẩm thực, soạn thảo trực quan phong cách WordPress & Word.',
+    keywords: 'quản trị bài viết, admin ẩm thực, soạn thảo bài viết, hôm nay ăn gì',
+    image: 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1200&auto=format&fit=crop&q=80',
+    imageAlt: 'Trang Quản Trị Hôm Nay Ăn Gì',
+    priority: 0.1,
+    changefreq: 'monthly',
+    lastmod: '2026-10-02',
+  },
 };
 
 /**

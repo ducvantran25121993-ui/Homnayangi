@@ -36,8 +36,8 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
     };
   }, []);
 
-  if (activeTab === 'tarot') {
-    return null; // On homepage root, breadcrumbs aren't necessary
+  if (activeTab === 'tarot' || activeTab === 'admin') {
+    return null; // On homepage root or admin panel, breadcrumbs aren't necessary
   }
 
   const currentTabMeta = TAB_CONFIG[activeTab];

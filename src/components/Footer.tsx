@@ -73,9 +73,28 @@ export const Footer: React.FC<{
               <div className="font-extrabold text-stone-900 text-sm">
                 Hôm Nay Ăn Gì? • Smart Food Decider
               </div>
-              <p className="text-xs text-stone-500">
-                Gợi ý ẩm thực 3 miền & liên kết đặt món nhanh
-              </p>
+              <div className="flex items-center gap-1.5 text-xs text-stone-500">
+                <span>Gợi ý ẩm thực 3 miền & liên kết đặt món nhanh</span>
+                <a
+                  href="/admin"
+                  onClick={(e) => {
+                    if (e.ctrlKey || e.metaKey || e.button === 1) return;
+                    e.preventDefault();
+                    if (onNavigate) {
+                      onNavigate('admin');
+                    } else {
+                      window.history.pushState({ tab: 'admin' }, '', '/admin');
+                      window.dispatchEvent(new Event('locationchange'));
+                    }
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
+                  title="Quản trị bài viết & nội dung (Admin)"
+                  aria-label="Quản trị bài viết"
+                  className="inline-flex items-center justify-center p-0.5 rounded opacity-20 hover:opacity-75 transition-opacity text-stone-400 hover:text-stone-600"
+                >
+                  <Lock className="w-3 h-3" />
+                </a>
+              </div>
             </div>
           </div>
 
@@ -153,7 +172,7 @@ export const Footer: React.FC<{
           </p>
           <div className="flex items-center gap-1">
             <span>Thiết kế vì người yêu ẩm thực Việt Nam</span>
-            <Heart className="w-3.5 h-3.5 text-red-500 fill-red-500 inline" />
+            <Heart className="w-3.5 h-3.5 text-stone-400 fill-stone-300 inline" />
           </div>
         </div>
       </div>

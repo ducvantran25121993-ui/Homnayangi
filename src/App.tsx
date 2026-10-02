@@ -12,6 +12,7 @@ import { ContactPage } from './components/ContactPage';
 import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
 import { TermsOfServicePage } from './components/TermsOfServicePage';
 import { BlogPage } from './components/BlogPage';
+import { AdminBlogPage } from './components/AdminBlogPage';
 import { RestaurantsPage } from './components/RestaurantsPage';
 import { AdminInboxModal } from './components/AdminInboxModal';
 import { AffiliateModal } from './components/AffiliateModal';
@@ -228,6 +229,23 @@ export default function App() {
     fetchAffiliateData();
     // Poll stats occasionally (every 60s)
     const interval = setInterval(fetchAffiliateData, 60000);
+
+    // Initial sync of custom blog posts from server to localStorage
+    const syncCustomBlogPosts = async () => {
+      try {
+        const res = await fetch('/api/admin/posts');
+        if (res.ok) {
+          const data = await res.json();
+          if (data.customPosts && Array.isArray(data.customPosts) && typeof window !== 'undefined') {
+            localStorage.setItem('angigio_custom_blog_posts', JSON.stringify(data.customPosts));
+          }
+        }
+      } catch {
+        // Fallback silently
+      }
+    };
+    syncCustomBlogPosts();
+
     return () => clearInterval(interval);
   }, []);
 
@@ -424,6 +442,12 @@ export default function App() {
           <BlogPage
             onNavigate={handleNavigateTab}
             onSelectDish={(dish) => setSelectedDish(dish)}
+          />
+        )}
+
+        {activeTab === 'admin' && (
+          <AdminBlogPage
+            onNavigate={handleNavigateTab}
           />
         )}
 

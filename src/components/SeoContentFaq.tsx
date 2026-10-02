@@ -827,8 +827,8 @@ export const SeoContentFaq: React.FC<{
     };
   }, []);
 
-  // Do not display SEO FAQ block on About and Contact pages as they are standalone pages
-  if (activeTab === 'about' || activeTab === 'contact') {
+  // Do not display SEO FAQ block on About, Contact, and Admin pages
+  if (activeTab === 'about' || activeTab === 'contact' || activeTab === 'admin') {
     return null;
   }
 
