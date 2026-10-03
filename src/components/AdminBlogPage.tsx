@@ -2004,8 +2004,8 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
               )}
             </div>
 
-            {/* Right 4 Cols: WordPress Document Settings Sidebar */}
-            <div className="lg:col-span-4 space-y-5">
+            {/* Right 4 Cols: WordPress Document Settings Sidebar (Sticky & Fixed) */}
+            <div className="lg:col-span-4 space-y-5 lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto lg:pr-1.5 pb-10 overscroll-contain">
               {/* Google SERP SEO Preview */}
               <div className="bg-white p-5 rounded-2xl border border-stone-200 shadow-xs space-y-3">
                 <h3 className="font-extrabold text-stone-900 text-xs uppercase tracking-wider flex items-center gap-1.5">
