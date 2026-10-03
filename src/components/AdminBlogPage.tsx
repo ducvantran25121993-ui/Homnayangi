@@ -1031,7 +1031,15 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
     if (serverSaved) {
       showToast(`Đã lưu bài viết thành công! Website đã được cập nhật tại /${cleanSlug}`, 'success');
     } else {
-      showToast(`Đã lưu bài viết vào bộ nhớ trình duyệt! (${serverErrorMsg})`, 'warning');
+      const is404OrStatic = serverErrorMsg.includes('404') || serverErrorMsg.includes('Failed to fetch');
+      if (is404OrStatic) {
+        showToast(
+          `Đã lưu bài viết vào bộ nhớ trình duyệt! (Chế độ web tĩnh / Vercel: Bạn có thể nhấn nút "Mục Lưu Data" để tải file JSON)`,
+          'warning'
+        );
+      } else {
+        showToast(`Đã lưu bài viết vào bộ nhớ trình duyệt! (${serverErrorMsg})`, 'warning');
+      }
     }
 
     // Update current post ID
@@ -1155,6 +1163,15 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
               </div>
             ) : (
               <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setIsDataModalOpen(true)}
+                  className="flex items-center gap-1.5 bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs sm:text-sm font-semibold py-2 px-3 rounded-lg border border-stone-700 shadow-sm transition-colors cursor-pointer"
+                  title="Mục lưu dữ liệu & xuất file cho máy chủ khác"
+                >
+                  <Database className="w-4 h-4 text-emerald-400" />
+                  <span className="hidden sm:inline">Mục Lưu Data</span>
+                </button>
                 <a
                   href={`/${slug || editingPostId || ''}`}
                   target="_blank"
