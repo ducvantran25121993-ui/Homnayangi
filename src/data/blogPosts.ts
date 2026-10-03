@@ -699,10 +699,24 @@ export const INITIAL_BLOG_POSTS: BlogPost[] = [
   }
 ];
 
+declare global {
+  interface Window {
+    __INITIAL_CUSTOM_POSTS__?: BlogPost[];
+  }
+}
+
 export const LOCAL_STORAGE_CUSTOM_POSTS = 'angigio_custom_blog_posts';
 
 export function getCustomBlogPosts(): BlogPost[] {
   if (typeof window === 'undefined') return [];
+  // 1. Check window.__INITIAL_CUSTOM_POSTS__ injected by server for cross-device & instant page loads
+  if (typeof window !== 'undefined' && Array.isArray(window.__INITIAL_CUSTOM_POSTS__) && window.__INITIAL_CUSTOM_POSTS__.length > 0) {
+    try {
+      localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(window.__INITIAL_CUSTOM_POSTS__));
+    } catch {}
+    return window.__INITIAL_CUSTOM_POSTS__;
+  }
+  // 2. Fallback to localStorage
   try {
     const raw = localStorage.getItem(LOCAL_STORAGE_CUSTOM_POSTS);
     if (!raw) return [];

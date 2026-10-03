@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "title": "Test Post",
+    "slug": "test-bai-viet-moi",
+    "content": "Noi dung test",
+    "id": "test-bai-viet-moi",
+    "publishDate": "03/10/2026",
+    "updatedAt": "2026-10-03T08:22:42.348Z"
+  }
+]

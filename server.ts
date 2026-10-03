@@ -540,6 +540,12 @@ function saveCustomBlogPosts(posts: any[]) {
     const dir = path.dirname(CUSTOM_POSTS_FILE);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(CUSTOM_POSTS_FILE, JSON.stringify(posts, null, 2), "utf-8");
+
+    // Also persist to dist/custom_blog_posts.json so production static serving is immediately up-to-date
+    const distTarget = path.join(process.cwd(), "dist", "custom_blog_posts.json");
+    if (fs.existsSync(path.dirname(distTarget))) {
+      fs.writeFileSync(distTarget, JSON.stringify(posts, null, 2), "utf-8");
+    }
   } catch (err) {
     console.error("Error saving custom blog posts:", err);
   }
@@ -945,6 +951,15 @@ async function startServer() {
       updatedHtml = updatedHtml.replace(
         '</head>',
         `    <script type="application/ld+json">\n${JSON.stringify(articleSchema, null, 2)}\n    </script>\n  </head>`
+      );
+    }
+
+    // Inject initial custom posts so all devices and machines see new posts instantaneously on page load
+    if (customPosts && Array.isArray(customPosts) && customPosts.length > 0) {
+      const serialized = JSON.stringify(customPosts).replace(/</g, '\\u003c');
+      updatedHtml = updatedHtml.replace(
+        '</head>',
+        `    <script>window.__INITIAL_CUSTOM_POSTS__ = ${serialized};</script>\n  </head>`
       );
     }
 

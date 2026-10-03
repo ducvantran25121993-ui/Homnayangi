@@ -856,8 +856,8 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
       title: title.trim(),
       excerpt: excerpt.trim() || title.trim(),
       coverImage: coverImage.trim() || '/images/an-gi-cho-do-ngan.jpg',
-      category: category,
-      tags: tags
+      category: category || 'Gợi Ý Thực Đơn',
+      tags: (typeof tags === 'string' ? tags : '')
         .split(',')
         .map((t) => t.trim())
         .filter(Boolean),
@@ -866,11 +866,14 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
         role: authorRole.trim() || 'Chuyên gia Ẩm thực & Dinh dưỡng',
         avatar: 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=120&auto=format&fit=crop&q=80',
       },
-      publishDate: publishDate.trim(),
-      readTime: readTime.trim(),
-      featured: featured,
+      publishDate: publishDate.trim() || new Date().toLocaleDateString('vi-VN', { day: '2-digit', month: '2-digit', year: 'numeric' }),
+      readTime: readTime.trim() || '6 phút đọc',
+      featured: !!featured,
       content: markdownContent,
     };
+
+    let serverSaved = false;
+    let serverErrorMsg = '';
 
     try {
       // 1. Send to server API
@@ -882,13 +885,19 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
         body: JSON.stringify(postPayload),
       });
 
-      if (!res.ok) {
-        throw new Error('Lỗi khi gửi dữ liệu lên máy chủ');
+      const resData = await res.json().catch(() => null);
+
+      if (res.ok && resData?.success) {
+        serverSaved = true;
+      } else {
+        serverErrorMsg = resData?.message || `Lỗi máy chủ (${res.status})`;
       }
+    } catch (apiErr: any) {
+      serverErrorMsg = apiErr?.message || 'Không thể kết nối máy chủ';
+    }
 
-      const resData = await res.json();
-
-      // 2. Also save to localStorage immediately for instant client responsiveness
+    // 2. Also save to localStorage immediately for instant client responsiveness
+    try {
       const existingCustomStr = localStorage.getItem(LOCAL_STORAGE_CUSTOM_POSTS);
       let customList: BlogPost[] = existingCustomStr ? JSON.parse(existingCustomStr) : [];
       const idx = customList.findIndex((p) => p.slug === cleanSlug || p.id === postPayload.id);
@@ -898,25 +907,28 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
         customList.unshift(postPayload);
       }
       localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(customList));
-
-      // Dispatch global events so the public website and all components update immediately
-      window.dispatchEvent(new Event('custom-posts-updated'));
-      window.dispatchEvent(new Event('locationchange'));
-
-      // Reload posts
-      await loadPosts();
-
-      setSaving(false);
-      showToast(`Đã lưu bài viết thành công! Website đã được cập nhật tại /${cleanSlug}`, 'success');
-
-      // Update current post ID
-      setEditingPostId(postPayload.id);
-      setSlug(cleanSlug);
-    } catch (err: any) {
-      console.error(err);
-      setSaving(false);
-      showToast(err?.message || 'Không thể lưu bài viết. Vui lòng thử lại!', 'error');
+    } catch (storageErr) {
+      console.warn('LocalStorage error:', storageErr);
     }
+
+    // Dispatch global events so the public website and all components update immediately
+    window.dispatchEvent(new Event('custom-posts-updated'));
+    window.dispatchEvent(new Event('locationchange'));
+
+    // Reload posts
+    await loadPosts();
+
+    setSaving(false);
+
+    if (serverSaved) {
+      showToast(`Đã lưu bài viết thành công! Website đã được cập nhật tại /${cleanSlug}`, 'success');
+    } else {
+      showToast(`Đã lưu bài viết vào bộ nhớ trình duyệt! (${serverErrorMsg})`, 'warning');
+    }
+
+    // Update current post ID
+    setEditingPostId(postPayload.id);
+    setSlug(cleanSlug);
   };
 
   // Delete Post
@@ -1345,13 +1357,14 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
               </div>
 
               {/* The Visual WYSIWYG Document Sheet */}
-              {editorSubTab === 'visual' ? (
-                <div
-                  className={`bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden relative transition-all ${
-                    isFullscreen ? 'fixed inset-0 z-50 rounded-none border-none overflow-y-auto' : ''
-                  }`}
-                >
-                  {/* Sticky WordPress Ribbon Toolbar */}
+              <div
+                className={`bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden relative transition-all ${
+                  editorSubTab === 'visual' ? 'block' : 'hidden'
+                } ${
+                  isFullscreen ? 'fixed inset-0 z-50 rounded-none border-none overflow-y-auto' : ''
+                }`}
+              >
+                {/* Sticky WordPress Ribbon Toolbar */}
                   <div className="sticky top-0 z-20 bg-stone-50 border-b border-stone-200 p-2 sm:p-2.5 flex flex-wrap items-center gap-1.5 text-stone-700 text-xs shadow-xs">
                     {/* Format Block (Headings) */}
                     <select
@@ -1779,8 +1792,9 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                     </div>
                   </div>
                 </div>
-              ) : (
-                /* Live Preview Mode */
+
+              {/* Live Preview Mode */}
+              {editorSubTab === 'preview' && (
                 <div className="bg-white rounded-2xl border border-stone-200 p-8 shadow-xs space-y-6">
                   <div className="border-b border-stone-200 pb-6">
                     <span className="text-xs font-bold px-2.5 py-1 rounded bg-orange-100 text-orange-800">

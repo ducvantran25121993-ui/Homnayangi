@@ -155,6 +155,18 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
     };
   }, [allPosts]);
 
+  // Auto-resolve active post if allPosts updates (e.g. after API fetch finishes)
+  useEffect(() => {
+    const pathname = window.location.pathname.replace(/\/$/, '') || '';
+    if (pathname !== '/blog' && pathname !== '') {
+      const slug = pathname.replace(/^\/?blog\//, '').replace(/^\//, '');
+      const found = allPosts.find((p) => p.slug === slug || p.id === slug) || getBlogPostBySlug(slug);
+      if (found && (!activePost || activePost.slug !== found.slug)) {
+        setActivePost(found);
+      }
+    }
+  }, [allPosts]);
+
   // Update document title, meta tags, and structured JSON-LD schema when activePost changes
   useEffect(() => {
     if (activePost) {
@@ -342,10 +354,9 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
   };
 
   // Handle create new post submit
-  const handleCreatePost = (e: React.FormEvent) => {
+  const handleCreatePost = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newTitle.trim() || !newContent.trim()) {
-      alert('Vui lòng nhập đầy đủ tiêu đề và nội dung bài viết!');
       return;
     }
 
@@ -359,20 +370,20 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
       .replace(/\s+/g, '-');
 
     const createdPost: BlogPost = {
-      id: `post-${Date.now()}`,
-      slug,
+      id: slug || `post-${Date.now()}`,
+      slug: slug || `post-${Date.now()}`,
       title: newTitle.trim(),
       excerpt:
         newExcerpt.trim() ||
         newContent.replace(/[#*`>]/g, '').slice(0, 160).trim() + '...',
-      coverImage: newCoverImage.trim(),
+      coverImage: newCoverImage.trim() || '/images/an-gi-cho-do-ngan.jpg',
       category: newCategory,
       tags: newTags
         .split(',')
         .map((t) => t.trim())
         .filter(Boolean),
       author: {
-        name: newAuthorName.trim() || 'Biên tập viên',
+        name: newAuthorName.trim() || 'Bếp Trưởng Hôm Nay Ăn Gì',
         role: newAuthorRole.trim() || 'Người yêu ẩm thực',
         avatar:
           'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
@@ -386,13 +397,27 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
       content: newContent.trim(),
     };
 
-    const updated = [createdPost, ...customPosts];
+    // 1. Sync to server API
+    try {
+      await fetch('/api/admin/posts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(createdPost),
+      });
+    } catch (err) {
+      console.warn('API post error:', err);
+    }
+
+    // 2. Persist locally
+    const updated = [createdPost, ...customPosts.filter((p) => p.slug !== createdPost.slug)];
     setCustomPosts(updated);
     try {
       localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(updated));
     } catch {
       // LocalStorage quota fallback
     }
+
+    window.dispatchEvent(new Event('custom-posts-updated'));
 
     setIsCreateModalOpen(false);
     // Reset form
