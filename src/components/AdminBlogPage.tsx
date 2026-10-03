@@ -158,11 +158,15 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
   } | null>(null);
   const [editingLinkUrl, setEditingLinkUrl] = useState('');
   const [isEditingLinkInline, setIsEditingLinkInline] = useState(false);
+  const [editingLinkTextVal, setEditingLinkTextVal] = useState('');
+  const [isEditingLinkText, setIsEditingLinkText] = useState(false);
 
   // Insert Link Modal
   const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
   const [linkModalUrl, setLinkModalUrl] = useState('');
   const [linkModalText, setLinkModalText] = useState('');
+  const [linkSearchQuery, setLinkSearchQuery] = useState('');
+  const savedSelectionRange = useRef<Range | null>(null);
 
   // Insert Image Modal / Image Picker
   const [isImagePickerOpen, setIsImagePickerOpen] = useState(false);
@@ -953,13 +957,16 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
         left: Math.max(10, Math.min(rect.left - editorRect.left, editorRect.width - 320)),
       });
       setIsEditingLinkInline(false);
+      setIsEditingLinkText(false);
       setEditingLinkUrl(linkEl.getAttribute('href') || '');
+      setEditingLinkTextVal(linkEl.textContent || '');
       return;
     }
 
     // Clicked outside link: dismiss floating toolbar & popovers
     setFloatingLink(null);
     setIsEditingLinkInline(false);
+    setIsEditingLinkText(false);
     setIsTextColorPickerOpen(false);
     setIsBgColorPickerOpen(false);
   };
@@ -996,22 +1003,123 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
     showToast('Đã cập nhật liên kết!', 'success');
   };
 
+  // Update anchor text of floating link
+  const handleSaveFloatingLinkText = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!floatingLink?.targetEl || !editingLinkTextVal.trim()) return;
+
+    floatingLink.targetEl.textContent = editingLinkTextVal.trim();
+    setFloatingLink(null);
+    setIsEditingLinkText(false);
+    updateCounts();
+    showToast('Đã đổi chữ hiển thị của link thành công!', 'success');
+  };
+
+  // Add space after link if glued to text
+  const handleAddSpaceAfterFloatingLink = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!floatingLink?.targetEl) return;
+
+    floatingLink.targetEl.after(document.createTextNode(' '));
+    updateCounts();
+    setFloatingLink(null);
+    showToast('Đã tách khoảng cách giữa link và chữ sau!', 'success');
+  };
+
+  // Open Link Modal with captured selection
+  const handleOpenLinkModal = () => {
+    let selectedText = '';
+    const sel = window.getSelection();
+    if (sel && sel.rangeCount > 0 && editorRef.current) {
+      const range = sel.getRangeAt(0);
+      if (editorRef.current.contains(range.commonAncestorContainer)) {
+        savedSelectionRange.current = range.cloneRange();
+        selectedText = sel.toString().trim();
+      } else {
+        savedSelectionRange.current = null;
+      }
+    } else {
+      savedSelectionRange.current = null;
+    }
+
+    setLinkModalText(selectedText);
+    setLinkModalUrl('');
+    setLinkSearchQuery('');
+    setIsLinkModalOpen(true);
+  };
+
   // Insert Link from Toolbar Modal
   const handleInsertLink = () => {
-    if (!linkModalUrl.trim()) return;
-    const href = linkModalUrl.trim();
-    const text = linkModalText.trim() || href;
+    let href = linkModalUrl.trim();
+    if (!href) {
+      showToast('Vui lòng nhập địa chỉ URL hoặc chọn bài viết gợi ý', 'warning');
+      return;
+    }
+
+    // Auto-fix URL format if not absolute or domain-relative
+    if (!href.startsWith('http://') && !href.startsWith('https://') && !href.startsWith('/')) {
+      href = 'https://' + href;
+    }
+
+    // Determine readable anchor text
+    let text = linkModalText.trim();
+    if (!text) {
+      const slugCandidate = href.split('/').filter(Boolean).pop()?.toLowerCase();
+      const matched = posts.find(
+        (p) => p.slug?.toLowerCase() === slugCandidate || href.includes(p.slug)
+      );
+      if (matched) {
+        text = matched.title;
+      } else if (slugCandidate) {
+        text = slugCandidate.replace(/[-_]/g, ' ').replace(/^\w/, (c) => c.toUpperCase());
+      } else {
+        text = href;
+      }
+    }
 
     if (editorRef.current) {
       editorRef.current.focus();
-      const linkHtml = `<a href="${href}" class="text-orange-600 underline font-semibold hover:text-orange-700">${text}</a>`;
-      document.execCommand('insertHTML', false, linkHtml);
+
+      // Restore saved range
+      const sel = window.getSelection();
+      let isCollapsed = true;
+      if (savedSelectionRange.current && sel) {
+        sel.removeAllRanges();
+        sel.addRange(savedSelectionRange.current);
+        isCollapsed = savedSelectionRange.current.collapsed;
+      }
+
+      // Safe HTML: if cursor was collapsed, add space padding so it never glues into adjacent word!
+      const linkHtml = isCollapsed
+        ? ` <a href="${href}" class="text-orange-600 underline font-semibold hover:text-orange-700">${text}</a> `
+        : `<a href="${href}" class="text-orange-600 underline font-semibold hover:text-orange-700">${text}</a>`;
+
+      try {
+        document.execCommand('insertHTML', false, linkHtml);
+      } catch {
+        if (sel && sel.rangeCount > 0) {
+          const range = sel.getRangeAt(0);
+          range.deleteContents();
+          const temp = document.createElement('div');
+          temp.innerHTML = linkHtml;
+          const frag = document.createDocumentFragment();
+          while (temp.firstChild) {
+            frag.appendChild(temp.firstChild);
+          }
+          range.insertNode(frag);
+        }
+      }
+
+      updateCounts();
     }
 
     setIsLinkModalOpen(false);
     setLinkModalUrl('');
     setLinkModalText('');
-    showToast('Đã chèn liên kết vào bài viết!');
+    savedSelectionRange.current = null;
+    showToast(`Đã chèn liên kết "${text}" thành công!`, 'success');
   };
 
   // Insert Image from Library / URL
@@ -1858,9 +1966,9 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                     {/* Links */}
                     <button
                       type="button"
-                      onClick={() => setIsLinkModalOpen(true)}
-                      className="p-1.5 rounded-md hover:bg-orange-100 text-orange-700 flex items-center gap-1 font-bold transition-colors"
-                      title="Chèn liên kết"
+                      onClick={handleOpenLinkModal}
+                      className="p-1.5 rounded-md hover:bg-orange-100 text-orange-700 flex items-center gap-1 font-bold transition-colors cursor-pointer"
+                      title="Chèn liên kết (Bôi đen chữ hoặc chèn mới)"
                     >
                       <LinkIcon className="w-3.5 h-3.5" />
                       <span className="hidden sm:inline">Chèn Link</span>
@@ -1990,7 +2098,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                                 type="text"
                                 value={editingLinkUrl}
                                 onChange={(e) => setEditingLinkUrl(e.target.value)}
-                                className="bg-stone-800 border border-stone-600 rounded px-2.5 py-1 text-white text-xs w-56 focus:outline-none focus:border-orange-500 font-mono"
+                                className="bg-stone-800 border border-stone-600 rounded px-2.5 py-1 text-white text-xs w-60 focus:outline-none focus:border-orange-500 font-mono"
                                 placeholder="https://... hoặc /duong-dan"
                                 autoFocus
                               />
@@ -1999,7 +2107,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                                 onClick={handleSaveFloatingLinkUrl}
                                 className="bg-orange-600 hover:bg-orange-500 text-white px-2.5 py-1 rounded-md font-bold text-xs cursor-pointer shadow-xs"
                               >
-                                Lưu
+                                Lưu URL
                               </button>
                               <button
                                 type="button"
@@ -2009,9 +2117,34 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                                 Hủy
                               </button>
                             </div>
+                          ) : isEditingLinkText ? (
+                            <div className="flex items-center gap-1.5">
+                              <input
+                                type="text"
+                                value={editingLinkTextVal}
+                                onChange={(e) => setEditingLinkTextVal(e.target.value)}
+                                className="bg-stone-800 border border-stone-600 rounded px-2.5 py-1 text-white text-xs w-60 focus:outline-none focus:border-orange-500"
+                                placeholder="Đổi chữ hiển thị của liên kết..."
+                                autoFocus
+                              />
+                              <button
+                                type="button"
+                                onClick={handleSaveFloatingLinkText}
+                                className="bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1 rounded-md font-bold text-xs cursor-pointer shadow-xs"
+                              >
+                                Đổi chữ
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setIsEditingLinkText(false)}
+                                className="text-stone-400 hover:text-white px-1.5 py-1 text-xs cursor-pointer"
+                              >
+                                Hủy
+                              </button>
+                            </div>
                           ) : (
                             <>
-                              <div className="flex items-center gap-1.5 max-w-[200px] sm:max-w-[260px] truncate">
+                              <div className="flex items-center gap-1.5 max-w-[170px] sm:max-w-[220px] truncate">
                                 <LinkIcon className="w-3.5 h-3.5 text-orange-400 shrink-0" />
                                 <span className="font-mono text-stone-200 text-[11px] truncate">
                                   {floatingLink.url}
@@ -2030,24 +2163,53 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                                 <ExternalLink className="w-3.5 h-3.5" />
                               </a>
 
+                              {/* Edit URL */}
                               <button
                                 type="button"
-                                onClick={() => setIsEditingLinkInline(true)}
+                                onClick={() => {
+                                  setIsEditingLinkInline(true);
+                                  setIsEditingLinkText(false);
+                                }}
                                 className="p-1.5 rounded-lg hover:bg-stone-800 text-stone-300 hover:text-orange-400 transition-colors"
                                 title="Sửa địa chỉ URL"
                               >
                                 <Edit3 className="w-3.5 h-3.5" />
                               </button>
 
-                              {/* UNLINK BUTTON: Removes link without shifting scroll */}
+                              {/* Edit Anchor Text */}
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setIsEditingLinkText(true);
+                                  setIsEditingLinkInline(false);
+                                  setEditingLinkTextVal(floatingLink.targetEl.textContent || '');
+                                }}
+                                className="p-1.5 rounded-lg hover:bg-stone-800 text-stone-300 hover:text-emerald-400 transition-colors flex items-center gap-1 text-[11px] font-medium"
+                                title="Đổi chữ hiển thị của link (Ví dụ: đổi từ link thô sang tên bài viết)"
+                              >
+                                <Type className="w-3.5 h-3.5" />
+                                <span className="hidden sm:inline">Sửa chữ</span>
+                              </button>
+
+                              {/* Add space if stuck */}
+                              <button
+                                type="button"
+                                onClick={handleAddSpaceAfterFloatingLink}
+                                className="p-1.5 rounded-lg hover:bg-stone-800 text-amber-300 hover:text-amber-200 transition-colors text-[11px] font-medium"
+                                title="Thêm dấu cách sau liên kết nếu bị dính liền chữ"
+                              >
+                                <span>Tách cách</span>
+                              </button>
+
+                              {/* UNLINK BUTTON */}
                               <button
                                 type="button"
                                 onClick={handleRemoveFloatingLink}
-                                className="flex items-center gap-1 bg-rose-600 hover:bg-rose-500 text-white px-2.5 py-1 rounded-lg font-bold text-[11px] transition-colors cursor-pointer shadow-xs ml-1"
-                                title="Xóa bỏ liên kết này (giữ nguyên chữ, trình soạn thảo đứng im)"
+                                className="flex items-center gap-1 bg-rose-600 hover:bg-rose-500 text-white px-2 py-1 rounded-lg font-bold text-[11px] transition-colors cursor-pointer shadow-xs ml-0.5"
+                                title="Gỡ bỏ liên kết (giữ nguyên chữ)"
                               >
                                 <Unlink className="w-3.5 h-3.5" />
-                                <span>Xóa liên kết</span>
+                                <span>Gỡ link</span>
                               </button>
 
                               <button
@@ -2288,40 +2450,150 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
       {/* ================= MODAL: CHÈN LIÊN KẾT ================= */}
       {isLinkModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+          <div className="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-stone-100 pb-3">
-              <h3 className="font-extrabold text-stone-900 text-sm flex items-center gap-1.5">
-                <LinkIcon className="w-4 h-4 text-orange-600" />
-                <span>Chèn Liên Kết Mới</span>
+              <h3 className="font-extrabold text-stone-900 text-sm flex items-center gap-2">
+                <div className="w-7 h-7 rounded-lg bg-orange-100 flex items-center justify-center text-orange-600">
+                  <LinkIcon className="w-4 h-4" />
+                </div>
+                <span>Chèn Liên Kết Mới (Anchor Link)</span>
               </h3>
-              <button onClick={() => setIsLinkModalOpen(false)} className="text-stone-400 hover:text-stone-700">
+              <button
+                onClick={() => setIsLinkModalOpen(false)}
+                className="text-stone-400 hover:text-stone-700 p-1 rounded-lg"
+              >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
+            {/* Selection Guidance Tip */}
+            <div className="bg-amber-50 border border-amber-200/80 rounded-xl p-3 text-xs text-amber-900 flex items-start gap-2.5">
+              <Sparkles className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+              <div className="space-y-0.5 leading-relaxed">
+                <p className="font-bold">Mẹo chèn liên kết đẹp & chuẩn SEO:</p>
+                <p className="text-amber-800">
+                  {linkModalText ? (
+                    <span>
+                      Đang gán liên kết cho chữ đã chọn:{' '}
+                      <strong className="text-orange-700 bg-white px-1.5 py-0.5 rounded border border-amber-200">
+                        "{linkModalText}"
+                      </strong>
+                    </span>
+                  ) : (
+                    <span>
+                      Bạn có thể bôi đen chữ trong bài trước khi bấm <strong>"Chèn Link"</strong>, hoặc điền từ khóa vào ô <strong>"Văn bản hiển thị"</strong> bên dưới để tránh bị dán cả đường link thô.
+                    </span>
+                  )}
+                </p>
+              </div>
+            </div>
+
             <div className="space-y-3">
+              {/* URL Input */}
               <div>
-                <label className="block text-xs font-bold text-stone-700 mb-1">Địa chỉ URL:</label>
+                <label className="block text-xs font-bold text-stone-700 mb-1">
+                  Địa chỉ URL liên kết:
+                </label>
                 <input
                   type="text"
-                  placeholder="https://... hoặc /thit-heo-lam-mon-gi-ngon"
+                  placeholder="https://angigio.com/cach-nau-pho-ga-ta-la-chanh hoặc /cach-nau-pho-ga-ta-la-chanh"
                   value={linkModalUrl}
-                  onChange={(e) => setLinkModalUrl(e.target.value)}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setLinkModalUrl(val);
+                    if (!linkModalText.trim() && val.trim()) {
+                      const slugCandidate = val.trim().split('/').filter(Boolean).pop()?.toLowerCase();
+                      const matched = posts.find((p) => p.slug?.toLowerCase() === slugCandidate);
+                      if (matched) {
+                        setLinkModalText(matched.title);
+                      } else if (slugCandidate && slugCandidate.length > 2 && !slugCandidate.includes('.')) {
+                        setLinkModalText(
+                          slugCandidate.replace(/[-_]/g, ' ').replace(/^\w/, (c) => c.toUpperCase())
+                        );
+                      }
+                    }
+                  }}
                   className="w-full text-xs p-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:bg-white focus:outline-none focus:ring-1 focus:ring-orange-500 font-mono"
                   autoFocus
                 />
               </div>
 
+              {/* Anchor Text Input */}
               <div>
-                <label className="block text-xs font-bold text-stone-700 mb-1">Văn bản hiển thị (Anchor text):</label>
+                <label className="block text-xs font-bold text-stone-700 mb-1">
+                  Văn bản hiển thị (Anchor text):
+                </label>
                 <input
                   type="text"
-                  placeholder="Ví dụ: xem thêm món ngon từ thịt heo"
+                  placeholder="Ví dụ: cách nấu phở gà ta lá chanh"
                   value={linkModalText}
                   onChange={(e) => setLinkModalText(e.target.value)}
                   className="w-full text-xs p-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:bg-white focus:outline-none focus:ring-1 focus:ring-orange-500"
                 />
+                <p className="text-[11px] text-stone-400 mt-1">
+                  Đây là từ ngữ người đọc nhìn thấy và bấm vào trên trang web.
+                </p>
               </div>
+
+              {/* Quick Select Internal Posts */}
+              <div className="space-y-1.5 pt-1">
+                <div className="flex items-center justify-between text-xs font-bold text-stone-700">
+                  <span className="flex items-center gap-1.5">
+                    <FileText className="w-3.5 h-3.5 text-orange-600" />
+                    <span>Gợi ý bài viết nội bộ (SEO Internal Links):</span>
+                  </span>
+                  <span className="text-[11px] font-normal text-stone-400">Bấm 1 chạm để tự điền</span>
+                </div>
+
+                <div className="max-h-36 overflow-y-auto space-y-1 border border-stone-200 rounded-xl p-1.5 bg-stone-50/50">
+                  {posts
+                    .filter((p) => p.slug !== slug)
+                    .slice(0, 6)
+                    .map((p) => {
+                      const isSelected = linkModalUrl.includes(p.slug);
+                      return (
+                        <button
+                          key={p.slug}
+                          type="button"
+                          onClick={() => {
+                            setLinkModalUrl(`https://angigio.com/${p.slug}`);
+                            if (!linkModalText.trim()) {
+                              setLinkModalText(p.title);
+                            }
+                          }}
+                          className={`w-full text-left p-2 rounded-lg text-xs flex items-center gap-2.5 transition-colors cursor-pointer ${
+                            isSelected
+                              ? 'bg-orange-100 text-orange-950 font-bold border border-orange-300'
+                              : 'hover:bg-white text-stone-700 hover:text-stone-900 border border-transparent'
+                          }`}
+                        >
+                          <img
+                            src={p.coverImage || '/images/an-gi-cho-do-ngan.jpg'}
+                            alt=""
+                            className="w-7 h-7 rounded-md object-cover border border-stone-200 shrink-0"
+                          />
+                          <div className="min-w-0 flex-1">
+                            <div className="font-semibold truncate leading-tight">{p.title}</div>
+                            <div className="text-[10px] text-stone-400 font-mono truncate">/{p.slug}</div>
+                          </div>
+                          {isSelected && <Check className="w-4 h-4 text-orange-600 shrink-0" />}
+                        </button>
+                      );
+                    })}
+                </div>
+              </div>
+
+              {/* Preview */}
+              {(linkModalText || linkModalUrl) && (
+                <div className="bg-stone-50 border border-stone-200 rounded-xl p-2.5 text-xs text-stone-600 flex items-center justify-between">
+                  <span className="text-stone-400 text-[11px]">Xem trước liên kết:</span>
+                  <span className="truncate max-w-[280px]">
+                    <span className="text-orange-600 underline font-semibold">
+                      {linkModalText || linkModalUrl}
+                    </span>
+                  </span>
+                </div>
+              )}
             </div>
 
             <div className="flex items-center justify-end gap-2 pt-2 border-t border-stone-100">
@@ -2335,7 +2607,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
               <button
                 type="button"
                 onClick={handleInsertLink}
-                className="text-xs px-4 py-2 rounded-lg font-bold bg-orange-600 hover:bg-orange-500 text-white"
+                className="text-xs px-4 py-2 rounded-lg font-bold bg-orange-600 hover:bg-orange-500 text-white cursor-pointer shadow-xs"
               >
                 Chèn Liên Kết
               </button>
