@@ -22,6 +22,7 @@ import { Footer } from './components/Footer';
 import { Dish, AffiliateConfig, ClickRecord, UserLocation } from './types';
 import { INITIAL_DISHES } from './data/dishes';
 import { DEFAULT_AFFILIATE_CONFIG } from './utils/affiliate';
+import { fetchAndSyncCustomPosts } from './data/blogPosts';
 import {
   getStoredUserLocation,
   saveUserLocation,
@@ -127,6 +128,20 @@ export default function App() {
       updateRegionSEO(currentRegionId);
     }
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+
+    // Multi-server & multi-device sync: fetch custom posts on mount
+    fetchAndSyncCustomPosts().then((syncedPosts) => {
+      if (syncedPosts && syncedPosts.length > 0) {
+        const pathname = window.location.pathname.replace(/\/$/, '') || '/';
+        const cleanSlug = pathname.replace(/^\/?blog\//, '').replace(/^\//, '');
+        const isCustomPost = syncedPosts.some(
+          (p) => p.slug === cleanSlug || p.id === cleanSlug
+        );
+        if (isCustomPost && activeTab !== 'blog') {
+          setActiveTab('blog');
+        }
+      }
+    });
 
     // Check if URL has secret query ?admin=1 or ?admin=inbox
     const params = new URLSearchParams(window.location.search);

@@ -759,3 +759,51 @@ export function getFeaturedBlogPosts(): BlogPost[] {
   const all = getAllBlogPosts();
   return all.filter((p) => p.featured);
 }
+
+/**
+ * Fetch and synchronize custom blog posts from server API or static custom_blog_posts.json fallback.
+ * Works on any web server (Node/Express, Vercel, Netlify, Nginx, Apache, CDN).
+ */
+export async function fetchAndSyncCustomPosts(): Promise<BlogPost[]> {
+  if (typeof window === 'undefined') return [];
+  let fetched: BlogPost[] = [];
+  const cacheBust = Date.now();
+
+  // 1. Try dynamic Express server API
+  try {
+    const res = await fetch(`/api/admin/posts?_t=${cacheBust}`);
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data.customPosts) && data.customPosts.length > 0) {
+        fetched = data.customPosts;
+      }
+    }
+  } catch {
+    // ignore
+  }
+
+  // 2. Fallback to static custom_blog_posts.json (essential for Vercel, static hosting, or other web servers)
+  if (!fetched || fetched.length === 0) {
+    try {
+      const res = await fetch(`/custom_blog_posts.json?_t=${cacheBust}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          fetched = data;
+        }
+      }
+    } catch {
+      // ignore
+    }
+  }
+
+  if (fetched && fetched.length > 0) {
+    try {
+      window.__INITIAL_CUSTOM_POSTS__ = fetched;
+      localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(fetched));
+      window.dispatchEvent(new Event('custom-posts-updated'));
+    } catch {}
+  }
+
+  return fetched;
+}

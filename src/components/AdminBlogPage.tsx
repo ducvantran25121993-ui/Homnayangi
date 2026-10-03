@@ -117,7 +117,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
   const [saving, setSaving] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterCategory, setFilterCategory] = useState<string>('Tất Cả');
-  const [toastMessage, setToastMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null);
+  const [toastMessage, setToastMessage] = useState<{ text: string; type: 'success' | 'error' | 'warning' } | null>(null);
 
   // Editor State
   const [editingPostId, setEditingPostId] = useState<string | null>(null);
@@ -177,14 +177,122 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
   // Data Storage & Backup Center State
   const [isDataModalOpen, setIsDataModalOpen] = useState(false);
   const [syncingServer, setSyncingServer] = useState(false);
+  const [copiedDataJson, setCopiedDataJson] = useState(false);
+  const [remoteServerUrl, setRemoteServerUrl] = useState('');
+  const [syncingRemote, setSyncingRemote] = useState(false);
   const fileImportRef = useRef<HTMLInputElement>(null);
 
   // Show Toast Helper
-  const showToast = (text: string, type: 'success' | 'error' = 'success') => {
+  const showToast = (text: string, type: 'success' | 'error' | 'warning' = 'success') => {
     setToastMessage({ text, type });
     setTimeout(() => {
       setToastMessage(null);
     }, 4500);
+  };
+
+  // Export exact custom_blog_posts.json file for other web servers (Vercel, VPS, Nginx, Hosting)
+  const handleExportServerJson = () => {
+    try {
+      const customRaw = typeof window !== 'undefined' ? localStorage.getItem(LOCAL_STORAGE_CUSTOM_POSTS) : null;
+      const customParsed = customRaw ? JSON.parse(customRaw) : [];
+      const exportList = customParsed.length > 0 ? customParsed : posts;
+
+      const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(exportList, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute('href', dataStr);
+      downloadAnchor.setAttribute('download', 'custom_blog_posts.json');
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+
+      showToast('Đã tải file chuẩn "custom_blog_posts.json"! Chỉ cần đặt file này vào thư mục public của bất kỳ máy chủ nào.');
+    } catch (err: any) {
+      showToast('Lỗi xuất file: ' + (err?.message || ''), 'error');
+    }
+  };
+
+  // Copy raw JSON to clipboard for instant pasting on other servers
+  const handleCopyJsonToClipboard = () => {
+    try {
+      const customRaw = typeof window !== 'undefined' ? localStorage.getItem(LOCAL_STORAGE_CUSTOM_POSTS) : null;
+      const customParsed = customRaw ? JSON.parse(customRaw) : [];
+      const exportList = customParsed.length > 0 ? customParsed : posts;
+      navigator.clipboard.writeText(JSON.stringify(exportList, null, 2));
+      setCopiedDataJson(true);
+      showToast('Đã sao chép mã JSON vào Clipboard! Bạn có thể dán vào máy chủ khác.');
+      setTimeout(() => setCopiedDataJson(false), 3000);
+    } catch {
+      showToast('Không thể sao chép tự động', 'error');
+    }
+  };
+
+  // Sync posts from another remote web server URL
+  const handleSyncFromRemoteUrl = async () => {
+    if (!remoteServerUrl.trim()) {
+      showToast('Vui lòng nhập địa chỉ máy chủ khác (VD: https://domain-cua-ban.com)', 'error');
+      return;
+    }
+    setSyncingRemote(true);
+    let target = remoteServerUrl.trim().replace(/\/$/, '');
+    if (!target.startsWith('http://') && !target.startsWith('https://')) {
+      target = `https://${target}`;
+    }
+
+    try {
+      let remotePosts: BlogPost[] = [];
+      try {
+        const res = await fetch(`${target}/api/admin/posts?_t=${Date.now()}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data.customPosts) && data.customPosts.length > 0) {
+            remotePosts = data.customPosts;
+          } else if (Array.isArray(data.posts) && data.posts.length > 0) {
+            remotePosts = data.posts;
+          }
+        }
+      } catch {
+        // ignore
+      }
+
+      if (remotePosts.length === 0) {
+        const res = await fetch(`${target}/custom_blog_posts.json?_t=${Date.now()}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data) && data.length > 0) {
+            remotePosts = data;
+          }
+        }
+      }
+
+      if (remotePosts.length === 0) {
+        throw new Error('Không thể tải bài viết từ máy chủ này. Hãy kiểm tra URL hoặc CORS.');
+      }
+
+      // Merge and save
+      const existingRaw = localStorage.getItem(LOCAL_STORAGE_CUSTOM_POSTS);
+      const existingList: BlogPost[] = existingRaw ? JSON.parse(existingRaw) : [];
+      const map = new Map<string, BlogPost>();
+      existingList.forEach((p) => map.set(p.slug || p.id, p));
+      remotePosts.forEach((p) => map.set(p.slug || p.id, p));
+      const merged = Array.from(map.values());
+
+      localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(merged));
+
+      // Sync to local server
+      await fetch('/api/admin/posts/import', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ posts: merged, overwrite: false }),
+      });
+
+      await loadPosts();
+      showToast(`Đồng bộ thành công! Đã nạp ${remotePosts.length} bài viết từ máy chủ từ xa.`);
+      setRemoteServerUrl('');
+    } catch (err: any) {
+      showToast(err.message || 'Lỗi kết nối máy chủ từ xa', 'error');
+    } finally {
+      setSyncingRemote(false);
+    }
   };
 
   // Export / Download Data JSON file to computer
@@ -976,17 +1084,23 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
             className={`flex items-center gap-3 px-5 py-3.5 rounded-xl shadow-lg border text-sm font-semibold ${
               toastMessage.type === 'success'
                 ? 'bg-emerald-600 text-white border-emerald-500'
+                : toastMessage.type === 'warning'
+                ? 'bg-amber-600 text-white border-amber-500'
                 : 'bg-rose-600 text-white border-rose-500'
             }`}
           >
-            {toastMessage.type === 'success' ? <Check className="w-4 h-4 shrink-0" /> : <AlertCircle className="w-4 h-4 shrink-0" />}
+            {toastMessage.type === 'success' ? (
+              <Check className="w-4 h-4 shrink-0" />
+            ) : (
+              <AlertCircle className="w-4 h-4 shrink-0" />
+            )}
             <span>{toastMessage.text}</span>
           </div>
         </div>
       )}
 
       {/* Top Header */}
-      <header className="sticky top-0 z-30 bg-stone-900 text-white shadow-md border-b border-stone-800">
+      <header className="sticky top-0 z-40 bg-stone-900 text-white shadow-md border-b border-stone-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <button
@@ -1293,79 +1407,76 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
           </div>
         ) : (
           /* ================= WORDPRESS VISUAL EDITOR VIEW ================= */
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             {/* Left 8 Cols: Main Document Editor */}
-            <div className="lg:col-span-8 space-y-5">
-              {/* Title & Slug Box */}
-              <div className="bg-white p-5 sm:p-6 rounded-2xl border border-stone-200 shadow-xs space-y-3">
-                <input
-                  type="text"
-                  placeholder="Nhập tiêu đề bài viết tại đây..."
-                  value={title}
-                  onChange={(e) => {
-                    setTitle(e.target.value);
-                    if (!editingPostId) {
-                      setSlug(generateSlug(e.target.value));
-                    }
-                  }}
-                  className="w-full text-xl sm:text-2xl font-black text-stone-900 placeholder-stone-300 border-none outline-none focus:ring-0 leading-tight"
-                />
-
-                {/* Permalink */}
-                <div className="flex items-center gap-1.5 text-xs text-stone-500 bg-stone-50 p-2.5 rounded-xl border border-stone-200/80">
-                  <Globe className="w-3.5 h-3.5 text-stone-400 shrink-0" />
-                  <span className="font-semibold text-stone-600">Đường dẫn:</span>
-                  <span className="text-stone-400 font-mono">https://angigio.com/</span>
+            <div className={isFullscreen ? "fixed inset-0 z-50 bg-stone-100 overflow-y-auto p-4 sm:p-6 space-y-4" : "lg:col-span-8 space-y-4"}>
+              {/* STICKY TOP CONTROLS: Title, Slug, Tab Switcher & Word Ribbon Toolbar */}
+              <div className={`sticky ${isFullscreen ? 'top-0' : 'top-16'} z-30 bg-white rounded-2xl border border-stone-200/90 shadow-md transition-all`}>
+                {/* 1. Title & Permalink */}
+                <div className="p-3.5 sm:p-4.5 space-y-2.5">
                   <input
                     type="text"
-                    value={slug}
-                    onChange={(e) => setSlug(generateSlug(e.target.value))}
-                    className="font-mono font-bold text-orange-700 bg-white border border-stone-300 px-2 py-0.5 rounded text-xs flex-1 focus:outline-none focus:ring-1 focus:ring-orange-500"
-                    placeholder="duong-dan-bai-viet"
+                    placeholder="Nhập tiêu đề bài viết tại đây..."
+                    value={title}
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                      if (!editingPostId) {
+                        setSlug(generateSlug(e.target.value));
+                      }
+                    }}
+                    className="w-full text-lg sm:text-2xl font-black text-stone-900 placeholder-stone-300 border-none outline-none focus:ring-0 leading-tight"
                   />
-                </div>
-              </div>
 
-              {/* View Mode Tabs */}
-              <div className="flex items-center justify-between border-b border-stone-200 pb-2">
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setEditorSubTab('visual')}
-                    className={`text-xs font-bold py-1.5 px-3 rounded-lg transition-colors ${
-                      editorSubTab === 'visual'
-                        ? 'bg-stone-900 text-white'
-                        : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
-                    }`}
-                  >
-                    Trực Quan (Word / WordPress)
-                  </button>
-                  <button
-                    onClick={() => setEditorSubTab('preview')}
-                    className={`text-xs font-bold py-1.5 px-3 rounded-lg transition-colors ${
-                      editorSubTab === 'preview'
-                        ? 'bg-stone-900 text-white'
-                        : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
-                    }`}
-                  >
-                    Xem Trước Thực Tế
-                  </button>
+                  {/* Permalink */}
+                  <div className="flex items-center gap-1.5 text-xs text-stone-500 bg-stone-50 p-2 sm:p-2.5 rounded-xl border border-stone-200/80">
+                    <Globe className="w-3.5 h-3.5 text-stone-400 shrink-0" />
+                    <span className="font-semibold text-stone-600">Đường dẫn:</span>
+                    <span className="text-stone-400 font-mono">https://angigio.com/</span>
+                    <input
+                      type="text"
+                      value={slug}
+                      onChange={(e) => setSlug(generateSlug(e.target.value))}
+                      className="font-mono font-bold text-orange-700 bg-white border border-stone-300 px-2 py-0.5 rounded text-xs flex-1 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                      placeholder="duong-dan-bai-viet"
+                    />
+                  </div>
                 </div>
 
-                <span className="text-xs text-stone-400 hidden sm:inline">
-                  Hỗ trợ định dạng Rich-Text & tự động tối ưu hóa SEO
-                </span>
-              </div>
+                {/* 2. Sub Tabs (Trực quan vs Xem trước) */}
+                <div className="px-3.5 py-2 bg-stone-50/80 border-t border-b border-stone-200/70 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setEditorSubTab('visual')}
+                      className={`text-xs font-bold py-1.5 px-3 rounded-lg transition-colors cursor-pointer ${
+                        editorSubTab === 'visual'
+                          ? 'bg-stone-900 text-white shadow-xs'
+                          : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
+                      }`}
+                    >
+                      Trực Quan (Word / WordPress)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setEditorSubTab('preview')}
+                      className={`text-xs font-bold py-1.5 px-3 rounded-lg transition-colors cursor-pointer ${
+                        editorSubTab === 'preview'
+                          ? 'bg-stone-900 text-white shadow-xs'
+                          : 'bg-white text-stone-600 hover:bg-stone-100 border border-stone-200'
+                      }`}
+                    >
+                      Xem Trước Thực Tế
+                    </button>
+                  </div>
 
-              {/* The Visual WYSIWYG Document Sheet */}
-              <div
-                className={`bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden relative transition-all ${
-                  editorSubTab === 'visual' ? 'block' : 'hidden'
-                } ${
-                  isFullscreen ? 'fixed inset-0 z-50 rounded-none border-none overflow-y-auto' : ''
-                }`}
-              >
-                {/* Sticky WordPress Ribbon Toolbar */}
-                  <div className="sticky top-0 z-20 bg-stone-50 border-b border-stone-200 p-2 sm:p-2.5 flex flex-wrap items-center gap-1.5 text-stone-700 text-xs shadow-xs">
+                  <span className="text-xs text-stone-400 hidden sm:inline">
+                    Hỗ trợ định dạng Rich-Text & tự động tối ưu hóa SEO
+                  </span>
+                </div>
+
+                {/* 3. Sticky Ribbon Toolbar */}
+                {editorSubTab === 'visual' && (
+                  <div className="bg-stone-50/90 rounded-b-2xl p-2 sm:p-2.5 flex flex-wrap items-center gap-1.5 text-stone-700 text-xs">
                     {/* Format Block (Headings) */}
                     <select
                       onChange={(e) => {
@@ -1670,9 +1781,17 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                       {isFullscreen ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
                     </button>
                   </div>
+                )}
+              </div>
 
-                  {/* Document Page Canvas Styled Like Microsoft Word / WordPress Sheet */}
-                  <div className="p-4 sm:p-8 bg-stone-100/80 min-h-[680px] relative">
+              {/* The Visual WYSIWYG Document Sheet */}
+              <div
+                className={`bg-white rounded-2xl border border-stone-200 shadow-sm overflow-hidden relative transition-all ${
+                  editorSubTab === 'visual' ? 'block' : 'hidden'
+                }`}
+              >
+                {/* Document Page Canvas Styled Like Microsoft Word / WordPress Sheet */}
+                <div className="p-4 sm:p-8 bg-stone-100/80 min-h-[680px] relative">
                     <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md border border-stone-200/90 p-8 sm:p-14 min-h-[600px] relative">
                       <div
                         ref={editorRef}
@@ -2252,42 +2371,111 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
 
             {/* Action Buttons */}
             <div className="space-y-3">
+              {/* Option 1: Direct File for Other Web Servers */}
               <button
                 type="button"
-                onClick={handleExportData}
-                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer group"
+                onClick={handleExportServerJson}
+                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs sm:text-sm shadow-md transition-all cursor-pointer group"
               >
                 <div className="flex items-center gap-3">
-                  <Download className="w-5 h-5" />
+                  <FileJson className="w-5 h-5 shrink-0" />
                   <div className="text-left">
-                    <div>Lưu & Tải File Data Về Máy Tính (Backup JSON)</div>
-                    <div className="text-[11px] font-normal text-emerald-100">
-                      Tải file .json chứa toàn bộ bài viết để cất giữ an toàn
+                    <div>Tải File Chuẩn Cho Máy Chủ Khác (custom_blog_posts.json)</div>
+                    <div className="text-[11px] font-normal text-amber-100">
+                      Đặt file này vào thư mục public của Vercel, VPS, Nginx, Hosting để máy chủ đó xem được ngay
                     </div>
                   </div>
                 </div>
-                <span className="text-xs bg-emerald-700 px-2.5 py-1 rounded-lg shrink-0">Tải ngay</span>
+                <span className="text-xs bg-amber-700 px-2.5 py-1 rounded-lg shrink-0">Tải JSON</span>
               </button>
 
+              {/* Option 2: Copy JSON to Clipboard */}
+              <button
+                type="button"
+                onClick={handleCopyJsonToClipboard}
+                className="w-full flex items-center justify-between p-3 rounded-2xl bg-stone-100 hover:bg-stone-200 text-stone-800 font-bold text-xs sm:text-sm border border-stone-200 transition-all cursor-pointer"
+              >
+                <div className="flex items-center gap-3">
+                  {copiedDataJson ? <Check className="w-5 h-5 text-emerald-600 shrink-0" /> : <Copy className="w-5 h-5 text-stone-600 shrink-0" />}
+                  <div className="text-left">
+                    <div>{copiedDataJson ? 'Đã Sao Chép Vào Bộ Nhớ Đệm!' : 'Sao Chép Mã JSON Bài Viết (Clipboard)'}</div>
+                    <div className="text-[11px] font-normal text-stone-500">
+                      Dán trực tiếp vào file custom_blog_posts.json trên bất kỳ máy chủ nào
+                    </div>
+                  </div>
+                </div>
+                <span className="text-xs bg-stone-200 text-stone-700 px-2.5 py-1 rounded-lg shrink-0">
+                  {copiedDataJson ? 'Đã chép' : 'Sao chép'}
+                </span>
+              </button>
+
+              {/* Option 3: Full Backup */}
+              <button
+                type="button"
+                onClick={handleExportData}
+                className="w-full flex items-center justify-between p-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs sm:text-sm shadow-xs transition-all cursor-pointer group"
+              >
+                <div className="flex items-center gap-3">
+                  <Download className="w-5 h-5 shrink-0" />
+                  <div className="text-left">
+                    <div>Lưu Bản Sao Lưu Đầy Đủ (Full Backup JSON)</div>
+                    <div className="text-[11px] font-normal text-emerald-100">
+                      Tải file sao lưu chứa toàn bộ lịch sử và bài viết để cất giữ an toàn
+                    </div>
+                  </div>
+                </div>
+                <span className="text-xs bg-emerald-700 px-2.5 py-1 rounded-lg shrink-0">Tải backup</span>
+              </button>
+
+              {/* Option 4: Import File */}
               <button
                 type="button"
                 onClick={() => {
                   fileImportRef.current?.click();
                 }}
-                className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-stone-100 hover:bg-stone-200 text-stone-800 font-bold text-xs sm:text-sm border border-stone-200 transition-all cursor-pointer"
+                className="w-full flex items-center justify-between p-3 rounded-2xl bg-stone-100 hover:bg-stone-200 text-stone-800 font-bold text-xs sm:text-sm border border-stone-200 transition-all cursor-pointer"
               >
                 <div className="flex items-center gap-3">
-                  <Upload className="w-5 h-5 text-stone-600" />
+                  <Upload className="w-5 h-5 text-stone-600 shrink-0" />
                   <div className="text-left">
-                    <div>Khôi Phục Dữ Liệu Từ File JSON (Import)</div>
+                    <div>Khôi Phục / Nhập Bài Viết Từ File JSON (Import)</div>
                     <div className="text-[11px] font-normal text-stone-500">
-                      Nạp lại danh sách bài viết từ bản sao lưu đã lưu trước đó
+                      Nạp danh sách bài viết từ file .json vào hệ thống máy chủ hiện tại
                     </div>
                   </div>
                 </div>
                 <span className="text-xs bg-stone-200 text-stone-700 px-2.5 py-1 rounded-lg shrink-0">Chọn file</span>
               </button>
 
+              {/* Option 5: Sync with Remote Server URL */}
+              <div className="p-3.5 rounded-2xl bg-stone-50 border border-stone-200 space-y-2.5">
+                <div className="flex items-center gap-2 text-xs font-bold text-stone-900">
+                  <Globe className="w-4 h-4 text-orange-600" />
+                  <span>Kéo bài viết từ máy chủ web khác qua URL:</span>
+                </div>
+                <div className="flex gap-2">
+                  <input
+                    type="url"
+                    placeholder="https://may-chu-khac.com"
+                    value={remoteServerUrl}
+                    onChange={(e) => setRemoteServerUrl(e.target.value)}
+                    className="flex-1 px-3 py-2 text-xs bg-white border border-stone-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleSyncFromRemoteUrl}
+                    disabled={syncingRemote}
+                    className="px-3.5 py-2 bg-orange-600 hover:bg-orange-500 text-white rounded-xl text-xs font-bold shrink-0 transition-colors disabled:opacity-50 cursor-pointer"
+                  >
+                    {syncingRemote ? 'Đang kéo...' : 'Đồng bộ'}
+                  </button>
+                </div>
+                <p className="text-[11px] text-stone-500">
+                  Nhập địa chỉ máy chủ khác để lấy toàn bộ bài viết đã đăng về máy chủ này tự động.
+                </p>
+              </div>
+
+              {/* Option 6: Push/Sync to Local Server */}
               <button
                 type="button"
                 onClick={handleSyncAllData}
@@ -2295,15 +2483,15 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                 className="w-full flex items-center justify-between p-3.5 rounded-2xl bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs sm:text-sm transition-all cursor-pointer disabled:opacity-50"
               >
                 <div className="flex items-center gap-3">
-                  <RefreshCw className={`w-5 h-5 ${syncingServer ? 'animate-spin text-orange-400' : 'text-stone-300'}`} />
+                  <RefreshCw className={`w-5 h-5 shrink-0 ${syncingServer ? 'animate-spin text-orange-400' : 'text-stone-300'}`} />
                   <div className="text-left">
-                    <div>{syncingServer ? 'Đang Gửi Lên Máy Chủ...' : 'Lưu & Đồng Bộ Toàn Bộ Lên Server'}</div>
+                    <div>{syncingServer ? 'Đang Gửi Lên Máy Chủ...' : 'Lưu & Cập Nhật File Trên Máy Chủ Này'}</div>
                     <div className="text-[11px] font-normal text-stone-400">
-                      Ghi đè và cập nhật file máy chủ ngay lập tức
+                      Ghi đè file public/custom_blog_posts.json ngay lập tức
                     </div>
                   </div>
                 </div>
-                <span className="text-xs bg-stone-800 text-stone-300 px-2.5 py-1 rounded-lg shrink-0">Đồng bộ</span>
+                <span className="text-xs bg-stone-800 text-stone-300 px-2.5 py-1 rounded-lg shrink-0">Lưu Server</span>
               </button>
             </div>
 

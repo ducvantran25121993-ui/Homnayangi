@@ -26,6 +26,8 @@ import {
   BLOG_CATEGORIES,
   INITIAL_BLOG_POSTS,
   getBlogPostBySlug,
+  getCustomBlogPosts,
+  fetchAndSyncCustomPosts,
 } from '../data/blogPosts';
 import { INITIAL_DISHES } from '../data/dishes';
 import { findDishByRecipeSlug, getRecipePath } from '../data/recipes';
@@ -43,13 +45,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
   const [selectedCategory, setSelectedCategory] = useState<string>('Tất Cả');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [customPosts, setCustomPosts] = useState<BlogPost[]>(() => {
-    if (typeof window === 'undefined') return [];
-    try {
-      const saved = localStorage.getItem(LOCAL_STORAGE_CUSTOM_POSTS);
-      return saved ? JSON.parse(saved) : [];
-    } catch {
-      return [];
-    }
+    return getCustomBlogPosts();
   });
 
   // Current active post when viewing detail
@@ -96,22 +92,12 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
     return Array.from(postMap.values());
   }, [customPosts]);
 
-  // Load latest posts from server API on mount
+  // Load latest posts from server API or static json on mount
   useEffect(() => {
     const fetchLatestPosts = async () => {
-      try {
-        const res = await fetch('/api/admin/posts');
-        if (res.ok) {
-          const data = await res.json();
-          if (data.customPosts && Array.isArray(data.customPosts)) {
-            setCustomPosts(data.customPosts);
-            if (typeof window !== 'undefined') {
-              localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(data.customPosts));
-            }
-          }
-        }
-      } catch {
-        // Fallback to local
+      const synced = await fetchAndSyncCustomPosts();
+      if (synced && synced.length > 0) {
+        setCustomPosts(synced);
       }
     };
     fetchLatestPosts();

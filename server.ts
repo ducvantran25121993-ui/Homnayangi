@@ -522,11 +522,16 @@ Yêu cầu trả về đúng định dạng JSON:
 
 // Persistent storage for custom blog posts (WordPress Admin)
 const CUSTOM_POSTS_FILE = path.join(process.cwd(), "public", "custom_blog_posts.json");
+const DIST_POSTS_FILE = path.join(process.cwd(), "dist", "custom_blog_posts.json");
 
 function loadCustomBlogPosts(): any[] {
   try {
     if (fs.existsSync(CUSTOM_POSTS_FILE)) {
       const raw = fs.readFileSync(CUSTOM_POSTS_FILE, "utf-8");
+      return JSON.parse(raw);
+    }
+    if (fs.existsSync(DIST_POSTS_FILE)) {
+      const raw = fs.readFileSync(DIST_POSTS_FILE, "utf-8");
       return JSON.parse(raw);
     }
   } catch (err) {
@@ -550,6 +555,14 @@ function saveCustomBlogPosts(posts: any[]) {
     console.error("Error saving custom blog posts:", err);
   }
 }
+
+// Direct static JSON endpoint with no-cache headers for cross-server & CDN consumers
+app.get("/custom_blog_posts.json", (_req, res) => {
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+  const posts = loadCustomBlogPosts();
+  return res.json(posts);
+});
 
 function addUrlToSitemap(slug: string) {
   try {
@@ -1006,7 +1019,7 @@ async function startServer() {
       ? __dirname
       : path.resolve(process.cwd(), "dist");
 
-    app.use(express.static(distPath));
+    app.use(express.static(distPath, { index: false }));
     app.get("*", (req, res) => {
       const indexPath = path.join(distPath, "index.html");
       if (fs.existsSync(indexPath)) {
