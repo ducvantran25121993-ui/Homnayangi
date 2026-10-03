@@ -140,6 +140,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
   const [readTime, setReadTime] = useState('6 phút đọc');
   const [featured, setFeatured] = useState(false);
   const [editorSubTab, setEditorSubTab] = useState<'visual' | 'preview' | 'markdown'>('visual');
+  const [currentBlockFormat, setCurrentBlockFormat] = useState<string>('p');
 
   // Fullscreen & Live counters for Word/WordPress experience
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -782,6 +783,70 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
     }
   }, []);
 
+  // Detect current block/heading format at cursor position
+  const detectCurrentBlockFormat = useCallback(() => {
+    if (typeof window === 'undefined') return;
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0 || !editorRef.current) return;
+
+    // 1. Traverse upwards from anchorNode to editorRef container
+    let node: Node | null = selection.anchorNode;
+    while (node && node !== editorRef.current) {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        const tag = (node as HTMLElement).tagName.toLowerCase();
+        if (['h1', 'h2', 'h3', 'h4', 'blockquote', 'pre', 'p'].includes(tag)) {
+          setCurrentBlockFormat(tag);
+          return;
+        }
+      }
+      node = node.parentNode;
+    }
+
+    // 2. Secondary check: queryCommandValue
+    try {
+      const val = document.queryCommandValue('formatBlock');
+      if (val) {
+        const cleanVal = val.toLowerCase().replace(/[<>]/g, '');
+        if (['h1', 'h2', 'h3', 'h4', 'blockquote', 'pre', 'p'].includes(cleanVal)) {
+          setCurrentBlockFormat(cleanVal);
+          return;
+        }
+      }
+    } catch {}
+
+    setCurrentBlockFormat('p');
+  }, []);
+
+  // Format block change handler (H1, H2, H3, H4, Quote, Paragraph)
+  const handleFormatBlockChange = (tag: string) => {
+    setCurrentBlockFormat(tag);
+    if (!tag || !editorRef.current) return;
+    editorRef.current.focus();
+    try {
+      document.execCommand('formatBlock', false, tag);
+    } catch {
+      document.execCommand('formatBlock', false, `<${tag}>`);
+    }
+    updateCounts();
+    setTimeout(detectCurrentBlockFormat, 30);
+  };
+
+  // Sync toolbar with cursor position whenever user clicks, types, or moves cursor
+  useEffect(() => {
+    if (viewMode !== 'editor' || editorSubTab !== 'visual') return;
+    const handleSelectionChange = () => {
+      const selection = window.getSelection();
+      if (!selection || !editorRef.current) return;
+      if (editorRef.current.contains(selection.anchorNode)) {
+        detectCurrentBlockFormat();
+      }
+    };
+    document.addEventListener('selectionchange', handleSelectionChange);
+    return () => {
+      document.removeEventListener('selectionchange', handleSelectionChange);
+    };
+  }, [viewMode, editorSubTab, detectCurrentBlockFormat]);
+
   // Execute formatting command in document
   const execCmd = (cmd: string, val: string | undefined = undefined) => {
     if (!editorRef.current) return;
@@ -823,6 +888,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
   // Handle click on links inside editor ("trình soạn thảo đứng im dể dễ chọn & có thể xóa bỏ")
   const handleEditorClick = (e: React.MouseEvent<HTMLDivElement>) => {
     updateCounts();
+    detectCurrentBlockFormat();
     const target = e.target as HTMLElement;
     const linkEl = target.closest('a');
 
@@ -1538,13 +1604,10 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                   <div className="bg-stone-50/90 rounded-b-2xl p-2 sm:p-2.5 flex flex-wrap items-center gap-1.5 text-stone-700 text-xs">
                     {/* Format Block (Headings) */}
                     <select
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        if (val) execCmd('formatBlock', val);
-                      }}
-                      className="bg-white border border-stone-300 rounded-lg px-2.5 py-1 text-xs font-semibold text-stone-700 focus:outline-none focus:ring-1 focus:ring-orange-500 shadow-2xs"
-                      defaultValue="p"
-                      title="Định dạng đoạn văn & tiêu đề"
+                      value={currentBlockFormat}
+                      onChange={(e) => handleFormatBlockChange(e.target.value)}
+                      className="bg-white border border-stone-300 rounded-lg px-2.5 py-1 text-xs font-semibold text-stone-700 focus:outline-none focus:ring-1 focus:ring-orange-500 shadow-2xs cursor-pointer"
+                      title="Định dạng đoạn văn & tiêu đề (tự động nhận diện theo vị trí con trỏ)"
                     >
                       <option value="p">Đoạn văn (Normal)</option>
                       <option value="h1">Tiêu đề lớn (H1)</option>
@@ -1856,8 +1919,15 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                         ref={editorRef}
                         contentEditable
                         onClick={handleEditorClick}
-                        onInput={updateCounts}
-                        onKeyUp={updateCounts}
+                        onInput={() => {
+                          updateCounts();
+                          detectCurrentBlockFormat();
+                        }}
+                        onKeyUp={() => {
+                          updateCounts();
+                          detectCurrentBlockFormat();
+                        }}
+                        onMouseUp={detectCurrentBlockFormat}
                         className="prose prose-stone max-w-none focus:outline-none min-h-[500px] text-stone-800 leading-relaxed text-[16px]"
                         style={{
                           wordBreak: 'break-word',
