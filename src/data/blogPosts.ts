@@ -761,28 +761,43 @@ export function getFeaturedBlogPosts(): BlogPost[] {
 }
 
 /**
- * Fetch and synchronize custom blog posts from server API or static custom_blog_posts.json fallback.
- * Works on any web server (Node/Express, Vercel, Netlify, Nginx, Apache, CDN).
+ * Fetch and synchronize custom blog posts from:
+ * 1. Google Cloud Firestore (global cloud database accessible by any device/server)
+ * 2. Dynamic Express server API (/api/admin/posts)
+ * 3. Static fallback (/custom_blog_posts.json)
  */
 export async function fetchAndSyncCustomPosts(): Promise<BlogPost[]> {
   if (typeof window === 'undefined') return [];
   let fetched: BlogPost[] = [];
   const cacheBust = Date.now();
 
-  // 1. Try dynamic Express server API
+  // 1. First priority: Google Cloud Firestore (accessible globally on all devices and servers)
   try {
-    const res = await fetch(`/api/admin/posts?_t=${cacheBust}`);
-    if (res.ok) {
-      const data = await res.json();
-      if (Array.isArray(data.customPosts) && data.customPosts.length > 0) {
-        fetched = data.customPosts;
-      }
+    const { getPostsFromFirestore } = await import('../firebase');
+    const cloudPosts = await getPostsFromFirestore();
+    if (cloudPosts && cloudPosts.length > 0) {
+      fetched = cloudPosts;
     }
   } catch {
     // ignore
   }
 
-  // 2. Fallback to static custom_blog_posts.json (essential for Vercel, static hosting, or other web servers)
+  // 2. Try dynamic Express server API
+  if (!fetched || fetched.length === 0) {
+    try {
+      const res = await fetch(`/api/admin/posts?_t=${cacheBust}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data.customPosts) && data.customPosts.length > 0) {
+          fetched = data.customPosts;
+        }
+      }
+    } catch {
+      // ignore
+    }
+  }
+
+  // 3. Fallback to static custom_blog_posts.json (for Vercel, static hosting, or CDN)
   if (!fetched || fetched.length === 0) {
     try {
       const res = await fetch(`/custom_blog_posts.json?_t=${cacheBust}`);

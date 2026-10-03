@@ -62,6 +62,11 @@ import {
   LOCAL_STORAGE_CUSTOM_POSTS,
   getAllBlogPosts,
 } from '../data/blogPosts';
+import {
+  savePostToFirestore,
+  deletePostFromFirestore,
+  getPostsFromFirestore,
+} from '../firebase';
 import { TabType } from '../utils/navigation';
 
 interface AdminBlogPageProps {
@@ -426,9 +431,30 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
       .replace(/\s+/g, '-');
   };
 
-  // Fetch all posts from API or localStorage
+  // Fetch all posts from Cloud Firestore, API, or localStorage
   const loadPosts = useCallback(async () => {
     setLoading(true);
+
+    // 1. Try Cloud Firestore first for global multi-device sync
+    try {
+      const cloudPosts = await getPostsFromFirestore();
+      if (cloudPosts && cloudPosts.length > 0) {
+        const map = new Map<string, BlogPost>();
+        INITIAL_BLOG_POSTS.forEach((p) => map.set(p.slug, p));
+        cloudPosts.forEach((p) => map.set(p.slug, p));
+        const merged = Array.from(map.values());
+        setPosts(merged);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(cloudPosts));
+        }
+        setLoading(false);
+        return;
+      }
+    } catch (e) {
+      console.warn('Firestore load error:', e);
+    }
+
+    // 2. Try server API
     try {
       const res = await fetch('/api/admin/posts');
       if (res.ok) {
@@ -447,7 +473,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
       // Fallback to local
     }
 
-    // Local fallback
+    // 3. Local fallback
     const all = getAllBlogPosts();
     setPosts(all);
     setLoading(false);
@@ -980,6 +1006,14 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
       content: markdownContent,
     };
 
+    let cloudSaved = false;
+    try {
+      await savePostToFirestore(postPayload);
+      cloudSaved = true;
+    } catch (fbErr) {
+      console.warn('Firestore save warning:', fbErr);
+    }
+
     let serverSaved = false;
     let serverErrorMsg = '';
 
@@ -1028,7 +1062,9 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
 
     setSaving(false);
 
-    if (serverSaved) {
+    if (cloudSaved) {
+      showToast(`Đã lưu bài viết lên Đám Mây (Firestore) thành công! Tất cả các máy tính và điện thoại khác đều xem được ngay tại /${cleanSlug}`, 'success');
+    } else if (serverSaved) {
       showToast(`Đã lưu bài viết thành công! Website đã được cập nhật tại /${cleanSlug}`, 'success');
     } else {
       const is404OrStatic = serverErrorMsg.includes('404') || serverErrorMsg.includes('Failed to fetch');
@@ -1052,6 +1088,12 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
     if (!window.confirm(`Bạn có chắc chắn muốn xóa bài viết "${post.title}"?`)) return;
 
     try {
+      try {
+        await deletePostFromFirestore(post.slug || post.id);
+      } catch (e) {
+        console.warn('Firestore delete error:', e);
+      }
+
       await fetch(`/api/admin/posts/${post.slug || post.id}`, {
         method: 'DELETE',
       });

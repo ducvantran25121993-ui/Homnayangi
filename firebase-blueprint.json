@@ -1,0 +1,92 @@
+{
+  "entities": {
+    "Post": {
+      "title": "Post",
+      "description": "Bài viết ẩm thực và cẩm nang món ngon được đăng tải",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Mã định danh bài viết hoặc slug",
+          "maxLength": 150
+        },
+        "slug": {
+          "type": "string",
+          "description": "Đường dẫn thân thiện URL của bài viết",
+          "maxLength": 150
+        },
+        "title": {
+          "type": "string",
+          "description": "Tiêu đề bài viết",
+          "maxLength": 300
+        },
+        "excerpt": {
+          "type": "string",
+          "description": "Đoạn trích tóm tắt bài viết cho SEO và mạng xã hội",
+          "maxLength": 1000
+        },
+        "content": {
+          "type": "string",
+          "description": "Nội dung bài viết đầy đủ ở định dạng HTML",
+          "maxLength": 500000
+        },
+        "coverImage": {
+          "type": "string",
+          "description": "URL ảnh bìa đại diện",
+          "maxLength": 2048
+        },
+        "category": {
+          "type": "string",
+          "description": "Chuyên mục bài viết",
+          "maxLength": 100
+        },
+        "tags": {
+          "type": "string",
+          "description": "Danh sách thẻ bài viết cách nhau bởi dấu phẩy",
+          "maxLength": 500
+        },
+        "authorName": {
+          "type": "string",
+          "description": "Tên tác giả bài viết",
+          "maxLength": 100
+        },
+        "authorRole": {
+          "type": "string",
+          "description": "Chức danh tác giả",
+          "maxLength": 100
+        },
+        "authorAvatar": {
+          "type": "string",
+          "description": "Ảnh đại diện tác giả",
+          "maxLength": 2048
+        },
+        "publishDate": {
+          "type": "string",
+          "description": "Ngày đăng bài dạng hiển thị (DD/MM/YYYY)",
+          "maxLength": 50
+        },
+        "readTime": {
+          "type": "string",
+          "description": "Thời gian đọc ước tính",
+          "maxLength": 50
+        },
+        "featured": {
+          "type": "boolean",
+          "description": "Đánh dấu bài viết nổi bật"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Thời gian cập nhật bài viết dạng ISO string",
+          "maxLength": 100
+        }
+      },
+      "required": ["id", "slug", "title", "content"]
+    }
+  },
+  "firestore": {
+    "/posts/{postId}": {
+      "schema": "Post",
+      "description": "Tập hợp tất cả các bài viết blog ẩm thực được đồng bộ trên toàn cầu"
+    }
+  }
+}
