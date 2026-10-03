@@ -162,7 +162,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
               >
                 {activeRegion.name}
               </span>
-              <link itemProp="item" href={`https://www.angigio.com${activeRegion.path}`} />
+              <link itemProp="item" href={`https://angigio.com${activeRegion.path}`} />
               <meta itemProp="position" content="3" />
             </li>
           </>
@@ -228,7 +228,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
                 >
                   {recipeArticleTitle}
                 </span>
-                <link itemProp="item" href={`https://www.angigio.com${getRecipePath(recipeDish)}`} />
+                <link itemProp="item" href={`https://angigio.com${getRecipePath(recipeDish)}`} />
                 <meta itemProp="position" content="4" />
               </li>
             </>
@@ -266,7 +266,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
                 >
                   {recipeArticleTitle}
                 </span>
-                <link itemProp="item" href={`https://www.angigio.com${getRecipePath(recipeDish)}`} />
+                <link itemProp="item" href={`https://angigio.com${getRecipePath(recipeDish)}`} />
                 <meta itemProp="position" content="3" />
               </li>
             </>
@@ -312,7 +312,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
               >
                 {activeBlogPost.title}
               </span>
-              <link itemProp="item" href={`https://www.angigio.com/${activeBlogPost.slug}`} />
+              <link itemProp="item" href={`https://angigio.com/${activeBlogPost.slug}`} />
               <meta itemProp="position" content="3" />
             </li>
           </>
@@ -331,7 +331,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
             >
               {currentLabel}
             </span>
-            <link itemProp="item" href={`https://www.angigio.com${currentPath}`} />
+            <link itemProp="item" href={`https://angigio.com${currentPath}`} />
             <meta itemProp="position" content="2" />
           </li>
         )}

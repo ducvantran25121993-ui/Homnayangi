@@ -46,7 +46,7 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = ({ onNavigate, onSelect
     '@type': 'WebPage',
     name: '404 - Không Tìm Thấy Trang | Hôm Nay Ăn Gì',
     description: 'Trang bạn đang tìm kiếm không tồn tại hoặc đã được dọn sang địa chỉ mới.',
-    url: typeof window !== 'undefined' ? window.location.href : 'https://www.angigio.com/404',
+    url: typeof window !== 'undefined' ? window.location.href : 'https://angigio.com/404',
     breadcrumb: {
       '@type': 'BreadcrumbList',
       itemListElement: [
@@ -54,13 +54,13 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = ({ onNavigate, onSelect
           '@type': 'ListItem',
           position: 1,
           name: 'Trang chủ',
-          item: 'https://www.angigio.com/',
+          item: 'https://angigio.com/',
         },
         {
           '@type': 'ListItem',
           position: 2,
           name: '404 Không Tìm Thấy Trang',
-          item: 'https://www.angigio.com/404',
+          item: 'https://angigio.com/404',
         },
       ],
     },

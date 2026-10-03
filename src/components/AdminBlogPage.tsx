@@ -1233,7 +1233,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                             <span className="text-stone-400">/{post.slug}</span>
                             <button
                               onClick={() => {
-                                navigator.clipboard.writeText(`https://www.angigio.com/${post.slug}`);
+                                navigator.clipboard.writeText(`https://angigio.com/${post.slug}`);
                                 showToast('Đã sao chép link!');
                               }}
                               className="text-stone-400 hover:text-stone-700"
@@ -1303,7 +1303,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                 <div className="flex items-center gap-1.5 text-xs text-stone-500 bg-stone-50 p-2.5 rounded-xl border border-stone-200/80">
                   <Globe className="w-3.5 h-3.5 text-stone-400 shrink-0" />
                   <span className="font-semibold text-stone-600">Đường dẫn:</span>
-                  <span className="text-stone-400 font-mono">https://www.angigio.com/</span>
+                  <span className="text-stone-400 font-mono">https://angigio.com/</span>
                   <input
                     type="text"
                     value={slug}

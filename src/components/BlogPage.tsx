@@ -161,7 +161,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
       document.title = `${activePost.title} | Blog Ẩm Thực Hôm Nay Ăn Gì`;
       const canonical = document.querySelector('link[rel="canonical"]');
       if (canonical) {
-        canonical.setAttribute('href', `https://www.angigio.com/${activePost.slug}`);
+        canonical.setAttribute('href', `https://angigio.com/${activePost.slug}`);
       }
 
       // Smoothly normalize address bar to canonical URL if opened via an alias
@@ -202,12 +202,12 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
         '@graph': [
           {
             '@type': 'BlogPosting',
-            '@id': `https://www.angigio.com/${activePost.slug}#article`,
+            '@id': `https://angigio.com/${activePost.slug}#article`,
             isPartOf: {
               '@type': 'WebSite',
-              '@id': 'https://www.angigio.com/#website',
+              '@id': 'https://angigio.com/#website',
               name: 'Hôm Nay Ăn Gì',
-              url: 'https://www.angigio.com/',
+              url: 'https://angigio.com/',
             },
             headline: activePost.title,
             description: activePost.excerpt,
@@ -222,38 +222,38 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
             publisher: {
               '@type': 'Organization',
               name: 'Hôm Nay Ăn Gì',
-              url: 'https://www.angigio.com',
+              url: 'https://angigio.com',
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://www.angigio.com/logo.png',
+                url: 'https://angigio.com/logo.png',
               },
             },
             mainEntityOfPage: {
               '@type': 'WebPage',
-              '@id': `https://www.angigio.com/${activePost.slug}`,
+              '@id': `https://angigio.com/${activePost.slug}`,
             },
           },
           {
             '@type': 'BreadcrumbList',
-            '@id': `https://www.angigio.com/${activePost.slug}#breadcrumb`,
+            '@id': `https://angigio.com/${activePost.slug}#breadcrumb`,
             itemListElement: [
               {
                 '@type': 'ListItem',
                 position: 1,
                 name: 'Trang chủ',
-                item: 'https://www.angigio.com/',
+                item: 'https://angigio.com/',
               },
               {
                 '@type': 'ListItem',
                 position: 2,
                 name: 'Blog Ẩm Thực',
-                item: 'https://www.angigio.com/blog',
+                item: 'https://angigio.com/blog',
               },
               {
                 '@type': 'ListItem',
                 position: 3,
                 name: activePost.title,
-                item: `https://www.angigio.com/${activePost.slug}`,
+                item: `https://angigio.com/${activePost.slug}`,
               },
             ],
           },
@@ -263,7 +263,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
       document.title = 'Blog Ẩm Thực - Cẩm Nang Món Ngon & Bí Quyết Nấu Nướng | Hôm Nay Ăn Gì';
       const canonical = document.querySelector('link[rel="canonical"]');
       if (canonical) {
-        canonical.setAttribute('href', 'https://www.angigio.com/blog');
+        canonical.setAttribute('href', 'https://angigio.com/blog');
       }
       const existingScript = document.getElementById('blog-post-jsonld');
       if (existingScript) existingScript.remove();

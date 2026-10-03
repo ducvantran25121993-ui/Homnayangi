@@ -680,7 +680,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
       '',
       recipe.tip ? `💡 MẸO NẤU CHUẨN VỊ: ${recipe.tip}` : '',
       '',
-      'Mâm cơm gia đình chuẩn vị Việt: https://www.angigio.com',
+      'Mâm cơm gia đình chuẩn vị Việt: https://angigio.com',
     ].filter(Boolean).join('\n');
 
     navigator.clipboard.writeText(text).then(() => {
@@ -1061,7 +1061,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
       `💡 BÍ QUYẾT BẾP TRƯỞNG: ${currentRecipe.chefSecret}`,
       currentRecipe.recommendedSauce ? `🥢 Nước chấm & đồ ăn kèm: ${currentRecipe.recommendedSauce}` : '',
       '',
-      `Khám phá thêm ${INITIAL_DISHES.length}+ món ngon tại: https://www.angigio.com/am-thuc-vung-mien`,
+      `Khám phá thêm ${INITIAL_DISHES.length}+ món ngon tại: https://angigio.com/am-thuc-vung-mien`,
     ].filter(Boolean);
 
     navigator.clipboard.writeText(lines.join('\n')).then(() => {
@@ -2411,14 +2411,14 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
             "@graph": [
               {
                 "@type": "WebPage",
-                "@id": `https://www.angigio.com${
+                "@id": `https://angigio.com${
                   viewingRecipeArticle
                     ? getRecipePath(selectedRecipeDish)
                     : sectionTab === 'region' && typeof window !== 'undefined' && isRegionPath(window.location.pathname)
                     ? currentRegion.path
                     : DISCOVER_SUB_CONFIG[sectionTab].path
                 }#webpage`,
-                "url": `https://www.angigio.com${
+                "url": `https://angigio.com${
                   viewingRecipeArticle
                     ? getRecipePath(selectedRecipeDish)
                     : sectionTab === 'region' && typeof window !== 'undefined' && isRegionPath(window.location.pathname)
@@ -2438,14 +2438,14 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                 "inLanguage": "vi-VN",
                 "isPartOf": {
                   "@type": "WebSite",
-                  "@id": "https://www.angigio.com/#website",
+                  "@id": "https://angigio.com/#website",
                   "name": "Hôm Nay Ăn Gì",
-                  "url": "https://www.angigio.com/"
+                  "url": "https://angigio.com/"
                 }
               },
               {
                 "@type": "BreadcrumbList",
-                "@id": `https://www.angigio.com${
+                "@id": `https://angigio.com${
                   viewingRecipeArticle
                     ? getRecipePath(selectedRecipeDish)
                     : sectionTab === 'region' && typeof window !== 'undefined' && isRegionPath(window.location.pathname)
@@ -2457,7 +2457,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                     "@type": "ListItem",
                     "position": 1,
                     "name": "Trang Chủ",
-                    "item": "https://www.angigio.com/"
+                    "item": "https://angigio.com/"
                   },
                   ...(sectionTab === 'recipe'
                     ? [
@@ -2465,7 +2465,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                           "@type": "ListItem",
                           "position": 2,
                           "name": "Cách Nấu Món Ngon",
-                          "item": "https://www.angigio.com/cach-nau-mon-ngon"
+                          "item": "https://angigio.com/cach-nau-mon-ngon"
                         },
                         ...(viewingRecipeArticle
                           ? [
@@ -2473,7 +2473,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                                 "@type": "ListItem",
                                 "position": 3,
                                 "name": getRecipeArticleTitle(selectedRecipeDish, currentRecipe),
-                                "item": `https://www.angigio.com${getRecipePath(selectedRecipeDish)}`
+                                "item": `https://angigio.com${getRecipePath(selectedRecipeDish)}`
                               }
                             ]
                           : [])
@@ -2484,7 +2484,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                           "@type": "ListItem",
                           "position": 2,
                           "name": "Ẩm Thực Vùng Miền",
-                          "item": "https://www.angigio.com/am-thuc-vung-mien"
+                          "item": "https://angigio.com/am-thuc-vung-mien"
                         },
                         ...(typeof window !== 'undefined' && isRegionPath(window.location.pathname)
                           ? [
@@ -2492,7 +2492,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                                 "@type": "ListItem",
                                 "position": 3,
                                 "name": currentRegion.name,
-                                "item": `https://www.angigio.com${currentRegion.path}`
+                                "item": `https://angigio.com${currentRegion.path}`
                               }
                             ]
                           : [])
@@ -2502,7 +2502,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                           "@type": "ListItem",
                           "position": 2,
                           "name": "Thực Đơn Mỗi Ngày",
-                          "item": "https://www.angigio.com/thuc-don-moi-ngay"
+                          "item": "https://angigio.com/thuc-don-moi-ngay"
                         }
                       ]
                   )
@@ -2513,15 +2513,15 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                 ? [
                     {
                       "@type": "Recipe",
-                      "@id": `https://www.angigio.com${getRecipePath(selectedRecipeDish)}`,
-                      "url": `https://www.angigio.com${getRecipePath(selectedRecipeDish)}`,
-                      "mainEntityOfPage": `https://www.angigio.com${getRecipePath(selectedRecipeDish)}`,
+                      "@id": `https://angigio.com${getRecipePath(selectedRecipeDish)}`,
+                      "url": `https://angigio.com${getRecipePath(selectedRecipeDish)}`,
+                      "mainEntityOfPage": `https://angigio.com${getRecipePath(selectedRecipeDish)}`,
                       "name": getRecipeArticleTitle(selectedRecipeDish, currentRecipe),
                       "headline": `${getRecipeArticleTitle(selectedRecipeDish, currentRecipe)} - Hướng dẫn chi tiết định lượng và các bước nấu chuẩn vị`,
                       "image": [
                         selectedRecipeDish.image.startsWith('http')
                           ? selectedRecipeDish.image
-                          : `https://www.angigio.com${selectedRecipeDish.image}`
+                          : `https://angigio.com${selectedRecipeDish.image}`
                       ],
                       "description":
                         selectedRecipeDish.description ||
@@ -2553,15 +2553,15 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                         "position": st.step,
                         "name": st.title,
                         "text": st.description,
-                        "url": `https://www.angigio.com${getRecipePath(selectedRecipeDish)}#step-${st.step}`,
+                        "url": `https://angigio.com${getRecipePath(selectedRecipeDish)}#step-${st.step}`,
                         "image": selectedRecipeDish.image.startsWith('http')
                           ? selectedRecipeDish.image
-                          : `https://www.angigio.com${selectedRecipeDish.image}`
+                          : `https://angigio.com${selectedRecipeDish.image}`
                       })),
                       "author": {
                         "@type": "Organization",
                         "name": "Hôm Nay Ăn Gì",
-                        "url": "https://www.angigio.com/"
+                        "url": "https://angigio.com/"
                       }
                     }
                   ]
@@ -2569,8 +2569,8 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                 ? [
                     {
                       "@type": "CollectionPage",
-                      "@id": `https://www.angigio.com${typeof window !== 'undefined' && isRegionPath(window.location.pathname) ? currentRegion.path : '/am-thuc-vung-mien'}#collection`,
-                      "url": `https://www.angigio.com${typeof window !== 'undefined' && isRegionPath(window.location.pathname) ? currentRegion.path : '/am-thuc-vung-mien'}`,
+                      "@id": `https://angigio.com${typeof window !== 'undefined' && isRegionPath(window.location.pathname) ? currentRegion.path : '/am-thuc-vung-mien'}#collection`,
+                      "url": `https://angigio.com${typeof window !== 'undefined' && isRegionPath(window.location.pathname) ? currentRegion.path : '/am-thuc-vung-mien'}`,
                       "name": typeof window !== 'undefined' && isRegionPath(window.location.pathname)
                         ? currentRegion.metaTitle
                         : "Bản Đồ Ẩm Thực Vùng Miền 3 Miền Việt Nam",
@@ -2580,7 +2580,7 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                       "inLanguage": "vi-VN",
                       "isPartOf": {
                         "@type": "WebSite",
-                        "@id": "https://www.angigio.com/#website"
+                        "@id": "https://angigio.com/#website"
                       },
                       "mainEntity": {
                         "@type": "ItemList",
@@ -2591,8 +2591,8 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                           "@type": "ListItem",
                           "position": idx + 1,
                           "name": dish.name,
-                          "url": `https://www.angigio.com${getRecipePath(dish)}`,
-                          "image": dish.image.startsWith('http') ? dish.image : `https://www.angigio.com${dish.image}`
+                          "url": `https://angigio.com${getRecipePath(dish)}`,
+                          "image": dish.image.startsWith('http') ? dish.image : `https://angigio.com${dish.image}`
                         }))
                       }
                     }
@@ -2600,14 +2600,14 @@ export const FoodDiscoveryPage: React.FC<FoodDiscoveryPageProps> = ({
                 : [
                     {
                       "@type": "CollectionPage",
-                      "@id": "https://www.angigio.com/thuc-don-moi-ngay#collection",
-                      "url": "https://www.angigio.com/thuc-don-moi-ngay",
+                      "@id": "https://angigio.com/thuc-don-moi-ngay#collection",
+                      "url": "https://angigio.com/thuc-don-moi-ngay",
                       "name": "Thực Đơn Mỗi Ngày Cân Bằng Dinh Dưỡng",
                       "description": "Gợi ý mâm cơm gia đình chuẩn vị, đủ dinh dưỡng từ Thứ 2 đến Chủ Nhật cho cả nhà quây quần.",
                       "inLanguage": "vi-VN",
                       "isPartOf": {
                         "@type": "WebSite",
-                        "@id": "https://www.angigio.com/#website"
+                        "@id": "https://angigio.com/#website"
                       }
                     }
                   ]
