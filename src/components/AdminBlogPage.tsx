@@ -141,6 +141,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
   const [featured, setFeatured] = useState(false);
   const [editorSubTab, setEditorSubTab] = useState<'visual' | 'preview' | 'markdown'>('visual');
   const [currentBlockFormat, setCurrentBlockFormat] = useState<string>('p');
+  const [currentFontSize, setCurrentFontSize] = useState<string>('3');
 
   // Fullscreen & Live counters for Word/WordPress experience
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -783,6 +784,28 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
     }
   }, []);
 
+  // Map heading/block tag to font size level (1-7 scale used by browser execCommand)
+  const getFontSizeForTag = (tag: string): string => {
+    switch (tag) {
+      case 'h1':
+        return '6'; // 32px (H1)
+      case 'h2':
+        return '5'; // 24px (H2)
+      case 'h3':
+        return '4'; // 18-20px (H3)
+      case 'h4':
+        return '3'; // 16px (H4)
+      case 'p':
+        return '3'; // 16px (Normal paragraph)
+      case 'blockquote':
+        return '3'; // 16px
+      case 'pre':
+        return '2'; // 13px
+      default:
+        return '3';
+    }
+  };
+
   // Detect current block/heading format at cursor position
   const detectCurrentBlockFormat = useCallback(() => {
     if (typeof window === 'undefined') return;
@@ -791,35 +814,51 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
 
     // 1. Traverse upwards from anchorNode to editorRef container
     let node: Node | null = selection.anchorNode;
+    let foundTag = 'p';
+
     while (node && node !== editorRef.current) {
       if (node.nodeType === Node.ELEMENT_NODE) {
         const tag = (node as HTMLElement).tagName.toLowerCase();
         if (['h1', 'h2', 'h3', 'h4', 'blockquote', 'pre', 'p'].includes(tag)) {
-          setCurrentBlockFormat(tag);
-          return;
+          foundTag = tag;
+          break;
         }
       }
       node = node.parentNode;
     }
 
-    // 2. Secondary check: queryCommandValue
-    try {
-      const val = document.queryCommandValue('formatBlock');
-      if (val) {
-        const cleanVal = val.toLowerCase().replace(/[<>]/g, '');
-        if (['h1', 'h2', 'h3', 'h4', 'blockquote', 'pre', 'p'].includes(cleanVal)) {
-          setCurrentBlockFormat(cleanVal);
-          return;
+    if (foundTag === 'p') {
+      try {
+        const val = document.queryCommandValue('formatBlock');
+        if (val) {
+          const cleanVal = val.toLowerCase().replace(/[<>]/g, '');
+          if (['h1', 'h2', 'h3', 'h4', 'blockquote', 'pre', 'p'].includes(cleanVal)) {
+            foundTag = cleanVal;
+          }
         }
-      }
-    } catch {}
+      } catch {}
+    }
 
-    setCurrentBlockFormat('p');
+    setCurrentBlockFormat(foundTag);
+
+    // Sync font size to match heading size
+    try {
+      const fsVal = document.queryCommandValue('fontSize');
+      if (fsVal && ['1', '2', '3', '4', '5', '6', '7'].includes(fsVal)) {
+        setCurrentFontSize(fsVal);
+      } else {
+        setCurrentFontSize(getFontSizeForTag(foundTag));
+      }
+    } catch {
+      setCurrentFontSize(getFontSizeForTag(foundTag));
+    }
   }, []);
 
   // Format block change handler (H1, H2, H3, H4, Quote, Paragraph)
   const handleFormatBlockChange = (tag: string) => {
     setCurrentBlockFormat(tag);
+    setCurrentFontSize(getFontSizeForTag(tag));
+
     if (!tag || !editorRef.current) return;
     editorRef.current.focus();
     try {
@@ -858,6 +897,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
   // Font Size formatter
   const handleApplyFontSize = (sizeVal: string) => {
     if (!sizeVal) return;
+    setCurrentFontSize(sizeVal);
     execCmd('fontSize', sizeVal);
   };
 
@@ -1620,17 +1660,17 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
 
                     {/* Font Size */}
                     <select
+                      value={currentFontSize}
                       onChange={(e) => handleApplyFontSize(e.target.value)}
-                      className="bg-white border border-stone-300 rounded-lg px-2 py-1 text-xs font-semibold text-stone-700 focus:outline-none focus:ring-1 focus:ring-orange-500 shadow-2xs"
-                      defaultValue=""
-                      title="Cỡ chữ"
+                      className="bg-white border border-stone-300 rounded-lg px-2 py-1 text-xs font-semibold text-stone-700 focus:outline-none focus:ring-1 focus:ring-orange-500 shadow-2xs cursor-pointer"
+                      title="Cỡ chữ (tự động đồng bộ theo loại tiêu đề hoặc tùy chỉnh)"
                     >
-                      <option value="" disabled>Cỡ chữ</option>
                       <option value="2">Nhỏ (13px)</option>
                       <option value="3">Chuẩn (16px)</option>
-                      <option value="4">Vừa (18px)</option>
-                      <option value="5">Lớn (24px)</option>
-                      <option value="6">Rất lớn (32px)</option>
+                      <option value="4">Vừa (18px - H3)</option>
+                      <option value="5">Lớn (24px - H2)</option>
+                      <option value="6">Rất lớn (32px - H1)</option>
+                      <option value="7">Cực lớn (36px)</option>
                     </select>
 
                     <div className="h-4 w-px bg-stone-300 mx-0.5" />
@@ -1928,7 +1968,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                           detectCurrentBlockFormat();
                         }}
                         onMouseUp={detectCurrentBlockFormat}
-                        className="prose prose-stone max-w-none focus:outline-none min-h-[500px] text-stone-800 leading-relaxed text-[16px]"
+                        className="prose prose-stone max-w-none focus:outline-none min-h-[500px] text-stone-800 leading-relaxed text-[16px] blog-editor-canvas"
                         style={{
                           wordBreak: 'break-word',
                         }}
