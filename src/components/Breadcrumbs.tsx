@@ -25,6 +25,8 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
   // Force re-render on any popstate or custom locationchange events
   // Note: All hooks MUST be called unconditionally at top of component before any early return
   const [, setTick] = useState(0);
+  const [activeBlogPost, setActiveBlogPost] = useState<{ title: string; slug: string } | null>(null);
+
   useEffect(() => {
     const handleUrlChange = () => setTick((t) => t + 1);
     window.addEventListener('popstate', handleUrlChange);
@@ -34,6 +36,21 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
       window.removeEventListener('locationchange', handleUrlChange);
     };
   }, []);
+
+  useEffect(() => {
+    const isBlog = activeTab === 'blog';
+    const currentPath = typeof window !== 'undefined' ? window.location.pathname : '';
+    if (isBlog && currentPath !== '/blog' && currentPath !== '') {
+      import('../data/blogPosts').then((m) => {
+        const post = m.getBlogPostBySlug(currentPath);
+        if (post) {
+          setActiveBlogPost({ title: post.title, slug: post.slug });
+        }
+      });
+    } else {
+      setActiveBlogPost(null);
+    }
+  }, [activeTab]);
 
   if (activeTab === 'tarot' || activeTab === 'admin') {
     return null; // On homepage root or admin panel, breadcrumbs aren't necessary
@@ -74,20 +91,6 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
 
   // Check if currently on a specific blog post
   const isBlog = activeTab === 'blog';
-  const [activeBlogPost, setActiveBlogPost] = useState<{ title: string; slug: string } | null>(null);
-
-  useEffect(() => {
-    if (isBlog && currentPathname !== '/blog' && currentPathname !== '') {
-      import('../data/blogPosts').then((m) => {
-        const post = m.getBlogPostBySlug(currentPathname);
-        if (post) {
-          setActiveBlogPost({ title: post.title, slug: post.slug });
-        }
-      });
-    } else {
-      setActiveBlogPost(null);
-    }
-  }, [isBlog, currentPathname]);
 
   const currentLabel =
     isDiscover && discoverSubMeta ? discoverSubMeta.label : currentTabMeta?.label;

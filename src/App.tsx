@@ -16,6 +16,7 @@ import {
 import { getTabFromUrl, updateTabSEO, updateRegionSEO, TAB_CONFIG, TabType } from './utils/navigation';
 import { getRegionFromUrl, isRegionPath } from './data/regionalCuisine';
 import { OfflineIndicator } from './components/OfflineIndicator';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 // Code-split heavy pages and modals for lightning-fast mobile loading
 const Breadcrumbs = lazy(() => import('./components/Breadcrumbs').then((m) => ({ default: m.Breadcrumbs })));
@@ -417,13 +418,16 @@ export default function App() {
 
       {/* Breadcrumbs navigation for subpages (Lazy loaded, omitted on tarot homepage) */}
       {activeTab !== 'tarot' && (
-        <Suspense fallback={null}>
-          <Breadcrumbs activeTab={activeTab} onNavigate={handleNavigateTab} />
-        </Suspense>
+        <ErrorBoundary fallback={null}>
+          <Suspense fallback={null}>
+            <Breadcrumbs activeTab={activeTab} onNavigate={handleNavigateTab} />
+          </Suspense>
+        </ErrorBoundary>
       )}
 
       {/* Main Container */}
-      <main className="flex-1 pb-12">
+      <ErrorBoundary>
+        <main className="flex-1 pb-12">
         {activeTab === 'wheel' && (
           <Suspense fallback={<div className="min-h-[280px] flex items-center justify-center text-stone-400 text-xs">Đang tải Vòng Quay...</div>}>
             <LuckyWheel
@@ -573,6 +577,7 @@ export default function App() {
         {/* Editorial SEO Content & FAQ Accordion (Loaded on demand as user scrolls near bottom) */}
         <DeferredSeoContentFaq activeTab={activeTab} onNavigate={handleNavigateTab} />
       </main>
+      </ErrorBoundary>
 
       {/* Dish Detail Modal (Rendered only on demand) */}
       {selectedDish && (
