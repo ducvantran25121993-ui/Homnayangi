@@ -72,6 +72,7 @@ export default defineConfig(() => {
       tailwindcss(),
       aistudioMediaPlugin(),
       VitePWA({
+        injectRegister: 'script-defer',
         registerType: 'autoUpdate',
         includeAssets: [
           'favicon.ico',
@@ -199,6 +200,39 @@ export default defineConfig(() => {
         '@': path.resolve(__dirname, '.'),
       },
       dedupe: ['react', 'react-dom'],
+    },
+    build: {
+      target: 'esnext',
+      cssCodeSplit: true,
+      minify: 'esbuild',
+      chunkSizeWarningLimit: 600,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules/firebase/')) {
+              return 'vendor-firebase';
+            }
+            if (id.includes('node_modules/lucide-react/')) {
+              return 'vendor-icons';
+            }
+            if (id.includes('node_modules/motion/') || id.includes('node_modules/framer-motion/')) {
+              return 'vendor-motion';
+            }
+            if (id.includes('node_modules/canvas-confetti/')) {
+              return 'vendor-confetti';
+            }
+            if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
+              return 'vendor-react';
+            }
+            if (id.includes('src/data/recipes.ts') || id.includes('src/data/familyDishRecipes.ts')) {
+              return 'data-recipes';
+            }
+            if (id.includes('src/data/blogPosts.ts')) {
+              return 'data-blog';
+            }
+          },
+        },
+      },
     },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.

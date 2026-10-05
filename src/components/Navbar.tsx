@@ -251,10 +251,14 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onError={(e) => {
                     const target = e.currentTarget;
                     if (!target.src.includes('/logo.svg')) {
-                      target.src = '/logo.svg?v=5';
+                      target.src = '/logo.svg?v=7';
                     }
                   }}
                   alt="Logo Hôm Nay Ăn Gì" 
+                  width="44"
+                  height="44"
+                  fetchPriority="high"
+                  decoding="async"
                   className="w-10 h-10 sm:w-11 sm:h-11 object-contain drop-shadow-xs group-hover:scale-105 transition-transform duration-200 shrink-0" 
                 />
               </a>

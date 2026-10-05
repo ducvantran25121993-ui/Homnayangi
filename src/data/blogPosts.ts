@@ -771,12 +771,14 @@ export async function fetchAndSyncCustomPosts(): Promise<BlogPost[]> {
   let fetched: BlogPost[] = [];
   const cacheBust = Date.now();
 
-  // 1. First priority: Google Cloud Firestore (accessible globally on all devices and servers)
+  // 1. Fast static / local custom_blog_posts.json first (super fast CDN/cache, takes ~10ms)
   try {
-    const { getPostsFromFirestore } = await import('../firebase');
-    const cloudPosts = await getPostsFromFirestore();
-    if (cloudPosts && cloudPosts.length > 0) {
-      fetched = cloudPosts;
+    const res = await fetch(`/custom_blog_posts.json?_t=${cacheBust}`);
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        fetched = data;
+      }
     }
   } catch {
     // ignore
@@ -797,15 +799,17 @@ export async function fetchAndSyncCustomPosts(): Promise<BlogPost[]> {
     }
   }
 
-  // 3. Fallback to static custom_blog_posts.json (for Vercel, static hosting, or CDN)
+  // 3. Cloud Firestore fallback with 3-second timeout protection
   if (!fetched || fetched.length === 0) {
     try {
-      const res = await fetch(`/custom_blog_posts.json?_t=${cacheBust}`);
-      if (res.ok) {
-        const data = await res.json();
-        if (Array.isArray(data) && data.length > 0) {
-          fetched = data;
-        }
+      const { getPostsFromFirestore } = await import('../firebase');
+      const cloudPromise = getPostsFromFirestore();
+      const timeoutPromise = new Promise<BlogPost[]>((_, reject) =>
+        setTimeout(() => reject(new Error('Firestore timeout')), 3000)
+      );
+      const cloudPosts = await Promise.race([cloudPromise, timeoutPromise]);
+      if (cloudPosts && cloudPosts.length > 0) {
+        fetched = cloudPosts;
       }
     } catch {
       // ignore

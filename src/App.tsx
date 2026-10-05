@@ -1,22 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, Suspense, lazy } from 'react';
 import { Navbar } from './components/Navbar';
-import { LuckyWheel } from './components/LuckyWheel';
-import { AIAssistant } from './components/AIAssistant';
 import { FoodTarot } from './components/FoodTarot';
-import { DishCatalog } from './components/DishCatalog';
-import { SnacksTeaPage } from './components/SnacksTeaPage';
-import { MealPlanner } from './components/MealPlanner';
-import { FoodDiscoveryPage } from './components/FoodDiscoveryPage';
-import { AboutPage } from './components/AboutPage';
-import { ContactPage } from './components/ContactPage';
-import { PrivacyPolicyPage } from './components/PrivacyPolicyPage';
-import { TermsOfServicePage } from './components/TermsOfServicePage';
-import { BlogPage } from './components/BlogPage';
-import { AdminBlogPage } from './components/AdminBlogPage';
-import { RestaurantsPage } from './components/RestaurantsPage';
-import { AffiliateModal } from './components/AffiliateModal';
-import { DishDetailModal } from './components/DishDetailModal';
-import { LocationModal } from './components/LocationModal';
 import { OrderToast } from './components/OrderToast';
 import { Footer } from './components/Footer';
 import { Dish, AffiliateConfig, ClickRecord, UserLocation } from './types';
@@ -33,8 +17,26 @@ import {
 import { getTabFromUrl, updateTabSEO, updateRegionSEO, TAB_CONFIG, TabType } from './utils/navigation';
 import { getRegionFromUrl, isRegionPath } from './data/regionalCuisine';
 import { Breadcrumbs } from './components/Breadcrumbs';
-import { SeoContentFaq } from './components/SeoContentFaq';
 import { OfflineIndicator } from './components/OfflineIndicator';
+
+// Code-split heavy pages and modals for lightning-fast mobile loading
+const LuckyWheel = lazy(() => import('./components/LuckyWheel').then((m) => ({ default: m.LuckyWheel })));
+const AIAssistant = lazy(() => import('./components/AIAssistant').then((m) => ({ default: m.AIAssistant })));
+const DishCatalog = lazy(() => import('./components/DishCatalog').then((m) => ({ default: m.DishCatalog })));
+const SnacksTeaPage = lazy(() => import('./components/SnacksTeaPage').then((m) => ({ default: m.SnacksTeaPage })));
+const MealPlanner = lazy(() => import('./components/MealPlanner').then((m) => ({ default: m.MealPlanner })));
+const FoodDiscoveryPage = lazy(() => import('./components/FoodDiscoveryPage').then((m) => ({ default: m.FoodDiscoveryPage })));
+const AboutPage = lazy(() => import('./components/AboutPage').then((m) => ({ default: m.AboutPage })));
+const ContactPage = lazy(() => import('./components/ContactPage').then((m) => ({ default: m.ContactPage })));
+const PrivacyPolicyPage = lazy(() => import('./components/PrivacyPolicyPage').then((m) => ({ default: m.PrivacyPolicyPage })));
+const TermsOfServicePage = lazy(() => import('./components/TermsOfServicePage').then((m) => ({ default: m.TermsOfServicePage })));
+const BlogPage = lazy(() => import('./components/BlogPage').then((m) => ({ default: m.BlogPage })));
+const AdminBlogPage = lazy(() => import('./components/AdminBlogPage').then((m) => ({ default: m.AdminBlogPage })));
+const RestaurantsPage = lazy(() => import('./components/RestaurantsPage').then((m) => ({ default: m.RestaurantsPage })));
+const AffiliateModal = lazy(() => import('./components/AffiliateModal').then((m) => ({ default: m.AffiliateModal })));
+const DishDetailModal = lazy(() => import('./components/DishDetailModal').then((m) => ({ default: m.DishDetailModal })));
+const LocationModal = lazy(() => import('./components/LocationModal').then((m) => ({ default: m.LocationModal })));
+const SeoContentFaq = lazy(() => import('./components/SeoContentFaq').then((m) => ({ default: m.SeoContentFaq })));
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>(() => {
@@ -129,19 +131,31 @@ export default function App() {
     }
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 
-    // Multi-server & multi-device sync: fetch custom posts on mount
-    fetchAndSyncCustomPosts().then((syncedPosts) => {
-      if (syncedPosts && syncedPosts.length > 0) {
-        const pathname = window.location.pathname.replace(/\/$/, '') || '/';
-        const cleanSlug = pathname.replace(/^\/?blog\//, '').replace(/^\//, '');
-        const isCustomPost = syncedPosts.some(
-          (p) => p.slug === cleanSlug || p.id === cleanSlug
-        );
-        if (isCustomPost && activeTab !== 'blog') {
-          setActiveTab('blog');
+    // Defer blog custom post sync so it NEVER blocks initial mobile FCP or LCP
+    const pathname = window.location.pathname.replace(/\/$/, '') || '/';
+    const isBlogRoute = pathname.startsWith('/blog') || pathname === '/admin' || (pathname !== '/' && !['/vong-quay', '/mon-ngon', '/do-uong-an-vat', '/lich-an-theo-tuan', '/quan-ngon', '/kham-pha-am-thuc'].includes(pathname));
+
+    if (isBlogRoute) {
+      fetchAndSyncCustomPosts().then((syncedPosts) => {
+        if (syncedPosts && syncedPosts.length > 0) {
+          const cleanSlug = pathname.replace(/^\/?blog\//, '').replace(/^\//, '');
+          const isCustomPost = syncedPosts.some(
+            (p) => p.slug === cleanSlug || p.id === cleanSlug
+          );
+          if (isCustomPost && activeTab !== 'blog') {
+            setActiveTab('blog');
+          }
         }
-      }
-    });
+      });
+    } else {
+      setTimeout(() => {
+        if ('requestIdleCallback' in window) {
+          (window as any).requestIdleCallback(() => fetchAndSyncCustomPosts());
+        } else {
+          fetchAndSyncCustomPosts();
+        }
+      }, 3500);
+    }
 
     // Check if URL has secret query ?admin=1 or ?admin=inbox
     const params = new URLSearchParams(window.location.search);
@@ -363,34 +377,40 @@ export default function App() {
       {/* Main Container */}
       <main className="flex-1 pb-12">
         {activeTab === 'wheel' && (
-          <LuckyWheel
-            affiliateConfig={affiliateConfig}
-            onDishSelect={(dish) => setSelectedDish(dish)}
-            userLocation={userLocation}
-            onOpenLocationModal={openLocationPicker}
-            onNavigate={handleNavigateTab}
-          />
+          <Suspense fallback={<div className="min-h-[280px] flex items-center justify-center text-stone-400 text-xs">Đang tải Vòng Quay...</div>}>
+            <LuckyWheel
+              affiliateConfig={affiliateConfig}
+              onDishSelect={(dish) => setSelectedDish(dish)}
+              userLocation={userLocation}
+              onOpenLocationModal={openLocationPicker}
+              onNavigate={handleNavigateTab}
+            />
+          </Suspense>
         )}
 
         {activeTab === 'planner' && (
-          <MealPlanner
-            affiliateConfig={affiliateConfig}
-            userLocation={userLocation}
-            onOpenLocationModal={openLocationPicker}
-            onSelectDish={(dish) => setSelectedDish(dish)}
-            onNavigate={handleNavigateTab}
-          />
+          <Suspense fallback={<div className="min-h-[280px] flex items-center justify-center text-stone-400 text-xs">Đang tải Lên Lịch Ăn...</div>}>
+            <MealPlanner
+              affiliateConfig={affiliateConfig}
+              userLocation={userLocation}
+              onOpenLocationModal={openLocationPicker}
+              onSelectDish={(dish) => setSelectedDish(dish)}
+              onNavigate={handleNavigateTab}
+            />
+          </Suspense>
         )}
 
         {activeTab === 'ai' && (
-          <AIAssistant
-            affiliateConfig={affiliateConfig}
-            userLocation={userLocation}
-            onOpenLocationModal={openLocationPicker}
-            onSelectDish={(dish) => setSelectedDish(dish)}
-            selectedDish={selectedDish}
-            onNavigate={handleNavigateTab}
-          />
+          <Suspense fallback={<div className="min-h-[280px] flex items-center justify-center text-stone-400 text-xs">Đang tải Trợ lý AI...</div>}>
+            <AIAssistant
+              affiliateConfig={affiliateConfig}
+              userLocation={userLocation}
+              onOpenLocationModal={openLocationPicker}
+              onSelectDish={(dish) => setSelectedDish(dish)}
+              selectedDish={selectedDish}
+              onNavigate={handleNavigateTab}
+            />
+          </Suspense>
         )}
 
         {activeTab === 'tarot' && (
@@ -403,108 +423,138 @@ export default function App() {
         )}
 
         {activeTab === 'catalog' && (
-          <DishCatalog
-            affiliateConfig={affiliateConfig}
-            onSelectDish={(dish) => setSelectedDish(dish)}
-            selectedDish={selectedDish}
-            userLocation={userLocation}
-            onOpenLocationModal={openLocationPicker}
-            onNavigate={handleNavigateTab}
-          />
+          <Suspense fallback={<div className="min-h-[280px] flex items-center justify-center text-stone-400 text-xs">Đang tải Danh bạ Món Ngon...</div>}>
+            <DishCatalog
+              affiliateConfig={affiliateConfig}
+              onSelectDish={(dish) => setSelectedDish(dish)}
+              selectedDish={selectedDish}
+              userLocation={userLocation}
+              onOpenLocationModal={openLocationPicker}
+              onNavigate={handleNavigateTab}
+            />
+          </Suspense>
         )}
 
         {activeTab === 'snacks' && (
-          <SnacksTeaPage
-            affiliateConfig={affiliateConfig}
-            onSelectDish={(dish) => setSelectedDish(dish)}
-            selectedDish={selectedDish}
-            userLocation={userLocation}
-            onOpenLocationModal={openLocationPicker}
-            onNavigate={handleNavigateTab}
-          />
+          <Suspense fallback={<div className="min-h-[280px] flex items-center justify-center text-stone-400 text-xs">Đang tải Trà Sữa & Ăn Vặt...</div>}>
+            <SnacksTeaPage
+              affiliateConfig={affiliateConfig}
+              onSelectDish={(dish) => setSelectedDish(dish)}
+              selectedDish={selectedDish}
+              userLocation={userLocation}
+              onOpenLocationModal={openLocationPicker}
+              onNavigate={handleNavigateTab}
+            />
+          </Suspense>
         )}
 
         {activeTab === 'discover' && (
-          <FoodDiscoveryPage
-            onSelectDish={(dish) => setSelectedDish(dish)}
-            onNavigate={handleNavigateTab}
-            userLocation={userLocation}
-            affiliateConfig={affiliateConfig}
-          />
+          <Suspense fallback={<div className="min-h-[280px] flex items-center justify-center text-stone-400 text-xs">Đang tải Khám Phá Ẩm Thực...</div>}>
+            <FoodDiscoveryPage
+              onSelectDish={(dish) => setSelectedDish(dish)}
+              onNavigate={handleNavigateTab}
+              userLocation={userLocation}
+              affiliateConfig={affiliateConfig}
+            />
+          </Suspense>
         )}
 
         {activeTab === 'about' && (
-          <AboutPage
-            onNavigate={handleNavigateTab}
-          />
+          <Suspense fallback={<div className="min-h-[280px] flex items-center justify-center text-stone-400 text-xs">Đang tải...</div>}>
+            <AboutPage
+              onNavigate={handleNavigateTab}
+            />
+          </Suspense>
         )}
 
         {activeTab === 'contact' && (
-          <ContactPage
-            onNavigate={handleNavigateTab}
-          />
+          <Suspense fallback={<div className="min-h-[280px] flex items-center justify-center text-stone-400 text-xs">Đang tải...</div>}>
+            <ContactPage
+              onNavigate={handleNavigateTab}
+            />
+          </Suspense>
         )}
 
         {activeTab === 'privacy' && (
-          <PrivacyPolicyPage
-            onNavigate={handleNavigateTab}
-          />
+          <Suspense fallback={<div className="min-h-[280px] flex items-center justify-center text-stone-400 text-xs">Đang tải...</div>}>
+            <PrivacyPolicyPage
+              onNavigate={handleNavigateTab}
+            />
+          </Suspense>
         )}
 
         {activeTab === 'terms' && (
-          <TermsOfServicePage
-            onNavigate={handleNavigateTab}
-          />
+          <Suspense fallback={<div className="min-h-[280px] flex items-center justify-center text-stone-400 text-xs">Đang tải...</div>}>
+            <TermsOfServicePage
+              onNavigate={handleNavigateTab}
+            />
+          </Suspense>
         )}
 
         {activeTab === 'blog' && (
-          <BlogPage
-            onNavigate={handleNavigateTab}
-            onSelectDish={(dish) => setSelectedDish(dish)}
-          />
+          <Suspense fallback={<div className="min-h-[280px] flex items-center justify-center text-stone-400 text-xs">Đang tải Blog Ẩm Thực...</div>}>
+            <BlogPage
+              onNavigate={handleNavigateTab}
+              onSelectDish={(dish) => setSelectedDish(dish)}
+            />
+          </Suspense>
         )}
 
         {activeTab === 'admin' && (
-          <AdminBlogPage
-            onNavigate={handleNavigateTab}
-          />
+          <Suspense fallback={<div className="min-h-[280px] flex items-center justify-center text-stone-400 text-xs">Đang mở Quản Trị...</div>}>
+            <AdminBlogPage
+              onNavigate={handleNavigateTab}
+            />
+          </Suspense>
         )}
 
         {activeTab === 'restaurants' && (
-          <RestaurantsPage
-            userLocation={userLocation}
-            onOpenLocationModal={openLocationPicker}
-            onSelectDish={(dishId) => {
-              const found = INITIAL_DISHES.find(d => d.id === dishId);
-              if (found) setSelectedDish(found);
-            }}
-            onNavigateContact={() => handleNavigateTab('contact')}
-          />
+          <Suspense fallback={<div className="min-h-[280px] flex items-center justify-center text-stone-400 text-xs">Đang tải Quán Ngon...</div>}>
+            <RestaurantsPage
+              userLocation={userLocation}
+              onOpenLocationModal={openLocationPicker}
+              onSelectDish={(dishId) => {
+                const found = INITIAL_DISHES.find(d => d.id === dishId);
+                if (found) setSelectedDish(found);
+              }}
+              onNavigateContact={() => handleNavigateTab('contact')}
+            />
+          </Suspense>
         )}
 
-        {/* Editorial SEO Content & FAQ Accordion */}
-        <SeoContentFaq activeTab={activeTab} onNavigate={handleNavigateTab} />
+        {/* Editorial SEO Content & FAQ Accordion (Lazy loaded with fallback) */}
+        <Suspense fallback={null}>
+          <SeoContentFaq activeTab={activeTab} onNavigate={handleNavigateTab} />
+        </Suspense>
       </main>
 
-      {/* Dish Detail Modal (Displays with integrated location and food apps) */}
-      <DishDetailModal
-        dish={selectedDish}
-        onClose={() => setSelectedDish(null)}
-        affiliateConfig={affiliateConfig}
-        userLocation={userLocation}
-        onOpenLocationModal={openLocationPicker}
-      />
+      {/* Dish Detail Modal (Rendered only on demand) */}
+      {selectedDish && (
+        <Suspense fallback={null}>
+          <DishDetailModal
+            dish={selectedDish}
+            onClose={() => setSelectedDish(null)}
+            affiliateConfig={affiliateConfig}
+            userLocation={userLocation}
+            onOpenLocationModal={openLocationPicker}
+          />
+        </Suspense>
+      )}
 
-      {/* Location Picker Modal */}
-      <LocationModal
-        isOpen={isLocationModalOpen}
-        onClose={() => setIsLocationModalOpen(false)}
-        currentLocation={userLocation}
-        onLocationChange={handleLocationSelected}
-        onSelectLocation={handleLocationSelected}
-        targetDishName={locationTargetDish}
-        pendingDishName={locationTargetDish}
-      />
+      {/* Location Picker Modal (Rendered only on demand) */}
+      {isLocationModalOpen && (
+        <Suspense fallback={null}>
+          <LocationModal
+            isOpen={isLocationModalOpen}
+            onClose={() => setIsLocationModalOpen(false)}
+            currentLocation={userLocation}
+            onLocationChange={handleLocationSelected}
+            onSelectLocation={handleLocationSelected}
+            targetDishName={locationTargetDish}
+            pendingDishName={locationTargetDish}
+          />
+        </Suspense>
+      )}
 
       {/* Offline Status Connectivity Banner */}
       <OfflineIndicator />
@@ -512,14 +562,18 @@ export default function App() {
       {/* Order Toast */}
       <OrderToast />
 
-      {/* Affiliate Management & Analytics Modal */}
-      <AffiliateModal
-        isOpen={isAffiliateModalOpen}
-        onClose={() => setIsAffiliateModalOpen(false)}
-        config={affiliateConfig}
-        onSaveConfig={handleSaveAffiliateConfig}
-        clickStats={clickStats}
-      />
+      {/* Affiliate Management & Analytics Modal (Rendered only on demand) */}
+      {isAffiliateModalOpen && (
+        <Suspense fallback={null}>
+          <AffiliateModal
+            isOpen={isAffiliateModalOpen}
+            onClose={() => setIsAffiliateModalOpen(false)}
+            config={affiliateConfig}
+            onSaveConfig={handleSaveAffiliateConfig}
+            clickStats={clickStats}
+          />
+        </Suspense>
+      )}
 
       {/* GPS Auto-Detection Toast Notification */}
       {gpsToast && (
