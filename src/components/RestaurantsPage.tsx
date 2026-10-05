@@ -490,7 +490,7 @@ export const RestaurantsPage: React.FC<RestaurantsPageProps> = ({
                 <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
                 <span>Dành Cho Chủ Quán Ăn & Nhà Hàng</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                <span className="text-[10px] text-emerald-400 font-semibold normal-case">Tuyển đối tác toàn quốc</span>
+                <span className="text-[10px] text-emerald-400 font-semibold normal-case">Hỗ trợ toàn quốc</span>
               </div>
 
               {/* Main Headline with Gradient */}
