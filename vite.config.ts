@@ -227,32 +227,12 @@ export default defineConfig(() => {
       chunkSizeWarningLimit: 600,
       modulePreload: {
         polyfill: false,
-        resolveDependencies(filename, deps) {
-          return deps.filter(
-            (dep) =>
-              !dep.includes('data-blog') &&
-              !dep.includes('data-recipes') &&
-              !dep.includes('vendor-firebase') &&
-              !dep.includes('confetti') &&
-              !dep.includes('vendor-icons') &&
-              !dep.includes('SeoContentFaq')
-          );
-        },
       },
       rollupOptions: {
         output: {
           manualChunks(id) {
             if (id.includes('node_modules/firebase/')) {
               return 'vendor-firebase';
-            }
-            if (id.includes('node_modules/lucide-react/')) {
-              return 'vendor-icons';
-            }
-            if (id.includes('src/data/recipes.ts') || id.includes('src/data/familyDishRecipes.ts')) {
-              return 'data-recipes';
-            }
-            if (id.includes('src/data/blogPosts.ts')) {
-              return 'data-blog';
             }
           },
         },

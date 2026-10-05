@@ -10,7 +10,6 @@ import {
 import { getRegionFromUrl, getRegionById, isRegionPath, RegionId } from '../data/regionalCuisine';
 import { findDishByRecipeSlug, getDishRecipe, getRecipeArticleTitle, getRecipePath } from '../data/recipes';
 import { INITIAL_DISHES } from '../data/dishes';
-import { getBlogPostBySlug } from '../data/blogPosts';
 
 interface BreadcrumbsProps {
   activeTab: TabType;
@@ -75,10 +74,20 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
 
   // Check if currently on a specific blog post
   const isBlog = activeTab === 'blog';
-  const activeBlogPost =
-    isBlog && currentPathname !== '/blog' && currentPathname !== ''
-      ? getBlogPostBySlug(currentPathname)
-      : null;
+  const [activeBlogPost, setActiveBlogPost] = useState<{ title: string; slug: string } | null>(null);
+
+  useEffect(() => {
+    if (isBlog && currentPathname !== '/blog' && currentPathname !== '') {
+      import('../data/blogPosts').then((m) => {
+        const post = m.getBlogPostBySlug(currentPathname);
+        if (post) {
+          setActiveBlogPost({ title: post.title, slug: post.slug });
+        }
+      });
+    } else {
+      setActiveBlogPost(null);
+    }
+  }, [isBlog, currentPathname]);
 
   const currentLabel =
     isDiscover && discoverSubMeta ? discoverSubMeta.label : currentTabMeta?.label;
