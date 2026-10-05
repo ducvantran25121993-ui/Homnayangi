@@ -18,18 +18,19 @@ export const PWAInstallButton: React.FC<{
   const [activeGuideTab, setActiveGuideTab] = useState<'ios' | 'android' | 'desktop'>('android');
 
   useEffect(() => {
-    // Check standalone
-    const isRunningStandalone = 
-      window.matchMedia('(display-mode: standalone)').matches || 
-      (window.navigator as any).standalone === true;
-    setIsStandalone(isRunningStandalone);
+    // Defer non-critical standalone & iframe checks so they don't block initial paint or trigger layout reflow
+    const timer = setTimeout(() => {
+      const isRunningStandalone = 
+        window.matchMedia('(display-mode: standalone)').matches || 
+        (window.navigator as any).standalone === true;
+      setIsStandalone(isRunningStandalone);
 
-    // Check iframe
-    try {
-      setIsInIframe(window.self !== window.top);
-    } catch {
-      setIsInIframe(true);
-    }
+      try {
+        setIsInIframe(window.self !== window.top);
+      } catch {
+        setIsInIframe(true);
+      }
+    }, 200);
 
     // Auto-detect device for guide tab
     const ua = navigator.userAgent.toLowerCase();
@@ -56,6 +57,7 @@ export const PWAInstallButton: React.FC<{
     window.addEventListener('appinstalled', handleAppInstalled);
 
     return () => {
+      clearTimeout(timer);
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.removeEventListener('appinstalled', handleAppInstalled);
     };

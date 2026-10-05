@@ -65,11 +65,25 @@ function aistudioMediaPlugin(): Plugin {
 }
 // LINT.ThenChange(//depot/google3/java/com/google/alkali/boq/makersuite/applet_dev_service/templates/initializers/react_theme/vite.config.ts:aistudio_media_plugin)
 
+function nonBlockingCssPlugin(): Plugin {
+  return {
+    name: 'non-blocking-css-plugin',
+    apply: 'build',
+    transformIndexHtml(html: string) {
+      return html.replace(
+        /<link rel="stylesheet" crossorigin href="([^"]+\.css)">/g,
+        '<link rel="preload" as="style" href="$1" onload="this.onload=null;this.rel=\'stylesheet\'"><noscript><link rel="stylesheet" href="$1"></noscript>'
+      );
+    },
+  };
+}
+
 export default defineConfig(() => {
   return {
     plugins: [
       react(),
       tailwindcss(),
+      nonBlockingCssPlugin(),
       aistudioMediaPlugin(),
       VitePWA({
         injectRegister: 'script-defer',

@@ -16,10 +16,10 @@ import {
 } from './utils/location';
 import { getTabFromUrl, updateTabSEO, updateRegionSEO, TAB_CONFIG, TabType } from './utils/navigation';
 import { getRegionFromUrl, isRegionPath } from './data/regionalCuisine';
-import { Breadcrumbs } from './components/Breadcrumbs';
 import { OfflineIndicator } from './components/OfflineIndicator';
 
 // Code-split heavy pages and modals for lightning-fast mobile loading
+const Breadcrumbs = lazy(() => import('./components/Breadcrumbs').then((m) => ({ default: m.Breadcrumbs })));
 const LuckyWheel = lazy(() => import('./components/LuckyWheel').then((m) => ({ default: m.LuckyWheel })));
 const AIAssistant = lazy(() => import('./components/AIAssistant').then((m) => ({ default: m.AIAssistant })));
 const DishCatalog = lazy(() => import('./components/DishCatalog').then((m) => ({ default: m.DishCatalog })));
@@ -111,8 +111,10 @@ export default function App() {
     } else if (targetRegionId) {
       updateRegionSEO(targetRegionId);
     }
-    // Cuộn lên đầu trang ngay lập tức khi chuyển tab hoặc chuyển trang
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    // Cuộn lên đầu trang mượt mà qua requestAnimationFrame để tránh forced reflow
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    });
   }, []);
 
   // Sync with browser Back/Forward buttons, secret admin URL query, and keyboard shortcut
@@ -123,13 +125,13 @@ export default function App() {
       window.location.pathname.startsWith('/cach-nau-mon-ngon/');
     const currentRegionId = getRegionFromUrl();
 
-    // Initial SEO update & scroll to top on tab change
+    // Initial SEO update on tab change
     if (!isCurrentPathRecipe && !currentRegionId) {
       updateTabSEO(activeTab);
     } else if (currentRegionId) {
       updateRegionSEO(currentRegionId);
     }
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    // Note: Do not call window.scrollTo synchronously on mount to avoid forced reflow during first paint!
 
     // Defer blog custom post sync so it NEVER blocks initial mobile FCP or LCP
     const pathname = window.location.pathname.replace(/\/$/, '') || '/';
@@ -182,7 +184,9 @@ export default function App() {
       } else if (popRegionId) {
         updateRegionSEO(popRegionId);
       }
-      window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      });
     };
 
     // Shortcut: Press Shift + A to open Admin (Inbox tab)
@@ -371,8 +375,12 @@ export default function App() {
         onOpenLocationModal={() => openLocationPicker()}
       />
 
-      {/* Breadcrumbs navigation for subpages */}
-      <Breadcrumbs activeTab={activeTab} onNavigate={handleNavigateTab} />
+      {/* Breadcrumbs navigation for subpages (Lazy loaded, omitted on tarot homepage) */}
+      {activeTab !== 'tarot' && (
+        <Suspense fallback={null}>
+          <Breadcrumbs activeTab={activeTab} onNavigate={handleNavigateTab} />
+        </Suspense>
+      )}
 
       {/* Main Container */}
       <main className="flex-1 pb-12">

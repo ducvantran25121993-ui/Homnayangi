@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import '../styles/blog-editor.css';
 import {
   FileText,
   Plus,

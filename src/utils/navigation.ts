@@ -1,8 +1,24 @@
 import { Dish, DishRecipe, RegionId } from '../types';
 import { getRegionById } from '../data/regionalCuisine';
-import { getRecipePath, getRecipeArticleTitle, formatRecipeSeoTitle, findDishByRecipeSlug } from '../data/recipes';
-import { INITIAL_DISHES } from '../data/dishes';
-import { isBlogPostSlug } from '../data/blogPosts';
+
+const KNOWN_BLOG_SLUGS = new Set([
+  'top-10-mon-an-vat-sai-gon',
+  'bi-quyet-nau-pho-bo-ha-noi',
+  'an-gi-o-da-nang',
+  'thuc-don-eat-clean-7-ngay',
+  'cach-lam-tra-sua-tai-nha',
+  'thit-heo-lam-mon-gi-ngon',
+  'mon-ngon-tu-thit-bo',
+  'mon-ngon-tu-ga',
+  'canh-ngon-mua-he',
+  'mon-ngon-dai-tiec',
+]);
+
+export function isBlogPostSlug(slug: string): boolean {
+  if (!slug) return false;
+  const clean = slug.replace(/^\/?blog\//, '').replace(/^\//, '').replace(/\/$/, '');
+  return KNOWN_BLOG_SLUGS.has(clean);
+}
 
 export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'snacks' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms' | 'blog' | 'restaurants' | 'admin';
 
@@ -45,7 +61,7 @@ export const DISCOVER_SUB_CONFIG: Record<DiscoverSubSection, TabMeta> = {
   recipe: {
     path: '/cach-nau-mon-ngon',
     title: 'Cách Nấu Món Ngon - Công Thức Nấu Ăn Chuẩn Vị & Bí Quyết Bếp Trưởng | Hôm Nay Ăn Gì',
-    description: `Hướng dẫn chi tiết cách nấu hơn ${INITIAL_DISHES.length}+ món ngon chuẩn vị gia đình Việt Nam: Định lượng nguyên liệu chuẩn xác, các bước thực hiện dễ hiểu và mẹo bí quyết bếp trưởng.`,
+    description: 'Hướng dẫn chi tiết cách nấu hơn 100+ món ngon chuẩn vị gia đình Việt Nam: Định lượng nguyên liệu chuẩn xác, các bước thực hiện dễ hiểu và mẹo bí quyết bếp trưởng.',
     label: 'Cách Nấu Món Ngon',
     shortLabel: 'Cách Nấu',
     keywords: 'cách nấu món ngon, công thức nấu ăn, hướng dẫn nấu ăn, bí quyết nấu ăn ngon, cách nấu phở, cách nấu bún bò huế, món ngon mỗi ngày, công thức chuẩn vị',
@@ -207,8 +223,7 @@ export function getDiscoverSubSectionFromUrl(): DiscoverSubSection {
     pathname === '/kham-pha-am-thuc/cach-nau-mon-ngon' ||
     pathname.startsWith('/cach-nau-') ||
     pathname.startsWith('/cach-lam-') ||
-    pathname.startsWith('/cach-nau-mon-ngon/') ||
-    findDishByRecipeSlug(pathname, INITIAL_DISHES) !== undefined
+    pathname.startsWith('/cach-nau-mon-ngon/')
   ) {
     return 'recipe';
   }
@@ -239,8 +254,7 @@ export function getTabFromUrl(): TabType {
     pathname === '/cam-nang-am-thuc' ||
     pathname.startsWith('/am-thuc-') ||
     pathname.startsWith('/cach-nau-') ||
-    pathname.startsWith('/cach-lam-') ||
-    findDishByRecipeSlug(pathname, INITIAL_DISHES) !== undefined
+    pathname.startsWith('/cach-lam-')
   ) return 'discover';
   if (pathname === '/gioi-thieu' || pathname === '/about') return 'about';
   if (pathname === '/lien-he' || pathname === '/contact') return 'contact';
@@ -396,8 +410,9 @@ export function updateRegionSEO(regionId: RegionId): void {
 /**
  * Update document title, meta tags, and canonical link specifically for Recipe Article
  */
-export function updateRecipeArticleSEO(dish: Dish, recipe?: DishRecipe): void {
+export async function updateRecipeArticleSEO(dish: Dish, recipe?: DishRecipe): Promise<void> {
   if (typeof document === 'undefined') return;
+  const { getRecipePath, getRecipeArticleTitle, formatRecipeSeoTitle } = await import('../data/recipes');
   const recipePath = getRecipePath(dish);
   const articleTitle = getRecipeArticleTitle(dish, recipe);
   const title = formatRecipeSeoTitle(articleTitle);
