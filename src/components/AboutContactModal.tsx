@@ -13,7 +13,6 @@ import {
   CheckCircle2,
   ExternalLink,
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
 import { saveContactMessage } from '../utils/contactStorage';
 
 export type AboutContactTab = 'about' | 'contact';
@@ -76,17 +75,12 @@ export const AboutContactModal: React.FC<AboutContactModalProps> = ({
   if (!isOpen || !mounted) return null;
 
   const modalContent = (
-    <AnimatePresence>
-      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
-        <div className="fixed inset-0" onClick={onClose} />
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
+      <div className="fixed inset-0" onClick={onClose} />
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.96, y: 10 }}
-          transition={{ duration: 0.18 }}
-          className="relative z-10 w-full max-w-lg sm:max-w-xl bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-stone-200/80 overflow-hidden text-stone-900 my-auto max-h-[92vh] flex flex-col"
-        >
+      <div
+        className="relative z-10 w-full max-w-lg sm:max-w-xl bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-stone-200/80 overflow-hidden text-stone-900 my-auto max-h-[92vh] flex flex-col animate-fade-in"
+      >
           {/* Header */}
           <div className="flex items-center justify-between px-5 py-4 border-b border-stone-100 bg-gradient-to-r from-stone-50 via-white to-orange-50/40 shrink-0">
             <div className="flex items-center gap-2.5">
@@ -325,9 +319,8 @@ export const AboutContactModal: React.FC<AboutContactModalProps> = ({
               </div>
             )}
           </div>
-        </motion.div>
+        </div>
       </div>
-    </AnimatePresence>
   );
 
   return typeof document !== 'undefined' ? createPortal(modalContent, document.body) : modalContent;

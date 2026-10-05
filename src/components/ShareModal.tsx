@@ -10,7 +10,6 @@ import {
   Send,
   QrCode,
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
 
 export interface SocialPlatform {
   id: string;
@@ -168,19 +167,14 @@ export const ShareModal: React.FC<ShareModalProps> = ({
   if (!isOpen || !mounted) return null;
 
   const modalContent = (
-    <AnimatePresence>
-      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
-        {/* Backdrop click to close */}
-        <div className="fixed inset-0" onClick={onClose} />
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
+      {/* Backdrop click to close */}
+      <div className="fixed inset-0" onClick={onClose} />
 
-        {/* Modal Card - Thiết kế gọn gàng, vừa vặn màn hình không bị tràn/cắt */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96, y: 8 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.96, y: 8 }}
-          transition={{ duration: 0.18 }}
-          className="relative z-10 w-full max-w-sm sm:max-w-md bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-stone-200/80 overflow-hidden text-stone-900 my-auto max-h-[92vh] flex flex-col"
-        >
+      {/* Modal Card - Thiết kế gọn gàng, vừa vặn màn hình không bị tràn/cắt */}
+      <div
+        className="relative z-10 w-full max-w-sm sm:max-w-md bg-white rounded-2xl sm:rounded-3xl shadow-2xl border border-stone-200/80 overflow-hidden text-stone-900 my-auto max-h-[92vh] flex flex-col animate-fade-in"
+      >
           {/* Header - Rút gọn padding */}
           <div className="flex items-center justify-between px-4 py-3 sm:px-5 sm:py-3.5 border-b border-stone-100 bg-gradient-to-r from-stone-50 via-white to-orange-50/40 shrink-0">
             <div className="flex items-center gap-2.5">
@@ -276,12 +270,7 @@ export const ShareModal: React.FC<ShareModalProps> = ({
               </button>
 
               {showQR && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="mt-2 flex flex-col items-center p-2.5 rounded-xl bg-stone-50 border border-stone-200"
-                >
+                <div className="mt-2 flex flex-col items-center p-2.5 rounded-xl bg-stone-50 border border-stone-200 animate-fade-in">
                   <img
                     src={qrImageUrl}
                     alt="Mã QR liên kết Hôm Nay Ăn Gì"
@@ -290,13 +279,12 @@ export const ShareModal: React.FC<ShareModalProps> = ({
                   <span className="text-[10px] text-stone-500 mt-1.5 text-center">
                     Mở camera điện thoại quét mã để vào ngay
                   </span>
-                </motion.div>
+                </div>
               )}
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
-    </AnimatePresence>
   );
 
   return typeof document !== 'undefined' ? createPortal(modalContent, document.body) : modalContent;

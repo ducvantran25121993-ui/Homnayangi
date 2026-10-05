@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Download, X, Smartphone, Monitor, Share, ExternalLink, Check, Sparkles } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -93,36 +92,34 @@ export const PWAInstallButton: React.FC<{
     if (!showModal) return null;
 
     return createPortal(
-      <AnimatePresence>
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowModal(false)}
-            className="fixed inset-0 bg-stone-900/60 backdrop-blur-xs"
-          />
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        {/* Backdrop */}
+        <div
+          onClick={() => setShowModal(false)}
+          className="fixed inset-0 bg-stone-900/60 backdrop-blur-xs animate-fade-in"
+        />
 
-          {/* Dialog */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 10 }}
-            className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-stone-200 overflow-hidden z-10"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Header */}
-            <div className="flex items-center justify-between px-5 py-4 border-b border-stone-100 bg-linear-to-r from-orange-50/70 to-amber-50/50">
-              <div className="flex items-center gap-3">
+        {/* Dialog */}
+        <div
+          className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-stone-200 overflow-hidden z-10 animate-fade-in"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Header */}
+          <div className="flex items-center justify-between px-5 py-4 border-b border-stone-100 bg-linear-to-r from-orange-50/70 to-amber-50/50">
+            <div className="flex items-center gap-3">
+              <picture>
+                <source srcSet="/logo.webp?v=8" type="image/webp" />
                 <img 
-                  src="/logo.png?v=6" 
+                  src="/logo.png?v=8" 
                   alt="Logo" 
+                  width="36"
+                  height="36"
                   className="w-9 h-9 object-contain drop-shadow-xs"
                   onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = '/logo.svg?v=6';
+                    (e.currentTarget as HTMLImageElement).src = '/logo.svg?v=8';
                   }}
                 />
+              </picture>
                 <div>
                   <h3 className="font-extrabold text-stone-900 text-sm sm:text-base leading-tight">
                     Cài Đặt Hôm Nay Ăn Gì?
@@ -320,9 +317,8 @@ export const PWAInstallButton: React.FC<{
                 Đã hiểu
               </button>
             </div>
-          </motion.div>
         </div>
-      </AnimatePresence>,
+      </div>,
       document.body
     );
   };

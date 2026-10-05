@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, Suspense, lazy } from 'react';
 import {
   UtensilsCrossed,
   Sparkles,
@@ -13,11 +13,11 @@ import {
   Coffee,
   Store,
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
 import { UserLocation } from '../types';
 import { TAB_CONFIG, TabType } from '../utils/navigation';
-import { ShareModal } from './ShareModal';
 import { PWAInstallButton } from './PWAInstallButton';
+
+const ShareModal = lazy(() => import('./ShareModal').then(m => ({ default: m.ShareModal })));
 
 interface NavbarProps {
   activeTab: TabType;
@@ -38,7 +38,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isWheelDropdownOpen, setIsWheelDropdownOpen] = useState(false);
   const [isFoodDropdownOpen, setIsFoodDropdownOpen] = useState(false);
-  const [logoSrc, setLogoSrc] = useState<string>('/logo.png?v=6');
+  const [logoSrc, setLogoSrc] = useState<string>('/logo.webp?v=8');
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [logoToast, setLogoToast] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -246,21 +246,24 @@ export const Navbar: React.FC<NavbarProps> = ({
                 role="img"
                 aria-label="Logo thương hiệu Hôm Nay Ăn Gì"
               >
-                <img 
-                  src={logoSrc} 
-                  onError={(e) => {
-                    const target = e.currentTarget;
-                    if (!target.src.includes('/logo.svg')) {
-                      target.src = '/logo.svg?v=7';
-                    }
-                  }}
-                  alt="Logo Hôm Nay Ăn Gì" 
-                  width="44"
-                  height="44"
-                  fetchPriority="high"
-                  decoding="async"
-                  className="w-10 h-10 sm:w-11 sm:h-11 object-contain drop-shadow-xs group-hover:scale-105 transition-transform duration-200 shrink-0" 
-                />
+                <picture>
+                  <source srcSet="/logo.webp?v=8" type="image/webp" />
+                  <img 
+                    src={logoSrc} 
+                    onError={(e) => {
+                      const target = e.currentTarget;
+                      if (!target.src.includes('/logo.svg')) {
+                        target.src = '/logo.svg?v=8';
+                      }
+                    }}
+                    alt="Logo Hôm Nay Ăn Gì" 
+                    width="44"
+                    height="44"
+                    fetchPriority="high"
+                    decoding="async"
+                    className="w-10 h-10 sm:w-11 sm:h-11 object-contain drop-shadow-xs group-hover:scale-105 transition-transform duration-200 shrink-0" 
+                  />
+                </picture>
               </a>
               <button
                 type="button"
@@ -304,11 +307,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               {activeTab === 'tarot' && (
-                <motion.div
-                  layoutId="navbar-active-pill"
-                  className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50"
-                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                />
+                <div className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50 transition-all duration-200" />
               )}
               <span className={`relative z-10 transition-colors ${
                 activeTab === 'tarot' ? 'text-orange-600' : 'text-stone-400 group-hover:text-stone-600'
@@ -333,11 +332,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
               >
                 {isWheelGroupActive && (
-                  <motion.div
-                    layoutId="navbar-active-pill"
-                    className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
+                  <div className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50 transition-all duration-200" />
                 )}
 
                 <span className={`relative z-10 transition-colors ${
@@ -356,18 +351,11 @@ export const Navbar: React.FC<NavbarProps> = ({
               </a>
 
               {/* Desktop Submenu Dropdown for Vòng Quay & Trợ Lý AI */}
-              <AnimatePresence>
-                {isWheelDropdownOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 6, scale: 0.96 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute left-0 top-full mt-2 w-72 bg-white rounded-2xl shadow-xl border border-stone-200/80 p-2 z-50 overflow-hidden"
-                  >
-                    <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-stone-400">
-                      Chọn món thông minh
-                    </div>
+              {isWheelDropdownOpen && (
+                <div className="absolute left-0 top-full mt-2 w-72 bg-white rounded-2xl shadow-xl border border-stone-200/80 p-2 z-50 overflow-hidden animate-fade-in transition-all">
+                  <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-stone-400">
+                    Chọn món thông minh
+                  </div>
                     <div className="space-y-1">
                       {wheelSubItems.map((sub) => {
                         const isSubActive = activeTab === sub.id;
@@ -406,9 +394,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                         );
                       })}
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                </div>
+              )}
             </div>
 
             {/* 3. Món Ngon with Dropdown Submenu for Lịch Ăn Tuần & Đồ Uống */}
@@ -426,11 +413,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
               >
                 {isFoodGroupActive && (
-                  <motion.div
-                    layoutId="navbar-active-pill"
-                    className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
+                  <div className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50 transition-all duration-200" />
                 )}
 
                 <span className={`relative z-10 transition-colors ${
@@ -453,59 +436,51 @@ export const Navbar: React.FC<NavbarProps> = ({
               </a>
 
               {/* Desktop Submenu Dropdown Card for Món Ngon */}
-              <AnimatePresence>
-                {isFoodDropdownOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 6, scale: 0.96 }}
-                    transition={{ duration: 0.15 }}
-                    className="absolute left-0 top-full mt-2 w-72 bg-white rounded-2xl shadow-xl border border-stone-200/80 p-2 z-50 overflow-hidden"
-                  >
-                    <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-stone-400">
-                      Chuyên mục món ăn
-                    </div>
-                    <div className="space-y-1">
-                      {foodSubItems.map((sub) => {
-                        const isSubActive = activeTab === sub.id;
-                        return (
-                          <a
-                            key={sub.id}
-                            href={sub.path}
-                            onClick={(e) => handleNavClick(sub.id, e)}
-                            className={`flex items-start gap-3 p-2.5 rounded-xl transition-all cursor-pointer group ${
-                              isSubActive
-                                ? 'bg-orange-50/80 text-orange-900 border border-orange-200/70'
-                                : 'hover:bg-stone-50 text-stone-700'
-                            }`}
-                          >
-                            <div className={`p-2 rounded-lg shrink-0 transition-colors ${
-                              isSubActive
-                                ? 'bg-orange-600 text-white'
-                                : 'bg-stone-100 text-stone-500 group-hover:bg-orange-100 group-hover:text-orange-600'
+              {isFoodDropdownOpen && (
+                <div className="absolute left-0 top-full mt-2 w-72 bg-white rounded-2xl shadow-xl border border-stone-200/80 p-2 z-50 overflow-hidden animate-fade-in transition-all">
+                  <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-stone-400">
+                    Chuyên mục món ăn
+                  </div>
+                  <div className="space-y-1">
+                    {foodSubItems.map((sub) => {
+                      const isSubActive = activeTab === sub.id;
+                      return (
+                        <a
+                          key={sub.id}
+                          href={sub.path}
+                          onClick={(e) => handleNavClick(sub.id, e)}
+                          className={`flex items-start gap-3 p-2.5 rounded-xl transition-all cursor-pointer group ${
+                            isSubActive
+                              ? 'bg-orange-50/80 text-orange-900 border border-orange-200/70'
+                              : 'hover:bg-stone-50 text-stone-700'
+                          }`}
+                        >
+                          <div className={`p-2 rounded-lg shrink-0 transition-colors ${
+                            isSubActive
+                              ? 'bg-orange-600 text-white'
+                              : 'bg-stone-100 text-stone-500 group-hover:bg-orange-100 group-hover:text-orange-600'
+                          }`}>
+                            {sub.icon}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <span className={`text-xs font-bold block ${
+                              isSubActive ? 'text-orange-950' : 'text-stone-900 group-hover:text-orange-600'
                             }`}>
-                              {sub.icon}
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <span className={`text-xs font-bold block ${
-                                isSubActive ? 'text-orange-950' : 'text-stone-900 group-hover:text-orange-600'
-                              }`}>
-                                {sub.label}
-                              </span>
-                              <p className="text-[11px] text-stone-500 leading-tight mt-0.5">
-                                {sub.description}
-                              </p>
-                            </div>
-                            {isSubActive && (
-                              <Check className="w-4 h-4 text-orange-600 shrink-0 self-center" />
-                            )}
-                          </a>
-                        );
-                      })}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+                              {sub.label}
+                            </span>
+                            <p className="text-[11px] text-stone-500 leading-tight mt-0.5">
+                              {sub.description}
+                            </p>
+                          </div>
+                          {isSubActive && (
+                            <Check className="w-4 h-4 text-orange-600 shrink-0 self-center" />
+                          )}
+                        </a>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* 4. Quán Ngon (Mới thêm) */}
@@ -517,11 +492,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               {activeTab === 'restaurants' && (
-                <motion.div
-                  layoutId="navbar-active-pill"
-                  className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50"
-                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                />
+                <div className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50 transition-all duration-200" />
               )}
               <span className={`relative z-10 transition-colors ${
                 activeTab === 'restaurants' ? 'text-orange-600' : 'text-stone-400 group-hover:text-stone-600'
@@ -540,11 +511,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               {activeTab === 'discover' && (
-                <motion.div
-                  layoutId="navbar-active-pill"
-                  className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50"
-                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                />
+                <div className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50 transition-all duration-200" />
               )}
               <span className={`relative z-10 transition-colors ${
                 activeTab === 'discover' ? 'text-orange-600' : 'text-stone-400 group-hover:text-stone-600'
@@ -610,11 +577,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
               >
                 {isActive && (
-                  <motion.div
-                    layoutId="mobile-navbar-active-pill"
-                    className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
+                  <div className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50 transition-all duration-200" />
                 )}
                 <span className={`relative z-10 ${isActive ? 'text-orange-600' : 'text-stone-400'}`}>
                   {item.icon}
@@ -628,28 +591,25 @@ export const Navbar: React.FC<NavbarProps> = ({
         </nav>
       </div>
 
-      {/* Share to Social Media Modal */}
-      <ShareModal
-        isOpen={isShareModalOpen}
-        onClose={() => setIsShareModalOpen(false)}
-        title="Hôm Nay Ăn Gì? • Gợi ý món ngon chuẩn vị"
-        text="Cùng quay bánh xe may mắn, bốc quẻ Tarot, lên lịch ăn tuần và tìm món ngon nhé!"
-      />
+      {/* Share to Social Media Modal (Rendered lazily on demand) */}
+      {isShareModalOpen && (
+        <Suspense fallback={null}>
+          <ShareModal
+            isOpen={isShareModalOpen}
+            onClose={() => setIsShareModalOpen(false)}
+            title="Hôm Nay Ăn Gì? • Gợi ý món ngon chuẩn vị"
+            text="Cùng quay bánh xe may mắn, bốc quẻ Tarot, lên lịch ăn tuần và tìm món ngon nhé!"
+          />
+        </Suspense>
+      )}
 
       {/* Toast message for logo upload */}
-      <AnimatePresence>
-        {logoToast && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-stone-900 text-white px-4 py-2 rounded-full shadow-lg text-xs font-semibold flex items-center gap-2 border border-orange-500/30"
-          >
-            <Check className="w-4 h-4 text-orange-400" />
-            <span>{logoToast}</span>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {logoToast && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-stone-900 text-white px-4 py-2 rounded-full shadow-lg text-xs font-semibold flex items-center gap-2 border border-orange-500/30 animate-fade-in">
+          <Check className="w-4 h-4 text-orange-400" />
+          <span>{logoToast}</span>
+        </div>
+      )}
     </header>
   );
 };
