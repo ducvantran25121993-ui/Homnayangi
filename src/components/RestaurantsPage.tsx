@@ -22,6 +22,11 @@ import {
   Crown,
   Coffee,
   Beer,
+  Zap,
+  TrendingUp,
+  ShieldCheck,
+  Mail,
+  Check,
 } from 'lucide-react';
 import { SAMPLE_SPONSORED_PARTNERS } from '../data/sponsoredPartners';
 import { SponsoredPartner, UserLocation } from '../types';
@@ -459,36 +464,222 @@ export const RestaurantsPage: React.FC<RestaurantsPageProps> = ({
       </section>
 
       {/* 4. PARTNER PROMOTION BANNER */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-        <div className="relative rounded-3xl overflow-hidden bg-linear-to-r from-stone-900 via-stone-800 to-orange-950 text-white p-8 sm:p-12 shadow-lg border border-stone-800">
-          <div className="relative z-10 max-w-2xl">
-            <span className="px-3 py-1 bg-orange-600 text-white text-xs font-bold rounded-lg uppercase tracking-wider mb-3 inline-block">
-              Dành Cho Chủ Quán Ăn & Nhà Hàng
-            </span>
-            <h2 className="text-xl sm:text-3xl font-black text-white mb-3">
-              Quán Của Bạn Chưa Có Mặt Trên "Hôm Nay Ăn Gì?"
-            </h2>
-            <p className="text-xs sm:text-sm text-stone-300 mb-6 leading-relaxed">
-              Tiếp cận hơn 50.000+ thực khách mỗi tháng đang tìm kiếm món ăn mỗi ngày quanh khu vực của bạn. Xuất hiện nổi bật trong Vòng Quay, Tarot Ẩm Thực và danh bạ Quán Ngon với nút đặt món trực tiếp qua ShopeeFood, GrabFood, BeFood.
-            </p>
-            <div className="flex flex-wrap items-center gap-3">
-              {onNavigateContact && (
-                <button
-                  onClick={onNavigateContact}
-                  className="px-6 py-3 bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs sm:text-sm rounded-xl shadow-md transition-all cursor-pointer inline-flex items-center gap-2"
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 mb-8">
+        <div className="relative rounded-3xl overflow-hidden bg-gradient-to-br from-stone-950 via-stone-900 to-orange-950 border border-orange-500/30 shadow-2xl p-6 sm:p-10 lg:p-12">
+          
+          {/* Ambient Lighting & Glow Effects */}
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-orange-600/25 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 left-1/4 w-80 h-80 bg-amber-500/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-1/2 left-0 w-72 h-72 bg-rose-600/15 rounded-full blur-3xl pointer-events-none" />
+          
+          {/* Decorative Subtle Grid Texture */}
+          <div 
+            className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+            style={{ 
+              backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
+              backgroundSize: '24px 24px' 
+            }}
+          />
+
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            
+            {/* Left Content Column (7 cols) */}
+            <div className="lg:col-span-7">
+              {/* Top Pill Badge */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-500/15 border border-orange-500/30 text-orange-300 text-xs font-bold uppercase tracking-wider mb-4 backdrop-blur-md">
+                <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+                <span>Dành Cho Chủ Quán Ăn & Nhà Hàng</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                <span className="text-[10px] text-emerald-400 font-semibold normal-case">Tuyển đối tác toàn quốc</span>
+              </div>
+
+              {/* Main Headline with Gradient */}
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white leading-tight mb-4 tracking-tight">
+                Quán Của Bạn Chưa Có Mặt Trên <br className="hidden sm:inline" />
+                <span className="bg-gradient-to-r from-orange-400 via-amber-300 to-yellow-400 bg-clip-text text-transparent">
+                  "Hôm Nay Ăn Gì?"
+                </span>
+              </h2>
+
+              <p className="text-xs sm:text-sm text-stone-300 mb-6 leading-relaxed max-w-xl">
+                Tiếp cận hơn <strong className="text-white font-bold">50.000+ thực khách mỗi tháng</strong> đang tìm kiếm món ăn mỗi ngày quanh khu vực của bạn. Xuất hiện nổi bật trong Vòng Quay, Tarot Ẩm Thực và danh bạ Quán Ngon với nút đặt món trực tiếp qua ShopeeFood, GrabFood, BeFood.
+              </p>
+
+              {/* Feature Benefit Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 max-w-xl">
+                <div className="flex items-center gap-2.5 bg-stone-900/70 border border-stone-800 rounded-xl px-3.5 py-2.5 text-xs text-stone-200">
+                  <div className="w-7 h-7 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center shrink-0">
+                    <Zap className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-white">Xuất hiện nổi bật</div>
+                    <div className="text-[11px] text-stone-400">Trong Vòng Quay & Tarot Ẩm Thực</div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2.5 bg-stone-900/70 border border-stone-800 rounded-xl px-3.5 py-2.5 text-xs text-stone-200">
+                  <div className="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                    <TrendingUp className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-white">Tăng đơn đặt món</div>
+                    <div className="text-[11px] text-stone-400">Nút đặt ShopeeFood, Grab, Be</div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2.5 bg-stone-900/70 border border-stone-800 rounded-xl px-3.5 py-2.5 text-xs text-stone-200">
+                  <div className="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+                    <MapPin className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-white">Định vị GPS thông minh</div>
+                    <div className="text-[11px] text-stone-400">Ưu tiên khách ở gần quán nhất</div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2.5 bg-stone-900/70 border border-stone-800 rounded-xl px-3.5 py-2.5 text-xs text-stone-200">
+                  <div className="w-7 h-7 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
+                    <ShieldCheck className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-white">Duyệt hồ sơ nhanh 24h</div>
+                    <div className="text-[11px] text-stone-400">Hỗ trợ tối ưu thông tin quán</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Call-to-action buttons */}
+              <div className="flex flex-wrap items-center gap-3">
+                {onNavigateContact && (
+                  <button
+                    onClick={onNavigateContact}
+                    className="px-6 py-3.5 bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500 hover:from-orange-500 hover:to-amber-400 text-white font-extrabold text-xs sm:text-sm rounded-xl shadow-lg shadow-orange-600/30 hover:shadow-orange-600/50 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer inline-flex items-center gap-2 group"
+                  >
+                    <PlusCircle className="w-4 h-4 group-hover:rotate-90 transition-transform duration-300" />
+                    <span>Đăng ký quán ngon ngay</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </button>
+                )}
+                <a
+                  href="https://zalo.me/0385522474"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-3.5 bg-[#0068FF]/15 hover:bg-[#0068FF]/25 text-white border border-[#0068FF]/40 hover:border-[#0068FF]/70 font-bold text-xs sm:text-sm rounded-xl transition-all cursor-pointer inline-flex items-center gap-2.5 backdrop-blur-sm group"
+                  title="Nhắn tin Zalo trực tiếp hỗ trợ đối tác nhà hàng"
                 >
-                  <PlusCircle className="w-4 h-4" />
-                  <span>Đăng ký quán ngon ngay</span>
-                </button>
-              )}
-              <a
-                href="mailto:contact@angigio.com"
-                className="px-5 py-3 bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm rounded-xl transition-all cursor-pointer"
-              >
-                Liên hệ hợp tác: contact@angigio.com
-              </a>
+                  <span className="w-5 h-5 rounded-md bg-[#0068FF] text-white flex items-center justify-center font-black text-[10px] tracking-tighter shrink-0 shadow-xs">
+                    Zalo
+                  </span>
+                  <span>Liên hệ Zalo: 038 5522 474</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-sky-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </a>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-4 text-[11px] text-stone-400">
+                <span className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-emerald-400" /> Miễn phí đăng ký cơ bản
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-emerald-400" /> Không giữ cọc hay ràng buộc
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Check className="w-3.5 h-3.5 text-emerald-400" /> Hỗ trợ gắn link app giao hàng
+                </span>
+              </div>
             </div>
+
+            {/* Right Showcase Column (5 cols) - Interactive Restaurant Preview Mockup */}
+            <div className="lg:col-span-5 relative mt-4 lg:mt-0">
+              <div className="relative mx-auto max-w-sm">
+                
+                {/* Floating Decorative Glow */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-amber-500 rounded-3xl blur-xl opacity-30 animate-pulse pointer-events-none" />
+
+                {/* Main Card Mockup */}
+                <div className="relative bg-stone-900 border border-stone-700/80 rounded-2xl overflow-hidden shadow-2xl p-4 space-y-3.5">
+                  
+                  {/* Mockup Header: Verified Partner */}
+                  <div className="flex items-center justify-between">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 text-[11px] font-bold border border-amber-500/30">
+                      <Crown className="w-3 h-3 text-amber-400 fill-amber-400" />
+                      <span>Quán Đối Tác Xác Thực</span>
+                    </span>
+                    <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-400">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                      <span>Đang mở cửa</span>
+                    </span>
+                  </div>
+
+                  {/* Image with overlay tags */}
+                  <div className="relative h-44 rounded-xl overflow-hidden bg-stone-800">
+                    <img 
+                      src="/images/thit_ba_chi_nuong_noi_chien.jpg" 
+                      alt="Quán đối tác mẫu" 
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-stone-950/85 via-transparent to-black/20" />
+                    <div className="absolute top-2.5 left-2.5 flex items-center gap-1.5 bg-black/60 backdrop-blur-md text-white text-[11px] font-bold px-2 py-0.5 rounded-lg border border-white/10">
+                      <Star className="w-3 h-3 text-amber-400 fill-amber-400" />
+                      <span>4.9 (1.200+ đánh giá)</span>
+                    </div>
+                    <div className="absolute bottom-2.5 left-2.5 right-2.5">
+                      <div className="text-white font-extrabold text-sm drop-shadow-md leading-tight">
+                        Cơm Tấm Sườn Cọng Nướng & Món Ngon Gia Đình
+                      </div>
+                      <div className="flex items-center gap-1.5 text-stone-300 text-[11px] mt-1">
+                        <MapPin className="w-3 h-3 text-orange-400 shrink-0" />
+                        <span className="truncate">Cách bạn 0.8 km • Quận 1, TP.HCM</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Mockup Delivery CTA Buttons */}
+                  <div className="space-y-1.5">
+                    <div className="text-[10px] uppercase font-bold text-stone-400 tracking-wider">
+                      Khách hàng bấm đặt món trực tiếp qua:
+                    </div>
+                    <div className="grid grid-cols-3 gap-1.5">
+                      <div className="bg-orange-950/80 border border-orange-500/40 text-orange-200 text-center py-2 px-1 rounded-lg text-[11px] font-extrabold flex flex-col items-center">
+                        <span className="text-[10px] text-orange-400">Shopee</span>
+                        <span>Food</span>
+                      </div>
+                      <div className="bg-emerald-950/80 border border-emerald-500/40 text-emerald-200 text-center py-2 px-1 rounded-lg text-[11px] font-extrabold flex flex-col items-center">
+                        <span className="text-[10px] text-emerald-400">Grab</span>
+                        <span>Food</span>
+                      </div>
+                      <div className="bg-amber-950/80 border border-amber-500/40 text-amber-200 text-center py-2 px-1 rounded-lg text-[11px] font-extrabold flex flex-col items-center">
+                        <span className="text-[10px] text-amber-400">Be</span>
+                        <span>Food</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Conversion Stat Pill on the card */}
+                  <div className="p-2.5 rounded-xl bg-stone-800/90 border border-stone-700/80 flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">
+                        ↗
+                      </div>
+                      <span className="text-stone-300 text-[11px]">Lượt xem & đặt hàng:</span>
+                    </div>
+                    <span className="font-extrabold text-emerald-400 text-xs">
+                      +350 khách / tuần
+                    </span>
+                  </div>
+
+                </div>
+
+                {/* Floating mini badge at bottom right */}
+                <div className="absolute -bottom-3 -right-2 bg-gradient-to-r from-orange-600 to-amber-500 text-white rounded-xl shadow-xl px-3 py-1.5 text-[11px] font-extrabold flex items-center gap-1.5 border border-white/20">
+                  <Flame className="w-3.5 h-3.5 fill-white" />
+                  <span>Ưu tiên hiển thị top</span>
+                </div>
+
+              </div>
+            </div>
+
           </div>
+
         </div>
       </section>
     </div>
