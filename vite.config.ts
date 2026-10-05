@@ -233,7 +233,9 @@ export default defineConfig(() => {
               !dep.includes('data-blog') &&
               !dep.includes('data-recipes') &&
               !dep.includes('vendor-firebase') &&
-              !dep.includes('confetti')
+              !dep.includes('confetti') &&
+              !dep.includes('vendor-icons') &&
+              !dep.includes('SeoContentFaq')
           );
         },
       },
@@ -242,6 +244,9 @@ export default defineConfig(() => {
           manualChunks(id) {
             if (id.includes('node_modules/firebase/')) {
               return 'vendor-firebase';
+            }
+            if (id.includes('node_modules/lucide-react/')) {
+              return 'vendor-icons';
             }
             if (id.includes('src/data/recipes.ts') || id.includes('src/data/familyDishRecipes.ts')) {
               return 'data-recipes';

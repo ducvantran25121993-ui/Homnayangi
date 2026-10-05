@@ -18,20 +18,6 @@ export const PWAInstallButton: React.FC<{
   const [activeGuideTab, setActiveGuideTab] = useState<'ios' | 'android' | 'desktop'>('android');
 
   useEffect(() => {
-    // Defer non-critical standalone & iframe checks so they don't block initial paint or trigger layout reflow
-    const timer = setTimeout(() => {
-      const isRunningStandalone = 
-        window.matchMedia('(display-mode: standalone)').matches || 
-        (window.navigator as any).standalone === true;
-      setIsStandalone(isRunningStandalone);
-
-      try {
-        setIsInIframe(window.self !== window.top);
-      } catch {
-        setIsInIframe(true);
-      }
-    }, 200);
-
     // Auto-detect device for guide tab
     const ua = navigator.userAgent.toLowerCase();
     if (/iphone|ipad|ipod/.test(ua)) {
@@ -57,7 +43,6 @@ export const PWAInstallButton: React.FC<{
     window.addEventListener('appinstalled', handleAppInstalled);
 
     return () => {
-      clearTimeout(timer);
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
       window.removeEventListener('appinstalled', handleAppInstalled);
     };
@@ -67,8 +52,22 @@ export const PWAInstallButton: React.FC<{
     e.preventDefault();
     e.stopPropagation();
 
+    // Check standalone & iframe only upon user click to avoid forced reflow during initial page render
+    const isRunningStandalone = 
+      window.matchMedia('(display-mode: standalone)').matches || 
+      (window.navigator as any).standalone === true;
+    setIsStandalone(isRunningStandalone);
+
+    let inIframe = false;
+    try {
+      inIframe = window.self !== window.top;
+    } catch {
+      inIframe = true;
+    }
+    setIsInIframe(inIframe);
+
     // If native prompt is ready and not in iframe, try triggering it
-    if (deferredPrompt && !isInIframe) {
+    if (deferredPrompt && !inIframe) {
       try {
         await deferredPrompt.prompt();
         const choice = await deferredPrompt.userChoice;

@@ -37,6 +37,40 @@ const DishDetailModal = lazy(() => import('./components/DishDetailModal').then((
 const LocationModal = lazy(() => import('./components/LocationModal').then((m) => ({ default: m.LocationModal })));
 const SeoContentFaq = lazy(() => import('./components/SeoContentFaq').then((m) => ({ default: m.SeoContentFaq })));
 
+const DeferredSeoContentFaq: React.FC<{ activeTab: TabType; onNavigate: (tab: TabType) => void }> = ({ activeTab, onNavigate }) => {
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if ('IntersectionObserver' in window && containerRef.current) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            setShouldLoad(true);
+            observer.disconnect();
+          }
+        },
+        { rootMargin: '350px' }
+      );
+      observer.observe(containerRef.current);
+      return () => observer.disconnect();
+    } else {
+      const timer = setTimeout(() => setShouldLoad(true), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  return (
+    <div ref={containerRef} className="min-h-[40px]">
+      {shouldLoad && (
+        <Suspense fallback={null}>
+          <SeoContentFaq activeTab={activeTab} onNavigate={onNavigate} />
+        </Suspense>
+      )}
+    </div>
+  );
+};
+
 export default function App() {
   const [activeTab, setActiveTab] = useState<TabType>(() => {
     const tab = getTabFromUrl();
@@ -136,12 +170,12 @@ export default function App() {
     const pathname = window.location.pathname.replace(/\/$/, '') || '/';
     const isBlogRoute = pathname.startsWith('/blog') || pathname === '/admin' || (pathname !== '/' && !['/vong-quay', '/mon-ngon', '/do-uong-an-vat', '/lich-an-theo-tuan', '/quan-ngon', '/kham-pha-am-thuc'].includes(pathname));
 
-    const syncBlog = async () => {
-      const { fetchAndSyncCustomPosts } = await import('./data/blogPosts');
-      return fetchAndSyncCustomPosts();
-    };
-
     if (isBlogRoute) {
+      const syncBlog = async () => {
+        const { fetchAndSyncCustomPosts } = await import('./data/blogPosts');
+        return fetchAndSyncCustomPosts();
+      };
+
       syncBlog().then((syncedPosts) => {
         if (syncedPosts && syncedPosts.length > 0) {
           const cleanSlug = pathname.replace(/^\/?blog\//, '').replace(/^\//, '');
@@ -153,14 +187,6 @@ export default function App() {
           }
         }
       });
-    } else {
-      setTimeout(() => {
-        if ('requestIdleCallback' in window) {
-          (window as any).requestIdleCallback(() => syncBlog());
-        } else {
-          syncBlog();
-        }
-      }, 4000);
     }
 
     // Check if URL has secret query ?admin=1 or ?admin=inbox
@@ -248,8 +274,8 @@ export default function App() {
     ],
   });
 
-  // Fetch initial config and click stats from server
-  const fetchAffiliateData = async () => {
+  // Fetch config and click stats from server when affiliate modal opens or in idle
+  const fetchAffiliateData = useCallback(async () => {
     try {
       const res = await fetch('/api/affiliate/config');
       if (res.ok) {
@@ -264,14 +290,20 @@ export default function App() {
     } catch {
       // Fallback in case of network issue
     }
-  };
+  }, []);
 
   useEffect(() => {
-    fetchAffiliateData();
-    // Poll stats occasionally (every 60s)
-    const interval = setInterval(fetchAffiliateData, 60000);
+    if (isAffiliateModalOpen) {
+      fetchAffiliateData();
+    }
+  }, [isAffiliateModalOpen, fetchAffiliateData]);
 
-    // Initial sync of custom blog posts from server to localStorage
+  // Sync custom blog posts only on blog / admin route or idle
+  useEffect(() => {
+    const pathname = window.location.pathname.replace(/\/$/, '') || '/';
+    const isBlog = pathname.startsWith('/blog') || pathname === '/admin';
+    if (!isBlog) return;
+
     const syncCustomBlogPosts = async () => {
       try {
         const res = await fetch('/api/admin/posts');
@@ -286,9 +318,7 @@ export default function App() {
       }
     };
     syncCustomBlogPosts();
-
-    return () => clearInterval(interval);
-  }, []);
+  }, [activeTab]);
 
   // Listen for global location events
   useEffect(() => {
@@ -337,7 +367,13 @@ export default function App() {
       }
     };
 
-    const timer = setTimeout(triggerAutoDetect, 900);
+    const timer = setTimeout(() => {
+      if ('requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(triggerAutoDetect);
+      } else {
+        triggerAutoDetect();
+      }
+    }, 3500);
     return () => {
       isCancelled = true;
       clearTimeout(timer);
@@ -534,10 +570,8 @@ export default function App() {
           </Suspense>
         )}
 
-        {/* Editorial SEO Content & FAQ Accordion (Lazy loaded with fallback) */}
-        <Suspense fallback={null}>
-          <SeoContentFaq activeTab={activeTab} onNavigate={handleNavigateTab} />
-        </Suspense>
+        {/* Editorial SEO Content & FAQ Accordion (Loaded on demand as user scrolls near bottom) */}
+        <DeferredSeoContentFaq activeTab={activeTab} onNavigate={handleNavigateTab} />
       </main>
 
       {/* Dish Detail Modal (Rendered only on demand) */}
