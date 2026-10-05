@@ -707,20 +707,77 @@ declare global {
 
 export const LOCAL_STORAGE_CUSTOM_POSTS = 'angigio_custom_blog_posts';
 
+export function normalizeBlogPost(raw: any): BlogPost {
+  if (!raw || typeof raw !== 'object') {
+    return INITIAL_BLOG_POSTS[0];
+  }
+  const id = String(raw.id || raw.slug || 'bai-viet-am-thuc');
+  const slug = String(raw.slug || raw.id || 'bai-viet-am-thuc');
+  const title = String(raw.title || 'Bài viết ẩm thực');
+  const content = String(raw.content || '');
+  const excerpt = String(
+    raw.excerpt ||
+      (content ? content.replace(/[#*`>]/g, '').slice(0, 160).trim() + '...' : 'Khám phá bí quyết và văn hóa ẩm thực đặc sắc trên Hôm Nay Ăn Gì.')
+  );
+  const coverImage = String(
+    raw.coverImage ||
+      'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1200&auto=format&fit=crop&q=80'
+  );
+  const category = (raw.category || 'Bí Quyết Nấu Ăn') as BlogPost['category'];
+
+  let tags: string[] = ['Ẩm Thực', 'Món Ngon'];
+  if (Array.isArray(raw.tags)) {
+    tags = raw.tags.map((t: any) => String(t).trim()).filter(Boolean);
+    if (tags.length === 0) tags = ['Ẩm Thực', 'Món Ngon'];
+  } else if (typeof raw.tags === 'string' && raw.tags.trim().length > 0) {
+    tags = raw.tags.split(',').map((t: string) => t.trim()).filter(Boolean);
+  }
+
+  const author = {
+    name: String(raw.author?.name || 'Bếp Trưởng Hôm Nay Ăn Gì'),
+    role: String(raw.author?.role || 'Chuyên gia ẩm thực'),
+    avatar: String(
+      raw.author?.avatar ||
+        'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=120&auto=format&fit=crop&q=80'
+    ),
+  };
+
+  return {
+    id,
+    slug,
+    title,
+    excerpt,
+    coverImage,
+    category,
+    tags,
+    author,
+    publishDate: String(raw.publishDate || '01/10/2026'),
+    readTime: String(raw.readTime || '5 phút đọc'),
+    featured: Boolean(raw.featured),
+    relatedDishIds: Array.isArray(raw.relatedDishIds) ? raw.relatedDishIds : [],
+    content,
+  };
+}
+
 export function getCustomBlogPosts(): BlogPost[] {
   if (typeof window === 'undefined') return [];
   // 1. Check window.__INITIAL_CUSTOM_POSTS__ injected by server for cross-device & instant page loads
   if (typeof window !== 'undefined' && Array.isArray(window.__INITIAL_CUSTOM_POSTS__) && window.__INITIAL_CUSTOM_POSTS__.length > 0) {
+    const normalized = window.__INITIAL_CUSTOM_POSTS__.map(normalizeBlogPost);
     try {
-      localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(window.__INITIAL_CUSTOM_POSTS__));
+      localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(normalized));
     } catch {}
-    return window.__INITIAL_CUSTOM_POSTS__;
+    return normalized;
   }
   // 2. Fallback to localStorage
   try {
     const raw = localStorage.getItem(LOCAL_STORAGE_CUSTOM_POSTS);
     if (!raw) return [];
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    if (Array.isArray(parsed)) {
+      return parsed.map(normalizeBlogPost);
+    }
+    return [];
   } catch {
     return [];
   }
@@ -728,10 +785,11 @@ export function getCustomBlogPosts(): BlogPost[] {
 
 export function getAllBlogPosts(): BlogPost[] {
   const custom = getCustomBlogPosts();
-  if (!custom || custom.length === 0) return INITIAL_BLOG_POSTS;
   const map = new Map<string, BlogPost>();
-  INITIAL_BLOG_POSTS.forEach((p) => map.set(p.slug, p));
-  custom.forEach((p) => map.set(p.slug, p));
+  INITIAL_BLOG_POSTS.forEach((p) => map.set(p.slug, normalizeBlogPost(p)));
+  if (custom && custom.length > 0) {
+    custom.forEach((p) => map.set(p.slug, normalizeBlogPost(p)));
+  }
   return Array.from(map.values());
 }
 
@@ -817,12 +875,14 @@ export async function fetchAndSyncCustomPosts(): Promise<BlogPost[]> {
   }
 
   if (fetched && fetched.length > 0) {
+    const normalized = fetched.map(normalizeBlogPost);
     try {
-      window.__INITIAL_CUSTOM_POSTS__ = fetched;
-      localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(fetched));
+      window.__INITIAL_CUSTOM_POSTS__ = normalized;
+      localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(normalized));
       window.dispatchEvent(new Event('custom-posts-updated'));
     } catch {}
+    return normalized;
   }
 
-  return fetched;
+  return [];
 }

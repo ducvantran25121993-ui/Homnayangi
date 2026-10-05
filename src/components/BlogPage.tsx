@@ -28,6 +28,7 @@ import {
   getBlogPostBySlug,
   getCustomBlogPosts,
   fetchAndSyncCustomPosts,
+  normalizeBlogPost,
 } from '../data/blogPosts';
 import { INITIAL_DISHES } from '../data/dishes';
 import { findDishByRecipeSlug, getRecipePath } from '../data/recipes';
@@ -45,7 +46,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
   const [selectedCategory, setSelectedCategory] = useState<string>('Tất Cả');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [customPosts, setCustomPosts] = useState<BlogPost[]>(() => {
-    return getCustomBlogPosts();
+    return getCustomBlogPosts().map(normalizeBlogPost);
   });
 
   // Current active post when viewing detail
@@ -55,10 +56,12 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
     if (pathname === '/blog' || pathname === '') return null;
     if (pathname.startsWith('/blog/')) {
       const slug = pathname.replace('/blog/', '');
-      return getBlogPostBySlug(slug) || null;
+      const found = getBlogPostBySlug(slug);
+      return found ? normalizeBlogPost(found) : null;
     }
     const slug = pathname.replace(/^\//, '');
-    return getBlogPostBySlug(slug) || null;
+    const found = getBlogPostBySlug(slug);
+    return found ? normalizeBlogPost(found) : null;
   });
 
   // Modal create post state
@@ -84,10 +87,13 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
   const allPosts = useMemo(() => {
     const postMap = new Map<string, BlogPost>();
     INITIAL_BLOG_POSTS.forEach((p) => {
-      postMap.set(p.slug, p);
+      postMap.set(p.slug, normalizeBlogPost(p));
     });
-    customPosts.forEach((p) => {
-      postMap.set(p.slug, p);
+    (customPosts || []).forEach((p) => {
+      if (p && (p.slug || p.id)) {
+        const normalized = normalizeBlogPost(p);
+        postMap.set(normalized.slug, normalized);
+      }
     });
     return Array.from(postMap.values());
   }, [customPosts]);
@@ -277,7 +283,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
         searchQuery.trim() === '' ||
         post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         post.excerpt.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        post.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()));
+        (post.tags || []).some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()));
       return matchCategory && matchSearch;
     });
   }, [allPosts, selectedCategory, searchQuery]);
@@ -816,15 +822,15 @@ ${newContent}
             {/* Author info */}
             <div className="flex items-center gap-3.5 pt-4 border-t border-stone-100">
               <img
-                src={activePost.author.avatar}
-                alt={activePost.author.name}
+                src={activePost.author?.avatar || 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=120&auto=format&fit=crop&q=80'}
+                alt={activePost.author?.name || 'Bếp Trưởng Hôm Nay Ăn Gì'}
                 className="w-11 h-11 rounded-full object-cover ring-2 ring-orange-500/20 shadow-2xs"
               />
               <div>
                 <div className="font-extrabold text-stone-900 text-sm">
-                  {activePost.author.name}
+                  {activePost.author?.name || 'Bếp Trưởng Hôm Nay Ăn Gì'}
                 </div>
-                <div className="text-xs text-stone-500">{activePost.author.role}</div>
+                <div className="text-xs text-stone-500">{activePost.author?.role || 'Chuyên gia ẩm thực'}</div>
               </div>
             </div>
           </div>
@@ -849,7 +855,7 @@ ${newContent}
                 Thẻ chủ đề:
               </div>
               <div className="flex flex-wrap gap-2">
-                {activePost.tags.map((tag, tIdx) => (
+                {(activePost.tags || []).map((tag, tIdx) => (
                   <span
                     key={tIdx}
                     className="px-3 py-1 bg-stone-100 text-stone-700 text-xs font-semibold rounded-lg hover:bg-orange-50 hover:text-orange-700 transition-colors"
@@ -1107,7 +1113,7 @@ ${newContent}
                   </p>
 
                   <div className="flex flex-wrap gap-1.5 mb-6">
-                    {featuredPost.tags.slice(0, 3).map((tag, tIdx) => (
+                    {(featuredPost.tags || []).slice(0, 3).map((tag, tIdx) => (
                       <span
                         key={tIdx}
                         className="px-2.5 py-0.5 bg-stone-100 text-stone-600 text-[11px] font-semibold rounded-md"
@@ -1121,16 +1127,16 @@ ${newContent}
                 <div className="pt-4 border-t border-stone-100 flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
                     <img
-                      src={featuredPost.author.avatar}
-                      alt={featuredPost.author.name}
+                      src={featuredPost.author?.avatar || 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=120&auto=format&fit=crop&q=80'}
+                      alt={featuredPost.author?.name || 'Bếp Trưởng Hôm Nay Ăn Gì'}
                       className="w-9 h-9 rounded-full object-cover ring-2 ring-orange-100"
                     />
                     <div>
                       <div className="text-xs font-bold text-stone-900">
-                        {featuredPost.author.name}
+                        {featuredPost.author?.name || 'Bếp Trưởng Hôm Nay Ăn Gì'}
                       </div>
                       <div className="text-[11px] text-stone-400">
-                        {featuredPost.author.role}
+                        {featuredPost.author?.role || 'Chuyên gia ẩm thực'}
                       </div>
                     </div>
                   </div>
@@ -1262,7 +1268,7 @@ ${newContent}
                       </p>
 
                       <div className="flex flex-wrap gap-1.5 mb-2">
-                        {post.tags.slice(0, 2).map((t, idx) => (
+                        {(post.tags || []).slice(0, 2).map((t, idx) => (
                           <span
                             key={idx}
                             className="px-2 py-0.5 bg-stone-100 text-stone-600 text-[10px] font-semibold rounded"
@@ -1278,12 +1284,12 @@ ${newContent}
                   <div className="p-5 sm:p-6 pt-0 border-t border-stone-50 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <img
-                        src={post.author.avatar}
-                        alt={post.author.name}
+                        src={post.author?.avatar || 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=120&auto=format&fit=crop&q=80'}
+                        alt={post.author?.name || 'Bếp Trưởng Hôm Nay Ăn Gì'}
                         className="w-7 h-7 rounded-full object-cover ring-1 ring-orange-100"
                       />
                       <span className="text-xs font-bold text-stone-800 truncate max-w-[120px]">
-                        {post.author.name}
+                        {post.author?.name || 'Bếp Trưởng Hôm Nay Ăn Gì'}
                       </span>
                     </div>
 
