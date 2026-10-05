@@ -61,10 +61,12 @@ export const AffiliateModal: React.FC<AffiliateModalProps> = ({
           </div>
 
           <button
+            type="button"
             onClick={onClose}
+            aria-label="Đóng cửa sổ quản lý hoa hồng Affiliate"
             className="p-2 rounded-xl text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 

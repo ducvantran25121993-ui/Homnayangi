@@ -215,22 +215,33 @@ export default defineConfig(() => {
       },
       dedupe: ['react', 'react-dom'],
     },
+    esbuild: {
+      drop: ['console', 'debugger'],
+      legalComments: 'none',
+      treeShaking: true,
+    },
     build: {
       target: 'esnext',
       cssCodeSplit: true,
       minify: 'esbuild',
       chunkSizeWarningLimit: 600,
+      modulePreload: {
+        polyfill: false,
+        resolveDependencies(filename, deps) {
+          return deps.filter(
+            (dep) =>
+              !dep.includes('data-blog') &&
+              !dep.includes('data-recipes') &&
+              !dep.includes('vendor-firebase') &&
+              !dep.includes('confetti')
+          );
+        },
+      },
       rollupOptions: {
         output: {
           manualChunks(id) {
             if (id.includes('node_modules/firebase/')) {
               return 'vendor-firebase';
-            }
-            if (id.includes('node_modules/canvas-confetti/')) {
-              return 'vendor-confetti';
-            }
-            if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
-              return 'vendor-react';
             }
             if (id.includes('src/data/recipes.ts') || id.includes('src/data/familyDishRecipes.ts')) {
               return 'data-recipes';

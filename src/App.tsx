@@ -6,7 +6,6 @@ import { Footer } from './components/Footer';
 import { Dish, AffiliateConfig, ClickRecord, UserLocation } from './types';
 import { INITIAL_DISHES } from './data/dishes';
 import { DEFAULT_AFFILIATE_CONFIG } from './utils/affiliate';
-import { fetchAndSyncCustomPosts } from './data/blogPosts';
 import {
   getStoredUserLocation,
   saveUserLocation,
@@ -137,8 +136,13 @@ export default function App() {
     const pathname = window.location.pathname.replace(/\/$/, '') || '/';
     const isBlogRoute = pathname.startsWith('/blog') || pathname === '/admin' || (pathname !== '/' && !['/vong-quay', '/mon-ngon', '/do-uong-an-vat', '/lich-an-theo-tuan', '/quan-ngon', '/kham-pha-am-thuc'].includes(pathname));
 
+    const syncBlog = async () => {
+      const { fetchAndSyncCustomPosts } = await import('./data/blogPosts');
+      return fetchAndSyncCustomPosts();
+    };
+
     if (isBlogRoute) {
-      fetchAndSyncCustomPosts().then((syncedPosts) => {
+      syncBlog().then((syncedPosts) => {
         if (syncedPosts && syncedPosts.length > 0) {
           const cleanSlug = pathname.replace(/^\/?blog\//, '').replace(/^\//, '');
           const isCustomPost = syncedPosts.some(
@@ -152,11 +156,11 @@ export default function App() {
     } else {
       setTimeout(() => {
         if ('requestIdleCallback' in window) {
-          (window as any).requestIdleCallback(() => fetchAndSyncCustomPosts());
+          (window as any).requestIdleCallback(() => syncBlog());
         } else {
-          fetchAndSyncCustomPosts();
+          syncBlog();
         }
-      }, 3500);
+      }, 4000);
     }
 
     // Check if URL has secret query ?admin=1 or ?admin=inbox
@@ -605,13 +609,17 @@ export default function App() {
           </div>
           <div className="flex items-center gap-1.5 shrink-0">
             <button
+              type="button"
               onClick={() => setIsLocationModalOpen(true)}
+              aria-label="Thay đổi vị trí nhận gợi ý món ăn"
               className="text-[11px] font-bold text-orange-400 hover:text-orange-300 underline cursor-pointer px-1 py-0.5"
             >
               Đổi
             </button>
             <button
+              type="button"
               onClick={() => setGpsToast(null)}
+              aria-label="Đóng thông báo định vị GPS tự động"
               className="text-stone-400 hover:text-stone-200 p-1 rounded-lg hover:bg-stone-800 transition-colors cursor-pointer"
               title="Đóng thông báo"
             >

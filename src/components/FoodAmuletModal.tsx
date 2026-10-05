@@ -77,10 +77,12 @@ export const FoodAmuletModal: React.FC<FoodAmuletModalProps> = ({
 
         {/* Close Button */}
         <button
+          type="button"
           onClick={onClose}
+          aria-label="Đóng bùa hộ mệnh ẩm thực"
           className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white/80 hover:text-white flex items-center justify-center transition-colors cursor-pointer z-20"
         >
-          <X className="w-4 h-4" />
+          <X className="w-4 h-4" aria-hidden="true" />
         </button>
 
         {/* Header Ribbon */}

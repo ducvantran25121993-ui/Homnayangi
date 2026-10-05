@@ -237,14 +237,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               accept="image/png,image/jpeg,image/webp,image/svg+xml" 
               className="hidden" 
               id="brand-logo-file-input"
+              aria-label="Tải lên tệp logo thương hiệu"
             />
             <div className="relative">
               <a 
                 href={TAB_CONFIG.tarot.path}
                 onClick={(e) => handleNavClick('tarot', e)}
                 className="block cursor-pointer"
-                role="img"
-                aria-label="Logo thương hiệu Hôm Nay Ăn Gì"
+                aria-label="Về trang chủ Hôm Nay Ăn Gì"
               >
                 <picture>
                   <source srcSet="/logo.webp?v=8" type="image/webp" />
@@ -272,10 +272,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                   fileInputRef.current?.click();
                 }}
                 disabled={uploadingLogo}
+                aria-label="Tải lên hình ảnh logo thương hiệu"
                 title="Bấm để chọn file logo gốc (.png, .svg)"
                 className="absolute -bottom-1 -right-1 p-1 bg-stone-900/80 hover:bg-orange-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-xs cursor-pointer"
               >
-                <Camera className="w-3 h-3" />
+                <Camera className="w-3 h-3" aria-hidden="true" />
               </button>
             </div>
 
@@ -526,7 +527,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-center gap-2 shrink-0">
             {onOpenLocationModal && (
               <button
+                type="button"
                 onClick={onOpenLocationModal}
+                aria-label={`Chọn vị trí địa lý giao món. Hiện tại: ${userLocation?.district ? `${userLocation.district}, ` : ''}${userLocation?.city || 'Việt Nam'}`}
                 title={`Vị trí: ${userLocation?.district ? `${userLocation.district}, ` : ''}${userLocation?.city || 'Việt Nam'}${userLocation?.source === 'gps' ? ' (Định vị GPS tự động)' : ''}`}
                 className="flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 rounded-full border border-stone-200/80 bg-white hover:bg-stone-50 text-stone-700 transition-colors text-xs font-medium cursor-pointer shadow-2xs group"
               >
@@ -546,7 +549,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             <PWAInstallButton variant="navbar" />
 
             <button
+              type="button"
               onClick={handleOpenShare}
+              aria-label="Chia sẻ trang web Hôm Nay Ăn Gì cùng bạn bè qua mạng xã hội"
               title="Chia sẻ cùng bạn bè qua mạng xã hội"
               className="px-3.5 py-1.5 rounded-full border border-stone-200/80 bg-white hover:bg-stone-50 hover:border-orange-300 text-stone-700 transition-all duration-200 flex items-center gap-1.5 text-xs font-medium cursor-pointer shadow-2xs group"
             >

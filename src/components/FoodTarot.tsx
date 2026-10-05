@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, lazy, Suspense } from 'react';
 import {
   Compass,
   Sparkles,
@@ -24,11 +24,12 @@ import { trackAndOpenAffiliateLink, formatVND } from '../utils/affiliate';
 import { formatLocationDisplay } from '../utils/location';
 import { DeliveryLocationBadge } from './DeliveryLocationBadge';
 import { tarotAudio } from '../utils/tarotSound';
-import { FoodAmuletModal, FoodAmuletData } from './FoodAmuletModal';
+import type { FoodAmuletData } from './FoodAmuletModal';
 import { TarotSigilArt } from './TarotSigilArt';
 import { getZodiacArchetypes, ELEMENT_THEMES } from '../data/zodiacTarotCards';
-import { ShareModal } from './ShareModal';
-import confetti from 'canvas-confetti';
+
+const FoodAmuletModal = lazy(() => import('./FoodAmuletModal').then((m) => ({ default: m.FoodAmuletModal })));
+const ShareModal = lazy(() => import('./ShareModal').then((m) => ({ default: m.ShareModal })));
 
 interface FoodTarotProps {
   affiliateConfig: AffiliateConfig;
@@ -1245,12 +1246,14 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
       setRevealedResult(newResult);
       setIsFlipping(false);
       tarotAudio.playCardReveal();
-      confetti({
-        particleCount: 75,
-        spread: 80,
-        origin: { y: 0.65 },
-        colors: ['#F59E0B', '#6366F1', '#EC4899', '#10B981', '#3B82F6'],
-      });
+      import('canvas-confetti').then(({ default: confetti }) => {
+        confetti({
+          particleCount: 75,
+          spread: 80,
+          origin: { y: 0.65 },
+          colors: ['#F59E0B', '#6366F1', '#EC4899', '#10B981', '#3B82F6'],
+        });
+      }).catch(() => {});
     }, 550);
   };
 
@@ -1297,7 +1300,9 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
         <div className="relative z-10 flex items-center justify-between gap-2 w-full mb-6 px-1">
           {/* Interactive Mystic Candle */}
           <button
+            type="button"
             onClick={handleInteractCandle}
+            aria-label={candlePuffs > 0 ? `Nến tâm linh đang cháy, đã nhận ${candlePuffs} lời nguyện. Bấm để cầu nguyện thêm` : 'Bấm để thắp nến ước nguyện vị giác tâm linh'}
             title="Bấm để thắp nến ước nguyện vị giác"
             className={`flex items-center gap-2 px-4 py-1.5 rounded-full border transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer shadow-md shadow-purple-950/30 bg-gradient-to-r from-[#0d041c] via-[#200b3d] to-[#3b0d5c] ${
               isCandleLit
@@ -1322,18 +1327,20 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
 
           {/* Tibetan Sound Toggle */}
           <button
+            type="button"
             onClick={handleToggleMute}
+            aria-label={isMuted ? 'Bật âm thanh huyền bí chuông Tây Tạng' : 'Tắt âm thanh chuông Tây Tạng'}
             title={isMuted ? 'Bật âm thanh huyền ảo' : 'Tắt âm thanh'}
             className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-50 hover:bg-purple-100 border border-purple-200 text-purple-900 text-xs font-bold transition-colors cursor-pointer shadow-xs"
           >
             {isMuted ? (
               <>
-                <VolumeX className="w-4 h-4 text-stone-500" />
+                <VolumeX className="w-4 h-4 text-stone-500" aria-hidden="true" />
                 <span className="text-xs text-stone-600 font-medium">Âm Thanh: Tắt</span>
               </>
             ) : (
               <>
-                <Volume2 className="w-4 h-4 text-purple-600 animate-pulse" />
+                <Volume2 className="w-4 h-4 text-purple-600 animate-pulse" aria-hidden="true" />
                 <span className="text-xs text-purple-950 font-bold">Chuông Tây Tạng</span>
               </>
             )}
@@ -1367,6 +1374,8 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                   key={realm.id}
                   type="button"
                   onClick={() => handleSelectRealm(realm.id)}
+                  aria-label={`Chọn cõi ẩm thực ${realm.name}: ${realm.shortDesc}. Hiện có ${countInRealm} món`}
+                  aria-pressed={isActive}
                   className={`group relative p-3 sm:p-4 rounded-2xl sm:rounded-3xl border text-left transition-all duration-300 cursor-pointer overflow-hidden ${
                     isActive
                       ? `bg-gradient-to-br from-[#1b0633] via-[#280a47] to-[#120324] ${realm.activeBorder} shadow-xl ring-2 ring-amber-300/50 scale-[1.02]`
@@ -1494,6 +1503,8 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                     setRevealedResult(null);
                     tarotAudio.playCandleSpark();
                   }}
+                  aria-label="Chọn cung hoàng đạo: Toàn Thể Vũ Trụ (Cosmos Omniverse)"
+                  aria-pressed={isCosmosSelected}
                   className={`w-full group relative px-4 sm:px-6 py-3.5 rounded-2xl border-2 transition-all duration-500 flex items-center justify-between gap-3 text-left cursor-pointer overflow-hidden select-none ${
                     isCosmosSelected
                       ? 'bg-gradient-to-r from-[#2c084d] via-[#1a0430] to-[#3a0b63] border-amber-300 shadow-[0_0_35px_rgba(245,158,11,0.55),inset_0_0_20px_rgba(245,158,11,0.25)] ring-2 ring-amber-400/50'
@@ -1565,11 +1576,14 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
               return (
                 <button
                   key={z.id}
+                  type="button"
                   onClick={() => {
                     setSelectedZodiac(z);
                     setRevealedResult(null);
                     tarotAudio.playCandleSpark();
                   }}
+                  aria-label={`Chọn cung hoàng đạo ${z.name} (${z.dates}) - ${z.mysticTitle}`}
+                  aria-pressed={isSelected}
                   className={`group relative p-2.5 sm:p-3 min-h-[148px] sm:min-h-[160px] rounded-2xl border-2 transition-all duration-500 flex flex-col items-center justify-between text-center cursor-pointer select-none bg-gradient-to-b ${
                     isSelected
                       ? `${elementCfg.buttonActive} ${elementCfg.glowShadow} scale-[1.03] z-20`
@@ -1725,8 +1739,10 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
               return (
                 <button
                   key={arc.id}
+                  type="button"
                   disabled={isFlipping}
                   onClick={() => drawNextUniqueDish(arc)}
+                  aria-label={`Rút lá bài Tarot: ${arc.name} (${arc.latin}) - ${arc.subtitle}`}
                   className={`group relative aspect-[1/1.6] min-h-[295px] sm:min-h-[335px] rounded-2xl bg-gradient-to-b ${arc.cardBg} p-3 sm:p-3.5 flex flex-col items-center justify-between border-2 ${arc.borderGlow} ${arc.glowAura} hover:-translate-y-2.5 hover:scale-[1.03] transition-all duration-500 shadow-2xl cursor-pointer overflow-hidden text-center select-none ${
                     isFlipping ? 'opacity-50 pointer-events-none scale-95' : ''
                   }`}
@@ -1816,8 +1832,10 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
 
               {/* Enchanted Celestial Draw Button */}
               <button
+                type="button"
                 onClick={() => drawNextUniqueDish()}
                 disabled={isFlipping}
+                aria-label={`Khai quẻ Tarot ngẫu nhiên cõi ${currentRealmObj.name}`}
                 className={`relative shrink-0 px-6 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 hover:from-amber-300 hover:to-yellow-300 text-stone-950 font-black text-xs sm:text-sm tracking-wider flex items-center justify-center gap-2.5 transition-all duration-300 shadow-[0_0_25px_rgba(245,158,11,0.5)] hover:scale-105 active:scale-95 cursor-pointer border border-amber-300 overflow-hidden ${
                   isFlipping ? 'opacity-60 pointer-events-none' : ''
                 }`}
@@ -2029,46 +2047,54 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
 
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
                       <button
+                        type="button"
                         onClick={() =>
                           trackAndOpenAffiliateLink('shopeefood', revealedResult.dish, affiliateConfig, userLocation)
                         }
+                        aria-label={`Đặt món ${revealedResult.dish.name} qua ShopeeFood`}
                         title={`Chuyển qua ShopeeFood tìm quán ${revealedResult.dish.name} tại ${targetArea}`}
                         className="py-3 px-3 rounded-2xl bg-[#EE4D2D] hover:bg-[#D73211] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(238,77,45,0.35)] cursor-pointer"
                       >
-                        <ShoppingBag className="w-4 h-4 shrink-0" />
+                        <ShoppingBag className="w-4 h-4 shrink-0" aria-hidden="true" />
                         <span>ShopeeFood</span>
                       </button>
 
                       <button
+                        type="button"
                         onClick={() =>
                           trackAndOpenAffiliateLink('grabfood', revealedResult.dish, affiliateConfig, userLocation)
                         }
+                        aria-label={`Đặt món ${revealedResult.dish.name} qua GrabFood`}
                         title={`Chuyển qua GrabFood tìm quán ${revealedResult.dish.name} tại ${targetArea}`}
                         className="py-3 px-3 rounded-2xl bg-[#00B14F] hover:bg-[#009643] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(0,177,79,0.35)] cursor-pointer"
                       >
-                        <ShoppingBag className="w-4 h-4 shrink-0" />
+                        <ShoppingBag className="w-4 h-4 shrink-0" aria-hidden="true" />
                         <span>GrabFood</span>
                       </button>
 
                       <button
+                        type="button"
                         onClick={() =>
                           trackAndOpenAffiliateLink('befood', revealedResult.dish, affiliateConfig, userLocation)
                         }
+                        aria-label={`Đặt món ${revealedResult.dish.name} qua BeFood`}
                         title={`Chuyển qua BeFood tìm quán ${revealedResult.dish.name} tại ${targetArea}`}
                         className="py-3 px-3 rounded-2xl bg-[#FFD100] hover:bg-[#ECC200] text-stone-950 font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(255,209,0,0.35)] cursor-pointer"
                       >
-                        <ShoppingBag className="w-4 h-4 shrink-0 text-stone-950" />
+                        <ShoppingBag className="w-4 h-4 shrink-0 text-stone-950" aria-hidden="true" />
                         <span>BeFood</span>
                       </button>
 
                       <button
+                        type="button"
                         onClick={() =>
                           trackAndOpenAffiliateLink('googlemaps', revealedResult.dish, affiliateConfig, userLocation)
                         }
+                        aria-label={`Tìm quán ${revealedResult.dish.name} trên Google Maps`}
                         title={`Mở Google Maps tìm quán ${revealedResult.dish.name} gần bạn`}
                         className="py-3 px-3 rounded-2xl bg-[#1a73e8] hover:bg-[#1557b0] text-white font-black text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-[0_4px_15px_rgba(26,115,232,0.35)] cursor-pointer"
                       >
-                        <MapPin className="w-4 h-4 shrink-0 text-white" />
+                        <MapPin className="w-4 h-4 shrink-0 text-white" aria-hidden="true" />
                         <span>Google Maps</span>
                       </button>
                     </div>
@@ -2077,41 +2103,49 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
                   {/* Secondary Navigation Buttons: Switch to another unique dish OR return to deck */}
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-3 border-t border-purple-800/30">
                     <button
+                      type="button"
                       disabled={isFlipping}
                       onClick={() => drawNextUniqueDish()}
+                      aria-label="Khai quẻ món ăn khác"
                       className={`w-full sm:w-auto py-3 px-5 rounded-xl bg-gradient-to-r ${theme.actionPrimaryBtn} font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer hover:scale-[1.03] uppercase tracking-wider`}
                     >
-                      <RefreshCw className={`w-4 h-4 ${isFlipping ? 'animate-spin' : ''}`} />
+                      <RefreshCw className={`w-4 h-4 ${isFlipping ? 'animate-spin' : ''}`} aria-hidden="true" />
                       <span>Khai quẻ món khác</span>
                     </button>
 
                     <div className="flex w-full sm:w-auto items-center justify-center gap-2 sm:gap-3">
                       {onSelectDish && (
                         <button
+                          type="button"
                           onClick={() => onSelectDish(revealedResult.dish)}
+                          aria-label={`Xem chi tiết món ăn ${revealedResult.dish.name}`}
                           title="Xem chi tiết món"
                           className="flex-1 sm:flex-initial py-3 px-3.5 sm:px-4 rounded-xl bg-[#1e0a38] hover:bg-[#280e4b] text-purple-200 hover:text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all cursor-pointer border border-purple-500/30 shadow-sm"
                         >
-                          <Eye className="w-4 h-4 text-amber-400" />
+                          <Eye className="w-4 h-4 text-amber-400" aria-hidden="true" />
                           <span className="hidden sm:inline">Xem chi tiết món</span>
                         </button>
                       )}
 
                       <button
+                        type="button"
                         onClick={() => setRevealedResult(null)}
+                        aria-label="Rút từ bộ bài khác"
                         title="Rút từ bộ bài"
                         className="flex-1 sm:flex-initial py-3 px-3.5 sm:px-4 rounded-xl border border-purple-600/40 hover:border-amber-400/60 bg-[#120524] hover:bg-[#1b0836] text-stone-300 hover:text-amber-200 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm"
                       >
-                        <RotateCcw className="w-3.5 h-3.5 text-amber-400" />
+                        <RotateCcw className="w-3.5 h-3.5 text-amber-400" aria-hidden="true" />
                         <span className="hidden sm:inline">Rút từ bộ bài</span>
                       </button>
 
                       <button
+                        type="button"
                         onClick={() => setIsShareModalOpen(true)}
+                        aria-label="Chia sẻ quẻ bài Tarot lên mạng xã hội"
                         title="Chia sẻ quẻ bài Tarot lên mạng xã hội"
                         className="flex-1 sm:flex-initial py-3 px-3.5 sm:px-4 rounded-xl border border-amber-500/50 hover:border-amber-400 bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500/30 hover:to-orange-500/30 text-amber-300 font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition-all cursor-pointer shadow-sm"
                       >
-                        <Share2 className="w-4 h-4 text-amber-400" />
+                        <Share2 className="w-4 h-4 text-amber-400" aria-hidden="true" />
                         <span className="hidden sm:inline">Chia sẻ quẻ</span>
                       </button>
                     </div>
@@ -2125,22 +2159,26 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
 
       {/* Amulet Talisman Modal */}
       {amuletData && (
-        <FoodAmuletModal
-          data={amuletData}
-          onClose={() => setAmuletData(null)}
-          userLocation={userLocation}
-          affiliateConfig={affiliateConfig}
-        />
+        <Suspense fallback={null}>
+          <FoodAmuletModal
+            data={amuletData}
+            onClose={() => setAmuletData(null)}
+            userLocation={userLocation}
+            affiliateConfig={affiliateConfig}
+          />
+        </Suspense>
       )}
 
       {/* Social Share Modal */}
       {revealedResult && (
-        <ShareModal
-          isOpen={isShareModalOpen}
-          onClose={() => setIsShareModalOpen(false)}
-          title={`Quẻ bài Tarot ẩm thực: ${revealedResult.archetype.name} - ${revealedResult.dish.name}!`}
-          text={`Tôi vừa bốc được quẻ "${revealedResult.archetype.name}" (${revealedResult.isUpright ? 'Thuận Chiều' : 'Nghịch Chiều'}) với món định mệnh "${revealedResult.dish.name}".\nLời sấm truyền: "${revealedResult.quote}"`}
-        />
+        <Suspense fallback={null}>
+          <ShareModal
+            isOpen={isShareModalOpen}
+            onClose={() => setIsShareModalOpen(false)}
+            title={`Quẻ bài Tarot ẩm thực: ${revealedResult.archetype.name} - ${revealedResult.dish.name}!`}
+            text={`Tôi vừa bốc được quẻ "${revealedResult.archetype.name}" (${revealedResult.isUpright ? 'Thuận Chiều' : 'Nghịch Chiều'}) với món định mệnh "${revealedResult.dish.name}".\nLời sấm truyền: "${revealedResult.quote}"`}
+          />
+        </Suspense>
       )}
       </div>
     </div>

@@ -132,10 +132,12 @@ export const PWAInstallButton: React.FC<{
                 </div>
               </div>
               <button
+                type="button"
                 onClick={() => setShowModal(false)}
+                aria-label="Đóng hướng dẫn cài đặt ứng dụng"
                 className="p-1.5 rounded-full hover:bg-stone-200/60 text-stone-400 hover:text-stone-700 transition-colors cursor-pointer"
               >
-                <X className="w-5 h-5" />
+                <X className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
 
@@ -331,10 +333,11 @@ export const PWAInstallButton: React.FC<{
         <button
           type="button"
           onClick={handleInstallClick}
+          aria-label={isStandalone ? 'Ứng dụng Hôm Nay Ăn Gì đã được cài đặt' : 'Cài đặt ứng dụng Hôm Nay Ăn Gì trên điện thoại hoặc máy tính'}
           className={`inline-flex items-center gap-1.5 text-xs text-stone-600 hover:text-orange-600 transition-colors py-1 px-2 rounded-lg hover:bg-stone-50 cursor-pointer font-medium ${className}`}
           title={isStandalone ? "Ứng dụng đã được cài đặt" : "Cài đặt Hôm Nay Ăn Gì về điện thoại / máy tính"}
         >
-          <Download className="w-3.5 h-3.5 text-orange-500" />
+          <Download className="w-3.5 h-3.5 text-orange-500" aria-hidden="true" />
           <span>{isStandalone ? 'Đã cài đặt' : 'Cài đặt App'}</span>
         </button>
         {renderModal()}
@@ -348,10 +351,11 @@ export const PWAInstallButton: React.FC<{
         <button
           type="button"
           onClick={handleInstallClick}
+          aria-label={isStandalone ? 'Ứng dụng Hôm Nay Ăn Gì đã được cài đặt' : 'Cài đặt ứng dụng Hôm Nay Ăn Gì trên điện thoại hoặc máy tính'}
           className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold transition-all cursor-pointer shadow-xs ${className}`}
           title="Cài đặt App"
         >
-          <Download className="w-3.5 h-3.5" />
+          <Download className="w-3.5 h-3.5" aria-hidden="true" />
           <span>{isStandalone ? 'Đã cài đặt' : 'Cài App'}</span>
         </button>
         {renderModal()}
@@ -365,10 +369,11 @@ export const PWAInstallButton: React.FC<{
       <button
         type="button"
         onClick={handleInstallClick}
+        aria-label={isStandalone ? 'Ứng dụng Hôm Nay Ăn Gì đã được cài đặt' : 'Cài đặt ứng dụng Hôm Nay Ăn Gì trên điện thoại hoặc máy tính'}
         className={`px-3 py-1.5 rounded-full border border-orange-200/90 bg-orange-50/70 hover:bg-orange-100 hover:border-orange-300 text-orange-700 transition-all duration-200 flex items-center gap-1.5 text-xs font-semibold cursor-pointer shadow-2xs group ${className}`}
         title="Cài đặt Hôm Nay Ăn Gì trên điện thoại / máy tính"
       >
-        <Download className="w-3.5 h-3.5 text-orange-600 group-hover:scale-110 transition-transform" />
+        <Download className="w-3.5 h-3.5 text-orange-600 group-hover:scale-110 transition-transform" aria-hidden="true" />
         <span className="hidden sm:inline">{isStandalone ? 'Đã cài' : 'Cài App'}</span>
       </button>
       {renderModal()}

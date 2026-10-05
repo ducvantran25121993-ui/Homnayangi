@@ -167,10 +167,11 @@ export const Footer: React.FC<{
               <button
                 type="button"
                 onClick={onOpenAdminInbox}
+                aria-label="Đăng nhập trang quản trị nội dung"
                 title="Quản trị"
                 className="opacity-20 hover:opacity-100 transition-opacity p-0.5 cursor-pointer text-stone-400 hover:text-stone-700"
               >
-                <Lock className="w-2.5 h-2.5" />
+                <Lock className="w-2.5 h-2.5" aria-hidden="true" />
               </button>
             )}
           </p>

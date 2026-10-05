@@ -192,11 +192,13 @@ export const ShareModal: React.FC<ShareModalProps> = ({
             </div>
 
             <button
+              type="button"
               onClick={onClose}
+              aria-label="Đóng cửa sổ chia sẻ"
               className="w-7 h-7 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-500 flex items-center justify-center transition-colors cursor-pointer shrink-0"
               title="Đóng"
             >
-              <X className="w-3.5 h-3.5" />
+              <X className="w-3.5 h-3.5" aria-hidden="true" />
             </button>
           </div>
 

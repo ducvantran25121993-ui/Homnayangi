@@ -167,10 +167,12 @@ export const LocationModal: React.FC<LocationModalProps> = ({
           </div>
 
           <button
+            type="button"
             onClick={onClose}
+            aria-label="Đóng cửa sổ chọn vị trí"
             className="p-2 rounded-full hover:bg-white/20 text-white transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 
