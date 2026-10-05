@@ -54,6 +54,8 @@ import {
   HardDrive,
   CheckCircle2,
   FileJson,
+  Inbox,
+  Mail,
 } from 'lucide-react';
 import {
   BlogPost,
@@ -68,6 +70,8 @@ import {
   getPostsFromFirestore,
 } from '../firebase';
 import { TabType } from '../utils/navigation';
+import { AdminInboxView } from './AdminInboxView';
+import { getContactMessages } from '../utils/contactStorage';
 
 interface AdminBlogPageProps {
   onNavigate?: (tab: TabType) => void;
@@ -116,7 +120,8 @@ const HIGHLIGHT_COLORS = [
 ];
 
 export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
-  const [viewMode, setViewMode] = useState<'list' | 'editor'>('list');
+  const [viewMode, setViewMode] = useState<'list' | 'editor' | 'inbox'>('list');
+  const [unreadMessagesCount, setUnreadMessagesCount] = useState<number>(0);
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -488,6 +493,32 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
   useEffect(() => {
     loadPosts();
   }, [loadPosts]);
+
+  // Check URL query tab=inbox and track unread contact messages
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('tab') === 'inbox') {
+      setViewMode('inbox');
+    }
+
+    const updateUnread = () => {
+      try {
+        const msgs = getContactMessages();
+        const unread = msgs.filter((m) => m.status === 'unread').length;
+        setUnreadMessagesCount(unread);
+      } catch {
+        // ignore
+      }
+    };
+
+    updateUnread();
+    window.addEventListener('angigio_new_message', updateUnread);
+    window.addEventListener('angigio_messages_updated', updateUnread);
+    return () => {
+      window.removeEventListener('angigio_new_message', updateUnread);
+      window.removeEventListener('angigio_messages_updated', updateUnread);
+    };
+  }, []);
 
   // Convert markdown to clean HTML for visual editing
   const markdownToHtml = (md: string): string => {
@@ -1369,7 +1400,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
           <div className="flex items-center gap-3">
             <button
               onClick={() => {
-                if (viewMode === 'editor') {
+                if (viewMode === 'editor' || viewMode === 'inbox') {
                   setViewMode('list');
                 } else if (onNavigate) {
                   onNavigate('blog');
@@ -1377,10 +1408,10 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                   window.location.href = '/blog';
                 }
               }}
-              className="flex items-center gap-1.5 text-xs sm:text-sm text-stone-300 hover:text-white bg-stone-800 hover:bg-stone-700 py-1.5 px-3 rounded-lg transition-colors"
+              className="flex items-center gap-1.5 text-xs sm:text-sm text-stone-300 hover:text-white bg-stone-800 hover:bg-stone-700 py-1.5 px-3 rounded-lg transition-colors cursor-pointer"
             >
               <ArrowLeft className="w-4 h-4" />
-              <span>{viewMode === 'editor' ? 'Danh Sách' : 'Xem Blog'}</span>
+              <span>{viewMode === 'editor' || viewMode === 'inbox' ? 'Danh Sách' : 'Xem Blog'}</span>
             </button>
 
             <div className="h-4 w-px bg-stone-700 hidden sm:block" />
@@ -1389,15 +1420,71 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
               <h1 className="font-extrabold text-sm sm:text-base tracking-wide text-white flex items-center gap-1.5">
                 <span>Hôm Nay Ăn Gì</span>
-                <span className="text-stone-300 font-normal text-xs bg-stone-800 border border-stone-700 px-2 py-0.5 rounded-md">
-                  Quản Trị Bài Viết
+                <span className="text-stone-300 font-normal text-xs bg-stone-800 border border-stone-700 px-2 py-0.5 rounded-md hidden md:inline">
+                  Quản Trị Hệ Thống
                 </span>
               </h1>
+            </div>
+
+            {/* Main Navigation Tabs: Bài Viết Blog & Hộp Thư Góp Ý */}
+            <div className="flex items-center gap-1 bg-stone-800 p-1 rounded-xl border border-stone-700 ml-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setViewMode('list');
+                  const url = new URL(window.location.href);
+                  url.searchParams.delete('tab');
+                  window.history.replaceState({ tab: 'admin' }, '', url.pathname);
+                }}
+                className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                  viewMode !== 'inbox'
+                    ? 'bg-orange-600 text-white shadow-xs'
+                    : 'text-stone-300 hover:text-white hover:bg-stone-700/60'
+                }`}
+              >
+                <FileText className="w-3.5 h-3.5" />
+                <span>Bài Viết</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setViewMode('inbox');
+                  const url = new URL(window.location.href);
+                  url.searchParams.set('tab', 'inbox');
+                  window.history.replaceState({ tab: 'admin' }, '', `${url.pathname}?tab=inbox`);
+                }}
+                className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer relative ${
+                  viewMode === 'inbox'
+                    ? 'bg-orange-600 text-white shadow-xs'
+                    : 'text-stone-300 hover:text-white hover:bg-stone-700/60'
+                }`}
+                title="Hộp thư góp ý & liên hệ từ người dùng"
+              >
+                <Inbox className="w-3.5 h-3.5" />
+                <span>Hộp Thư</span>
+                {unreadMessagesCount > 0 && (
+                  <span className="bg-rose-500 text-white text-[10px] font-extrabold px-1.5 py-0.2 rounded-full animate-pulse ml-0.5">
+                    {unreadMessagesCount}
+                  </span>
+                )}
+              </button>
             </div>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-3">
-            {viewMode === 'list' ? (
+            {viewMode === 'inbox' ? (
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setViewMode('list')}
+                  className="flex items-center gap-1.5 bg-stone-800 hover:bg-stone-700 text-stone-200 text-xs sm:text-sm font-semibold py-2 px-3 sm:px-3.5 rounded-lg border border-stone-700 shadow-sm transition-colors cursor-pointer"
+                >
+                  <FileText className="w-4 h-4 text-orange-400" />
+                  <span>Về Bài Viết</span>
+                </button>
+              </div>
+            ) : viewMode === 'list' ? (
               <div className="flex items-center gap-2">
                 <button
                   type="button"
@@ -1406,7 +1493,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                   title="Mục lưu dữ liệu & sao lưu bài viết"
                 >
                   <Database className="w-4 h-4 text-emerald-400" />
-                  <span>Mục Lưu Data</span>
+                  <span className="hidden sm:inline">Mục Lưu Data</span>
                 </button>
                 <button
                   type="button"
@@ -1453,7 +1540,12 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
 
       {/* Main Body */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 pt-6">
-        {viewMode === 'list' ? (
+        {viewMode === 'inbox' ? (
+          /* ================= INBOX VIEW ================= */
+          <div className="py-2">
+            <AdminInboxView embedded={true} onClose={() => setViewMode('list')} />
+          </div>
+        ) : viewMode === 'list' ? (
           /* ================= POST LIST VIEW ================= */
           <div className="space-y-6">
             {/* Stats Cards */}
@@ -1462,9 +1554,24 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                 <div className="text-xs text-stone-500 font-medium">Tổng bài viết</div>
                 <div className="text-2xl font-black text-stone-900 mt-1">{posts.length}</div>
               </div>
-              <div className="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs">
-                <div className="text-xs text-stone-500 font-medium">Chuyên mục</div>
-                <div className="text-2xl font-black text-orange-600 mt-1">{BLOG_CATEGORIES.length}</div>
+              <div
+                onClick={() => {
+                  setViewMode('inbox');
+                  const url = new URL(window.location.href);
+                  url.searchParams.set('tab', 'inbox');
+                  window.history.replaceState({ tab: 'admin' }, '', `${url.pathname}?tab=inbox`);
+                }}
+                className="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs cursor-pointer hover:border-orange-300 hover:shadow-sm transition-all group"
+                title="Bấm để mở Hộp Thư Góp Ý"
+              >
+                <div className="flex items-center justify-between text-xs text-stone-500 font-medium">
+                  <span>Hộp thư góp ý</span>
+                  <Inbox className="w-3.5 h-3.5 text-orange-500 group-hover:scale-110 transition-transform" />
+                </div>
+                <div className="text-2xl font-black text-orange-600 mt-1 flex items-baseline gap-1.5">
+                  <span>{unreadMessagesCount}</span>
+                  <span className="text-xs font-semibold text-stone-400">tin chưa đọc</span>
+                </div>
               </div>
               <div className="bg-white p-4 rounded-2xl border border-stone-200 shadow-xs">
                 <div className="text-xs text-stone-500 font-medium">Bài nổi bật</div>
