@@ -1175,21 +1175,21 @@ export const SeoContentFaq: React.FC<{
               </a>
 
               <a
-                href="/ai-goi-y-mon-an"
+                href="/mon-ngon"
                 onClick={(e) => {
                   if (onNavigate) {
                     e.preventDefault();
-                    onNavigate('ai');
+                    onNavigate('catalog');
                   }
                 }}
                 className="p-4 rounded-2xl bg-stone-50/80 hover:bg-orange-50/80 border border-stone-200/80 hover:border-orange-200 transition-all group flex items-center justify-between"
               >
                 <div>
                   <div className="font-bold text-stone-900 group-hover:text-orange-600 text-sm">
-                    Trợ Lý AI Chọn Món
+                    Món Ngon
                   </div>
                   <div className="text-xs text-stone-500 mt-0.5">
-                    Gợi ý theo tâm trạng & thời tiết
+                    Khám phá 160+ món ngon 3 miền
                   </div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-orange-600 group-hover:translate-x-0.5 transition-all" />
@@ -1641,21 +1641,21 @@ export const SeoContentFaq: React.FC<{
               </a>
 
               <a
-                href="/ai-goi-y-mon-an"
+                href="/mon-ngon"
                 onClick={(e) => {
                   if (onNavigate) {
                     e.preventDefault();
-                    onNavigate('ai');
+                    onNavigate('catalog');
                   }
                 }}
                 className="p-4 rounded-2xl bg-stone-50/80 hover:bg-orange-50/80 border border-stone-200/80 hover:border-orange-200 transition-all group flex items-center justify-between"
               >
                 <div>
                   <div className="font-bold text-stone-900 group-hover:text-orange-600 text-sm">
-                    Trợ Lý AI Chọn Món
+                    Món Ngon
                   </div>
                   <div className="text-xs text-stone-500 mt-0.5">
-                    Gợi ý thực đơn theo tâm trạng & thời tiết
+                    Khám phá 160+ món ngon 3 miền
                   </div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-orange-600 group-hover:translate-x-0.5 transition-all" />
