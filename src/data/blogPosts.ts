@@ -786,10 +786,16 @@ export function getCustomBlogPosts(): BlogPost[] {
 export function getAllBlogPosts(): BlogPost[] {
   const custom = getCustomBlogPosts();
   const map = new Map<string, BlogPost>();
-  INITIAL_BLOG_POSTS.forEach((p) => map.set(p.slug, normalizeBlogPost(p)));
+  // 1. Put custom posts FIRST so newly created / edited posts from admin appear at the very top!
   if (custom && custom.length > 0) {
     custom.forEach((p) => map.set(p.slug, normalizeBlogPost(p)));
   }
+  // 2. Add initial posts if not overridden by custom posts
+  INITIAL_BLOG_POSTS.forEach((p) => {
+    if (!map.has(p.slug)) {
+      map.set(p.slug, normalizeBlogPost(p));
+    }
+  });
   return Array.from(map.values());
 }
 
@@ -826,16 +832,21 @@ export function getFeaturedBlogPosts(): BlogPost[] {
  */
 export async function fetchAndSyncCustomPosts(): Promise<BlogPost[]> {
   if (typeof window === 'undefined') return [];
-  let fetched: BlogPost[] = [];
   const cacheBust = Date.now();
+  const postMap = new Map<string, BlogPost>();
 
-  // 1. Fast static / local custom_blog_posts.json first (super fast CDN/cache, takes ~10ms)
+  // 1. Fast static / local custom_blog_posts.json
   try {
     const res = await fetch(`/custom_blog_posts.json?_t=${cacheBust}`);
     if (res.ok) {
       const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) {
-        fetched = data;
+      if (Array.isArray(data)) {
+        data.forEach((p) => {
+          if (p && (p.slug || p.id)) {
+            const normalized = normalizeBlogPost(p);
+            postMap.set(normalized.slug, normalized);
+          }
+        });
       }
     }
   } catch {
@@ -843,45 +854,57 @@ export async function fetchAndSyncCustomPosts(): Promise<BlogPost[]> {
   }
 
   // 2. Try dynamic Express server API
-  if (!fetched || fetched.length === 0) {
-    try {
-      const res = await fetch(`/api/admin/posts?_t=${cacheBust}`);
-      if (res.ok) {
-        const data = await res.json();
-        if (Array.isArray(data.customPosts) && data.customPosts.length > 0) {
-          fetched = data.customPosts;
+  try {
+    const res = await fetch(`/api/admin/posts?_t=${cacheBust}`);
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data.customPosts)) {
+        data.customPosts.forEach((p: any) => {
+          if (p && (p.slug || p.id)) {
+            const normalized = normalizeBlogPost(p);
+            postMap.set(normalized.slug, normalized);
+          }
+        });
+      }
+    }
+  } catch {
+    // ignore
+  }
+
+  // 3. Cloud Firestore (source of truth for admin posts across devices)
+  try {
+    const { getPostsFromFirestore } = await import('../firebase');
+    const cloudPromise = getPostsFromFirestore();
+    const timeoutPromise = new Promise<BlogPost[]>((_, reject) =>
+      setTimeout(() => reject(new Error('Firestore timeout')), 3500)
+    );
+    const cloudPosts = await Promise.race([cloudPromise, timeoutPromise]);
+    if (Array.isArray(cloudPosts)) {
+      cloudPosts.forEach((p) => {
+        if (p && (p.slug || p.id)) {
+          const normalized = normalizeBlogPost(p);
+          postMap.set(normalized.slug, normalized);
         }
-      }
-    } catch {
-      // ignore
+      });
     }
+  } catch {
+    // ignore
   }
 
-  // 3. Cloud Firestore fallback with 3-second timeout protection
-  if (!fetched || fetched.length === 0) {
+  const merged = Array.from(postMap.values());
+  if (merged.length > 0) {
     try {
-      const { getPostsFromFirestore } = await import('../firebase');
-      const cloudPromise = getPostsFromFirestore();
-      const timeoutPromise = new Promise<BlogPost[]>((_, reject) =>
-        setTimeout(() => reject(new Error('Firestore timeout')), 3000)
-      );
-      const cloudPosts = await Promise.race([cloudPromise, timeoutPromise]);
-      if (cloudPosts && cloudPosts.length > 0) {
-        fetched = cloudPosts;
-      }
-    } catch {
-      // ignore
-    }
-  }
-
-  if (fetched && fetched.length > 0) {
-    const normalized = fetched.map(normalizeBlogPost);
-    try {
-      window.__INITIAL_CUSTOM_POSTS__ = normalized;
-      localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(normalized));
+      window.__INITIAL_CUSTOM_POSTS__ = merged;
+      localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(merged));
+      // Register all slugs into KNOWN_BLOG_SLUGS dynamically
+      const { KNOWN_BLOG_SLUGS } = await import('./blogSlugs');
+      merged.forEach((p) => {
+        if (p.slug) KNOWN_BLOG_SLUGS.add(p.slug);
+        if (p.id) KNOWN_BLOG_SLUGS.add(p.id);
+      });
       window.dispatchEvent(new Event('custom-posts-updated'));
     } catch {}
-    return normalized;
+    return merged;
   }
 
   return [];

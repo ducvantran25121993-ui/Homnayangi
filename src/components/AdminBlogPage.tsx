@@ -452,8 +452,11 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
       const cloudPosts = await getPostsFromFirestore();
       if (cloudPosts && cloudPosts.length > 0) {
         const map = new Map<string, BlogPost>();
-        INITIAL_BLOG_POSTS.forEach((p) => map.set(p.slug, p));
-        cloudPosts.forEach((p) => map.set(p.slug, p));
+        // Custom posts first
+        cloudPosts.forEach((p) => map.set(p.slug || p.id, p));
+        INITIAL_BLOG_POSTS.forEach((p) => {
+          if (!map.has(p.slug)) map.set(p.slug, p);
+        });
         const merged = Array.from(map.values());
         setPosts(merged);
         if (typeof window !== 'undefined') {
@@ -472,7 +475,14 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
       if (res.ok) {
         const data = await res.json();
         if (data.posts && Array.isArray(data.posts)) {
-          setPosts(data.posts);
+          const map = new Map<string, BlogPost>();
+          if (Array.isArray(data.customPosts)) {
+            data.customPosts.forEach((p: BlogPost) => map.set(p.slug || p.id, p));
+          }
+          data.posts.forEach((p: BlogPost) => {
+            if (!map.has(p.slug || p.id)) map.set(p.slug || p.id, p);
+          });
+          setPosts(Array.from(map.values()));
           // Sync custom posts into localStorage as instant fallback
           if (data.customPosts && typeof window !== 'undefined') {
             localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(data.customPosts));
@@ -1295,6 +1305,15 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
         customList.unshift(postPayload);
       }
       localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(customList));
+
+      if (typeof window !== 'undefined') {
+        (window as any).__INITIAL_CUSTOM_POSTS__ = customList;
+      }
+
+      // Add to KNOWN_BLOG_SLUGS so route is immediately recognized
+      const { KNOWN_BLOG_SLUGS } = await import('../data/blogSlugs');
+      KNOWN_BLOG_SLUGS.add(cleanSlug);
+      if (postPayload.id) KNOWN_BLOG_SLUGS.add(postPayload.id);
     } catch (storageErr) {
       console.warn('LocalStorage error:', storageErr);
     }
@@ -1516,15 +1535,21 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                   <Database className="w-4 h-4 text-emerald-400" />
                   <span className="hidden sm:inline">Mục Lưu Data</span>
                 </button>
-                <a
-                  href={`/${slug || editingPostId || ''}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hidden sm:inline-flex items-center gap-1 text-xs text-stone-300 hover:text-white bg-stone-800 hover:bg-stone-700 py-2 px-3 rounded-lg transition-colors"
-                >
-                  <Eye className="w-3.5 h-3.5" />
-                  <span>Xem Trên Web</span>
-                </a>
+                {(() => {
+                  const targetSlug = (slug.trim() ? generateSlug(slug) : (title.trim() ? generateSlug(title) : editingPostId || '')).replace(/^\//, '');
+                  return (
+                    <a
+                      href={targetSlug ? `/${targetSlug}` : '/blog'}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-stone-200 hover:text-white bg-stone-800 hover:bg-stone-700 py-2 px-3 rounded-lg border border-stone-700 transition-colors"
+                      title={targetSlug ? `Xem bài viết tại /${targetSlug}` : 'Xem danh sách blog trên web'}
+                    >
+                      <Eye className="w-3.5 h-3.5 text-amber-400" />
+                      <span>Xem Trên Web</span>
+                    </a>
+                  );
+                })()}
                 <button
                   onClick={handleSavePost}
                   disabled={saving}

@@ -295,7 +295,8 @@ export function getTabFromUrl(): TabType {
     return 'tarot';
   }
 
-  return 'tarot';
+  // Any non-root path that isn't a known system route is a blog post (including newly created admin posts)
+  return 'blog';
 }
 
 /**

@@ -83,16 +83,20 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
   const [newContent, setNewContent] = useState('');
   const [previewMode, setPreviewMode] = useState(false);
 
-  // All posts combined (custom + initial, custom posts take precedence so admin edits update the website)
+  // All posts combined: custom posts come FIRST so newly published posts from admin appear at the very top!
   const allPosts = useMemo(() => {
     const postMap = new Map<string, BlogPost>();
-    INITIAL_BLOG_POSTS.forEach((p) => {
-      postMap.set(p.slug, normalizeBlogPost(p));
-    });
+    // 1. Custom posts first (most recently added/edited by admin)
     (customPosts || []).forEach((p) => {
       if (p && (p.slug || p.id)) {
         const normalized = normalizeBlogPost(p);
         postMap.set(normalized.slug, normalized);
+      }
+    });
+    // 2. Add initial blog posts if not overridden
+    INITIAL_BLOG_POSTS.forEach((p) => {
+      if (!postMap.has(p.slug)) {
+        postMap.set(p.slug, normalizeBlogPost(p));
       }
     });
     return Array.from(postMap.values());

@@ -556,11 +556,63 @@ function saveCustomBlogPosts(posts: any[]) {
   }
 }
 
+async function syncFirestorePostsToServer(): Promise<any[]> {
+  try {
+    const configPath = path.join(process.cwd(), "firebase-applet-config.json");
+    if (!fs.existsSync(configPath)) return loadCustomBlogPosts();
+    const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
+    const { initializeApp, getApps, getApp } = await import("firebase/app");
+    const { getFirestore, collection, getDocs } = await import("firebase/firestore");
+    const app = getApps().length === 0 ? initializeApp(config) : getApp();
+    const db = getFirestore(app, config.firestoreDatabaseId);
+    const snap = await getDocs(collection(db, "posts"));
+    if (snap.empty) return loadCustomBlogPosts();
+
+    const cloudPosts: any[] = [];
+    snap.forEach((d) => {
+      const data = d.data();
+      cloudPosts.push({
+        id: data.id || d.id,
+        slug: data.slug || d.id,
+        title: data.title || "",
+        excerpt: data.excerpt || "",
+        content: data.content || "",
+        coverImage: data.coverImage || "/images/an-gi-cho-do-ngan.jpg",
+        category: data.category || "Gợi Ý Thực Đơn",
+        tags: typeof data.tags === "string" ? data.tags.split(",").map((t: string) => t.trim()).filter(Boolean) : (data.tags || []),
+        author: {
+          name: data.authorName || "Bếp Trưởng Hôm Nay Ăn Gì",
+          role: data.authorRole || "Chuyên gia Ẩm thực & Dinh dưỡng",
+          avatar: data.authorAvatar || "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=120&auto=format&fit=crop&q=80",
+        },
+        publishDate: data.publishDate || "",
+        readTime: data.readTime || "5 phút đọc",
+        featured: Boolean(data.featured),
+        updatedAt: data.updatedAt || new Date().toISOString(),
+      });
+    });
+
+    const localPosts = loadCustomBlogPosts();
+    const map = new Map<string, any>();
+    localPosts.forEach((p) => map.set(p.slug || p.id, p));
+    cloudPosts.forEach((p) => map.set(p.slug || p.id, p));
+    const merged = Array.from(map.values());
+    saveCustomBlogPosts(merged);
+    return merged;
+  } catch (err) {
+    console.warn("syncFirestorePostsToServer warning:", err);
+    return loadCustomBlogPosts();
+  }
+}
+
+// Trigger initial sync on startup in background
+syncFirestorePostsToServer().catch(() => {});
+
 // Direct static JSON endpoint with no-cache headers for cross-server & CDN consumers
-app.get("/custom_blog_posts.json", (_req, res) => {
+app.get("/custom_blog_posts.json", async (_req, res) => {
   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
   res.setHeader("Content-Type", "application/json; charset=utf-8");
-  const posts = loadCustomBlogPosts();
+  const posts = await syncFirestorePostsToServer();
   return res.json(posts);
 });
 
@@ -586,11 +638,14 @@ function addUrlToSitemap(slug: string) {
 }
 
 // API: Get all blog posts (initial + custom)
-app.get("/api/admin/posts", (_req, res) => {
-  const customPosts = loadCustomBlogPosts();
+app.get("/api/admin/posts", async (_req, res) => {
+  const customPosts = await syncFirestorePostsToServer();
   const postMap = new Map<string, any>();
-  INITIAL_BLOG_POSTS.forEach((p) => postMap.set(p.slug, p));
-  customPosts.forEach((p) => postMap.set(p.slug, p)); // custom updates/overrides
+  // Custom posts first
+  customPosts.forEach((p) => postMap.set(p.slug, p));
+  INITIAL_BLOG_POSTS.forEach((p) => {
+    if (!postMap.has(p.slug)) postMap.set(p.slug, p);
+  });
   return res.json({
     success: true,
     posts: Array.from(postMap.values()),
@@ -599,7 +654,7 @@ app.get("/api/admin/posts", (_req, res) => {
 });
 
 // API: Create or update a blog post
-app.post("/api/admin/posts", (req, res) => {
+app.post("/api/admin/posts", async (req, res) => {
   try {
     const postData = req.body;
     if (!postData || !postData.title || !postData.slug) {
@@ -626,6 +681,38 @@ app.post("/api/admin/posts", (req, res) => {
 
     saveCustomBlogPosts(customPosts);
     addUrlToSitemap(cleanSlug);
+
+    // Also persist to Firestore so it is globally available across all servers
+    try {
+      const configPath = path.join(process.cwd(), "firebase-applet-config.json");
+      if (fs.existsSync(configPath)) {
+        const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
+        const { initializeApp, getApps, getApp } = await import("firebase/app");
+        const { getFirestore, doc, setDoc } = await import("firebase/firestore");
+        const app = getApps().length === 0 ? initializeApp(config) : getApp();
+        const db = getFirestore(app, config.firestoreDatabaseId);
+        const docId = cleanSlug.replace(/[^a-zA-Z0-9_\-]/g, '-').slice(0, 120);
+        await setDoc(doc(db, "posts", docId), {
+          id: savedPost.id,
+          slug: savedPost.slug,
+          title: savedPost.title,
+          excerpt: savedPost.excerpt || '',
+          content: savedPost.content || '',
+          coverImage: savedPost.coverImage || '/images/an-gi-cho-do-ngan.jpg',
+          category: savedPost.category || 'Gợi Ý Thực Đơn',
+          tags: Array.isArray(savedPost.tags) ? savedPost.tags.join(', ') : (savedPost.tags || ''),
+          authorName: savedPost.author?.name || 'Bếp Trưởng Hôm Nay Ăn Gì',
+          authorRole: savedPost.author?.role || 'Chuyên gia Ẩm thực & Dinh dưỡng',
+          authorAvatar: savedPost.author?.avatar || 'https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=120&auto=format&fit=crop&q=80',
+          publishDate: savedPost.publishDate,
+          readTime: savedPost.readTime || '5 phút đọc',
+          featured: Boolean(savedPost.featured),
+          updatedAt: savedPost.updatedAt,
+        });
+      }
+    } catch (fbErr) {
+      console.warn("Backend Firestore save warning:", fbErr);
+    }
 
     return res.json({
       success: true,
