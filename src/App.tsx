@@ -471,6 +471,7 @@ export default function App() {
             onSelectDish={(dish) => setSelectedDish(dish)}
             userLocation={userLocation}
             onOpenLocationModal={openLocationPicker}
+            onNavigate={handleNavigateTab}
           />
         )}
 

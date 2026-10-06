@@ -16,10 +16,12 @@ import {
   MapPin,
   Sparkle,
   Share2,
+  BookOpen,
 } from 'lucide-react';
 import { INITIAL_DISHES } from '../data/dishes';
 import { TAROT_REALMS, TarotRealmId, isDishInRealm } from '../data/tarotRealms';
 import { Dish, AffiliateConfig, UserLocation } from '../types';
+import { TabType } from '../utils/navigation';
 import { trackAndOpenAffiliateLink, formatVND } from '../utils/affiliate';
 import { formatLocationDisplay } from '../utils/location';
 import { DeliveryLocationBadge } from './DeliveryLocationBadge';
@@ -36,6 +38,7 @@ interface FoodTarotProps {
   onSelectDish?: (dish: Dish) => void;
   userLocation: UserLocation;
   onOpenLocationModal: (dishName?: string) => void;
+  onNavigate?: (tab: TabType) => void;
 }
 
 export interface TarotArchetype {
@@ -1109,6 +1112,7 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
   onSelectDish,
   userLocation,
   onOpenLocationModal,
+  onNavigate,
 }) => {
   const [drawnDishIds, setDrawnDishIds] = useState<string[]>(() => {
     try {
@@ -1434,14 +1438,35 @@ export const FoodTarot: React.FC<FoodTarotProps> = ({
           </div>
 
           {/* Slogan & Oracle Flavor of Active Realm */}
-          <div className="mt-3 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-[#17052c] via-[#240a3f] to-[#17052c] border border-purple-700/40 text-purple-100 flex items-center justify-between gap-2 text-xs sm:text-[13px] shadow-sm backdrop-blur-xs">
-            <div className="flex items-center gap-2 overflow-hidden">
+          <div className="mt-3 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-[#17052c] via-[#240a3f] to-[#17052c] border border-purple-700/40 text-purple-100 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs sm:text-[13px] shadow-sm backdrop-blur-xs">
+            <div className="flex items-center gap-2 overflow-hidden w-full sm:w-auto">
               <span className="text-amber-300 font-black shrink-0">✦ Cõi {currentRealmObj.name}:</span>
-              <span className="text-stone-200 italic line-clamp-1">{currentRealmObj.oracleFlavor}</span>
+              <span className="text-stone-200 italic truncate">{currentRealmObj.oracleFlavor}</span>
             </div>
-            <span className="hidden md:inline-block text-[11px] font-bold text-amber-300/90 shrink-0">
-              {currentRealmObj.tagline}
-            </span>
+            <div className="flex items-center gap-2.5 shrink-0 self-end sm:self-auto">
+              <span className="hidden md:inline-block text-[11px] font-bold text-amber-300/90">
+                {currentRealmObj.tagline}
+              </span>
+              <a
+                href="/blog"
+                onClick={(e) => {
+                  if (e.ctrlKey || e.metaKey || e.button === 1) return;
+                  e.preventDefault();
+                  if (onNavigate) {
+                    onNavigate('blog');
+                  } else {
+                    window.history.pushState({ tab: 'blog' }, '', '/blog');
+                    window.dispatchEvent(new Event('locationchange'));
+                  }
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }}
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white font-bold text-[11px] sm:text-xs shadow-md transition-all cursor-pointer hover:scale-105 active:scale-95 shrink-0"
+                title="Khám phá Blog Ẩm Thực & Cẩm Nang Món Ngon"
+              >
+                <BookOpen className="w-3.5 h-3.5 text-white" />
+                <span>Blog Ẩm Thực</span>
+              </a>
+            </div>
           </div>
         </div>
 

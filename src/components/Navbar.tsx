@@ -12,6 +12,7 @@ import {
   Camera,
   Coffee,
   Store,
+  BookOpen,
 } from 'lucide-react';
 import { UserLocation } from '../types';
 import { TAB_CONFIG, TabType } from '../utils/navigation';
@@ -38,14 +39,17 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isWheelDropdownOpen, setIsWheelDropdownOpen] = useState(false);
   const [isFoodDropdownOpen, setIsFoodDropdownOpen] = useState(false);
+  const [isDiscoverDropdownOpen, setIsDiscoverDropdownOpen] = useState(false);
   const [logoSrc, setLogoSrc] = useState<string>('/logo.webp?v=8');
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [logoToast, setLogoToast] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const wheelDropdownRef = useRef<HTMLDivElement>(null);
   const foodDropdownRef = useRef<HTMLDivElement>(null);
+  const discoverDropdownRef = useRef<HTMLDivElement>(null);
   const wheelTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const foodTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const discoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -87,6 +91,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     setActiveTab(tab);
     setIsWheelDropdownOpen(false);
     setIsFoodDropdownOpen(false);
+    setIsDiscoverDropdownOpen(false);
   };
 
   // Close dropdown on click outside
@@ -98,12 +103,16 @@ export const Navbar: React.FC<NavbarProps> = ({
       if (foodDropdownRef.current && !foodDropdownRef.current.contains(event.target as Node)) {
         setIsFoodDropdownOpen(false);
       }
+      if (discoverDropdownRef.current && !discoverDropdownRef.current.contains(event.target as Node)) {
+        setIsDiscoverDropdownOpen(false);
+      }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
       if (foodTimeoutRef.current) clearTimeout(foodTimeoutRef.current);
+      if (discoverTimeoutRef.current) clearTimeout(discoverTimeoutRef.current);
     };
   }, []);
 
@@ -129,8 +138,43 @@ export const Navbar: React.FC<NavbarProps> = ({
     }, 180);
   };
 
+  const handleDiscoverMouseEnter = () => {
+    if (discoverTimeoutRef.current) clearTimeout(discoverTimeoutRef.current);
+    setIsDiscoverDropdownOpen(true);
+  };
+
+  const handleDiscoverMouseLeave = () => {
+    discoverTimeoutRef.current = setTimeout(() => {
+      setIsDiscoverDropdownOpen(false);
+    }, 180);
+  };
+
   const isWheelGroupActive = activeTab === 'wheel' || activeTab === 'ai';
   const isFoodGroupActive = activeTab === 'catalog' || activeTab === 'snacks' || activeTab === 'planner';
+  const isDiscoverGroupActive = activeTab === 'discover' || activeTab === 'blog';
+
+  const discoverSubItems: Array<{
+    id: 'blog' | 'discover';
+    label: string;
+    description: string;
+    path: string;
+    icon: React.ReactNode;
+  }> = [
+    {
+      id: 'blog',
+      label: 'Blog Ẩm Thực',
+      description: 'Cẩm nang món ngon & bí quyết ẩm thực',
+      path: TAB_CONFIG.blog.path,
+      icon: <BookOpen className="w-4 h-4" />,
+    },
+    {
+      id: 'discover',
+      label: 'Khám Phá Vùng Miền',
+      description: 'Tinh hoa đặc sản 3 miền Bắc, Trung, Nam & Miền Tây',
+      path: TAB_CONFIG.discover.path,
+      icon: <Compass className="w-4 h-4" />,
+    },
+  ];
 
   const wheelSubItems: Array<{
     id: 'wheel' | 'ai';
@@ -216,10 +260,10 @@ export const Navbar: React.FC<NavbarProps> = ({
       icon: <Store className="w-3.5 h-3.5" />,
     },
     {
-      id: 'discover',
-      shortLabel: 'Ẩm Thực',
-      path: TAB_CONFIG.discover.path,
-      icon: <Compass className="w-3.5 h-3.5" />,
+      id: 'blog',
+      shortLabel: 'Blog',
+      path: TAB_CONFIG.blog.path,
+      icon: <BookOpen className="w-3.5 h-3.5" />,
     },
   ];
 
@@ -503,24 +547,86 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className="relative z-10 tracking-tight">Quán Ngon</span>
             </a>
 
-            {/* 5. Khám Phá / Ẩm Thực */}
-            <a
-              href={TAB_CONFIG.discover.path}
-              onClick={(e) => handleNavClick('discover', e)}
-              className={`relative flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full text-sm font-medium transition-colors select-none cursor-pointer ${
-                activeTab === 'discover' ? 'text-stone-900 font-semibold' : 'text-stone-500 hover:text-stone-900'
-              }`}
+            {/* 5. Khám Phá / Ẩm Thực with Dropdown Submenu for Blog Ẩm Thực */}
+            <div
+              ref={discoverDropdownRef}
+              className="relative"
+              onMouseEnter={handleDiscoverMouseEnter}
+              onMouseLeave={handleDiscoverMouseLeave}
             >
-              {activeTab === 'discover' && (
-                <div className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50 transition-all duration-200" />
+              <a
+                href={activeTab === 'blog' ? TAB_CONFIG.blog.path : TAB_CONFIG.discover.path}
+                onClick={(e) => handleNavClick(activeTab === 'blog' ? 'blog' : 'discover', e)}
+                className={`relative flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 rounded-full text-sm font-medium transition-colors select-none cursor-pointer ${
+                  isDiscoverGroupActive ? 'text-stone-900 font-semibold' : 'text-stone-500 hover:text-stone-900'
+                }`}
+              >
+                {isDiscoverGroupActive && (
+                  <div className="absolute inset-0 bg-white rounded-full shadow-xs border border-stone-200/50 transition-all duration-200" />
+                )}
+
+                <span className={`relative z-10 transition-colors ${
+                  isDiscoverGroupActive ? 'text-orange-600' : 'text-stone-400 group-hover:text-stone-600'
+                }`}>
+                  {activeTab === 'blog' ? <BookOpen className="w-4 h-4" /> : <Compass className="w-4 h-4" />}
+                </span>
+
+                <span className="relative z-10 tracking-tight">
+                  {activeTab === 'blog' ? 'Blog Ẩm Thực' : 'Ẩm Thực'}
+                </span>
+
+                <ChevronDown className={`relative z-10 w-3.5 h-3.5 text-stone-400 transition-transform duration-200 ${
+                  isDiscoverDropdownOpen ? 'rotate-180 text-orange-600' : ''
+                }`} />
+              </a>
+
+              {/* Desktop Submenu Dropdown Card for Ẩm Thực & Blog */}
+              {isDiscoverDropdownOpen && (
+                <div className="absolute right-0 top-full mt-2 w-72 bg-white rounded-2xl shadow-xl border border-stone-200/80 p-2 z-50 overflow-hidden animate-fade-in transition-all">
+                  <div className="px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-stone-400">
+                    Cẩm nang & Khám phá
+                  </div>
+                  <div className="space-y-1">
+                    {discoverSubItems.map((sub) => {
+                      const isSubActive = activeTab === sub.id;
+                      return (
+                        <a
+                          key={sub.id}
+                          href={sub.path}
+                          onClick={(e) => handleNavClick(sub.id, e)}
+                          className={`flex items-start gap-3 p-2.5 rounded-xl transition-all cursor-pointer group ${
+                            isSubActive
+                              ? 'bg-orange-50/80 text-orange-900 border border-orange-200/70'
+                              : 'hover:bg-stone-50 text-stone-700'
+                          }`}
+                        >
+                          <div className={`p-2 rounded-lg shrink-0 transition-colors ${
+                            isSubActive
+                              ? 'bg-orange-600 text-white'
+                              : 'bg-stone-100 text-stone-500 group-hover:bg-orange-100 group-hover:text-orange-600'
+                          }`}>
+                            {sub.icon}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <span className={`text-xs font-bold block ${
+                              isSubActive ? 'text-orange-950' : 'text-stone-900 group-hover:text-orange-600'
+                            }`}>
+                              {sub.label}
+                            </span>
+                            <p className="text-[11px] text-stone-500 leading-tight mt-0.5">
+                              {sub.description}
+                            </p>
+                          </div>
+                          {isSubActive && (
+                            <Check className="w-4 h-4 text-orange-600 shrink-0 self-center" />
+                          )}
+                        </a>
+                      );
+                    })}
+                  </div>
+                </div>
               )}
-              <span className={`relative z-10 transition-colors ${
-                activeTab === 'discover' ? 'text-orange-600' : 'text-stone-400 group-hover:text-stone-600'
-              }`}>
-                <Compass className="w-4 h-4" />
-              </span>
-              <span className="relative z-10 tracking-tight">Ẩm Thực</span>
-            </a>
+            </div>
           </nav>
 
           {/* Right Action buttons */}

@@ -24,7 +24,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
 }) => {
   // Force re-render on any popstate or custom locationchange events
   // Note: All hooks MUST be called unconditionally at top of component before any early return
-  const [, setTick] = useState(0);
+  const [tick, setTick] = useState(0);
   const [activeBlogPost, setActiveBlogPost] = useState<{ title: string; slug: string } | null>(null);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({
     } else {
       setActiveBlogPost(null);
     }
-  }, [activeTab]);
+  }, [activeTab, tick]);
 
   if (activeTab === 'tarot' || activeTab === 'admin') {
     return null; // On homepage root or admin panel, breadcrumbs aren't necessary

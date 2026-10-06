@@ -1,23 +1,30 @@
 import { Dish, DishRecipe, RegionId } from '../types';
 import { getRegionById } from '../data/regionalCuisine';
-
-const KNOWN_BLOG_SLUGS = new Set([
-  'top-10-mon-an-vat-sai-gon',
-  'bi-quyet-nau-pho-bo-ha-noi',
-  'an-gi-o-da-nang',
-  'thuc-don-eat-clean-7-ngay',
-  'cach-lam-tra-sua-tai-nha',
-  'thit-heo-lam-mon-gi-ngon',
-  'mon-ngon-tu-thit-bo',
-  'mon-ngon-tu-ga',
-  'canh-ngon-mua-he',
-  'mon-ngon-dai-tiec',
-]);
+import { KNOWN_BLOG_SLUGS } from '../data/blogSlugs';
 
 export function isBlogPostSlug(slug: string): boolean {
   if (!slug) return false;
   const clean = slug.replace(/^\/?blog\//, '').replace(/^\//, '').replace(/\/$/, '');
-  return KNOWN_BLOG_SLUGS.has(clean);
+  if (KNOWN_BLOG_SLUGS.has(clean)) return true;
+
+  // Check window.__INITIAL_CUSTOM_POSTS__ or localStorage for custom admin posts
+  if (typeof window !== 'undefined') {
+    if (window.history.state?.tab === 'blog') return true;
+    try {
+      const initialCustom = (window as any).__INITIAL_CUSTOM_POSTS__;
+      if (Array.isArray(initialCustom) && initialCustom.some((p: any) => p.slug === clean || p.id === clean)) {
+        return true;
+      }
+      const raw = localStorage.getItem('angigio_custom_blog_posts');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.some((p: any) => p.slug === clean || p.id === clean)) {
+          return true;
+        }
+      }
+    } catch {}
+  }
+  return false;
 }
 
 export type TabType = 'tarot' | 'wheel' | 'planner' | 'ai' | 'catalog' | 'snacks' | 'discover' | 'about' | 'contact' | 'privacy' | 'terms' | 'blog' | 'restaurants' | 'admin';
@@ -260,7 +267,12 @@ export function getTabFromUrl(): TabType {
   if (pathname === '/lien-he' || pathname === '/contact') return 'contact';
   if (pathname === '/chinh-sach-bao-mat' || pathname === '/privacy' || pathname === '/bao-mat') return 'privacy';
   if (pathname === '/dieu-khoan-su-dung' || pathname === '/terms' || pathname === '/dieu-khoan') return 'terms';
-  if (pathname === '/blog' || pathname.startsWith('/blog/') || isBlogPostSlug(pathname)) return 'blog';
+  if (
+    pathname === '/blog' ||
+    pathname.startsWith('/blog/') ||
+    isBlogPostSlug(pathname) ||
+    (typeof window !== 'undefined' && window.history.state?.tab === 'blog' && pathname !== '/')
+  ) return 'blog';
   if (pathname === '/admin' || pathname === '/quan-tri' || pathname.startsWith('/admin/')) return 'admin';
   if (pathname === '/quan-ngon' || pathname === '/quan-ngon-gan-ban' || pathname === '/dia-diem-an-uong' || pathname === '/nha-hang-quan-an') return 'restaurants';
   if (pathname === '/') {
