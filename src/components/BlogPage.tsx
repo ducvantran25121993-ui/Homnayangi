@@ -17,7 +17,6 @@ import {
   X,
   Eye,
   Edit3,
-  Trash2,
   Home,
   Database,
 } from 'lucide-react';
@@ -315,38 +314,6 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
       setCopiedShareLink(true);
       setTimeout(() => setCopiedShareLink(false), 2500);
     }
-  };
-
-  // Delete a custom post
-  const handleDeletePost = (postId: string, e?: React.MouseEvent) => {
-    if (e) e.stopPropagation();
-    if (typeof window !== 'undefined' && !window.confirm('Bạn có chắc chắn muốn xóa bài viết này không?')) {
-      return;
-    }
-    const updated = customPosts.filter((p) => p.id !== postId);
-    setCustomPosts(updated);
-    try {
-      localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(updated));
-    } catch {
-      // ignore
-    }
-    if (activePost && activePost.id === postId) {
-      handleBackToList();
-    }
-  };
-
-  // Clear all custom posts
-  const handleClearAllCustomPosts = () => {
-    if (typeof window !== 'undefined' && !window.confirm('Bạn có chắc chắn muốn xóa toàn bộ bài viết để bắt đầu viết mới từ đầu không?')) {
-      return;
-    }
-    setCustomPosts([]);
-    try {
-      localStorage.removeItem(LOCAL_STORAGE_CUSTOM_POSTS);
-    } catch {
-      // ignore
-    }
-    handleBackToList();
   };
 
   // Handle create new post submit
@@ -767,17 +734,6 @@ ${newContent}
             </button>
 
             <div className="flex items-center gap-2">
-              {customPosts.some((p) => p.id === activePost.id) && (
-                <button
-                  onClick={(e) => handleDeletePost(activePost.id, e)}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-2 rounded-xl border border-red-200 shadow-2xs transition-all cursor-pointer"
-                  title="Xóa bài viết này"
-                >
-                  <Trash2 className="w-4 h-4" />
-                  <span>Xóa bài viết</span>
-                </button>
-              )}
-
               <button
                 onClick={handleCopyShareLink}
                 className="inline-flex items-center gap-1.5 text-xs font-bold text-stone-600 hover:text-orange-600 bg-white px-3 py-2 rounded-xl border border-stone-200 shadow-2xs transition-all cursor-pointer"
@@ -1164,16 +1120,6 @@ ${newContent}
             </h2>
 
             <div className="flex items-center gap-3">
-              {customPosts.length > 0 && (
-                <button
-                  onClick={handleClearAllCustomPosts}
-                  className="text-xs font-bold text-stone-500 hover:text-stone-700 inline-flex items-center gap-1 cursor-pointer transition-colors"
-                >
-                  <Trash2 className="w-3.5 h-3.5" />
-                  Xóa tất cả ({customPosts.length})
-                </button>
-              )}
-
               <button
                 onClick={() => {
                   if (onNavigate) {
@@ -1238,17 +1184,6 @@ ${newContent}
                         <span className="px-2.5 py-1 bg-black/60 backdrop-blur-xs text-white text-[11px] font-bold rounded-lg">
                           {post.category}
                         </span>
-                      </div>
-                      <div className="absolute top-3 right-3 flex items-center gap-1.5">
-                        {customPosts.some((p) => p.id === post.id) && (
-                          <button
-                            onClick={(e) => handleDeletePost(post.id, e)}
-                            className="p-1.5 bg-black/60 hover:bg-red-600 backdrop-blur-xs text-white rounded-lg transition-colors cursor-pointer"
-                            title="Xóa bài viết này"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        )}
                       </div>
                     </div>
 

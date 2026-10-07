@@ -57,6 +57,7 @@ import {
   FileJson,
   Inbox,
   Mail,
+  LogOut,
 } from 'lucide-react';
 import {
   BlogPost,
@@ -69,10 +70,18 @@ import {
   savePostToFirestore,
   deletePostFromFirestore,
   getPostsFromFirestore,
+  logoutUser,
+  onAuthStateChanged,
+  auth,
 } from '../firebase';
 import { TabType } from '../utils/navigation';
 import { AdminInboxView } from './AdminInboxView';
 import { getContactMessages } from '../utils/contactStorage';
+import {
+  AdminLogin,
+  AdminUserSession,
+  ADMIN_SESSION_STORAGE_KEY,
+} from './AdminLogin';
 
 interface AdminBlogPageProps {
   onNavigate?: (tab: TabType) => void;
@@ -121,6 +130,20 @@ const HIGHLIGHT_COLORS = [
 ];
 
 export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
+  // Authentication session state
+  const [adminSession, setAdminSession] = useState<AdminUserSession | null>(() => {
+    if (typeof window === 'undefined') return null;
+    try {
+      const stored =
+        localStorage.getItem(ADMIN_SESSION_STORAGE_KEY) ||
+        sessionStorage.getItem(ADMIN_SESSION_STORAGE_KEY);
+      if (stored) {
+        return JSON.parse(stored);
+      }
+    } catch {}
+    return null;
+  });
+
   const [viewMode, setViewMode] = useState<'list' | 'editor' | 'inbox'>('list');
   const [unreadMessagesCount, setUnreadMessagesCount] = useState<number>(0);
   const [posts, setPosts] = useState<BlogPost[]>([]);
@@ -129,6 +152,42 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterCategory, setFilterCategory] = useState<string>('Tất Cả');
   const [toastMessage, setToastMessage] = useState<{ text: string; type: 'success' | 'error' | 'warning' } | null>(null);
+
+  // Sync Firebase Auth state
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const session: AdminUserSession = {
+          email: user.email || 'ducvantran25121993@gmail.com',
+          name: user.displayName || 'Quản Trị Viên',
+          avatar: user.photoURL || undefined,
+          method: 'google',
+          loginAt: new Date().toISOString(),
+        };
+        setAdminSession(session);
+        try {
+          localStorage.setItem(ADMIN_SESSION_STORAGE_KEY, JSON.stringify(session));
+        } catch {}
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
+  // Handle Logout
+  const handleLogout = async () => {
+    if (typeof window !== 'undefined' && !window.confirm('Bạn có chắc chắn muốn đăng xuất khỏi trang quản trị?')) {
+      return;
+    }
+    try {
+      await logoutUser();
+    } catch {}
+    try {
+      localStorage.removeItem(ADMIN_SESSION_STORAGE_KEY);
+      sessionStorage.removeItem(ADMIN_SESSION_STORAGE_KEY);
+    } catch {}
+    setAdminSession(null);
+    if (toastMessage) setToastMessage(null);
+  };
 
   // Editor State
   const [editingPostId, setEditingPostId] = useState<string | null>(null);
@@ -1390,6 +1449,25 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
     return matchQuery && matchCategory;
   });
 
+  // Check if user is authenticated before rendering admin dashboard
+  if (!adminSession) {
+    return (
+      <AdminLogin
+        onLoginSuccess={(session) => {
+          setAdminSession(session);
+          showToast(`Đăng nhập thành công! Chào mừng ${session.name || session.email}.`, 'success');
+        }}
+        onBackToHome={() => {
+          if (onNavigate) {
+            onNavigate('tarot');
+          } else {
+            window.location.href = '/';
+          }
+        }}
+      />
+    );
+  }
+
   return (
     <div className="min-h-screen bg-stone-100/70 text-stone-900 pb-20">
       {/* Toast Notification */}
@@ -1560,6 +1638,26 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                 </button>
               </div>
             )}
+
+            {/* Admin User Badge & Logout Button */}
+            <div className="flex items-center gap-1.5 pl-2 border-l border-stone-800">
+              <div
+                className="hidden xl:flex items-center gap-1.5 text-xs text-stone-300 bg-stone-800/90 px-2.5 py-1.5 rounded-lg border border-stone-700/60 max-w-[150px] truncate"
+                title={adminSession.email}
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0 animate-pulse" />
+                <span className="truncate">{adminSession.email.split('@')[0]}</span>
+              </div>
+              <button
+                type="button"
+                onClick={handleLogout}
+                className="flex items-center gap-1 text-xs text-stone-300 hover:text-rose-200 bg-stone-800 hover:bg-rose-950/80 py-2 px-2.5 sm:px-3 rounded-lg border border-stone-700 hover:border-rose-800 transition-colors cursor-pointer"
+                title="Đăng xuất khỏi trang quản trị"
+              >
+                <LogOut className="w-3.5 h-3.5 text-rose-400" />
+                <span className="hidden sm:inline font-semibold">Đăng Xuất</span>
+              </button>
+            </div>
           </div>
         </div>
       </header>
