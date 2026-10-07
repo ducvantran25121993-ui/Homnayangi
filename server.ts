@@ -524,6 +524,46 @@ Yêu cầu trả về đúng định dạng JSON:
 const CUSTOM_POSTS_FILE = path.join(process.cwd(), "public", "custom_blog_posts.json");
 const DIST_POSTS_FILE = path.join(process.cwd(), "dist", "custom_blog_posts.json");
 
+const KNOWN_POST_LINKS: Record<string, { title: string; slug: string }> = {
+  "thit-heo-lam-mon-gi-ngon": { title: "Thịt Heo Làm Món Gì Ngon", slug: "thit-heo-lam-mon-gi-ngon" },
+  "thit-ga-nau-mon-gi-ngon": { title: "Thịt Gà Nấu Món Gì Ngon", slug: "thit-ga-nau-mon-gi-ngon" },
+  "ca-lam-mon-gi-ngon-goi-y-cac-mon-ca-de-lam": { title: "Cá Làm Món Gì Ngon", slug: "ca-lam-mon-gi-ngon-goi-y-cac-mon-ca-de-lam" },
+  "thit-bo-lam-mon-gi-ngon-goi-y-mon-bo-de-lam-dam-da-cho-bua-com-gia-dinh": { title: "Thịt Bò Làm Món Gì Ngon", slug: "thit-bo-lam-mon-gi-ngon-goi-y-mon-bo-de-lam-dam-da-cho-bua-com-gia-dinh" },
+  "trung-lam-mon-gi-ngon-goi-y-cac-mon-trung-de-lam-hao-com-cho-ca-nha": { title: "Trứng Làm Món Gì Ngon", slug: "trung-lam-mon-gi-ngon-goi-y-cac-mon-trung-de-lam-hao-com-cho-ca-nha" },
+};
+
+function enrichPostContentLinks(content: string, allPosts: any[] = []): string {
+  if (!content) return "";
+  const lines = content.split("\n");
+  return lines.map((line) => {
+    let l = line;
+    if (/>\s*Xem thêm[:\s]/i.test(l) && !l.includes("](")) {
+      for (const [slug, info] of Object.entries(KNOWN_POST_LINKS)) {
+        if (l.toLowerCase().includes(slug) || l.toLowerCase().includes(info.title.toLowerCase())) {
+          return `> Xem thêm: [${info.title}](https://angigio.com/${info.slug})`;
+        }
+      }
+      for (const p of allPosts) {
+        if (p.slug && (l.toLowerCase().includes(p.slug.toLowerCase()) || l.toLowerCase().includes(p.title.toLowerCase().trim()))) {
+          return `> Xem thêm: [${p.title}](https://angigio.com/${p.slug})`;
+        }
+      }
+    }
+    const parts = l.split(/(\[[^\]]+\]\([^)]+\))/g);
+    l = parts
+      .map((part) => {
+        if (part.startsWith("[") && part.includes("](")) return part;
+        return part.replace(/\b(?:https?:\/\/angigio\.com\/|angigio\.com\/)([a-z0-9-]+)\b/gi, (full, slugPart) => {
+          const info = KNOWN_POST_LINKS[slugPart.toLowerCase()];
+          const title = info ? info.title : slugPart;
+          return `[${title}](https://angigio.com/${slugPart})`;
+        });
+      })
+      .join("");
+    return l;
+  }).join("\n");
+}
+
 function loadCustomBlogPosts(): any[] {
   try {
     if (fs.existsSync(CUSTOM_POSTS_FILE)) {
@@ -596,7 +636,11 @@ async function syncFirestorePostsToServer(): Promise<any[]> {
     const map = new Map<string, any>();
     localPosts.forEach((p) => map.set(p.slug || p.id, p));
     cloudPosts.forEach((p) => map.set(p.slug || p.id, p));
-    const merged = Array.from(map.values());
+    const allList = Array.from(map.values());
+    const merged = allList.map((p) => ({
+      ...p,
+      content: enrichPostContentLinks(p.content, allList),
+    }));
     saveCustomBlogPosts(merged);
     return merged;
   } catch (err) {
@@ -665,8 +709,10 @@ app.post("/api/admin/posts", async (req, res) => {
     const cleanSlug = postData.slug.toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
     const existingIdx = customPosts.findIndex((p) => p.slug === cleanSlug || p.id === postData.id);
 
+    const enrichedContent = enrichPostContentLinks(postData.content, customPosts);
     const savedPost = {
       ...postData,
+      content: enrichedContent,
       id: postData.id || cleanSlug,
       slug: cleanSlug,
       publishDate: postData.publishDate || new Date().toLocaleDateString("vi-VN", { day: '2-digit', month: '2-digit', year: 'numeric' }),

@@ -751,12 +751,22 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
         const el = node as HTMLElement;
         const tag = el.tagName.toLowerCase();
 
-        if (tag === 'h1') return `\n# ${el.textContent?.trim()}\n\n`;
-        if (tag === 'h2') return `\n## ${el.textContent?.trim()}\n\n`;
-        if (tag === 'h3') return `\n### ${el.textContent?.trim()}\n\n`;
-        if (tag === 'h4') return `\n#### ${el.textContent?.trim()}\n\n`;
+        if (tag === 'h1') return `\n# ${Array.from(el.childNodes).map(processNode).join('').trim()}\n\n`;
+        if (tag === 'h2') return `\n## ${Array.from(el.childNodes).map(processNode).join('').trim()}\n\n`;
+        if (tag === 'h3') return `\n### ${Array.from(el.childNodes).map(processNode).join('').trim()}\n\n`;
+        if (tag === 'h4') return `\n#### ${Array.from(el.childNodes).map(processNode).join('').trim()}\n\n`;
         if (tag === 'hr') return `\n---\n\n`;
-        if (tag === 'blockquote') return `\n> ${el.textContent?.trim()}\n\n`;
+        if (tag === 'br') return '\n';
+        if (tag === 'blockquote') {
+          const rawInner = Array.from(el.childNodes).map(processNode).join('');
+          const bqLines = rawInner.split('\n').map((l) => l.trim()).filter(Boolean);
+          if (bqLines.length === 0) return '';
+          return '\n' + bqLines.map((l) => (l.startsWith('>') ? l : `> ${l}`)).join('\n') + '\n\n';
+        }
+        if (tag === 'div') {
+          const inner = Array.from(el.childNodes).map(processNode).join('');
+          return inner.trim() ? `\n${inner.trim()}\n` : '\n';
+        }
         if (tag === 'p') {
           const inner = Array.from(el.childNodes).map(processNode).join('');
           return inner.trim() ? `\n${inner.trim()}\n` : '\n';
@@ -781,14 +791,19 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
         }
         if (tag === 'a') {
           const href = el.getAttribute('href') || '#';
-          const text = el.textContent || '';
+          const text = Array.from(el.childNodes).map(processNode).join('').trim() || el.textContent?.trim() || href;
           return `[${text}](${href})`;
         }
         if (tag === 'strong' || tag === 'b') {
-          return `**${el.textContent}**`;
+          const inner = Array.from(el.childNodes).map(processNode).join('');
+          return `**${inner}**`;
         }
         if (tag === 'em' || tag === 'i') {
-          return `*${el.textContent}*`;
+          const inner = Array.from(el.childNodes).map(processNode).join('');
+          return `*${inner}*`;
+        }
+        if (tag === 'u' || tag === 'span') {
+          return Array.from(el.childNodes).map(processNode).join('');
         }
         if (tag === 'img') {
           const src = el.getAttribute('src') || '';
@@ -827,6 +842,52 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
     // Normalize newlines
     md = md.replace(/\n{3,}/g, '\n\n').trim();
     return md;
+  };
+
+  // Helper to ensure all raw links, "Xem thêm" references, and internal post mentions are properly formatted as markdown links
+  const autoFormatLinksAndReferences = (markdown: string, existingPosts: BlogPost[]): string => {
+    if (!markdown) return '';
+    const lines = markdown.split('\n');
+    return lines
+      .map((line) => {
+        let processed = line;
+
+        // 1. Check if line has "Xem thêm" without markdown link (e.g. "> Xem thêm: angigio.com/slug" or "> Xem thêm: Tiêu đề")
+        if (/>\s*Xem thêm[:\s]/i.test(processed) && !processed.includes('](')) {
+          let foundPost: BlogPost | undefined;
+          for (const p of existingPosts) {
+            if (
+              processed.toLowerCase().includes(p.slug.toLowerCase()) ||
+              processed.toLowerCase().includes(p.title.toLowerCase().trim())
+            ) {
+              foundPost = p;
+              break;
+            }
+          }
+          if (foundPost) {
+            return `> Xem thêm: [${foundPost.title}](https://angigio.com/${foundPost.slug})`;
+          }
+        }
+
+        // 2. Auto-link bare URLs outside existing markdown links
+        const parts = processed.split(/(\[[^\]]+\]\([^)]+\))/g);
+        processed = parts
+          .map((part) => {
+            if (part.startsWith('[') && part.includes('](')) return part;
+            return part.replace(
+              /\b(?:https?:\/\/angigio\.com\/|angigio\.com\/)([a-z0-9-]+)\b/gi,
+              (full, slugPart) => {
+                const target = existingPosts.find((p) => p.slug.toLowerCase() === slugPart.toLowerCase());
+                const anchorText = target ? target.title : slugPart;
+                return `[${anchorText}](https://angigio.com/${slugPart})`;
+              }
+            );
+          })
+          .join('');
+
+        return processed;
+      })
+      .join('\n');
   };
 
   // Open New Post Form
@@ -1183,34 +1244,42 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
     if (editorRef.current) {
       editorRef.current.focus();
 
-      // Restore saved range
+      let targetRange = savedSelectionRange.current;
       const sel = window.getSelection();
-      let isCollapsed = true;
-      if (savedSelectionRange.current && sel) {
-        sel.removeAllRanges();
-        sel.addRange(savedSelectionRange.current);
-        isCollapsed = savedSelectionRange.current.collapsed;
+
+      // Ensure targetRange is valid and located within editor
+      if (!targetRange || !editorRef.current.contains(targetRange.commonAncestorContainer)) {
+        if (sel && sel.rangeCount > 0 && editorRef.current.contains(sel.getRangeAt(0).commonAncestorContainer)) {
+          targetRange = sel.getRangeAt(0);
+        } else {
+          // Default to end of editor
+          targetRange = document.createRange();
+          targetRange.selectNodeContents(editorRef.current);
+          targetRange.collapse(false);
+        }
       }
 
-      // Safe HTML: if cursor was collapsed, add space padding so it never glues into adjacent word!
-      const linkHtml = isCollapsed
-        ? ` <a href="${href}" class="text-orange-600 underline font-semibold hover:text-orange-700">${text}</a> `
-        : `<a href="${href}" class="text-orange-600 underline font-semibold hover:text-orange-700">${text}</a>`;
+      // Create anchor element directly with full attributes & high-contrast styling
+      const anchor = document.createElement('a');
+      anchor.setAttribute('href', href);
+      anchor.className = 'text-orange-600 underline font-semibold hover:text-orange-700 cursor-pointer';
+      anchor.textContent = text;
 
-      try {
-        document.execCommand('insertHTML', false, linkHtml);
-      } catch {
-        if (sel && sel.rangeCount > 0) {
-          const range = sel.getRangeAt(0);
-          range.deleteContents();
-          const temp = document.createElement('div');
-          temp.innerHTML = linkHtml;
-          const frag = document.createDocumentFragment();
-          while (temp.firstChild) {
-            frag.appendChild(temp.firstChild);
-          }
-          range.insertNode(frag);
-        }
+      // Delete whatever was selected and insert anchor
+      targetRange.deleteContents();
+      targetRange.insertNode(anchor);
+
+      // Add space text node after anchor
+      const spaceNode = document.createTextNode(' ');
+      anchor.after(spaceNode);
+
+      // Move caret after the space
+      const newRange = document.createRange();
+      newRange.setStartAfter(spaceNode);
+      newRange.collapse(true);
+      if (sel) {
+        sel.removeAllRanges();
+        sel.addRange(newRange);
       }
 
       updateCounts();
@@ -1297,7 +1366,8 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
 
     // Get current HTML from editor and convert to clean markdown
     const currentHtml = editorRef.current?.innerHTML || '';
-    const markdownContent = htmlToMarkdown(currentHtml);
+    const rawMarkdown = htmlToMarkdown(currentHtml);
+    const markdownContent = autoFormatLinksAndReferences(rawMarkdown, posts);
 
     const postPayload: BlogPost = {
       id: editingPostId || cleanSlug,

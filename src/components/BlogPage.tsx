@@ -427,15 +427,112 @@ ${newContent}
   },`;
   };
 
-  // Helper to parse inline markdown: images, bold and links
-  const parseInlineContent = (text: string) => {
-    // Regex splits by: ![img](url) OR [link](url) OR **bold**
-    const parts = text.split(/(!\[[^\]]*\]\([^)]+\)|\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*)/g);
+  // Helper to render high-contrast, fully interactive clickable anchor link with SPA routing
+  const renderClickableLink = (label: string, href: string, keyIdx: number) => {
+    let isInternal = href.startsWith('/');
+    let targetPath = href;
+
+    if (!isInternal) {
+      try {
+        const urlObj = new URL(href, typeof window !== 'undefined' ? window.location.origin : 'https://angigio.com');
+        if (urlObj.hostname === 'angigio.com' || (typeof window !== 'undefined' && urlObj.hostname === window.location.hostname)) {
+          isInternal = true;
+          targetPath = urlObj.pathname + urlObj.search + urlObj.hash;
+        }
+      } catch {
+        if (href.startsWith('angigio.com/')) {
+          isInternal = true;
+          targetPath = '/' + href.replace(/^angigio\.com\/?/, '');
+        }
+      }
+    }
+
+    const handleClick = (e: React.MouseEvent) => {
+      if (e.ctrlKey || e.metaKey || e.button === 1) return;
+      if (isInternal) {
+        e.preventDefault();
+
+        // 1. Check if this link points to a dish recipe (e.g. /suon-nuong-bbq or /cach-nau-suon-nuong-bbq)
+        const matchedDish = findDishByRecipeSlug(targetPath, INITIAL_DISHES);
+        if (matchedDish) {
+          const targetRecipePath = getRecipePath(matchedDish);
+          window.history.pushState({ section: 'recipe', dishId: matchedDish.id }, '', targetRecipePath);
+          window.dispatchEvent(new Event('locationchange'));
+          if (onSelectDish) onSelectDish(matchedDish);
+          if (onNavigate) onNavigate('discover');
+          window.scrollTo({ top: 0, behavior: 'instant' });
+          return;
+        }
+
+        // 2. Check if this link points to a blog post slug
+        const cleanSlug = targetPath.replace(/^\//, '').replace(/^blog\//, '').split('?')[0].split('#')[0];
+        const matchedPost = allPosts.find((p) => p.slug === cleanSlug || p.id === cleanSlug);
+        if (matchedPost) {
+          setActivePost(matchedPost);
+          window.history.pushState({ tab: 'blog', slug: matchedPost.slug }, '', `/${matchedPost.slug}`);
+          window.dispatchEvent(new Event('locationchange'));
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+
+        // 3. Homepage
+        if (targetPath === '/' || targetPath === '') {
+          if (onNavigate) onNavigate('tarot');
+          window.history.pushState(null, '', '/');
+          window.dispatchEvent(new Event('locationchange'));
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
+
+        // 4. Any other internal path
+        window.history.pushState(null, '', targetPath);
+        window.dispatchEvent(new Event('locationchange'));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    };
+
+    return (
+      <a
+        key={`inline-link-${keyIdx}`}
+        href={href}
+        onClick={handleClick}
+        className="text-orange-600 hover:text-orange-700 underline font-bold decoration-orange-300 hover:decoration-orange-600 transition-colors cursor-pointer inline"
+        {...(!isInternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      >
+        {label}
+      </a>
+    );
+  };
+
+  // Helper to parse inline markdown & HTML: images, bold and links
+  const parseInlineContent = (text: string): React.ReactNode => {
+    if (!text) return null;
+
+    // First auto-enrich any "Xem thêm: <URL/Title>" without markdown link
+    let enriched = text;
+    if (/^Xem thêm[:\s]/i.test(enriched.trim()) && !enriched.includes('](') && !enriched.includes('<a')) {
+      for (const p of allPosts) {
+        if (
+          enriched.toLowerCase().includes(p.slug.toLowerCase()) ||
+          enriched.toLowerCase().includes(p.title.toLowerCase().trim())
+        ) {
+          enriched = enriched.replace(
+            /(?:https?:\/\/angigio\.com\/|angigio\.com\/|\/)?([a-z0-9-]+|\b[^\n]+)/i,
+            `[${p.title}](https://angigio.com/${p.slug})`
+          );
+          break;
+        }
+      }
+    }
+
+    // Tokenizer regex: matches markdown images, markdown links, html links, bold, or raw URLs
+    const TOKEN_REGEX = /(!\[[^\]]*\]\([^)]+\)|\[[^\]]+\]\([^)]+\)|<a\s+[^>]*>.*?<\/a>|\*\*[^*]+\*\*|https?:\/\/[^\s<)"']+|(?:\b)angigio\.com\/[^\s<)"']+)/gi;
+    const parts = enriched.split(TOKEN_REGEX);
 
     return parts.map((part, index) => {
       if (!part) return null;
 
-      // Check markdown image: ![alt](src)
+      // 1. Markdown image: ![alt](src)
       const imgMatch = part.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
       if (imgMatch) {
         const [, alt, src] = imgMatch;
@@ -464,54 +561,36 @@ ${newContent}
         );
       }
 
-      // Check markdown link: [label](href)
+      // 2. Markdown link: [label](href)
       const linkMatch = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
       if (linkMatch) {
-        const [, label, href] = linkMatch;
-        const isInternal = href.startsWith('/');
-        return (
-          <a
-            key={`inline-link-${index}`}
-            href={href}
-            onClick={(e) => {
-              if (e.ctrlKey || e.metaKey || e.button === 1) return;
-              if (isInternal) {
-                e.preventDefault();
-                // Check if this link points to a dish recipe (e.g. /suon-nuong-bbq or /cach-nau-suon-nuong-bbq)
-                const matchedDish = findDishByRecipeSlug(href, INITIAL_DISHES);
-                if (matchedDish) {
-                  const targetRecipePath = getRecipePath(matchedDish);
-                  window.history.pushState({ section: 'recipe', dishId: matchedDish.id }, '', targetRecipePath);
-                  window.dispatchEvent(new Event('locationchange'));
-                  if (onSelectDish) {
-                    onSelectDish(matchedDish);
-                  }
-                  if (onNavigate) {
-                    onNavigate('discover');
-                  }
-                  window.scrollTo({ top: 0, behavior: 'instant' });
-                  return;
-                }
-
-                window.history.pushState(null, '', href);
-                window.dispatchEvent(new Event('locationchange'));
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }
-            }}
-            className="text-orange-600 hover:text-orange-700 underline font-bold decoration-orange-300 hover:decoration-orange-600 transition-colors cursor-pointer"
-            {...(!isInternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-          >
-            {label}
-          </a>
-        );
+        const [, rawLabel, rawHref] = linkMatch;
+        return renderClickableLink(rawLabel.trim(), rawHref.trim(), index);
       }
 
-      // Check bold: **text**
+      // 3. HTML anchor tag: <a ...href="url"...>label</a>
+      const htmlLinkMatch = part.match(/^<a\s+(?:[^>]*?\s+)?href=["']([^"']*)["'][^>]*>(.*?)<\/a>$/i);
+      if (htmlLinkMatch) {
+        const [, rawHref, rawLabel] = htmlLinkMatch;
+        return renderClickableLink(rawLabel.trim() || rawHref.trim(), rawHref.trim(), index);
+      }
+
+      // 4. Bare / Raw URL: https://... or angigio.com/...
+      if (/^(?:https?:\/\/[^\s<)"']+|(?:\b)angigio\.com\/[^\s<)"']+)$/i.test(part.trim())) {
+        const rawUrl = part.trim();
+        const fullHref = rawUrl.startsWith('http') ? rawUrl : `https://${rawUrl}`;
+        const slugPart = rawUrl.split('/').filter(Boolean).pop()?.toLowerCase();
+        const matchedPost = allPosts.find((p) => p.slug.toLowerCase() === slugPart);
+        const displayLabel = matchedPost ? matchedPost.title : rawUrl;
+        return renderClickableLink(displayLabel, fullHref, index);
+      }
+
+      // 5. Bold: **text** (recursively parse inside so bold links work)
       const boldMatch = part.match(/^\*\*([^*]+)\*\*$/);
       if (boldMatch) {
         return (
           <strong key={`inline-bold-${index}`} className="font-extrabold text-stone-900">
-            {boldMatch[1]}
+            {parseInlineContent(boldMatch[1])}
           </strong>
         );
       }
