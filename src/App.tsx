@@ -215,9 +215,19 @@ export default function App() {
       } else if (popRegionId) {
         updateRegionSEO(popRegionId);
       }
-      requestAnimationFrame(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-      });
+
+      // Do NOT scroll to top if user is working inside the admin dashboard
+      if (currentTab !== 'admin' && !window.location.pathname.startsWith('/admin')) {
+        requestAnimationFrame(() => {
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+        });
+      }
+    };
+
+    const handleCustomPostsUpdated = () => {
+      // Re-evaluate current tab without scrolling
+      const currentTab = getTabFromUrl();
+      setActiveTab(currentTab);
     };
 
     // Shortcut: Press Shift + A to open Admin (Inbox tab)
@@ -236,12 +246,12 @@ export default function App() {
 
     window.addEventListener('popstate', handlePopState);
     window.addEventListener('locationchange', handlePopState);
-    window.addEventListener('custom-posts-updated', handlePopState);
+    window.addEventListener('custom-posts-updated', handleCustomPostsUpdated);
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('popstate', handlePopState);
       window.removeEventListener('locationchange', handlePopState);
-      window.removeEventListener('custom-posts-updated', handlePopState);
+      window.removeEventListener('custom-posts-updated', handleCustomPostsUpdated);
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [activeTab]);

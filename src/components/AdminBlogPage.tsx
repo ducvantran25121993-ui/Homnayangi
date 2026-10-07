@@ -503,8 +503,8 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
   };
 
   // Fetch all posts from Cloud Firestore, API, or localStorage
-  const loadPosts = useCallback(async () => {
-    setLoading(true);
+  const loadPosts = useCallback(async (silent = false) => {
+    if (!silent) setLoading(true);
 
     // 1. Try Cloud Firestore first for global multi-device sync
     try {
@@ -521,7 +521,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
         if (typeof window !== 'undefined') {
           localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(cloudPosts));
         }
-        setLoading(false);
+        if (!silent) setLoading(false);
         return;
       }
     } catch (e) {
@@ -546,7 +546,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
           if (data.customPosts && typeof window !== 'undefined') {
             localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(data.customPosts));
           }
-          setLoading(false);
+          if (!silent) setLoading(false);
           return;
         }
       }
@@ -557,7 +557,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
     // 3. Local fallback
     const all = getAllBlogPosts();
     setPosts(all);
-    setLoading(false);
+    if (!silent) setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -1241,8 +1241,12 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
       }
     }
 
+    // Capture scroll position before inserting link
+    const savedWindowScrollY = window.scrollY || document.documentElement.scrollTop;
+    const savedEditorScrollTop = editorRef.current?.scrollTop || 0;
+
     if (editorRef.current) {
-      editorRef.current.focus();
+      editorRef.current.focus({ preventScroll: true });
 
       let targetRange = savedSelectionRange.current;
       const sel = window.getSelection();
@@ -1289,6 +1293,19 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
     setLinkModalUrl('');
     setLinkModalText('');
     savedSelectionRange.current = null;
+
+    // Restore exact scroll position
+    window.scrollTo({ top: savedWindowScrollY, behavior: 'instant' });
+    if (editorRef.current) {
+      editorRef.current.scrollTop = savedEditorScrollTop;
+    }
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: savedWindowScrollY, behavior: 'instant' });
+      if (editorRef.current) {
+        editorRef.current.scrollTop = savedEditorScrollTop;
+      }
+    });
+
     showToast(`Đã chèn liên kết "${text}" thành công!`, 'success');
   };
 
@@ -1361,6 +1378,10 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
       showToast('Vui lòng nhập đường dẫn (slug) hợp lệ!', 'error');
       return;
     }
+
+    // Capture exact scroll positions of window and editor before saving
+    const savedWindowScrollY = window.scrollY || document.documentElement.scrollTop;
+    const savedEditorScrollTop = editorRef.current?.scrollTop || 0;
 
     setSaving(true);
 
@@ -1447,14 +1468,37 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
       console.warn('LocalStorage error:', storageErr);
     }
 
-    // Dispatch global events so the public website and all components update immediately
+    // Dispatch event so blog lists update data silently
     window.dispatchEvent(new Event('custom-posts-updated'));
-    window.dispatchEvent(new Event('locationchange'));
 
-    // Reload posts
-    await loadPosts();
+    // Reload posts silently without triggering loading spinner or losing focus
+    await loadPosts(true);
 
     setSaving(false);
+
+    // Update current post ID & slug
+    setEditingPostId(postPayload.id);
+    setSlug(cleanSlug);
+
+    // Lock and restore exact scroll position so the user never jumps to the top!
+    window.scrollTo({ top: savedWindowScrollY, behavior: 'instant' });
+    if (editorRef.current) {
+      editorRef.current.scrollTop = savedEditorScrollTop;
+    }
+
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: savedWindowScrollY, behavior: 'instant' });
+      if (editorRef.current) {
+        editorRef.current.scrollTop = savedEditorScrollTop;
+      }
+    });
+
+    setTimeout(() => {
+      window.scrollTo({ top: savedWindowScrollY, behavior: 'instant' });
+      if (editorRef.current) {
+        editorRef.current.scrollTop = savedEditorScrollTop;
+      }
+    }, 60);
 
     if (cloudSaved) {
       showToast(`Đã lưu bài viết lên Đám Mây (Firestore) thành công! Tất cả các máy tính và điện thoại khác đều xem được ngay tại /${cleanSlug}`, 'success');
@@ -1471,10 +1515,6 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
         showToast(`Đã lưu bài viết vào bộ nhớ trình duyệt! (${serverErrorMsg})`, 'warning');
       }
     }
-
-    // Update current post ID
-    setEditingPostId(postPayload.id);
-    setSlug(cleanSlug);
   };
 
   // Delete Post
