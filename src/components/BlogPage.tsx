@@ -107,6 +107,14 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
       const synced = await fetchAndSyncCustomPosts();
       if (synced && synced.length > 0) {
         setCustomPosts(synced);
+        const pathname = window.location.pathname.replace(/\/$/, '') || '';
+        if (pathname !== '/blog' && pathname !== '') {
+          const currentSlug = pathname.replace(/^\/?blog\//, '').replace(/^\//, '');
+          const updated = synced.find((p) => p.slug === currentSlug || p.id === currentSlug);
+          if (updated) {
+            setActivePost(normalizeBlogPost(updated));
+          }
+        }
       }
     };
     fetchLatestPosts();
@@ -135,7 +143,16 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
       try {
         const saved = localStorage.getItem(LOCAL_STORAGE_CUSTOM_POSTS);
         if (saved) {
-          setCustomPosts(JSON.parse(saved));
+          const parsed = JSON.parse(saved);
+          setCustomPosts(parsed);
+          const pathname = window.location.pathname.replace(/\/$/, '') || '';
+          if (pathname !== '/blog' && pathname !== '') {
+            const currentSlug = pathname.replace(/^\/?blog\//, '').replace(/^\//, '');
+            const updated = parsed.find((p: BlogPost) => p.slug === currentSlug || p.id === currentSlug);
+            if (updated) {
+              setActivePost(normalizeBlogPost(updated));
+            }
+          }
         }
       } catch {
         // ignore
@@ -156,7 +173,13 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
     if (pathname !== '/blog' && pathname !== '') {
       const slug = pathname.replace(/^\/?blog\//, '').replace(/^\//, '');
       const found = allPosts.find((p) => p.slug === slug || p.id === slug) || getBlogPostBySlug(slug);
-      if (found && (!activePost || activePost.slug !== found.slug)) {
+      if (
+        found &&
+        (!activePost ||
+          activePost.slug !== found.slug ||
+          activePost.content !== found.content ||
+          activePost.coverImage !== found.coverImage)
+      ) {
         setActivePost(found);
       }
     }
@@ -620,17 +643,26 @@ ${newContent}
           if (lines[i].trim()) tipLines.push(lines[i].trim());
           i++;
         }
+        let customHeader = 'Mẹo Nấu Ngon Từ Bếp Trưởng:';
+        const displayLines: string[] = [];
+        for (const tl of tipLines) {
+          if (/^(\*\*|\*)?💡?\s*Mẹo/i.test(tl.trim()) && displayLines.length === 0) {
+            customHeader = tl.replace(/[*_#]/g, '').trim();
+          } else {
+            displayLines.push(tl);
+          }
+        }
         elements.push(
           <div
             key={`tip-box-${currentKey++}`}
-            className="my-6 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50/80 border-l-4 border-orange-500 text-stone-800 shadow-2xs space-y-2 border border-orange-100/60"
+            className="my-6 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50/80 border-l-4 border-orange-500 text-stone-800 shadow-2xs space-y-2 border border-orange-100/60 not-prose"
           >
             <div className="flex items-center gap-2 font-black text-orange-950 text-base sm:text-lg">
               <span className="text-xl">💡</span>
-              <span>Mẹo Nấu Ngon Từ Bếp Trưởng:</span>
+              <span>{customHeader}</span>
             </div>
             <div className="space-y-1.5 text-stone-700 leading-relaxed text-sm sm:text-base">
-              {tipLines.map((tl, tlIdx) => (
+              {(displayLines.length > 0 ? displayLines : tipLines).map((tl, tlIdx) => (
                 <div key={tlIdx}>{parseInlineContent(tl)}</div>
               ))}
             </div>
@@ -661,7 +693,7 @@ ${newContent}
         elements.push(
           <div
             key={`html-callout-${currentKey++}`}
-            className="my-6 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50/80 border-l-4 border-orange-500 text-stone-800 shadow-2xs space-y-2 border border-orange-100/60"
+            className="my-6 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50/80 border-l-4 border-orange-500 text-stone-800 shadow-2xs space-y-2 border border-orange-100/60 not-prose"
           >
             <div className="flex items-center gap-2 font-black text-orange-950 text-base sm:text-lg">
               <span className="text-xl">💡</span>
@@ -693,7 +725,7 @@ ${newContent}
         elements.push(
           <div
             key={`standalone-tip-${currentKey++}`}
-            className="my-6 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50/80 border-l-4 border-orange-500 text-stone-800 shadow-2xs space-y-2.5 border border-orange-100/60"
+            className="my-6 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50/80 border-l-4 border-orange-500 text-stone-800 shadow-2xs space-y-2.5 border border-orange-100/60 not-prose"
           >
             <div className="flex items-center gap-2 font-black text-orange-950 text-base sm:text-lg">
               <span className="text-xl">💡</span>
@@ -711,55 +743,68 @@ ${newContent}
         continue;
       }
 
-      // 1. Markdown Table Check
-      if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
+      // 1. Markdown Table Check (Supports standard markdown tables, tables without trailing pipe, and tables with/without separator)
+      const isTableRowLine = (l: string) => {
+        const trimmed = l.trim();
+        return trimmed.startsWith('|') && (trimmed.endsWith('|') || trimmed.includes('|'));
+      };
+
+      if (isTableRowLine(line)) {
         const tableLines: string[] = [];
-        while (i < lines.length && lines[i].trim().startsWith('|') && lines[i].trim().endsWith('|')) {
+        while (i < lines.length && isTableRowLine(lines[i])) {
           tableLines.push(lines[i].trim());
           i++;
         }
         i--; // Step back one line since loop increments
 
-        if (tableLines.length >= 2) {
-          const headerCells = tableLines[0]
-            .split('|')
-            .filter((_, idx, arr) => idx > 0 && idx < arr.length - 1)
-            .map((c) => c.trim());
+        if (tableLines.length >= 1) {
+          const parseRowCells = (rowText: string): string[] => {
+            let trimmed = rowText.trim();
+            if (trimmed.startsWith('|')) trimmed = trimmed.slice(1);
+            if (trimmed.endsWith('|')) trimmed = trimmed.slice(0, -1);
+            return trimmed.split('|').map((c) => c.trim());
+          };
 
-          // Check if row 1 is separator (e.g. |---|---|)
-          const isSeparator = /^\|(\s*[-:]+\s*\|)+$/.test(tableLines[1]);
-          const bodyStartIdx = isSeparator ? 2 : 1;
+          const firstRowCells = parseRowCells(tableLines[0]);
+          let isSeparatorRow = false;
+          let bodyStartIdx = 1;
 
-          const bodyRows = tableLines.slice(bodyStartIdx).map((rowLine) =>
-            rowLine
-              .split('|')
-              .filter((_, idx, arr) => idx > 0 && idx < arr.length - 1)
-              .map((c) => c.trim())
-          );
+          if (tableLines.length > 1) {
+            const row1 = tableLines[1].trim();
+            if (/^\|?(\s*[-:]+\s*\|?)+$/.test(row1)) {
+              isSeparatorRow = true;
+              bodyStartIdx = 2;
+            }
+          }
+
+          const effectiveHeaders = isSeparatorRow ? firstRowCells : [];
+          const effectiveBody = isSeparatorRow ? tableLines.slice(bodyStartIdx).map(parseRowCells) : tableLines.map(parseRowCells);
 
           elements.push(
             <div
               key={`table-${currentKey++}`}
-              className="overflow-x-auto my-6 rounded-2xl border border-stone-200/90 shadow-2xs bg-white"
+              className="overflow-x-auto my-6 rounded-2xl border border-stone-200/90 shadow-2xs bg-white not-prose"
             >
               <table className="w-full text-left text-xs sm:text-sm border-collapse min-w-[500px]">
-                <thead className="bg-orange-50/80 border-b border-orange-100 text-orange-950 font-black">
-                  <tr>
-                    {headerCells.map((h, hIdx) => (
-                      <th key={hIdx} className="px-4 py-3 font-black text-stone-900">
-                        {parseInlineContent(h)}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
+                {effectiveHeaders.length > 0 && (
+                  <thead className="bg-orange-50/90 border-b border-orange-200 text-orange-950 font-black">
+                    <tr>
+                      {effectiveHeaders.map((h, hIdx) => (
+                        <th key={hIdx} className="px-4 py-3 font-black text-stone-900 border-r border-orange-100/60 last:border-r-0">
+                          {parseInlineContent(h)}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                )}
                 <tbody className="divide-y divide-stone-100">
-                  {bodyRows.map((r, rIdx) => (
+                  {effectiveBody.map((r, rIdx) => (
                     <tr
                       key={rIdx}
-                      className={rIdx % 2 === 0 ? 'bg-white' : 'bg-stone-50/60 hover:bg-orange-50/30'}
+                      className={rIdx % 2 === 0 ? 'bg-white hover:bg-orange-50/20' : 'bg-stone-50/70 hover:bg-orange-50/30'}
                     >
                       {r.map((c, cIdx) => (
-                        <td key={cIdx} className="px-4 py-3 text-stone-700 leading-relaxed font-medium">
+                        <td key={cIdx} className="px-4 py-3 text-stone-700 leading-relaxed font-medium border-r border-stone-100 last:border-r-0">
                           {parseInlineContent(c)}
                         </td>
                       ))}
@@ -785,43 +830,44 @@ ${newContent}
           if (i < lines.length) rawTableLines.push(lines[i]);
         }
         const fullTableHtml = rawTableLines.join('\n');
-        // Parse rows from HTML
         const rowMatches = fullTableHtml.match(/<tr[^>]*>[\s\S]*?<\/tr>/gi) || [];
         if (rowMatches.length > 0) {
           const rowsData = rowMatches.map((rowHtml) => {
             const cells = (rowHtml.match(/<(th|td)[^>]*>([\s\S]*?)<\/(th|td)>/gi) || []).map((c) =>
-              c.replace(/<[^>]+>/g, '').trim()
+              c.replace(/<\/?(th|td)[^>]*>/gi, '').trim()
             );
             const isHead = rowHtml.toLowerCase().includes('<th');
             return { cells, isHead };
           });
 
-          const headRow = rowsData.find((r) => r.isHead) || rowsData[0];
-          const bodyRows = rowsData.filter((r) => r !== headRow);
+          const headRow = rowsData.find((r) => r.isHead) || (rowsData.length > 1 ? rowsData[0] : null);
+          const bodyRows = headRow ? rowsData.filter((r) => r !== headRow) : rowsData;
 
           elements.push(
             <div
               key={`html-table-${currentKey++}`}
-              className="overflow-x-auto my-6 rounded-2xl border border-stone-200/90 shadow-2xs bg-white"
+              className="overflow-x-auto my-6 rounded-2xl border border-stone-200/90 shadow-2xs bg-white not-prose"
             >
               <table className="w-full text-left text-xs sm:text-sm border-collapse min-w-[500px]">
-                <thead className="bg-orange-50/80 border-b border-orange-100 text-orange-950 font-black">
-                  <tr>
-                    {headRow.cells.map((h, hIdx) => (
-                      <th key={hIdx} className="px-4 py-3 font-black text-stone-900">
-                        {parseInlineContent(h)}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
+                {headRow && (
+                  <thead className="bg-orange-50/90 border-b border-orange-200 text-orange-950 font-black">
+                    <tr>
+                      {headRow.cells.map((h, hIdx) => (
+                        <th key={hIdx} className="px-4 py-3 font-black text-stone-900 border-r border-orange-100/60 last:border-r-0">
+                          {parseInlineContent(h)}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                )}
                 <tbody className="divide-y divide-stone-100">
                   {bodyRows.map((r, rIdx) => (
                     <tr
                       key={rIdx}
-                      className={rIdx % 2 === 0 ? 'bg-white' : 'bg-stone-50/60 hover:bg-orange-50/30'}
+                      className={rIdx % 2 === 0 ? 'bg-white hover:bg-orange-50/20' : 'bg-stone-50/70 hover:bg-orange-50/30'}
                     >
                       {r.cells.map((c, cIdx) => (
-                        <td key={cIdx} className="px-4 py-3 text-stone-700 leading-relaxed font-medium">
+                        <td key={cIdx} className="px-4 py-3 text-stone-700 leading-relaxed font-medium border-r border-stone-100 last:border-r-0">
                           {parseInlineContent(c)}
                         </td>
                       ))}

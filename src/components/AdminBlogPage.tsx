@@ -111,6 +111,8 @@ const PRESET_FOOD_IMAGES: PresetFoodImage[] = [
   { name: 'Thịt băm sốt cà chua', url: '/images/thit_bam_sot_ca_chua.jpg', category: 'Thịt Heo' },
 
   // Thịt Bò
+  { name: 'Thịt bò làm món gì ngon', url: '/images/thit-bo-lam-mon-gi-ngon.jpg', category: 'Thịt Bò' },
+  { name: 'Bò lúc lắc mềm mọng', url: '/images/com_bo_luc_lac.jpg', category: 'Thịt Bò' },
   { name: 'Cơm rang dưa bò', url: '/images/com_rang_dua_bo.jpg', category: 'Thịt Bò' },
   { name: 'Nui xào bò', url: '/images/nui_xao_bo.jpg', category: 'Thịt Bò' },
   { name: 'Mì xào bò rau cải', url: '/images/mi_xao_bo.jpg', category: 'Thịt Bò' },
@@ -133,8 +135,11 @@ const PRESET_FOOD_IMAGES: PresetFoodImage[] = [
   { name: 'Miến gà ta truyền thống', url: '/images/mien_ga.jpg', category: 'Thịt Gà' },
 
   // Cá & Thủy Hải Sản
+  { name: 'Cá làm món gì ngon', url: '/images/ca-lam-mon-gi-ngon.jpg', category: 'Cá & Hải Sản' },
+  { name: 'Cá kho tộ đậm đà', url: '/images/com_ca_kho_to.jpg', category: 'Cá & Hải Sản' },
   { name: 'Cá diêu hồng hấp gừng', url: '/images/ca_dieu_hong_hap.jpg', category: 'Cá & Hải Sản' },
   { name: 'Canh chua cá lóc', url: '/images/canh_chua_ca_loc.jpg', category: 'Cá & Hải Sản' },
+  { name: 'Cá lóc nướng trui', url: '/images/ca_loc_nuong_trui.jpg', category: 'Cá & Hải Sản' },
   { name: 'Bún cá thanh nhẹ', url: '/images/bun_ca.jpg', category: 'Cá & Hải Sản' },
   { name: 'Cháo cá lóc nóng', url: '/images/chao_ca_loc.jpg', category: 'Cá & Hải Sản' },
   { name: 'Lẩu cá kèo miền Tây', url: '/images/lau_ca_keo.jpg', category: 'Cá & Hải Sản' },
@@ -144,11 +149,13 @@ const PRESET_FOOD_IMAGES: PresetFoodImage[] = [
   { name: 'Hàu nướng mỡ hành', url: '/images/hau_nuong.jpg', category: 'Cá & Hải Sản' },
 
   // Món Trứng
+  { name: 'Trứng làm món gì ngon', url: '/images/trung-lam-mon-gi-ngon.jpg', category: 'Món Trứng' },
   { name: 'Trứng cuộn vân mây', url: '/images/trung_cuon_van_may.jpg', category: 'Món Trứng' },
   { name: 'Trứng cút lộn xào me', url: '/images/trung_cut_lon_xao_me.jpg', category: 'Món Trứng' },
   { name: 'Rau cải luộc trứng lòng đào', url: '/images/rau_cai_luoc_trung_long_dao.jpg', category: 'Món Trứng' },
 
   // Cơm & Bún & Mâm Cơm
+  { name: 'Nấu gì hôm nay', url: '/images/nau-gi-hom-nay.jpg', category: 'Cơm & Bún' },
   { name: 'Mâm cơm gia đình', url: '/images/mam_com_gia_dinh.jpg', category: 'Cơm & Bún' },
   { name: 'Cơm tấm sườn bì chả', url: '/images/com_tam_suon_bi_cha.jpg', category: 'Cơm & Bún' },
   { name: 'Cơm thịt kho tàu', url: '/images/com_thit_kho_tau.jpg', category: 'Cơm & Bún' },
@@ -688,8 +695,17 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
           if (lines[i].trim()) tipLines.push(lines[i].trim());
           i++;
         }
+        let customHeader = 'Mẹo Nấu Ngon Từ Bếp Trưởng:';
+        const displayLines: string[] = [];
+        for (const tl of tipLines) {
+          if (/^(\*\*|\*)?💡?\s*Mẹo/i.test(tl.trim()) && displayLines.length === 0) {
+            customHeader = tl.replace(/[*_#]/g, '').trim();
+          } else {
+            displayLines.push(tl);
+          }
+        }
         htmlChunks.push(
-          `<div class="blog-callout-box my-6 p-4 sm:p-5 rounded-2xl bg-amber-50/90 border-l-4 border-orange-500 text-stone-800 shadow-2xs space-y-1.5 border border-orange-100/60"><strong class="text-orange-950 font-black flex items-center gap-2 text-base"><span>💡</span><span>Mẹo Nấu Ngon Từ Bếp Trưởng:</span></strong><div class="text-sm sm:text-base leading-relaxed text-stone-700 space-y-1">${tipLines
+          `<div class="blog-callout-box my-6 p-4 sm:p-5 rounded-2xl bg-amber-50/90 border-l-4 border-orange-500 text-stone-800 shadow-2xs space-y-1.5 border border-orange-100/60"><strong class="text-orange-950 font-black flex items-center gap-2 text-base"><span>💡</span><span>${customHeader}</span></strong><div class="text-sm sm:text-base leading-relaxed text-stone-700 space-y-1">${(displayLines.length > 0 ? displayLines : tipLines)
             .map((tl) => `<p>${formatInline(tl)}</p>`)
             .join('')}</div></div>`
         );
@@ -697,17 +713,19 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
       }
 
       // Check Table
-      if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
+      if (line.trim().startsWith('|') && (line.trim().endsWith('|') || line.includes('|'))) {
         if (!inTable) {
           inTable = true;
           tableHtml = '<table class="w-full border-collapse my-6 border border-stone-300"><tbody>';
         }
-        if (line.includes('---')) {
+        if (/^\|?(\s*[-:]+\s*\|?)+$/.test(line.trim())) {
           continue; // separator
         }
-        const cells = line
+        let cleanLine = line.trim();
+        if (cleanLine.startsWith('|')) cleanLine = cleanLine.slice(1);
+        if (cleanLine.endsWith('|')) cleanLine = cleanLine.slice(0, -1);
+        const cells = cleanLine
           .split('|')
-          .slice(1, -1)
           .map((c) => c.trim());
         const isHeader = !tableHtml.includes('<tr>');
         tableHtml += '<tr>';
