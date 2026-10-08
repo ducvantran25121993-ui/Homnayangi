@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import '../styles/blog-editor.css';
 import {
   FileText,
@@ -87,92 +87,14 @@ interface AdminBlogPageProps {
   onNavigate?: (tab: TabType) => void;
 }
 
-export interface PresetFoodImage {
-  name: string;
-  url: string;
-  category: string;
-}
+import {
+  PRESET_FOOD_IMAGES,
+  PRESET_FOOD_CATEGORIES,
+  PresetFoodImage,
+} from '../data/presetImages';
 
-// Preset food images available in /public/images/ for fast selection
-const PRESET_FOOD_IMAGES: PresetFoodImage[] = [
-  // Thịt Heo
-  { name: 'Thịt heo làm món gì ngon', url: '/images/thit-heo-lam-mon-gi-ngon.jpg', category: 'Thịt Heo' },
-  { name: 'Thịt ba chỉ làm món gì ngon', url: '/images/thit-ba-chi-lam-mon-gi-ngon.jpg', category: 'Thịt Heo' },
-  { name: 'Sườn heo làm món gì ngon', url: '/images/suon-heo-lam-mon-gi-ngon.jpg', category: 'Thịt Heo' },
-  { name: 'Thịt nạc heo làm món gì ngon', url: '/images/thit-nac-heo-lam-mon-gi-ngon.jpg', category: 'Thịt Heo' },
-  { name: 'Thịt băm làm món gì ngon', url: '/images/thit-bam-lam-mon-gi-ngon.jpg', category: 'Thịt Heo' },
-  { name: 'Thịt kho tàu nước dừa', url: '/images/thit_kho_tau.jpg', category: 'Thịt Heo' },
-  { name: 'Thịt ba chỉ rang cháy cạnh', url: '/images/ba_chi_rang.jpg', category: 'Thịt Heo' },
-  { name: 'Thịt ba chỉ luộc', url: '/images/thit_ba_chi_luoc.jpg', category: 'Thịt Heo' },
-  { name: 'Thịt ba chỉ nướng nồi chiên', url: '/images/thit_ba_chi_nuong_noi_chien.jpg', category: 'Thịt Heo' },
-  { name: 'Thịt heo luộc cuốn bánh tráng', url: '/images/thit-heo-luoc-cuon-banh-trang.jpg', category: 'Thịt Heo' },
-  { name: 'Thịt heo xào sả ớt', url: '/images/thit-heo-xao-sa-ot.jpg', category: 'Thịt Heo' },
-  { name: 'Sườn heo rim mặn ngọt', url: '/images/suon_heo_rim_man_ngot.jpg', category: 'Thịt Heo' },
-  { name: 'Thịt băm sốt cà chua', url: '/images/thit_bam_sot_ca_chua.jpg', category: 'Thịt Heo' },
-
-  // Thịt Bò
-  { name: 'Thịt bò làm món gì ngon', url: '/images/thit-bo-lam-mon-gi-ngon.jpg', category: 'Thịt Bò' },
-  { name: 'Bò lúc lắc mềm mọng', url: '/images/com_bo_luc_lac.jpg', category: 'Thịt Bò' },
-  { name: 'Cơm rang dưa bò', url: '/images/com_rang_dua_bo.jpg', category: 'Thịt Bò' },
-  { name: 'Nui xào bò', url: '/images/nui_xao_bo.jpg', category: 'Thịt Bò' },
-  { name: 'Mì xào bò rau cải', url: '/images/mi_xao_bo.jpg', category: 'Thịt Bò' },
-  { name: 'Phở bò tái lăn Hà Nội', url: '/images/pho_bo_tai_lan.jpg', category: 'Thịt Bò' },
-  { name: 'Phở cuốn Hà Nội', url: '/images/pho_cuon_ha_noi.jpg', category: 'Thịt Bò' },
-  { name: 'Phở sốt vang bò mềm', url: '/images/pho_sot_vang.jpg', category: 'Thịt Bò' },
-  { name: 'Lẩu riêu cua bắp bò', url: '/images/lau_rieu_cua_bap_bo.jpg', category: 'Thịt Bò' },
-  { name: 'Lòng bò xào dưa chua', url: '/images/long_bo_xao_dua.jpg', category: 'Thịt Bò' },
-  { name: 'Nộm bò khô phố cổ', url: '/images/nom_bo_kho.jpg', category: 'Thịt Bò' },
-
-  // Thịt Gà
-  { name: 'Thịt gà nấu món gì ngon', url: '/images/thit-ga-nau-mon-gi-ngon.jpg', category: 'Thịt Gà' },
-  { name: 'Gà kho gừng sả ớt', url: '/images/ga_kho_gung_sa_ot.jpg', category: 'Thịt Gà' },
-  { name: 'Phở gà ta lá chanh', url: '/images/pho_ga_ta.jpg', category: 'Thịt Gà' },
-  { name: 'Gà đồi hấp lá chanh', url: '/images/ga_doi_hap_la_chanh.jpg', category: 'Thịt Gà' },
-  { name: 'Gà nướng cơm lam Tây Bắc', url: '/images/ga_nuong_com_lam.jpg', category: 'Thịt Gà' },
-  { name: 'Lẩu gà lá é Đà Lạt', url: '/images/lau_ga_la_e.jpg', category: 'Thịt Gà' },
-  { name: 'Lẩu gà ớt hiểm', url: '/images/lau_ga_ot_hiem.jpg', category: 'Thịt Gà' },
-  { name: 'Xôi gà xé mỡ hành', url: '/images/xoi_ga.jpg', category: 'Thịt Gà' },
-  { name: 'Miến gà ta truyền thống', url: '/images/mien_ga.jpg', category: 'Thịt Gà' },
-
-  // Cá & Thủy Hải Sản
-  { name: 'Cá làm món gì ngon', url: '/images/ca-lam-mon-gi-ngon.jpg', category: 'Cá & Hải Sản' },
-  { name: 'Cá kho tộ đậm đà', url: '/images/com_ca_kho_to.jpg', category: 'Cá & Hải Sản' },
-  { name: 'Cá diêu hồng hấp gừng', url: '/images/ca_dieu_hong_hap.jpg', category: 'Cá & Hải Sản' },
-  { name: 'Canh chua cá lóc', url: '/images/canh_chua_ca_loc.jpg', category: 'Cá & Hải Sản' },
-  { name: 'Cá lóc nướng trui', url: '/images/ca_loc_nuong_trui.jpg', category: 'Cá & Hải Sản' },
-  { name: 'Bún cá thanh nhẹ', url: '/images/bun_ca.jpg', category: 'Cá & Hải Sản' },
-  { name: 'Cháo cá lóc nóng', url: '/images/chao_ca_loc.jpg', category: 'Cá & Hải Sản' },
-  { name: 'Lẩu cá kèo miền Tây', url: '/images/lau_ca_keo.jpg', category: 'Cá & Hải Sản' },
-  { name: 'Mực xào cần tây', url: '/images/muc_xao_can_tay.jpg', category: 'Cá & Hải Sản' },
-  { name: 'Mực một nắng nướng sa tế', url: '/images/muc_mot_nang_nuong.jpg', category: 'Cá & Hải Sản' },
-  { name: 'Ốc hương sốt bơ tỏi', url: '/images/oc_huong_bo_toi.jpg', category: 'Cá & Hải Sản' },
-  { name: 'Hàu nướng mỡ hành', url: '/images/hau_nuong.jpg', category: 'Cá & Hải Sản' },
-
-  // Món Trứng
-  { name: 'Trứng làm món gì ngon', url: '/images/trung-lam-mon-gi-ngon.jpg', category: 'Món Trứng' },
-  { name: 'Trứng cuộn vân mây', url: '/images/trung_cuon_van_may.jpg', category: 'Món Trứng' },
-  { name: 'Trứng cút lộn xào me', url: '/images/trung_cut_lon_xao_me.jpg', category: 'Món Trứng' },
-  { name: 'Rau cải luộc trứng lòng đào', url: '/images/rau_cai_luoc_trung_long_dao.jpg', category: 'Món Trứng' },
-
-  // Cơm & Bún & Mâm Cơm
-  { name: 'Nấu gì hôm nay', url: '/images/nau-gi-hom-nay.jpg', category: 'Cơm & Bún' },
-  { name: 'Mâm cơm gia đình', url: '/images/mam_com_gia_dinh.jpg', category: 'Cơm & Bún' },
-  { name: 'Cơm tấm sườn bì chả', url: '/images/com_tam_suon_bi_cha.jpg', category: 'Cơm & Bún' },
-  { name: 'Cơm thịt kho tàu', url: '/images/com_thit_kho_tau.jpg', category: 'Cơm & Bún' },
-  { name: 'Bún đậu mắm tôm', url: '/images/bun_dau_mam_tom.jpg', category: 'Cơm & Bún' },
-  { name: 'Hủ tiếu Nam Vang', url: '/images/hu_tieu_nam_vang.jpg', category: 'Cơm & Bún' },
-  { name: 'Bún bò Huế / Phở bò', url: '/images/pho_bo.jpg', category: 'Cơm & Bún' },
-  { name: 'Xôi khúc / Xôi xéo Hà Nội', url: '/images/xoi_xeo_ha_noi.jpg', category: 'Cơm & Bún' },
-
-  // Đổi Vị & Giải Ngán
-  { name: 'Ăn gì cho đỡ ngán', url: '/images/an-gi-cho-do-ngan.jpg', category: 'Đổi Vị' },
-  { name: 'Món ngon nồi chiên không dầu', url: '/images/mon-ngon-bang-noi-chien-khong-dau.jpg', category: 'Đổi Vị' },
-  { name: 'Gỏi cuốn tôm thịt chấm tương', url: '/images/goi_cuon_tom_thit_chuan.jpg', category: 'Đổi Vị' },
-  { name: 'Đậu hũ sốt cà nấm', url: '/images/dau_hu_sot_ca_nam.jpg', category: 'Đổi Vị' },
-  { name: 'Đậu hũ chiên giòn', url: '/images/dau_hu_chien_gion.jpg', category: 'Đổi Vị' },
-  { name: 'Rau muống xào tỏi', url: '/images/rau_muong_xao_toi.jpg', category: 'Đổi Vị' },
-  { name: 'Salad cá ngừ ngô ngọt', url: '/images/salad_ca_ngu_ngo_ngot.jpg', category: 'Đổi Vị' },
-];
+export { PRESET_FOOD_IMAGES, PRESET_FOOD_CATEGORIES };
+export type { PresetFoodImage };
 
 // Color palettes for WordPress toolbar
 const TEXT_COLORS = [
@@ -303,10 +225,122 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
   // Insert Image Modal / Image Picker
   const [isImagePickerOpen, setIsImagePickerOpen] = useState(false);
   const [imagePickerMode, setImagePickerMode] = useState<'cover' | 'editor'>('editor');
+  const [imagePickerTab, setImagePickerTab] = useState<'preset' | 'upload' | 'url'>('preset');
   const [imagePickerCategory, setImagePickerCategory] = useState<string>('Tất Cả');
   const [imageSearchQuery, setImageSearchQuery] = useState<string>('');
   const [customImageUrl, setCustomImageUrl] = useState('');
   const [imageCaption, setImageCaption] = useState('');
+
+  // Upload Image State
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+  const [uploadedResult, setUploadedResult] = useState<{ url: string; filename: string; sizeKb: string } | null>(null);
+  const [userUploadedImages, setUserUploadedImages] = useState<PresetFoodImage[]>(() => {
+    if (typeof window === 'undefined') return [];
+    try {
+      const stored = localStorage.getItem('angigio_user_uploaded_images');
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      return [];
+    }
+  });
+  const fileUploadInputRef = useRef<HTMLInputElement>(null);
+  const sidebarFileInputRef = useRef<HTMLInputElement>(null);
+  const [isDraggingUpload, setIsDraggingUpload] = useState(false);
+
+  // Combine preset food images with user-uploaded images
+  const allAvailableImages = useMemo(() => {
+    return [...userUploadedImages, ...PRESET_FOOD_IMAGES];
+  }, [userUploadedImages]);
+
+  // Dynamic available categories with user-uploaded images tab
+  const availableImageCategories = useMemo(() => {
+    const cats: string[] = ['Tất Cả'];
+    if (userUploadedImages.length > 0) {
+      cats.push('Ảnh Của Bạn');
+    }
+    PRESET_FOOD_CATEGORIES.forEach((c) => {
+      if (c !== 'Tất Cả' && !cats.includes(c)) cats.push(c);
+    });
+    return cats;
+  }, [userUploadedImages.length]);
+
+  const getCategoryImageCount = useCallback(
+    (cat: string) => {
+      if (cat === 'Tất Cả') return allAvailableImages.length;
+      if (cat === 'Ảnh Của Bạn') return userUploadedImages.length;
+      return PRESET_FOOD_IMAGES.filter((img) => img.category === cat).length;
+    },
+    [allAvailableImages.length, userUploadedImages.length]
+  );
+
+  // Filtered images for picker
+  const filteredPickerImages = useMemo(() => {
+    let list = allAvailableImages;
+    if (imagePickerCategory === 'Ảnh Của Bạn') {
+      list = userUploadedImages;
+    } else if (imagePickerCategory !== 'Tất Cả') {
+      list = PRESET_FOOD_IMAGES.filter((img) => img.category === imagePickerCategory);
+    }
+
+    if (!imageSearchQuery.trim()) return list;
+    const q = imageSearchQuery.toLowerCase().trim();
+    return list.filter((img) => img.name.toLowerCase().includes(q) || img.category.toLowerCase().includes(q));
+  }, [allAvailableImages, userUploadedImages, imagePickerCategory, imageSearchQuery]);
+
+  // Quick cover suggestions based on post title & category
+  const quickCoverSuggestions = useMemo(() => {
+    const currentTitle = (title || '').toLowerCase();
+    let matches: PresetFoodImage[] = [];
+
+    if (currentTitle.includes('gà')) {
+      matches = PRESET_FOOD_IMAGES.filter((img) => img.category === 'Thịt Gà');
+    } else if (currentTitle.includes('bò')) {
+      matches = PRESET_FOOD_IMAGES.filter((img) => img.category === 'Thịt Bò');
+    } else if (
+      currentTitle.includes('heo') ||
+      currentTitle.includes('lợn') ||
+      currentTitle.includes('sườn') ||
+      currentTitle.includes('ba chỉ')
+    ) {
+      matches = PRESET_FOOD_IMAGES.filter((img) => img.category === 'Thịt Heo');
+    } else if (
+      currentTitle.includes('cá') ||
+      currentTitle.includes('hải sản') ||
+      currentTitle.includes('tôm') ||
+      currentTitle.includes('mực')
+    ) {
+      matches = PRESET_FOOD_IMAGES.filter((img) => img.category === 'Cá & Hải Sản');
+    } else if (currentTitle.includes('trứng')) {
+      matches = PRESET_FOOD_IMAGES.filter((img) => img.category === 'Món Trứng');
+    } else if (
+      currentTitle.includes('bún') ||
+      currentTitle.includes('phở') ||
+      currentTitle.includes('mì')
+    ) {
+      matches = PRESET_FOOD_IMAGES.filter((img) => img.category === 'Bún, Phở, Mì');
+    } else if (
+      currentTitle.includes('chay') ||
+      currentTitle.includes('rau') ||
+      currentTitle.includes('đậu')
+    ) {
+      matches = PRESET_FOOD_IMAGES.filter((img) => img.category === 'Món Chay & Rau');
+    } else if (currentTitle.includes('ngán') || currentTitle.includes('đổi vị')) {
+      matches = PRESET_FOOD_IMAGES.filter(
+        (img) => img.category === 'Món Ăn Vặt & Đổi Vị' || img.category === 'Lẩu, Canh & Cháo'
+      );
+    }
+
+    if (matches.length < 4) {
+      const defaults = PRESET_FOOD_IMAGES.slice(0, 8);
+      const combined = [...matches, ...defaults];
+      const unique = Array.from(new Set(combined.map((x) => x.url))).map(
+        (u) => combined.find((x) => x.url === u)!
+      );
+      return unique.slice(0, 4);
+    }
+    return matches.slice(0, 4);
+  }, [title]);
 
   // Insert Table Modal
   const [isTableModalOpen, setIsTableModalOpen] = useState(false);
@@ -1440,6 +1474,81 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
     setCustomImageUrl('');
     setImageCaption('');
     showToast('Đã chèn ảnh vào bài viết!');
+  };
+
+  // Upload image handler with automatic sharp SEO compression (50-60KB)
+  const handleUploadFile = async (file: File, autoSetCover = false) => {
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      setUploadError('Vui lòng chọn tệp hình ảnh hợp lệ (PNG, JPG, WebP)');
+      return;
+    }
+    if (file.size > 20 * 1024 * 1024) {
+      setUploadError('Dung lượng ảnh vượt quá 20MB. Vui lòng chọn ảnh nhỏ hơn.');
+      return;
+    }
+
+    setIsUploadingImage(true);
+    setUploadError(null);
+    setUploadedResult(null);
+
+    const reader = new FileReader();
+    reader.onerror = () => {
+      setIsUploadingImage(false);
+      setUploadError('Lỗi đọc tệp ảnh.');
+    };
+    reader.onload = async (e) => {
+      const base64Data = e.target?.result as string;
+      if (!base64Data) {
+        setIsUploadingImage(false);
+        setUploadError('Không thể đọc dữ liệu tệp.');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/admin/upload-image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            data: base64Data,
+            filename: file.name.replace(/\.[^/.]+$/, ''),
+          }),
+        });
+        const data = await res.json();
+        if (data.success && data.url) {
+          const newImg: PresetFoodImage = {
+            name: file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' '),
+            url: data.url,
+            category: 'Ảnh Của Bạn',
+          };
+          setUploadedResult(data);
+          setUserUploadedImages((prev) => {
+            const updated = [newImg, ...prev.filter((x) => x.url !== data.url)];
+            try {
+              localStorage.setItem('angigio_user_uploaded_images', JSON.stringify(updated));
+            } catch {}
+            return updated;
+          });
+
+          if (autoSetCover || imagePickerMode === 'cover') {
+            setCoverImage(data.url);
+            showToast(`Đã tải lên và đổi ảnh đại diện (${data.sizeKb} KB chuẩn SEO)!`, 'success');
+            if (autoSetCover) {
+              setIsImagePickerOpen(false);
+            }
+          } else {
+            showToast(`Đã tải lên và nén chuẩn SEO (${data.sizeKb} KB)!`, 'success');
+          }
+        } else {
+          setUploadError(data.message || 'Lỗi khi tải ảnh lên máy chủ.');
+        }
+      } catch (err: any) {
+        setUploadError('Không thể kết nối đến máy chủ để tải ảnh lên.');
+      } finally {
+        setIsUploadingImage(false);
+      }
+    };
+    reader.readAsDataURL(file);
   };
 
   // Insert Table
@@ -2842,37 +2951,154 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
 
               {/* Ảnh đại diện (Cover Image) */}
               <div className="bg-white p-5 rounded-2xl border border-stone-200 shadow-xs space-y-3">
-                <h3 className="font-extrabold text-stone-900 text-xs uppercase tracking-wider flex items-center gap-1.5">
-                  <ImageIcon className="w-3.5 h-3.5 text-orange-600" />
-                  <span>Ảnh Đại Diện (Cover Image)</span>
-                </h3>
+                <div className="flex items-center justify-between">
+                  <h3 className="font-extrabold text-stone-900 text-xs uppercase tracking-wider flex items-center gap-1.5">
+                    <ImageIcon className="w-3.5 h-3.5 text-orange-600" />
+                    <span>Ảnh Đại Diện (Cover Image)</span>
+                  </h3>
+                  <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+                    Chuẩn SEO 50-60KB
+                  </span>
+                </div>
 
-                {coverImage && (
-                  <div className="relative rounded-xl overflow-hidden border border-stone-200 aspect-video bg-stone-100">
-                    <img src={coverImage} alt="Cover preview" className="w-full h-full object-cover" />
+                {/* Hidden input for direct uploading from sidebar */}
+                <input
+                  type="file"
+                  ref={sidebarFileInputRef}
+                  onChange={(e) => {
+                    const f = e.target.files?.[0];
+                    if (f) handleUploadFile(f, true);
+                    e.target.value = '';
+                  }}
+                  accept="image/*"
+                  className="hidden"
+                />
+
+                {/* Cover Preview with Hover Action Overlay */}
+                <div className="relative group rounded-xl overflow-hidden border border-stone-200 aspect-video bg-stone-100 shadow-xs">
+                  {coverImage ? (
+                    <img
+                      src={coverImage}
+                      alt="Cover preview"
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center text-stone-400 gap-1.5">
+                      <ImageIcon className="w-8 h-8" />
+                      <span className="text-xs">Chưa chọn ảnh đại diện</span>
+                    </div>
+                  )}
+
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-stone-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 p-3 backdrop-blur-[2px]">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setImagePickerMode('cover');
+                        setImagePickerTab('preset');
+                        setImagePickerCategory('Tất Cả');
+                        setImageSearchQuery('');
+                        setIsImagePickerOpen(true);
+                      }}
+                      className="px-3 py-1.5 bg-orange-600 hover:bg-orange-500 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-md transition-all cursor-pointer"
+                    >
+                      <RefreshCw className="w-3.5 h-3.5" />
+                      <span>Đổi ảnh khác</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => sidebarFileInputRef.current?.click()}
+                      className="px-3 py-1.5 bg-white/95 hover:bg-white text-stone-800 rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-md transition-all cursor-pointer"
+                    >
+                      <Upload className="w-3.5 h-3.5 text-stone-700" />
+                      <span>Tải ảnh lên</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="grid grid-cols-2 gap-2 pt-0.5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setImagePickerMode('cover');
+                      setImagePickerTab('preset');
+                      setImagePickerCategory('Tất Cả');
+                      setImageSearchQuery('');
+                      setIsImagePickerOpen(true);
+                    }}
+                    className="w-full text-xs font-bold py-2 px-2.5 bg-orange-600 hover:bg-orange-500 text-white rounded-xl shadow-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  >
+                    <RefreshCw className="w-3.5 h-3.5 shrink-0" />
+                    <span>Đổi hình ảnh khác</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => sidebarFileInputRef.current?.click()}
+                    className="w-full text-xs font-bold py-2 px-2.5 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer border border-stone-200"
+                  >
+                    <Upload className="w-3.5 h-3.5 shrink-0 text-stone-600" />
+                    <span>Tải ảnh từ máy</span>
+                  </button>
+                </div>
+
+                {/* Quick suggestions based on post keywords */}
+                {quickCoverSuggestions.length > 0 && (
+                  <div className="space-y-1.5 pt-2 border-t border-stone-100">
+                    <label className="text-[11px] font-bold text-stone-600 flex items-center justify-between">
+                      <span>Gợi ý ảnh nhanh theo bài viết:</span>
+                      <span className="text-[10px] text-stone-400 font-normal">1-click để đổi</span>
+                    </label>
+                    <div className="grid grid-cols-4 gap-1.5">
+                      {quickCoverSuggestions.map((item) => {
+                        const isCurrent = coverImage === item.url;
+                        return (
+                          <button
+                            key={item.url}
+                            type="button"
+                            onClick={() => {
+                              setCoverImage(item.url);
+                              showToast(`Đã đổi ảnh đại diện: "${item.name}"!`, 'success');
+                            }}
+                            className={`group relative aspect-video rounded-lg overflow-hidden border transition-all cursor-pointer ${
+                              isCurrent
+                                ? 'border-orange-500 ring-2 ring-orange-500/40 shadow-xs'
+                                : 'border-stone-200 hover:border-orange-400 hover:shadow-xs'
+                            }`}
+                            title={`Chọn "${item.name}"`}
+                          >
+                            <img
+                              src={item.url}
+                              alt={item.name}
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform"
+                            />
+                            {isCurrent && (
+                              <span className="absolute top-0.5 right-0.5 bg-orange-600 text-white p-0.5 rounded-full shadow-xs">
+                                <Check className="w-2.5 h-2.5" />
+                              </span>
+                            )}
+                            <span className="absolute inset-x-0 bottom-0 bg-stone-900/75 text-white text-[8px] font-semibold px-1 py-0.5 truncate text-center">
+                              {item.name}
+                            </span>
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
                 )}
 
-                <div className="flex items-center gap-2">
+                {/* URL input field */}
+                <div className="pt-1">
+                  <label className="block text-[10px] text-stone-400 font-medium mb-1">
+                    Đường dẫn tệp ảnh (URL / Path):
+                  </label>
                   <input
                     type="text"
                     value={coverImage}
                     onChange={(e) => setCoverImage(e.target.value)}
                     placeholder="/images/an-gi-cho-do-ngan.jpg"
-                    className="w-full text-xs p-2 bg-stone-50 border border-stone-200 rounded-lg font-mono focus:outline-none"
+                    className="w-full text-[11px] p-2 bg-stone-50 border border-stone-200 rounded-lg font-mono text-stone-600 focus:outline-none focus:bg-white focus:ring-1 focus:ring-orange-500"
                   />
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setImagePickerMode('cover');
-                      setImagePickerCategory('Tất Cả');
-                      setImageSearchQuery('');
-                      setIsImagePickerOpen(true);
-                    }}
-                    className="text-xs font-bold px-2.5 py-2 bg-orange-100 text-orange-800 rounded-lg hover:bg-orange-200 shrink-0 cursor-pointer"
-                  >
-                    Chọn ảnh
-                  </button>
                 </div>
               </div>
 

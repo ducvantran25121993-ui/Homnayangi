@@ -2,6 +2,7 @@ import express from "express";
 import http from "http";
 import path from "path";
 import fs from "fs";
+import sharp from "sharp";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
 import { getAllSeoRoutes } from "./src/data/seoRoutes";
@@ -818,6 +819,121 @@ app.post("/api/admin/posts/import", (req, res) => {
   } catch (error: any) {
     console.error("Error importing blog posts:", error);
     return res.status(500).json({ success: false, message: error?.message || "Lỗi khi nhập dữ liệu bài viết" });
+  }
+});
+
+// API: Upload image from client, optimize with sharp to 50KB-60KB, save to /public/images/
+app.post("/api/admin/upload-image", async (req, res) => {
+  try {
+    const { data, filename } = req.body;
+    if (!data) {
+      return res.status(400).json({ success: false, message: "Vui lòng chọn tệp hình ảnh" });
+    }
+
+    const base64Data = data.replace(/^data:image\/\w+;base64,/, "");
+    const inputBuffer = Buffer.from(base64Data, "base64");
+
+    const rawName = (filename || "mon-an").toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/đ/g, "d")
+      .replace(/[^a-z0-9_-]/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+
+    const finalName = `${rawName || "anh-mon-an"}-${Date.now()}.jpg`;
+    const targetPath = path.join(process.cwd(), "public", "images", finalName);
+
+    // Iteratively optimize to hit 50KB - 60KB (51,200 - 61,440 bytes)
+    const targetMin = 51200;
+    const targetMax = 61440;
+
+    let bestBuffer: Buffer | null = null;
+    for (const w of [680, 640, 600, 580, 540, 500, 480]) {
+      for (let q = 88; q >= 40; q -= 2) {
+        const buf = await sharp(inputBuffer)
+          .resize({ width: w, withoutEnlargement: true })
+          .jpeg({
+            quality: q,
+            progressive: true,
+            chromaSubsampling: "4:2:0",
+          })
+          .toBuffer();
+
+        if (buf.length >= targetMin && buf.length <= targetMax) {
+          bestBuffer = buf;
+          break;
+        }
+        if (buf.length <= targetMax && (!bestBuffer || buf.length > bestBuffer.length)) {
+          bestBuffer = buf;
+        }
+      }
+      if (bestBuffer && bestBuffer.length >= targetMin && bestBuffer.length <= targetMax) {
+        break;
+      }
+    }
+
+    if (!bestBuffer) {
+      bestBuffer = await sharp(inputBuffer)
+        .resize({ width: 620, withoutEnlargement: true })
+        .jpeg({ quality: 75, progressive: true, chromaSubsampling: "4:2:0" })
+        .toBuffer();
+    }
+
+    const imagesDir = path.join(process.cwd(), "public", "images");
+    if (!fs.existsSync(imagesDir)) fs.mkdirSync(imagesDir, { recursive: true });
+    fs.writeFileSync(targetPath, bestBuffer);
+
+    // Also persist to dist/images if dist directory exists
+    const distTarget = path.join(process.cwd(), "dist", "images", finalName);
+    if (fs.existsSync(path.join(process.cwd(), "dist"))) {
+      const distImagesDir = path.join(process.cwd(), "dist", "images");
+      if (!fs.existsSync(distImagesDir)) fs.mkdirSync(distImagesDir, { recursive: true });
+      fs.writeFileSync(distTarget, bestBuffer);
+    }
+
+    const publicUrl = `/images/${finalName}`;
+    return res.json({
+      success: true,
+      url: publicUrl,
+      filename: finalName,
+      size: bestBuffer.length,
+      sizeKb: (bestBuffer.length / 1024).toFixed(1),
+    });
+  } catch (err: any) {
+    console.error("Error uploading image:", err);
+    return res.status(500).json({ success: false, message: err?.message || "Lỗi xử lý tải ảnh" });
+  }
+});
+
+// API: Get list of all images available in /public/images/
+app.get("/api/admin/images", (_req, res) => {
+  try {
+    const imagesDir = path.join(process.cwd(), "public", "images");
+    if (!fs.existsSync(imagesDir)) {
+      return res.json({ success: true, images: [] });
+    }
+    const files = fs.readdirSync(imagesDir);
+    const validExts = [".jpg", ".jpeg", ".png", ".webp", ".svg"];
+    const imageList = files
+      .filter((f) => validExts.includes(path.extname(f).toLowerCase()) && !f.startsWith("."))
+      .map((f) => {
+        const filePath = path.join(imagesDir, f);
+        const stats = fs.statSync(filePath);
+        return {
+          filename: f,
+          url: `/images/${f}`,
+          size: stats.size,
+          sizeKb: (stats.size / 1024).toFixed(1),
+          mtime: stats.mtimeMs,
+        };
+      })
+      .sort((a, b) => b.mtime - a.mtime);
+
+    return res.json({ success: true, count: imageList.length, images: imageList });
+  } catch (err: any) {
+    console.error("Error fetching images list:", err);
+    return res.status(500).json({ success: false, message: "Lỗi đọc danh sách hình ảnh" });
   }
 });
 
