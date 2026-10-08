@@ -51,14 +51,15 @@ export const AdminLogin: React.FC<AdminLoginProps> = ({ onLoginSuccess, onBackTo
       ? localStorage.getItem(ADMIN_CUSTOM_PASSCODE_KEY) || DEFAULT_ADMIN_PASSCODE
       : DEFAULT_ADMIN_PASSCODE;
 
-    // Check against user-requested passcode "Conlaumoinoi"
+    // Check against user-requested passcode "Conlaumoinoi" (case-insensitive for convenience)
+    const normalizedInput = password.trim().toLowerCase();
     const validPasscodes = [
-      savedPasscode,
-      DEFAULT_ADMIN_PASSCODE,
-      'Conlaumoinoi',
+      savedPasscode.toLowerCase(),
+      DEFAULT_ADMIN_PASSCODE.toLowerCase(),
+      'conlaumoinoi',
     ];
 
-    if (validPasscodes.includes(password.trim())) {
+    if (validPasscodes.includes(normalizedInput)) {
       const session: AdminUserSession = {
         email: 'ducvantran25121993@gmail.com',
         name: 'Quản Trị Viên',

@@ -508,18 +508,20 @@ ${newContent}
   const parseInlineContent = (text: string): React.ReactNode => {
     if (!text) return null;
 
-    // First auto-enrich any "Xem thêm: <URL/Title>" without markdown link
-    let enriched = text;
-    if (/^Xem thêm[:\s]/i.test(enriched.trim()) && !enriched.includes('](') && !enriched.includes('<a')) {
+    // Normalize non-breaking spaces
+    let enriched = text.replace(/\u00a0/g, ' ');
+
+    // Auto-enrich any "Xem thêm: <URL/Title>" without markdown link
+    const xemThemMatch = enriched.match(/^(?:💡\s*)?(?:Xem thêm|xem thêm)[:\s]+(.+)$/i);
+    if (xemThemMatch && !enriched.includes('](') && !enriched.includes('<a')) {
+      const targetQuery = xemThemMatch[1].trim();
       for (const p of allPosts) {
         if (
-          enriched.toLowerCase().includes(p.slug.toLowerCase()) ||
-          enriched.toLowerCase().includes(p.title.toLowerCase().trim())
+          targetQuery.toLowerCase().includes(p.slug.toLowerCase()) ||
+          targetQuery.toLowerCase().includes(p.title.toLowerCase().trim()) ||
+          p.title.toLowerCase().includes(targetQuery.toLowerCase())
         ) {
-          enriched = enriched.replace(
-            /(?:https?:\/\/angigio\.com\/|angigio\.com\/|\/)?([a-z0-9-]+|\b[^\n]+)/i,
-            `[${p.title}](https://angigio.com/${p.slug})`
-          );
+          enriched = `Xem thêm: [${p.title}](https://angigio.com/${p.slug})`;
           break;
         }
       }
@@ -599,14 +601,115 @@ ${newContent}
     });
   };
 
-  // Render markdown-like text nicely (Headings, Tables, Blockquotes, Lists, Links, Paragraphs)
+  // Render markdown-like text nicely (Headings, Tables, Blockquotes, Callout Tip Boxes, Lists, Links, Paragraphs)
   const renderFormattedContent = (content: string) => {
-    const lines = content.split('\n');
+    // Normalize content
+    const normalizedContent = (content || '').replace(/\u00a0/g, ' ');
+    const lines = normalizedContent.split('\n');
     const elements: React.ReactNode[] = [];
     let currentKey = 0;
 
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
+
+      // 0. Callout Box :::tip ... :::
+      if (line.trim().startsWith(':::tip') || line.trim().startsWith(':::callout')) {
+        const tipLines: string[] = [];
+        i++;
+        while (i < lines.length && !lines[i].trim().startsWith(':::')) {
+          if (lines[i].trim()) tipLines.push(lines[i].trim());
+          i++;
+        }
+        elements.push(
+          <div
+            key={`tip-box-${currentKey++}`}
+            className="my-6 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50/80 border-l-4 border-orange-500 text-stone-800 shadow-2xs space-y-2 border border-orange-100/60"
+          >
+            <div className="flex items-center gap-2 font-black text-orange-950 text-base sm:text-lg">
+              <span className="text-xl">💡</span>
+              <span>Mẹo Nấu Ngon Từ Bếp Trưởng:</span>
+            </div>
+            <div className="space-y-1.5 text-stone-700 leading-relaxed text-sm sm:text-base">
+              {tipLines.map((tl, tlIdx) => (
+                <div key={tlIdx}>{parseInlineContent(tl)}</div>
+              ))}
+            </div>
+          </div>
+        );
+        continue;
+      }
+
+      // 0.5 Raw HTML Callout Box (<div class="...blog-callout-box" or border-orange)
+      if (line.includes('blog-callout-box') || (line.includes('<div') && (line.includes('border-orange') || line.includes('bg-orange')))) {
+        const divLines: string[] = [line];
+        if (!line.includes('</div>')) {
+          i++;
+          while (i < lines.length && !lines[i].includes('</div>')) {
+            divLines.push(lines[i]);
+            i++;
+          }
+          if (i < lines.length) divLines.push(lines[i]);
+        }
+        const innerText = divLines
+          .join('\n')
+          .replace(/<div[^>]*>/i, '')
+          .replace(/<\/div>/i, '')
+          .replace(/<strong[^>]*>(.*?)<\/strong>/gi, '$1\n')
+          .replace(/<p[^>]*>(.*?)<\/p>/gi, '$1\n')
+          .trim();
+
+        elements.push(
+          <div
+            key={`html-callout-${currentKey++}`}
+            className="my-6 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50/80 border-l-4 border-orange-500 text-stone-800 shadow-2xs space-y-2 border border-orange-100/60"
+          >
+            <div className="flex items-center gap-2 font-black text-orange-950 text-base sm:text-lg">
+              <span className="text-xl">💡</span>
+              <span>Mẹo Nấu Ngon Từ Bếp Trưởng:</span>
+            </div>
+            <div className="space-y-1.5 text-stone-700 leading-relaxed text-sm sm:text-base">
+              {innerText.split('\n').filter(Boolean).map((tl, tlIdx) => (
+                <div key={tlIdx}>{parseInlineContent(tl)}</div>
+              ))}
+            </div>
+          </div>
+        );
+        continue;
+      }
+
+      // 0.7 Standalone Chef Tip Box in body (e.g. "**💡 Mẹo nấu ngon từ Bếp Trưởng:**" followed by tip/links)
+      if (line.includes('💡 Mẹo nấu ngon từ Bếp Trưởng') || line.includes('💡 Mẹo Hay Từ Bếp Trưởng')) {
+        const tipLines: string[] = [];
+        i++;
+        // Gather following lines until next heading or hr or blank line separator
+        while (i < lines.length && !lines[i].startsWith('#') && lines[i].trim() !== '---') {
+          if (lines[i].trim()) {
+            tipLines.push(lines[i].trim());
+          }
+          i++;
+        }
+        i--; // Step back one line
+
+        elements.push(
+          <div
+            key={`standalone-tip-${currentKey++}`}
+            className="my-6 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50/80 border-l-4 border-orange-500 text-stone-800 shadow-2xs space-y-2.5 border border-orange-100/60"
+          >
+            <div className="flex items-center gap-2 font-black text-orange-950 text-base sm:text-lg">
+              <span className="text-xl">💡</span>
+              <span>Mẹo Nấu Ngon Từ Bếp Trưởng:</span>
+            </div>
+            {tipLines.length > 0 && (
+              <div className="space-y-1.5 text-stone-700 leading-relaxed text-sm sm:text-base">
+                {tipLines.map((tl, tlIdx) => (
+                  <div key={tlIdx}>{parseInlineContent(tl)}</div>
+                ))}
+              </div>
+            )}
+          </div>
+        );
+        continue;
+      }
 
       // 1. Markdown Table Check
       if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
@@ -670,6 +773,68 @@ ${newContent}
         }
       }
 
+      // 1.2 Raw HTML Table Check (<table>...</table>)
+      if (line.includes('<table')) {
+        const rawTableLines: string[] = [line];
+        if (!line.includes('</table>')) {
+          i++;
+          while (i < lines.length && !lines[i].includes('</table>')) {
+            rawTableLines.push(lines[i]);
+            i++;
+          }
+          if (i < lines.length) rawTableLines.push(lines[i]);
+        }
+        const fullTableHtml = rawTableLines.join('\n');
+        // Parse rows from HTML
+        const rowMatches = fullTableHtml.match(/<tr[^>]*>[\s\S]*?<\/tr>/gi) || [];
+        if (rowMatches.length > 0) {
+          const rowsData = rowMatches.map((rowHtml) => {
+            const cells = (rowHtml.match(/<(th|td)[^>]*>([\s\S]*?)<\/(th|td)>/gi) || []).map((c) =>
+              c.replace(/<[^>]+>/g, '').trim()
+            );
+            const isHead = rowHtml.toLowerCase().includes('<th');
+            return { cells, isHead };
+          });
+
+          const headRow = rowsData.find((r) => r.isHead) || rowsData[0];
+          const bodyRows = rowsData.filter((r) => r !== headRow);
+
+          elements.push(
+            <div
+              key={`html-table-${currentKey++}`}
+              className="overflow-x-auto my-6 rounded-2xl border border-stone-200/90 shadow-2xs bg-white"
+            >
+              <table className="w-full text-left text-xs sm:text-sm border-collapse min-w-[500px]">
+                <thead className="bg-orange-50/80 border-b border-orange-100 text-orange-950 font-black">
+                  <tr>
+                    {headRow.cells.map((h, hIdx) => (
+                      <th key={hIdx} className="px-4 py-3 font-black text-stone-900">
+                        {parseInlineContent(h)}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-stone-100">
+                  {bodyRows.map((r, rIdx) => (
+                    <tr
+                      key={rIdx}
+                      className={rIdx % 2 === 0 ? 'bg-white' : 'bg-stone-50/60 hover:bg-orange-50/30'}
+                    >
+                      {r.cells.map((c, cIdx) => (
+                        <td key={cIdx} className="px-4 py-3 text-stone-700 leading-relaxed font-medium">
+                          {parseInlineContent(c)}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+          continue;
+        }
+      }
+
       // 1.5 Horizontal Rule (--- or ***)
       if (line.trim() === '---' || line.trim() === '***') {
         elements.push(
@@ -711,12 +876,36 @@ ${newContent}
           </h2>
         );
       } else if (line.startsWith('> ')) {
+        // Collect consecutive blockquote lines together into a single card!
+        const bqLines: string[] = [];
+        while (i < lines.length && lines[i].startsWith('> ')) {
+          bqLines.push(lines[i].replace(/^>\s?/, ''));
+          i++;
+        }
+        i--; // Step back one line
+
+        const isTipBlock = bqLines.some((l) => l.includes('💡') || /Mẹo\s(nấu|nhỏ|hay|bếp)/i.test(l));
+
         elements.push(
           <blockquote
             key={`quote-${currentKey++}`}
-            className="my-6 p-4 sm:p-5 bg-amber-50/80 border-l-4 border-amber-500 rounded-r-2xl text-stone-800 italic text-sm sm:text-base leading-relaxed"
+            className={`my-6 p-4 sm:p-5 border-l-4 rounded-r-2xl leading-relaxed text-sm sm:text-base space-y-2 ${
+              isTipBlock
+                ? 'bg-gradient-to-r from-amber-50 to-orange-50/80 border-orange-500 text-stone-800 shadow-2xs font-normal border-r border-t border-b border-orange-100/60'
+                : 'bg-amber-50/80 border-amber-500 text-stone-800 italic'
+            }`}
           >
-            {parseInlineContent(line.replace('> ', ''))}
+            {isTipBlock && (
+              <div className="flex items-center gap-1.5 font-black text-orange-950 text-sm sm:text-base not-italic mb-1">
+                <span>💡</span>
+                <span>Mẹo Hay & Gợi Ý Thêm:</span>
+              </div>
+            )}
+            {bqLines.map((bql, bqIdx) => (
+              <p key={bqIdx} className={isTipBlock ? 'not-italic my-1 text-stone-700' : 'my-1'}>
+                {parseInlineContent(bql)}
+              </p>
+            ))}
           </blockquote>
         );
       } else if (line.startsWith('- ') || line.startsWith('* ')) {

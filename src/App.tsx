@@ -225,9 +225,11 @@ export default function App() {
     };
 
     const handleCustomPostsUpdated = () => {
-      // Re-evaluate current tab without scrolling
+      // Re-evaluate current tab only if changed, without scrolling
       const currentTab = getTabFromUrl();
-      setActiveTab(currentTab);
+      if (currentTab !== activeTab) {
+        setActiveTab(currentTab);
+      }
     };
 
     // Shortcut: Press Shift + A to open Admin (Inbox tab)

@@ -87,24 +87,84 @@ interface AdminBlogPageProps {
   onNavigate?: (tab: TabType) => void;
 }
 
+export interface PresetFoodImage {
+  name: string;
+  url: string;
+  category: string;
+}
+
 // Preset food images available in /public/images/ for fast selection
-const PRESET_FOOD_IMAGES = [
-  { name: 'Ăn gì cho đỡ ngán', url: '/images/an-gi-cho-do-ngan.jpg' },
-  { name: 'Thịt heo làm món gì ngon', url: '/images/thit-heo-lam-mon-gi-ngon.jpg' },
-  { name: 'Sườn heo làm món gì ngon', url: '/images/suon-heo-lam-mon-gi-ngon.jpg' },
-  { name: 'Thịt nạc heo làm món gì ngon', url: '/images/thit-nac-heo-lam-mon-gi-ngon.jpg' },
-  { name: 'Thịt gà nấu món gì ngon', url: '/images/thit-ga-nau-mon-gi-ngon.jpg' },
-  { name: 'Thịt ba chỉ rang cháy cạnh', url: '/images/ba_chi_rang.jpg' },
-  { name: 'Thịt kho tàu nước dừa', url: '/images/thit_kho_tau.jpg' },
-  { name: 'Thịt ba chỉ luộc', url: '/images/thit_ba_chi_luoc.jpg' },
-  { name: 'Thịt ba chỉ nướng', url: '/images/thit_ba_chi_nuong_noi_chien.jpg' },
-  { name: 'Canh chua cá lóc', url: '/images/canh_chua_ca_loc.jpg' },
-  { name: 'Bún cá thanh nhẹ', url: '/images/bun_ca.jpg' },
-  { name: 'Cá diêu hồng hấp gừng', url: '/images/ca_dieu_hong_hap.jpg' },
-  { name: 'Bún đậu mắm tôm', url: '/images/bun_dau_mam_tom.jpg' },
-  { name: 'Đậu hũ sốt cà nấm', url: '/images/dau_hu_sot_ca_nam.jpg' },
-  { name: 'Cải thìa xào nấm', url: '/images/cai_thia_xao_nam.jpg' },
-  { name: 'Cháo cá lóc nóng', url: '/images/chao_ca_loc.jpg' },
+const PRESET_FOOD_IMAGES: PresetFoodImage[] = [
+  // Thịt Heo
+  { name: 'Thịt heo làm món gì ngon', url: '/images/thit-heo-lam-mon-gi-ngon.jpg', category: 'Thịt Heo' },
+  { name: 'Thịt ba chỉ làm món gì ngon', url: '/images/thit-ba-chi-lam-mon-gi-ngon.jpg', category: 'Thịt Heo' },
+  { name: 'Sườn heo làm món gì ngon', url: '/images/suon-heo-lam-mon-gi-ngon.jpg', category: 'Thịt Heo' },
+  { name: 'Thịt nạc heo làm món gì ngon', url: '/images/thit-nac-heo-lam-mon-gi-ngon.jpg', category: 'Thịt Heo' },
+  { name: 'Thịt băm làm món gì ngon', url: '/images/thit-bam-lam-mon-gi-ngon.jpg', category: 'Thịt Heo' },
+  { name: 'Thịt kho tàu nước dừa', url: '/images/thit_kho_tau.jpg', category: 'Thịt Heo' },
+  { name: 'Thịt ba chỉ rang cháy cạnh', url: '/images/ba_chi_rang.jpg', category: 'Thịt Heo' },
+  { name: 'Thịt ba chỉ luộc', url: '/images/thit_ba_chi_luoc.jpg', category: 'Thịt Heo' },
+  { name: 'Thịt ba chỉ nướng nồi chiên', url: '/images/thit_ba_chi_nuong_noi_chien.jpg', category: 'Thịt Heo' },
+  { name: 'Thịt heo luộc cuốn bánh tráng', url: '/images/thit-heo-luoc-cuon-banh-trang.jpg', category: 'Thịt Heo' },
+  { name: 'Thịt heo xào sả ớt', url: '/images/thit-heo-xao-sa-ot.jpg', category: 'Thịt Heo' },
+  { name: 'Sườn heo rim mặn ngọt', url: '/images/suon_heo_rim_man_ngot.jpg', category: 'Thịt Heo' },
+  { name: 'Thịt băm sốt cà chua', url: '/images/thit_bam_sot_ca_chua.jpg', category: 'Thịt Heo' },
+
+  // Thịt Bò
+  { name: 'Cơm rang dưa bò', url: '/images/com_rang_dua_bo.jpg', category: 'Thịt Bò' },
+  { name: 'Nui xào bò', url: '/images/nui_xao_bo.jpg', category: 'Thịt Bò' },
+  { name: 'Mì xào bò rau cải', url: '/images/mi_xao_bo.jpg', category: 'Thịt Bò' },
+  { name: 'Phở bò tái lăn Hà Nội', url: '/images/pho_bo_tai_lan.jpg', category: 'Thịt Bò' },
+  { name: 'Phở cuốn Hà Nội', url: '/images/pho_cuon_ha_noi.jpg', category: 'Thịt Bò' },
+  { name: 'Phở sốt vang bò mềm', url: '/images/pho_sot_vang.jpg', category: 'Thịt Bò' },
+  { name: 'Lẩu riêu cua bắp bò', url: '/images/lau_rieu_cua_bap_bo.jpg', category: 'Thịt Bò' },
+  { name: 'Lòng bò xào dưa chua', url: '/images/long_bo_xao_dua.jpg', category: 'Thịt Bò' },
+  { name: 'Nộm bò khô phố cổ', url: '/images/nom_bo_kho.jpg', category: 'Thịt Bò' },
+
+  // Thịt Gà
+  { name: 'Thịt gà nấu món gì ngon', url: '/images/thit-ga-nau-mon-gi-ngon.jpg', category: 'Thịt Gà' },
+  { name: 'Gà kho gừng sả ớt', url: '/images/ga_kho_gung_sa_ot.jpg', category: 'Thịt Gà' },
+  { name: 'Phở gà ta lá chanh', url: '/images/pho_ga_ta.jpg', category: 'Thịt Gà' },
+  { name: 'Gà đồi hấp lá chanh', url: '/images/ga_doi_hap_la_chanh.jpg', category: 'Thịt Gà' },
+  { name: 'Gà nướng cơm lam Tây Bắc', url: '/images/ga_nuong_com_lam.jpg', category: 'Thịt Gà' },
+  { name: 'Lẩu gà lá é Đà Lạt', url: '/images/lau_ga_la_e.jpg', category: 'Thịt Gà' },
+  { name: 'Lẩu gà ớt hiểm', url: '/images/lau_ga_ot_hiem.jpg', category: 'Thịt Gà' },
+  { name: 'Xôi gà xé mỡ hành', url: '/images/xoi_ga.jpg', category: 'Thịt Gà' },
+  { name: 'Miến gà ta truyền thống', url: '/images/mien_ga.jpg', category: 'Thịt Gà' },
+
+  // Cá & Thủy Hải Sản
+  { name: 'Cá diêu hồng hấp gừng', url: '/images/ca_dieu_hong_hap.jpg', category: 'Cá & Hải Sản' },
+  { name: 'Canh chua cá lóc', url: '/images/canh_chua_ca_loc.jpg', category: 'Cá & Hải Sản' },
+  { name: 'Bún cá thanh nhẹ', url: '/images/bun_ca.jpg', category: 'Cá & Hải Sản' },
+  { name: 'Cháo cá lóc nóng', url: '/images/chao_ca_loc.jpg', category: 'Cá & Hải Sản' },
+  { name: 'Lẩu cá kèo miền Tây', url: '/images/lau_ca_keo.jpg', category: 'Cá & Hải Sản' },
+  { name: 'Mực xào cần tây', url: '/images/muc_xao_can_tay.jpg', category: 'Cá & Hải Sản' },
+  { name: 'Mực một nắng nướng sa tế', url: '/images/muc_mot_nang_nuong.jpg', category: 'Cá & Hải Sản' },
+  { name: 'Ốc hương sốt bơ tỏi', url: '/images/oc_huong_bo_toi.jpg', category: 'Cá & Hải Sản' },
+  { name: 'Hàu nướng mỡ hành', url: '/images/hau_nuong.jpg', category: 'Cá & Hải Sản' },
+
+  // Món Trứng
+  { name: 'Trứng cuộn vân mây', url: '/images/trung_cuon_van_may.jpg', category: 'Món Trứng' },
+  { name: 'Trứng cút lộn xào me', url: '/images/trung_cut_lon_xao_me.jpg', category: 'Món Trứng' },
+  { name: 'Rau cải luộc trứng lòng đào', url: '/images/rau_cai_luoc_trung_long_dao.jpg', category: 'Món Trứng' },
+
+  // Cơm & Bún & Mâm Cơm
+  { name: 'Mâm cơm gia đình', url: '/images/mam_com_gia_dinh.jpg', category: 'Cơm & Bún' },
+  { name: 'Cơm tấm sườn bì chả', url: '/images/com_tam_suon_bi_cha.jpg', category: 'Cơm & Bún' },
+  { name: 'Cơm thịt kho tàu', url: '/images/com_thit_kho_tau.jpg', category: 'Cơm & Bún' },
+  { name: 'Bún đậu mắm tôm', url: '/images/bun_dau_mam_tom.jpg', category: 'Cơm & Bún' },
+  { name: 'Hủ tiếu Nam Vang', url: '/images/hu_tieu_nam_vang.jpg', category: 'Cơm & Bún' },
+  { name: 'Bún bò Huế / Phở bò', url: '/images/pho_bo.jpg', category: 'Cơm & Bún' },
+  { name: 'Xôi khúc / Xôi xéo Hà Nội', url: '/images/xoi_xeo_ha_noi.jpg', category: 'Cơm & Bún' },
+
+  // Đổi Vị & Giải Ngán
+  { name: 'Ăn gì cho đỡ ngán', url: '/images/an-gi-cho-do-ngan.jpg', category: 'Đổi Vị' },
+  { name: 'Món ngon nồi chiên không dầu', url: '/images/mon-ngon-bang-noi-chien-khong-dau.jpg', category: 'Đổi Vị' },
+  { name: 'Gỏi cuốn tôm thịt chấm tương', url: '/images/goi_cuon_tom_thit_chuan.jpg', category: 'Đổi Vị' },
+  { name: 'Đậu hũ sốt cà nấm', url: '/images/dau_hu_sot_ca_nam.jpg', category: 'Đổi Vị' },
+  { name: 'Đậu hũ chiên giòn', url: '/images/dau_hu_chien_gion.jpg', category: 'Đổi Vị' },
+  { name: 'Rau muống xào tỏi', url: '/images/rau_muong_xao_toi.jpg', category: 'Đổi Vị' },
+  { name: 'Salad cá ngừ ngô ngọt', url: '/images/salad_ca_ngu_ngo_ngot.jpg', category: 'Đổi Vị' },
 ];
 
 // Color palettes for WordPress toolbar
@@ -235,6 +295,9 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
 
   // Insert Image Modal / Image Picker
   const [isImagePickerOpen, setIsImagePickerOpen] = useState(false);
+  const [imagePickerMode, setImagePickerMode] = useState<'cover' | 'editor'>('editor');
+  const [imagePickerCategory, setImagePickerCategory] = useState<string>('Tất Cả');
+  const [imageSearchQuery, setImageSearchQuery] = useState<string>('');
   const [customImageUrl, setCustomImageUrl] = useState('');
   const [imageCaption, setImageCaption] = useState('');
 
@@ -617,6 +680,22 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
         inOrderedList = false;
       }
 
+      // Check Callout Box :::tip ... :::
+      if (line.trim().startsWith(':::tip') || line.trim().startsWith(':::callout')) {
+        const tipLines: string[] = [];
+        i++;
+        while (i < lines.length && !lines[i].trim().startsWith(':::')) {
+          if (lines[i].trim()) tipLines.push(lines[i].trim());
+          i++;
+        }
+        htmlChunks.push(
+          `<div class="blog-callout-box my-6 p-4 sm:p-5 rounded-2xl bg-amber-50/90 border-l-4 border-orange-500 text-stone-800 shadow-2xs space-y-1.5 border border-orange-100/60"><strong class="text-orange-950 font-black flex items-center gap-2 text-base"><span>💡</span><span>Mẹo Nấu Ngon Từ Bếp Trưởng:</span></strong><div class="text-sm sm:text-base leading-relaxed text-stone-700 space-y-1">${tipLines
+            .map((tl) => `<p>${formatInline(tl)}</p>`)
+            .join('')}</div></div>`
+        );
+        continue;
+      }
+
       // Check Table
       if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
         if (!inTable) {
@@ -764,7 +843,17 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
           return '\n' + bqLines.map((l) => (l.startsWith('>') ? l : `> ${l}`)).join('\n') + '\n\n';
         }
         if (tag === 'div') {
+          const isCallout =
+            el.classList.contains('blog-callout-box') ||
+            el.className.includes('border-orange') ||
+            el.className.includes('bg-orange') ||
+            el.className.includes('bg-amber') ||
+            el.textContent?.includes('💡 Mẹo') ||
+            el.textContent?.includes('Mẹo Nấu Ngon');
           const inner = Array.from(el.childNodes).map(processNode).join('');
+          if (isCallout && inner.trim()) {
+            return `\n:::tip\n${inner.trim()}\n:::\n\n`;
+          }
           return inner.trim() ? `\n${inner.trim()}\n` : '\n';
         }
         if (tag === 'p') {
@@ -823,7 +912,9 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
           if (rows.length === 0) return '';
           let mdTable = '\n';
           rows.forEach((row, rowIdx) => {
-            const cols = Array.from(row.querySelectorAll('th, td')).map((c) => c.textContent?.trim() || '');
+            const cols = Array.from(row.querySelectorAll(':scope > th, :scope > td')).map((c) =>
+              Array.from(c.childNodes).map(processNode).join('').replace(/\|/g, '\\|').trim()
+            );
             mdTable += `| ${cols.join(' | ')} |\n`;
             if (rowIdx === 0) {
               mdTable += `| ${cols.map(() => '---').join(' | ')} |\n`;
@@ -850,22 +941,26 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
     const lines = markdown.split('\n');
     return lines
       .map((line) => {
-        let processed = line;
+        let processed = line.replace(/\u00a0/g, ' ');
 
-        // 1. Check if line has "Xem thêm" without markdown link (e.g. "> Xem thêm: angigio.com/slug" or "> Xem thêm: Tiêu đề")
-        if (/>\s*Xem thêm[:\s]/i.test(processed) && !processed.includes('](')) {
+        // 1. Check if line has "Xem thêm" without markdown link (e.g. "> Xem thêm: Thịt Heo Làm Món Gì Ngon" or "> Xem thêm: angigio.com/slug")
+        const xemThemMatch = processed.match(/^(\s*(?:>|💡)?\s*(?:Xem thêm|xem thêm)[:\s]+)(.+)$/i);
+        if (xemThemMatch && !processed.includes('](') && !processed.includes('<a')) {
+          const prefix = xemThemMatch[1].startsWith('>') ? '> Xem thêm: ' : 'Xem thêm: ';
+          const query = xemThemMatch[2].trim();
           let foundPost: BlogPost | undefined;
           for (const p of existingPosts) {
             if (
-              processed.toLowerCase().includes(p.slug.toLowerCase()) ||
-              processed.toLowerCase().includes(p.title.toLowerCase().trim())
+              query.toLowerCase().includes(p.slug.toLowerCase()) ||
+              query.toLowerCase().includes(p.title.toLowerCase().trim()) ||
+              p.title.toLowerCase().includes(query.toLowerCase())
             ) {
               foundPost = p;
               break;
             }
           }
           if (foundPost) {
-            return `> Xem thêm: [${foundPost.title}](https://angigio.com/${foundPost.slug})`;
+            return `${prefix}[${foundPost.title}](https://angigio.com/${foundPost.slug})`;
           }
         }
 
@@ -1355,15 +1450,15 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
   const handleInsertCallout = () => {
     if (!editorRef.current) return;
     const calloutHtml = `
-      <div class="my-6 p-4 rounded-xl bg-orange-50 border-l-4 border-orange-500 text-stone-800">
-        <strong class="text-orange-950 font-bold block mb-1">💡 Mẹo nấu ngon từ Bếp Trưởng:</strong>
-        <p class="text-sm">Nhập lời khuyên hoặc bí quyết nhà bếp bổ ích cho bạn đọc tại đây...</p>
+      <div class="blog-callout-box my-6 p-4 sm:p-5 rounded-2xl bg-amber-50/90 border-l-4 border-orange-500 text-stone-800 shadow-2xs space-y-1.5 border border-orange-100/60">
+        <strong class="text-orange-950 font-black flex items-center gap-2 text-base"><span>💡</span><span>Mẹo Nấu Ngon Từ Bếp Trưởng:</span></strong>
+        <p class="text-sm sm:text-base leading-relaxed text-stone-700">Nhập bí quyết nhà bếp hoặc lời khuyên bổ ích cho bạn đọc tại đây...</p>
       </div>
       <p><br/></p>
     `;
-    editorRef.current.focus();
+    editorRef.current.focus({ preventScroll: true });
     document.execCommand('insertHTML', false, calloutHtml);
-    showToast('Đã thêm hộp chú thích!');
+    showToast('Đã thêm hộp mẹo nấu ngon!');
   };
 
   // Save Post to Server & Local Storage
@@ -1481,24 +1576,17 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
     setSlug(cleanSlug);
 
     // Lock and restore exact scroll position so the user never jumps to the top!
-    window.scrollTo({ top: savedWindowScrollY, behavior: 'instant' });
-    if (editorRef.current) {
-      editorRef.current.scrollTop = savedEditorScrollTop;
-    }
-
-    requestAnimationFrame(() => {
+    const restoreScroll = () => {
       window.scrollTo({ top: savedWindowScrollY, behavior: 'instant' });
       if (editorRef.current) {
         editorRef.current.scrollTop = savedEditorScrollTop;
       }
-    });
-
-    setTimeout(() => {
-      window.scrollTo({ top: savedWindowScrollY, behavior: 'instant' });
-      if (editorRef.current) {
-        editorRef.current.scrollTop = savedEditorScrollTop;
-      }
-    }, 60);
+    };
+    restoreScroll();
+    requestAnimationFrame(restoreScroll);
+    setTimeout(restoreScroll, 40);
+    setTimeout(restoreScroll, 120);
+    setTimeout(restoreScroll, 250);
 
     if (cloudSaved) {
       showToast(`Đã lưu bài viết lên Đám Mây (Firestore) thành công! Tất cả các máy tính và điện thoại khác đều xem được ngay tại /${cleanSlug}`, 'success');
@@ -1516,6 +1604,20 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
       }
     }
   };
+
+  // Keyboard shortcut Ctrl+S / Cmd+S to save instantly without changing position
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
+        e.preventDefault();
+        if (viewMode === 'editor' && !saving) {
+          handleSavePost();
+        }
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [viewMode, saving, title, slug, excerpt, coverImage, category, tags, authorName, authorRole, publishDate, readTime, featured, posts]);
 
   // Delete Post
   const handleDeletePost = async (post: BlogPost) => {
@@ -2328,7 +2430,12 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                     {/* Media & Inserts */}
                     <button
                       type="button"
-                      onClick={() => setIsImagePickerOpen(true)}
+                      onClick={() => {
+                        setImagePickerMode('editor');
+                        setImagePickerCategory('Tất Cả');
+                        setImageSearchQuery('');
+                        setIsImagePickerOpen(true);
+                      }}
                       className="p-1.5 rounded-md hover:bg-stone-200 text-stone-800 flex items-center gap-1 font-medium transition-colors"
                       title="Chèn hình ảnh từ thư viện"
                     >
@@ -2380,6 +2487,18 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                       title="Làm lại (Ctrl+Y)"
                     >
                       <Redo className="w-3.5 h-3.5" />
+                    </button>
+
+                    {/* Quick Save button right in editor toolbar */}
+                    <button
+                      type="button"
+                      onClick={handleSavePost}
+                      disabled={saving}
+                      className="ml-auto flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-500 disabled:bg-emerald-800 text-white text-xs font-bold py-1.5 px-3 rounded-lg shadow-2xs transition-colors cursor-pointer"
+                      title="Lưu bài viết tức thì (Ctrl+S)"
+                    >
+                      {saving ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
+                      <span>{saving ? 'Đang Lưu...' : 'Lưu'}</span>
                     </button>
 
                     {/* Fullscreen Toggle */}
@@ -2726,8 +2845,13 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                   />
                   <button
                     type="button"
-                    onClick={() => setIsImagePickerOpen(true)}
-                    className="text-xs font-bold px-2.5 py-2 bg-orange-100 text-orange-800 rounded-lg hover:bg-orange-200 shrink-0"
+                    onClick={() => {
+                      setImagePickerMode('cover');
+                      setImagePickerCategory('Tất Cả');
+                      setImageSearchQuery('');
+                      setIsImagePickerOpen(true);
+                    }}
+                    className="text-xs font-bold px-2.5 py-2 bg-orange-100 text-orange-800 rounded-lg hover:bg-orange-200 shrink-0 cursor-pointer"
                   >
                     Chọn ảnh
                   </button>
@@ -2960,62 +3084,150 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
       {/* ================= MODAL: CHỌN / CHÈN ẢNH ================= */}
       {isImagePickerOpen && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-4 max-h-[85vh] flex flex-col">
+          <div className="bg-white rounded-2xl max-w-3xl w-full p-6 shadow-2xl space-y-4 max-h-[90vh] flex flex-col">
             <div className="flex items-center justify-between border-b border-stone-100 pb-3">
-              <h3 className="font-extrabold text-stone-900 text-sm flex items-center gap-1.5">
-                <ImageIcon className="w-4 h-4 text-orange-600" />
-                <span>Thư Viện Ảnh Món Ăn Chuẩn SEO</span>
-              </h3>
-              <button onClick={() => setIsImagePickerOpen(false)} className="text-stone-400 hover:text-stone-700">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-xl bg-orange-100 flex items-center justify-center text-orange-600">
+                  <ImageIcon className="w-4 h-4" />
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-stone-900 text-sm">
+                    {imagePickerMode === 'cover'
+                      ? 'Chọn Ảnh Đại Diện Cho Bài Viết'
+                      : 'Chèn Ảnh Vào Nội Dung Bài Viết'}
+                  </h3>
+                  <p className="text-[11px] text-stone-500">
+                    {imagePickerMode === 'cover'
+                      ? 'Ảnh sẽ hiển thị ngoài trang chủ, thẻ chia sẻ mạng xã hội và đầu bài viết'
+                      : 'Ảnh minh họa trực quan chuẩn kích thước 50-60KB'}
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsImagePickerOpen(false)}
+                className="text-stone-400 hover:text-stone-700 p-1 rounded-lg"
+              >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="overflow-y-auto space-y-4 flex-1 pr-1">
+            {/* Search & Category Filter */}
+            <div className="space-y-2">
+              <div className="relative">
+                <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="Tìm kiếm hình ảnh món ăn (thịt heo, gà, bò, cá, trứng, bún...)"
+                  value={imageSearchQuery}
+                  onChange={(e) => setImageSearchQuery(e.target.value)}
+                  className="w-full text-xs pl-9 pr-3 py-2 bg-stone-50 border border-stone-200 rounded-xl focus:bg-white focus:outline-none focus:ring-1 focus:ring-orange-500"
+                />
+              </div>
+
+              {/* Category Pills */}
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {['Tất Cả', 'Thịt Heo', 'Thịt Bò', 'Thịt Gà', 'Cá & Hải Sản', 'Món Trứng', 'Cơm & Bún', 'Đổi Vị'].map(
+                  (cat) => (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => setImagePickerCategory(cat)}
+                      className={`text-[11px] font-bold px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
+                        imagePickerCategory === cat
+                          ? 'bg-orange-600 text-white shadow-2xs'
+                          : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  )
+                )}
+              </div>
+            </div>
+
+            {/* Image Grid */}
+            <div className="overflow-y-auto space-y-4 flex-1 pr-1 max-h-[46vh]">
               <div>
                 <label className="block text-xs font-bold text-stone-700 mb-1.5">
-                  Chọn ảnh mẫu có sẵn (Đã tối ưu 50-60KB chuẩn SEO):
+                  Thư viện món ăn chuẩn SEO ({
+                    PRESET_FOOD_IMAGES.filter((img) => {
+                      const matchCat = imagePickerCategory === 'Tất Cả' || img.category === imagePickerCategory;
+                      const matchQuery =
+                        !imageSearchQuery.trim() ||
+                        img.name.toLowerCase().includes(imageSearchQuery.toLowerCase());
+                      return matchCat && matchQuery;
+                    }).length
+                  } ảnh):
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                  {PRESET_FOOD_IMAGES.map((img) => (
-                    <button
-                      key={img.url}
-                      type="button"
-                      onClick={() => {
-                        setCoverImage(img.url);
-                        handleInsertImage(img.url, img.name);
-                      }}
-                      className="group flex flex-col items-center p-2 rounded-xl border border-stone-200 hover:border-orange-500 hover:bg-orange-50/50 transition-all text-left"
-                    >
-                      <img
-                        src={img.url}
-                        alt={img.name}
-                        className="w-full aspect-square object-cover rounded-lg mb-1.5 group-hover:scale-105 transition-transform"
-                      />
-                      <span className="text-[11px] font-bold text-stone-700 group-hover:text-orange-700 line-clamp-1 w-full text-center">
-                        {img.name}
-                      </span>
-                    </button>
-                  ))}
+                  {PRESET_FOOD_IMAGES.filter((img) => {
+                    const matchCat = imagePickerCategory === 'Tất Cả' || img.category === imagePickerCategory;
+                    const matchQuery =
+                      !imageSearchQuery.trim() ||
+                      img.name.toLowerCase().includes(imageSearchQuery.toLowerCase());
+                    return matchCat && matchQuery;
+                  }).map((img) => {
+                    const isCurrentCover = imagePickerMode === 'cover' && coverImage === img.url;
+                    return (
+                      <button
+                        key={img.url}
+                        type="button"
+                        onClick={() => {
+                          if (imagePickerMode === 'cover') {
+                            setCoverImage(img.url);
+                            setIsImagePickerOpen(false);
+                            showToast(`Đã đổi ảnh đại diện: "${img.name}"!`, 'success');
+                          } else {
+                            handleInsertImage(img.url, img.name);
+                          }
+                        }}
+                        className={`group relative flex flex-col items-center p-2 rounded-xl border transition-all text-left cursor-pointer ${
+                          isCurrentCover
+                            ? 'border-orange-500 bg-orange-50 ring-2 ring-orange-500/20'
+                            : 'border-stone-200 hover:border-orange-500 hover:bg-orange-50/50'
+                        }`}
+                      >
+                        <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-1.5 bg-stone-100">
+                          <img
+                            src={img.url}
+                            alt={img.name}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                          />
+                          {isCurrentCover && (
+                            <span className="absolute top-1 right-1 bg-orange-600 text-white p-1 rounded-md shadow-xs">
+                              <Check className="w-3 h-3" />
+                            </span>
+                          )}
+                        </div>
+                        <span className="text-[11px] font-bold text-stone-700 group-hover:text-orange-700 line-clamp-1 w-full text-center">
+                          {img.name}
+                        </span>
+                        <span className="text-[9px] text-stone-400 mt-0.5">{img.category}</span>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
+              {/* Custom Image URL Option */}
               <div className="border-t border-stone-100 pt-3 space-y-2">
                 <label className="block text-xs font-bold text-stone-700">Hoặc nhập URL hình ảnh tùy chỉnh:</label>
                 <input
                   type="text"
-                  placeholder="https://images.unsplash.com/..."
+                  placeholder="https://images.unsplash.com/... hoặc /images/mon-an.jpg"
                   value={customImageUrl}
                   onChange={(e) => setCustomImageUrl(e.target.value)}
                   className="w-full text-xs p-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:bg-white focus:outline-none"
                 />
-                <input
-                  type="text"
-                  placeholder="Chú thích ảnh (Caption)..."
-                  value={imageCaption}
-                  onChange={(e) => setImageCaption(e.target.value)}
-                  className="w-full text-xs p-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:bg-white focus:outline-none"
-                />
+                {imagePickerMode === 'editor' && (
+                  <input
+                    type="text"
+                    placeholder="Chú thích ảnh (Caption)..."
+                    value={imageCaption}
+                    onChange={(e) => setImageCaption(e.target.value)}
+                    className="w-full text-xs p-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:bg-white focus:outline-none"
+                  />
+                )}
               </div>
             </div>
 
@@ -3030,10 +3242,18 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
               {customImageUrl && (
                 <button
                   type="button"
-                  onClick={() => handleInsertImage(customImageUrl, imageCaption)}
-                  className="text-xs px-4 py-2 rounded-lg font-bold bg-orange-600 hover:bg-orange-500 text-white"
+                  onClick={() => {
+                    if (imagePickerMode === 'cover') {
+                      setCoverImage(customImageUrl.trim());
+                      setIsImagePickerOpen(false);
+                      showToast('Đã đặt ảnh đại diện từ liên kết tùy chỉnh!', 'success');
+                    } else {
+                      handleInsertImage(customImageUrl, imageCaption);
+                    }
+                  }}
+                  className="text-xs px-4 py-2 rounded-lg font-bold bg-orange-600 hover:bg-orange-500 text-white cursor-pointer shadow-xs"
                 >
-                  Chèn Ảnh Này
+                  {imagePickerMode === 'cover' ? 'Đặt Làm Ảnh Đại Diện' : 'Chèn Ảnh Này'}
                 </button>
               )}
             </div>

@@ -509,11 +509,11 @@ export const INITIAL_BLOG_POSTS: BlogPost[] = [
     "content": "Thịt heo là món ăn quen thuộc hàng ngày, nhưng không ít lần đi chợ về bạn gặp phải miếng thịt có mùi gây khó chịu, hoặc bảo quản trong tủ lạnh vài hôm đã bị khô quắt, biến màu và mất đi độ tươi ngon vốn có. Việc nắm vững các mẹo sơ chế sạch mùi và quy trình bảo quản khoa học không chỉ giúp món ăn của bạn tròn vị thơm ngon hơn, mà còn là yếu tố quan trọng bảo vệ sức khỏe cho cả gia đình. Hãy cùng mình bỏ túi ngay những bí kíp cực kỳ hữu ích dưới đây nhé!\n\n## 1. Ba Cách Khử Sạch Mùi Hôi Thịt Heo Bằng Gia Vị Tự Nhiên\n\nKhông cần hóa chất tẩy rửa phức tạp, gian bếp nhà bạn luôn có sẵn những nguyên liệu tuyệt vời để làm sạch thịt heo:\n- **Nước muối loãng pha giấm gạo:** Ngâm miếng thịt trong âu nước muối loãng có pha chút giấm trong 10 phút. Axit axetic trong giấm sẽ khử sạch vi khuẩn bề mặt và đánh bay mùi tanh hôi hiệu quả.\n- **Rượu trắng và gừng đập dập:** Rượu trắng có khả năng hòa tan các hợp chất gây mùi đạm động vật. Xoa bóp thịt với chút rượu trắng và gừng rồi rửa sạch lại, miếng thịt sẽ thơm tho tự nhiên.\n- **Chần sơ với củ hành khô:** Đun nồi nước sôi thả một củ hành khô đập dập, chần thịt trong 2 phút rồi vớt ra ngâm nước lạnh. Mẹo này cực kỳ hiệu quả khi chuẩn bị nấu các món canh sườn hay thịt kho tàu.\n\n## 2. Cách Bảo Quản Thịt Heo Trong Tủ Lạnh Giữ Trọn Dinh Dưỡng\n\n- **Chia nhỏ khẩu phần từng bữa:** Trước khi cấp đông, hãy chia thịt thành từng phần vừa đủ ăn cho một bữa. Tránh việc rã đông nguyên tảng lớn rồi lại cấp đông trở lại, khiến vi khuẩn sinh sôi và thịt bị nát rữa.\n- **Thấm khô ráo trước khi bọc kín:** Dùng khăn giấy đa năng thấm kiệt nước bề mặt thịt, sau đó bọc màng bọc thực phẩm thật chặt hoặc cho vào túi zip hút chân không để ngăn hiện tượng \"cháy lạnh\" (freezer burn) làm khô thớ thịt.\n- **Thời gian bảo quản an toàn:** Ngăn mát tủ lạnh (0 - 4°C) bảo quản tối đa 2 - 3 ngày. Ngăn đông đá (-18°C) có thể bảo quản tươi ngon từ 3 - 6 tháng. Để có thêm ý tưởng nấu các món ngon từ thịt tươi, mời bạn ghé xem [cẩm nang thịt heo làm món gì ngon](/thit-heo-lam-mon-gi-ngon).\n\n## 3. Mẹo Rã Đông Chuẩn Nhất Để Không Mất Chất\n\nCách rã đông an toàn và giữ trọn vị ngọt tự nhiên nhất là chuyển thịt từ ngăn đông xuống ngăn mát tủ lạnh trước nửa ngày. Nếu cần gấp, bạn có thể ngâm túi thịt bọc kín vào âu nước lạnh có pha chút muối hạt, tuyệt đối không dùng nước sôi làm chín tái bề mặt thịt.\n\nChăm sóc gian bếp từ những điều nhỏ nhặt nhất sẽ giúp bữa cơm gia đình bạn luôn tươi ngon, an toàn và tràn đầy tình thương yêu!\n## 4. Dấu Hiệu Nhận Biết Thịt Heo Đã Bị Hỏng Tuyệt Đối Không Ăn\n\nSức khỏe của gia đình là điều quý giá nhất, vì vậy bạn cần nắm rõ các dấu hiệu cảnh báo thịt đã biến chất để tránh gây ngộ độc thực phẩm:\n- **Biến màu sắc:** Thịt chuyển sang màu xanh xám, nâu thẫm hoặc xuất hiện các đốm mốc trắng li ti trên bề mặt bì.\n- **Mùi ôi thiu nồng nặc:** Khi mở túi bọc thịt ra ngửi thấy mùi chua gắt, mùi hắc amoniac hoặc mùi tanh nồng khó chịu.\n- **Bề mặt nhớt dính:** Khi sờ ngón tay vào thớ thịt thấy trơn nhớt, có dịch nhầy dính chặt vào tay và thịt bị nhũn rữa mất hoàn toàn độ đàn hồi.\n\nNếu gặp phải những dấu hiệu trên, hãy dứt khoát bỏ ngay miếng thịt, tuyệt đối không cố gắng rửa lại hay nấu chín kỹ vì độc tố vi khuẩn đã ngấm sâu vào trong thớ thịt không thể triệt tiêu bằng nhiệt độ thông thường.\n\n## 5. Vun Đắp Hạnh Phúc Từ Căn Bếp An Toàn\n\nMột bữa ăn ngon phải luôn bắt đầu từ nguồn nguyên liệu sạch sẽ và an toàn. Việc bạn dành chút thời gian để sơ chế kỹ lưỡng, khử sạch mùi hôi và bảo quản thịt khoa học chính là sự quan tâm thầm lặng nhưng sâu sắc nhất dành cho sức khỏe của những người thân yêu. Hãy để gian bếp nhà bạn luôn là nơi an toàn, ấm áp và tràn ngập những món ăn thơm ngon, bổ dưỡng mỗi ngày!\n"
   },
   {
-  "id": "thit-ga-nau-mon-gi-ngon",
-  "slug": "thit-ga-nau-mon-gi-ngon",
-  "title": "Thịt Gà Nấu Món Gì Ngon? Gợi Ý Món Ngon Từ Gà Dễ Làm Cho Cả Nhà",
-  "excerpt": "Thịt gà nấu món gì ngon cho cả nhà? Khám phá bản đồ 19+ món ngon từ thịt gà dễ làm: gà kho gừng, gà rang sả ớt, gà chiên mắm, gà nướng mật ong, gà hấp hành thanh ngọt.",
-  "coverImage": "/images/ga_kho_gung_sa_ot.jpg",
+    "id": "thit-ga-nau-mon-gi-ngon",
+    "slug": "thit-ga-nau-mon-gi-ngon",
+    "title": "Thịt Gà Nấu Món Gì Ngon? Gợi Ý Món Ngon Từ Gà Dễ Làm Cho Cả Nhà",
+    "excerpt": "Thịt gà nấu món gì ngon cho cả nhà? Khám phá bản đồ 19+ món ngon từ thịt gà dễ làm: gà kho gừng, gà rang sả ớt, gà chiên mắm, gà nướng mật ong, gà hấp hành thanh ngọt.",
+    "coverImage": "/images/thit-ga-nau-mon-gi-ngon.jpg",
   "category": "Gợi Ý Thực Đơn",
   "tags": [
     "Thịt gà nấu món gì ngon",
@@ -543,7 +543,7 @@ export const INITIAL_BLOG_POSTS: BlogPost[] = [
     "slug": "hom-nay-an-gi-voi-thit-bo",
     "title": "Hôm Nay Ăn Gì Với Thịt Bò? Top Món Xào, Món Canh, Món Hầm Mềm Ngọt",
     "excerpt": "Thịt bò làm món gì ngon cho gia đình? Khám phá bò lúc lắc mềm mọng, bò xào cần tỏi giòn ngọt, bò kho bánh mì và canh bắp bò thanh mát.",
-    "coverImage": "https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&auto=format&fit=crop&q=80",
+    "coverImage": "/images/com_rang_dua_bo.jpg",
     "category": "Gợi Ý Thực Đơn",
     "tags": [
       "Thịt bò",
@@ -569,7 +569,7 @@ export const INITIAL_BLOG_POSTS: BlogPost[] = [
     "slug": "hom-nay-an-gi-voi-trung",
     "title": "Hôm Nay Ăn Gì Với Trứng? 10 Món Trứng Lạ Miệng, Siêu Hao Cơm",
     "excerpt": "Biến tấu các món ngon từ trứng gà, trứng vịt dễ làm tại nhà: trứng cuộn ngũ sắc, trứng chiên nước mắm, trứng đúc thịt và trứng lòng đào ngâm tương.",
-    "coverImage": "https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&auto=format&fit=crop&q=80",
+    "coverImage": "/images/trung_cuon_van_may.jpg",
     "category": "Gợi Ý Thực Đơn",
     "tags": [
       "Món ngon từ trứng",
@@ -595,7 +595,7 @@ export const INITIAL_BLOG_POSTS: BlogPost[] = [
     "slug": "hom-nay-an-gi-voi-100-nghin",
     "title": "Hôm Nay Ăn Gì Với 100 Nghìn? 7 Mâm Cơm 3 Món Đủ Chất Cho Gia Đình",
     "excerpt": "Gợi ý các thực đơn mâm cơm gia đình 3 món chỉ 100k ngon - bổ - rẻ: canh chua cá lóc, thịt kho tiêu, trứng chiên cà chua đủ đầy dinh dưỡng.",
-    "coverImage": "https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&auto=format&fit=crop&q=80",
+    "coverImage": "/images/mam_com_gia_dinh.jpg",
     "category": "Gợi Ý Thực Đơn",
     "tags": [
       "Thực đơn 100k",
