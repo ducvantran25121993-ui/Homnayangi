@@ -3325,165 +3325,445 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
         </div>
       )}
 
-      {/* ================= MODAL: CHỌN / CHÈN ẢNH ================= */}
+      {/* ================= MODAL: CHỌN / ĐỔI / TẢI ẢNH ================= */}
       {isImagePickerOpen && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-3xl w-full p-6 shadow-2xl space-y-4 max-h-[90vh] flex flex-col">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white rounded-2xl max-w-4xl w-full p-5 sm:p-6 shadow-2xl space-y-4 max-h-[92vh] flex flex-col">
+            {/* Modal Header */}
             <div className="flex items-center justify-between border-b border-stone-100 pb-3">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-xl bg-orange-100 flex items-center justify-center text-orange-600">
-                  <ImageIcon className="w-4 h-4" />
+              <div className="flex items-center gap-2.5">
+                <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center text-orange-600 shrink-0">
+                  <ImageIcon className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-stone-900 text-sm">
+                  <h3 className="font-extrabold text-stone-900 text-sm sm:text-base">
                     {imagePickerMode === 'cover'
-                      ? 'Chọn Ảnh Đại Diện Cho Bài Viết'
-                      : 'Chèn Ảnh Vào Nội Dung Bài Viết'}
+                      ? 'Chọn & Đổi Ảnh Đại Diện Cho Bài Viết'
+                      : 'Chèn Hình Ảnh Minh Họa Vào Bài Viết'}
                   </h3>
-                  <p className="text-[11px] text-stone-500">
+                  <p className="text-[11px] sm:text-xs text-stone-500">
                     {imagePickerMode === 'cover'
-                      ? 'Ảnh sẽ hiển thị ngoài trang chủ, thẻ chia sẻ mạng xã hội và đầu bài viết'
-                      : 'Ảnh minh họa trực quan chuẩn kích thước 50-60KB'}
+                      ? 'Chọn từ thư viện 260+ món ăn ngon hoặc tải ảnh mới lên chuẩn SEO 50-60KB'
+                      : 'Hình ảnh chuẩn kích thước, tự động nén tối ưu SEO 50-60KB'}
                   </p>
                 </div>
               </div>
               <button
+                type="button"
                 onClick={() => setIsImagePickerOpen(false)}
-                className="text-stone-400 hover:text-stone-700 p-1 rounded-lg"
+                className="text-stone-400 hover:text-stone-700 p-1.5 rounded-lg hover:bg-stone-100 transition-colors"
+                title="Đóng cửa sổ"
               >
-                <X className="w-4 h-4" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Search & Category Filter */}
-            <div className="space-y-2">
-              <div className="relative">
-                <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                <input
-                  type="text"
-                  placeholder="Tìm kiếm hình ảnh món ăn (thịt heo, gà, bò, cá, trứng, bún...)"
-                  value={imageSearchQuery}
-                  onChange={(e) => setImageSearchQuery(e.target.value)}
-                  className="w-full text-xs pl-9 pr-3 py-2 bg-stone-50 border border-stone-200 rounded-xl focus:bg-white focus:outline-none focus:ring-1 focus:ring-orange-500"
-                />
-              </div>
+            {/* Modal Tabs */}
+            <div className="flex items-center border-b border-stone-200 gap-1 sm:gap-2">
+              <button
+                type="button"
+                onClick={() => setImagePickerTab('preset')}
+                className={`flex items-center gap-1.5 pb-2.5 px-3 text-xs font-bold border-b-2 transition-all cursor-pointer ${
+                  imagePickerTab === 'preset'
+                    ? 'border-orange-600 text-orange-600'
+                    : 'border-transparent text-stone-500 hover:text-stone-800'
+                }`}
+              >
+                <ImageIcon className="w-4 h-4" />
+                <span>Thư viện có sẵn ({allAvailableImages.length})</span>
+              </button>
 
-              {/* Category Pills */}
-              <div className="flex flex-wrap gap-1.5 pt-1">
-                {['Tất Cả', 'Thịt Heo', 'Thịt Bò', 'Thịt Gà', 'Cá & Hải Sản', 'Món Trứng', 'Cơm & Bún', 'Đổi Vị'].map(
-                  (cat) => (
-                    <button
-                      key={cat}
-                      type="button"
-                      onClick={() => setImagePickerCategory(cat)}
-                      className={`text-[11px] font-bold px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
-                        imagePickerCategory === cat
-                          ? 'bg-orange-600 text-white shadow-2xs'
-                          : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
-                      }`}
-                    >
-                      {cat}
-                    </button>
-                  )
-                )}
-              </div>
+              <button
+                type="button"
+                onClick={() => setImagePickerTab('upload')}
+                className={`flex items-center gap-1.5 pb-2.5 px-3 text-xs font-bold border-b-2 transition-all cursor-pointer ${
+                  imagePickerTab === 'upload'
+                    ? 'border-orange-600 text-orange-600'
+                    : 'border-transparent text-stone-500 hover:text-stone-800'
+                }`}
+              >
+                <Upload className="w-4 h-4" />
+                <span>Tải ảnh lên từ máy tính</span>
+                <span className="hidden sm:inline bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-1.5 py-0.5 rounded-md">
+                  Nén 50-60KB
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setImagePickerTab('url')}
+                className={`flex items-center gap-1.5 pb-2.5 px-3 text-xs font-bold border-b-2 transition-all cursor-pointer ${
+                  imagePickerTab === 'url'
+                    ? 'border-orange-600 text-orange-600'
+                    : 'border-transparent text-stone-500 hover:text-stone-800'
+                }`}
+              >
+                <LinkIcon className="w-4 h-4" />
+                <span>Nhập URL liên kết</span>
+              </button>
             </div>
 
-            {/* Image Grid */}
-            <div className="overflow-y-auto space-y-4 flex-1 pr-1 max-h-[46vh]">
-              <div>
-                <label className="block text-xs font-bold text-stone-700 mb-1.5">
-                  Thư viện món ăn chuẩn SEO ({
-                    PRESET_FOOD_IMAGES.filter((img) => {
-                      const matchCat = imagePickerCategory === 'Tất Cả' || img.category === imagePickerCategory;
-                      const matchQuery =
-                        !imageSearchQuery.trim() ||
-                        img.name.toLowerCase().includes(imageSearchQuery.toLowerCase());
-                      return matchCat && matchQuery;
-                    }).length
-                  } ảnh):
-                </label>
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                  {PRESET_FOOD_IMAGES.filter((img) => {
-                    const matchCat = imagePickerCategory === 'Tất Cả' || img.category === imagePickerCategory;
-                    const matchQuery =
-                      !imageSearchQuery.trim() ||
-                      img.name.toLowerCase().includes(imageSearchQuery.toLowerCase());
-                    return matchCat && matchQuery;
-                  }).map((img) => {
-                    const isCurrentCover = imagePickerMode === 'cover' && coverImage === img.url;
-                    return (
+            {/* TAB 1: THƯ VIỆN HÌNH ẢNH CÓ SẴN */}
+            {imagePickerTab === 'preset' && (
+              <div className="flex-1 flex flex-col min-h-0 space-y-3">
+                {/* Search & Categories */}
+                <div className="space-y-2">
+                  <div className="relative">
+                    <Search className="w-4 h-4 text-stone-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                    <input
+                      type="text"
+                      placeholder="Tìm món ăn nhanh: sườn, gà, phở, bò, cá, canh, bún, lẩu, xào, kho..."
+                      value={imageSearchQuery}
+                      onChange={(e) => setImageSearchQuery(e.target.value)}
+                      className="w-full text-xs pl-9 pr-8 py-2 bg-stone-50 border border-stone-200 rounded-xl focus:bg-white focus:outline-none focus:ring-1 focus:ring-orange-500"
+                    />
+                    {imageSearchQuery && (
                       <button
-                        key={img.url}
+                        type="button"
+                        onClick={() => setImageSearchQuery('')}
+                        className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    )}
+                  </div>
+
+                  {/* Category Pills with item counts */}
+                  <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto pr-1">
+                    {availableImageCategories.map((cat) => {
+                      const count = getCategoryImageCount(cat);
+                      const isSelected = imagePickerCategory === cat;
+                      return (
+                        <button
+                          key={cat}
+                          type="button"
+                          onClick={() => setImagePickerCategory(cat)}
+                          className={`text-[11px] font-bold px-2.5 py-1 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${
+                            isSelected
+                              ? 'bg-orange-600 text-white shadow-2xs'
+                              : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
+                          }`}
+                        >
+                          <span>{cat}</span>
+                          <span
+                            className={`text-[10px] px-1 py-0.2 rounded-full font-semibold ${
+                              isSelected ? 'bg-orange-700/60 text-white' : 'bg-stone-200/80 text-stone-600'
+                            }`}
+                          >
+                            {count}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Grid of Images */}
+                <div className="overflow-y-auto flex-1 pr-1 border border-stone-100 rounded-xl p-2 bg-stone-50/50 min-h-[300px] max-h-[46vh]">
+                  {filteredPickerImages.length === 0 ? (
+                    <div className="h-48 flex flex-col items-center justify-center text-stone-400 gap-2">
+                      <ImageIcon className="w-10 h-10 stroke-1" />
+                      <p className="text-xs">Không tìm thấy hình ảnh nào phù hợp với từ khóa.</p>
+                      <button
                         type="button"
                         onClick={() => {
-                          if (imagePickerMode === 'cover') {
-                            setCoverImage(img.url);
-                            setIsImagePickerOpen(false);
-                            showToast(`Đã đổi ảnh đại diện: "${img.name}"!`, 'success');
-                          } else {
-                            handleInsertImage(img.url, img.name);
-                          }
+                          setImageSearchQuery('');
+                          setImagePickerCategory('Tất Cả');
                         }}
-                        className={`group relative flex flex-col items-center p-2 rounded-xl border transition-all text-left cursor-pointer ${
-                          isCurrentCover
-                            ? 'border-orange-500 bg-orange-50 ring-2 ring-orange-500/20'
-                            : 'border-stone-200 hover:border-orange-500 hover:bg-orange-50/50'
-                        }`}
+                        className="text-xs font-bold text-orange-600 hover:underline"
                       >
-                        <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-1.5 bg-stone-100">
-                          <img
-                            src={img.url}
-                            alt={img.name}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                          />
-                          {isCurrentCover && (
-                            <span className="absolute top-1 right-1 bg-orange-600 text-white p-1 rounded-md shadow-xs">
-                              <Check className="w-3 h-3" />
-                            </span>
-                          )}
-                        </div>
-                        <span className="text-[11px] font-bold text-stone-700 group-hover:text-orange-700 line-clamp-1 w-full text-center">
-                          {img.name}
-                        </span>
-                        <span className="text-[9px] text-stone-400 mt-0.5">{img.category}</span>
+                        Xem tất cả hình ảnh
                       </button>
-                    );
-                  })}
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2.5">
+                      {filteredPickerImages.map((img) => {
+                        const isCurrentCover = imagePickerMode === 'cover' && coverImage === img.url;
+                        return (
+                          <div
+                            key={img.url}
+                            onClick={() => {
+                              if (imagePickerMode === 'cover') {
+                                setCoverImage(img.url);
+                                setIsImagePickerOpen(false);
+                                showToast(`Đã đổi ảnh đại diện: "${img.name}"!`, 'success');
+                              } else {
+                                handleInsertImage(img.url, img.name);
+                              }
+                            }}
+                            className={`group relative flex flex-col p-2 rounded-xl border transition-all text-left cursor-pointer bg-white ${
+                              isCurrentCover
+                                ? 'border-orange-500 bg-orange-50/40 ring-2 ring-orange-500/20 shadow-xs'
+                                : 'border-stone-200 hover:border-orange-500 hover:shadow-sm'
+                            }`}
+                          >
+                            <div className="relative w-full aspect-square rounded-lg overflow-hidden mb-1.5 bg-stone-100">
+                              <img
+                                src={img.url}
+                                alt={img.name}
+                                loading="lazy"
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+                              />
+                              {isCurrentCover && (
+                                <span className="absolute top-1 right-1 bg-orange-600 text-white p-1 rounded-md shadow-xs flex items-center gap-1 text-[10px] font-bold">
+                                  <Check className="w-3 h-3" />
+                                  <span className="hidden sm:inline">Ảnh bìa</span>
+                                </span>
+                              )}
+                              <div className="absolute inset-0 bg-stone-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <span className="bg-white text-stone-900 font-bold text-[11px] px-2.5 py-1 rounded-lg shadow-md">
+                                  {imagePickerMode === 'cover' ? 'Chọn làm ảnh bìa' : 'Chèn vào bài'}
+                                </span>
+                              </div>
+                            </div>
+                            <span className="text-[11px] font-bold text-stone-800 group-hover:text-orange-600 line-clamp-1 w-full leading-tight">
+                              {img.name}
+                            </span>
+                            <span className="text-[9px] text-stone-400 mt-0.5">{img.category}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
-              </div>
 
-              {/* Custom Image URL Option */}
-              <div className="border-t border-stone-100 pt-3 space-y-2">
-                <label className="block text-xs font-bold text-stone-700">Hoặc nhập URL hình ảnh tùy chỉnh:</label>
-                <input
-                  type="text"
-                  placeholder="https://images.unsplash.com/... hoặc /images/mon-an.jpg"
-                  value={customImageUrl}
-                  onChange={(e) => setCustomImageUrl(e.target.value)}
-                  className="w-full text-xs p-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:bg-white focus:outline-none"
-                />
                 {imagePickerMode === 'editor' && (
-                  <input
-                    type="text"
-                    placeholder="Chú thích ảnh (Caption)..."
-                    value={imageCaption}
-                    onChange={(e) => setImageCaption(e.target.value)}
-                    className="w-full text-xs p-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:bg-white focus:outline-none"
-                  />
+                  <div className="pt-1">
+                    <input
+                      type="text"
+                      placeholder="Ghi chú thích ảnh (Caption tùy chọn trước khi bấm chọn)..."
+                      value={imageCaption}
+                      onChange={(e) => setImageCaption(e.target.value)}
+                      className="w-full text-xs p-2 bg-stone-50 border border-stone-200 rounded-lg focus:bg-white focus:outline-none"
+                    />
+                  </div>
                 )}
               </div>
-            </div>
+            )}
 
-            <div className="flex items-center justify-end gap-2 pt-2 border-t border-stone-100">
+            {/* TAB 2: TẢI ẢNH LÊN TỪ MÁY TÍNH */}
+            {imagePickerTab === 'upload' && (
+              <div className="flex-1 flex flex-col min-h-0 space-y-4 overflow-y-auto pr-1">
+                {/* Hidden File Input */}
+                <input
+                  type="file"
+                  ref={fileUploadInputRef}
+                  onChange={(e) => {
+                    const f = e.target.files?.[0];
+                    if (f) handleUploadFile(f, imagePickerMode === 'cover');
+                    e.target.value = '';
+                  }}
+                  accept="image/png,image/jpeg,image/jpg,image/webp"
+                  className="hidden"
+                />
+
+                {/* Drag & Drop Upload Zone */}
+                <div
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setIsDraggingUpload(true);
+                  }}
+                  onDragLeave={() => setIsDraggingUpload(false)}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    setIsDraggingUpload(false);
+                    const f = e.dataTransfer.files?.[0];
+                    if (f) handleUploadFile(f, imagePickerMode === 'cover');
+                  }}
+                  onClick={() => fileUploadInputRef.current?.click()}
+                  className={`border-2 border-dashed rounded-2xl p-6 sm:p-8 text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-3 ${
+                    isDraggingUpload
+                      ? 'border-orange-500 bg-orange-50/60 scale-[0.99]'
+                      : 'border-stone-300 hover:border-orange-500 hover:bg-orange-50/20 bg-stone-50/50'
+                  }`}
+                >
+                  <div className="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center text-orange-600 shadow-xs">
+                    <Upload className="w-7 h-7" />
+                  </div>
+                  <div className="space-y-1">
+                    <p className="text-xs sm:text-sm font-bold text-stone-800">
+                      Kéo thả ảnh vào đây hoặc nhấp để chọn tệp từ máy tính
+                    </p>
+                    <p className="text-[11px] text-stone-500">
+                      Hỗ trợ PNG, JPG, JPEG, WebP. Tối đa 20MB mỗi tệp.
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="bg-emerald-50 text-emerald-800 border border-emerald-200 text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                      Tự động nén chuẩn SEO 50 KB - 60 KB
+                    </span>
+                  </div>
+                </div>
+
+                {/* Upload Status / Progress */}
+                {isUploadingImage && (
+                  <div className="p-4 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center gap-3 text-orange-800 text-xs font-bold animate-pulse">
+                    <RefreshCw className="w-4 h-4 animate-spin text-orange-600" />
+                    <span>Đang tải ảnh lên máy chủ và nén tối ưu chuẩn SEO 50KB - 60KB...</span>
+                  </div>
+                )}
+
+                {/* Upload Error */}
+                {uploadError && (
+                  <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 shrink-0" />
+                    <span>{uploadError}</span>
+                  </div>
+                )}
+
+                {/* Uploaded Success Preview */}
+                {uploadedResult && !isUploadingImage && (
+                  <div className="p-4 rounded-2xl bg-emerald-50/80 border border-emerald-200 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-emerald-900 flex items-center gap-1.5">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                        Tải lên & nén thành công!
+                      </span>
+                      <span className="bg-emerald-600 text-white text-[11px] font-bold px-2 py-0.5 rounded-full shadow-2xs">
+                        Dung lượng: {uploadedResult.sizeKb} KB (Chuẩn SEO)
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="w-24 h-24 rounded-xl overflow-hidden border border-emerald-200 bg-white shrink-0 shadow-xs">
+                        <img
+                          src={uploadedResult.url}
+                          alt="Uploaded"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="space-y-1.5 flex-1 min-w-0">
+                        <div className="text-xs font-mono text-stone-700 truncate font-bold">
+                          {uploadedResult.url}
+                        </div>
+                        <p className="text-[11px] text-stone-500">
+                          Hình ảnh đã được lưu vào máy chủ và sẵn sàng sử dụng.
+                        </p>
+                        <div className="pt-1 flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (imagePickerMode === 'cover') {
+                                setCoverImage(uploadedResult.url);
+                                setIsImagePickerOpen(false);
+                                showToast('Đã đặt làm ảnh đại diện bài viết!', 'success');
+                              } else {
+                                handleInsertImage(uploadedResult.url, imageCaption);
+                              }
+                            }}
+                            className="text-xs font-bold px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl shadow-xs transition-colors cursor-pointer"
+                          >
+                            {imagePickerMode === 'cover'
+                              ? '✓ Đặt Làm Ảnh Đại Diện Ngay'
+                              : '＋ Chèn Ảnh Này Vào Bài Viết'}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* User's Previously Uploaded Images Gallery */}
+                {userUploadedImages.length > 0 && (
+                  <div className="space-y-2 pt-2 border-t border-stone-200">
+                    <label className="block text-xs font-bold text-stone-700">
+                      Ảnh bạn đã tải lên gần đây ({userUploadedImages.length} ảnh):
+                    </label>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                      {userUploadedImages.map((img) => (
+                        <button
+                          key={img.url}
+                          type="button"
+                          onClick={() => {
+                            if (imagePickerMode === 'cover') {
+                              setCoverImage(img.url);
+                              setIsImagePickerOpen(false);
+                              showToast(`Đã đổi ảnh đại diện: "${img.name}"!`, 'success');
+                            } else {
+                              handleInsertImage(img.url, img.name);
+                            }
+                          }}
+                          className="group relative flex flex-col items-center p-2 rounded-xl border border-stone-200 hover:border-orange-500 hover:bg-orange-50/30 transition-all text-left cursor-pointer bg-white"
+                        >
+                          <div className="w-full aspect-square rounded-lg overflow-hidden mb-1 bg-stone-100">
+                            <img
+                              src={img.url}
+                              alt={img.name}
+                              className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                            />
+                          </div>
+                          <span className="text-[10px] font-bold text-stone-700 truncate w-full text-center">
+                            {img.name}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* TAB 3: NHẬP URL LIÊN KẾT */}
+            {imagePickerTab === 'url' && (
+              <div className="flex-1 flex flex-col space-y-3">
+                <div>
+                  <label className="block text-xs font-bold text-stone-700 mb-1">
+                    Địa chỉ URL hình ảnh:
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="https://images.unsplash.com/... hoặc /images/mon-an.jpg"
+                    value={customImageUrl}
+                    onChange={(e) => setCustomImageUrl(e.target.value)}
+                    className="w-full text-xs p-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:bg-white focus:outline-none focus:ring-1 focus:ring-orange-500 font-mono"
+                    autoFocus
+                  />
+                </div>
+
+                {customImageUrl && (
+                  <div className="p-3 rounded-xl border border-stone-200 bg-stone-50/50 space-y-2">
+                    <label className="block text-[11px] font-bold text-stone-600">Xem trước ảnh:</label>
+                    <div className="relative aspect-video max-h-48 rounded-lg overflow-hidden bg-stone-100 border border-stone-200">
+                      <img
+                        src={customImageUrl}
+                        alt="Preview"
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          (e.target as HTMLElement).style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {imagePickerMode === 'editor' && (
+                  <div>
+                    <label className="block text-xs font-bold text-stone-700 mb-1">
+                      Chú thích ảnh (Caption):
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Ví dụ: Đĩa sườn xào chua ngọt vàng ươm đậm vị..."
+                      value={imageCaption}
+                      onChange={(e) => setImageCaption(e.target.value)}
+                      className="w-full text-xs p-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:bg-white focus:outline-none focus:ring-1 focus:ring-orange-500"
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Footer Buttons */}
+            <div className="flex items-center justify-end gap-2 pt-3 border-t border-stone-100">
               <button
                 type="button"
                 onClick={() => setIsImagePickerOpen(false)}
-                className="text-xs px-3.5 py-2 rounded-lg text-stone-600 hover:bg-stone-100"
+                className="text-xs px-4 py-2 rounded-xl text-stone-600 hover:bg-stone-100 transition-colors font-medium"
               >
-                Hủy
+                Đóng
               </button>
-              {customImageUrl && (
+              {imagePickerTab === 'url' && customImageUrl && (
                 <button
                   type="button"
                   onClick={() => {
@@ -3495,7 +3775,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                       handleInsertImage(customImageUrl, imageCaption);
                     }
                   }}
-                  className="text-xs px-4 py-2 rounded-lg font-bold bg-orange-600 hover:bg-orange-500 text-white cursor-pointer shadow-xs"
+                  className="text-xs px-4 py-2 rounded-xl font-bold bg-orange-600 hover:bg-orange-500 text-white cursor-pointer shadow-xs transition-colors"
                 >
                   {imagePickerMode === 'cover' ? 'Đặt Làm Ảnh Đại Diện' : 'Chèn Ảnh Này'}
                 </button>
