@@ -37,7 +37,8 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.json({ limit: "25mb" }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
 // In-memory click tracking & stats
 interface ClickEvent {
@@ -1185,7 +1186,7 @@ app.post("/api/admin/posts/import", (req, res) => {
 // API: Upload image from client, optimize with sharp to 50KB-60KB, save to /public/images/
 app.post("/api/admin/upload-image", async (req, res) => {
   try {
-    const { data, filename } = req.body;
+    const { data, filename } = req.body || {};
     if (!data) {
       return res.status(400).json({ success: false, message: "Vui lòng chọn tệp hình ảnh" });
     }
@@ -1204,17 +1205,29 @@ app.post("/api/admin/upload-image", async (req, res) => {
     const finalName = `${rawName || "anh-mon-an"}-${Date.now()}.jpg`;
     const targetPath = path.join(process.cwd(), "public", "images", finalName);
 
-    // Iteratively optimize to hit 50KB - 60KB (51,200 - 61,440 bytes)
+    // Target size: 50 KB - 60 KB (51,200 - 61,440 bytes)
     const targetMin = 51200;
     const targetMax = 61440;
 
+    // Step 1: Pre-scale image down to max width 680px once (drastically accelerates subsequent passes)
+    const preScaledBuffer = await sharp(inputBuffer)
+      .resize({ width: 680, withoutEnlargement: true })
+      .jpeg({ quality: 85, progressive: true, chromaSubsampling: "4:2:0" })
+      .toBuffer();
+
     let bestBuffer: Buffer | null = null;
-    for (const w of [680, 640, 600, 580, 540, 500, 480]) {
-      for (let q = 88; q >= 40; q -= 2) {
-        const buf = await sharp(inputBuffer)
+
+    // Step 2: Binary search quality across widths [680, 640, 600, 560, 520]
+    for (const w of [680, 640, 600, 560, 520]) {
+      let lowQ = 40;
+      let highQ = 94;
+
+      while (lowQ <= highQ) {
+        const midQ = Math.round((lowQ + highQ) / 2);
+        const buf = await sharp(preScaledBuffer)
           .resize({ width: w, withoutEnlargement: true })
           .jpeg({
-            quality: q,
+            quality: midQ,
             progressive: true,
             chromaSubsampling: "4:2:0",
           })
@@ -1224,20 +1237,25 @@ app.post("/api/admin/upload-image", async (req, res) => {
           bestBuffer = buf;
           break;
         }
-        if (buf.length <= targetMax && (!bestBuffer || buf.length > bestBuffer.length)) {
-          bestBuffer = buf;
+
+        if (buf.length < targetMin) {
+          if (!bestBuffer || buf.length > bestBuffer.length) {
+            bestBuffer = buf;
+          }
+          lowQ = midQ + 1; // increase quality to increase file size
+        } else {
+          // buf.length > targetMax
+          highQ = midQ - 1; // decrease quality to decrease file size
         }
       }
+
       if (bestBuffer && bestBuffer.length >= targetMin && bestBuffer.length <= targetMax) {
         break;
       }
     }
 
     if (!bestBuffer) {
-      bestBuffer = await sharp(inputBuffer)
-        .resize({ width: 620, withoutEnlargement: true })
-        .jpeg({ quality: 75, progressive: true, chromaSubsampling: "4:2:0" })
-        .toBuffer();
+      bestBuffer = preScaledBuffer;
     }
 
     const imagesDir = path.join(process.cwd(), "public", "images");
@@ -1253,6 +1271,7 @@ app.post("/api/admin/upload-image", async (req, res) => {
     }
 
     const publicUrl = `/images/${finalName}`;
+    console.log(`[Upload Image] Successfully saved ${publicUrl} (${bestBuffer.length} bytes, ${(bestBuffer.length / 1024).toFixed(1)} KB)`);
     return res.json({
       success: true,
       url: publicUrl,
