@@ -13,6 +13,7 @@ import {
   Coffee,
   Store,
   BookOpen,
+  ChefHat,
 } from 'lucide-react';
 import { UserLocation } from '../types';
 import { TAB_CONFIG, TabType } from '../utils/navigation';
@@ -258,6 +259,12 @@ export const Navbar: React.FC<NavbarProps> = ({
       shortLabel: 'Quán Ngon',
       path: TAB_CONFIG.restaurants.path,
       icon: <Store className="w-3.5 h-3.5" />,
+    },
+    {
+      id: 'discover',
+      shortLabel: 'Ẩm Thực',
+      path: TAB_CONFIG.discover.path,
+      icon: <ChefHat className="w-3.5 h-3.5" />,
     },
     {
       id: 'blog',
@@ -667,10 +674,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* Mobile Modern Pill Slider (5 direct items: Tarot | Vòng Quay | Món Ngon | Quán Ngon | Ẩm Thực) */}
+        {/* Mobile Modern Pill Slider (6 direct items: Tarot | Vòng Quay | Món Ngon | Quán Ngon | Ẩm Thực | Blog) */}
         <nav 
           aria-label="Menu điều hướng di động" 
-          className="md:hidden flex items-center justify-between p-1 my-1.5 rounded-full bg-stone-100/90 border border-stone-200/60"
+          className="md:hidden flex items-center justify-between p-1 my-1.5 rounded-full bg-stone-100/90 border border-stone-200/60 overflow-x-auto no-scrollbar scroll-smooth"
         >
           {mobileNavItems.map((item) => {
             const isActive = item.id === 'catalog' 
@@ -683,8 +690,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 key={item.id}
                 href={item.path}
                 onClick={(e) => handleNavClick(item.id, e)}
-                className={`relative flex-1 flex flex-col items-center justify-center gap-0.5 py-1 px-0.5 rounded-full text-xs font-medium transition-colors select-none text-center cursor-pointer ${
-                  isActive ? 'text-stone-900 font-bold' : 'text-stone-500'
+                className={`relative flex-1 min-w-[48px] flex flex-col items-center justify-center gap-0.5 py-1 px-0.5 rounded-full text-xs font-medium transition-colors select-none text-center cursor-pointer ${
+                  isActive ? 'text-stone-900 font-bold' : 'text-stone-500 hover:text-stone-800'
                 }`}
               >
                 {isActive && (
@@ -693,7 +700,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <span className={`relative z-10 ${isActive ? 'text-orange-600' : 'text-stone-400'}`}>
                   {item.icon}
                 </span>
-                <span className="relative z-10 text-[10px] sm:text-xs leading-none whitespace-nowrap">
+                <span className="relative z-10 text-[9.5px] min-[360px]:text-[10px] sm:text-xs leading-none whitespace-nowrap">
                   {item.shortLabel}
                 </span>
               </a>
