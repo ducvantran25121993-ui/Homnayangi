@@ -698,6 +698,170 @@ app.get("/api/admin/posts", async (_req, res) => {
   });
 });
 
+// Comprehensive dynamic SEO routes config for server-rendered HTML meta tags
+let SEO_ROUTES_CONFIG = getAllSeoRoutes();
+
+function injectSeoMeta(html: string, requestedPath: string): string {
+  const cleanPath = requestedPath.replace(/\/$/, "") || "/";
+  const slug = cleanPath.replace(/^\//, "").replace(/^\/?blog\//, "");
+
+  // 1. Check custom posts first so any newly published or edited admin posts take immediate effect
+  const customPosts = loadCustomBlogPosts();
+  const customMatch = customPosts.find((p) => p.slug === slug || p.id === slug);
+  let meta = customMatch
+    ? {
+        path: `/${customMatch.slug}`,
+        title: `${customMatch.title} | Blog Ẩm Thực Hôm Nay Ăn Gì`,
+        description: customMatch.excerpt,
+        keywords: Array.isArray(customMatch.tags) ? customMatch.tags.join(', ') : (customMatch.tags || ''),
+        image: customMatch.coverImage || "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1200&auto=format&fit=crop&q=80",
+        imageAlt: customMatch.title,
+        isArticle: true,
+        canonicalPath: `/${customMatch.slug}`,
+      }
+    : SEO_ROUTES_CONFIG[cleanPath];
+
+  const isRecipeRoute =
+    cleanPath.startsWith("/cach-nau-") ||
+    cleanPath.startsWith("/cach-lam-") ||
+    cleanPath.startsWith("/cach-nau-mon-ngon/");
+
+  if (!meta && cleanPath.startsWith("/cach-nau-mon-ngon/")) {
+    const slug = cleanPath.replace("/cach-nau-mon-ngon/", "");
+    meta = SEO_ROUTES_CONFIG[`/${slug}`];
+  }
+
+  if (!meta && (cleanPath.startsWith("/cach-nau-") || cleanPath.startsWith("/cach-lam-"))) {
+    const slug = cleanPath.replace(/^\//, "");
+    const normalizedName = slug
+      .replace(/^cach-(?:nau|lam)-/, "")
+      .split("-")
+      .map((w) => (w ? w.charAt(0).toUpperCase() + w.slice(1) : ""))
+      .join(" ")
+      .trim();
+    meta = {
+      path: cleanPath,
+      title: `Cách Nấu ${normalizedName} Thơm Ngon Chuẩn Vị | Hôm Nay Ăn Gì`,
+      description: `Hướng dẫn chi tiết từng bước nấu món ${normalizedName} thơm ngon, chuẩn vị gia đình Việt Nam: Định lượng nguyên liệu, mẹo sơ chế và bí quyết nêm nếm.`,
+      keywords: `cách nấu ${normalizedName.toLowerCase()}, công thức nấu ${normalizedName.toLowerCase()}, hướng dẫn làm ${normalizedName.toLowerCase()}, món ngon mỗi ngày, ẩm thực việt nam`,
+      image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=1200&auto=format&fit=crop&q=80",
+      imageAlt: `Cách Nấu ${normalizedName} Thơm Ngon Chuẩn Vị`,
+    };
+  }
+
+  if (!meta) {
+    meta = SEO_ROUTES_CONFIG["/"];
+  }
+  const fullUrl = `https://angigio.com${meta.path === "/" ? "/" : meta.path}`;
+  const canonicalUrl = meta.canonicalPath
+    ? `https://angigio.com${meta.canonicalPath === "/" ? "/" : meta.canonicalPath}`
+    : fullUrl;
+
+  let updatedHtml = html
+    .replace(/<title>.*?<\/title>/i, `<title>${meta.title}</title>`)
+    .replace(/<meta\s+name="title"\s+content=".*?"\s*\/?>/i, `<meta name="title" content="${meta.title}" />`)
+    .replace(/<meta\s+name="description"\s+content=".*?"\s*\/?>/i, `<meta name="description" content="${meta.description}" />`)
+    .replace(/<meta\s+name="keywords"\s+content=".*?"\s*\/?>/i, `<meta name="keywords" content="${meta.keywords}" />`)
+    .replace(/<link\s+rel="canonical"\s+href=".*?"\s*\/?>/i, `<link rel="canonical" href="${canonicalUrl}" />`)
+    .replace(/<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i, `<meta property="og:title" content="${meta.title}" />`)
+    .replace(/<meta\s+property="og:description"\s+content=".*?"\s*\/?>/i, `<meta property="og:description" content="${meta.description}" />`)
+    .replace(/<meta\s+property="og:url"\s+content=".*?"\s*\/?>/i, `<meta property="og:url" content="${fullUrl}" />`)
+    .replace(/<meta\s+property="og:image"\s+content=".*?"\s*\/?>/i, `<meta property="og:image" content="${meta.image}" />`)
+    .replace(/<meta\s+property="og:image:alt"\s+content=".*?"\s*\/?>/i, `<meta property="og:image:alt" content="${meta.imageAlt}" />`)
+    .replace(/<meta\s+name="twitter:title"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:title" content="${meta.title}" />`)
+    .replace(/<meta\s+name="twitter:description"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:description" content="${meta.description}" />`)
+    .replace(/<meta\s+name="twitter:url"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:url" content="${fullUrl}" />`)
+    .replace(/<meta\s+name="twitter:image"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:image" content="${meta.image}" />`);
+
+  if (isRecipeRoute || meta.isArticle) {
+    const publishedTime = '2026-09-28T08:00:00+07:00';
+    const modifiedTime = '2026-09-30T00:00:00+07:00';
+    updatedHtml = updatedHtml.replace(
+      /<meta\s+property="og:type"\s+content=".*?"\s*\/?>/i,
+      `<meta property="og:type" content="article" />\n    <meta property="article:published_time" content="${publishedTime}" />\n    <meta property="article:modified_time" content="${modifiedTime}" />\n    <meta property="article:author" content="Hôm Nay Ăn Gì" />\n    <meta property="article:section" content="Bí quyết ẩm thực" />`
+    );
+
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BlogPosting",
+          "@id": `${fullUrl}#article`,
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://angigio.com/#website",
+            "name": "Hôm Nay Ăn Gì",
+            "url": "https://angigio.com/"
+          },
+          "headline": meta.title,
+          "description": meta.description,
+          "image": [meta.image?.startsWith("http") ? meta.image : `https://angigio.com${meta.image}`],
+          "datePublished": publishedTime,
+          "dateModified": modifiedTime,
+          "author": {
+            "@type": "Person",
+            "name": "Bếp Trưởng Hôm Nay Ăn Gì",
+            "jobTitle": "Chuyên gia ẩm thực"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Hôm Nay Ăn Gì",
+            "url": "https://angigio.com/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://angigio.com/logo.png"
+            }
+          },
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": fullUrl
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": `${fullUrl}#breadcrumb`,
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Trang chủ",
+              "item": "https://angigio.com/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Blog Ẩm Thực",
+              "item": "https://angigio.com/blog"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": meta.title,
+              "item": fullUrl
+            }
+          ]
+        }
+      ]
+    };
+
+    updatedHtml = updatedHtml.replace(
+      '</head>',
+      `    <script type="application/ld+json">\n${JSON.stringify(articleSchema, null, 2)}\n    </script>\n  </head>`
+    );
+  }
+
+  // Inject initial custom posts so all devices and machines see new posts instantaneously on page load
+  if (customPosts && Array.isArray(customPosts) && customPosts.length > 0) {
+    const serialized = JSON.stringify(customPosts).replace(/</g, '\\u003c');
+    updatedHtml = updatedHtml.replace(
+      '</head>',
+      `    <script>window.__INITIAL_CUSTOM_POSTS__ = ${serialized};</script>\n  </head>`
+    );
+  }
+
+  return updatedHtml;
+}
+
 // API: Create or update a blog post
 app.post("/api/admin/posts", async (req, res) => {
   try {
@@ -728,6 +892,22 @@ app.post("/api/admin/posts", async (req, res) => {
 
     saveCustomBlogPosts(customPosts);
     addUrlToSitemap(cleanSlug);
+
+    // Prerender static HTML files in dist/ if available
+    try {
+      const distIndex = path.join(process.cwd(), "dist", "index.html");
+      if (fs.existsSync(distIndex)) {
+        const baseHtml = fs.readFileSync(distIndex, "utf-8");
+        const seoHtml = injectSeoMeta(baseHtml, `/${cleanSlug}`);
+        const distFile = path.join(process.cwd(), "dist", `${cleanSlug}.html`);
+        fs.writeFileSync(distFile, seoHtml, "utf-8");
+        const distSubDir = path.join(process.cwd(), "dist", cleanSlug);
+        if (!fs.existsSync(distSubDir)) fs.mkdirSync(distSubDir, { recursive: true });
+        fs.writeFileSync(path.join(distSubDir, "index.html"), seoHtml, "utf-8");
+      }
+    } catch (ssgErr) {
+      console.warn("Could not generate static post html:", ssgErr);
+    }
 
     // Also persist to Firestore so it is globally available across all servers
     try {
@@ -1064,169 +1244,8 @@ async function startServer() {
     });
   }
 
-  // Comprehensive dynamic SEO routes config for server-rendered HTML meta tags
-  const SEO_ROUTES_CONFIG = getAllSeoRoutes();
-
-  function injectSeoMeta(html: string, requestedPath: string): string {
-    const cleanPath = requestedPath.replace(/\/$/, "") || "/";
-    const slug = cleanPath.replace(/^\//, "").replace(/^\/?blog\//, "");
-
-    // 1. Check custom posts first so any newly published or edited admin posts take immediate effect
-    const customPosts = loadCustomBlogPosts();
-    const customMatch = customPosts.find((p) => p.slug === slug || p.id === slug);
-    let meta = customMatch
-      ? {
-          path: `/${customMatch.slug}`,
-          title: `${customMatch.title} | Blog Ẩm Thực Hôm Nay Ăn Gì`,
-          description: customMatch.excerpt,
-          keywords: Array.isArray(customMatch.tags) ? customMatch.tags.join(', ') : (customMatch.tags || ''),
-          image: customMatch.coverImage || "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1200&auto=format&fit=crop&q=80",
-          imageAlt: customMatch.title,
-          isArticle: true,
-          canonicalPath: `/${customMatch.slug}`,
-        }
-      : SEO_ROUTES_CONFIG[cleanPath];
-
-    const isRecipeRoute =
-      cleanPath.startsWith("/cach-nau-") ||
-      cleanPath.startsWith("/cach-lam-") ||
-      cleanPath.startsWith("/cach-nau-mon-ngon/");
-
-    if (!meta && cleanPath.startsWith("/cach-nau-mon-ngon/")) {
-      const slug = cleanPath.replace("/cach-nau-mon-ngon/", "");
-      meta = SEO_ROUTES_CONFIG[`/${slug}`];
-    }
-
-    if (!meta && (cleanPath.startsWith("/cach-nau-") || cleanPath.startsWith("/cach-lam-"))) {
-      const slug = cleanPath.replace(/^\//, "");
-      const normalizedName = slug
-        .replace(/^cach-(?:nau|lam)-/, "")
-        .split("-")
-        .map((w) => (w ? w.charAt(0).toUpperCase() + w.slice(1) : ""))
-        .join(" ")
-        .trim();
-      meta = {
-        path: cleanPath,
-        title: `Cách Nấu ${normalizedName} Thơm Ngon Chuẩn Vị | Hôm Nay Ăn Gì`,
-        description: `Hướng dẫn chi tiết từng bước nấu món ${normalizedName} thơm ngon, chuẩn vị gia đình Việt Nam: Định lượng nguyên liệu, mẹo sơ chế và bí quyết nêm nếm.`,
-        keywords: `cách nấu ${normalizedName.toLowerCase()}, công thức nấu ${normalizedName.toLowerCase()}, hướng dẫn làm ${normalizedName.toLowerCase()}, món ngon mỗi ngày, ẩm thực việt nam`,
-        image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=1200&auto=format&fit=crop&q=80",
-        imageAlt: `Cách Nấu ${normalizedName} Thơm Ngon Chuẩn Vị`,
-      };
-    }
-
-    if (!meta) {
-      meta = SEO_ROUTES_CONFIG["/"];
-    }
-    const fullUrl = `https://angigio.com${meta.path === "/" ? "/" : meta.path}`;
-    const canonicalUrl = meta.canonicalPath
-      ? `https://angigio.com${meta.canonicalPath === "/" ? "/" : meta.canonicalPath}`
-      : fullUrl;
-
-    let updatedHtml = html
-      .replace(/<title>.*?<\/title>/i, `<title>${meta.title}</title>`)
-      .replace(/<meta\s+name="title"\s+content=".*?"\s*\/?>/i, `<meta name="title" content="${meta.title}" />`)
-      .replace(/<meta\s+name="description"\s+content=".*?"\s*\/?>/i, `<meta name="description" content="${meta.description}" />`)
-      .replace(/<meta\s+name="keywords"\s+content=".*?"\s*\/?>/i, `<meta name="keywords" content="${meta.keywords}" />`)
-      .replace(/<link\s+rel="canonical"\s+href=".*?"\s*\/?>/i, `<link rel="canonical" href="${canonicalUrl}" />`)
-      .replace(/<meta\s+property="og:title"\s+content=".*?"\s*\/?>/i, `<meta property="og:title" content="${meta.title}" />`)
-      .replace(/<meta\s+property="og:description"\s+content=".*?"\s*\/?>/i, `<meta property="og:description" content="${meta.description}" />`)
-      .replace(/<meta\s+property="og:url"\s+content=".*?"\s*\/?>/i, `<meta property="og:url" content="${fullUrl}" />`)
-      .replace(/<meta\s+property="og:image"\s+content=".*?"\s*\/?>/i, `<meta property="og:image" content="${meta.image}" />`)
-      .replace(/<meta\s+property="og:image:alt"\s+content=".*?"\s*\/?>/i, `<meta property="og:image:alt" content="${meta.imageAlt}" />`)
-      .replace(/<meta\s+name="twitter:title"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:title" content="${meta.title}" />`)
-      .replace(/<meta\s+name="twitter:description"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:description" content="${meta.description}" />`)
-      .replace(/<meta\s+name="twitter:url"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:url" content="${fullUrl}" />`)
-      .replace(/<meta\s+name="twitter:image"\s+content=".*?"\s*\/?>/i, `<meta name="twitter:image" content="${meta.image}" />`);
-
-    if (isRecipeRoute || meta.isArticle) {
-      const publishedTime = '2026-09-28T08:00:00+07:00';
-      const modifiedTime = '2026-09-30T00:00:00+07:00';
-      updatedHtml = updatedHtml.replace(
-        /<meta\s+property="og:type"\s+content=".*?"\s*\/?>/i,
-        `<meta property="og:type" content="article" />\n    <meta property="article:published_time" content="${publishedTime}" />\n    <meta property="article:modified_time" content="${modifiedTime}" />\n    <meta property="article:author" content="Hôm Nay Ăn Gì" />\n    <meta property="article:section" content="Bí quyết ẩm thực" />`
-      );
-
-      const articleSchema = {
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "BlogPosting",
-            "@id": `${fullUrl}#article`,
-            "isPartOf": {
-              "@type": "WebSite",
-              "@id": "https://angigio.com/#website",
-              "name": "Hôm Nay Ăn Gì",
-              "url": "https://angigio.com/"
-            },
-            "headline": meta.title,
-            "description": meta.description,
-            "image": [meta.image?.startsWith("http") ? meta.image : `https://angigio.com${meta.image}`],
-            "datePublished": publishedTime,
-            "dateModified": modifiedTime,
-            "author": {
-              "@type": "Person",
-              "name": "Bếp Trưởng Hôm Nay Ăn Gì",
-              "jobTitle": "Chuyên gia ẩm thực"
-            },
-            "publisher": {
-              "@type": "Organization",
-              "name": "Hôm Nay Ăn Gì",
-              "url": "https://angigio.com/",
-              "logo": {
-                "@type": "ImageObject",
-                "url": "https://angigio.com/logo.png"
-              }
-            },
-            "mainEntityOfPage": {
-              "@type": "WebPage",
-              "@id": fullUrl
-            }
-          },
-          {
-            "@type": "BreadcrumbList",
-            "@id": `${fullUrl}#breadcrumb`,
-            "itemListElement": [
-              {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Trang chủ",
-                "item": "https://angigio.com/"
-              },
-              {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Blog Ẩm Thực",
-                "item": "https://angigio.com/blog"
-              },
-              {
-                "@type": "ListItem",
-                "position": 3,
-                "name": meta.title,
-                "item": fullUrl
-              }
-            ]
-          }
-        ]
-      };
-
-      updatedHtml = updatedHtml.replace(
-        '</head>',
-        `    <script type="application/ld+json">\n${JSON.stringify(articleSchema, null, 2)}\n    </script>\n  </head>`
-      );
-    }
-
-    // Inject initial custom posts so all devices and machines see new posts instantaneously on page load
-    if (customPosts && Array.isArray(customPosts) && customPosts.length > 0) {
-      const serialized = JSON.stringify(customPosts).replace(/</g, '\\u003c');
-      updatedHtml = updatedHtml.replace(
-        '</head>',
-        `    <script>window.__INITIAL_CUSTOM_POSTS__ = ${serialized};</script>\n  </head>`
-      );
-    }
-
-    return updatedHtml;
-  }
+  // Refresh SEO routes config for server-rendered HTML meta tags
+  SEO_ROUTES_CONFIG = getAllSeoRoutes();
 
   const httpServer = http.createServer(app);
 

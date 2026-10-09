@@ -2213,30 +2213,130 @@
     </image:image>
   </url>
   <url>
-    <loc>https://angigio.com/lam-mon-ngon-bang-noi-chien-khong-dau-goi-y-mon-de-lam-tai-nha</loc>
-    <lastmod>2026-09-28</lastmod>
+    <loc>https://angigio.com/ca-lam-mon-gi-ngon-goi-y-cac-mon-ca-de-lam</loc>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://angigio.com/images/mon-ngon-bang-noi-chien-khong-dau.jpg</image:loc>
-      <image:title>Làm Món Ngon Bằng Nồi Chiên Không Dầu - Gợi Ý Món Dễ Làm Tại Nhà</image:title>
+      <image:loc>https://angigio.com/images/ca-lam-mon-gi-ngon.jpg</image:loc>
+      <image:title>Cá Làm Món Gì Ngon? Gợi Ý Các Món Cá Dễ Làm</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://angigio.com/thit-bo-lam-mon-gi-ngon-goi-y-mon-bo-de-lam-dam-da-cho-bua-com-gia-dinh</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://angigio.com/images/thit-bo-lam-mon-gi-ngon.jpg</image:loc>
+      <image:title>Thịt Bò Làm Món Gì Ngon? Gợi Ý Món Bò Dễ Làm, Đậm Đà Cho Bữa Cơm Gia Đình</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://angigio.com/thit-heo-lam-mon-gi-ngon</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
       <image:loc>https://angigio.com/images/thit-heo-lam-mon-gi-ngon.jpg</image:loc>
       <image:title>Thịt Heo Làm Món Gì Ngon? Gợi Ý Món Ngon Đổi Vị Dễ Làm Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://angigio.com/mon-ngon-tu-thit-ba-chi</loc>
-    <lastmod>2026-09-28</lastmod>
+    <loc>https://angigio.com/trung-lam-mon-gi-ngon-goi-y-cac-mon-trung-de-lam-hao-com-cho-ca-nha</loc>
+    <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://angigio.com/images/trung-lam-mon-gi-ngon.jpg</image:loc>
+      <image:title>Trứng Làm Món Gì Ngon? Gợi Ý Các Món Trứng Dễ Làm, Hao Cơm Cho Cả Nhà</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://angigio.com/thit-ga-nau-mon-gi-ngon</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://angigio.com/images/thit-ga-nau-mon-gi-ngon.jpg</image:loc>
+      <image:title>Thịt Gà Nấu Món Gì Ngon? Gợi Ý Món Ngon Từ Gà Dễ Làm Cho Cả Nhà</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://angigio.com/an-gi-cho-do-ngan-goi-y-mon-ngon-doi-vi-de-an-cho-ca-nha</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://angigio.com/images/an-gi-cho-do-ngan.jpg</image:loc>
+      <image:title>Ăn Gì Cho Đỡ Ngán? Gợi Ý Món Ngon Đổi Vị Dễ Ăn Cho Cả Nhà</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://angigio.com/an-gi-hom-nay-goi-y-mon-ngon-de-lam-cho-bua-com-moi-ngay</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://angigio.com/images/mam_com_gia_dinh.jpg</image:loc>
+      <image:title>Ăn Gì Hôm Nay? Gợi Ý Món Ngon Dễ Làm Cho Bữa Cơm Mỗi Ngày</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://angigio.com/nau-gi-hom-nay-goi-y-mon-ngon-de-nau</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://angigio.com/images/nau-gi-hom-nay.jpg</image:loc>
+      <image:title>11111111</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://angigio.com/an-gi-cho-do-ngan</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://angigio.com/images/an-gi-cho-do-ngan.jpg</image:loc>
+      <image:title>qweqwe</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://angigio.com/toi-nay-an-gi-goi-y-bua-toi-ngon-de-lam-cho-ca-nha</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://angigio.com/images/an-gi-cho-do-ngan.jpg</image:loc>
+      <image:title>Tối Nay Ăn Gì? Gợi Ý Bữa Tối Ngon, Dễ Làm Cho Cả Nhà</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://angigio.com/trua-nay-an-gi-goi-y-bua-trua-ngon-de-an-cho-moi-ngay</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://angigio.com/images/an-gi-cho-do-ngan.jpg</image:loc>
+      <image:title>Trưa Nay Ăn Gì? Gợi Ý Bữa Trưa Ngon, Dễ Ăn Cho Mỗi Ngày</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://angigio.com/lam-mon-ngon-bang-noi-chien-khong-dau-goi-y-mon-de-lam-tai-nha</loc>
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://angigio.com/images/mon-ngon-bang-noi-chien-khong-dau.jpg</image:loc>
+      <image:title>Làm Món Ngon Bằng Nồi Chiên Không Dầu - Gợi Ý Món Dễ Làm Tại Nhà</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://angigio.com/mon-ngon-tu-thit-ba-chi</loc>
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
     <image:image>
       <image:loc>https://angigio.com/images/thit-ba-chi-lam-mon-gi-ngon.jpg</image:loc>
       <image:title>Thịt Ba Chỉ Làm Món Gì Ngon? 10 Món Ngon Từ Thịt Ba Chỉ Đưa Cơm</image:title>
@@ -2244,9 +2344,9 @@
   </url>
   <url>
     <loc>https://angigio.com/suon-heo-lam-mon-gi-ngon</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
       <image:loc>https://angigio.com/images/suon-heo-lam-mon-gi-ngon.jpg</image:loc>
       <image:title>Sườn Heo Làm Món Gì Ngon? 12 Món Ngon Từ Sườn Heo Dễ Làm Tại Nhà</image:title>
@@ -2254,9 +2354,9 @@
   </url>
   <url>
     <loc>https://angigio.com/thit-nac-heo-lam-mon-gi-ngon</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
       <image:loc>https://angigio.com/images/thit-nac-heo-lam-mon-gi-ngon.jpg</image:loc>
       <image:title>Thịt Nạc Heo Làm Món Gì Ngon? 17+ Món Ngon Dễ Làm, Mềm Mọng Không Khô Cực Đưa Cơm</image:title>
@@ -2264,171 +2364,151 @@
   </url>
   <url>
     <loc>https://angigio.com/mon-ngon-tu-thit-bam</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:loc>https://angigio.com/images/thit-bam-lam-mon-gi-ngon.jpg</image:loc>
       <image:title>Thịt Băm Làm Món Gì Ngon? 9 Món Nhanh Gọn, Cực Hao Cơm Cho Cả Nhà</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://angigio.com/cac-mon-thit-heo-kho</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:loc>https://angigio.com/images/thit_kho_tau.jpg</image:loc>
       <image:title>Thịt Heo Kho Gì Ngon? 7 Món Thịt Kho Đậm Đà Óng Ả Chuẩn Cơm Mẹ Nấu</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://angigio.com/mon-ngon-tu-chan-gio-heo</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:loc>https://angigio.com/images/gio_heo_chien_gion.jpg</image:loc>
       <image:title>Chân Giò Heo Làm Món Gì Ngon? 8 Món Hầm, Chiên Giòn, Luộc Giòn Bì</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://angigio.com/mon-ngon-tu-tai-heo</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:loc>https://angigio.com/images/tai_heo_sot_thai.jpg</image:loc>
       <image:title>Tai Heo Làm Món Gì Ngon? Top Món Gỏi, Tai Heo Sốt Thái, Ngâm Chua Ngọt</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://angigio.com/mon-ngon-tu-thit-cot-let</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:loc>https://angigio.com/images/suon_heo_rim_man_ngot.jpg</image:loc>
       <image:title>Thịt Cốt Lết Làm Món Gì Ngon? Bí Quyết Ướp Cốt Lết Mềm Mọng Không Khô</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://angigio.com/thit-heo-quay-va-nuong-gion-bi</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:loc>https://angigio.com/images/banh_hoi_heo_quay.jpg</image:loc>
       <image:title>Cách Làm Thịt Heo Quay Giòn Bì &amp; Thịt Nướng Vàng Óng Bất Bại Tại Nhà</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://angigio.com/cac-mon-canh-thit-heo-thanh-mat</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:loc>https://angigio.com/images/canh_rau_ngot_thit_bam.jpg</image:loc>
       <image:title>Thịt Heo Nấu Canh Gì Ngon? 8 Món Canh Thịt Heo Thanh Mát, Giải Nhiệt</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://angigio.com/thit-heo-xao-gi-ngon</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:loc>https://angigio.com/images/thit-heo-xao-sa-ot.jpg</image:loc>
       <image:title>Thịt Heo Xào Gì Ngon? 7 Món Thịt Heo Xào Rau Củ Giòn Ngọt, Siêu Hao Cơm</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://angigio.com/cach-luoc-thit-heo-trang-gion-ngon</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:loc>https://angigio.com/images/thit-heo-luoc-cuon-banh-trang.jpg</image:loc>
       <image:title>Cách Luộc Thịt Heo Trắng Giòn, Không Hôi &amp; 5 Loại Nước Chấm Thần Thánh</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://angigio.com/meo-so-che-va-bao-quan-thit-heo</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:loc>https://angigio.com/images/hom-nay-an-gi-voi-thit-heo.jpg</image:loc>
       <image:title>Mẹo Khử Hôi Thịt Heo Sạch 100% &amp; Cách Bảo Quản Trong Tủ Lạnh An Toàn</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://angigio.com/thit-ga-nau-mon-gi-ngon</loc>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
-    <image:image>
-      <image:loc>https://angigio.com/images/ga_kho_gung_sa_ot.jpg</image:loc>
-      <image:title>Thịt Gà Nấu Món Gì Ngon? Gợi Ý Món Ngon Từ Gà Dễ Làm Cho Cả Nhà</image:title>
-    </image:image>
-  </url>
-  <url>
     <loc>https://angigio.com/hom-nay-an-gi-voi-thit-bo</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:loc>https://angigio.com/images/thit-bo-lam-mon-gi-ngon.jpg</image:loc>
       <image:title>Hôm Nay Ăn Gì Với Thịt Bò? Top Món Xào, Món Canh, Món Hầm Mềm Ngọt</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://angigio.com/hom-nay-an-gi-voi-trung</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:loc>https://angigio.com/images/trung_cuon_van_may.jpg</image:loc>
       <image:title>Hôm Nay Ăn Gì Với Trứng? 10 Món Trứng Lạ Miệng, Siêu Hao Cơm</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://angigio.com/hom-nay-an-gi-voi-100-nghin</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:loc>https://angigio.com/images/mam_com_gia_dinh.jpg</image:loc>
       <image:title>Hôm Nay Ăn Gì Với 100 Nghìn? 7 Mâm Cơm 3 Món Đủ Chất Cho Gia Đình</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://angigio.com/hom-nay-an-gi-cho-4-nguoi</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:loc>https://angigio.com/images/mam_com_gia_dinh.jpg</image:loc>
       <image:title>Hôm Nay Ăn Gì Cho 4 Người? Thực Đơn Mâm Cơm Gia Đình Chuẩn Ngon</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://angigio.com/an-gi-cho-do-ngan</loc>
-    <lastmod>2026-09-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
-    <image:image>
-      <image:loc>https://angigio.com/images/an-gi-cho-do-ngan.jpg</image:loc>
-      <image:title>Ăn Gì Cho Đỡ Ngán? Gợi Ý Món Ngon Đổi Vị Dễ Ăn Cho Cả Nhà</image:title>
-    </image:image>
-  </url>
-  <url>
     <loc>https://angigio.com/hom-nay-an-gi-khi-ban-ron</loc>
-    <lastmod>2026-09-28</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.80</priority>
+    <priority>0.85</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&amp;auto=format&amp;fit=crop&amp;q=80</image:loc>
+      <image:loc>https://angigio.com/images/com_tam.jpg</image:loc>
       <image:title>Hôm Nay Ăn Gì Khi Bận? 10 Món Ngon Dễ Làm Nấu Nhanh Dưới 15 Phút</image:title>
     </image:image>
   </url>

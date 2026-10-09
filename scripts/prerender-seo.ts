@@ -110,6 +110,19 @@ function injectMeta(html: string, meta: RouteSeoMeta) {
     );
   }
 
+  // Inject initial custom posts so all devices, crawlers and SSG see posts instantaneously
+  try {
+    const customPostsPath = path.join(process.cwd(), 'public', 'custom_blog_posts.json');
+    if (fs.existsSync(customPostsPath)) {
+      const rawCustom = fs.readFileSync(customPostsPath, 'utf-8');
+      const serialized = rawCustom.replace(/</g, '\\u003c');
+      updatedHtml = updatedHtml.replace(
+        '</head>',
+        `    <script>window.__INITIAL_CUSTOM_POSTS__ = ${serialized};</script>\n  </head>`
+      );
+    }
+  } catch {}
+
   return updatedHtml;
 }
 
@@ -187,6 +200,17 @@ function generateStaticHtmlPages() {
   const publicDir = path.resolve(process.cwd(), 'public');
   if (fs.existsSync(publicDir)) {
     fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemapXml, 'utf-8');
+  }
+
+  // Copy vercel.json and create _redirects for static hosts
+  const vercelJsonPath = path.resolve(process.cwd(), 'vercel.json');
+  if (fs.existsSync(vercelJsonPath)) {
+    fs.copyFileSync(vercelJsonPath, path.join(distDir, 'vercel.json'));
+  }
+  const redirectsContent = '/*    /index.html   200\n';
+  fs.writeFileSync(path.join(distDir, '_redirects'), redirectsContent, 'utf-8');
+  if (fs.existsSync(publicDir)) {
+    fs.writeFileSync(path.join(publicDir, '_redirects'), redirectsContent, 'utf-8');
   }
 
   console.log(`Prerender SEO HTML pages completed: generated ${count} routes and updated sitemap.xml!`);

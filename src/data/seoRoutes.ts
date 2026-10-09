@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import { INITIAL_DISHES } from './dishes';
 import { REGIONAL_CUISINES } from './regionalCuisine';
 import { getDishRecipe, getRecipeSlug, getRecipeArticleTitle, formatRecipeSeoTitle, RECIPE_SLUG_ALIASES } from './recipes';
@@ -289,19 +291,46 @@ export function getAllSeoRoutes(): Record<string, RouteSeoMeta> {
     }
   }
 
-  // 4. All Blog Posts (Direct root-level concise URLs without /blog/ prefix)
-  for (const post of INITIAL_BLOG_POSTS) {
+  // 4. All Blog Posts (Combine INITIAL_BLOG_POSTS with all custom blog posts)
+  const blogPostMap = new Map<string, any>();
+
+  // Load custom posts from public/custom_blog_posts.json first
+  try {
+    const customPostsPath = path.join(process.cwd(), 'public', 'custom_blog_posts.json');
+    if (fs.existsSync(customPostsPath)) {
+      const customData = JSON.parse(fs.readFileSync(customPostsPath, 'utf-8'));
+      if (Array.isArray(customData)) {
+        customData.forEach((p: any) => {
+          if (p && p.slug) blogPostMap.set(p.slug, p);
+        });
+      }
+    }
+  } catch {
+    // ignore
+  }
+
+  // Add initial blog posts
+  INITIAL_BLOG_POSTS.forEach((p) => {
+    if (!blogPostMap.has(p.slug)) {
+      blogPostMap.set(p.slug, p);
+    }
+  });
+
+  const allMergedPosts = Array.from(blogPostMap.values());
+
+  for (const post of allMergedPosts) {
     const postPath = `/${post.slug}`;
+    const rawTags = Array.isArray(post.tags) ? post.tags.join(', ') : (post.tags || '');
     const postMeta: RouteSeoMeta = {
       path: postPath,
       title: `${post.title} | Blog Ẩm Thực Hôm Nay Ăn Gì`,
-      description: post.excerpt,
-      keywords: `${post.tags.join(', ')}, ${post.title.toLowerCase()}, blog ẩm thực, mẹo nấu ăn ngon, hôm nay ăn gì`,
-      image: post.coverImage,
+      description: post.excerpt || post.title,
+      keywords: `${rawTags}, ${post.title.toLowerCase()}, blog ẩm thực, mẹo nấu ăn ngon, hôm nay ăn gì`,
+      image: post.coverImage || 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=1200&auto=format&fit=crop&q=80',
       imageAlt: post.title,
-      priority: 0.8,
+      priority: 0.85,
       changefreq: 'weekly',
-      lastmod: '2026-09-28',
+      lastmod: post.updatedAt ? post.updatedAt.slice(0, 10) : '2026-10-09',
       isArticle: true,
       canonicalPath: postPath,
     };
