@@ -160,12 +160,19 @@ export async function getPostsFromFirestore(): Promise<BlogPost[]> {
  * Delete a post from Cloud Firestore
  */
 export async function deletePostFromFirestore(postIdOrSlug: string): Promise<void> {
-  const docId = postIdOrSlug.toLowerCase().replace(/[^a-zA-Z0-9_\-]/g, '-').slice(0, 120);
+  const clean = String(postIdOrSlug).toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+  const docId = clean.replace(/[^a-zA-Z0-9_\-]/g, '-').slice(0, 120);
   const path = `posts/${docId}`;
   try {
     await deleteDoc(doc(db, 'posts', docId));
+    if (clean !== docId) {
+      await deleteDoc(doc(db, 'posts', clean)).catch(() => {});
+    }
   } catch (error) {
-    handleFirestoreError(error, OperationType.DELETE, path);
+    console.warn('Firestore delete error for path', path, error);
+    try {
+      handleFirestoreError(error, OperationType.DELETE, path);
+    } catch {}
   }
 }
 

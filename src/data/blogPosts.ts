@@ -759,11 +759,56 @@ export function normalizeBlogPost(raw: any): BlogPost {
   };
 }
 
+export const LOCAL_STORAGE_DELETED_POSTS = 'angigio_deleted_posts';
+
+export function getDeletedPostSlugs(): Set<string> {
+  const set = new Set<string>();
+  if (typeof window === 'undefined') return set;
+  try {
+    const raw = localStorage.getItem(LOCAL_STORAGE_DELETED_POSTS);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        parsed.forEach((s) => set.add(String(s).toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '')));
+      }
+    }
+  } catch {}
+  return set;
+}
+
+export function recordDeletedPostSlugLocal(slugOrId: string): void {
+  if (typeof window === 'undefined') return;
+  try {
+    const clean = String(slugOrId).toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+    const current = getDeletedPostSlugs();
+    current.add(clean);
+    localStorage.setItem(LOCAL_STORAGE_DELETED_POSTS, JSON.stringify(Array.from(current)));
+  } catch {}
+}
+
+export function removeDeletedPostSlugLocal(slugOrId: string): void {
+  if (typeof window === 'undefined') return;
+  try {
+    const clean = String(slugOrId).toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+    const current = getDeletedPostSlugs();
+    current.delete(clean);
+    localStorage.setItem(LOCAL_STORAGE_DELETED_POSTS, JSON.stringify(Array.from(current)));
+  } catch {}
+}
+
 export function getCustomBlogPosts(): BlogPost[] {
   if (typeof window === 'undefined') return [];
+  const deleted = getDeletedPostSlugs();
+  const filterDeleted = (posts: BlogPost[]) =>
+    posts.filter((p) => {
+      const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+      const id = (p.id || '').toLowerCase().trim();
+      return !deleted.has(s) && !deleted.has(id);
+    });
+
   // 1. Check window.__INITIAL_CUSTOM_POSTS__ injected by server for cross-device & instant page loads
   if (typeof window !== 'undefined' && Array.isArray(window.__INITIAL_CUSTOM_POSTS__) && window.__INITIAL_CUSTOM_POSTS__.length > 0) {
-    const normalized = window.__INITIAL_CUSTOM_POSTS__.map(normalizeBlogPost);
+    const normalized = filterDeleted(window.__INITIAL_CUSTOM_POSTS__.map(normalizeBlogPost));
     try {
       localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(normalized));
     } catch {}
@@ -775,7 +820,7 @@ export function getCustomBlogPosts(): BlogPost[] {
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     if (Array.isArray(parsed)) {
-      return parsed.map(normalizeBlogPost);
+      return filterDeleted(parsed.map(normalizeBlogPost));
     }
     return [];
   } catch {
@@ -784,16 +829,27 @@ export function getCustomBlogPosts(): BlogPost[] {
 }
 
 export function getAllBlogPosts(): BlogPost[] {
+  const deleted = getDeletedPostSlugs();
   const custom = getCustomBlogPosts();
   const map = new Map<string, BlogPost>();
   // 1. Put custom posts FIRST so newly created / edited posts from admin appear at the very top!
   if (custom && custom.length > 0) {
-    custom.forEach((p) => map.set(p.slug, normalizeBlogPost(p)));
+    custom.forEach((p) => {
+      const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+      const id = (p.id || '').toLowerCase().trim();
+      if (!deleted.has(s) && !deleted.has(id)) {
+        map.set(p.slug, normalizeBlogPost(p));
+      }
+    });
   }
-  // 2. Add initial posts if not overridden by custom posts
+  // 2. Add initial posts if not overridden by custom posts and not deleted
   INITIAL_BLOG_POSTS.forEach((p) => {
-    if (!map.has(p.slug)) {
-      map.set(p.slug, normalizeBlogPost(p));
+    const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+    const id = (p.id || '').toLowerCase().trim();
+    if (!deleted.has(s) && !deleted.has(id)) {
+      if (!map.has(p.slug)) {
+        map.set(p.slug, normalizeBlogPost(p));
+      }
     }
   });
   return Array.from(map.values());

@@ -64,6 +64,10 @@ import {
   BLOG_CATEGORIES,
   INITIAL_BLOG_POSTS,
   LOCAL_STORAGE_CUSTOM_POSTS,
+  LOCAL_STORAGE_DELETED_POSTS,
+  getDeletedPostSlugs,
+  recordDeletedPostSlugLocal,
+  removeDeletedPostSlugLocal,
   getAllBlogPosts,
 } from '../data/blogPosts';
 import {
@@ -221,6 +225,10 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
   const [linkModalText, setLinkModalText] = useState('');
   const [linkSearchQuery, setLinkSearchQuery] = useState('');
   const savedSelectionRange = useRef<Range | null>(null);
+
+  // Delete Post Confirmation State
+  const [postToDelete, setPostToDelete] = useState<BlogPost | null>(null);
+  const [isDeletingPost, setIsDeletingPost] = useState(false);
 
   // Insert Image Modal / Image Picker
   const [isImagePickerOpen, setIsImagePickerOpen] = useState(false);
@@ -610,20 +618,43 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
   const loadPosts = useCallback(async (silent = false) => {
     if (!silent) setLoading(true);
 
+    // Sync deleted post records from server if available
+    try {
+      const delRes = await fetch('/api/admin/deleted-posts');
+      if (delRes.ok) {
+        const delData = await delRes.json();
+        if (delData.deleted && Array.isArray(delData.deleted)) {
+          delData.deleted.forEach((s: string) => recordDeletedPostSlugLocal(s));
+        }
+      }
+    } catch {}
+
+    const deleted = getDeletedPostSlugs();
+
     // 1. Try Cloud Firestore first for global multi-device sync
     try {
       const cloudPosts = await getPostsFromFirestore();
       if (cloudPosts && cloudPosts.length > 0) {
+        const validCloudPosts = cloudPosts.filter((p) => {
+          const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+          const id = (p.id || '').toLowerCase().trim();
+          return !deleted.has(s) && !deleted.has(id);
+        });
+
         const map = new Map<string, BlogPost>();
         // Custom posts first
-        cloudPosts.forEach((p) => map.set(p.slug || p.id, p));
+        validCloudPosts.forEach((p) => map.set(p.slug || p.id, p));
         INITIAL_BLOG_POSTS.forEach((p) => {
-          if (!map.has(p.slug)) map.set(p.slug, p);
+          const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+          const id = (p.id || '').toLowerCase().trim();
+          if (!deleted.has(s) && !deleted.has(id)) {
+            if (!map.has(p.slug)) map.set(p.slug, p);
+          }
         });
         const merged = Array.from(map.values());
         setPosts(merged);
         if (typeof window !== 'undefined') {
-          localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(cloudPosts));
+          localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(validCloudPosts));
         }
         if (!silent) setLoading(false);
         return;
@@ -640,15 +671,30 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
         if (data.posts && Array.isArray(data.posts)) {
           const map = new Map<string, BlogPost>();
           if (Array.isArray(data.customPosts)) {
-            data.customPosts.forEach((p: BlogPost) => map.set(p.slug || p.id, p));
+            data.customPosts.forEach((p: BlogPost) => {
+              const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+              const id = (p.id || '').toLowerCase().trim();
+              if (!deleted.has(s) && !deleted.has(id)) {
+                map.set(p.slug || p.id, p);
+              }
+            });
           }
           data.posts.forEach((p: BlogPost) => {
-            if (!map.has(p.slug || p.id)) map.set(p.slug || p.id, p);
+            const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+            const id = (p.id || '').toLowerCase().trim();
+            if (!deleted.has(s) && !deleted.has(id)) {
+              if (!map.has(p.slug || p.id)) map.set(p.slug || p.id, p);
+            }
           });
           setPosts(Array.from(map.values()));
           // Sync custom posts into localStorage as instant fallback
           if (data.customPosts && typeof window !== 'undefined') {
-            localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(data.customPosts));
+            const validCustom = (data.customPosts as BlogPost[]).filter((p) => {
+              const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+              const id = (p.id || '').toLowerCase().trim();
+              return !deleted.has(s) && !deleted.has(id);
+            });
+            localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(validCustom));
           }
           if (!silent) setLoading(false);
           return;
@@ -1746,35 +1792,92 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [viewMode, saving, title, slug, excerpt, coverImage, category, tags, authorName, authorRole, publishDate, readTime, featured, posts]);
 
-  // Delete Post
-  const handleDeletePost = async (post: BlogPost) => {
-    if (!window.confirm(`Bạn có chắc chắn muốn xóa bài viết "${post.title}"?`)) return;
+  // Open Delete Confirmation Modal
+  const handleDeletePost = (post: BlogPost) => {
+    setPostToDelete(post);
+  };
+
+  // Execute Permanent Post Deletion
+  const confirmDeletePost = async () => {
+    if (!postToDelete) return;
+    setIsDeletingPost(true);
+
+    const targetSlug = (postToDelete.slug || postToDelete.id || '')
+      .toLowerCase()
+      .trim()
+      .replace(/^\//, '')
+      .replace(/\/$/, '');
+    const targetId = (postToDelete.id || postToDelete.slug || '').toLowerCase().trim();
 
     try {
+      // 1. Record in local deleted blacklist immediately
+      recordDeletedPostSlugLocal(targetSlug);
+      if (targetId && targetId !== targetSlug) {
+        recordDeletedPostSlugLocal(targetId);
+      }
+
+      // 2. Optimistic update in UI state
+      setPosts((prev) =>
+        prev.filter((p) => {
+          const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+          const id = (p.id || '').toLowerCase().trim();
+          return s !== targetSlug && id !== targetSlug && s !== targetId && id !== targetId;
+        })
+      );
+
+      // 3. Remove from localStorage custom posts
+      const existing = localStorage.getItem(LOCAL_STORAGE_CUSTOM_POSTS);
+      if (existing) {
+        try {
+          const list: BlogPost[] = JSON.parse(existing);
+          const filtered = list.filter((p) => {
+            const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+            const id = (p.id || '').toLowerCase().trim();
+            return s !== targetSlug && id !== targetSlug && s !== targetId && id !== targetId;
+          });
+          localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(filtered));
+        } catch {}
+      }
+
+      // 4. Dispatch events to refresh other open views
+      window.dispatchEvent(new Event('custom-posts-updated'));
+      window.dispatchEvent(new Event('locationchange'));
+
+      // 5. Delete from Cloud Firestore
       try {
-        await deletePostFromFirestore(post.slug || post.id);
+        await deletePostFromFirestore(targetSlug);
+        if (targetId && targetId !== targetSlug) {
+          await deletePostFromFirestore(targetId);
+        }
       } catch (e) {
         console.warn('Firestore delete error:', e);
       }
 
-      await fetch(`/api/admin/posts/${post.slug || post.id}`, {
-        method: 'DELETE',
-      });
-
-      // Update local storage
-      const existing = localStorage.getItem(LOCAL_STORAGE_CUSTOM_POSTS);
-      if (existing) {
-        const list: BlogPost[] = JSON.parse(existing);
-        const filtered = list.filter((p) => p.slug !== post.slug && p.id !== post.id);
-        localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(filtered));
-        window.dispatchEvent(new Event('custom-posts-updated'));
-        window.dispatchEvent(new Event('locationchange'));
+      // 6. Delete from backend API
+      try {
+        await fetch(`/api/admin/posts/${encodeURIComponent(targetSlug)}`, {
+          method: 'DELETE',
+        });
+      } catch (apiErr) {
+        console.warn('API delete error:', apiErr);
       }
 
-      await loadPosts();
-      showToast('Đã xóa bài viết thành công!', 'success');
-    } catch {
+      // If we were editing this post, switch back to list view
+      if (editingPostId && (editingPostId === targetSlug || editingPostId === targetId || slug === targetSlug)) {
+        setViewMode('list');
+        setEditingPostId(null);
+      }
+
+      // 7. Reload posts
+      await loadPosts(true);
+
+      showToast(`Đã xóa bài viết "${postToDelete.title}" thành công!`, 'success');
+      setPostToDelete(null);
+    } catch (err: any) {
+      console.error('Lỗi khi xóa bài viết:', err);
       showToast('Lỗi khi xóa bài viết!', 'error');
+    } finally {
+      setIsDeletingPost(false);
     }
   };
 
@@ -1967,6 +2070,36 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                     </a>
                   );
                 })()}
+                {editingPostId && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const current = posts.find((p) => p.id === editingPostId || p.slug === slug);
+                      if (current) {
+                        setPostToDelete(current);
+                      } else {
+                        setPostToDelete({
+                          id: editingPostId,
+                          slug: slug,
+                          title: title || 'Bài viết hiện tại',
+                          excerpt,
+                          content: '',
+                          coverImage,
+                          category,
+                          tags: [],
+                          author: { name: authorName, role: authorRole, avatar: '' },
+                          publishDate,
+                          readTime,
+                        });
+                      }
+                    }}
+                    className="flex items-center gap-1.5 bg-rose-600/90 hover:bg-rose-600 text-white text-xs sm:text-sm font-bold py-2 px-3 rounded-lg shadow-sm transition-colors cursor-pointer"
+                    title="Xóa vĩnh viễn bài viết này"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    <span className="hidden sm:inline">Xóa Bài</span>
+                  </button>
+                )}
                 <button
                   onClick={handleSavePost}
                   disabled={saving}
@@ -4028,6 +4161,66 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                 className="px-4 py-2 rounded-xl text-xs font-bold text-stone-600 hover:bg-stone-100 transition-colors cursor-pointer"
               >
                 Đóng
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ================= MODAL: XÁC NHẬN XÓA BÀI VIẾT ================= */}
+      {postToDelete && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4 border border-stone-200">
+            <div className="flex items-center gap-3.5">
+              <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center border border-rose-200 shrink-0">
+                <Trash2 className="w-6 h-6" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-black text-stone-900 text-base sm:text-lg">
+                  Xác Nhận Xóa Bài Viết
+                </h3>
+                <p className="text-xs text-stone-500">
+                  Hành động này sẽ xóa vĩnh viễn bài viết khỏi hệ thống và không thể khôi phục.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-stone-50 rounded-2xl p-3.5 border border-stone-200 space-y-1.5">
+              <div className="text-[11px] font-bold text-stone-400 uppercase tracking-wider">Bài viết được chọn:</div>
+              <div className="text-xs font-bold text-stone-900 line-clamp-2">
+                {postToDelete.title}
+              </div>
+              <div className="text-[11px] font-mono text-stone-500 truncate">
+                slug: /{postToDelete.slug}
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-stone-100">
+              <button
+                type="button"
+                onClick={() => setPostToDelete(null)}
+                disabled={isDeletingPost}
+                className="px-4 py-2 rounded-xl text-xs font-bold text-stone-600 hover:bg-stone-100 transition-colors cursor-pointer"
+              >
+                Hủy Bỏ
+              </button>
+              <button
+                type="button"
+                onClick={confirmDeletePost}
+                disabled={isDeletingPost}
+                className="px-5 py-2 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-500 text-white transition-colors flex items-center gap-2 shadow-sm cursor-pointer disabled:opacity-50"
+              >
+                {isDeletingPost ? (
+                  <>
+                    <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                    <span>Đang Xóa...</span>
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Xác Nhận Xóa Vĩnh Viễn</span>
+                  </>
+                )}
               </button>
             </div>
           </div>

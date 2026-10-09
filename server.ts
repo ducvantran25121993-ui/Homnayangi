@@ -524,6 +524,60 @@ Yêu cầu trả về đúng định dạng JSON:
 // Persistent storage for custom blog posts (WordPress Admin)
 const CUSTOM_POSTS_FILE = path.join(process.cwd(), "public", "custom_blog_posts.json");
 const DIST_POSTS_FILE = path.join(process.cwd(), "dist", "custom_blog_posts.json");
+const DELETED_POSTS_FILE = path.join(process.cwd(), "public", "deleted_posts.json");
+const DIST_DELETED_POSTS_FILE = path.join(process.cwd(), "dist", "deleted_posts.json");
+
+function loadDeletedPostSlugs(): string[] {
+  try {
+    if (fs.existsSync(DELETED_POSTS_FILE)) {
+      const raw = fs.readFileSync(DELETED_POSTS_FILE, "utf-8");
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) return parsed.map((s) => String(s).toLowerCase().trim());
+    }
+    if (fs.existsSync(DIST_DELETED_POSTS_FILE)) {
+      const raw = fs.readFileSync(DIST_DELETED_POSTS_FILE, "utf-8");
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) return parsed.map((s) => String(s).toLowerCase().trim());
+    }
+  } catch (err) {
+    console.error("Error loading deleted posts:", err);
+  }
+  return [];
+}
+
+function recordDeletedPostSlug(slugOrId: string) {
+  try {
+    const list = loadDeletedPostSlugs();
+    const clean = String(slugOrId).toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+    if (!list.includes(clean)) {
+      list.push(clean);
+      const dir = path.dirname(DELETED_POSTS_FILE);
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+      fs.writeFileSync(DELETED_POSTS_FILE, JSON.stringify(list, null, 2), "utf-8");
+      const distTargetDir = path.dirname(DIST_DELETED_POSTS_FILE);
+      if (fs.existsSync(distTargetDir)) {
+        fs.writeFileSync(DIST_DELETED_POSTS_FILE, JSON.stringify(list, null, 2), "utf-8");
+      }
+    }
+  } catch (err) {
+    console.error("Error recording deleted post:", err);
+  }
+}
+
+function removeDeletedPostSlug(slugOrId: string) {
+  try {
+    const list = loadDeletedPostSlugs();
+    const clean = String(slugOrId).toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+    const filtered = list.filter((s) => s !== clean);
+    fs.writeFileSync(DELETED_POSTS_FILE, JSON.stringify(filtered, null, 2), "utf-8");
+    const distTargetDir = path.dirname(DIST_DELETED_POSTS_FILE);
+    if (fs.existsSync(distTargetDir)) {
+      fs.writeFileSync(DIST_DELETED_POSTS_FILE, JSON.stringify(filtered, null, 2), "utf-8");
+    }
+  } catch (err) {
+    console.error("Error removing deleted post record:", err);
+  }
+}
 
 const KNOWN_POST_LINKS: Record<string, { title: string; slug: string }> = {
   "thit-heo-lam-mon-gi-ngon": { title: "Thịt Heo Làm Món Gì Ngon", slug: "thit-heo-lam-mon-gi-ngon" },
@@ -634,9 +688,22 @@ async function syncFirestorePostsToServer(): Promise<any[]> {
     });
 
     const localPosts = loadCustomBlogPosts();
+    const deletedSlugs = new Set(loadDeletedPostSlugs());
     const map = new Map<string, any>();
-    localPosts.forEach((p) => map.set(p.slug || p.id, p));
-    cloudPosts.forEach((p) => map.set(p.slug || p.id, p));
+    localPosts.forEach((p) => {
+      const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+      const id = (p.id || '').toLowerCase().trim();
+      if (!deletedSlugs.has(s) && !deletedSlugs.has(id)) {
+        map.set(p.slug || p.id, p);
+      }
+    });
+    cloudPosts.forEach((p) => {
+      const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+      const id = (p.id || '').toLowerCase().trim();
+      if (!deletedSlugs.has(s) && !deletedSlugs.has(id)) {
+        map.set(p.slug || p.id, p);
+      }
+    });
     const allList = Array.from(map.values());
     const merged = allList.map((p) => ({
       ...p,
@@ -646,7 +713,12 @@ async function syncFirestorePostsToServer(): Promise<any[]> {
     return merged;
   } catch (err) {
     console.warn("syncFirestorePostsToServer warning:", err);
-    return loadCustomBlogPosts();
+    const deletedSlugs = new Set(loadDeletedPostSlugs());
+    return loadCustomBlogPosts().filter((p) => {
+      const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+      const id = (p.id || '').toLowerCase().trim();
+      return !deletedSlugs.has(s) && !deletedSlugs.has(id);
+    });
   }
 }
 
@@ -659,6 +731,17 @@ app.get("/custom_blog_posts.json", async (_req, res) => {
   res.setHeader("Content-Type", "application/json; charset=utf-8");
   const posts = await syncFirestorePostsToServer();
   return res.json(posts);
+});
+
+// Endpoint for deleted post slugs
+app.get("/api/admin/deleted-posts", (_req, res) => {
+  return res.json({ success: true, deleted: loadDeletedPostSlugs() });
+});
+
+app.get("/deleted_posts.json", (_req, res) => {
+  res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+  res.setHeader("Content-Type", "application/json; charset=utf-8");
+  return res.json(loadDeletedPostSlugs());
 });
 
 function addUrlToSitemap(slug: string) {
@@ -684,12 +767,21 @@ function addUrlToSitemap(slug: string) {
 
 // API: Get all blog posts (initial + custom)
 app.get("/api/admin/posts", async (_req, res) => {
-  const customPosts = await syncFirestorePostsToServer();
+  const deletedSlugs = new Set(loadDeletedPostSlugs());
+  const customPosts = (await syncFirestorePostsToServer()).filter((p) => {
+    const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+    const id = (p.id || '').toLowerCase().trim();
+    return !deletedSlugs.has(s) && !deletedSlugs.has(id);
+  });
   const postMap = new Map<string, any>();
   // Custom posts first
   customPosts.forEach((p) => postMap.set(p.slug, p));
   INITIAL_BLOG_POSTS.forEach((p) => {
-    if (!postMap.has(p.slug)) postMap.set(p.slug, p);
+    const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+    const id = (p.id || '').toLowerCase().trim();
+    if (!deletedSlugs.has(s) && !deletedSlugs.has(id)) {
+      if (!postMap.has(p.slug)) postMap.set(p.slug, p);
+    }
   });
   return res.json({
     success: true,
@@ -884,6 +976,10 @@ app.post("/api/admin/posts", async (req, res) => {
       updatedAt: new Date().toISOString(),
     };
 
+    // If re-saving/creating, remove from deleted post blacklist
+    removeDeletedPostSlug(cleanSlug);
+    removeDeletedPostSlug(postData.id || cleanSlug);
+
     if (existingIdx >= 0) {
       customPosts[existingIdx] = savedPost;
     } else {
@@ -952,16 +1048,91 @@ app.post("/api/admin/posts", async (req, res) => {
   }
 });
 
-// API: Delete a custom blog post
-app.delete("/api/admin/posts/:slugOrId", (req, res) => {
-  const { slugOrId } = req.params;
-  const customPosts = loadCustomBlogPosts();
-  const filtered = customPosts.filter((p) => p.slug !== slugOrId && p.id !== slugOrId);
-  saveCustomBlogPosts(filtered);
-  return res.json({
-    success: true,
-    message: "Đã xóa bài viết thành công!",
-  });
+// API: Delete a custom blog post permanently
+app.delete("/api/admin/posts/:slugOrId", async (req, res) => {
+  try {
+    const { slugOrId } = req.params;
+    const cleanSlug = String(slugOrId).toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+
+    // 1. Record in persistent deleted posts blacklist
+    recordDeletedPostSlug(cleanSlug);
+    if (slugOrId !== cleanSlug) {
+      recordDeletedPostSlug(slugOrId);
+    }
+
+    // 2. Remove from custom_blog_posts.json
+    const customPosts = loadCustomBlogPosts();
+    const filtered = customPosts.filter((p) => {
+      const pSlug = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+      const pId = (p.id || '').toLowerCase().trim();
+      return pSlug !== cleanSlug && pId !== cleanSlug && pSlug !== slugOrId && pId !== slugOrId;
+    });
+    saveCustomBlogPosts(filtered);
+
+    // 3. Remove from Cloud Firestore
+    try {
+      const configPath = path.join(process.cwd(), "firebase-applet-config.json");
+      if (fs.existsSync(configPath)) {
+        const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
+        const { initializeApp, getApps, getApp } = await import("firebase/app");
+        const { getFirestore, doc, deleteDoc, collection, getDocs } = await import("firebase/firestore");
+        const app = getApps().length === 0 ? initializeApp(config) : getApp();
+        const db = getFirestore(app, config.firestoreDatabaseId);
+
+        const docId1 = cleanSlug.replace(/[^a-zA-Z0-9_\-]/g, '-').slice(0, 120);
+        await deleteDoc(doc(db, "posts", docId1)).catch(() => {});
+        if (cleanSlug !== docId1) {
+          await deleteDoc(doc(db, "posts", cleanSlug)).catch(() => {});
+        }
+
+        // Search and delete any remaining docs in "posts"
+        const snap = await getDocs(collection(db, "posts"));
+        for (const docSnap of snap.docs) {
+          const d = docSnap.data();
+          const pSlug = (d.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+          const pId = (d.id || '').toLowerCase().trim();
+          if (pSlug === cleanSlug || pId === cleanSlug || docSnap.id === docId1 || docSnap.id === cleanSlug) {
+            await deleteDoc(doc(db, "posts", docSnap.id)).catch(() => {});
+          }
+        }
+      }
+    } catch (fbErr) {
+      console.warn("Backend Firestore delete warning:", fbErr);
+    }
+
+    // 4. Remove generated static files in dist/ if present
+    try {
+      const distFile = path.join(process.cwd(), "dist", `${cleanSlug}.html`);
+      if (fs.existsSync(distFile)) fs.unlinkSync(distFile);
+      const distSubDir = path.join(process.cwd(), "dist", cleanSlug);
+      if (fs.existsSync(distSubDir)) fs.rmSync(distSubDir, { recursive: true, force: true });
+    } catch {}
+
+    // 5. Remove from sitemap.xml
+    try {
+      const pubFile = path.join(process.cwd(), "public", "sitemap.xml");
+      const distSitemap = path.join(process.cwd(), "dist", "sitemap.xml");
+      const targets = [pubFile, distSitemap].filter((f) => fs.existsSync(f));
+      for (const target of targets) {
+        let content = fs.readFileSync(target, "utf-8");
+        const regex = new RegExp(`\\s*<url>\\s*<loc>https:\\/\\/angigio\\.com\\/${cleanSlug}<\\/loc>[\\s\\S]*?<\\/url>`, 'g');
+        if (regex.test(content)) {
+          content = content.replace(regex, '');
+          fs.writeFileSync(target, content, "utf-8");
+        }
+      }
+    } catch (smErr) {
+      console.warn("Sitemap cleanup warning:", smErr);
+    }
+
+    return res.json({
+      success: true,
+      message: "Đã xóa bài viết thành công!",
+    });
+  } catch (error: any) {
+    console.error("Error deleting blog post:", error);
+    return res.status(500).json({ success: false, message: error?.message || "Lỗi xóa bài viết" });
+  }
 });
 
 // API: Batch import & restore posts (Save Data)
