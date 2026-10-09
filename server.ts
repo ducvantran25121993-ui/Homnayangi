@@ -621,14 +621,23 @@ function enrichPostContentLinks(content: string, allPosts: any[] = []): string {
 
 function loadCustomBlogPosts(): any[] {
   try {
+    let list: any[] = [];
     if (fs.existsSync(CUSTOM_POSTS_FILE)) {
       const raw = fs.readFileSync(CUSTOM_POSTS_FILE, "utf-8");
-      return JSON.parse(raw);
-    }
-    if (fs.existsSync(DIST_POSTS_FILE)) {
+      list = JSON.parse(raw);
+    } else if (fs.existsSync(DIST_POSTS_FILE)) {
       const raw = fs.readFileSync(DIST_POSTS_FILE, "utf-8");
-      return JSON.parse(raw);
+      list = JSON.parse(raw);
     }
+    const deletedSlugs = new Set(loadDeletedPostSlugs());
+    if (deletedSlugs.size > 0 && Array.isArray(list)) {
+      return list.filter((p) => {
+        const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+        const id = (p.id || '').toLowerCase().trim();
+        return !deletedSlugs.has(s) && !deletedSlugs.has(id);
+      });
+    }
+    return list;
   } catch (err) {
     console.error("Error loading custom blog posts:", err);
   }
@@ -1385,6 +1394,18 @@ async function startServer() {
       res.type("application/xml").sendFile(target);
     } else {
       res.status(404).send("Sitemap not found");
+    }
+  });
+
+  // Microsoft Bing Webmaster Tools XML verification
+  app.get(["/BingSiteAuth.xml", "/bingsiteauth.xml"], (_req, res) => {
+    const distFile = path.join(process.cwd(), "dist", "BingSiteAuth.xml");
+    const pubFile = path.join(process.cwd(), "public", "BingSiteAuth.xml");
+    const target = fs.existsSync(distFile) ? distFile : pubFile;
+    if (fs.existsSync(target)) {
+      res.type("application/xml").sendFile(target);
+    } else {
+      res.type("application/xml").send(`<?xml version="1.0"?>\n<users>\n\t<user>149C7981B16C035B95D859D5F31A28BC</user>\n</users>`);
     }
   });
 
