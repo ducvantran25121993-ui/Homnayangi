@@ -123,6 +123,19 @@ function injectMeta(html: string, meta: RouteSeoMeta) {
     }
   } catch {}
 
+  // Inject initial deleted posts so all devices and visitors instantly know deleted status
+  try {
+    const deletedPostsPath = path.join(process.cwd(), 'public', 'deleted_posts.json');
+    if (fs.existsSync(deletedPostsPath)) {
+      const rawDeleted = fs.readFileSync(deletedPostsPath, 'utf-8');
+      const serializedDel = rawDeleted.replace(/</g, '\\u003c');
+      updatedHtml = updatedHtml.replace(
+        '</head>',
+        `    <script>window.__INITIAL_DELETED_POSTS__ = ${serializedDel};</script>\n  </head>`
+      );
+    }
+  } catch {}
+
   return updatedHtml;
 }
 

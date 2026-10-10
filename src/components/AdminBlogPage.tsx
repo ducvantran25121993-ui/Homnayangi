@@ -1559,6 +1559,8 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
               canvas.height = h;
               const ctx = canvas.getContext('2d');
               if (!ctx) return resolve(raw);
+              ctx.fillStyle = '#FFFFFF';
+              ctx.fillRect(0, 0, w, h);
               ctx.drawImage(img, 0, 0, w, h);
               const compressed = canvas.toDataURL('image/jpeg', 0.88);
               resolve(compressed);
@@ -1573,7 +1575,20 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
     };
 
     try {
-      const base64Data = await preCompressImage(file);
+      let base64Data = '';
+      try {
+        base64Data = await preCompressImage(file);
+      } catch {}
+
+      if (!base64Data) {
+        base64Data = await new Promise<string>((resolve) => {
+          const r = new FileReader();
+          r.onload = (e) => resolve((e.target?.result as string) || '');
+          r.onerror = () => resolve('');
+          r.readAsDataURL(file);
+        });
+      }
+
       if (!base64Data) {
         setIsUploadingImage(false);
         setUploadError('Không thể đọc dữ liệu tệp ảnh.');
@@ -1955,10 +1970,12 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
 
   // Filter posts
   const filteredPosts = posts.filter((p) => {
+    const q = (searchQuery || '').toLowerCase().trim();
     const matchQuery =
-      p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.slug.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.author?.name.toLowerCase().includes(searchQuery.toLowerCase());
+      !q ||
+      (p.title || '').toLowerCase().includes(q) ||
+      (p.slug || '').toLowerCase().includes(q) ||
+      (p.author?.name || '').toLowerCase().includes(q);
     const matchCategory = filterCategory === 'Tất Cả' || p.category === filterCategory;
     return matchQuery && matchCategory;
   });
@@ -2335,19 +2352,29 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
 
               {/* Category Pills */}
               <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none">
-                {['Tất Cả', ...BLOG_CATEGORIES].map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => setFilterCategory(cat)}
-                    className={`text-xs px-3 py-1.5 rounded-lg font-bold shrink-0 transition-colors ${
-                      filterCategory === cat
-                        ? 'bg-orange-600 text-white'
-                        : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
-                    }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
+                {Array.from(new Set(BLOG_CATEGORIES)).map((cat, idx) => {
+                  const catCount = cat === 'Tất Cả' ? posts.length : posts.filter((p) => p.category === cat).length;
+                  return (
+                    <button
+                      key={`admin-cat-filter-${cat}-${idx}`}
+                      onClick={() => setFilterCategory(cat)}
+                      className={`text-xs px-3 py-1.5 rounded-lg font-bold shrink-0 transition-colors cursor-pointer flex items-center gap-1.5 ${
+                        filterCategory === cat
+                          ? 'bg-orange-600 text-white shadow-2xs'
+                          : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                      }`}
+                    >
+                      <span>{cat}</span>
+                      <span
+                        className={`text-[10px] px-1.5 py-0.2 rounded-full font-semibold ${
+                          filterCategory === cat ? 'bg-orange-700/60 text-white' : 'bg-stone-200 text-stone-600'
+                        }`}
+                      >
+                        {catCount}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
@@ -3120,8 +3147,8 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
                   onChange={(e) => setCategory(e.target.value as any)}
                   className="w-full text-xs font-bold p-2.5 bg-stone-50 border border-stone-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-orange-500"
                 >
-                  {BLOG_CATEGORIES.map((cat) => (
-                    <option key={cat} value={cat}>
+                  {Array.from(new Set(BLOG_CATEGORIES.filter((c) => c !== 'Tất Cả'))).map((cat, idx) => (
+                    <option key={`admin-category-opt-${cat}-${idx}`} value={cat}>
                       {cat}
                     </option>
                   ))}
@@ -3635,12 +3662,12 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
 
                   {/* Category Pills with item counts */}
                   <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto pr-1">
-                    {availableImageCategories.map((cat) => {
+                    {availableImageCategories.map((cat, idx) => {
                       const count = getCategoryImageCount(cat);
                       const isSelected = imagePickerCategory === cat;
                       return (
                         <button
-                          key={cat}
+                          key={`img-cat-pill-${cat}-${idx}`}
                           type="button"
                           onClick={() => setImagePickerCategory(cat)}
                           className={`text-[11px] font-bold px-2.5 py-1 rounded-lg transition-all cursor-pointer flex items-center gap-1.5 shrink-0 ${

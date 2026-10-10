@@ -996,6 +996,16 @@ function injectSeoMeta(html: string, requestedPath: string): string {
     );
   }
 
+  // Inject initial deleted posts so all devices, browsers, and visitors filter out deleted posts instantaneously
+  const deletedPosts = loadDeletedPostSlugs();
+  if (deletedPosts && Array.isArray(deletedPosts) && deletedPosts.length > 0) {
+    const serializedDeleted = JSON.stringify(deletedPosts).replace(/</g, '\\u003c');
+    updatedHtml = updatedHtml.replace(
+      '</head>',
+      `    <script>window.__INITIAL_DELETED_POSTS__ = ${serializedDeleted};</script>\n  </head>`
+    );
+  }
+
   return updatedHtml;
 }
 
@@ -1166,10 +1176,13 @@ app.delete("/api/admin/posts/:slugOrId", async (req, res) => {
 
     // 4. Remove generated static files in dist/ if present
     try {
-      const distFile = path.join(process.cwd(), "dist", `${cleanSlug}.html`);
-      if (fs.existsSync(distFile)) fs.unlinkSync(distFile);
-      const distSubDir = path.join(process.cwd(), "dist", cleanSlug);
-      if (fs.existsSync(distSubDir)) fs.rmSync(distSubDir, { recursive: true, force: true });
+      const targets = [cleanSlug, slugOrId].filter(Boolean);
+      for (const s of targets) {
+        const distFile = path.join(process.cwd(), "dist", `${s}.html`);
+        if (fs.existsSync(distFile)) fs.unlinkSync(distFile);
+        const distSubDir = path.join(process.cwd(), "dist", s);
+        if (fs.existsSync(distSubDir)) fs.rmSync(distSubDir, { recursive: true, force: true });
+      }
     } catch {}
 
     // 5. Remove from sitemap.xml
@@ -1245,8 +1258,8 @@ app.post("/api/admin/upload-image", async (req, res) => {
       return res.status(400).json({ success: false, message: "Vui lòng chọn tệp hình ảnh" });
     }
 
-    const base64Data = data.replace(/^data:image\/\w+;base64,/, "");
-    const inputBuffer = Buffer.from(base64Data, "base64");
+    const base64Data = data.includes("base64,") ? data.split("base64,").pop()! : data;
+    const inputBuffer = Buffer.from(base64Data.trim(), "base64");
 
     const rawName = (filename || "mon-an").toLowerCase()
       .normalize("NFD")
@@ -1263,8 +1276,9 @@ app.post("/api/admin/upload-image", async (req, res) => {
     const targetMin = 51200;
     const targetMax = 61440;
 
-    // Step 1: Pre-scale image down to max width 680px once (drastically accelerates subsequent passes)
+    // Step 1: Pre-scale image down to max width 680px once & flatten transparent PNG onto crisp white background
     const preScaledBuffer = await sharp(inputBuffer)
+      .flatten({ background: { r: 255, g: 255, b: 255 } })
       .resize({ width: 680, withoutEnlargement: true })
       .jpeg({ quality: 85, progressive: true, chromaSubsampling: "4:2:0" })
       .toBuffer();
@@ -1509,8 +1523,20 @@ async function startServer() {
     });
   }
 
-  // Refresh SEO routes config for server-rendered HTML meta tags
-  SEO_ROUTES_CONFIG = getAllSeoRoutes();
+  // Intercept deleted blog posts globally so deleted posts are NEVER served across any machine or browser
+  app.use((req, res, next) => {
+    if (req.method === "GET") {
+      const cleanPath = req.path.toLowerCase().replace(/^\//, '').replace(/\/$/, '');
+      const slug = cleanPath.replace(/^blog\//, '');
+      if (slug) {
+        const deleted = loadDeletedPostSlugs();
+        if (deleted.includes(slug) || deleted.includes(cleanPath)) {
+          return res.redirect(302, "/blog");
+        }
+      }
+    }
+    next();
+  });
 
   const httpServer = http.createServer(app);
 

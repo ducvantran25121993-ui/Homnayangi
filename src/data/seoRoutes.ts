@@ -291,7 +291,18 @@ export function getAllSeoRoutes(): Record<string, RouteSeoMeta> {
     }
   }
 
-  // 4. All Blog Posts (Combine INITIAL_BLOG_POSTS with all custom blog posts)
+  // 4. All Blog Posts (Combine INITIAL_BLOG_POSTS with all custom blog posts, excluding deleted posts)
+  const deletedSlugs = new Set<string>();
+  try {
+    const deletedPath = path.join(process.cwd(), 'public', 'deleted_posts.json');
+    if (fs.existsSync(deletedPath)) {
+      const delData = JSON.parse(fs.readFileSync(deletedPath, 'utf-8'));
+      if (Array.isArray(delData)) {
+        delData.forEach((s: any) => deletedSlugs.add(String(s).toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '')));
+      }
+    }
+  } catch {}
+
   const blogPostMap = new Map<string, any>();
 
   // Load custom posts from public/custom_blog_posts.json first
@@ -301,7 +312,13 @@ export function getAllSeoRoutes(): Record<string, RouteSeoMeta> {
       const customData = JSON.parse(fs.readFileSync(customPostsPath, 'utf-8'));
       if (Array.isArray(customData)) {
         customData.forEach((p: any) => {
-          if (p && p.slug) blogPostMap.set(p.slug, p);
+          if (p && p.slug) {
+            const clean = String(p.slug).toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+            const cleanId = String(p.id || '').toLowerCase().trim();
+            if (!deletedSlugs.has(clean) && !deletedSlugs.has(cleanId)) {
+              blogPostMap.set(p.slug, p);
+            }
+          }
         });
       }
     }
@@ -309,10 +326,14 @@ export function getAllSeoRoutes(): Record<string, RouteSeoMeta> {
     // ignore
   }
 
-  // Add initial blog posts
+  // Add initial blog posts if not deleted
   INITIAL_BLOG_POSTS.forEach((p) => {
-    if (!blogPostMap.has(p.slug)) {
-      blogPostMap.set(p.slug, p);
+    const clean = String(p.slug).toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+    const cleanId = String(p.id || '').toLowerCase().trim();
+    if (!deletedSlugs.has(clean) && !deletedSlugs.has(cleanId)) {
+      if (!blogPostMap.has(p.slug)) {
+        blogPostMap.set(p.slug, p);
+      }
     }
   });
 

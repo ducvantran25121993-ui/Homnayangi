@@ -1332,9 +1332,9 @@ ${newContent}
 
             {/* Category Pills */}
             <div className="flex flex-wrap items-center gap-1.5 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
-              {BLOG_CATEGORIES.map((cat) => (
+              {Array.from(new Set(BLOG_CATEGORIES)).map((cat, idx) => (
                 <button
-                  key={cat}
+                  key={`blog-cat-${cat}-${idx}`}
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
                     selectedCategory === cat
