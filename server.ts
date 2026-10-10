@@ -580,6 +580,39 @@ function removeDeletedPostSlug(slugOrId: string) {
   }
 }
 
+async function syncFirestoreDeletedPosts(): Promise<string[]> {
+  try {
+    const configPath = path.join(process.cwd(), "firebase-applet-config.json");
+    if (!fs.existsSync(configPath)) return loadDeletedPostSlugs();
+    const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
+    const { initializeApp, getApps, getApp } = await import("firebase/app");
+    const { getFirestore, collection, getDocs } = await import("firebase/firestore");
+    const app = getApps().length === 0 ? initializeApp(config) : getApp();
+    const db = getFirestore(app, config.firestoreDatabaseId);
+    const snap = await getDocs(collection(db, "deleted_posts"));
+    const set = new Set<string>(loadDeletedPostSlugs());
+    snap.forEach((d) => {
+      const data = d.data();
+      const s = (data.slugOrId || d.id || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+      if (s) set.add(s);
+      const docClean = d.id.toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+      if (docClean) set.add(docClean);
+    });
+    const merged = Array.from(set);
+    const dir = path.dirname(DELETED_POSTS_FILE);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(DELETED_POSTS_FILE, JSON.stringify(merged, null, 2), "utf-8");
+    const distTargetDir = path.dirname(DIST_DELETED_POSTS_FILE);
+    if (fs.existsSync(distTargetDir)) {
+      fs.writeFileSync(DIST_DELETED_POSTS_FILE, JSON.stringify(merged, null, 2), "utf-8");
+    }
+    return merged;
+  } catch (err) {
+    console.warn("syncFirestoreDeletedPosts warning:", err);
+    return loadDeletedPostSlugs();
+  }
+}
+
 const KNOWN_POST_LINKS: Record<string, { title: string; slug: string }> = {
   "thit-heo-lam-mon-gi-ngon": { title: "Thịt Heo Làm Món Gì Ngon", slug: "thit-heo-lam-mon-gi-ngon" },
   "thit-ga-nau-mon-gi-ngon": { title: "Thịt Gà Nấu Món Gì Ngon", slug: "thit-ga-nau-mon-gi-ngon" },
@@ -743,15 +776,17 @@ app.get("/custom_blog_posts.json", async (_req, res) => {
   return res.json(posts);
 });
 
-// Endpoint for deleted post slugs
-app.get("/api/admin/deleted-posts", (_req, res) => {
-  return res.json({ success: true, deleted: loadDeletedPostSlugs() });
+// Endpoint for deleted post slugs (synced from Cloud Firestore)
+app.get("/api/admin/deleted-posts", async (_req, res) => {
+  const deleted = await syncFirestoreDeletedPosts();
+  return res.json({ success: true, deleted });
 });
 
-app.get("/deleted_posts.json", (_req, res) => {
+app.get("/deleted_posts.json", async (_req, res) => {
   res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
   res.setHeader("Content-Type", "application/json; charset=utf-8");
-  return res.json(loadDeletedPostSlugs());
+  const deleted = await syncFirestoreDeletedPosts();
+  return res.json(deleted);
 });
 
 function addUrlToSitemap(slug: string) {
@@ -777,7 +812,7 @@ function addUrlToSitemap(slug: string) {
 
 // API: Get all blog posts (initial + custom)
 app.get("/api/admin/posts", async (_req, res) => {
-  const deletedSlugs = new Set(loadDeletedPostSlugs());
+  const deletedSlugs = new Set(await syncFirestoreDeletedPosts());
   const customPosts = (await syncFirestorePostsToServer()).filter((p) => {
     const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
     const id = (p.id || '').toLowerCase().trim();
@@ -1021,7 +1056,7 @@ app.post("/api/admin/posts", async (req, res) => {
       if (fs.existsSync(configPath)) {
         const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
         const { initializeApp, getApps, getApp } = await import("firebase/app");
-        const { getFirestore, doc, setDoc } = await import("firebase/firestore");
+        const { getFirestore, doc, setDoc, deleteDoc } = await import("firebase/firestore");
         const app = getApps().length === 0 ? initializeApp(config) : getApp();
         const db = getFirestore(app, config.firestoreDatabaseId);
         const docId = cleanSlug.replace(/[^a-zA-Z0-9_\-]/g, '-').slice(0, 120);
@@ -1042,6 +1077,12 @@ app.post("/api/admin/posts", async (req, res) => {
           featured: Boolean(savedPost.featured),
           updatedAt: savedPost.updatedAt,
         });
+
+        // Unmark from Firestore deleted_posts
+        await deleteDoc(doc(db, "deleted_posts", docId)).catch(() => {});
+        if (cleanSlug !== docId) {
+          await deleteDoc(doc(db, "deleted_posts", cleanSlug)).catch(() => {});
+        }
       }
     } catch (fbErr) {
       console.warn("Backend Firestore save warning:", fbErr);
@@ -1085,7 +1126,7 @@ app.delete("/api/admin/posts/:slugOrId", async (req, res) => {
       if (fs.existsSync(configPath)) {
         const config = JSON.parse(fs.readFileSync(configPath, "utf-8"));
         const { initializeApp, getApps, getApp } = await import("firebase/app");
-        const { getFirestore, doc, deleteDoc, collection, getDocs } = await import("firebase/firestore");
+        const { getFirestore, doc, deleteDoc, setDoc, collection, getDocs } = await import("firebase/firestore");
         const app = getApps().length === 0 ? initializeApp(config) : getApp();
         const db = getFirestore(app, config.firestoreDatabaseId);
 
@@ -1104,6 +1145,19 @@ app.delete("/api/admin/posts/:slugOrId", async (req, res) => {
           if (pSlug === cleanSlug || pId === cleanSlug || docSnap.id === docId1 || docSnap.id === cleanSlug) {
             await deleteDoc(doc(db, "posts", docSnap.id)).catch(() => {});
           }
+        }
+
+        // Persist deletion into Cloud Firestore deleted_posts collection for global multi-device sync
+        await setDoc(doc(db, "deleted_posts", docId1), {
+          slugOrId: cleanSlug,
+          deletedAt: new Date().toISOString(),
+        }).catch(() => {});
+        if (slugOrId !== cleanSlug) {
+          const docId2 = slugOrId.replace(/[^a-zA-Z0-9_\-]/g, '-').slice(0, 120);
+          await setDoc(doc(db, "deleted_posts", docId2), {
+            slugOrId,
+            deletedAt: new Date().toISOString(),
+          }).catch(() => {});
         }
       }
     } catch (fbErr) {

@@ -115,8 +115,73 @@ export async function savePostToFirestore(post: BlogPost): Promise<void> {
 
   try {
     await setDoc(doc(db, 'posts', docId), payload);
+    // Remove from deleted_posts if it was previously marked deleted
+    await removeDeletedPostFromFirestore(docId).catch(() => {});
+    if (post.slug && post.slug !== docId) {
+      await removeDeletedPostFromFirestore(post.slug).catch(() => {});
+    }
+    if (post.id && post.id !== docId) {
+      await removeDeletedPostFromFirestore(post.id).catch(() => {});
+    }
   } catch (error) {
     handleFirestoreError(error, OperationType.WRITE, path);
+  }
+}
+
+/**
+ * Get all deleted post slugs/IDs from Cloud Firestore for global multi-device sync
+ */
+export async function getDeletedPostsFromFirestore(): Promise<string[]> {
+  const path = 'deleted_posts';
+  try {
+    const snapshot = await getDocs(collection(db, path));
+    const list: string[] = [];
+    snapshot.forEach((d) => {
+      const data = d.data();
+      const slugOrId = (data.slugOrId || d.id || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+      if (slugOrId) list.push(slugOrId);
+      const docClean = d.id.toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+      if (docClean && !list.includes(docClean)) list.push(docClean);
+    });
+    return list;
+  } catch (error) {
+    console.warn('Firestore getDeletedPosts error:', error);
+    return [];
+  }
+}
+
+/**
+ * Record a deleted post slug or ID into Cloud Firestore
+ */
+export async function recordDeletedPostInFirestore(slugOrId: string): Promise<void> {
+  const clean = String(slugOrId).toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+  if (!clean) return;
+  const docId = clean.replace(/[^a-zA-Z0-9_\-]/g, '-').slice(0, 120);
+  const path = `deleted_posts/${docId}`;
+  try {
+    await setDoc(doc(db, 'deleted_posts', docId), {
+      slugOrId: clean,
+      deletedAt: new Date().toISOString(),
+    });
+  } catch (error) {
+    console.warn('Firestore recordDeletedPost error:', error);
+  }
+}
+
+/**
+ * Remove a post slug or ID from deleted_posts in Cloud Firestore (when restored/re-saved)
+ */
+export async function removeDeletedPostFromFirestore(slugOrId: string): Promise<void> {
+  const clean = String(slugOrId).toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+  if (!clean) return;
+  const docId = clean.replace(/[^a-zA-Z0-9_\-]/g, '-').slice(0, 120);
+  try {
+    await deleteDoc(doc(db, 'deleted_posts', docId)).catch(() => {});
+    if (clean !== docId) {
+      await deleteDoc(doc(db, 'deleted_posts', clean)).catch(() => {});
+    }
+  } catch (error) {
+    console.warn('Firestore removeDeletedPost error:', error);
   }
 }
 
@@ -157,22 +222,43 @@ export async function getPostsFromFirestore(): Promise<BlogPost[]> {
 }
 
 /**
- * Delete a post from Cloud Firestore
+ * Delete a post from Cloud Firestore permanently and record into deleted_posts
  */
-export async function deletePostFromFirestore(postIdOrSlug: string): Promise<void> {
+export async function deletePostFromFirestore(postIdOrSlug: string, aliases: string[] = []): Promise<void> {
   const clean = String(postIdOrSlug).toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
-  const docId = clean.replace(/[^a-zA-Z0-9_\-]/g, '-').slice(0, 120);
-  const path = `posts/${docId}`;
-  try {
-    await deleteDoc(doc(db, 'posts', docId));
-    if (clean !== docId) {
-      await deleteDoc(doc(db, 'posts', clean)).catch(() => {});
-    }
-  } catch (error) {
-    console.warn('Firestore delete error for path', path, error);
+  const allIdentifiers = Array.from(new Set([clean, ...aliases.map((a) => a.toLowerCase().trim().replace(/^\//, '').replace(/\/$/, ''))].filter(Boolean)));
+
+  // 1. Delete documents from posts collection
+  for (const id of allIdentifiers) {
+    const docId = id.replace(/[^a-zA-Z0-9_\-]/g, '-').slice(0, 120);
     try {
-      handleFirestoreError(error, OperationType.DELETE, path);
-    } catch {}
+      await deleteDoc(doc(db, 'posts', docId)).catch(() => {});
+      if (id !== docId) {
+        await deleteDoc(doc(db, 'posts', id)).catch(() => {});
+      }
+    } catch (error) {
+      console.warn('Firestore delete error for doc', docId, error);
+    }
+  }
+
+  // 2. Query posts collection to delete any documents where slug or id matches
+  try {
+    const snapshot = await getDocs(collection(db, 'posts'));
+    for (const d of snapshot.docs) {
+      const data = d.data();
+      const pSlug = (data.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+      const pId = (data.id || '').toLowerCase().trim();
+      if (allIdentifiers.includes(pSlug) || allIdentifiers.includes(pId) || allIdentifiers.includes(d.id)) {
+        await deleteDoc(doc(db, 'posts', d.id)).catch(() => {});
+      }
+    }
+  } catch (queryErr) {
+    console.warn('Firestore sweep delete warning:', queryErr);
+  }
+
+  // 3. Record all identifiers into deleted_posts collection for multi-device sync
+  for (const id of allIdentifiers) {
+    await recordDeletedPostInFirestore(id);
   }
 }
 

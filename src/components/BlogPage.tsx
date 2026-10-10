@@ -26,6 +26,8 @@ import {
   INITIAL_BLOG_POSTS,
   getBlogPostBySlug,
   getCustomBlogPosts,
+  getDeletedPostSlugs,
+  syncDeletedPosts,
   fetchAndSyncCustomPosts,
   normalizeBlogPost,
 } from '../data/blogPosts';
@@ -47,6 +49,7 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
   const [customPosts, setCustomPosts] = useState<BlogPost[]>(() => {
     return getCustomBlogPosts().map(normalizeBlogPost);
   });
+  const [deletedSlugs, setDeletedSlugs] = useState<Set<string>>(() => getDeletedPostSlugs());
 
   // Current active post when viewing detail
   const [activePost, setActivePost] = useState<BlogPost | null>(() => {
@@ -88,28 +91,44 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
     // 1. Custom posts first (most recently added/edited by admin)
     (customPosts || []).forEach((p) => {
       if (p && (p.slug || p.id)) {
-        const normalized = normalizeBlogPost(p);
-        postMap.set(normalized.slug, normalized);
+        const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+        const id = (p.id || '').toLowerCase().trim();
+        if (!deletedSlugs.has(s) && !deletedSlugs.has(id)) {
+          const normalized = normalizeBlogPost(p);
+          postMap.set(normalized.slug, normalized);
+        }
       }
     });
-    // 2. Add initial blog posts if not overridden
+    // 2. Add initial blog posts if not overridden and NOT DELETED
     INITIAL_BLOG_POSTS.forEach((p) => {
-      if (!postMap.has(p.slug)) {
-        postMap.set(p.slug, normalizeBlogPost(p));
+      const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+      const id = (p.id || '').toLowerCase().trim();
+      if (!deletedSlugs.has(s) && !deletedSlugs.has(id)) {
+        if (!postMap.has(p.slug)) {
+          postMap.set(p.slug, normalizeBlogPost(p));
+        }
       }
     });
     return Array.from(postMap.values());
-  }, [customPosts]);
+  }, [customPosts, deletedSlugs]);
 
-  // Load latest posts from server API or static json on mount
+  // Load latest posts and deleted posts from server API / Firestore on mount
   useEffect(() => {
     const fetchLatestPosts = async () => {
+      await syncDeletedPosts();
+      setDeletedSlugs(getDeletedPostSlugs());
       const synced = await fetchAndSyncCustomPosts();
       if (synced && synced.length > 0) {
         setCustomPosts(synced);
-        const pathname = window.location.pathname.replace(/\/$/, '') || '';
-        if (pathname !== '/blog' && pathname !== '') {
-          const currentSlug = pathname.replace(/^\/?blog\//, '').replace(/^\//, '');
+      }
+      setDeletedSlugs(getDeletedPostSlugs());
+      const pathname = window.location.pathname.replace(/\/$/, '') || '';
+      if (pathname !== '/blog' && pathname !== '') {
+        const currentSlug = pathname.replace(/^\/?blog\//, '').replace(/^\//, '');
+        const currentDel = getDeletedPostSlugs();
+        if (currentDel.has(currentSlug.toLowerCase())) {
+          setActivePost(null);
+        } else {
           const updated = synced.find((p) => p.slug === currentSlug || p.id === currentSlug);
           if (updated) {
             setActivePost(normalizeBlogPost(updated));
@@ -118,6 +137,15 @@ export const BlogPage: React.FC<BlogPageProps> = ({ onNavigate, onSelectDish }) 
       }
     };
     fetchLatestPosts();
+
+    const handleCustomPostsUpdated = () => {
+      setDeletedSlugs(getDeletedPostSlugs());
+      setCustomPosts(getCustomBlogPosts().map(normalizeBlogPost));
+    };
+    window.addEventListener('custom-posts-updated', handleCustomPostsUpdated);
+    return () => {
+      window.removeEventListener('custom-posts-updated', handleCustomPostsUpdated);
+    };
   }, []);
 
   // Sync browser back/forward and URL change

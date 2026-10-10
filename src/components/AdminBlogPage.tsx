@@ -66,6 +66,7 @@ import {
   LOCAL_STORAGE_CUSTOM_POSTS,
   LOCAL_STORAGE_DELETED_POSTS,
   getDeletedPostSlugs,
+  syncDeletedPosts,
   recordDeletedPostSlugLocal,
   removeDeletedPostSlugLocal,
   getAllBlogPosts,
@@ -618,17 +619,8 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
   const loadPosts = useCallback(async (silent = false) => {
     if (!silent) setLoading(true);
 
-    // Sync deleted post records from server if available
-    try {
-      const delRes = await fetch('/api/admin/deleted-posts');
-      if (delRes.ok) {
-        const delData = await delRes.json();
-        if (delData.deleted && Array.isArray(delData.deleted)) {
-          delData.deleted.forEach((s: string) => recordDeletedPostSlugLocal(s));
-        }
-      }
-    } catch {}
-
+    // Sync deleted post records from Cloud Firestore & server first
+    await syncDeletedPosts();
     const deleted = getDeletedPostSlugs();
 
     // 1. Try Cloud Firestore first for global multi-device sync
@@ -1883,26 +1875,21 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
     if (!postToDelete) return;
     setIsDeletingPost(true);
 
-    const targetSlug = (postToDelete.slug || postToDelete.id || '')
-      .toLowerCase()
-      .trim()
-      .replace(/^\//, '')
-      .replace(/\/$/, '');
-    const targetId = (postToDelete.id || postToDelete.slug || '').toLowerCase().trim();
+    const targetSlug = (postToDelete.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+    const targetId = (postToDelete.id || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+    const cleanDocId = (postToDelete.slug || postToDelete.id || '').toLowerCase().replace(/[^a-zA-Z0-9_\-]/g, '-').slice(0, 120);
+    const allIdentifiers = Array.from(new Set([targetSlug, targetId, cleanDocId].filter(Boolean)));
 
     try {
       // 1. Record in local deleted blacklist immediately
-      recordDeletedPostSlugLocal(targetSlug);
-      if (targetId && targetId !== targetSlug) {
-        recordDeletedPostSlugLocal(targetId);
-      }
+      allIdentifiers.forEach((id) => recordDeletedPostSlugLocal(id));
 
       // 2. Optimistic update in UI state
       setPosts((prev) =>
         prev.filter((p) => {
           const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
           const id = (p.id || '').toLowerCase().trim();
-          return s !== targetSlug && id !== targetSlug && s !== targetId && id !== targetId;
+          return !allIdentifiers.includes(s) && !allIdentifiers.includes(id);
         })
       );
 
@@ -1914,7 +1901,7 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
           const filtered = list.filter((p) => {
             const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
             const id = (p.id || '').toLowerCase().trim();
-            return s !== targetSlug && id !== targetSlug && s !== targetId && id !== targetId;
+            return !allIdentifiers.includes(s) && !allIdentifiers.includes(id);
           });
           localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(filtered));
         } catch {}
@@ -1924,27 +1911,31 @@ export const AdminBlogPage: React.FC<AdminBlogPageProps> = ({ onNavigate }) => {
       window.dispatchEvent(new Event('custom-posts-updated'));
       window.dispatchEvent(new Event('locationchange'));
 
-      // 5. Delete from Cloud Firestore
+      // 5. Delete from Cloud Firestore permanently & record into deleted_posts
       try {
-        await deletePostFromFirestore(targetSlug);
-        if (targetId && targetId !== targetSlug) {
-          await deletePostFromFirestore(targetId);
-        }
+        await deletePostFromFirestore(targetSlug || targetId, allIdentifiers);
       } catch (e) {
         console.warn('Firestore delete error:', e);
       }
 
       // 6. Delete from backend API
       try {
-        await fetch(`/api/admin/posts/${encodeURIComponent(targetSlug)}`, {
-          method: 'DELETE',
-        });
+        if (targetSlug) {
+          await fetch(`/api/admin/posts/${encodeURIComponent(targetSlug)}`, {
+            method: 'DELETE',
+          }).catch(() => {});
+        }
+        if (targetId && targetId !== targetSlug) {
+          await fetch(`/api/admin/posts/${encodeURIComponent(targetId)}`, {
+            method: 'DELETE',
+          }).catch(() => {});
+        }
       } catch (apiErr) {
         console.warn('API delete error:', apiErr);
       }
 
       // If we were editing this post, switch back to list view
-      if (editingPostId && (editingPostId === targetSlug || editingPostId === targetId || slug === targetSlug)) {
+      if (editingPostId && (allIdentifiers.includes(editingPostId) || allIdentifiers.includes(slug))) {
         setViewMode('list');
         setEditingPostId(null);
       }

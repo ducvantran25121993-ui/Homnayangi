@@ -1,10 +1,13 @@
 import { Dish, DishRecipe, RegionId } from '../types';
 import { getRegionById } from '../data/regionalCuisine';
 import { KNOWN_BLOG_SLUGS } from '../data/blogSlugs';
+import { getDeletedPostSlugs } from '../data/blogPosts';
 
 export function isBlogPostSlug(slug: string): boolean {
   if (!slug) return false;
-  const clean = slug.replace(/^\/?blog\//, '').replace(/^\//, '').replace(/\/$/, '');
+  const clean = slug.replace(/^\/?blog\//, '').replace(/^\//, '').replace(/\/$/, '').toLowerCase();
+  const deleted = getDeletedPostSlugs();
+  if (deleted.has(clean)) return false;
   if (KNOWN_BLOG_SLUGS.has(clean)) return true;
 
   // Check window.__INITIAL_CUSTOM_POSTS__ or localStorage for custom admin posts

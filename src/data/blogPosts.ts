@@ -40,7 +40,8 @@ export const BLOG_SLUG_ALIASES: Record<string, string> = {
   "mon-ngon-tu-thit-ga": "thit-ga-nau-mon-gi-ngon",
   "mon-ngon-voi-thit-bo": "hom-nay-an-gi-voi-thit-bo",
   "mon-ngon-voi-trung": "hom-nay-an-gi-voi-trung",
-  "thuc-don-100k": "hom-nay-an-gi-voi-100-nghin",
+  "thuc-don-100k": "100-nghin-nau-duoc-mon-gi-goi-y-bua-an-tiet-kiem",
+  "hom-nay-an-gi-voi-100-nghin": "100-nghin-nau-duoc-mon-gi-goi-y-bua-an-tiet-kiem",
   "thuc-don-4-nguoi": "hom-nay-an-gi-cho-4-nguoi",
   "mon-an-do-ngan": "an-gi-cho-do-ngan",
   "hom-nay-an-gi-cho-do-ngan": "an-gi-cho-do-ngan",
@@ -591,10 +592,10 @@ export const INITIAL_BLOG_POSTS: BlogPost[] = [
     "content": "Trong mọi căn bếp gia đình, quả trứng gà hay trứng vịt luôn là nguyên liệu thân thương, tiện lợi và tiết kiệm nhất. Những ngày đi làm về muộn chẳng kịp ghé chợ, hay những ngày cuối tháng muốn chi tiêu tiết kiệm mà vẫn đủ đầy dinh dưỡng, chỉ cần mở tủ lạnh lấy ra vài quả trứng là bạn đã có thể làm nên một bữa ăn ngon lành. Nhưng đừng chỉ quanh quẩn với món trứng luộc hay trứng ốp la đơn điệu, trứng có thể biến hóa thành vô số món ăn lạ miệng, bắt mắt khiến cả nhà thích mê!\n\n## 1. Trứng Sốt Cà Chua Hành Hoa Đậm Đà Quen Thuộc\n\nMón ăn tuổi thơ bình dị này luôn có sức mạnh kỳ diệu trong việc đánh thức vị giác. Từng miếng trứng chiên mềm xốp, vàng ươm được om trong nước sốt cà chua đỏ au sánh mịn, thơm lừng mùi hành hoa và tiêu sọ xay.\n\nVị chua ngọt thanh dịu của cà chua ngấm vào từng thớ trứng béo ngậy, chan thìa nước sốt nóng hổi lên bát cơm trắng dẻo thơm thì bao nhiêu mệt nhọc cả ngày dài như tan biến hết.\n\n## 2. Trứng Ngâm Tương Hàn Quốc Lòng Đào Dẻo Quánh\n\nMón trứng lòng đào ngâm tương béo ngậy, thơm nức mùi xì dầu tỏi ớt đang là món ăn \"gây nghiện\" của biết bao bạn trẻ. Trứng gà được luộc chuẩn xác trong 6 phút để lòng trắng vừa chín tới còn lòng đỏ vẫn dẻo quánh như thạch caramen.\n\n![Trứng lòng đào luộc dẻo quánh](/images/rau_cai_luoc_trung_long_dao.jpg)\n\nSau đó, ngâm trứng trong hỗn hợp nước tương ngon nấu cùng đường, hành tây, ớt xanh và mè rang thơm phức qua một đêm. Cắn một miếng trứng béo ngậy, ngập tràn vị mặn ngọt đậm đà, ăn cùng cơm nóng và rong biển thì ngon khó tả. Bạn cũng có thể xem thêm món trứng hấp thơm ngon tại [cách làm chả trứng hấp thơm bùi chuẩn vị](/com-tam-suon-bi-cha) để làm phong phú thực đơn.\n\n## 3. Trứng Chiên Nước Mắm Tỏi Ớt Cay Cay Ngọt Ngọt\n\nNếu bạn muốn một món ăn nhanh gọn trong 5 phút mà đưa cơm số một, hãy thử ngay trứng chiên nước mắm. Trứng ốp la lòng đào hoặc trứng chiên giòn rụm viền ngoài, sau đó rưới đều hỗn hợp nước mắm cốt pha đường, tỏi ớt băm nhuyễn kẹo lại sền sệt. Món ăn đơn giản nhưng độ hao cơm thì chẳng thua kém bất kỳ món cao lương mỹ vị nào. Khám phá thêm các mâm cơm tiết kiệm tại [thực đơn hôm nay ăn gì với 100 nghìn](/hom-nay-an-gi-voi-100-nghin).\n\nTrứng giản dị là thế nhưng nếu gửi gắm vào đó chút chăm chút yêu thương, mâm cơm gia đình bạn sẽ luôn ấm áp và đong đầy hạnh phúc!\n## 4. Trứng Cuộn Ngũ Sắc Bắt Mắt Dành Cho Bé Yêu\n\nNếu các bạn nhỏ trong nhà lười ăn rau củ, món trứng cuộn ngũ sắc theo phong cách Hàn Quốc chính là tuyệt chiêu giúp mẹ giải quyết nỗi lo này. Trứng gà đánh tan cùng cà rốt thái hạt lựu siêu nhỏ, hành tây, hành lá xanh mướt và chút giăm bông hoặc thịt băm nêm hạt nêm vừa vặn.\n\nRán trứng trên chảo chống dính với từng lớp mỏng, cuộn tròn dần tay từng lớp một cho đến khi được một cuộn trứng dày dặn, vàng ươm đẹp mắt. Cắt cuộn trứng thành từng khoanh tròn xoe rực rỡ sắc màu, chấm cùng tương cà chua ngọt dịu, các bé sẽ thích thú ăn hết veo cả đĩa rau củ mà không hề mè nheo gạt bỏ.\n\n## 5. Món Ngon Từ Trứng - Tinh Hoa Của Sự Giản Dị\n\nĐôi khi, hạnh phúc gia đình lại đến từ những điều giản dị và mộc mạc nhất. Một quả trứng gà nhỏ bé qua bàn tay chăm chút yêu thương có thể biến thành những món ăn thơm ngon, bắt mắt và đầy đủ dinh dưỡng cho cả nhà. Dù là bữa sáng vội vã với bánh mì ốp la hay bữa tối ấm cúng với đĩa trứng đúc thịt thơm lừng, các món ăn từ trứng luôn mang lại cảm giác thân quen, no đủ và đầm ấm cho gian bếp nhỏ.\n\nHãy luôn tích trữ sẵn một vỉ trứng tươi trong tủ lạnh để sẵn sàng biến tấu thành những món ngon nhanh gọn bất cứ khi nào bạn bận rộn. Chúc bạn luôn có những bữa cơm thật ngon miệng và ấm áp bên gia đình thân yêu!\n"
   },
   {
-    "id": "hom-nay-an-gi-voi-100-nghin",
-    "slug": "hom-nay-an-gi-voi-100-nghin",
-    "title": "Hôm Nay Ăn Gì Với 100 Nghìn? 7 Mâm Cơm 3 Món Đủ Chất Cho Gia Đình",
-    "excerpt": "Gợi ý các thực đơn mâm cơm gia đình 3 món chỉ 100k ngon - bổ - rẻ: canh chua cá lóc, thịt kho tiêu, trứng chiên cà chua đủ đầy dinh dưỡng.",
+    "id": "100-nghin-nau-duoc-mon-gi-goi-y-bua-an-tiet-kiem",
+    "slug": "100-nghin-nau-duoc-mon-gi-goi-y-bua-an-tiet-kiem",
+    "title": "100 Nghìn Nấu Được Món Gì? Gợi Ý Bữa Ăn Tiết Kiệm",
+    "excerpt": "Gợi ý các thực đơn mâm cơm gia đình 3 món chỉ 100k ngon - bổ - rẻ: thịt rang, cá kho, trứng chiên cà chua đủ đầy dinh dưỡng tiết kiệm.",
     "coverImage": "/images/mam_com_gia_dinh.jpg",
     "category": "Gợi Ý Thực Đơn",
     "tags": [
@@ -764,6 +765,9 @@ export const LOCAL_STORAGE_DELETED_POSTS = 'angigio_deleted_posts';
 export function getDeletedPostSlugs(): Set<string> {
   const set = new Set<string>();
   if (typeof window === 'undefined') return set;
+  if ((window as any).__ANGIGIO_DELETED_POSTS__ instanceof Set) {
+    return new Set((window as any).__ANGIGIO_DELETED_POSTS__);
+  }
   try {
     const raw = localStorage.getItem(LOCAL_STORAGE_DELETED_POSTS);
     if (raw) {
@@ -773,6 +777,7 @@ export function getDeletedPostSlugs(): Set<string> {
       }
     }
   } catch {}
+  (window as any).__ANGIGIO_DELETED_POSTS__ = set;
   return set;
 }
 
@@ -782,6 +787,7 @@ export function recordDeletedPostSlugLocal(slugOrId: string): void {
     const clean = String(slugOrId).toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
     const current = getDeletedPostSlugs();
     current.add(clean);
+    (window as any).__ANGIGIO_DELETED_POSTS__ = current;
     localStorage.setItem(LOCAL_STORAGE_DELETED_POSTS, JSON.stringify(Array.from(current)));
   } catch {}
 }
@@ -792,8 +798,56 @@ export function removeDeletedPostSlugLocal(slugOrId: string): void {
     const clean = String(slugOrId).toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
     const current = getDeletedPostSlugs();
     current.delete(clean);
+    (window as any).__ANGIGIO_DELETED_POSTS__ = current;
     localStorage.setItem(LOCAL_STORAGE_DELETED_POSTS, JSON.stringify(Array.from(current)));
   } catch {}
+}
+
+/**
+ * Global synchronization of deleted posts from Cloud Firestore & Backend API
+ * Ensures any article deleted on one device is instantly hidden across all devices and visitors
+ */
+export async function syncDeletedPosts(): Promise<Set<string>> {
+  const set = getDeletedPostSlugs();
+  if (typeof window === 'undefined') return set;
+
+  // 1. Fetch from Firestore deleted_posts (Global cloud database)
+  try {
+    const { getDeletedPostsFromFirestore } = await import('../firebase');
+    const cloudDeleted = await getDeletedPostsFromFirestore();
+    if (Array.isArray(cloudDeleted)) {
+      cloudDeleted.forEach((s) => {
+        const clean = String(s).toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+        if (clean) set.add(clean);
+      });
+    }
+  } catch (err) {
+    console.warn('syncDeletedPosts cloud error:', err);
+  }
+
+  // 2. Fetch from backend API
+  try {
+    const res = await fetch('/api/admin/deleted-posts');
+    if (res.ok) {
+      const data = await res.json();
+      if (data.deleted && Array.isArray(data.deleted)) {
+        data.deleted.forEach((s: string) => {
+          const clean = String(s).toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+          if (clean) set.add(clean);
+        });
+      }
+    }
+  } catch (err) {
+    console.warn('syncDeletedPosts API error:', err);
+  }
+
+  // Save merged set to localStorage and in-memory cache
+  try {
+    (window as any).__ANGIGIO_DELETED_POSTS__ = set;
+    localStorage.setItem(LOCAL_STORAGE_DELETED_POSTS, JSON.stringify(Array.from(set)));
+  } catch {}
+
+  return set;
 }
 
 export function getCustomBlogPosts(): BlogPost[] {
@@ -857,18 +911,34 @@ export function getAllBlogPosts(): BlogPost[] {
 
 export function getBlogPostBySlug(slug: string): BlogPost | undefined {
   if (!slug) return undefined;
-  const cleanSlug = slug.replace(/^\/?blog\//, "").replace(/^\//, "").replace(/\/$/, "");
-  const canonicalSlug = BLOG_SLUG_ALIASES[cleanSlug] || cleanSlug;
+  const cleanSlug = slug.replace(/^\/?blog\//, "").replace(/^\//, "").replace(/\/$/, "").toLowerCase();
+  const canonicalSlug = (BLOG_SLUG_ALIASES[cleanSlug] || cleanSlug).toLowerCase();
+  const deleted = getDeletedPostSlugs();
+  if (deleted.has(cleanSlug) || deleted.has(canonicalSlug)) {
+    return undefined;
+  }
   const all = getAllBlogPosts();
-  return all.find((p) => p.slug === canonicalSlug || p.id === canonicalSlug || p.slug === cleanSlug);
+  return all.find((p) => {
+    const pSlug = (p.slug || '').toLowerCase();
+    const pId = (p.id || '').toLowerCase();
+    return pSlug === canonicalSlug || pId === canonicalSlug || pSlug === cleanSlug || pId === cleanSlug;
+  });
 }
 
 export function isBlogPostSlug(slug: string): boolean {
   if (!slug) return false;
-  const clean = slug.replace(/^\/?blog\//, "").replace(/^\//, "").replace(/\/$/, "");
-  const canonical = BLOG_SLUG_ALIASES[clean] || clean;
+  const clean = slug.replace(/^\/?blog\//, "").replace(/^\//, "").replace(/\/$/, "").toLowerCase();
+  const canonical = (BLOG_SLUG_ALIASES[clean] || clean).toLowerCase();
+  const deleted = getDeletedPostSlugs();
+  if (deleted.has(clean) || deleted.has(canonical)) {
+    return false;
+  }
   const all = getAllBlogPosts();
-  return all.some((p) => p.slug === canonical || p.id === canonical || p.slug === clean);
+  return all.some((p) => {
+    const pSlug = (p.slug || '').toLowerCase();
+    const pId = (p.id || '').toLowerCase();
+    return pSlug === canonical || pId === canonical || pSlug === clean || pId === clean;
+  });
 }
 
 export function getBlogPostUrl(post: BlogPost): string {
@@ -888,6 +958,8 @@ export function getFeaturedBlogPosts(): BlogPost[] {
  */
 export async function fetchAndSyncCustomPosts(): Promise<BlogPost[]> {
   if (typeof window === 'undefined') return [];
+  // 0. Synchronize deleted posts from Firestore & server first!
+  const deleted = await syncDeletedPosts();
   const cacheBust = Date.now();
   const postMap = new Map<string, BlogPost>();
 
@@ -899,8 +971,12 @@ export async function fetchAndSyncCustomPosts(): Promise<BlogPost[]> {
       if (Array.isArray(data)) {
         data.forEach((p) => {
           if (p && (p.slug || p.id)) {
-            const normalized = normalizeBlogPost(p);
-            postMap.set(normalized.slug, normalized);
+            const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+            const id = (p.id || '').toLowerCase().trim();
+            if (!deleted.has(s) && !deleted.has(id)) {
+              const normalized = normalizeBlogPost(p);
+              postMap.set(normalized.slug, normalized);
+            }
           }
         });
       }
@@ -917,8 +993,12 @@ export async function fetchAndSyncCustomPosts(): Promise<BlogPost[]> {
       if (Array.isArray(data.customPosts)) {
         data.customPosts.forEach((p: any) => {
           if (p && (p.slug || p.id)) {
-            const normalized = normalizeBlogPost(p);
-            postMap.set(normalized.slug, normalized);
+            const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+            const id = (p.id || '').toLowerCase().trim();
+            if (!deleted.has(s) && !deleted.has(id)) {
+              const normalized = normalizeBlogPost(p);
+              postMap.set(normalized.slug, normalized);
+            }
           }
         });
       }
@@ -938,8 +1018,12 @@ export async function fetchAndSyncCustomPosts(): Promise<BlogPost[]> {
     if (Array.isArray(cloudPosts)) {
       cloudPosts.forEach((p) => {
         if (p && (p.slug || p.id)) {
-          const normalized = normalizeBlogPost(p);
-          postMap.set(normalized.slug, normalized);
+          const s = (p.slug || '').toLowerCase().trim().replace(/^\//, '').replace(/\/$/, '');
+          const id = (p.id || '').toLowerCase().trim();
+          if (!deleted.has(s) && !deleted.has(id)) {
+            const normalized = normalizeBlogPost(p);
+            postMap.set(normalized.slug, normalized);
+          }
         }
       });
     }
@@ -948,20 +1032,18 @@ export async function fetchAndSyncCustomPosts(): Promise<BlogPost[]> {
   }
 
   const merged = Array.from(postMap.values());
-  if (merged.length > 0) {
-    try {
-      window.__INITIAL_CUSTOM_POSTS__ = merged;
-      localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(merged));
-      // Register all slugs into KNOWN_BLOG_SLUGS dynamically
-      const { KNOWN_BLOG_SLUGS } = await import('./blogSlugs');
-      merged.forEach((p) => {
-        if (p.slug) KNOWN_BLOG_SLUGS.add(p.slug);
-        if (p.id) KNOWN_BLOG_SLUGS.add(p.id);
-      });
-      window.dispatchEvent(new Event('custom-posts-updated'));
-    } catch {}
-    return merged;
-  }
-
-  return [];
+  try {
+    window.__INITIAL_CUSTOM_POSTS__ = merged;
+    localStorage.setItem(LOCAL_STORAGE_CUSTOM_POSTS, JSON.stringify(merged));
+    // Register all slugs into KNOWN_BLOG_SLUGS dynamically
+    const { KNOWN_BLOG_SLUGS } = await import('./blogSlugs');
+    // Remove deleted from KNOWN_BLOG_SLUGS
+    deleted.forEach((d) => KNOWN_BLOG_SLUGS.delete(d));
+    merged.forEach((p) => {
+      if (p.slug && !deleted.has(p.slug.toLowerCase())) KNOWN_BLOG_SLUGS.add(p.slug);
+      if (p.id && !deleted.has(p.id.toLowerCase())) KNOWN_BLOG_SLUGS.add(p.id);
+    });
+    window.dispatchEvent(new Event('custom-posts-updated'));
+  } catch {}
+  return merged;
 }

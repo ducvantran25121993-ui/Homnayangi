@@ -2263,18 +2263,8 @@
     </image:image>
   </url>
   <url>
-    <loc>https://angigio.com/an-gi-cho-do-ngan-goi-y-mon-ngon-doi-vi-de-an-cho-ca-nha</loc>
-    <lastmod>2026-10-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://angigio.com/images/an-gi-cho-do-ngan.jpg</image:loc>
-      <image:title>Ăn Gì Cho Đỡ Ngán? Gợi Ý Món Ngon Đổi Vị Dễ Ăn Cho Cả Nhà</image:title>
-    </image:image>
-  </url>
-  <url>
     <loc>https://angigio.com/an-gi-hom-nay-goi-y-mon-ngon-de-lam-cho-bua-com-moi-ngay</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -2284,22 +2274,42 @@
   </url>
   <url>
     <loc>https://angigio.com/toi-nay-an-gi-goi-y-bua-toi-ngon-de-lam-cho-ca-nha</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://angigio.com/images/an-gi-cho-do-ngan.jpg</image:loc>
+      <image:loc>https://angigio.com/images/bau_luoc_kho_quet.jpg</image:loc>
       <image:title>Tối Nay Ăn Gì? Gợi Ý Bữa Tối Ngon, Dễ Làm Cho Cả Nhà</image:title>
     </image:image>
   </url>
   <url>
     <loc>https://angigio.com/trua-nay-an-gi-goi-y-bua-trua-ngon-de-an-cho-moi-ngay</loc>
-    <lastmod>2026-10-08</lastmod>
+    <lastmod>2026-10-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://angigio.com/images/an-gi-cho-do-ngan.jpg</image:loc>
+      <image:loc>https://angigio.com/images/goi_cuon.jpg</image:loc>
       <image:title>Trưa Nay Ăn Gì? Gợi Ý Bữa Trưa Ngon, Dễ Ăn Cho Mỗi Ngày</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://angigio.com/100-nghin-nau-duoc-mon-gi-goi-y-bua-an-tiet-kiem</loc>
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://angigio.com/images/mam_com_gia_dinh.jpg</image:loc>
+      <image:title>100 Nghìn Nấu Được Món Gì? Gợi Ý Bữa Ăn Tiết Kiệm</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://angigio.com/cuoi-tuan-an-gi-nhung-bua-an-tan-huong-ngay-nghi</loc>
+    <lastmod>2026-10-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://angigio.com/images/lau_ca_keo.jpg</image:loc>
+      <image:title>Cuối Tuần Ăn Gì? Những Bữa Ăn Tận Hưởng Ngày Nghỉ</image:title>
     </image:image>
   </url>
   <url>
@@ -2460,16 +2470,6 @@
     <image:image>
       <image:loc>https://angigio.com/images/trung_cuon_van_may.jpg</image:loc>
       <image:title>Hôm Nay Ăn Gì Với Trứng? 10 Món Trứng Lạ Miệng, Siêu Hao Cơm</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://angigio.com/hom-nay-an-gi-voi-100-nghin</loc>
-    <lastmod>2026-10-09</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://angigio.com/images/mam_com_gia_dinh.jpg</image:loc>
-      <image:title>Hôm Nay Ăn Gì Với 100 Nghìn? 7 Mâm Cơm 3 Món Đủ Chất Cho Gia Đình</image:title>
     </image:image>
   </url>
   <url>

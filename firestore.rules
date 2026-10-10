@@ -16,11 +16,23 @@ service cloud.firestore {
              data.content is string && data.content.size() <= 500000;
     }
 
+    function isValidDeletedPost(data) {
+      return data.slugOrId is string && data.slugOrId.size() <= 150;
+    }
+
     match /posts/{postId} {
       allow read: if true;
       allow create: if isValidId(postId) && isValidPost(request.resource.data);
       allow update: if isValidId(postId) && isValidPost(request.resource.data);
       allow delete: if isValidId(postId);
     }
+
+    match /deleted_posts/{slugId} {
+      allow read: if true;
+      allow create: if isValidId(slugId) && isValidDeletedPost(request.resource.data);
+      allow update: if isValidId(slugId) && isValidDeletedPost(request.resource.data);
+      allow delete: if isValidId(slugId);
+    }
   }
 }
+

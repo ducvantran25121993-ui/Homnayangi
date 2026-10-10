@@ -81,12 +81,34 @@
         }
       },
       "required": ["id", "slug", "title", "content"]
+    },
+    "DeletedPost": {
+      "title": "DeletedPost",
+      "description": "Bản ghi các bài viết blog đã bị xóa vĩnh viễn nhằm đồng bộ trên toàn bộ thiết bị",
+      "type": "object",
+      "properties": {
+        "slugOrId": {
+          "type": "string",
+          "description": "Slug hoặc ID của bài viết đã bị xóa",
+          "maxLength": 150
+        },
+        "deletedAt": {
+          "type": "string",
+          "description": "Thời gian xóa dạng ISO string",
+          "maxLength": 100
+        }
+      },
+      "required": ["slugOrId"]
     }
   },
   "firestore": {
     "/posts/{postId}": {
       "schema": "Post",
       "description": "Tập hợp tất cả các bài viết blog ẩm thực được đồng bộ trên toàn cầu"
+    },
+    "/deleted_posts/{slugId}": {
+      "schema": "DeletedPost",
+      "description": "Danh sách các slug/ID bài viết đã bị xóa để đồng bộ trên mọi thiết bị và trình duyệt"
     }
   }
 }
